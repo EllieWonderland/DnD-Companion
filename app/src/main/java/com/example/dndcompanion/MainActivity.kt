@@ -17,10 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dndcompanion.ui.theme.ui.CombatScreen
-import com.example.dndcompanion.ui.theme.ui.HelpScreen
 import com.example.dndcompanion.ui.theme.ui.RucksackScreen
 import com.example.dndcompanion.ui.theme.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.theme.ui.ZauberScreen
+import com.example.dndcompanion.ui.theme.ui.HelpScreen
 
 // Farben
 val BlauDunkel = Color(0xFF61A0AF)
@@ -33,7 +33,8 @@ val GelbSand = Color(0xFFF5D491)
 enum class AthaniaTab(val title: String) {
     Kampf("Kampf"),
     Zauber("Zauber"),
-    Rucksack("Rucksack")
+    Rucksack("Rucksack"),
+    Hilfe("Hilfe")
 }
 
 class MainActivity : ComponentActivity() {
@@ -50,41 +51,39 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun DnDApp(viewModel: CharacterViewModel) {
-    // Steuert die untere Navigation (0 = Athania, 1 = Capy, 2 = Hilfe)
-    var currentScreen by remember { mutableStateOf(0) }
+    var isAthaniaScreen by rememberSaveable { mutableStateOf(true) }
 
     Scaffold(
         bottomBar = {
             NavigationBar(containerColor = BlauHell) {
                 NavigationBarItem(
-                    selected = currentScreen == 0,
-                    onClick = { currentScreen = 0 },
+                    selected = isAthaniaScreen,
+                    onClick = { isAthaniaScreen = true },
                     icon = { Text("🧝‍♀️") },
                     label = { Text("Athania") },
-                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color.White,
+                        indicatorColor = BlauDunkel
+                    )
                 )
                 NavigationBarItem(
-                    selected = currentScreen == 1,
-                    onClick = { currentScreen = 1 },
+                    selected = !isAthaniaScreen,
+                    onClick = { isAthaniaScreen = false },
                     icon = { Text("🐾") },
                     label = { Text("Capy") },
-                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
-                )
-                NavigationBarItem(
-                    selected = currentScreen == 2,
-                    onClick = { currentScreen = 2 },
-                    icon = { Text("📚") }, // Ein Buch für Hilfe/Regeln
-                    label = { Text("Hilfe") },
-                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color.White,
+                        indicatorColor = BlauDunkel
+                    )
                 )
             }
         }
     ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
-            when (currentScreen) {
-                0 -> AthaniaScreen(viewModel)
-                1 -> CapyScreen(viewModel)
-                2 -> HelpScreen(viewModel)
+            if (isAthaniaScreen) {
+                AthaniaScreen(viewModel)
+            } else {
+                CapyScreen(viewModel)
             }
         }
     }
@@ -92,7 +91,6 @@ fun DnDApp(viewModel: CharacterViewModel) {
 
 @Composable
 fun AthaniaScreen(viewModel: CharacterViewModel) {
-    // State für die Tabs (jetzt mit Enum statt Index-Zahlen)
     var selectedTab by rememberSaveable { mutableStateOf(AthaniaTab.Kampf) }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -112,12 +110,12 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
             }
         }
 
-        // Content-Bereich
         Box(modifier = Modifier.fillMaxSize()) {
             when (selectedTab) {
                 AthaniaTab.Kampf -> CombatScreen(viewModel)
                 AthaniaTab.Zauber -> ZauberScreen(viewModel)
                 AthaniaTab.Rucksack -> RucksackScreen(viewModel)
+                AthaniaTab.Hilfe -> HelpScreen(viewModel)
             }
         }
     }
@@ -129,7 +127,6 @@ fun CapyScreen(viewModel: CharacterViewModel) {
         modifier = Modifier.fillMaxSize().background(GelbSand).padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Der Toggle-Switch (Himmel / Land)
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text("Land", color = PinkDunkel, fontWeight = FontWeight.Bold)
             Switch(
@@ -148,7 +145,6 @@ fun CapyScreen(viewModel: CharacterViewModel) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Lebenspunkte Balken für Capy
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = if(viewModel.isSkyBeast) BlauHell else PinkHell),
@@ -182,7 +178,6 @@ fun CapyScreen(viewModel: CharacterViewModel) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Basiswerte & Angriff
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = Color.White),

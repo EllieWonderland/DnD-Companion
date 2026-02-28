@@ -62,6 +62,30 @@ fun ChatView(viewModel: CharacterViewModel) {
     var messageToFaq by remember { mutableStateOf<ChatMessage?>(null) }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        // Status-Leiste für Modell und Limits
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Modell: ${viewModel.currentUsedModel}",
+                fontSize = 12.sp,
+                color = BlauDunkel,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Gemini Slots: ${viewModel.geminiMax - viewModel.geminiUsesToday} / ${viewModel.geminiMax}",
+                fontSize = 12.sp,
+                color = if (viewModel.geminiUsesToday >= viewModel.geminiMax) Color.Red else PinkDunkel
+            )
+        }
+        LinearProgressIndicator(
+            progress = { (viewModel.geminiMax - viewModel.geminiUsesToday).toFloat() / viewModel.geminiMax.toFloat() },
+            modifier = Modifier.fillMaxWidth().height(4.dp).padding(bottom = 12.dp),
+            color = PinkDunkel,
+            trackColor = BlauHell
+        )
         // Chat-Verlauf
         LazyColumn(
             modifier = Modifier.weight(1f).fillMaxWidth(),

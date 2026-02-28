@@ -133,8 +133,23 @@ fun CombatScreen(viewModel: CharacterViewModel) {
                 Text("Trefferbonus: ${viewModel.currentAttackBonus}", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Schaden: ${viewModel.currentDamage}", fontSize = 16.sp, color = Color.White)
+
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("Extra: Messer-Talent erlaubt 1x pro Zug Schadenswürfel neu zu werfen (nur Stich!).", fontSize = 12.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, color = BlauDunkel)
+
+                // Dynamischer Hinweis je nach Waffentyp
+                val extraNote = when (viewModel.currentWeapon) {
+                    ActiveWeapon.LANGBOGEN, ActiveWeapon.KURZSCHWERT_SCHILD ->
+                        "Messer-Talent: Erlaubt 1x pro Zug Schadenswürfel neu zu werfen (Stich)."
+                    ActiveWeapon.SHILLELAGH_SCHILD ->
+                        "Mastery (Topple): Gegner muss bei Treffer ST-Save (DC 12) bestehen oder liegt am Boden."
+                }
+
+                Text(
+                    text = extraNote,
+                    fontSize = 12.sp,
+                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                    color = BlauDunkel
+                )
             }
         }
     }

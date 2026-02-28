@@ -8,10 +8,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-// WICHTIG: Falls BuildConfig rot ist, hier Alt+Enter drücken!
 import com.example.dndcompanion.BuildConfig
 import com.google.ai.client.generativeai.GenerativeModel
-import com.google.ai.client.generativeai.type.content
 import kotlinx.coroutines.launch
 
 // --- DATENKLASSEN & ENUMS ---
@@ -169,6 +167,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 val parts = it.split("|")
                 if (parts.size == 2) InventoryItem(parts[0], parts[1].toIntOrNull() ?: 1) else null
             }
+            customLoot.clear()
             customLoot.addAll(items)
         }
     }
@@ -215,6 +214,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         spellSlotsLevel1 = 3
         huntersMarkFreeUses = 2
         goodberries = 0
+        geminiUsesToday = 0
 
         currentHp = maxHp
         hitDice = 4
@@ -228,6 +228,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             .putInt("goodberries", goodberries)
             .putInt("currentHp", currentHp)
             .putInt("hitDice", hitDice)
+            .putInt("geminiUsesToday", 0)
             .apply()
     }
 
@@ -270,30 +271,29 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val chatHistory = mutableStateListOf<ChatMessage>()
     val faqList = mutableStateListOf<FaqItem>()
 
+    // Status-Anzeigen für die UI
+    var currentUsedModel by mutableStateOf("Bereit")
+        private set
+    var geminiUsesToday by mutableStateOf(prefs.getInt("geminiUsesToday", 0))
+        private set
+    val geminiMax = 20
+
+    // Die Anweisung als Variable, damit wir sie überall nutzen können
+    private val systemPrompt = "Du bist ein Dungeons and Dragons Regel-Assistent. Beziehe dich ausschließlich auf die Regeln des Player Handbook 2024. Wir spielen nicht abwärtskompatibel. Antworte extrem kurz, präzise und leicht verständlich auf Deutsch."
+
+    // 1. Wahl: Gemini 1.5 Flash
+    private val primaryModel = GenerativeModel(
+        modelName = "gemini-1.5-flash",
+        apiKey = BuildConfig.GEMINI_API_KEY
+    )
+
+    // Das Chat-Objekt für den Kontext
+    private var activeChatSessionGemini = primaryModel.startChat()
+
     init {
         loadLoot()
         loadFaqs()
     }
-
-    // Der sichere Bot mit verborgenem API Key aus der BuildConfig
-    // 1. Versuch: Das brandneue Gemini 3 Flash (Super intelligent, aber niedriges Limit: 5 RPM / 20 RPD)
-    private val primaryModel = GenerativeModel(
-        modelName = "gemini-3-flash",
-        apiKey = BuildConfig.GEMINI_API_KEY,
-        systemInstruction = content {
-            text("Du bist ein Dungeons and Dragons Regel-Assistent. Beziehe dich ausschließlich auf die Regeln des Player Handbook 2024. Wir spielen nicht abwärtskompatibel. Mache nur Vorschläge und Erklärungen, die mit dem PHB 2024 konform sind. Antworte extrem kurz, präzise und leicht verständlich auf Deutsch.")
-        }
-    )
-
-    // 2. Notfall-Rettung: Gemma 3 (Hohes Limit: 30 RPM / 14.4 RPD)
-    // Hinweis: Falls die API "gemma-3-27b" nicht direkt frisst, kannst du hier auch "gemini-2.5-flash" als Plan B stehen lassen.
-    private val fallbackModel = GenerativeModel(
-        modelName = "gemma-3",
-        apiKey = BuildConfig.GEMINI_API_KEY,
-        systemInstruction = content {
-            text("Du bist ein Dungeons and Dragons Regel-Assistent. Beziehe dich ausschließlich auf die Regeln des Player Handbook 2024. Wir spielen nicht abwärtskompatibel. Mache nur Vorschläge und Erklärungen, die mit dem PHB 2024 konform sind. Antworte extrem kurz, präzise und leicht verständlich auf Deutsch.")
-        }
-    )
 
     fun loadFaqs() {
         val faqString = prefs.getString("savedFaqs", "") ?: ""
@@ -312,36 +312,47 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         prefs.edit().putString("savedFaqs", faqString).apply()
     }
 
+    // Hilfsfunktion: Baut das aktuelle Datenblatt deiner Stats
+    private fun getCharacterContext(): String {
+        return """
+            KONTEXT ATHANIA (Level $level):
+            HP: $currentHp/$maxHp, Trefferwürfel: $hitDice/4.
+            Zauberplätze Grad 1: $spellSlotsLevel1/3.
+            Kostenloses Zeichen des Jägers: $huntersMarkFreeUses/2.
+            Vorräte: $water Liter Wasser, $rations Rationen, $goodberries Gute Beeren.
+            Werte: ST 10, GE $dexterity (+4), KO $constitution (+3), IN 10, WE $wisdom (+2), CH 10.
+            Ausrüstung: ${currentWeapon.name}.
+        """.trimIndent()
+    }
+
     fun sendMessageToBot(message: String) {
         chatHistory.add(ChatMessage(message, true))
-
         val loadingIndex = chatHistory.size
-        chatHistory.add(ChatMessage("... blättert im Player's Handbook 2024 ...", false))
+        chatHistory.add(ChatMessage("... überlegt ...", false))
+
+        val context = getCharacterContext()
+        val finalPrompt = "$systemPrompt\n\n$context\n\nFrage: $message"
 
         viewModelScope.launch {
             try {
-                // Die App versucht zuerst das smarte Gemini 3 Flash
-                val response = primaryModel.generateContent(message)
-                chatHistory[loadingIndex] = ChatMessage(
-                    response.text ?: "Ich konnte keine Antwort finden.",
-                    false
-                )
-            } catch (e: Exception) {
-                // Wenn deine 20 Tages-Fragen aufgebraucht sind, springt nahtlos Gemma 3 ein!
-                try {
-                    val fallbackResponse = fallbackModel.generateContent(message)
-                    chatHistory[loadingIndex] = ChatMessage(
-                        fallbackResponse.text ?: "Ich konnte keine Antwort finden.",
-                        false
-                    )
-                } catch (fallbackException: Exception) {
-                    chatHistory[loadingIndex] = ChatMessage(
-                        "Die Götter schweigen. (Sowohl Gemini als auch Gemma haben ihr Limit erreicht).",
-                        false
-                    )
+                if (geminiUsesToday < geminiMax) {
+                    currentUsedModel = "Gemini 1.5 Flash"
+                    val response = activeChatSessionGemini.sendMessage(finalPrompt)
+                    geminiUsesToday++
+                    prefs.edit().putInt("geminiUsesToday", geminiUsesToday).apply()
+                    chatHistory[loadingIndex] = ChatMessage(response.text ?: "Keine Antwort.", false)
+                } else {
+                    throw Exception("Limit erreicht")
                 }
+            } catch (e: Exception) {
+                chatHistory[loadingIndex] = ChatMessage("Fehler: ${e.localizedMessage}", false)
             }
         }
+    }
+
+    fun resetChat() {
+        chatHistory.clear()
+        activeChatSessionGemini = primaryModel.startChat()
     }
 
     fun addChatToFaq(question: String, answer: String) {
