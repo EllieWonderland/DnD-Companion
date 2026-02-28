@@ -29,33 +29,77 @@ fun CombatScreen(viewModel: CharacterViewModel) {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // NEU: Lebenspunkte & Trefferwürfel
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp),
+            colors = CardDefaults.cardColors(containerColor = BlauHell),
+            shape = RoundedCornerShape(16.dp)
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    Text("HP: ${viewModel.currentHp} / ${viewModel.maxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Text("Trefferwürfel: ${viewModel.hitDice}/4", color = BlauDunkel, fontWeight = FontWeight.Bold)
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                LinearProgressIndicator(
+                    progress = { viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(12.dp),
+                    color = if (viewModel.currentHp > 10) PinkDunkel else Color.Red,
+                    trackColor = BlauDunkel
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Schnell-Buttons für Schaden und Heilung
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Button(onClick = { viewModel.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)) { Text("-5", fontSize = 16.sp) }
+                    Button(onClick = { viewModel.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)) { Text("-1", fontSize = 16.sp) }
+                    Button(onClick = { viewModel.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) { Text("+1", fontSize = 16.sp) }
+                    Button(onClick = { viewModel.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) { Text("+5", fontSize = 16.sp) }
+                }
+            }
+        }
+
         // Große Anzeige der Rüstungsklasse
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 24.dp),
+                .padding(bottom = 16.dp),
             colors = CardDefaults.cardColors(containerColor = BlauDunkel),
             shape = RoundedCornerShape(16.dp)
         ) {
             Column(
-                modifier = Modifier.padding(24.dp),
+                modifier = Modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(text = "Rüstungsklasse (RK)", color = Color.White, fontSize = 18.sp)
+                Text(text = "Rüstungsklasse (RK)", color = Color.White, fontSize = 16.sp)
                 Text(
                     text = viewModel.currentArmorClass.toString(),
                     color = PinkHell,
-                    fontSize = 56.sp,
+                    fontSize = 48.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
         }
 
-        Text("Waffe ausrüsten", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+        Text("Waffe ausrüsten", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Waffen-Auswahl (Segmented Control Style)
+        // Waffen-Auswahl
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
@@ -77,7 +121,7 @@ fun CombatScreen(viewModel: CharacterViewModel) {
             )
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
         // Anzeige der aktuellen Waffenwerte
         Card(
@@ -86,11 +130,11 @@ fun CombatScreen(viewModel: CharacterViewModel) {
             shape = RoundedCornerShape(12.dp)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("Trefferbonus: ${viewModel.currentAttackBonus}", fontSize = 22.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+                Text("Trefferbonus: ${viewModel.currentAttackBonus}", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("Schaden: ${viewModel.currentDamage}", fontSize = 18.sp, color = Color.DarkGray)
+                Text("Schaden: ${viewModel.currentDamage}", fontSize = 16.sp, color = Color.White)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("Extra: Messer-Talent erlaubt 1x pro Zug Schadenswürfel neu zu werfen (nur Stich!).", fontSize = 14.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, color = BlauDunkel)
+                Text("Extra: Messer-Talent erlaubt 1x pro Zug Schadenswürfel neu zu werfen (nur Stich!).", fontSize = 12.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, color = BlauDunkel)
             }
         }
     }
@@ -105,8 +149,10 @@ fun WeaponButton(title: String, isSelected: Boolean, onClick: () -> Unit) {
             contentColor = if (isSelected) Color.White else BlauDunkel
         ),
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier.width(110.dp).height(60.dp)
+        modifier = Modifier
+            .width(110.dp)
+            .height(60.dp)
     ) {
-        Text(text = title, fontSize = 12.sp, textAlign = TextAlign.Center, lineHeight = 14.sp)
+        Text(text = title, fontSize = 11.sp, textAlign = TextAlign.Center, lineHeight = 14.sp)
     }
 }
