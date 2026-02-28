@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,20 +16,27 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dndcompanion.ui.theme.ui.CombatScreen
 import com.example.dndcompanion.ui.theme.ui.RucksackScreen
 import com.example.dndcompanion.ui.theme.viewmodel.CharacterViewModel
+import com.example.dndcompanion.ui.theme.ui.ZauberScreen
 
-// Falls du die Farben noch nicht ausgelagert hast, hier zur Sicherheit nochmal:
+// Farben
 val BlauDunkel = Color(0xFF61A0AF)
 val BlauHell = Color(0xFF96C9DC)
 val PinkDunkel = Color(0xFFF06C9B)
 val PinkHell = Color(0xFFF9B9B7)
 val GelbSand = Color(0xFFF5D491)
 
+// Definition der Tabs für bessere Lesbarkeit
+enum class AthaniaTab(val title: String) {
+    Kampf("Kampf"),
+    Zauber("Zauber"),
+    Rucksack("Rucksack")
+}
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                // Hier wird das Gehirn der App (ViewModel) erschaffen und an alle Unterseiten weitergegeben
                 val viewModel: CharacterViewModel = viewModel()
                 DnDApp(viewModel)
             }
@@ -38,8 +46,8 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun DnDApp(viewModel: CharacterViewModel) {
-    // Steuert die untere Navigation
-    var isAthaniaScreen by remember { mutableStateOf(true) }
+    // rememberSaveable behält den Zustand auch beim Drehen des Bildschirms
+    var isAthaniaScreen by rememberSaveable { mutableStateOf(true) }
 
     Scaffold(
         bottomBar = {
@@ -67,11 +75,12 @@ fun DnDApp(viewModel: CharacterViewModel) {
             }
         }
     ) { paddingValues ->
+        // Padding vom Scaffold beachten
         Box(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
             if (isAthaniaScreen) {
                 AthaniaScreen(viewModel)
             } else {
-                CapyScreen(viewModel) // Das bauen wir später noch richtig aus
+                CapyScreen(viewModel)
             }
         }
     }
@@ -79,60 +88,57 @@ fun DnDApp(viewModel: CharacterViewModel) {
 
 @Composable
 fun AthaniaScreen(viewModel: CharacterViewModel) {
-    // Steuert die oberen Tabs für Athania
-    var selectedTab by remember { mutableStateOf(0) }
-    val tabs = listOf("Kampf", "Zauber", "Rucksack")
+    // State für die Tabs (jetzt mit Enum statt Index-Zahlen)
+    var selectedTab by rememberSaveable { mutableStateOf(AthaniaTab.Kampf) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         TabRow(
-            selectedTabIndex = selectedTab,
+            selectedTabIndex = selectedTab.ordinal,
             containerColor = GelbSand,
             contentColor = BlauDunkel
         ) {
-            tabs.forEachIndexed { index, title ->
+            AthaniaTab.entries.forEach { tab ->
                 Tab(
-                    selected = selectedTab == index,
-                    onClick = { selectedTab = index },
-                    text = { Text(title) },
+                    selected = selectedTab == tab,
+                    onClick = { selectedTab = tab },
+                    text = { Text(tab.title) },
                     selectedContentColor = PinkDunkel,
                     unselectedContentColor = BlauDunkel
                 )
             }
         }
 
-        // Zeigt den Screen an, der zum ausgewählten Tab gehört
-        Box(modifier = Modifier.weight(1f)) {
+        // Content-Bereich
+        Box(modifier = Modifier.fillMaxSize()) {
             when (selectedTab) {
-                0 -> CombatScreen(viewModel)
-                1 -> Box(modifier = Modifier.fillMaxSize().background(GelbSand), contentAlignment = Alignment.Center) {
-                    Text("Hier bauen wir gleich den Zauber-Screen hin!", color = BlauDunkel)
-                }
-                2 -> RucksackScreen(viewModel)
+                AthaniaTab.Kampf -> CombatScreen(viewModel)
+                AthaniaTab.Zauber -> ZauberScreen(viewModel)
+                AthaniaTab.Rucksack -> RucksackScreen(viewModel)
             }
         }
-    }
-}
+    } // <-- Hier fehlte die schließende Klammer für Column
+} // <-- Hier fehlte die schließende Klammer für AthaniaScreen
 
 @Composable
 fun CapyScreen(viewModel: CharacterViewModel) {
-    var isSkyBeast by remember { mutableStateOf(true) }
+    var isSkyBeast by rememberSaveable { mutableStateOf(true) }
 
     Column(
-        modifier = Modifier.fillMaxSize().background(GelbSand).padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(GelbSand)
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            // Farben getauscht: Land ist jetzt Pink, Himmel ist Blau
             Text("Land", color = PinkDunkel)
             Switch(
                 checked = isSkyBeast,
                 onCheckedChange = { isSkyBeast = it },
                 modifier = Modifier.padding(horizontal = 16.dp),
                 colors = SwitchDefaults.colors(
-                    // Wenn Himmel aktiv ist (checked) = Blau
                     checkedThumbColor = BlauDunkel,
                     checkedTrackColor = BlauHell,
-                    // Wenn Land aktiv ist (unchecked) = Pink
                     uncheckedThumbColor = PinkDunkel,
                     uncheckedTrackColor = PinkHell
                 )

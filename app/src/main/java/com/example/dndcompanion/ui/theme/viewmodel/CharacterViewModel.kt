@@ -17,6 +17,13 @@ data class InventoryItem(val name: String, val amount: Int)
 
 class CharacterViewModel : ViewModel() {
 
+    // --- LEBENSPUNKTE & TREFFERWÜRFEL ---
+    var currentHp by mutableStateOf(40)
+        private set
+    val maxHp = 40
+    var hitDice by mutableStateOf(4) // 4 Würfel (1W10) auf Level 4
+        private set
+
     // --- ZAUBER & FÄHIGKEITEN ---
     var spellSlotsLevel1 by mutableStateOf(3)
         private set
@@ -37,6 +44,22 @@ class CharacterViewModel : ViewModel() {
     // --- FUNKTIONEN FÜR DEN RUCKSACK ---
     fun changeWater(amount: Float) {
         water = (water + amount).coerceAtLeast(0f)
+    }
+
+    // --- ZAUBER ---
+    fun useSpellSlotLevel1() {
+        if (spellSlotsLevel1 > 0) spellSlotsLevel1--
+    }
+
+    fun useHuntersMarkFree() {
+        if (huntersMarkFreeUses > 0) huntersMarkFreeUses--
+    }
+
+    fun castGoodberry() {
+        if (spellSlotsLevel1 > 0) {
+            spellSlotsLevel1--
+            goodberries += 10
+        }
     }
 
     // --- KAMPF & WAFFEN ---
@@ -106,19 +129,24 @@ class CharacterViewModel : ViewModel() {
 
     // --- RASTEN ---
     fun takeShortRest() {
-        // Kurze Rast heilt primär (Trefferwürfel ausgeben), das können wir später in der UI regeln.
-        // Bei Bedarf Wasser trinken (manuell über die UI oder hier automatisiert).
+        // Kurze Rast: Wir geben 1 Trefferwürfel aus und heilen den Durchschnitt (1W10 + 3 = 8 HP)
+        if (hitDice > 0 && currentHp < maxHp) {
+            hitDice--
+            currentHp = (currentHp + 8).coerceAtMost(maxHp)
+        }
     }
 
     fun takeLongRest() {
         // Alles auffüllen
         spellSlotsLevel1 = 3
         huntersMarkFreeUses = 2
-
-        // Gute Beeren verfallen am Ende einer langen Rast
         goodberries = 0
 
-        // Verbrauch pro Tag (Lange Rast)
+        // HP und Trefferwürfel voll heilen
+        currentHp = maxHp
+        hitDice = 4
+
+        // Verbrauch pro Tag
         changeWater(-0.5f)
         changeRations(-1)
     }

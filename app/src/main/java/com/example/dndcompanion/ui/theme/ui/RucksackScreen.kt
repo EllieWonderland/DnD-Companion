@@ -48,12 +48,45 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
             onMinus = { viewModel.changeRations(-1) },
             onPlus = { viewModel.changeRations(1) }
         )
-        InventoryRow(
-            name = "Gute Beeren",
-            amount = viewModel.goodberries.toString(),
-            onMinus = { viewModel.changeGoodberries(-1) },
-            onPlus = { viewModel.changeGoodberries(1) }
-        )
+        // Gute Beeren mit Extra-Button für +10
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 4.dp),
+            colors = CardDefaults.cardColors(containerColor = BlauHell),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(12.dp)
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column {
+                    Text(text = "Gute Beeren", fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
+                    Button(
+                        onClick = { viewModel.castGoodberry() },
+                        enabled = viewModel.spellSlotsLevel1 > 0, // <-- NEU: Verhindert Zaubern ohne Slots
+                        colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
+                        modifier = Modifier.height(36.dp).padding(top = 4.dp),
+                        contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
+                    ) {
+                        Text("Zaubern (+10)", fontSize = 12.sp)
+                    }
+                }
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = { viewModel.changeGoodberries(-1) }) {
+                        Icon(Icons.Default.Remove, contentDescription = "Weniger", tint = PinkDunkel)
+                    }
+                    Text(text = viewModel.goodberries.toString(), fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
+                    IconButton(onClick = { viewModel.changeGoodberries(1) }) {
+                        Icon(Icons.Default.Add, contentDescription = "Mehr", tint = BlauDunkel)
+                    }
+                }
+            }
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
         Text("Flexibler Loot", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
