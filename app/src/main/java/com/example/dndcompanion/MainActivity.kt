@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dndcompanion.ui.theme.ui.CombatScreen
+import com.example.dndcompanion.ui.theme.ui.HelpScreen
 import com.example.dndcompanion.ui.theme.ui.RucksackScreen
 import com.example.dndcompanion.ui.theme.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.theme.ui.ZauberScreen
@@ -49,41 +50,41 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun DnDApp(viewModel: CharacterViewModel) {
-    // rememberSaveable behält den Zustand auch beim Drehen des Bildschirms
-    var isAthaniaScreen by rememberSaveable { mutableStateOf(true) }
+    // Steuert die untere Navigation (0 = Athania, 1 = Capy, 2 = Hilfe)
+    var currentScreen by remember { mutableStateOf(0) }
 
     Scaffold(
         bottomBar = {
             NavigationBar(containerColor = BlauHell) {
                 NavigationBarItem(
-                    selected = isAthaniaScreen,
-                    onClick = { isAthaniaScreen = true },
+                    selected = currentScreen == 0,
+                    onClick = { currentScreen = 0 },
                     icon = { Text("🧝‍♀️") },
                     label = { Text("Athania") },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = Color.White,
-                        indicatorColor = BlauDunkel
-                    )
+                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
                 )
                 NavigationBarItem(
-                    selected = !isAthaniaScreen,
-                    onClick = { isAthaniaScreen = false },
+                    selected = currentScreen == 1,
+                    onClick = { currentScreen = 1 },
                     icon = { Text("🐾") },
                     label = { Text("Capy") },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = Color.White,
-                        indicatorColor = BlauDunkel
-                    )
+                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
+                )
+                NavigationBarItem(
+                    selected = currentScreen == 2,
+                    onClick = { currentScreen = 2 },
+                    icon = { Text("📚") }, // Ein Buch für Hilfe/Regeln
+                    label = { Text("Hilfe") },
+                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
                 )
             }
         }
     ) { paddingValues ->
-        // Padding vom Scaffold beachten
         Box(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
-            if (isAthaniaScreen) {
-                AthaniaScreen(viewModel)
-            } else {
-                CapyScreen(viewModel)
+            when (currentScreen) {
+                0 -> AthaniaScreen(viewModel)
+                1 -> CapyScreen(viewModel)
+                2 -> HelpScreen(viewModel)
             }
         }
     }

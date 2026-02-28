@@ -7,9 +7,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+// WICHTIG: Falls BuildConfig rot ist, hier Alt+Enter drücken!
+import com.example.dndcompanion.BuildConfig
+import com.google.ai.client.generativeai.GenerativeModel
+import com.google.ai.client.generativeai.type.content
+import kotlinx.coroutines.launch
 
 // --- DATENKLASSEN & ENUMS ---
 data class InventoryItem(val name: String, val amount: Int)
+data class ChatMessage(val text: String, val isUser: Boolean)
+data class FaqItem(val question: String, val answer: String)
 
 enum class ActiveWeapon {
     LANGBOGEN,
@@ -17,7 +25,6 @@ enum class ActiveWeapon {
     SHILLELAGH_SCHILD
 }
 
-// Wir erben nun von AndroidViewModel, um Zugriff auf den Handyspeicher zu bekommen
 class CharacterViewModel(application: Application) : AndroidViewModel(application) {
 
     // Die Verbindung zum unsichtbaren Speicher deines Handys
@@ -48,7 +55,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     // --- LEBENSPUNKTE & TREFFERWÜRFEL ---
     val maxHp = 40
 
-    // Wir laden den Wert beim Start der App aus dem Speicher (oder nehmen 40, falls er nicht existiert)
     var currentHp by mutableStateOf(prefs.getInt("currentHp", maxHp))
         private set
     var hitDice by mutableStateOf(prefs.getInt("hitDice", 4))
@@ -56,7 +62,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun takeDamage(amount: Int) {
         currentHp = (currentHp - amount).coerceAtLeast(0)
-        prefs.edit().putInt("currentHp", currentHp).apply() // Direkt speichern!
+        prefs.edit().putInt("currentHp", currentHp).apply()
     }
 
     fun healManual(amount: Int) {
@@ -65,7 +71,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     // --- KAMPF & WAFFEN ---
-    // Enum als Text speichern und laden
     private val savedWeaponName = prefs.getString("currentWeapon", ActiveWeapon.LANGBOGEN.name) ?: ActiveWeapon.LANGBOGEN.name
     var currentWeapon by mutableStateOf(ActiveWeapon.valueOf(savedWeaponName))
         private set
@@ -152,12 +157,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     // --- FLEXIBLER LOOT ---
     val customLoot = mutableStateListOf<InventoryItem>()
-
-    init {
-        // Lädt den Loot direkt beim Start der App
-        loadLoot()
-    }
-
     private fun saveLoot() {
         val lootString = customLoot.joinToString(";") { "${it.name}|${it.amount}" }
         prefs.edit().putString("customLoot", lootString).apply()
@@ -182,7 +181,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         } else {
             customLoot.add(InventoryItem(itemName, 1))
         }
-        saveLoot() // Liste nach jeder Änderung speichern
+        saveLoot()
     }
 
     fun removeCustomLoot(itemName: String) {
@@ -266,4 +265,92 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val capyDamage: String get() = if (isSkyBeast) "1W4 + $wisMod Hieb" else "1W8 + $wisMod Hieb"
     val capySpeed: String get() = if (isSkyBeast) "Fliegen 18 m, Laufen 3 m" else "Laufen 12 m, Klettern 12 m"
     val capySpecial: String get() = if (isSkyBeast) "Vorbeifliegen (keine Gelegenheitsangriffe)" else "Ansturm (Gegner umstoßen, ST-Save)"
+
+    // --- HILFE: CHAT & FAQ ---
+    val chatHistory = mutableStateListOf<ChatMessage>()
+    val faqList = mutableStateListOf<FaqItem>()
+
+    init {
+        loadLoot()
+        loadFaqs()
+    }
+
+    // Der sichere Bot mit verborgenem API Key aus der BuildConfig
+    // 1. Versuch: Das brandneue Gemini 3 Flash (Super intelligent, aber niedriges Limit: 5 RPM / 20 RPD)
+    private val primaryModel = GenerativeModel(
+        modelName = "gemini-3-flash",
+        apiKey = BuildConfig.GEMINI_API_KEY,
+        systemInstruction = content {
+            text("Du bist ein Dungeons and Dragons Regel-Assistent. Beziehe dich ausschließlich auf die Regeln des Player Handbook 2024. Wir spielen nicht abwärtskompatibel. Mache nur Vorschläge und Erklärungen, die mit dem PHB 2024 konform sind. Antworte extrem kurz, präzise und leicht verständlich auf Deutsch.")
+        }
+    )
+
+    // 2. Notfall-Rettung: Gemma 3 (Hohes Limit: 30 RPM / 14.4 RPD)
+    // Hinweis: Falls die API "gemma-3-27b" nicht direkt frisst, kannst du hier auch "gemini-2.5-flash" als Plan B stehen lassen.
+    private val fallbackModel = GenerativeModel(
+        modelName = "gemma-3",
+        apiKey = BuildConfig.GEMINI_API_KEY,
+        systemInstruction = content {
+            text("Du bist ein Dungeons and Dragons Regel-Assistent. Beziehe dich ausschließlich auf die Regeln des Player Handbook 2024. Wir spielen nicht abwärtskompatibel. Mache nur Vorschläge und Erklärungen, die mit dem PHB 2024 konform sind. Antworte extrem kurz, präzise und leicht verständlich auf Deutsch.")
+        }
+    )
+
+    fun loadFaqs() {
+        val faqString = prefs.getString("savedFaqs", "") ?: ""
+        if (faqString.isNotEmpty()) {
+            val items = faqString.split("||").mapNotNull {
+                val parts = it.split("|:|")
+                if (parts.size == 2) FaqItem(parts[0], parts[1]) else null
+            }
+            faqList.clear()
+            faqList.addAll(items)
+        }
+    }
+
+    private fun saveFaqs() {
+        val faqString = faqList.joinToString("||") { "${it.question}|:|${it.answer}" }
+        prefs.edit().putString("savedFaqs", faqString).apply()
+    }
+
+    fun sendMessageToBot(message: String) {
+        chatHistory.add(ChatMessage(message, true))
+
+        val loadingIndex = chatHistory.size
+        chatHistory.add(ChatMessage("... blättert im Player's Handbook 2024 ...", false))
+
+        viewModelScope.launch {
+            try {
+                // Die App versucht zuerst das smarte Gemini 3 Flash
+                val response = primaryModel.generateContent(message)
+                chatHistory[loadingIndex] = ChatMessage(
+                    response.text ?: "Ich konnte keine Antwort finden.",
+                    false
+                )
+            } catch (e: Exception) {
+                // Wenn deine 20 Tages-Fragen aufgebraucht sind, springt nahtlos Gemma 3 ein!
+                try {
+                    val fallbackResponse = fallbackModel.generateContent(message)
+                    chatHistory[loadingIndex] = ChatMessage(
+                        fallbackResponse.text ?: "Ich konnte keine Antwort finden.",
+                        false
+                    )
+                } catch (fallbackException: Exception) {
+                    chatHistory[loadingIndex] = ChatMessage(
+                        "Die Götter schweigen. (Sowohl Gemini als auch Gemma haben ihr Limit erreicht).",
+                        false
+                    )
+                }
+            }
+        }
+    }
+
+    fun addChatToFaq(question: String, answer: String) {
+        faqList.add(FaqItem(question, answer))
+        saveFaqs()
+    }
+
+    fun removeFaq(item: FaqItem) {
+        faqList.remove(item)
+        saveFaqs()
+    }
 }
