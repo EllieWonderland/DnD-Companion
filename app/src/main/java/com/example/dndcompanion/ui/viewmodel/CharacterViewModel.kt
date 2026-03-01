@@ -18,7 +18,7 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 
 // --- DATENKLASSEN & ENUMS ---
-data class InventoryItem(val name: String, val amount: Int)
+data class InventoryItem(val name: String, val amount: Int, val weight: Double = 0.0)
 data class ChatMessage(val text: String, val isUser: Boolean)
 data class FaqItem(val question: String, val answer: String)
 
@@ -239,6 +239,18 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         prefs.edit { putInt("totalArrows", totalArrows) }
     }
 
+    // --- GEWICHTS-BERECHNUNG ---
+    val maxWeight: Double = 60.0
+    val currentWeight: Double
+        get() {
+            var total = 0.0
+            total += water * 2.0          // 1 Tag Wasser = ca. 2kg
+            total += rations * 1.0        // 1 Ration = ca. 1kg
+            total += totalArrows * 0.05   // 1 Pfeil = ca. 0.05kg
+            total += customLoot.sumOf { it.amount * it.weight }
+            return total
+        }
+
     val customLoot = mutableStateListOf<InventoryItem>()
     private fun saveLoot() {
         val json = gson.toJson(customLoot)
@@ -276,32 +288,32 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun getAthaniaDefaultLoot(): List<InventoryItem> {
         return listOf(
-            InventoryItem("Beschlagene Lederrüstung", 1),
-            InventoryItem("Langbogen", 1),
-            InventoryItem("Kurzschwert", 1),
-            InventoryItem("Kampfstab", 1),
-            InventoryItem("Peitsche", 1),
-            InventoryItem("Schild", 1),
-            InventoryItem("Reisekleidung", 1),
-            InventoryItem("Rucksack", 1),
-            InventoryItem("Kleine Onyxstatue (Fokus)", 1),
-            InventoryItem("Kräuterkundeset", 1),
-            InventoryItem("Schwarzer Onyxschädel", 1),
-            InventoryItem("Wasserschlauch (halb)", 2),
-            InventoryItem("Trank der Rinderhaut", 1),
-            InventoryItem("Gift (Flasche)", 2),
-            InventoryItem("Heiltrank", 1),
-            InventoryItem("Hämatit", 1)
+            InventoryItem("Beschlagene Lederrüstung", 1, 6.0),
+            InventoryItem("Langbogen", 1, 1.0),
+            InventoryItem("Kurzschwert", 1, 1.0),
+            InventoryItem("Kampfstab", 1, 2.0),
+            InventoryItem("Peitsche", 1, 1.5),
+            InventoryItem("Schild", 1, 3.0),
+            InventoryItem("Reisekleidung", 1, 2.0),
+            InventoryItem("Rucksack", 1, 2.5),
+            InventoryItem("Kleine Onyxstatue (Fokus)", 1, 0.5),
+            InventoryItem("Kräuterkundeset", 1, 1.5),
+            InventoryItem("Schwarzer Onyxschädel", 1, 1.0),
+            InventoryItem("Wasserschlauch (halb)", 2, 1.0),
+            InventoryItem("Trank der Rinderhaut", 1, 0.5),
+            InventoryItem("Gift (Flasche)", 2, 0.5),
+            InventoryItem("Heiltrank", 1, 0.5),
+            InventoryItem("Hämatit", 1, 0.1)
         )
     }
 
-    fun addCustomLoot(itemName: String) {
+    fun addCustomLoot(itemName: String, weight: Double = 0.0) {
         val index = customLoot.indexOfFirst { it.name.equals(itemName, ignoreCase = true) }
         if (index != -1) {
             val existingItem = customLoot[index]
             customLoot[index] = existingItem.copy(amount = existingItem.amount + 1)
         } else {
-            customLoot.add(InventoryItem(itemName, 1))
+            customLoot.add(InventoryItem(itemName, 1, weight))
         }
         saveLoot()
     }

@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.theme.BlauDunkel
 import com.example.dndcompanion.ui.theme.BlauHell
@@ -26,6 +28,7 @@ import com.example.dndcompanion.ui.theme.GelbSand
 @Composable
 fun RucksackScreen(viewModel: CharacterViewModel) {
     var newItemName by remember { mutableStateOf("") }
+    var newItemWeight by remember { mutableStateOf("") }
     var isMoneyBagExpanded by remember { mutableStateOf(false) }
 
     LazyColumn(
@@ -35,6 +38,17 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
             .padding(16.dp)
     ) {
         item {
+            // --- GEWICHT ---
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Traglast", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+                val weightColor = if (viewModel.currentWeight > viewModel.maxWeight) Color.Red else BlauDunkel
+                Text(String.format(java.util.Locale.US, "%.1f / %.1f kg", viewModel.currentWeight, viewModel.maxWeight), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = weightColor)
+            }
+
             // --- FESTER RUCKSACK NACH OBEN ---
             Text("Fester Rucksack", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
             Spacer(modifier = Modifier.height(8.dp))
@@ -136,8 +150,26 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                 OutlinedTextField(
                     value = newItemName,
                     onValueChange = { newItemName = it },
-                    label = { Text("Neuer Gegenstand") },
+                    label = { Text("Gegenstand") },
                     modifier = Modifier.weight(1f),
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = PinkDunkel,
+                        focusedLabelColor = PinkDunkel
+                    )
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                OutlinedTextField(
+                    value = newItemWeight,
+                    onValueChange = { 
+                        if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
+                            newItemWeight = it 
+                        }
+                    },
+                    label = { Text("kg") },
+                    modifier = Modifier.width(70.dp),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = PinkDunkel,
                         focusedLabelColor = PinkDunkel
@@ -147,11 +179,14 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                 Button(
                     onClick = {
                         if (newItemName.isNotBlank()) {
-                            viewModel.addCustomLoot(newItemName.trim())
+                            val w = newItemWeight.toDoubleOrNull() ?: 0.0
+                            viewModel.addCustomLoot(newItemName.trim(), w)
                             newItemName = "" // Textfeld wieder leeren
+                            newItemWeight = ""
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)
+                    colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
+                    contentPadding = PaddingValues(horizontal = 8.dp)
                 ) {
                     Text("Hinzufügen")
                 }
@@ -165,15 +200,16 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
             InventoryRow(
                 name = item.name,
                 amount = item.amount.toString(),
+                weight = item.weight,
                 onMinus = { viewModel.removeCustomLoot(item.name) },
-                onPlus = { viewModel.addCustomLoot(item.name) }
+                onPlus = { viewModel.addCustomLoot(item.name, item.weight) }
             )
         }
     }
 }
 
 @Composable
-fun InventoryRow(name: String, amount: String, onMinus: () -> Unit, onPlus: () -> Unit) {
+fun InventoryRow(name: String, amount: String, weight: Double? = null, onMinus: () -> Unit, onPlus: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -188,7 +224,12 @@ fun InventoryRow(name: String, amount: String, onMinus: () -> Unit, onPlus: () -
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = name, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
+            Column(modifier = Modifier.weight(1f)) {
+                Text(text = name, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
+                if (weight != null && weight > 0.0) {
+                    Text(text = "${weight} kg", fontSize = 12.sp, color = GelbSand)
+                }
+            }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onMinus) {
