@@ -109,7 +109,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
 
             // Zauberplätze Grad 1
             Card(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
                 colors = CardDefaults.cardColors(containerColor = BlauHell)
             ) {
                 Row(
@@ -132,6 +132,70 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             )
                         ) {
                             Text("Wirken")
+                        }
+                    }
+                }
+            }
+
+            if (viewModel.level >= 5) {
+                // Zauberplätze Grad 2
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    colors = CardDefaults.cardColors(containerColor = BlauHell)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column {
+                            Text("Zauberplätze Grad 2", color = Color.White, fontWeight = FontWeight.Bold)
+                            Text("Pass Without Trace, Spike Growth...", color = Color.White, fontSize = 12.sp)
+                        }
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text("${viewModel.spellSlotsLevel2} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                            Button(
+                                onClick = { viewModel.useSpellSlotLevel2() },
+                                enabled = viewModel.spellSlotsLevel2 > 0,
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = PinkDunkel,
+                                    disabledContainerColor = Color.Gray
+                                )
+                            ) {
+                                Text("Wirken")
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (viewModel.level >= 9) {
+                // Zauberplätze Grad 3
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    colors = CardDefaults.cardColors(containerColor = BlauHell)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column {
+                            Text("Zauberplätze Grad 3", color = Color.White, fontWeight = FontWeight.Bold)
+                            Text("Conjure Animals, Revivify...", color = Color.White, fontSize = 12.sp)
+                        }
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text("${viewModel.spellSlotsLevel3} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                            Button(
+                                onClick = { viewModel.useSpellSlotLevel3() },
+                                enabled = viewModel.spellSlotsLevel3 > 0,
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = PinkDunkel,
+                                    disabledContainerColor = Color.Gray
+                                )
+                            ) {
+                                Text("Wirken")
+                            }
                         }
                     }
                 }
@@ -189,6 +253,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             TraitCard("Trance", "Du musst nicht schlafen. Lange Rast dauert 4 Std in Meditation.")
             TraitCard("Feenblut", "Vorteil bei Rettungswürfen gegen Bezauberung.")
             TraitCard("Messerstecher", "Bei Stichschaden 1x pro Zug 1 Angriffswürfel neu würfeln. Bei Krit 1 zus. Schadenswürfel.")
+            
+            viewModel.customTraits.forEach { trait ->
+                TraitCard(trait.name, trait.desc)
+            }
             
             Spacer(modifier = Modifier.height(8.dp))
         }

@@ -109,6 +109,39 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             }
         }
 
+        // EP Hinzufügen (verschoben aus ProfilScreen)
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            var epInput by remember { mutableStateOf("") }
+            OutlinedTextField(
+                value = epInput,
+                onValueChange = { if (it.isEmpty() || it.all { char -> char.isDigit() }) epInput = it },
+                label = { Text("EP hinzufügen (Aktuell: ${viewModel.currentEP})") },
+                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
+                modifier = Modifier.weight(1f),
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = PinkDunkel,
+                    focusedLabelColor = PinkDunkel
+                )
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Button(
+                onClick = {
+                    val amount = epInput.toIntOrNull()
+                    if (amount != null && amount > 0) {
+                        viewModel.addExperience(amount)
+                        epInput = ""
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+            ) {
+                Text("+ EP")
+            }
+        }
+
         Text("Waffe ausrüsten", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
         Spacer(modifier = Modifier.height(8.dp))
 

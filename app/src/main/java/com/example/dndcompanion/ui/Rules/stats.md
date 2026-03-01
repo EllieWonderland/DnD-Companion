@@ -66,7 +66,7 @@
 * **Waffenmeisterung:** Langbogen + Knüppel
 * **Erzfeind:** Zeichen des Jägers ist stets vorbereitet und kann 2x pro lange Rast gewirkt werden (ohne Spellslot).
 * **Urbegleiter:** Land, Himmel, Meer
-  * Bonusaktion: Urtier A (Aktion?)
+  * Bonusaktion: Urtier angreifen lassen
   * Aktion: Urtier Angriff
   * Für Zauberslot: Urtier beleben (volle HP)
 

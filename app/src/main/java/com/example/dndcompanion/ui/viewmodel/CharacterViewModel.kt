@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 data class InventoryItem(val name: String, val amount: Int, val weight: Double = 0.0)
 data class ChatMessage(val text: String, val isUser: Boolean)
 data class FaqItem(val question: String, val answer: String)
+data class TraitItem(val name: String, val desc: String)
 
 data class Spell(
     val id: String = java.util.UUID.randomUUID().toString(),
@@ -49,10 +50,108 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     private val gson = Gson()
 
     // --- BASISWERTE ---
-    val level: Int = 4
-    val dexterity: Int = 18
-    val wisdom: Int = 14
-    val constitution: Int = 16
+    // EP Table D&D 5e:
+    private val epThresholds = listOf(
+        0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000,
+        85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000
+    )
+
+    var currentEP by mutableIntStateOf(prefs.getInt("currentEP", 3606))
+        private set
+
+    var level by mutableIntStateOf(prefs.getInt("level", 4))
+        private set
+
+    var strength by mutableIntStateOf(prefs.getInt("strength", 8))
+        private set
+    var dexterity by mutableIntStateOf(prefs.getInt("dexterity", 18))
+        private set
+    var constitution by mutableIntStateOf(prefs.getInt("constitution", 16))
+        private set
+    var intelligence by mutableIntStateOf(prefs.getInt("intelligence", 10))
+        private set
+    var wisdom by mutableIntStateOf(prefs.getInt("wisdom", 14))
+        private set
+    var charisma by mutableIntStateOf(prefs.getInt("charisma", 8))
+        private set
+
+    var showLevelUpDialog by mutableStateOf(false)
+        private set
+
+    fun addExperience(amount: Int) {
+        currentEP += amount
+        prefs.edit { putInt("currentEP", currentEP) }
+        checkLevelUp()
+    }
+        
+    private fun checkLevelUp() {
+        val newLevel = epThresholds.indexOfLast { currentEP >= it } + 1
+        if (newLevel > level) {
+            val oldLevel = level
+            level = newLevel
+            prefs.edit { putInt("level", level) }
+            showLevelUpDialog = true
+            
+            // --- AUTOMATISIERUNGEN FÜR WALDLÄUFER & BEAST MASTER (2024) ---
+            for (lvl in (oldLevel + 1)..newLevel) {
+                when (lvl) {
+                    5 -> {
+                        spellSlotsLevel2 = 2
+                        prefs.edit { putInt("spellSlotsLevel2", spellSlotsLevel2) }
+                        addCustomTrait("Zusätzlicher Angriff (Level 5)", "Du kannst zweimal angreifen, wenn du die Angriffsaktion ausführst.")
+                    }
+                    6 -> {
+                        addCustomTrait("Umherziehen / Roving (Level 6)", "Deine Bewegungsrate erhöht sich um 3m, wenn du keine schwere Rüstung trägst. Du erhältst eine Kletter- und Schwimmrate in Höhe deiner Gehgeschwindigkeit.")
+                    }
+                    7 -> {
+                        addCustomTrait("Außergewöhnliches Training (Level 7)", "Die Bestie kann Spurt, Rückzug, Ausweichen oder Hilfe als Bonusaktion nutzen. Ihre Angriffe können nun Wuchtschaden oder Energieschaden (Force) verursachen.")
+                    }
+                    9 -> {
+                        spellSlotsLevel3 = 2
+                        prefs.edit { putInt("spellSlotsLevel3", spellSlotsLevel3) }
+                        addCustomTrait("Expertise 2 (Level 9)", "Wähle zwei weitere Fertigkeiten für Expertise aus dem Handbuch.")
+                    }
+                    10 -> {
+                        addCustomTrait("Unermüdlich / Tireless (Level 10)", "Temporäre Trefferpunkte: Als Magie-Aktion erhältst du 1W8 + WIS-Mod TP (Nutzungen = WIS-Mod pro Tag). Erschöpfung: Eine Kurze Rast verringert deine Erschöpfung um 1 Stufe.")
+                    }
+                }
+            }
+        }
+    }
+
+    fun dismissLevelUpDialog() {
+        showLevelUpDialog = false
+    }
+
+    fun applyHpIncrease(conModifier: Int, rolledHp: Int = 6) {
+        val hpIncrease = rolledHp + conModifier
+        maxHp += hpIncrease
+        hitDice += 1
+        currentHp = (currentHp + hpIncrease).coerceAtMost(maxHp)
+        prefs.edit { 
+            putInt("maxHp", maxHp)
+            putInt("hitDice", hitDice)
+            putInt("currentHp", currentHp) 
+        }
+    }
+    
+    fun updateAttributes(strMod: Int = 0, dexMod: Int = 0, conMod: Int = 0, intMod: Int = 0, wisMod: Int = 0, chaMod: Int = 0) {
+        strength += strMod
+        dexterity += dexMod
+        constitution += conMod
+        intelligence += intMod
+        wisdom += wisMod
+        charisma += chaMod
+        
+        prefs.edit {
+            putInt("strength", strength)
+            putInt("dexterity", dexterity)
+            putInt("constitution", constitution)
+            putInt("intelligence", intelligence)
+            putInt("wisdom", wisdom)
+            putInt("charisma", charisma)
+        }
+    }
 
     val proficiencyBonus: Int
         get() = when(level) {
@@ -63,14 +162,18 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             else -> 6
         }
 
+    val strMod: Int get() = (strength - 10) / 2
     val dexMod: Int get() = (dexterity - 10) / 2
-    val wisMod: Int get() = (wisdom - 10) / 2
     val conMod: Int get() = (constitution - 10) / 2
+    val intMod: Int get() = (intelligence - 10) / 2
+    val wisMod: Int get() = (wisdom - 10) / 2
+    val chaMod: Int get() = (charisma - 10) / 2
 
     val spellAttackBonus: Int get() = proficiencyBonus + wisMod
     val spellSaveDc: Int get() = 8 + proficiencyBonus + wisMod
 
-    val maxHp = 40
+    var maxHp by mutableIntStateOf(prefs.getInt("maxHp", 40))
+        private set
     var currentHp by mutableIntStateOf(prefs.getInt("currentHp", maxHp))
         private set
     var hitDice by mutableIntStateOf(prefs.getInt("hitDice", 4))
@@ -118,6 +221,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     var spellSlotsLevel1 by mutableIntStateOf(prefs.getInt("spellSlotsLevel1", 3))
         private set
+    var spellSlotsLevel2 by mutableIntStateOf(prefs.getInt("spellSlotsLevel2", 0))
+        private set
+    var spellSlotsLevel3 by mutableIntStateOf(prefs.getInt("spellSlotsLevel3", 0))
+        private set
+
     var huntersMarkFreeUses by mutableIntStateOf(prefs.getInt("huntersMarkFreeUses", 2))
         private set
 
@@ -125,6 +233,20 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         if (spellSlotsLevel1 > 0) {
             spellSlotsLevel1--
             prefs.edit { putInt("spellSlotsLevel1", spellSlotsLevel1) }
+        }
+    }
+    
+    fun useSpellSlotLevel2() {
+        if (spellSlotsLevel2 > 0) {
+            spellSlotsLevel2--
+            prefs.edit { putInt("spellSlotsLevel2", spellSlotsLevel2) }
+        }
+    }
+    
+    fun useSpellSlotLevel3() {
+        if (spellSlotsLevel3 > 0) {
+            spellSlotsLevel3--
+            prefs.edit { putInt("spellSlotsLevel3", spellSlotsLevel3) }
         }
     }
 
@@ -318,6 +440,38 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         saveLoot()
     }
 
+    // --- FREIE MERKMALE (TRAITS) ---
+    val customTraits = mutableStateListOf<TraitItem>()
+    private fun saveTraits() {
+        val json = gson.toJson(customTraits)
+        prefs.edit { putString("customTraits", json) }
+    }
+    
+    private fun loadTraits() {
+        val jsonString = prefs.getString("customTraits", "") ?: ""
+        if (jsonString.isNotEmpty()) {
+            try {
+                val type = object : TypeToken<List<TraitItem>>() {}.type
+                val items: List<TraitItem> = gson.fromJson(jsonString, type)
+                customTraits.clear()
+                customTraits.addAll(items)
+            } catch (e: Exception) {
+                // Ignore
+            }
+        }
+    }
+
+    fun addCustomTrait(name: String, desc: String) {
+        customTraits.add(TraitItem(name, desc))
+        saveTraits()
+    }
+
+    // --- INIT ---
+    init {
+        loadLoot()
+        loadTraits()
+    }
+
     fun removeCustomLoot(itemName: String) {
         val index = customLoot.indexOfFirst { it.name.equals(itemName, ignoreCase = true) }
         if (index != -1) {
@@ -345,22 +499,39 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun takeLongRest() {
+        currentHp = maxHp
+        val recoveredHitDice = (level / 2).coerceAtLeast(1)
+        hitDice = (hitDice + recoveredHitDice).coerceAtMost(level)
+
         spellSlotsLevel1 = 3
+        
+        // --- DYNAMISCHE SLOTS ABHÄNGIG VOM LEVEL ---
+        if (level >= 9) {
+            spellSlotsLevel2 = 2
+            spellSlotsLevel3 = 2
+        } else if (level >= 5) {
+            spellSlotsLevel2 = 2
+            spellSlotsLevel3 = 0
+        } else {
+            spellSlotsLevel2 = 0
+            spellSlotsLevel3 = 0
+        }
+
         huntersMarkFreeUses = 2
         goodberries = 0
         geminiUsesToday = 0
-        currentHp = maxHp
-        hitDice = 4
         changeWater(-0.5f)
         changeRations(-1)
 
         prefs.edit {
-            putInt("spellSlotsLevel1", spellSlotsLevel1)
-            putInt("huntersMarkFreeUses", huntersMarkFreeUses)
-            putInt("goodberries", goodberries)
             putInt("currentHp", currentHp)
             putInt("hitDice", hitDice)
-            putInt("geminiUsesToday", 0)
+            putInt("spellSlotsLevel1", spellSlotsLevel1)
+            putInt("spellSlotsLevel2", spellSlotsLevel2)
+            putInt("spellSlotsLevel3", spellSlotsLevel3)
+            putInt("huntersMarkFreeUses", huntersMarkFreeUses)
+            putInt("goodberries", goodberries)
+            putInt("geminiUsesToday", geminiUsesToday)
         }
     }
 

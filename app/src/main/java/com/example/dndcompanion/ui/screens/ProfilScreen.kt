@@ -12,6 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.runtime.*
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.text.input.KeyboardType
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.theme.BlauDunkel
 import com.example.dndcompanion.ui.theme.BlauHell
@@ -20,6 +23,7 @@ import com.example.dndcompanion.ui.theme.GelbSand
 
 @Composable
 fun ProfilScreen(viewModel: CharacterViewModel) {
+    var epInput by remember { mutableStateOf("") }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -37,26 +41,31 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text("Athania", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                Text("Waldläufer (Herrin der Tiere) | Stufe 4", color = GelbSand)
+                Text("Waldläufer (Herrin der Tiere) | Stufe ${viewModel.level}", color = GelbSand)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Volk: Elf-Drow | Hintergrund: Wegfinder", color = Color.White)
-                Text("Gesinnung: Chaotisch Gut | EP: 3606", color = Color.White)
+                Text("Gesinnung: Chaotisch Gut | EP: ${viewModel.currentEP}", color = Color.White)
             }
         }
 
         // Attribute (STR, DEX, CON, INT, WIS, CHA)
         Text("Attribute & Rettungswürfe", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
         Spacer(modifier = Modifier.height(8.dp))
+        val strSave = viewModel.strMod + viewModel.proficiencyBonus
+        val dexSave = viewModel.dexMod + viewModel.proficiencyBonus
+        
+        fun formatMod(mod: Int) = if (mod >= 0) "+$mod" else "$mod"
+        
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            AttributeBox("STR", "8", "-1", "RW: +1 (Geübt)")
-            AttributeBox("DEX", "18", "+4", "RW: +5 (Geübt)")
-            AttributeBox("CON", "16", "+3", "RW: +3")
+            AttributeBox("STR", viewModel.strength.toString(), formatMod(viewModel.strMod), "RW: ${formatMod(strSave)} (Geübt)")
+            AttributeBox("DEX", viewModel.dexterity.toString(), formatMod(viewModel.dexMod), "RW: ${formatMod(dexSave)} (Geübt)")
+            AttributeBox("CON", viewModel.constitution.toString(), formatMod(viewModel.conMod), "RW: ${formatMod(viewModel.conMod)}")
         }
         Spacer(modifier = Modifier.height(8.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            AttributeBox("INT", "10", "+0", "RW: +0")
-            AttributeBox("WIS", "14", "+2", "RW: +2")
-            AttributeBox("CHA", "8", "-1", "RW: -1")
+            AttributeBox("INT", viewModel.intelligence.toString(), formatMod(viewModel.intMod), "RW: ${formatMod(viewModel.intMod)}")
+            AttributeBox("WIS", viewModel.wisdom.toString(), formatMod(viewModel.wisMod), "RW: ${formatMod(viewModel.wisMod)}")
+            AttributeBox("CHA", viewModel.charisma.toString(), formatMod(viewModel.chaMod), "RW: ${formatMod(viewModel.chaMod)}")
         }
         
         Spacer(modifier = Modifier.height(16.dp))
@@ -123,6 +132,10 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                 Text("Ich erinnere mich an jede einzelne Beleidigung, die mir galt, und hege eine stumme Abneigung gegen all jene, die mich schon einmal falsch behandelt haben.", color = Color.White)
             }
         }
+    }
+
+    if (viewModel.showLevelUpDialog) {
+        LevelUpDialog(viewModel = viewModel)
     }
 }
 
