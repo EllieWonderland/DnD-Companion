@@ -69,7 +69,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 ) {
                     Button(
                         onClick = { showShortRestDialog = true },
-                        enabled = viewModel.hitDice > 0 && viewModel.currentHp < viewModel.maxHp,
+                        enabled = viewModel.hitDice > 0,
                         colors = ButtonDefaults.buttonColors(containerColor = BlauHell),
                         modifier = Modifier.fillMaxWidth().height(40.dp),
                         contentPadding = PaddingValues(0.dp)
@@ -90,131 +90,117 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 }
             }
 
-            // Zeichen des Jägers (Kostenlos)
-            Card(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-                colors = CardDefaults.cardColors(containerColor = BlauHell)
-            ) {
-                Column(
-                    modifier = Modifier.padding(12.dp).fillMaxWidth()
+            val isHuntersMarkPrepared = viewModel.allSpells.any { it.name == "Zeichen des Jägers" && it.isPrepared }
+            if (isHuntersMarkPrepared) {
+                // Zeichen des Jägers (Kostenlos)
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                    colors = CardDefaults.cardColors(containerColor = BlauHell)
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+                    Column(
+                        modifier = Modifier.padding(12.dp).fillMaxWidth()
                     ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text("Zeichen des Jägers (Gratis)", color = Color.White, fontWeight = FontWeight.Bold)
-                            Text("Ohne Zauberplatz", color = Color.White, fontSize = 14.sp)
-                        }
-                        Text("${viewModel.huntersMarkFreeUses} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Button(
-                        onClick = { viewModel.useHuntersMarkFree() },
-                        enabled = viewModel.huntersMarkFreeUses > 0,
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = PinkDunkel,
-                            disabledContainerColor = Color.Gray
-                        )
-                    ) {
-                        Text("Wirken")
-                    }
-                }
-            }
-
-            // Wunden heilen (Kostenlos)
-            Card(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-                colors = CardDefaults.cardColors(containerColor = BlauHell)
-            ) {
-                Column(
-                    modifier = Modifier.padding(12.dp).fillMaxWidth()
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text("Wunden heilen (Gratis)", color = Color.White, fontWeight = FontWeight.Bold)
-                            Text("Ohne Zauberplatz (1x pro Lange Rast)", color = Color.White, fontSize = 14.sp)
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Button(
-                        onClick = { viewModel.useFreeCureWounds() },
-                        enabled = !viewModel.freeCureWoundsUsed,
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = PinkDunkel,
-                            disabledContainerColor = Color.Gray
-                        )
-                    ) {
-                        Text(if (viewModel.freeCureWoundsUsed) "Bereits verwendet" else "Wirken")
-                    }
-                }
-            }
-
-            // Standard-Taktik
-            var isTacticExpanded by remember { mutableStateOf(false) }
-            var isTacticEditing by remember { mutableStateOf(false) }
-            var editTacticText by remember { mutableStateOf(viewModel.standardTactic) }
-
-            Card(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp).clickable { 
-                    if (!isTacticEditing) isTacticExpanded = !isTacticExpanded 
-                },
-                colors = CardDefaults.cardColors(containerColor = BlauHell)
-            ) {
-                Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text("Standard-Taktik", color = GelbSand, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                        if (isTacticExpanded && !isTacticEditing) {
-                            IconButton(onClick = { 
-                                editTacticText = viewModel.standardTactic
-                                isTacticEditing = true 
-                            }, modifier = Modifier.size(24.dp)) {
-                                Icon(Icons.Default.Edit, contentDescription = "Bearbeiten", tint = PinkDunkel)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Zeichen des Jägers (Gratis)", color = Color.White, fontWeight = FontWeight.Bold)
+                                Text("Ohne Zauberplatz", color = Color.White, fontSize = 14.sp)
                             }
+                            Text("${viewModel.huntersMarkFreeUses} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
                         }
-                    }
-                    if (isTacticExpanded) {
                         Spacer(modifier = Modifier.height(8.dp))
-                        if (isTacticEditing) {
-                            OutlinedTextField(
-                                value = editTacticText,
-                                onValueChange = { editTacticText = it },
-                                modifier = Modifier.fillMaxWidth().height(120.dp),
-                                colors = OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = PinkDunkel,
-                                    unfocusedTextColor = Color.White,
-                                    focusedTextColor = Color.White
-                                )
+                        Button(
+                            onClick = { viewModel.useHuntersMarkFree() },
+                            enabled = viewModel.huntersMarkFreeUses > 0,
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = PinkDunkel,
+                                disabledContainerColor = Color.Gray
                             )
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                                TextButton(onClick = { isTacticEditing = false }) { Text("Abbrechen", color = Color.White) }
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Button(
-                                    onClick = {
-                                        viewModel.updateStandardTactic(editTacticText)
-                                        isTacticEditing = false
-                                    },
-                                    colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
-                                ) { Text("Speichern") }
-                            }
-                        } else {
-                            Text(viewModel.standardTactic, color = Color.White, fontSize = 14.sp)
+                        ) {
+                            Text("Wirken")
                         }
                     }
                 }
             }
+
+            val isCureWoundsPrepared = viewModel.allSpells.any { it.name == "Wunden heilen" && it.isPrepared }
+            if (isCureWoundsPrepared) {
+                // Wunden heilen (Kostenlos)
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                    colors = CardDefaults.cardColors(containerColor = BlauHell)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp).fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Wunden heilen (Gratis)", color = Color.White, fontWeight = FontWeight.Bold)
+                                Text("Ohne Zauberplatz (1x pro Lange Rast)", color = Color.White, fontSize = 14.sp)
+                            }
+                            Text("${if (viewModel.freeCureWoundsUsed) 0 else 1} / 1", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Button(
+                            onClick = { viewModel.useFreeCureWounds() },
+                            enabled = !viewModel.freeCureWoundsUsed,
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = PinkDunkel,
+                                disabledContainerColor = Color.Gray
+                            )
+                        ) {
+                            Text("Wirken")
+                        }
+                    }
+                }
+            }
+
+            val isHealingWordPrepared = viewModel.allSpells.any { it.name == "Heilendes Wort" && it.isPrepared }
+            if (isHealingWordPrepared) {
+                // Heilendes Wort (Kostenlos)
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                    colors = CardDefaults.cardColors(containerColor = BlauHell)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp).fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Heilendes Wort (Gratis)", color = Color.White, fontWeight = FontWeight.Bold)
+                                Text("Ohne Zauberplatz (1x pro Lange Rast)", color = Color.White, fontSize = 14.sp)
+                            }
+                            Text("${if (viewModel.freeHealingWordUsed) 0 else 1} / 1", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Button(
+                            onClick = { viewModel.useFreeHealingWord() },
+                            enabled = !viewModel.freeHealingWordUsed,
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = PinkDunkel,
+                                disabledContainerColor = Color.Gray
+                            )
+                        ) {
+                            Text("Wirken")
+                        }
+                    }
+                }
+            }
+            // (Standard-Taktik moved to CombatScreen)
 
             HorizontalDivider(color = BlauDunkel, thickness = 2.dp)
             Spacer(modifier = Modifier.height(16.dp))

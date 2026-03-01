@@ -8,6 +8,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
+import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.clickable
@@ -242,21 +244,39 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
         // Liste des flexiblen Loots gruppiert nach Kategorie
         val groupedLoot = viewModel.customLoot.groupBy { it.category }
         groupedLoot.forEach { (category, itemsInCategory) ->
-            Text(
-                text = category,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = BlauDunkel,
-                modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
-            )
-            itemsInCategory.forEach { item ->
-                InventoryRow(
-                    name = item.name,
-                    amount = item.amount.toString(),
-                    weight = item.weight,
-                    onMinus = { viewModel.removeCustomLoot(item.name) },
-                    onPlus = { viewModel.addCustomLoot(item.name, item.weight, item.category) }
+            var isExpanded by remember { mutableStateOf(false) }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { isExpanded = !isExpanded }
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = category,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = BlauDunkel
                 )
+                Icon(
+                    imageVector = if (isExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                    contentDescription = if (isExpanded) "Einklappen" else "Ausklappen",
+                    tint = BlauDunkel
+                )
+            }
+
+            if (isExpanded) {
+                itemsInCategory.forEach { item ->
+                    InventoryRow(
+                        name = item.name,
+                        amount = item.amount.toString(),
+                        weight = item.weight,
+                        onMinus = { viewModel.removeCustomLoot(item.name) },
+                        onPlus = { viewModel.addCustomLoot(item.name, item.weight, item.category) }
+                    )
+                }
             }
         }
     }

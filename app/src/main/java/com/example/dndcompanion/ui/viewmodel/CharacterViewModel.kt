@@ -545,6 +545,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         spellSlotsLevel3 = 0
         huntersMarkFreeUses = 2
         freeCureWoundsUsed = false
+        freeHealingWordUsed = false
         water = 2.0f
         rations = 10
         goodberries = 0
@@ -684,6 +685,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    var freeHealingWordUsed by mutableStateOf(prefs.getBoolean("freeHealingWordUsed", false))
+        private set
+
+    fun useFreeHealingWord() {
+        if (!freeHealingWordUsed) {
+            freeHealingWordUsed = true
+            prefs.edit { putBoolean("freeHealingWordUsed", true) }
+        }
+    }
+
     fun takeShortRest(hitDiceSpent: Int, rolledValue: Int) {
         if (hitDiceSpent <= hitDice && currentHp < maxHp) {
             hitDice -= hitDiceSpent
@@ -718,6 +729,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
         huntersMarkFreeUses = 2
         freeCureWoundsUsed = false
+        freeHealingWordUsed = false
         goodberries = 0
         geminiUsesToday = 0
         changeWater(-0.5f)
@@ -731,6 +743,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putInt("spellSlotsLevel3", spellSlotsLevel3)
             putInt("huntersMarkFreeUses", huntersMarkFreeUses)
             putBoolean("freeCureWoundsUsed", freeCureWoundsUsed)
+            putBoolean("freeHealingWordUsed", freeHealingWordUsed)
             putInt("goodberries", goodberries)
             putInt("geminiUsesToday", geminiUsesToday)
         }
@@ -844,6 +857,18 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 val items: List<Spell> = gson.fromJson(spellString, type)
                 allSpells.clear()
                 allSpells.addAll(items)
+
+                // Migration: Fehlende Standardzauber (wie "Heilendes Wort" im Update) nachträglich einfügen
+                val defaultSpells = getAthaniaDefaultSpells()
+                var addedNew = false
+                defaultSpells.forEach { defaultSpell ->
+                    if (allSpells.none { it.name == defaultSpell.name }) {
+                        allSpells.add(defaultSpell)
+                        addedNew = true
+                    }
+                }
+                if (addedNew) saveSpells()
+
             } catch (e: Exception) {
                 // Bei Fehlern nicht abstürzen
             }
@@ -916,6 +941,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 componentsV = true, componentsS = true, componentsM = false,
                 description = "Eine Kreatur, die du berührst, erhält Trefferpunkte in Höhe von 2d8 + deinem Zauber-Attributsmodifikator (PHB 2024) zurück.",
                 isPrepared = true
+            ),
+            Spell(
+                name = "Heilendes Wort",
+                level = 1,
+                castingTime = "1 Bonusaktion",
+                range = "18 m",
+                duration = "Sofort",
+                componentsV = true, componentsS = false, componentsM = false,
+                description = "Eine Kreatur deiner Wahl in Reichweite erhält Trefferpunkte in Höhe von 2d4 + deinem Zauber-Attributsmodifikator zurück. (PHB 2024).",
+                isPrepared = true
             )
         )
     }
@@ -932,7 +967,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             KONTEXT ATHANIA (Level $level, EP: $currentEP):
             HP: $currentHp/$maxHp, Trefferwürfel: $hitDice/4.
             Zauberplätze Grad 1: $spellSlotsLevel1/3, Grad 2: $spellSlotsLevel2/2, Grad 3: $spellSlotsLevel3/2.
-            Kostenloses Zeichen des Jägers: $huntersMarkFreeUses/2, Kostenlose Wunden heilen genutzt: $freeCureWoundsUsed.
+            Kostenlose Zauber genutzt: Wunden heilen ($freeCureWoundsUsed), Heilendes Wort ($freeHealingWordUsed). Freies Zeichen des Jägers: $huntersMarkFreeUses/2.
             Vorräte: $water Liter Wasser, $rations Rationen, $goodberries Gute Beeren.
             Geld: $coinsPM PM, $coinsGM GM, $coinsEM EM, $coinsSM SM, $coinsKM KM.
             Werte: ST $strength ($stModStr), GE $dexterity ($geModStr), KO $constitution ($koModStr), IN $intelligence ($inModStr), WE $wisdom ($weModStr), CH $charisma ($chModStr).

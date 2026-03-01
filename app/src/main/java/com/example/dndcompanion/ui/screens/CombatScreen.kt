@@ -20,6 +20,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Cancel
+import androidx.compose.material.icons.filled.Edit
 import com.example.dndcompanion.ui.viewmodel.ActiveWeapon
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.theme.BlauDunkel
@@ -348,6 +349,67 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             shape = RoundedCornerShape(12.dp)
         ) {
             Text("💰 Loot eintragen", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Standard-Taktik (Moved from ZauberScreen)
+        var isTacticExpanded by remember { mutableStateOf(false) }
+        var isTacticEditing by remember { mutableStateOf(false) }
+        var editTacticText by remember { mutableStateOf(viewModel.standardTactic) }
+
+        Card(
+            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp).clickable { 
+                if (!isTacticEditing) isTacticExpanded = !isTacticExpanded 
+            },
+            colors = CardDefaults.cardColors(containerColor = BlauHell)
+        ) {
+            Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Standard-Taktik", color = GelbSand, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    if (isTacticExpanded && !isTacticEditing) {
+                        IconButton(onClick = { 
+                            editTacticText = viewModel.standardTactic
+                            isTacticEditing = true 
+                        }, modifier = Modifier.size(24.dp)) {
+                            Icon(Icons.Default.Edit, contentDescription = "Bearbeiten", tint = PinkDunkel)
+                        }
+                    }
+                }
+                if (isTacticExpanded) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    if (isTacticEditing) {
+                        OutlinedTextField(
+                            value = editTacticText,
+                            onValueChange = { editTacticText = it },
+                            modifier = Modifier.fillMaxWidth().height(120.dp),
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = PinkDunkel,
+                                unfocusedTextColor = Color.White,
+                                focusedTextColor = Color.White
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                            TextButton(onClick = { isTacticEditing = false }) { Text("Abbrechen", color = Color.White) }
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Button(
+                                onClick = {
+                                    viewModel.updateStandardTactic(editTacticText)
+                                    isTacticEditing = false
+                                },
+                                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                            ) { Text("Speichern") }
+                        }
+                    } else {
+                        Text(viewModel.standardTactic, color = Color.White, fontSize = 14.sp)
+                    }
+                }
+            }
         }
     }
 }
