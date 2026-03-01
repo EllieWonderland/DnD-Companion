@@ -28,7 +28,7 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .background(GelbSand)
-            .padding(16.dp)
+            .padding(12.dp)
             .verticalScroll(rememberScrollState())
     ) {
         Text("Charakter Profil", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
@@ -36,10 +36,10 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
 
         // Grunddaten
         Card(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
             colors = CardDefaults.cardColors(containerColor = BlauHell)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(12.dp)) {
                 Text("Athania", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
                 Text("Waldläufer (Herrin der Tiere) | Stufe ${viewModel.level}", color = GelbSand)
                 Spacer(modifier = Modifier.height(8.dp))
@@ -76,10 +76,10 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
         Text("Fertigkeiten", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
         Spacer(modifier = Modifier.height(8.dp))
         Card(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
             colors = CardDefaults.cardColors(containerColor = BlauHell)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(12.dp)) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     Column(modifier = Modifier.weight(1f)) {
                         SkillRow("Akrobatik (DEX)", "+3")
@@ -118,7 +118,7 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(containerColor = BlauHell)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(12.dp)) {
                 Text("Aussehen: Magisches Tattoo (Blutige Hand eines Kindes)", color = Color.White)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Sprachen: Gemeinsprache, Gebärden-Gemeinsprache, Halblingisch, Zwergisch, Elfisch", color = Color.White)
@@ -146,13 +146,13 @@ fun AttributeBox(name: String, value: String, mod: String, rw: String) {
         colors = CardDefaults.cardColors(containerColor = BlauHell)
     ) {
         Column(
-            modifier = Modifier.padding(8.dp).fillMaxWidth(),
+            modifier = Modifier.padding(6.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(name, fontWeight = FontWeight.Bold, color = GelbSand, fontSize = 14.sp)
             Text(value, fontWeight = FontWeight.Bold, color = Color.White, fontSize = 24.sp)
             Text(mod, color = PinkDunkel, fontWeight = FontWeight.Bold, fontSize = 16.sp)
-            Text(rw, color = Color.LightGray, fontSize = 10.sp)
+            Text(rw, color = Color.LightGray, fontSize = 12.sp)
         }
     }
 }
@@ -166,7 +166,7 @@ fun SkillRow(name: String, mod: String, proficient: Boolean = false) {
     ) {
         val color = if (proficient) GelbSand else Color.White
         val weight = if (proficient) FontWeight.Bold else FontWeight.Normal
-        Text(name, color = color, fontSize = 12.sp, fontWeight = weight)
-        Text(mod, color = color, fontSize = 12.sp, fontWeight = weight)
+        Text(name, color = color, fontSize = 14.sp, fontWeight = weight)
+        Text(mod, color = color, fontSize = 14.sp, fontWeight = weight)
     }
 }

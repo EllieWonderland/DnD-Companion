@@ -22,6 +22,11 @@ data class InventoryItem(val name: String, val amount: Int, val weight: Double =
 data class ChatMessage(val text: String, val isUser: Boolean)
 data class FaqItem(val question: String, val answer: String)
 data class TraitItem(val name: String, val desc: String)
+data class BookEntry(
+    val id: String = java.util.UUID.randomUUID().toString(),
+    val text: String,
+    val timestamp: Long = System.currentTimeMillis()
+)
 
 data class Spell(
     val id: String = java.util.UUID.randomUUID().toString(),
@@ -42,6 +47,12 @@ enum class ActiveWeapon {
     LANGBOGEN,
     KURZSCHWERT_SCHILD,
     SHILLELAGH_SCHILD
+}
+
+enum class BeastType {
+    LAND,
+    SKY,
+    SEA
 }
 
 class CharacterViewModel(application: Application) : AndroidViewModel(application) {
@@ -179,13 +190,33 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     var hitDice by mutableIntStateOf(prefs.getInt("hitDice", 4))
         private set
 
+    var deathSaveSuccesses by mutableIntStateOf(prefs.getInt("deathSaveSuccesses", 0))
+        private set
+    var deathSaveFailures by mutableIntStateOf(prefs.getInt("deathSaveFailures", 0))
+        private set
+
+    fun updateDeathSaves(successes: Int, failures: Int) {
+        deathSaveSuccesses = successes.coerceIn(0, 3)
+        deathSaveFailures = failures.coerceIn(0, 3)
+        prefs.edit {
+            putInt("deathSaveSuccesses", deathSaveSuccesses)
+            putInt("deathSaveFailures", deathSaveFailures)
+        }
+    }
+
     fun takeDamage(amount: Int) {
         currentHp = (currentHp - amount).coerceAtLeast(0)
+        if (currentHp > 0) {
+            updateDeathSaves(0, 0)
+        }
         prefs.edit { putInt("currentHp", currentHp) }
     }
 
     fun healManual(amount: Int) {
         currentHp = (currentHp + amount).coerceAtMost(maxHp)
+        if (currentHp > 0) {
+            updateDeathSaves(0, 0)
+        }
         prefs.edit { putInt("currentHp", currentHp) }
     }
 
@@ -524,6 +555,14 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         totalArrows = 28
         shotArrows = 0
         currentWeapon = ActiveWeapon.LANGBOGEN
+        deathSaveSuccesses = 0
+        deathSaveFailures = 0
+        activeBeastType = BeastType.SKY
+        generalBookEntries.clear()
+        saveGeneralBookEntries()
+        grudgeBookEntries.clear()
+        saveGrudgeBookEntries()
+        standardTactic = "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen"
 
         // Loot und Traits zurücksetzen
         customLoot.clear()
@@ -534,10 +573,91 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         saveTraits()
     }
 
+    // --- BÜCHER & TAKTIK ---
+    val generalBookEntries = mutableStateListOf<BookEntry>()
+    val grudgeBookEntries = mutableStateListOf<BookEntry>()
+
+    private fun saveGeneralBookEntries() {
+        prefs.edit { putString("generalBookEntries", gson.toJson(generalBookEntries)) }
+    }
+
+    private fun saveGrudgeBookEntries() {
+        prefs.edit { putString("grudgeBookEntries", gson.toJson(grudgeBookEntries)) }
+    }
+
+    private fun loadBooks() {
+        val generalJson = prefs.getString("generalBookEntries", "[]") ?: "[]"
+        val grudgeJson = prefs.getString("grudgeBookEntries", "[]") ?: "[]"
+        try {
+            val type = object : TypeToken<List<BookEntry>>() {}.type
+            generalBookEntries.clear()
+            generalBookEntries.addAll(gson.fromJson(generalJson, type))
+            
+            grudgeBookEntries.clear()
+            grudgeBookEntries.addAll(gson.fromJson(grudgeJson, type))
+            
+            // Migration von alten Einzeleinträgen, falls die neue Liste leer ist
+            if (generalBookEntries.isEmpty()) {
+                val oldGeneral = prefs.getString("generalNotes", "") ?: ""
+                if (oldGeneral.isNotBlank()) {
+                    addGeneralBookEntry(oldGeneral)
+                    prefs.edit { remove("generalNotes") }
+                }
+            }
+            if (grudgeBookEntries.isEmpty()) {
+                val oldGrudge = prefs.getString("grudgeNotes", "") ?: ""
+                if (oldGrudge.isNotBlank()) {
+                    addGrudgeBookEntry(oldGrudge)
+                    prefs.edit { remove("grudgeNotes") }
+                }
+            }
+        } catch (e: Exception) {
+            // Ignore parse errors on load
+        }
+    }
+
+    fun addGeneralBookEntry(text: String) {
+        if (text.isNotBlank()) {
+            generalBookEntries.add(0, BookEntry(text = text.trim()))
+            saveGeneralBookEntries()
+        }
+    }
+
+    fun updateGeneralBookEntry(id: String, newText: String) {
+        val index = generalBookEntries.indexOfFirst { it.id == id }
+        if (index != -1 && newText.isNotBlank()) {
+            generalBookEntries[index] = generalBookEntries[index].copy(text = newText.trim())
+            saveGeneralBookEntries()
+        }
+    }
+
+    fun addGrudgeBookEntry(text: String) {
+        if (text.isNotBlank()) {
+            grudgeBookEntries.add(0, BookEntry(text = text.trim()))
+            saveGrudgeBookEntries()
+        }
+    }
+
+    fun updateGrudgeBookEntry(id: String, newText: String) {
+        val index = grudgeBookEntries.indexOfFirst { it.id == id }
+        if (index != -1 && newText.isNotBlank()) {
+            grudgeBookEntries[index] = grudgeBookEntries[index].copy(text = newText.trim())
+            saveGrudgeBookEntries()
+        }
+    }
+
+    var standardTactic by mutableStateOf(prefs.getString("standardTactic", "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen") ?: "")
+        private set
+    fun updateStandardTactic(text: String) {
+        standardTactic = text
+        prefs.edit { putString("standardTactic", standardTactic) }
+    }
+
     // --- INIT ---
     init {
         loadLoot()
         loadTraits()
+        loadBooks()
     }
 
     fun removeCustomLoot(itemName: String) {
@@ -603,18 +723,18 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    var isSkyBeast by mutableStateOf(prefs.getBoolean("isSkyBeast", true))
+    var activeBeastType by mutableStateOf(BeastType.valueOf(prefs.getString("activeBeastType", BeastType.SKY.name) ?: BeastType.SKY.name))
         private set
 
-    val capyMaxHp: Int get() = if (isSkyBeast) 4 + (4 * level) else 5 + (5 * level)
+    val capyMaxHp: Int get() = if (activeBeastType == BeastType.SKY || activeBeastType == BeastType.SEA) 4 + (4 * level) else 5 + (5 * level)
     var capyCurrentHp by mutableIntStateOf(prefs.getInt("capyCurrentHp", 20))
         private set
 
-    fun toggleBeastType(isSky: Boolean) {
-        isSkyBeast = isSky
+    fun toggleBeastType(type: BeastType) {
+        activeBeastType = type
         if (capyCurrentHp > capyMaxHp) capyCurrentHp = capyMaxHp
         prefs.edit {
-            putBoolean("isSkyBeast", isSkyBeast)
+            putString("activeBeastType", activeBeastType.name)
             putInt("capyCurrentHp", capyCurrentHp)
         }
     }
@@ -631,9 +751,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     val capyAc: Int get() = 13 + proficiencyBonus
     val capyAttackBonus: String get() = "+$spellAttackBonus"
-    val capyDamage: String get() = if (isSkyBeast) "1W4 + $wisMod Hieb" else "1W8 + $wisMod Hieb"
-    val capySpeed: String get() = if (isSkyBeast) "Fliegen 18 m, Laufen 3 m" else "Laufen 12 m, Klettern 12 m"
-    val capySpecial: String get() = if (isSkyBeast) "Vorbeifliegen" else "Ansturm"
+    val capyDamage: String get() = if (activeBeastType == BeastType.SKY) "1W4 + $wisMod Hieb" else if(activeBeastType == BeastType.SEA) "1W6 + $wisMod Stich" else "1W8 + $wisMod Hieb"
+    val capySpeed: String get() = if (activeBeastType == BeastType.SKY) "Fliegen 18 m, Laufen 3 m" else if(activeBeastType == BeastType.SEA) "Schwimmen 18 m, Laufen 1.5 m" else "Laufen 12 m, Klettern 12 m"
+    val capySpecial: String get() = if (activeBeastType == BeastType.SKY) "Vorbeifliegen" else if(activeBeastType == BeastType.SEA) "Unter Wasser atmen, Amphibisch" else "Ansturm"
 
     // --- HILFE: CHAT & FAQ ---
     val chatHistory = mutableStateListOf<ChatMessage>()

@@ -15,6 +15,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
+import androidx.compose.material.icons.filled.Cancel
 import com.example.dndcompanion.ui.viewmodel.ActiveWeapon
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.theme.BlauDunkel
@@ -29,7 +34,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
         modifier = Modifier
             .fillMaxSize()
             .background(GelbSand)
-            .padding(16.dp)
+            .padding(12.dp)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -47,11 +52,11 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp),
+                .padding(bottom = 12.dp),
             colors = CardDefaults.cardColors(containerColor = BlauHell),
             shape = RoundedCornerShape(16.dp)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(12.dp)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -71,6 +76,11 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     color = if (viewModel.currentHp > 10) PinkDunkel else Color.Red,
                     trackColor = BlauDunkel
                 )
+
+                if (viewModel.currentHp == 0) {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    DeathSavesRow(viewModel)
+                }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
@@ -102,7 +112,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                    modifier = Modifier.padding(12.dp).fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
@@ -123,7 +133,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                 shape = RoundedCornerShape(16.dp)
             ) {
                 Column(
-                    modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                    modifier = Modifier.padding(12.dp).fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
@@ -218,7 +228,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             colors = CardDefaults.cardColors(containerColor = BlauHell),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(12.dp)) {
                 Text("Trefferbonus: ${viewModel.currentAttackBonus}", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Schaden: ${viewModel.currentDamage}", fontSize = 16.sp, color = Color.White)
@@ -234,7 +244,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
 
                 Text(
                     text = extraNote,
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
                     color = BlauDunkel
                 )
@@ -248,7 +258,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                 colors = CardDefaults.cardColors(containerColor = BlauHell),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
+                Column(modifier = Modifier.padding(12.dp)) {
                     Text("Pfeilköcher", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
                     Spacer(modifier = Modifier.height(8.dp))
 
@@ -289,14 +299,14 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                                 colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
                                 modifier = Modifier.weight(1f).padding(end = 4.dp)
                             ) {
-                                Text("½ Einsammeln", fontSize = 12.sp)
+                                Text("½ Einsammeln", fontSize = 14.sp)
                             }
                             Button(
                                 onClick = { viewModel.discardShotArrows() },
                                 colors = ButtonDefaults.buttonColors(containerColor = Color.Red.copy(alpha = 0.7f)),
                                 modifier = Modifier.weight(1f).padding(start = 4.dp)
                             ) {
-                                Text("Alle verloren", fontSize = 12.sp)
+                                Text("Alle verloren", fontSize = 14.sp)
                             }
                         }
                     }
@@ -355,6 +365,53 @@ fun WeaponButton(title: String, isSelected: Boolean, onClick: () -> Unit) {
             .width(110.dp)
             .height(60.dp)
     ) {
-        Text(text = title, fontSize = 11.sp, textAlign = TextAlign.Center, lineHeight = 14.sp)
+        Text(text = title, fontSize = 14.sp, textAlign = TextAlign.Center, lineHeight = 16.sp)
+    }
+}
+
+@Composable
+fun DeathSavesRow(viewModel: CharacterViewModel) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text("Todesrettungswürfe", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            // Erfolge
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Erfolge:", color = GelbSand, fontSize = 14.sp)
+                Spacer(modifier = Modifier.width(4.dp))
+                repeat(3) { index ->
+                    val checked = index < viewModel.deathSaveSuccesses
+                    Icon(
+                        imageVector = if (checked) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+                        contentDescription = "Erfolg",
+                        tint = if (checked) GelbSand else Color.Gray,
+                        modifier = Modifier.size(24.dp).clickable { 
+                            if (checked) viewModel.updateDeathSaves(index, viewModel.deathSaveFailures)
+                            else viewModel.updateDeathSaves(index + 1, viewModel.deathSaveFailures)
+                        }
+                    )
+                }
+            }
+            // Fehlschläge
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Fehlschläge:", color = Color.Red, fontSize = 14.sp)
+                Spacer(modifier = Modifier.width(4.dp))
+                repeat(3) { index ->
+                    val checked = index < viewModel.deathSaveFailures
+                    Icon(
+                        imageVector = if (checked) Icons.Default.Cancel else Icons.Default.RadioButtonUnchecked,
+                        contentDescription = "Fehlschlag",
+                        tint = if (checked) Color.Red else Color.Gray,
+                        modifier = Modifier.size(24.dp).clickable {
+                            if (checked) viewModel.updateDeathSaves(viewModel.deathSaveSuccesses, index)
+                            else viewModel.updateDeathSaves(viewModel.deathSaveSuccesses, index + 1)
+                        }
+                    )
+                }
+            }
+        }
     }
 }

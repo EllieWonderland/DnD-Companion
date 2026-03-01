@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -18,12 +19,14 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.draw.clip
 import com.example.dndcompanion.ui.screens.CombatScreen
 import com.example.dndcompanion.ui.screens.RucksackScreen
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.screens.ZauberScreen
 import com.example.dndcompanion.ui.screens.HelpScreen
 import com.example.dndcompanion.ui.screens.ProfilScreen
+import com.example.dndcompanion.ui.screens.BucherScreen
 import com.example.dndcompanion.ui.theme.*
 
 // Definition der Tabs für bessere Lesbarkeit
@@ -70,10 +73,17 @@ fun DnDApp(viewModel: CharacterViewModel) {
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
                 )
                 NavigationBarItem(
-                    selected = currentScreen == 2, // NEU: Hilfe wieder hier
+                    selected = currentScreen == 2, // Hilfe
                     onClick = { currentScreen = 2 },
-                    icon = { Text("📚") },
+                    icon = { Text("💬") },
                     label = { Text("Hilfe") },
+                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
+                )
+                NavigationBarItem(
+                    selected = currentScreen == 3, // Bücher
+                    onClick = { currentScreen = 3 },
+                    icon = { Text("📖") },
+                    label = { Text("Bücher") },
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
                 )
             }
@@ -84,6 +94,7 @@ fun DnDApp(viewModel: CharacterViewModel) {
                 0 -> AthaniaScreen(viewModel)
                 1 -> CapyScreen(viewModel)
                 2 -> HelpScreen(viewModel)
+                3 -> BucherScreen(viewModel)
             }
         }
     }
@@ -126,31 +137,31 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
 
 @Composable
 fun CapyScreen(viewModel: CharacterViewModel) {
+    val beastColorLight = when(viewModel.activeBeastType) {
+        com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> PinkHell
+        com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> BlauHell
+        com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> Color(0xFF81C784)
+    }
+    val beastColorDark = when(viewModel.activeBeastType) {
+        com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> PinkDunkel
+        com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> BlauDunkel
+        com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> Color(0xFF388E3C)
+    }
+
     Column(
-        modifier = Modifier.fillMaxSize().background(GelbSand).padding(16.dp).verticalScroll(rememberScrollState()),
+        modifier = Modifier.fillMaxSize().background(GelbSand).padding(8.dp).verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Land", color = PinkDunkel, fontWeight = FontWeight.Bold)
-            Switch(
-                checked = viewModel.isSkyBeast,
-                onCheckedChange = { viewModel.toggleBeastType(it) },
-                modifier = Modifier.padding(horizontal = 16.dp),
-                colors = SwitchDefaults.colors(
-                    checkedThumbColor = BlauDunkel,
-                    checkedTrackColor = BlauHell,
-                    uncheckedThumbColor = PinkDunkel,
-                    uncheckedTrackColor = PinkHell
-                )
-            )
-            Text("Himmel", color = BlauDunkel, fontWeight = FontWeight.Bold)
-        }
+        SegmentedBeastControl(
+            activeType = viewModel.activeBeastType,
+            onTypeSelected = { viewModel.toggleBeastType(it) }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Card(
             modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = if(viewModel.isSkyBeast) BlauHell else PinkHell),
+            colors = CardDefaults.cardColors(containerColor = beastColorLight),
             shape = RoundedCornerShape(16.dp)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
@@ -160,8 +171,8 @@ fun CapyScreen(viewModel: CharacterViewModel) {
 
                 LinearProgressIndicator(
                     progress = { viewModel.capyCurrentHp.toFloat() / viewModel.capyMaxHp.toFloat() },
-                    modifier = Modifier.fillMaxWidth().height(12.dp),
-                    color = if (viewModel.capyCurrentHp > 5) (if(viewModel.isSkyBeast) BlauDunkel else PinkDunkel) else Color.Red,
+                    modifier = Modifier.fillMaxWidth().height(16.dp),
+                    color = if (viewModel.capyCurrentHp > 5) beastColorDark else Color.Red,
                     trackColor = Color.White
                 )
 
@@ -198,9 +209,45 @@ fun CapyScreen(viewModel: CharacterViewModel) {
 
                 HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
-                Text("Bestienschlag (Kosten: 1 Bonusaktion)", fontWeight = FontWeight.Bold, color = BlauDunkel, modifier = Modifier.padding(bottom = 4.dp))
+                Text("Bestienschlag (Kosten: 1 Bonusaktion)", fontWeight = FontWeight.Bold, color = BlauDunkel, modifier = Modifier.padding(bottom = 4.dp), fontSize = 16.sp)
                 Text("Trefferbonus: ${viewModel.capyAttackBonus}", fontSize = 18.sp)
-                Text("Schaden: ${viewModel.capyDamage}", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = PinkDunkel)
+                Text("Schaden: ${viewModel.capyDamage}", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = beastColorDark)
+            }
+        }
+    }
+}
+
+@Composable
+fun SegmentedBeastControl(activeType: com.example.dndcompanion.ui.viewmodel.BeastType, onTypeSelected: (com.example.dndcompanion.ui.viewmodel.BeastType) -> Unit) {
+    val options = listOf(
+        com.example.dndcompanion.ui.viewmodel.BeastType.LAND to "Land",
+        com.example.dndcompanion.ui.viewmodel.BeastType.SKY to "Himmel",
+        com.example.dndcompanion.ui.viewmodel.BeastType.SEA to "Meer"
+    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .clip(RoundedCornerShape(24.dp))
+            .background(BlauHell),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        options.forEach { (type, label) ->
+            val isSelected = activeType == type
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .background(if (isSelected) BlauDunkel else Color.Transparent)
+                    .clickable { onTypeSelected(type) },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = label,
+                    color = Color.White,
+                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
+                    fontSize = 16.sp
+                )
             }
         }
     }

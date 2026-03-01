@@ -37,7 +37,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .background(GelbSand)
-            .padding(16.dp)
+            .padding(12.dp)
             .verticalScroll(rememberScrollState())
     ) {
         // --- GEWICHT ---
@@ -78,7 +78,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
         ) {
             Row(
                 modifier = Modifier
-                    .padding(12.dp)
+                    .padding(8.dp)
                     .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -87,12 +87,12 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                     Text(text = "Gute Beeren", fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
                     Button(
                         onClick = { viewModel.castGoodberry() },
-                        enabled = viewModel.spellSlotsLevel1 > 0,
+                        enabled = viewModel.spellSlotsLevel1 > 0 && viewModel.allSpells.any { it.name == "Gute Beere" && it.isPrepared },
                         colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
                         modifier = Modifier.height(36.dp).padding(top = 4.dp),
                         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
                     ) {
-                        Text("Zaubern (+10)", fontSize = 12.sp)
+                        Text("Zaubern (+10)", fontSize = 14.sp)
                     }
                 }
 
@@ -119,23 +119,23 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
             Text("Geldbeutel", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
             if (!isMoneyBagExpanded) {
                 Text(
-                    "${viewModel.coinsPM}PM | ${viewModel.coinsGM}GM | ${viewModel.coinsEM}EM | ${viewModel.coinsSM}SM | ${viewModel.coinsKM}KM",
+                    "${viewModel.coinsKM}KM | ${viewModel.coinsSM}SM | ${viewModel.coinsEM}EM | ${viewModel.coinsGM}GM | ${viewModel.coinsPM}PM",
                     fontSize = 14.sp,
                     color = PinkDunkel,
                     fontWeight = FontWeight.Bold
                 )
             } else {
-                Text("Einklappen ▲", fontSize = 12.sp, color = BlauDunkel)
+                Text("Einklappen ▲", fontSize = 14.sp, color = BlauDunkel)
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
 
         if (isMoneyBagExpanded) {
-            CoinRow("Platin (PM)", viewModel.coinsPM.toString(), onMinus = { viewModel.changeCoinsPM(-it) }, onPlus = { viewModel.changeCoinsPM(it) })
-            CoinRow("Gold (GM)", viewModel.coinsGM.toString(), onMinus = { viewModel.changeCoinsGM(-it) }, onPlus = { viewModel.changeCoinsGM(it) })
-            CoinRow("Elektrum (EM)", viewModel.coinsEM.toString(), onMinus = { viewModel.changeCoinsEM(-it) }, onPlus = { viewModel.changeCoinsEM(it) })
-            CoinRow("Silber (SM)", viewModel.coinsSM.toString(), onMinus = { viewModel.changeCoinsSM(-it) }, onPlus = { viewModel.changeCoinsSM(it) })
             CoinRow("Kupfer (KM)", viewModel.coinsKM.toString(), onMinus = { viewModel.changeCoinsKM(-it) }, onPlus = { viewModel.changeCoinsKM(it) })
+            CoinRow("Silber (SM)", viewModel.coinsSM.toString(), onMinus = { viewModel.changeCoinsSM(-it) }, onPlus = { viewModel.changeCoinsSM(it) })
+            CoinRow("Elektrum (EM)", viewModel.coinsEM.toString(), onMinus = { viewModel.changeCoinsEM(-it) }, onPlus = { viewModel.changeCoinsEM(it) })
+            CoinRow("Gold (GM)", viewModel.coinsGM.toString(), onMinus = { viewModel.changeCoinsGM(-it) }, onPlus = { viewModel.changeCoinsGM(it) })
+            CoinRow("Platin (PM)", viewModel.coinsPM.toString(), onMinus = { viewModel.changeCoinsPM(-it) }, onPlus = { viewModel.changeCoinsPM(it) })
             Spacer(modifier = Modifier.height(16.dp))
         }
 
@@ -281,7 +281,7 @@ fun InventoryRow(name: String, amount: String, weight: Double? = null, onMinus: 
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = name, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
                 if (weight != null && weight > 0.0) {
-                    Text(text = "${weight} kg", fontSize = 12.sp, color = GelbSand)
+                    Text(text = "${weight} kg", fontSize = 14.sp, color = GelbSand)
                 }
             }
 
@@ -309,7 +309,7 @@ fun CoinRow(name: String, amount: String, onMinus: (Int) -> Unit, onPlus: (Int) 
     ) {
         Row(
             modifier = Modifier
-                .padding(horizontal = 12.dp, vertical = 8.dp)
+                .padding(horizontal = 8.dp, vertical = 4.dp)
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
@@ -317,7 +317,7 @@ fun CoinRow(name: String, amount: String, onMinus: (Int) -> Unit, onPlus: (Int) 
             Text(text = name, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.weight(1f))
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Button(onClick = { onMinus(10) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(36.dp)) { Text("-10", fontSize = 12.sp) }
+                Button(onClick = { onMinus(10) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(36.dp)) { Text("-10", fontSize = 14.sp) }
                 Spacer(modifier = Modifier.width(4.dp))
                 IconButton(onClick = { onMinus(1) }, modifier = Modifier.size(36.dp)) { Icon(Icons.Default.Remove, contentDescription = "Weniger", tint = PinkDunkel) }
                 
@@ -325,7 +325,7 @@ fun CoinRow(name: String, amount: String, onMinus: (Int) -> Unit, onPlus: (Int) 
                 
                 IconButton(onClick = { onPlus(1) }, modifier = Modifier.size(36.dp)) { Icon(Icons.Default.Add, contentDescription = "Mehr", tint = BlauDunkel) }
                 Spacer(modifier = Modifier.width(4.dp))
-                Button(onClick = { onPlus(10) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(32.dp)) { Text("+10", fontSize = 10.sp) }
+                Button(onClick = { onPlus(10) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(32.dp)) { Text("+10", fontSize = 12.sp) }
             }
         }
     }

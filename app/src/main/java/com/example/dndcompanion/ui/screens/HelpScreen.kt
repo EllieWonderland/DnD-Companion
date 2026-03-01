@@ -61,7 +61,7 @@ fun ChatView(viewModel: CharacterViewModel) {
     // Speichert die Nachricht, die wir gerade ins FAQ aufnehmen wollen
     var messageToFaq by remember { mutableStateOf<ChatMessage?>(null) }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp).imePadding()) {
         // Status-Leiste für Modell und Limits
         Row(
             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
