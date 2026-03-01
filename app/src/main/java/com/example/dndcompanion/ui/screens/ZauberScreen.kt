@@ -22,6 +22,8 @@ import com.example.dndcompanion.ui.viewmodel.Spell
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
@@ -31,6 +33,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
     var showShortRestDialog by remember { mutableStateOf(false) }
     var showLongRestDialog by remember { mutableStateOf(false) }
     var showSpellbookEditDialog by remember { mutableStateOf(false) }
+    var hitDiceToSpend by remember { mutableIntStateOf(1) }
     var rolledDiceInput by remember { mutableStateOf("") }
 
     Box(modifier = Modifier.fillMaxSize().background(GelbSand)) {
@@ -117,6 +120,39 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         )
                     ) {
                         Text("Wirken")
+                    }
+                }
+            }
+
+            // Wunden heilen (Kostenlos)
+            Card(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                colors = CardDefaults.cardColors(containerColor = BlauHell)
+            ) {
+                Column(
+                    modifier = Modifier.padding(12.dp).fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Wunden heilen (Gratis)", color = Color.White, fontWeight = FontWeight.Bold)
+                            Text("Ohne Zauberplatz (1x pro Lange Rast)", color = Color.White, fontSize = 14.sp)
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(
+                        onClick = { viewModel.useFreeCureWounds() },
+                        enabled = !viewModel.freeCureWoundsUsed,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = PinkDunkel,
+                            disabledContainerColor = Color.Gray
+                        )
+                    ) {
+                        Text(if (viewModel.freeCureWoundsUsed) "Bereits verwendet" else "Wirken")
                     }
                 }
             }
@@ -417,17 +453,31 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 title = { Text("Kurze Rast", color = BlauDunkel, fontWeight = FontWeight.Bold) },
                 text = {
                     Column {
-                        Text("Wirf einen W10 und trage das Ergebnis ein. Dein Konstitutions-Modifikator (+${viewModel.conMod}) wird automatisch addiert.", color = BlauDunkel)
+                        Text("Wähle aus, wie viele Trefferwürfel (Hit Dice) du ausgeben möchtest, und trage die Summe deiner Würfelergebnisse (W10) ein. Dein Konstitutions-Modifikator (+${viewModel.conMod}) wird pro ausgegebenem Würfel automatisch addiert.", color = BlauDunkel)
                         Spacer(modifier = Modifier.height(16.dp))
+
+                        // Würfelauswahl
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                            Text("Auszugebende Würfel:", color = BlauDunkel, fontWeight = FontWeight.Bold)
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                IconButton(onClick = { if (hitDiceToSpend > 0) hitDiceToSpend-- }) {
+                                    Icon(androidx.compose.material.icons.Icons.Default.Remove, contentDescription = "Weniger", tint = BlauDunkel)
+                                }
+                                Text("$hitDiceToSpend / ${viewModel.hitDice}", color = BlauDunkel, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                                IconButton(onClick = { if (hitDiceToSpend < viewModel.hitDice) hitDiceToSpend++ }) {
+                                    Icon(androidx.compose.material.icons.Icons.Default.Add, contentDescription = "Mehr", tint = BlauDunkel)
+                                }
+                            }
+                        }
+                        
+                        Spacer(modifier = Modifier.height(8.dp))
+
                         OutlinedTextField(
                             value = rolledDiceInput,
                             onValueChange = { newValue ->
-                                // Wir lassen nur Zahlen zu
-                                if (newValue.all { it.isDigit() }) {
-                                    rolledDiceInput = newValue
-                                }
+                                if (newValue.all { it.isDigit() }) rolledDiceInput = newValue
                             },
-                            label = { Text("Gewürfelte Zahl (W10)") },
+                            label = { Text("Summe gewürfelte Augen") },
                             singleLine = true,
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = PinkDunkel,
@@ -439,11 +489,12 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 confirmButton = {
                     Button(
                         onClick = {
-                            val rolledValue = rolledDiceInput.toIntOrNull()
-                            if (rolledValue != null && rolledValue > 0) {
-                                viewModel.takeShortRest(rolledValue)
+                            val rolledValue = rolledDiceInput.toIntOrNull() ?: 0
+                            if (hitDiceToSpend >= 0) {
+                                viewModel.takeShortRest(hitDiceToSpend, rolledValue)
                                 showShortRestDialog = false
                                 rolledDiceInput = "" // Feld für das nächste Mal leeren
+                                hitDiceToSpend = 1
                             }
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)

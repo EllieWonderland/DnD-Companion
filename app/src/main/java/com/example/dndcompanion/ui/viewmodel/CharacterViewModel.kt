@@ -544,6 +544,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         spellSlotsLevel2 = 0
         spellSlotsLevel3 = 0
         huntersMarkFreeUses = 2
+        freeCureWoundsUsed = false
         water = 2.0f
         rations = 10
         goodberries = 0
@@ -673,10 +674,20 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun takeShortRest(rolledValue: Int) {
-        if (hitDice > 0 && currentHp < maxHp) {
-            hitDice--
-            val healAmount = rolledValue + conMod
+    var freeCureWoundsUsed by mutableStateOf(prefs.getBoolean("freeCureWoundsUsed", false))
+        private set
+
+    fun useFreeCureWounds() {
+        if (!freeCureWoundsUsed) {
+            freeCureWoundsUsed = true
+            prefs.edit { putBoolean("freeCureWoundsUsed", true) }
+        }
+    }
+
+    fun takeShortRest(hitDiceSpent: Int, rolledValue: Int) {
+        if (hitDiceSpent <= hitDice && currentHp < maxHp) {
+            hitDice -= hitDiceSpent
+            val healAmount = rolledValue + (conMod * hitDiceSpent)
             currentHp = (currentHp + healAmount).coerceAtMost(maxHp)
 
             prefs.edit {
@@ -706,6 +717,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
 
         huntersMarkFreeUses = 2
+        freeCureWoundsUsed = false
         goodberries = 0
         geminiUsesToday = 0
         changeWater(-0.5f)
@@ -718,6 +730,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putInt("spellSlotsLevel2", spellSlotsLevel2)
             putInt("spellSlotsLevel3", spellSlotsLevel3)
             putInt("huntersMarkFreeUses", huntersMarkFreeUses)
+            putBoolean("freeCureWoundsUsed", freeCureWoundsUsed)
             putInt("goodberries", goodberries)
             putInt("geminiUsesToday", geminiUsesToday)
         }
@@ -908,14 +921,25 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun getCharacterContext(): String {
+        val stModStr = if (strMod >= 0) "+$strMod" else "$strMod"
+        val geModStr = if (dexMod >= 0) "+$dexMod" else "$dexMod"
+        val koModStr = if (conMod >= 0) "+$conMod" else "$conMod"
+        val inModStr = if (intMod >= 0) "+$intMod" else "$intMod"
+        val weModStr = if (wisMod >= 0) "+$wisMod" else "$wisMod"
+        val chModStr = if (chaMod >= 0) "+$chaMod" else "$chaMod"
+
         return """
-            KONTEXT ATHANIA (Level $level):
+            KONTEXT ATHANIA (Level $level, EP: $currentEP):
             HP: $currentHp/$maxHp, Trefferwürfel: $hitDice/4.
-            Zauberplätze Grad 1: $spellSlotsLevel1/3.
-            Kostenloses Zeichen des Jägers: $huntersMarkFreeUses/2.
+            Zauberplätze Grad 1: $spellSlotsLevel1/3, Grad 2: $spellSlotsLevel2/2, Grad 3: $spellSlotsLevel3/2.
+            Kostenloses Zeichen des Jägers: $huntersMarkFreeUses/2, Kostenlose Wunden heilen genutzt: $freeCureWoundsUsed.
             Vorräte: $water Liter Wasser, $rations Rationen, $goodberries Gute Beeren.
-            Werte: ST 10, GE $dexterity (+4), KO $constitution (+3), IN 10, WE $wisdom (+2), CH 10.
+            Geld: $coinsPM PM, $coinsGM GM, $coinsEM EM, $coinsSM SM, $coinsKM KM.
+            Werte: ST $strength ($stModStr), GE $dexterity ($geModStr), KO $constitution ($koModStr), IN $intelligence ($inModStr), WE $wisdom ($weModStr), CH $charisma ($chModStr).
             Ausrüstung: ${currentWeapon.name}.
+            
+            KONTEXT CAPY (BEGLEITER):
+            Aktueller Typ: ${activeBeastType.name}.
         """.trimIndent()
     }
 

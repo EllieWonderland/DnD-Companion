@@ -28,6 +28,9 @@ import com.example.dndcompanion.ui.screens.HelpScreen
 import com.example.dndcompanion.ui.screens.ProfilScreen
 import com.example.dndcompanion.ui.screens.BucherScreen
 import com.example.dndcompanion.ui.theme.*
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import kotlinx.coroutines.launch
 
 // Definition der Tabs für bessere Lesbarkeit
 enum class AthaniaTab(val title: String) {
@@ -102,20 +105,24 @@ fun DnDApp(viewModel: CharacterViewModel) {
 
 @Composable
 fun AthaniaScreen(viewModel: CharacterViewModel) {
-    // Hier entfernen wir den Hilfe-Tab, da er jetzt in der Haupt-Navi ist
-    var selectedTab by rememberSaveable { mutableStateOf(AthaniaTab.Kampf) }
+    val tabs = AthaniaTab.entries.filter { it != AthaniaTab.Hilfe }
+    val pagerState = rememberPagerState(initialPage = tabs.indexOf(AthaniaTab.Kampf), pageCount = { tabs.size })
+    val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxSize()) {
         TabRow(
-            selectedTabIndex = selectedTab.ordinal,
+            selectedTabIndex = pagerState.currentPage,
             containerColor = GelbSand,
             contentColor = BlauDunkel
         ) {
-            // Wir filtern den Hilfe-Tab aus der oberen Leiste heraus
-            AthaniaTab.entries.filter { it != AthaniaTab.Hilfe }.forEach { tab ->
+            tabs.forEachIndexed { index, tab ->
                 Tab(
-                    selected = selectedTab == tab,
-                    onClick = { selectedTab = tab },
+                    selected = pagerState.currentPage == index,
+                    onClick = { 
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(index)
+                        } 
+                    },
                     text = { Text(tab.title) },
                     selectedContentColor = PinkDunkel,
                     unselectedContentColor = BlauDunkel
@@ -123,13 +130,20 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
             }
         }
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            when (selectedTab) {
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            when (tabs[page]) {
                 AthaniaTab.Profil -> ProfilScreen(viewModel)
-                AthaniaTab.Kampf -> CombatScreen(viewModel, onNavigateToRucksack = { selectedTab = AthaniaTab.Rucksack })
+                AthaniaTab.Kampf -> CombatScreen(viewModel, onNavigateToRucksack = { 
+                    coroutineScope.launch {
+                        pagerState.animateScrollToPage(tabs.indexOf(AthaniaTab.Rucksack))
+                    }
+                })
                 AthaniaTab.Zauber -> ZauberScreen(viewModel)
                 AthaniaTab.Rucksack -> RucksackScreen(viewModel)
-                else -> ProfilScreen(viewModel) // Fallback
+                else -> ProfilScreen(viewModel)
             }
         }
     }
@@ -138,9 +152,9 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
 @Composable
 fun CapyScreen(viewModel: CharacterViewModel) {
     val beastColorLight = when(viewModel.activeBeastType) {
-        com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> PinkHell
-        com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> BlauHell
-        com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> Color(0xFF81C784)
+        com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> Gruen
+        com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> PinkHell
+        com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> BlauHell
     }
     val beastColorDark = when(viewModel.activeBeastType) {
         com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> PinkDunkel
