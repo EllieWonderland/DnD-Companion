@@ -84,6 +84,29 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 }
             }
 
+            // Rasten-Buttons nach oben gezogen
+            Text("Regeneration (Rasten)", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
+                Button(
+                    onClick = { showShortRestDialog = true },
+                    enabled = viewModel.hitDice > 0 && viewModel.currentHp < viewModel.maxHp,
+                    colors = ButtonDefaults.buttonColors(containerColor = BlauHell)
+                ) {
+                    Text("Kurze Rast")
+                }
+                Button(
+                    onClick = { viewModel.takeLongRest() },
+                    colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)
+                ) {
+                    Text("Lange Rast")
+                }
+            }
+
+            HorizontalDivider(color = BlauDunkel, thickness = 2.dp)
+            Spacer(modifier = Modifier.height(16.dp))
+
             // Zauberplätze Grad 1
             Card(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 24.dp),
@@ -158,26 +181,16 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             HorizontalDivider(color = BlauDunkel, thickness = 2.dp)
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Rast-Buttons
-            Text("Rasten (Regeneration)", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+            // Volks- und Klassenmerkmale nach unten gezogen
+            Text("Merkmale", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
             Spacer(modifier = Modifier.height(8.dp))
-
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                Button(
-                    // Hier öffnen wir das Popup, anstatt direkt zu heilen
-                    onClick = { showShortRestDialog = true },
-                    enabled = viewModel.hitDice > 0 && viewModel.currentHp < viewModel.maxHp,
-                    colors = ButtonDefaults.buttonColors(containerColor = BlauHell)
-                ) {
-                    Text("Kurze Rast")
-                }
-                Button(
-                    onClick = { viewModel.takeLongRest() },
-                    colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)
-                ) {
-                    Text("Lange Rast")
-                }
-            }
+            
+            TraitCard("Urbegleiter (Land, Himmel, Meer)", "Bonusaktion: Urtier befehligen\nAktion: Urtier Angriff\nZauberslot: Urtier beleben (volle HP)")
+            TraitCard("Trance", "Du musst nicht schlafen. Lange Rast dauert 4 Std in Meditation.")
+            TraitCard("Feenblut", "Vorteil bei Rettungswürfen gegen Bezauberung.")
+            TraitCard("Messerstecher", "Bei Stichschaden 1x pro Zug 1 Angriffswürfel neu würfeln. Bei Krit 1 zus. Schadenswürfel.")
+            
+            Spacer(modifier = Modifier.height(8.dp))
         }
 
         // Das Popup-Fenster für die Kurze Rast
@@ -308,6 +321,20 @@ fun SpellCard(
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun TraitCard(title: String, desc: String) {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+        colors = CardDefaults.cardColors(containerColor = BlauHell)
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Text(title, color = GelbSand, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(desc, color = Color.White, fontSize = 14.sp)
         }
     }
 }

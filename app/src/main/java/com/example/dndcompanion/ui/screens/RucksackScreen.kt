@@ -9,9 +9,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.clickable
+import androidx.compose.ui.Alignment
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -25,6 +26,7 @@ import com.example.dndcompanion.ui.theme.GelbSand
 @Composable
 fun RucksackScreen(viewModel: CharacterViewModel) {
     var newItemName by remember { mutableStateOf("") }
+    var isMoneyBagExpanded by remember { mutableStateOf(false) }
 
     LazyColumn(
         modifier = Modifier
@@ -33,21 +35,10 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
             .padding(16.dp)
     ) {
         item {
-            Text("Geldbeutel", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
-            Spacer(modifier = Modifier.height(8.dp))
-
-            CoinRow("Platin (PM)", viewModel.coinsPM.toString(), onMinus = { viewModel.changeCoinsPM(-it) }, onPlus = { viewModel.changeCoinsPM(it) })
-            CoinRow("Gold (GM)", viewModel.coinsGM.toString(), onMinus = { viewModel.changeCoinsGM(-it) }, onPlus = { viewModel.changeCoinsGM(it) })
-            CoinRow("Elektrum (EM)", viewModel.coinsEM.toString(), onMinus = { viewModel.changeCoinsEM(-it) }, onPlus = { viewModel.changeCoinsEM(it) })
-            CoinRow("Silber (SM)", viewModel.coinsSM.toString(), onMinus = { viewModel.changeCoinsSM(-it) }, onPlus = { viewModel.changeCoinsSM(it) })
-            CoinRow("Kupfer (KM)", viewModel.coinsKM.toString(), onMinus = { viewModel.changeCoinsKM(-it) }, onPlus = { viewModel.changeCoinsKM(it) })
-
-            Spacer(modifier = Modifier.height(24.dp))
-
+            // --- FESTER RUCKSACK NACH OBEN ---
             Text("Fester Rucksack", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Feste Items (Wasser, Rationen, Beeren)
             InventoryRow(
                 name = "Wasserschlauch (Tage)",
                 amount = viewModel.water.toString(),
@@ -60,6 +51,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                 onMinus = { viewModel.changeRations(-1) },
                 onPlus = { viewModel.changeRations(1) }
             )
+            
             // Gute Beeren mit Extra-Button für +10
             Card(
                 modifier = Modifier
@@ -79,7 +71,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                         Text(text = "Gute Beeren", fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
                         Button(
                             onClick = { viewModel.castGoodberry() },
-                            enabled = viewModel.spellSlotsLevel1 > 0, // <-- NEU: Verhindert Zaubern ohne Slots
+                            enabled = viewModel.spellSlotsLevel1 > 0,
                             colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
                             modifier = Modifier.height(36.dp).padding(top = 4.dp),
                             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
@@ -99,8 +91,40 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                     }
                 }
             }
-
+            
             Spacer(modifier = Modifier.height(24.dp))
+            
+            // --- GELDBEUTEL (Einklappbar) ---
+            Row(
+                modifier = Modifier.fillMaxWidth().clickable { isMoneyBagExpanded = !isMoneyBagExpanded },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text("Geldbeutel", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+                if (!isMoneyBagExpanded) {
+                    Text(
+                        "${viewModel.coinsPM} PM | ${viewModel.coinsGM} GM | ${viewModel.coinsEM} EM | ${viewModel.coinsSM} SM | ${viewModel.coinsKM} KM",
+                        fontSize = 12.sp,
+                        color = PinkDunkel,
+                        fontWeight = FontWeight.Bold
+                    )
+                } else {
+                    Text("Einklappen ▲", fontSize = 12.sp, color = BlauDunkel)
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+
+            if (isMoneyBagExpanded) {
+                CoinRow("Platin (PM)", viewModel.coinsPM.toString(), onMinus = { viewModel.changeCoinsPM(-it) }, onPlus = { viewModel.changeCoinsPM(it) })
+                CoinRow("Gold (GM)", viewModel.coinsGM.toString(), onMinus = { viewModel.changeCoinsGM(-it) }, onPlus = { viewModel.changeCoinsGM(it) })
+                CoinRow("Elektrum (EM)", viewModel.coinsEM.toString(), onMinus = { viewModel.changeCoinsEM(-it) }, onPlus = { viewModel.changeCoinsEM(it) })
+                CoinRow("Silber (SM)", viewModel.coinsSM.toString(), onMinus = { viewModel.changeCoinsSM(-it) }, onPlus = { viewModel.changeCoinsSM(it) })
+                CoinRow("Kupfer (KM)", viewModel.coinsKM.toString(), onMinus = { viewModel.changeCoinsKM(-it) }, onPlus = { viewModel.changeCoinsKM(it) })
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             Text("Flexibler Loot", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
             Spacer(modifier = Modifier.height(8.dp))
 

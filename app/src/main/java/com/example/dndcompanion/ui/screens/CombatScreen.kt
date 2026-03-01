@@ -23,7 +23,7 @@ import com.example.dndcompanion.ui.theme.PinkHell
 import com.example.dndcompanion.ui.theme.GelbSand
 
 @Composable
-fun CombatScreen(viewModel: CharacterViewModel) {
+fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -32,7 +32,17 @@ fun CombatScreen(viewModel: CharacterViewModel) {
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // NEU: Lebenspunkte & Trefferwürfel
+        // Top-Leiste: Passive Stats
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            Text("Initiative: +4", color = BlauDunkel, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text("Tempo: 9", color = BlauDunkel, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            Text("Pass. Wahrnehmung: 16", color = BlauDunkel, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+        }
+
+        // Lebenspunkte & Trefferwürfel
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -141,10 +151,9 @@ fun CombatScreen(viewModel: CharacterViewModel) {
 
                 // Dynamischer Hinweis je nach Waffentyp
                 val extraNote = when (viewModel.currentWeapon) {
-                    ActiveWeapon.LANGBOGEN, ActiveWeapon.KURZSCHWERT_SCHILD ->
-                        "Messer-Talent: Erlaubt 1x pro Zug Schadenswürfel neu zu werfen (Stich)."
-                    ActiveWeapon.SHILLELAGH_SCHILD ->
-                        "Mastery (Topple): Gegner muss bei Treffer ST-Save (DC 12) bestehen oder liegt am Boden."
+                    ActiveWeapon.LANGBOGEN -> "Verlangsamen: Ziel -3 Bewegung.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
+                    ActiveWeapon.KURZSCHWERT_SCHILD -> "Plagen: Nächster Angriff hat Vorteil.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
+                    ActiveWeapon.SHILLELAGH_SCHILD -> "Umstoßen (Mastery): Gegner muss bei Treffer Kon-Save (DC 12) bestehen oder liegt am Boden."
                 }
 
                 Text(
@@ -242,6 +251,17 @@ fun CombatScreen(viewModel: CharacterViewModel) {
                     }
                 }
             }
+        }
+
+        // NEU: Auffälliger Loot-Button zur direkten Navigation in den Rucksack
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = onNavigateToRucksack,
+            modifier = Modifier.fillMaxWidth().height(60.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Text("💰 Loot eintragen", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
         }
     }
 }

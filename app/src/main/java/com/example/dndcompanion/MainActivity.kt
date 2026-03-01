@@ -23,10 +23,12 @@ import com.example.dndcompanion.ui.screens.RucksackScreen
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.screens.ZauberScreen
 import com.example.dndcompanion.ui.screens.HelpScreen
+import com.example.dndcompanion.ui.screens.ProfilScreen
 import com.example.dndcompanion.ui.theme.*
 
 // Definition der Tabs für bessere Lesbarkeit
 enum class AthaniaTab(val title: String) {
+    Profil("Profil"),
     Kampf("Kampf"),
     Zauber("Zauber"),
     Rucksack("Rucksack"),
@@ -112,10 +114,11 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
 
         Box(modifier = Modifier.fillMaxSize()) {
             when (selectedTab) {
-                AthaniaTab.Kampf -> CombatScreen(viewModel)
+                AthaniaTab.Profil -> ProfilScreen(viewModel)
+                AthaniaTab.Kampf -> CombatScreen(viewModel, onNavigateToRucksack = { selectedTab = AthaniaTab.Rucksack })
                 AthaniaTab.Zauber -> ZauberScreen(viewModel)
                 AthaniaTab.Rucksack -> RucksackScreen(viewModel)
-                else -> CombatScreen(viewModel) // Fallback
+                else -> ProfilScreen(viewModel) // Fallback
             }
         }
     }

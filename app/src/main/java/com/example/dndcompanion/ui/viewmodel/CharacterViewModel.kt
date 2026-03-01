@@ -267,7 +267,32 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 customLoot.clear()
                 customLoot.addAll(items)
             }
+        } else {
+            // Initiale Gegenstände beim allerersten Start laden
+            customLoot.addAll(getAthaniaDefaultLoot())
+            saveLoot()
         }
+    }
+
+    private fun getAthaniaDefaultLoot(): List<InventoryItem> {
+        return listOf(
+            InventoryItem("Beschlagene Lederrüstung", 1),
+            InventoryItem("Langbogen", 1),
+            InventoryItem("Kurzschwert", 1),
+            InventoryItem("Kampfstab", 1),
+            InventoryItem("Peitsche", 1),
+            InventoryItem("Schild", 1),
+            InventoryItem("Reisekleidung", 1),
+            InventoryItem("Rucksack", 1),
+            InventoryItem("Kleine Onyxstatue (Fokus)", 1),
+            InventoryItem("Kräuterkundeset", 1),
+            InventoryItem("Schwarzer Onyxschädel", 1),
+            InventoryItem("Wasserschlauch (halb)", 2),
+            InventoryItem("Trank der Rinderhaut", 1),
+            InventoryItem("Gift (Flasche)", 2),
+            InventoryItem("Heiltrank", 1),
+            InventoryItem("Hämatit", 1)
+        )
     }
 
     fun addCustomLoot(itemName: String) {
