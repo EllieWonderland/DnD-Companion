@@ -4,12 +4,16 @@ import android.app.Application
 import android.content.Context
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dndcompanion.BuildConfig
-import com.google.ai.client.generativeai.GenerativeModel
+import com.google.firebase.Firebase
+import com.google.firebase.ai.ai
 import kotlinx.coroutines.launch
 
 // --- DATENKLASSEN & ENUMS ---
@@ -50,19 +54,19 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val spellSaveDc: Int get() = 8 + proficiencyBonus + wisMod
 
     val maxHp = 40
-    var currentHp by mutableStateOf(prefs.getInt("currentHp", maxHp))
+    var currentHp by mutableIntStateOf(prefs.getInt("currentHp", maxHp))
         private set
-    var hitDice by mutableStateOf(prefs.getInt("hitDice", 4))
+    var hitDice by mutableIntStateOf(prefs.getInt("hitDice", 4))
         private set
 
     fun takeDamage(amount: Int) {
         currentHp = (currentHp - amount).coerceAtLeast(0)
-        prefs.edit().putInt("currentHp", currentHp).apply()
+        prefs.edit { putInt("currentHp", currentHp) }
     }
 
     fun healManual(amount: Int) {
         currentHp = (currentHp + amount).coerceAtMost(maxHp)
-        prefs.edit().putInt("currentHp", currentHp).apply()
+        prefs.edit { putInt("currentHp", currentHp) }
     }
 
     private val savedWeaponName = prefs.getString("currentWeapon", ActiveWeapon.LANGBOGEN.name) ?: ActiveWeapon.LANGBOGEN.name
@@ -71,7 +75,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun equipWeapon(weapon: ActiveWeapon) {
         currentWeapon = weapon
-        prefs.edit().putString("currentWeapon", weapon.name).apply()
+        prefs.edit { putString("currentWeapon", weapon.name) }
     }
 
     val currentArmorClass: Int
@@ -95,22 +99,22 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             ActiveWeapon.SHILLELAGH_SCHILD -> "1W8 + $wisMod Wucht (Umstoßen: ST-Save 12)"
         }
 
-    var spellSlotsLevel1 by mutableStateOf(prefs.getInt("spellSlotsLevel1", 3))
+    var spellSlotsLevel1 by mutableIntStateOf(prefs.getInt("spellSlotsLevel1", 3))
         private set
-    var huntersMarkFreeUses by mutableStateOf(prefs.getInt("huntersMarkFreeUses", 2))
+    var huntersMarkFreeUses by mutableIntStateOf(prefs.getInt("huntersMarkFreeUses", 2))
         private set
 
     fun useSpellSlotLevel1() {
         if (spellSlotsLevel1 > 0) {
             spellSlotsLevel1--
-            prefs.edit().putInt("spellSlotsLevel1", spellSlotsLevel1).apply()
+            prefs.edit { putInt("spellSlotsLevel1", spellSlotsLevel1) }
         }
     }
 
     fun useHuntersMarkFree() {
         if (huntersMarkFreeUses > 0) {
             huntersMarkFreeUses--
-            prefs.edit().putInt("huntersMarkFreeUses", huntersMarkFreeUses).apply()
+            prefs.edit { putInt("huntersMarkFreeUses", huntersMarkFreeUses) }
         }
     }
 
@@ -118,39 +122,39 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         if (spellSlotsLevel1 > 0) {
             spellSlotsLevel1--
             goodberries += 10
-            prefs.edit()
-                .putInt("spellSlotsLevel1", spellSlotsLevel1)
-                .putInt("goodberries", goodberries)
-                .apply()
+            prefs.edit {
+                putInt("spellSlotsLevel1", spellSlotsLevel1)
+                putInt("goodberries", goodberries)
+            }
         }
     }
 
-    var water by mutableStateOf(prefs.getFloat("water", 2.0f))
+    var water by mutableFloatStateOf(prefs.getFloat("water", 2.0f))
         private set
-    var rations by mutableStateOf(prefs.getInt("rations", 10))
+    var rations by mutableIntStateOf(prefs.getInt("rations", 10))
         private set
-    var goodberries by mutableStateOf(prefs.getInt("goodberries", 0))
+    var goodberries by mutableIntStateOf(prefs.getInt("goodberries", 0))
         private set
 
     fun changeWater(amount: Float) {
         water = (water + amount).coerceAtLeast(0f)
-        prefs.edit().putFloat("water", water).apply()
+        prefs.edit { putFloat("water", water) }
     }
 
     fun changeRations(amount: Int) {
         rations = (rations + amount).coerceAtLeast(0)
-        prefs.edit().putInt("rations", rations).apply()
+        prefs.edit { putInt("rations", rations) }
     }
 
     fun changeGoodberries(amount: Int) {
         goodberries = (goodberries + amount).coerceAtLeast(0)
-        prefs.edit().putInt("goodberries", goodberries).apply()
+        prefs.edit { putInt("goodberries", goodberries) }
     }
 
     val customLoot = mutableStateListOf<InventoryItem>()
     private fun saveLoot() {
         val lootString = customLoot.joinToString(";") { "${it.name}|${it.amount}" }
-        prefs.edit().putString("customLoot", lootString).apply()
+        prefs.edit { putString("customLoot", lootString) }
     }
 
     private fun loadLoot() {
@@ -195,10 +199,10 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             val healAmount = rolledValue + conMod
             currentHp = (currentHp + healAmount).coerceAtMost(maxHp)
 
-            prefs.edit()
-                .putInt("hitDice", hitDice)
-                .putInt("currentHp", currentHp)
-                .apply()
+            prefs.edit {
+                putInt("hitDice", hitDice)
+                putInt("currentHp", currentHp)
+            }
         }
     }
 
@@ -212,37 +216,40 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         changeWater(-0.5f)
         changeRations(-1)
 
-        prefs.edit()
-            .putInt("spellSlotsLevel1", spellSlotsLevel1)
-            .putInt("huntersMarkFreeUses", huntersMarkFreeUses)
-            .putInt("goodberries", goodberries)
-            .putInt("currentHp", currentHp)
-            .putInt("hitDice", hitDice)
-            .putInt("geminiUsesToday", 0)
-            .apply()
+        prefs.edit {
+            putInt("spellSlotsLevel1", spellSlotsLevel1)
+            putInt("huntersMarkFreeUses", huntersMarkFreeUses)
+            putInt("goodberries", goodberries)
+            putInt("currentHp", currentHp)
+            putInt("hitDice", hitDice)
+            putInt("geminiUsesToday", 0)
+        }
     }
 
     var isSkyBeast by mutableStateOf(prefs.getBoolean("isSkyBeast", true))
         private set
 
     val capyMaxHp: Int get() = if (isSkyBeast) 4 + (4 * level) else 5 + (5 * level)
-    var capyCurrentHp by mutableStateOf(prefs.getInt("capyCurrentHp", 20))
+    var capyCurrentHp by mutableIntStateOf(prefs.getInt("capyCurrentHp", 20))
         private set
 
     fun toggleBeastType(isSky: Boolean) {
         isSkyBeast = isSky
         if (capyCurrentHp > capyMaxHp) capyCurrentHp = capyMaxHp
-        prefs.edit().putBoolean("isSkyBeast", isSkyBeast).putInt("capyCurrentHp", capyCurrentHp).apply()
+        prefs.edit {
+            putBoolean("isSkyBeast", isSkyBeast)
+            putInt("capyCurrentHp", capyCurrentHp)
+        }
     }
 
     fun takeCapyDamage(amount: Int) {
         capyCurrentHp = (capyCurrentHp - amount).coerceAtLeast(0)
-        prefs.edit().putInt("capyCurrentHp", capyCurrentHp).apply()
+        prefs.edit { putInt("capyCurrentHp", capyCurrentHp) }
     }
 
     fun healCapy(amount: Int) {
         capyCurrentHp = (capyCurrentHp + amount).coerceAtMost(capyMaxHp)
-        prefs.edit().putInt("capyCurrentHp", capyCurrentHp).apply()
+        prefs.edit { putInt("capyCurrentHp", capyCurrentHp) }
     }
 
     val capyAc: Int get() = 13 + proficiencyBonus
@@ -257,21 +264,19 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     var currentUsedModel by mutableStateOf("Bereit")
         private set
-    var geminiUsesToday by mutableStateOf(prefs.getInt("geminiUsesToday", 0))
+    var geminiUsesToday by mutableIntStateOf(prefs.getInt("geminiUsesToday", 0))
         private set
     val geminiMax = 20
 
     private val systemPrompt = "Du bist ein Dungeons and Dragons Regel-Assistent. Beziehe dich ausschließlich auf die Regeln des Player Handbook 2024. Wir spielen nicht abwärtskompatibel. Antworte extrem kurz, präzise und leicht verständlich auf Deutsch."
 
-    // NEU: Definition der beiden Modelle
-    private val model3Flash = GenerativeModel(
-        modelName = "gemini-3-flash-preview",
-        apiKey = BuildConfig.GEMINI_API_KEY
+    // Initialisierung über Firebase.ai.generativeModel
+    private val model3Flash = Firebase.ai.generativeModel(
+        modelName = "gemini-1.5-flash"
     )
 
-    private val model25Flash = GenerativeModel(
-        modelName = "gemini-2.5-flash",
-        apiKey = BuildConfig.GEMINI_API_KEY
+    private val model25Flash = Firebase.ai.generativeModel(
+        modelName = "gemini-1.5-pro"
     )
 
     // Chat-Session startet standardmäßig mit Gemini 3
@@ -296,7 +301,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun saveFaqs() {
         val faqString = faqList.joinToString("||") { "${it.question}|:|${it.answer}" }
-        prefs.edit().putString("savedFaqs", faqString).apply()
+        prefs.edit { putString("savedFaqs", faqString) }
     }
 
     private fun getCharacterContext(): String {
@@ -346,7 +351,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun finalizeResponse(index: Int, text: String?) {
         geminiUsesToday++
-        prefs.edit().putInt("geminiUsesToday", geminiUsesToday).apply()
+        prefs.edit { putInt("geminiUsesToday", geminiUsesToday) }
         chatHistory[index] = ChatMessage(text ?: "Keine Antwort.", false)
     }
 

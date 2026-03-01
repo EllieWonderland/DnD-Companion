@@ -29,7 +29,19 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 .padding(16.dp)
         ) {
             Text("Zauber & Fähigkeiten", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp)) // Etwas weniger Abstand hier
+
+            // NEU: Zauberwerte anzeigen
+            Card(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                colors = CardDefaults.cardColors(containerColor = BlauHell)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text("Zauber-Angriffsbonus: +${viewModel.spellAttackBonus}", color = Color.White, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text("Zauber-Rettungswurf DC: ${viewModel.spellSaveDc}", color = Color.White, fontWeight = FontWeight.Bold)
+                }
+            }
 
             // Zeichen des Jägers (Kostenlos)
             Card(

@@ -9,7 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.* 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -100,6 +100,22 @@ fun ChatView(viewModel: CharacterViewModel) {
         }
 
         Spacer(modifier = Modifier.height(8.dp))
+
+        // NEU: Chat zurücksetzen Button
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End // Rechts ausgerichtet
+        ) {
+            Button(
+                onClick = { viewModel.resetChat() },
+                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel),
+                modifier = Modifier.padding(bottom = 8.dp)
+            ) {
+                Icon(Icons.Default.Delete, contentDescription = "Chat zurücksetzen", tint = Color.White)
+                Spacer(Modifier.width(4.dp))
+                Text("Chat zurücksetzen", color = Color.White)
+            }
+        }
 
         // Eingabefeld
         Row(
