@@ -59,27 +59,31 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
                 colors = CardDefaults.cardColors(containerColor = BlauHell)
             ) {
-                Row(
-                    modifier = Modifier.padding(16.dp).fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                Column(
+                    modifier = Modifier.padding(16.dp).fillMaxWidth()
                 ) {
-                    Column {
-                        Text("Zeichen des Jägers (Gratis)", color = Color.White, fontWeight = FontWeight.Bold)
-                        Text("Ohne Zauberplatz", color = Color.White, fontSize = 12.sp)
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("${viewModel.huntersMarkFreeUses} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
-                        Button(
-                            onClick = { viewModel.useHuntersMarkFree() },
-                            enabled = viewModel.huntersMarkFreeUses > 0,
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = PinkDunkel,
-                                disabledContainerColor = Color.Gray
-                            )
-                        ) {
-                            Text("Wirken")
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text("Zeichen des Jägers (Gratis)", color = Color.White, fontWeight = FontWeight.Bold)
+                            Text("Ohne Zauberplatz", color = Color.White, fontSize = 12.sp)
                         }
+                        Text("${viewModel.huntersMarkFreeUses} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(
+                        onClick = { viewModel.useHuntersMarkFree() },
+                        enabled = viewModel.huntersMarkFreeUses > 0,
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = PinkDunkel,
+                            disabledContainerColor = Color.Gray
+                        )
+                    ) {
+                        Text("Wirken")
                     }
                 }
             }
@@ -246,16 +250,88 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Volks- und Klassenmerkmale nach unten gezogen
-            Text("Merkmale", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Merkmale", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+            }
             Spacer(modifier = Modifier.height(8.dp))
             
-            TraitCard("Urbegleiter (Land, Himmel, Meer)", "Bonusaktion: Urtier befehligen\nAktion: Urtier Angriff\nZauberslot: Urtier beleben (volle HP)")
-            TraitCard("Trance", "Du musst nicht schlafen. Lange Rast dauert 4 Std in Meditation.")
-            TraitCard("Feenblut", "Vorteil bei Rettungswürfen gegen Bezauberung.")
-            TraitCard("Messerstecher", "Bei Stichschaden 1x pro Zug 1 Angriffswürfel neu würfeln. Bei Krit 1 zus. Schadenswürfel.")
-            
-            viewModel.customTraits.forEach { trait ->
-                TraitCard(trait.name, trait.desc)
+            // Editierbare benutzerdefinierte Merkmale (alle Merkmale)
+            var editingTraitIndex by remember { mutableIntStateOf(-1) }
+            var editTraitName by remember { mutableStateOf("") }
+            var editTraitDesc by remember { mutableStateOf("") }
+
+            viewModel.customTraits.forEachIndexed { index, trait ->
+                if (editingTraitIndex == index) {
+                    // Inline-Bearbeitungsmodus
+                    Card(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                        colors = CardDefaults.cardColors(containerColor = BlauHell)
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            OutlinedTextField(
+                                value = editTraitName,
+                                onValueChange = { editTraitName = it },
+                                label = { Text("Name") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = PinkDunkel,
+                                    focusedLabelColor = PinkDunkel,
+                                    unfocusedTextColor = Color.White,
+                                    focusedTextColor = Color.White
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            OutlinedTextField(
+                                value = editTraitDesc,
+                                onValueChange = { editTraitDesc = it },
+                                label = { Text("Beschreibung") },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = PinkDunkel,
+                                    focusedLabelColor = PinkDunkel,
+                                    unfocusedTextColor = Color.White,
+                                    focusedTextColor = Color.White
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                TextButton(onClick = { editingTraitIndex = -1 }) {
+                                    Text("Abbrechen", color = Color.White)
+                                }
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Button(
+                                    onClick = {
+                                        viewModel.updateCustomTrait(index, editTraitName, editTraitDesc)
+                                        editingTraitIndex = -1
+                                    },
+                                    colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                                ) {
+                                    Text("Speichern")
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // Normaler Anzeige-Modus mit Bearbeiten/Löschen
+                    EditableTraitCard(
+                        title = trait.name,
+                        desc = trait.desc,
+                        onEdit = {
+                            editTraitName = trait.name
+                            editTraitDesc = trait.desc
+                            editingTraitIndex = index
+                        },
+                        onDelete = { viewModel.removeCustomTrait(index) }
+                    )
+                }
             }
             
             Spacer(modifier = Modifier.height(8.dp))
@@ -403,6 +479,44 @@ fun TraitCard(title: String, desc: String) {
             Text(title, color = GelbSand, fontWeight = FontWeight.Bold, fontSize = 16.sp)
             Spacer(modifier = Modifier.height(4.dp))
             Text(desc, color = Color.White, fontSize = 14.sp)
+        }
+    }
+}
+
+@Composable
+fun EditableTraitCard(title: String, desc: String, onEdit: () -> Unit, onDelete: () -> Unit) {
+    var expanded by remember { mutableStateOf(false) }
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).clickable { expanded = !expanded },
+        colors = CardDefaults.cardColors(containerColor = BlauHell)
+    ) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(title, color = GelbSand, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(desc, color = Color.White, fontSize = 14.sp)
+                }
+            }
+            if (expanded) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = onEdit) {
+                        Text("✏️ Bearbeiten", color = GelbSand, fontSize = 12.sp)
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    TextButton(onClick = onDelete) {
+                        Text("🗑️ Löschen", color = PinkDunkel, fontSize = 12.sp)
+                    }
+                }
+            }
         }
     }
 }

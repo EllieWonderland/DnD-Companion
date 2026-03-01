@@ -18,7 +18,7 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 
 // --- DATENKLASSEN & ENUMS ---
-data class InventoryItem(val name: String, val amount: Int, val weight: Double = 0.0)
+data class InventoryItem(val name: String, val amount: Int, val weight: Double = 0.0, val category: String = "Sonstiges")
 data class ChatMessage(val text: String, val isUser: Boolean)
 data class FaqItem(val question: String, val answer: String)
 data class TraitItem(val name: String, val desc: String)
@@ -410,32 +410,32 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun getAthaniaDefaultLoot(): List<InventoryItem> {
         return listOf(
-            InventoryItem("Beschlagene Lederrüstung", 1, 6.0),
-            InventoryItem("Langbogen", 1, 1.0),
-            InventoryItem("Kurzschwert", 1, 1.0),
-            InventoryItem("Kampfstab", 1, 2.0),
-            InventoryItem("Peitsche", 1, 1.5),
-            InventoryItem("Schild", 1, 3.0),
-            InventoryItem("Reisekleidung", 1, 2.0),
-            InventoryItem("Rucksack", 1, 2.5),
-            InventoryItem("Kleine Onyxstatue (Fokus)", 1, 0.5),
-            InventoryItem("Kräuterkundeset", 1, 1.5),
-            InventoryItem("Schwarzer Onyxschädel", 1, 1.0),
-            InventoryItem("Wasserschlauch (halb)", 2, 1.0),
-            InventoryItem("Trank der Rinderhaut", 1, 0.5),
-            InventoryItem("Gift (Flasche)", 2, 0.5),
-            InventoryItem("Heiltrank", 1, 0.5),
-            InventoryItem("Hämatit", 1, 0.1)
+            InventoryItem("Beschlagene Lederrüstung", 1, 6.0, "Rüstung & Waffen"),
+            InventoryItem("Langbogen", 1, 1.0, "Rüstung & Waffen"),
+            InventoryItem("Kurzschwert", 1, 1.0, "Rüstung & Waffen"),
+            InventoryItem("Kampfstab", 1, 2.0, "Rüstung & Waffen"),
+            InventoryItem("Peitsche", 1, 1.5, "Rüstung & Waffen"),
+            InventoryItem("Schild", 1, 3.0, "Rüstung & Waffen"),
+            InventoryItem("Reisekleidung", 1, 2.0, "Ausrüstung"),
+            InventoryItem("Rucksack", 1, 2.5, "Ausrüstung"),
+            InventoryItem("Kleine Onyxstatue (Fokus)", 1, 0.5, "Magie"),
+            InventoryItem("Kräuterkundeset", 1, 1.5, "Werkzeug"),
+            InventoryItem("Schwarzer Onyxschädel", 1, 1.0, "Sonstiges"),
+            InventoryItem("Wasserschlauch (halb)", 2, 1.0, "Ausrüstung"),
+            InventoryItem("Trank der Rinderhaut", 1, 0.5, "Tränke"),
+            InventoryItem("Gift (Flasche)", 2, 0.5, "Tränke"),
+            InventoryItem("Heiltrank", 1, 0.5, "Tränke"),
+            InventoryItem("Hämatit", 1, 0.1, "Schätze")
         )
     }
 
-    fun addCustomLoot(itemName: String, weight: Double = 0.0) {
+    fun addCustomLoot(itemName: String, weight: Double = 0.0, category: String = "Sonstiges") {
         val index = customLoot.indexOfFirst { it.name.equals(itemName, ignoreCase = true) }
         if (index != -1) {
             val existingItem = customLoot[index]
             customLoot[index] = existingItem.copy(amount = existingItem.amount + 1)
         } else {
-            customLoot.add(InventoryItem(itemName, 1, weight))
+            customLoot.add(InventoryItem(itemName, 1, weight, category))
         }
         saveLoot()
     }
@@ -458,11 +458,79 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             } catch (e: Exception) {
                 // Ignore
             }
+        } else {
+            // Initiale Merkmale beim allerersten Start laden
+            customTraits.addAll(getDefaultTraits())
+            saveTraits()
         }
+    }
+
+    private fun getDefaultTraits(): List<TraitItem> {
+        return listOf(
+            TraitItem("Urbegleiter (Land, Himmel, Meer)", "Bonusaktion: Urtier befehligen\nAktion: Urtier Angriff\nZauberslot: Urtier beleben (volle HP)"),
+            TraitItem("Trance", "Du musst nicht schlafen. Lange Rast dauert 4 Std in Meditation."),
+            TraitItem("Feenblut", "Vorteil bei Rettungswürfen gegen Bezauberung."),
+            TraitItem("Messerstecher", "Bei Stichschaden 1x pro Zug 1 Angriffswürfel neu würfeln. Bei Krit 1 zus. Schadenswürfel.")
+        )
     }
 
     fun addCustomTrait(name: String, desc: String) {
         customTraits.add(TraitItem(name, desc))
+        saveTraits()
+    }
+
+    fun removeCustomTrait(index: Int) {
+        if (index in customTraits.indices) {
+            customTraits.removeAt(index)
+            saveTraits()
+        }
+    }
+
+    fun updateCustomTrait(index: Int, name: String, desc: String) {
+        if (index in customTraits.indices) {
+            customTraits[index] = TraitItem(name, desc)
+            saveTraits()
+        }
+    }
+
+    // --- WERTE ZURÜCKSETZEN ---
+    fun resetToDefaults() {
+        // Alle SharedPreferences löschen und Grundwerte gemäß stats.md setzen
+        prefs.edit { clear() }
+
+        currentEP = 3606
+        level = 4
+        strength = 8
+        dexterity = 18
+        constitution = 16
+        intelligence = 10
+        wisdom = 14
+        charisma = 8
+        maxHp = 40
+        currentHp = 40
+        hitDice = 4
+        spellSlotsLevel1 = 3
+        spellSlotsLevel2 = 0
+        spellSlotsLevel3 = 0
+        huntersMarkFreeUses = 2
+        water = 2.0f
+        rations = 10
+        goodberries = 0
+        coinsKM = 0
+        coinsSM = 1
+        coinsEM = 0
+        coinsGM = 18
+        coinsPM = 0
+        totalArrows = 28
+        shotArrows = 0
+        currentWeapon = ActiveWeapon.LANGBOGEN
+
+        // Loot und Traits zurücksetzen
+        customLoot.clear()
+        customLoot.addAll(getAthaniaDefaultLoot())
+        saveLoot()
+        customTraits.clear()
+        customTraits.addAll(getDefaultTraits())
         saveTraits()
     }
 

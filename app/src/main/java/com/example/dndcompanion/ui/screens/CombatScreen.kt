@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -86,60 +87,102 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             }
         }
 
-        // Große Anzeige der Rüstungsklasse
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            colors = CardDefaults.cardColors(containerColor = BlauDunkel),
-            shape = RoundedCornerShape(16.dp)
+        // Große Anzeige: RK und EP nebeneinander
+        var showEpDialog by remember { mutableStateOf(false) }
+        var epInput by remember { mutableStateOf("") }
+
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Column(
-                modifier = Modifier.padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+            // Rüstungsklasse
+            Card(
+                modifier = Modifier.weight(1f),
+                colors = CardDefaults.cardColors(containerColor = BlauDunkel),
+                shape = RoundedCornerShape(16.dp)
             ) {
-                Text(text = "Rüstungsklasse (RK)", color = Color.White, fontSize = 16.sp)
-                Text(
-                    text = viewModel.currentArmorClass.toString(),
-                    color = PinkHell,
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.Bold
-                )
+                Column(
+                    modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(text = "Rüstungsklasse", color = Color.White, fontSize = 14.sp)
+                    Text(
+                        text = viewModel.currentArmorClass.toString(),
+                        color = PinkHell,
+                        fontSize = 48.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+
+            // Erfahrungspunkte
+            Card(
+                modifier = Modifier.weight(1f),
+                colors = CardDefaults.cardColors(containerColor = BlauDunkel),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(text = "EP (Stufe ${viewModel.level})", color = Color.White, fontSize = 14.sp)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = viewModel.currentEP.toString(),
+                            color = PinkHell,
+                            fontSize = 48.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        IconButton(onClick = { showEpDialog = true }) {
+                            Text("+", color = PinkHell, fontSize = 28.sp, fontWeight = FontWeight.Bold)
+                        }
+                    }
+                }
             }
         }
 
-        // EP Hinzufügen (verschoben aus ProfilScreen)
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            var epInput by remember { mutableStateOf("") }
-            OutlinedTextField(
-                value = epInput,
-                onValueChange = { if (it.isEmpty() || it.all { char -> char.isDigit() }) epInput = it },
-                label = { Text("EP hinzufügen (Aktuell: ${viewModel.currentEP})") },
-                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
-                modifier = Modifier.weight(1f),
-                singleLine = true,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PinkDunkel,
-                    focusedLabelColor = PinkDunkel
-                )
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(
-                onClick = {
-                    val amount = epInput.toIntOrNull()
-                    if (amount != null && amount > 0) {
-                        viewModel.addExperience(amount)
-                        epInput = ""
+        // EP Dialog
+        if (showEpDialog) {
+            AlertDialog(
+                onDismissRequest = { showEpDialog = false },
+                containerColor = GelbSand,
+                title = { Text("EP hinzufügen", color = BlauDunkel, fontWeight = FontWeight.Bold) },
+                text = {
+                    OutlinedTextField(
+                        value = epInput,
+                        onValueChange = { if (it.isEmpty() || it.all { c -> c.isDigit() }) epInput = it },
+                        label = { Text("Erfahrungspunkte") },
+                        keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
+                        singleLine = true,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = PinkDunkel,
+                            focusedLabelColor = PinkDunkel
+                        )
+                    )
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            val amount = epInput.toIntOrNull()
+                            if (amount != null && amount > 0) {
+                                viewModel.addExperience(amount)
+                                epInput = ""
+                                showEpDialog = false
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                    ) {
+                        Text("Hinzufügen")
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
-            ) {
-                Text("+ EP")
-            }
+                dismissButton = {
+                    TextButton(onClick = { showEpDialog = false }) {
+                        Text("Abbrechen", color = BlauDunkel)
+                    }
+                }
+            )
         }
 
         Text("Waffe ausrüsten", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
