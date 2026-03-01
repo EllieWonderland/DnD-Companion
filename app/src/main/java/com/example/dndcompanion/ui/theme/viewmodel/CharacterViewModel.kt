@@ -25,10 +25,9 @@ enum class ActiveWeapon {
 
 class CharacterViewModel(application: Application) : AndroidViewModel(application) {
 
-    // Die Verbindung zum unsichtbaren Speicher deines Handys
     private val prefs = application.getSharedPreferences("AthaniaSaveGame", Context.MODE_PRIVATE)
 
-    // --- BASISWERTE & MODIFIKATOREN (Athania) ---
+    // --- BASISWERTE ---
     val level: Int = 4
     val dexterity: Int = 18
     val wisdom: Int = 14
@@ -50,9 +49,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val spellAttackBonus: Int get() = proficiencyBonus + wisMod
     val spellSaveDc: Int get() = 8 + proficiencyBonus + wisMod
 
-    // --- LEBENSPUNKTE & TREFFERWÜRFEL ---
     val maxHp = 40
-
     var currentHp by mutableStateOf(prefs.getInt("currentHp", maxHp))
         private set
     var hitDice by mutableStateOf(prefs.getInt("hitDice", 4))
@@ -68,7 +65,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         prefs.edit().putInt("currentHp", currentHp).apply()
     }
 
-    // --- KAMPF & WAFFEN ---
     private val savedWeaponName = prefs.getString("currentWeapon", ActiveWeapon.LANGBOGEN.name) ?: ActiveWeapon.LANGBOGEN.name
     var currentWeapon by mutableStateOf(ActiveWeapon.valueOf(savedWeaponName))
         private set
@@ -99,7 +95,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             ActiveWeapon.SHILLELAGH_SCHILD -> "1W8 + $wisMod Wucht (Umstoßen: ST-Save 12)"
         }
 
-    // --- ZAUBER & FÄHIGKEITEN ---
     var spellSlotsLevel1 by mutableStateOf(prefs.getInt("spellSlotsLevel1", 3))
         private set
     var huntersMarkFreeUses by mutableStateOf(prefs.getInt("huntersMarkFreeUses", 2))
@@ -130,7 +125,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    // --- FESTER RUCKSACK ---
     var water by mutableStateOf(prefs.getFloat("water", 2.0f))
         private set
     var rations by mutableStateOf(prefs.getInt("rations", 10))
@@ -153,7 +147,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         prefs.edit().putInt("goodberries", goodberries).apply()
     }
 
-    // --- FLEXIBLER LOOT ---
     val customLoot = mutableStateListOf<InventoryItem>()
     private fun saveLoot() {
         val lootString = customLoot.joinToString(";") { "${it.name}|${it.amount}" }
@@ -196,7 +189,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    // --- RASTEN ---
     fun takeShortRest(rolledValue: Int) {
         if (hitDice > 0 && currentHp < maxHp) {
             hitDice--
@@ -215,10 +207,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         huntersMarkFreeUses = 2
         goodberries = 0
         geminiUsesToday = 0
-
         currentHp = maxHp
         hitDice = 4
-
         changeWater(-0.5f)
         changeRations(-1)
 
@@ -232,23 +222,17 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             .apply()
     }
 
-    // --- CAPY (URTIER) ---
     var isSkyBeast by mutableStateOf(prefs.getBoolean("isSkyBeast", true))
         private set
 
     val capyMaxHp: Int get() = if (isSkyBeast) 4 + (4 * level) else 5 + (5 * level)
-
     var capyCurrentHp by mutableStateOf(prefs.getInt("capyCurrentHp", 20))
         private set
 
     fun toggleBeastType(isSky: Boolean) {
         isSkyBeast = isSky
         if (capyCurrentHp > capyMaxHp) capyCurrentHp = capyMaxHp
-
-        prefs.edit()
-            .putBoolean("isSkyBeast", isSkyBeast)
-            .putInt("capyCurrentHp", capyCurrentHp)
-            .apply()
+        prefs.edit().putBoolean("isSkyBeast", isSkyBeast).putInt("capyCurrentHp", capyCurrentHp).apply()
     }
 
     fun takeCapyDamage(amount: Int) {
@@ -265,30 +249,33 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val capyAttackBonus: String get() = "+$spellAttackBonus"
     val capyDamage: String get() = if (isSkyBeast) "1W4 + $wisMod Hieb" else "1W8 + $wisMod Hieb"
     val capySpeed: String get() = if (isSkyBeast) "Fliegen 18 m, Laufen 3 m" else "Laufen 12 m, Klettern 12 m"
-    val capySpecial: String get() = if (isSkyBeast) "Vorbeifliegen (keine Gelegenheitsangriffe)" else "Ansturm (Gegner umstoßen, ST-Save)"
+    val capySpecial: String get() = if (isSkyBeast) "Vorbeifliegen" else "Ansturm"
 
     // --- HILFE: CHAT & FAQ ---
     val chatHistory = mutableStateListOf<ChatMessage>()
     val faqList = mutableStateListOf<FaqItem>()
 
-    // Status-Anzeigen für die UI
     var currentUsedModel by mutableStateOf("Bereit")
         private set
     var geminiUsesToday by mutableStateOf(prefs.getInt("geminiUsesToday", 0))
         private set
     val geminiMax = 20
 
-    // Die Anweisung als Variable, damit wir sie überall nutzen können
     private val systemPrompt = "Du bist ein Dungeons and Dragons Regel-Assistent. Beziehe dich ausschließlich auf die Regeln des Player Handbook 2024. Wir spielen nicht abwärtskompatibel. Antworte extrem kurz, präzise und leicht verständlich auf Deutsch."
 
-    // 1. Wahl: Gemini 1.5 Flash
-    private val primaryModel = GenerativeModel(
-        modelName = "gemini-1.5-flash",
+    // NEU: Definition der beiden Modelle
+    private val model3Flash = GenerativeModel(
+        modelName = "gemini-3-flash-preview",
         apiKey = BuildConfig.GEMINI_API_KEY
     )
 
-    // Das Chat-Objekt für den Kontext
-    private var activeChatSessionGemini = primaryModel.startChat()
+    private val model25Flash = GenerativeModel(
+        modelName = "gemini-2.5-flash",
+        apiKey = BuildConfig.GEMINI_API_KEY
+    )
+
+    // Chat-Session startet standardmäßig mit Gemini 3
+    private var activeChatSession = model3Flash.startChat()
 
     init {
         loadLoot()
@@ -312,7 +299,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         prefs.edit().putString("savedFaqs", faqString).apply()
     }
 
-    // Hilfsfunktion: Baut das aktuelle Datenblatt deiner Stats
     private fun getCharacterContext(): String {
         return """
             KONTEXT ATHANIA (Level $level):
@@ -336,11 +322,19 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         viewModelScope.launch {
             try {
                 if (geminiUsesToday < geminiMax) {
-                    currentUsedModel = "Gemini 1.5 Flash"
-                    val response = activeChatSessionGemini.sendMessage(finalPrompt)
-                    geminiUsesToday++
-                    prefs.edit().putInt("geminiUsesToday", geminiUsesToday).apply()
-                    chatHistory[loadingIndex] = ChatMessage(response.text ?: "Keine Antwort.", false)
+                    try {
+                        // Versuch 1: Gemini 3 Flash
+                        currentUsedModel = "Gemini 3 Flash"
+                        val response = activeChatSession.sendMessage(finalPrompt)
+                        finalizeResponse(loadingIndex, response.text)
+                    } catch (_: Exception) {
+                        // Fallback: Gemini 2.5 Flash
+                        currentUsedModel = "Gemini 2.5 Flash (Fallback)"
+                        val fallbackSession = model25Flash.startChat(history = activeChatSession.history)
+                        val response = fallbackSession.sendMessage(finalPrompt)
+                        activeChatSession = fallbackSession // Bleibe für diesen Chat beim Fallback
+                        finalizeResponse(loadingIndex, response.text)
+                    }
                 } else {
                     throw Exception("Limit erreicht")
                 }
@@ -350,9 +344,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    private fun finalizeResponse(index: Int, text: String?) {
+        geminiUsesToday++
+        prefs.edit().putInt("geminiUsesToday", geminiUsesToday).apply()
+        chatHistory[index] = ChatMessage(text ?: "Keine Antwort.", false)
+    }
+
     fun resetChat() {
         chatHistory.clear()
-        activeChatSessionGemini = primaryModel.startChat()
+        activeChatSession = model3Flash.startChat()
+        currentUsedModel = "Bereit"
     }
 
     fun addChatToFaq(question: String, answer: String) {

@@ -51,39 +51,41 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun DnDApp(viewModel: CharacterViewModel) {
-    var isAthaniaScreen by rememberSaveable { mutableStateOf(true) }
+    // 0 = Athania, 1 = Capy, 2 = Hilfe
+    var currentScreen by rememberSaveable { mutableStateOf(0) }
 
     Scaffold(
         bottomBar = {
             NavigationBar(containerColor = BlauHell) {
                 NavigationBarItem(
-                    selected = isAthaniaScreen,
-                    onClick = { isAthaniaScreen = true },
+                    selected = currentScreen == 0,
+                    onClick = { currentScreen = 0 },
                     icon = { Text("🧝‍♀️") },
                     label = { Text("Athania") },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = Color.White,
-                        indicatorColor = BlauDunkel
-                    )
+                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
                 )
                 NavigationBarItem(
-                    selected = !isAthaniaScreen,
-                    onClick = { isAthaniaScreen = false },
+                    selected = currentScreen == 1,
+                    onClick = { currentScreen = 1 },
                     icon = { Text("🐾") },
                     label = { Text("Capy") },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = Color.White,
-                        indicatorColor = BlauDunkel
-                    )
+                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
+                )
+                NavigationBarItem(
+                    selected = currentScreen == 2, // NEU: Hilfe wieder hier
+                    onClick = { currentScreen = 2 },
+                    icon = { Text("📚") },
+                    label = { Text("Hilfe") },
+                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
                 )
             }
         }
     ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
-            if (isAthaniaScreen) {
-                AthaniaScreen(viewModel)
-            } else {
-                CapyScreen(viewModel)
+            when (currentScreen) {
+                0 -> AthaniaScreen(viewModel)
+                1 -> CapyScreen(viewModel)
+                2 -> HelpScreen(viewModel)
             }
         }
     }
@@ -91,6 +93,7 @@ fun DnDApp(viewModel: CharacterViewModel) {
 
 @Composable
 fun AthaniaScreen(viewModel: CharacterViewModel) {
+    // Hier entfernen wir den Hilfe-Tab, da er jetzt in der Haupt-Navi ist
     var selectedTab by rememberSaveable { mutableStateOf(AthaniaTab.Kampf) }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -99,7 +102,8 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
             containerColor = GelbSand,
             contentColor = BlauDunkel
         ) {
-            AthaniaTab.entries.forEach { tab ->
+            // Wir filtern den Hilfe-Tab aus der oberen Leiste heraus
+            AthaniaTab.entries.filter { it != AthaniaTab.Hilfe }.forEach { tab ->
                 Tab(
                     selected = selectedTab == tab,
                     onClick = { selectedTab = tab },
@@ -115,7 +119,7 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
                 AthaniaTab.Kampf -> CombatScreen(viewModel)
                 AthaniaTab.Zauber -> ZauberScreen(viewModel)
                 AthaniaTab.Rucksack -> RucksackScreen(viewModel)
-                AthaniaTab.Hilfe -> HelpScreen(viewModel)
+                else -> CombatScreen(viewModel) // Fallback
             }
         }
     }
