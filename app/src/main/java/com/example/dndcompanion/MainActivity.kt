@@ -16,18 +16,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.dndcompanion.ui.theme.ui.CombatScreen
-import com.example.dndcompanion.ui.theme.ui.RucksackScreen
-import com.example.dndcompanion.ui.theme.viewmodel.CharacterViewModel
-import com.example.dndcompanion.ui.theme.ui.ZauberScreen
-import com.example.dndcompanion.ui.theme.ui.HelpScreen
-
-// Farben
-val BlauDunkel = Color(0xFF61A0AF)
-val BlauHell = Color(0xFF96C9DC)
-val PinkDunkel = Color(0xFFF06C9B)
-val PinkHell = Color(0xFFF9B9B7)
-val GelbSand = Color(0xFFF5D491)
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import com.example.dndcompanion.ui.screens.CombatScreen
+import com.example.dndcompanion.ui.screens.RucksackScreen
+import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+import com.example.dndcompanion.ui.screens.ZauberScreen
+import com.example.dndcompanion.ui.screens.HelpScreen
+import com.example.dndcompanion.ui.theme.*
 
 // Definition der Tabs für bessere Lesbarkeit
 enum class AthaniaTab(val title: String) {
@@ -128,7 +124,7 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
 @Composable
 fun CapyScreen(viewModel: CharacterViewModel) {
     Column(
-        modifier = Modifier.fillMaxSize().background(GelbSand).padding(16.dp),
+        modifier = Modifier.fillMaxSize().background(GelbSand).padding(16.dp).verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {

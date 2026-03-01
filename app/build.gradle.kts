@@ -75,4 +75,7 @@ dependencies {
 
     // Einfaches SDK ohne Firebase-Cloud-Zwang
     implementation(libs.google.generativeai)
+
+    // JSON Serialisierung für Datensicherheit
+    implementation("com.google.code.gson:gson:2.10.1")
 }
