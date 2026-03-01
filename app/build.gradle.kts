@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("com.google.gms.google-services")
 }
 
 val properties = Properties()
@@ -73,6 +72,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.ai)
+
+    // Einfaches SDK ohne Firebase-Cloud-Zwang
+    implementation(libs.google.generativeai)
 }

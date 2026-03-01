@@ -12,8 +12,7 @@ import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dndcompanion.BuildConfig
-import com.google.firebase.Firebase
-import com.google.firebase.ai.ai
+import com.google.ai.client.generativeai.GenerativeModel
 import kotlinx.coroutines.launch
 
 // --- DATENKLASSEN & ENUMS ---
@@ -270,16 +269,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     private val systemPrompt = "Du bist ein Dungeons and Dragons Regel-Assistent. Beziehe dich ausschließlich auf die Regeln des Player Handbook 2024. Wir spielen nicht abwärtskompatibel. Antworte extrem kurz, präzise und leicht verständlich auf Deutsch."
 
-    // Initialisierung über Firebase.ai.generativeModel
-    private val model3Flash = Firebase.ai.generativeModel(
-        modelName = "gemini-1.5-flash"
+    private val model3Flash = GenerativeModel(
+        modelName = "gemini-3.0-flash",
+        apiKey = BuildConfig.GEMINI_API_KEY
     )
 
-    private val model25Flash = Firebase.ai.generativeModel(
-        modelName = "gemini-1.5-pro"
+    private val model25Flash = GenerativeModel(
+        modelName = "gemini-2.5-flash",
+        apiKey = BuildConfig.GEMINI_API_KEY
     )
 
-    // Chat-Session startet standardmäßig mit Gemini 3
     private var activeChatSession = model3Flash.startChat()
 
     init {
@@ -328,23 +327,27 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             try {
                 if (geminiUsesToday < geminiMax) {
                     try {
-                        // Versuch 1: Gemini 3 Flash
-                        currentUsedModel = "Gemini 3 Flash"
+                        currentUsedModel = "Gemini 3.0 Flash"
                         val response = activeChatSession.sendMessage(finalPrompt)
                         finalizeResponse(loadingIndex, response.text)
-                    } catch (_: Exception) {
-                        // Fallback: Gemini 2.5 Flash
+                    } catch (e: Exception) {
                         currentUsedModel = "Gemini 2.5 Flash (Fallback)"
                         val fallbackSession = model25Flash.startChat(history = activeChatSession.history)
                         val response = fallbackSession.sendMessage(finalPrompt)
-                        activeChatSession = fallbackSession // Bleibe für diesen Chat beim Fallback
+                        activeChatSession = fallbackSession
                         finalizeResponse(loadingIndex, response.text)
                     }
                 } else {
                     throw Exception("Limit erreicht")
                 }
             } catch (e: Exception) {
-                chatHistory[loadingIndex] = ChatMessage("Fehler: ${e.localizedMessage}", false)
+                // Fängt den Serialisierungsbug ab, der bei 404 (Modell nicht gefunden) auftritt
+                val errorMsg = if (e.localizedMessage?.contains("MissingFieldException") == true) {
+                    "Fehler: Das Modell konnte nicht gefunden werden. Prüfe, ob dein API-Key bereits für die 3.0 / 2.5 Modelle freigeschaltet ist."
+                } else {
+                    "Fehler: ${e.localizedMessage}"
+                }
+                chatHistory[loadingIndex] = ChatMessage(errorMsg, false)
             }
         }
     }
