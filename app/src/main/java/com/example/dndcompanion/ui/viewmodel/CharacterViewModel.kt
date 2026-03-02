@@ -837,16 +837,43 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     // --- SPELBOOK (ZAUBERBUCH) ---
     val allSpells = mutableStateListOf<Spell>()
+    val globalSpellbook = mutableStateListOf<Spell>()
 
     init {
         loadLoot()
         loadFaqs()
         loadSpells()
+        loadGlobalSpellbook()
     }
 
     private fun saveSpells() {
         val json = gson.toJson(allSpells)
         prefs.edit { putString("savedSpells", json) }
+    }
+
+    private fun loadGlobalSpellbook() {
+        viewModelScope.launch {
+            try {
+                val context = getApplication<Application>()
+                val spellList = mutableListOf<Spell>()
+                val type = object : TypeToken<List<SpellDto>>() {}.type
+
+                for (i in 0..9) {
+                    val fileName = "Zauberbuch/zauber_stufe$i.json"
+                    try {
+                        val jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
+                        val dtos: List<SpellDto> = gson.fromJson(jsonString, type)
+                        spellList.addAll(dtos.map { it.toSpell() })
+                    } catch (e: Exception) {
+                        // ignore missing files
+                    }
+                }
+                globalSpellbook.clear()
+                globalSpellbook.addAll(spellList)
+            } catch (e: Exception) {
+                // ignore
+            }
+        }
     }
 
     private fun loadSpells() {

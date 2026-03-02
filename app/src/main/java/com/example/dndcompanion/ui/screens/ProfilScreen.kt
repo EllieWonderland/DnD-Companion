@@ -45,6 +45,8 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text("Volk: Elf-Drow | Hintergrund: Wegfinder", color = Color.White)
                 Text("Gesinnung: Chaotisch Gut | EP: ${viewModel.currentEP}", color = Color.White)
+                HorizontalDivider(color = GelbSand, thickness = 1.dp, modifier = Modifier.padding(vertical = 4.dp))
+                Text("Übungsbonus: +${viewModel.proficiencyBonus}", color = PinkDunkel, fontWeight = FontWeight.Bold, fontSize = 16.sp)
             }
         }
 

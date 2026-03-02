@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -533,7 +534,8 @@ fun SpellCard(
     spell: Spell,
     isEditMode: Boolean = false,
     onTogglePrep: () -> Unit = {},
-    onDelete: (() -> Unit)? = null
+    onDelete: (() -> Unit)? = null,
+    extraContent: (@Composable () -> Unit)? = null
 ) {
     var expanded by remember { mutableStateOf(false) }
     Card(
@@ -585,7 +587,6 @@ fun SpellCard(
 
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(spell.description, color = Color.White, fontSize = 14.sp)
-                
                 if (isEditMode && onDelete != null) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(
@@ -595,6 +596,9 @@ fun SpellCard(
                     ) {
                         Text("Aus dem Buch löschen", fontSize = 14.sp)
                     }
+                }
+                if (extraContent != null) {
+                    extraContent()
                 }
             }
         }
@@ -724,104 +728,107 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                     colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
                     modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
                 ) {
-                    Text("+ Neuen Zauber eintragen", color = Color.White)
+                    Text("+ Zauber aus Kompendium hinzufügen", color = Color.White)
                 }
             }
         }
     }
 
     if (showAddSpellDialog) {
-        AddSpellDialog(
-            onDismiss = { showAddSpellDialog = false },
-            onSave = { newSpell ->
-                viewModel.addNewSpell(newSpell)
-                showAddSpellDialog = false
-            }
+        SpellCatalogDialog(
+            viewModel = viewModel,
+            onDismiss = { showAddSpellDialog = false }
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddSpellDialog(onDismiss: () -> Unit, onSave: (Spell) -> Unit) {
-    var name by remember { mutableStateOf("") }
-    var level by remember { mutableStateOf("1") }
-    var castingTime by remember { mutableStateOf("1 Aktion") }
-    var range by remember { mutableStateOf("9 m") }
-    var duration by remember { mutableStateOf("Sofort") }
-    var desc by remember { mutableStateOf("") }
+fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
+    var searchQuery by remember { mutableStateOf("") }
+    var selectedLevel by remember { mutableIntStateOf(-1) }
     
-    var hasV by remember { mutableStateOf(false) }
-    var hasS by remember { mutableStateOf(false) }
-    var hasM by remember { mutableStateOf(false) }
-    var matCost by remember { mutableStateOf("") }
-
-    AlertDialog(
+    Dialog(
         onDismissRequest = onDismiss,
-        containerColor = GelbSand,
-        title = { Text("Neuer Zauber", color = BlauDunkel, fontWeight = FontWeight.Bold) },
-        text = {
-            Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Name") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(value = level, onValueChange = { level = it }, label = { Text("Level (0 = Trick)") }, modifier = Modifier.weight(1f), singleLine = true)
-                    OutlinedTextField(value = castingTime, onValueChange = { castingTime = it }, label = { Text("Zeit") }, modifier = Modifier.weight(1f), singleLine = true)
-                }
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(value = range, onValueChange = { range = it }, label = { Text("Reichweite") }, modifier = Modifier.weight(1f), singleLine = true)
-                    OutlinedTextField(value = duration, onValueChange = { duration = it }, label = { Text("Dauer") }, modifier = Modifier.weight(1f), singleLine = true)
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        Surface(modifier = Modifier.fillMaxSize(), color = GelbSand) {
+            Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Zauberkompendium", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+                    TextButton(onClick = onDismiss) { Text("Schließen", color = PinkDunkel, fontWeight = FontWeight.Bold) }
                 }
                 
-                Text("Komponenten:", color = BlauDunkel, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 8.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(checked = hasV, onCheckedChange = { hasV = it })
-                    Text("V", modifier = Modifier.padding(end = 8.dp))
-                    Checkbox(checked = hasS, onCheckedChange = { hasS = it })
-                    Text("S", modifier = Modifier.padding(end = 8.dp))
-                    Checkbox(checked = hasM, onCheckedChange = { hasM = it })
-                    Text("M")
-                }
-                if (hasM) {
-                    OutlinedTextField(value = matCost, onValueChange = { matCost = it }, label = { Text("Material/Kosten") }, modifier = Modifier.fillMaxWidth(), singleLine = true)
-                }
-
                 OutlinedTextField(
-                    value = desc, onValueChange = { desc = it },
-                    label = { Text("Beschreibung (Effekt)") },
-                    modifier = Modifier.fillMaxWidth().height(120.dp),
-                    maxLines = 5
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    label = { Text("Zauber suchen") },
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = PinkDunkel,
+                        focusedLabelColor = PinkDunkel
+                    )
                 )
-            }
-        },
-        confirmButton = {
-            Button(
-                onClick = {
-                    if (name.isNotBlank()) {
-                        val lvlInt = level.toIntOrNull() ?: 1
-                        onSave(
-                            Spell(
-                                name = name,
-                                level = lvlInt,
-                                castingTime = castingTime,
-                                range = range,
-                                duration = duration,
-                                componentsV = hasV,
-                                componentsS = hasS,
-                                componentsM = hasM,
-                                materialCost = matCost,
-                                description = desc,
-                                isPrepared = true // Direkt beim Erstellen aktivieren
-                            )
-                        )
+                
+                val scrollRowState = rememberScrollState()
+                Row(modifier = Modifier.fillMaxWidth().horizontalScroll(scrollRowState).padding(bottom = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    val levels = listOf(-1) + (0..9).toList()
+                    levels.forEach { lvl ->
+                        Button(
+                            onClick = { selectedLevel = lvl },
+                            colors = ButtonDefaults.buttonColors(containerColor = if (selectedLevel == lvl) PinkDunkel else BlauHell),
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                            modifier = Modifier.height(32.dp)
+                        ) {
+                            val label = if (lvl == -1) "Alle" else if (lvl == 0) "Tricks" else "Grad $lvl"
+                            Text(label, fontSize = 12.sp, color = Color.White)
+                        }
                     }
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
-            ) {
-                Text("Speichern")
+                }
+                
+                Box(modifier = Modifier.weight(1f)) {
+                    val filteredSpells = viewModel.globalSpellbook.filter { spell -> 
+                        (selectedLevel == -1 || spell.level == selectedLevel) &&
+                        (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
+                    }.sortedWith(compareBy({ it.level }, { it.name }))
+                    
+                    if (filteredSpells.isEmpty()) {
+                        Text("Keine Zauber gefunden.", modifier = Modifier.padding(16.dp), color = BlauDunkel)
+                    } else {
+                        val scrollState = rememberScrollState()
+                        Column(modifier = Modifier.verticalScroll(scrollState).fillMaxWidth()) {
+                            filteredSpells.forEach { catalogSpell ->
+                                val alreadyInBook = viewModel.allSpells.any { it.name == catalogSpell.name }
+                                SpellCard(
+                                    spell = catalogSpell,
+                                    isEditMode = true, // Wir schalten es ein, damit es immer ausgeklappt/bearbeitbar wirkt
+                                    onTogglePrep = {},
+                                    onDelete = null,
+                                    extraContent = {
+                                        Button(
+                                            onClick = {
+                                                if (!alreadyInBook) {
+                                                    viewModel.addNewSpell(catalogSpell.copy(isPrepared = true, id = java.util.UUID.randomUUID().toString()))
+                                                }
+                                            },
+                                            enabled = !alreadyInBook,
+                                            colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel, disabledContainerColor = Color.Gray),
+                                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(36.dp)
+                                        ) {
+                                            Text(if (alreadyInBook) "Bereits im Buch" else "+ Hinzufügen", fontSize = 14.sp)
+                                        }
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
             }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Abbrechen", color = BlauDunkel) }
         }
-    )
+    }
 }
