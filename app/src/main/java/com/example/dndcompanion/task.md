@@ -15,7 +15,7 @@
   - *Commit:* `git commit -m "feat: add druid spell restrictions, styling and free casts for faerie fire and darkness"`
 - [x] **Navigation & Pfeilköcher:** Hardware-Zurück-Button navigiert jetzt zwischen den Tabs anstatt die App zu schließen. Die "Pfeilköcher" Buttons im Kampfscreen wurden klar beschriftet und optisch angepasst.
   - *Commit:* `git commit -m "fix: app navigation via back button and improve quiver ui"`
-- [ ] **Handbuch / Regelwerk-Referenz einbinden:** Einen Nachschlage-Bereich in der App schaffen, der die Markdown-Dateien aus `Rules/Handbuch` ausliest. Zustände (Conditions), Kampfregeln, etc. können dort sauber formatiert und klickbar angezeigt werden.
+- [x] **Handbuch / Regelwerk-Referenz einbinden:** Einen Nachschlage-Bereich in der App schaffen, der die Markdown-Dateien aus `Rules/Handbuch` ausliest. Zustände (Conditions), Kampfregeln, etc. können dort sauber formatiert und klickbar angezeigt werden. Inklusive Zauberbuch.
   - *Commit:* `git commit -m "feat: add rulebook reference section parsing markdown files"`
 - [ ] **LLM-Kontext (RAG) erweitern:** Den eingebauten Chatbot (`gemini`) so anpassen, dass er bei Regelfragen den lokalen Text des Handbuchs einbezieht.
   - *Commit:* `git commit -m "feat: enhance chatbot with local rulebook context (RAG)"`

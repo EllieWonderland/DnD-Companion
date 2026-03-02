@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -15,6 +16,10 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import com.halilibo.richtext.markdown.Markdown
+import com.halilibo.richtext.ui.material3.Material3RichText
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +36,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 enum class BookType {
-    GENERAL, GRUDGE, SPELLBOOK
+    GENERAL, GRUDGE, SPELLBOOK, RULEBOOK
 }
 
 @Composable
@@ -44,6 +49,10 @@ fun BucherScreen(viewModel: CharacterViewModel) {
         if (activeBook == BookType.SPELLBOOK) {
             SpellbookDetailView(
                 viewModel = viewModel,
+                onBack = { activeBook = null }
+            )
+        } else if (activeBook == BookType.RULEBOOK) {
+            RulebookDetailView(
                 onBack = { activeBook = null }
             )
         } else {
@@ -88,13 +97,19 @@ fun LibraryView(onBookSelected: (BookType) -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             BookCard(
                 title = "Zauberbuch",
                 subtitle = "Alle bekannten Zauber",
                 color = BlauDunkel,
                 onClick = { onBookSelected(BookType.SPELLBOOK) }
+            )
+            BookCard(
+                title = "Regelwerk",
+                subtitle = "Handbuch & D&D Regeln",
+                color = Color(0xFF2E7D32), // Dark green for Rulebook
+                onClick = { onBookSelected(BookType.RULEBOOK) }
             )
         }
     }
@@ -443,6 +458,96 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             }
                         )
                     }
+                }
+            }
+        }
+    }
+}
+
+data class RulebookChapter(val title: String, val filename: String)
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RulebookDetailView(onBack: () -> Unit) {
+    val chapters = listOf(
+        RulebookChapter("1. Gameplay", "Rules/Handbuch/Kapitel/kapitel1_gameplay.md"),
+        RulebookChapter("2. Völker", "Rules/Handbuch/Kapitel/kapitel2_races.md"),
+        RulebookChapter("3. Klassen", "Rules/Handbuch/Kapitel/kapitel3_classes.md"),
+        RulebookChapter("4. Herkünfte", "Rules/Handbuch/Kapitel/kapitel4_origins.md"),
+        RulebookChapter("5. Talente", "Rules/Handbuch/Kapitel/kapitel5_talente.md"),
+        RulebookChapter("6. Ausrüstung", "Rules/Handbuch/Kapitel/kapitel6_equipment.md"),
+        RulebookChapter("7. Zauber", "Rules/Handbuch/Kapitel/kapitel7_spells.md"),
+        RulebookChapter("8. Kampf", "Rules/Handbuch/Kapitel/kapitel8_combat_conditions.md"),
+        RulebookChapter("9. Spellbook", "Rules/Zauberbuch/Spellbook.md")
+    )
+
+    var selectedChapter by remember { mutableStateOf(chapters.first()) }
+    var markdownContent by remember { mutableStateOf("Lade...") }
+    val context = androidx.compose.ui.platform.LocalContext.current
+
+    LaunchedEffect(selectedChapter) {
+        markdownContent = withContext(Dispatchers.IO) {
+            try {
+                context.assets.open(selectedChapter.filename).bufferedReader().use { it.readText() }
+            } catch (e: Exception) {
+                "Fehler beim Laden von ${selectedChapter.filename}"
+            }
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(GelbSand)
+    ) {
+        // Top Bar
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFF2E7D32)) // Dark green
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = onBack) {
+                Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Regelwerk", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        }
+
+        // Chapter Selection (Scrollable)
+        ScrollableTabRow(
+            selectedTabIndex = chapters.indexOf(selectedChapter),
+            containerColor = BlauHell,
+            contentColor = Color.White,
+            edgePadding = 8.dp
+        ) {
+            chapters.forEachIndexed { index, chapter ->
+                Tab(
+                    selected = selectedChapter == chapter,
+                    onClick = { selectedChapter = chapter },
+                    text = { Text(chapter.title, fontSize = 14.sp) },
+                    selectedContentColor = GelbSand,
+                    unselectedContentColor = Color.White
+                )
+            }
+        }
+
+        // Markdown Content
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .background(Color.White, RoundedCornerShape(8.dp))
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Material3RichText {
+                    Markdown(content = markdownContent)
                 }
             }
         }

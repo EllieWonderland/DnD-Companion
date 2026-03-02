@@ -321,7 +321,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Pfeile kaufen/finden:", fontSize = 14.sp, color = BlauDunkel, fontWeight = FontWeight.Bold)
+                        Text("Pfeile...", fontSize = 14.sp, color = BlauDunkel, fontWeight = FontWeight.Bold)
                         Row {
                             Button(
                                 onClick = { viewModel.changeTotalArrows(-1) },
@@ -335,7 +335,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                                 colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
                                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
                                 modifier = Modifier.height(36.dp)
-                            ) { Text("+ Kaufen", fontSize = 12.sp) }
+                            ) { Text("+ Aufnehmen", fontSize = 12.sp) }
                         }
                     }
                 }

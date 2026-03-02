@@ -77,4 +77,8 @@ dependencies {
 
     // JSON Serialisierung für Datensicherheit
     implementation("com.google.code.gson:gson:2.10.1")
+
+    // Markdown Parsing
+    implementation(libs.compose.richtext.ui.material3)
+    implementation(libs.compose.richtext.commonmark)
 }
