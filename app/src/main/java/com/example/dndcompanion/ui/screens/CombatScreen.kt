@@ -433,6 +433,49 @@ fun WeaponButton(title: String, isSelected: Boolean, onClick: () -> Unit) {
 
 @Composable
 fun DeathSavesRow(viewModel: CharacterViewModel) {
+    var showSuccessDialog by remember { mutableStateOf(false) }
+    var showFailureDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(viewModel.deathSaveSuccesses) {
+        if (viewModel.deathSaveSuccesses >= 3) {
+            showSuccessDialog = true
+        }
+    }
+
+    LaunchedEffect(viewModel.deathSaveFailures) {
+        if (viewModel.deathSaveFailures >= 3) {
+            showFailureDialog = true
+        }
+    }
+
+    if (showSuccessDialog) {
+        AlertDialog(
+            onDismissRequest = { showSuccessDialog = false },
+            title = { Text("Stabilisiert!", color = GelbSand, fontWeight = FontWeight.Bold) },
+            text = { Text("Du hast 3 erfolgreiche Rettungswürfe geschafft. Du bist stabilisiert (HP bleiben 0, aber du stirbst nicht).", color = BlauDunkel) },
+            confirmButton = {
+                Button(onClick = { showSuccessDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) {
+                    Text("Puh!")
+                }
+            },
+            containerColor = BlauHell
+        )
+    }
+
+    if (showFailureDialog) {
+        AlertDialog(
+            onDismissRequest = { showFailureDialog = false },
+            title = { Text("Gefallen...", color = Color.Red, fontWeight = FontWeight.Bold) },
+            text = { Text("Du hast 3 fehlgeschlagene Rettungswürfe ereilt. Athania ist gestorben...", color = BlauDunkel) },
+            confirmButton = {
+                Button(onClick = { showFailureDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)) {
+                    Text("RiP")
+                }
+            },
+            containerColor = Color.LightGray
+        )
+    }
+
     Column(modifier = Modifier.fillMaxWidth()) {
         Text("Todesrettungswürfe", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
         Spacer(modifier = Modifier.height(8.dp))

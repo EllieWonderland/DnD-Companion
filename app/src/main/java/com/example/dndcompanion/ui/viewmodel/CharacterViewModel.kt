@@ -40,6 +40,7 @@ data class Spell(
     val componentsM: Boolean = false,
     val materialCost: String = "",
     val description: String,
+    val classes: List<String> = emptyList(),
     var isPrepared: Boolean = false
 )
 
@@ -708,7 +709,27 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun takeLongRest() {
+    var showRestWarningDialog by mutableStateOf(false)
+        private set
+
+    fun dismissRestWarningDialog() {
+        showRestWarningDialog = false
+    }
+
+    fun attemptLongRest() {
+        if (water < 0.5f || rations < 1) {
+            showRestWarningDialog = true
+        } else {
+            takeLongRest()
+        }
+    }
+
+    fun forceLongRestWithoutResources() {
+        showRestWarningDialog = false
+        takeLongRest(consumeResources = false)
+    }
+
+    fun takeLongRest(consumeResources: Boolean = true) {
         currentHp = maxHp
         val recoveredHitDice = (level / 2).coerceAtLeast(1)
         hitDice = (hitDice + recoveredHitDice).coerceAtMost(level)
@@ -732,8 +753,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         freeHealingWordUsed = false
         goodberries = 0
         geminiUsesToday = 0
-        changeWater(-0.5f)
-        changeRations(-1)
+        
+        if (consumeResources) {
+            changeWater(-0.5f)
+            changeRations(-1)
+        }
 
         prefs.edit {
             putInt("currentHp", currentHp)

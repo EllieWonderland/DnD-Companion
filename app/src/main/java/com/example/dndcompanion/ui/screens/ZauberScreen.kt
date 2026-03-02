@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -79,8 +80,8 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                     }
                     Button(
                         onClick = { 
-                            viewModel.takeLongRest() 
-                            showLongRestDialog = true
+                            viewModel.attemptLongRest() 
+                            if (!viewModel.showRestWarningDialog) showLongRestDialog = true
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
                         modifier = Modifier.fillMaxWidth().height(40.dp),
@@ -525,6 +526,31 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 onDismiss = { showSpellbookEditDialog = false }
             )
         }
+
+        if (viewModel.showRestWarningDialog) {
+            AlertDialog(
+                onDismissRequest = { viewModel.dismissRestWarningDialog() },
+                title = { Text("Unzureichende Rationen", color = BlauDunkel, fontWeight = FontWeight.Bold) },
+                text = { Text("Du hast nicht genug Wasserschläuche (0.5 benötigt) oder Tagesrationen (1 benötigt) für eine Lange Rast. Rasten ohne Ressourcen?", color = BlauDunkel) },
+                confirmButton = {
+                    Button(
+                        onClick = { 
+                            viewModel.forceLongRestWithoutResources() 
+                            showLongRestDialog = true
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                    ) {
+                        Text("Trotzdem Rasten")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { viewModel.dismissRestWarningDialog() }) {
+                        Text("Abbrechen", color = BlauDunkel)
+                    }
+                },
+                containerColor = GelbSand
+            )
+        }
     }
 }
 
@@ -532,6 +558,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
 fun SpellCard(
     spell: Spell,
     isEditMode: Boolean = false,
+    isEquipped: Boolean = false,
     onTogglePrep: () -> Unit = {},
     onDelete: (() -> Unit)? = null,
     extraContent: (@Composable () -> Unit)? = null
@@ -554,6 +581,14 @@ fun SpellCard(
                     Text(spell.name, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                     val type = if (spell.level == 0) "Zaubertrick" else "Stufe ${spell.level}"
                     Text(type, color = GelbSand, fontSize = 14.sp)
+                }
+                if (isEquipped) {
+                    Icon(
+                        imageVector = androidx.compose.material.icons.Icons.Default.CheckCircle,
+                        contentDescription = "Ausrüstet",
+                        tint = PinkDunkel,
+                        modifier = Modifier.size(24.dp).padding(end = 8.dp)
+                    )
                 }
                 if (isEditMode) {
                     Switch(

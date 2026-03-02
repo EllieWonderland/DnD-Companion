@@ -7,6 +7,10 @@
   - *Commit:* `git commit -m "feat: show proficiency bonus on profile screen"`
 - [x] **Zauberbuch integrieren:** Die neuen JSON-Dateien aus `Rules/Zauberbuch` (Stufe 0-9) per JSON-Parser in die App einlesen und ein durchsuchbares, filterbares Zauberbuch (`SpellbookScreen`) implementieren. So kann man vorbereitete Zauber direkt aus der kompletten Liste auswählen.
   - *Commit:* `git commit -m "feat: integrate full spellbook catalog from JSON assets and replace manual entry"`
+- [x] **Zauberbuch anpassen:** Eingeklappte Icons anzeigen für ausgerüstete Zauber in der Bibliothek. Die Zauber nach der Klasse "Waldläufer" oder "Hexenmeister" filtern.
+  - *Commit:* `git commit -m "feat: add equipped badge to spell cards and filter global spellbook by character class"`
+- [x] **Rasten und Lebenspunkte:** Lange Rast warnt bei fehlendem Wasser/Nahrung. Todesrettungswürfe erhalten Reaktionen bei 3 Erfolgen/Fehlschlägen.
+  - *Commit:* `git commit -m "feat: add resource warnings to long rest and dialogs for death save outcomes"`
 - [ ] **Handbuch / Regelwerk-Referenz einbinden:** Einen Nachschlage-Bereich in der App schaffen, der die Markdown-Dateien aus `Rules/Handbuch` ausliest. Zustände (Conditions), Kampfregeln, etc. können dort sauber formatiert und klickbar angezeigt werden.
   - *Commit:* `git commit -m "feat: add rulebook reference section parsing markdown files"`
 - [ ] **LLM-Kontext (RAG) erweitern:** Den eingebauten Chatbot (`gemini`) so anpassen, dass er bei Regelfragen den lokalen Text des Handbuchs einbezieht.

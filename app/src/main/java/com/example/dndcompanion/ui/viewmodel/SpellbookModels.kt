@@ -53,6 +53,7 @@ data class SpellDto(
             componentsM = components?.m?.isNotBlank() == true,
             materialCost = components?.m ?: "",
             description = descBuilder.toString().trim(),
+            classes = classes,
             isPrepared = false
         )
     }

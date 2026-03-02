@@ -139,6 +139,31 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
     if (viewModel.showLevelUpDialog) {
         LevelUpDialog(viewModel = viewModel)
     }
+
+    if (viewModel.showRestWarningDialog) {
+        AlertDialog(
+            onDismissRequest = { viewModel.dismissRestWarningDialog() },
+            title = { Text("Unzureichende Rationen", color = BlauDunkel, fontWeight = FontWeight.Bold) },
+            text = { Text("Du hast nicht genug Wasserschläuche (0.5 benötigt) oder Tagesrationen (1 benötigt) für eine vollständige Lange Rast. Willst du trotzdem rasten? (Es werden keine Rationen verbraucht, aber du erhältst keine HP oder Zauberslots zurück... oder wir ignorieren die Regeln für jetzt und rasten trotzdem ohne Ressourcen-Abzug?)", color = BlauDunkel) },
+            confirmButton = {
+                Button(
+                    onClick = { 
+                        viewModel.forceLongRestWithoutResources() 
+                        viewModel.dismissRestWarningDialog()
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                ) {
+                    Text("Trotzdem Rasten")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { viewModel.dismissRestWarningDialog() }) {
+                    Text("Abbrechen", color = BlauDunkel)
+                }
+            },
+            containerColor = GelbSand
+        )
+    }
 }
 
 @Composable

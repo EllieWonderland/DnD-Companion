@@ -376,6 +376,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
             Spacer(modifier = Modifier.height(8.dp))
 
             val filteredSpells = viewModel.globalSpellbook.filter { spell -> 
+                (spell.classes.contains("Waldläufer") || spell.classes.contains("Hexenmeister")) &&
                 (selectedLevel == -1 || spell.level == selectedLevel) &&
                 (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
             }.sortedWith(compareBy({ it.level }, { it.name }))
@@ -389,6 +390,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                         SpellCard(
                             spell = catalogSpell,
                             isEditMode = false,
+                            isEquipped = alreadyInBook,
                             onTogglePrep = {},
                             onDelete = null,
                             extraContent = {
