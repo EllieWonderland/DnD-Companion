@@ -473,12 +473,12 @@ data class RulebookChapter(val title: String, val filename: String)
 @Composable
 fun RulebookDetailView(onBack: () -> Unit) {
     val chapters = listOf(
+        RulebookChapter("Index", ""), // Fake chapter for Index/Search Tab
         RulebookChapter("1. Gameplay", "Rules/Handbuch/Kapitel/kapitel1_gameplay.md"),
         RulebookChapter("2. Völker", "Rules/Handbuch/Kapitel/kapitel2_races.md"),
         RulebookChapter("3. Klassen", "Rules/Handbuch/Kapitel/kapitel3_classes.md"),
         RulebookChapter("4. Herkünfte", "Rules/Handbuch/Kapitel/kapitel4_origins.md"),
         RulebookChapter("5. Talente", "Rules/Handbuch/Kapitel/kapitel5_talente.md"),
-        RulebookChapter("6. Ausrüstung", "Rules/Handbuch/Kapitel/kapitel6_equipment.md"),
         RulebookChapter("6. Ausrüstung", "Rules/Handbuch/Kapitel/kapitel6_equipment.md"),
         RulebookChapter("7. Kampf", "Rules/Handbuch/Kapitel/kapitel8_combat_conditions.md"),
         RulebookChapter("8. Zauber", "Rules/Handbuch/Kapitel/kapitel7_spells.md"),
@@ -489,24 +489,44 @@ fun RulebookDetailView(onBack: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     var searchQuery by remember { mutableStateOf("") }
     
-    // Store content per chapter index to avoid reloading
+    // Store content and blocks per chapter index
     val chapterContents = remember { mutableStateMapOf<Int, String>() }
-    val scrollStates = chapters.map { rememberScrollState() }
+    val chapterBlocks = remember { mutableStateMapOf<Int, List<String>>() }
+    val scrollStates = chapters.map { androidx.compose.foundation.lazy.rememberLazyListState() }
     val context = androidx.compose.ui.platform.LocalContext.current
 
-    LaunchedEffect(pagerState.currentPage) {
-        val index = pagerState.currentPage
-        if (!chapterContents.containsKey(index)) {
-            val chapter = chapters[index]
-            chapterContents[index] = withContext(Dispatchers.IO) {
+    // Struct for global index
+    data class IndexEntry(val chapterIndex: Int, val blockIndex: Int, val title: String, val isH3: Boolean, val chapterName: String)
+    var globalIndex by remember { mutableStateOf<List<IndexEntry>>(emptyList()) }
+
+    // Load everything upfront for global search/index
+    LaunchedEffect(Unit) {
+        val allIndex = mutableListOf<IndexEntry>()
+        val regex = Regex("(?=^## |^### )", RegexOption.MULTILINE)
+        
+        withContext(Dispatchers.IO) {
+            for (i in 1 until chapters.size) { // Skip Index chapter
                 try {
-                    context.assets.open(chapter.filename).bufferedReader().use { it.readText() }
+                    val text = context.assets.open(chapters[i].filename).bufferedReader().use { it.readText() }
+                    chapterContents[i] = text
+                    val blocks = text.split(regex).filter { it.isNotBlank() }
+                    chapterBlocks[i] = blocks
+                    
+                    blocks.forEachIndexed { blockIndex, blockText ->
+                        val firstLine = blockText.trimStart().substringBefore('\n')
+                        if (firstLine.startsWith("## ") || firstLine.startsWith("### ")) {
+                            val isH3 = firstLine.startsWith("### ")
+                            val title = firstLine.removePrefix("### ").removePrefix("## ").trim()
+                            allIndex.add(IndexEntry(i, blockIndex, title, isH3, chapters[i].title))
+                        }
+                    }
                 } catch (e: Exception) {
-                    "Fehler beim Laden von ${chapter.filename}"
+                    chapterContents[i] = "Fehler beim Laden von ${chapters[i].filename}"
+                    chapterBlocks[i] = listOf("Fehler")
                 }
             }
         }
-        scrollStates[index].scrollTo(0)
+        globalIndex = allIndex
     }
 
     Column(
@@ -585,106 +605,131 @@ fun RulebookDetailView(onBack: () -> Unit) {
                 state = pagerState,
                 modifier = Modifier.fillMaxSize()
             ) { page ->
-                val content = chapterContents[page] ?: "Lade..."
-                
-                // --- MARDKOWN PARSING FOR INDEX & SPLITTING ---
-                // We split by "## " (H2) and "### " (H3) to create blocks we can scroll to.
-                val blocks = remember(content, searchQuery) {
-                    if (searchQuery.isNotBlank()) {
-                        content.split("\n\n").filter { it.contains(searchQuery, ignoreCase = true) }
-                    } else {
-                        // regex to keep the delimiter: (?=^## |^### ) with multiline
-                        val regex = Regex("(?=^## |^### )", RegexOption.MULTILINE)
-                        content.split(regex).filter { it.isNotBlank() }
-                    }
-                }
-                
-                val listState = androidx.compose.foundation.lazy.rememberLazyListState()
-                
-                // Scroll to top effect on page change
-                LaunchedEffect(page) {
-                    listState.scrollToItem(0)
-                }
+                val listState = scrollStates[page]
 
-                Box(modifier = Modifier.fillMaxSize()) {
-                    LazyColumn(
-                        state = listState,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp)
-                    ) {
-                        // Index (only if no search query and there are headings)
-                        if (searchQuery.isBlank() && blocks.size > 1) {
-                            item {
-                                Card(
-                                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-                                    colors = CardDefaults.cardColors(containerColor = BlauHell)
-                                ) {
-                                    Column(modifier = Modifier.padding(12.dp)) {
-                                        Text("Inhaltsverzeichnis", fontWeight = FontWeight.Bold, color = BlauDunkel, fontSize = 18.sp)
-                                        Spacer(modifier = Modifier.height(8.dp))
-                                        val localScope = rememberCoroutineScope()
-                                        blocks.forEachIndexed { index, blockText ->
-                                            val firstLine = blockText.trimStart().substringBefore('\n')
-                                            if (firstLine.startsWith("## ") || firstLine.startsWith("### ")) {
-                                                val isH3 = firstLine.startsWith("### ")
-                                                val title = firstLine.removePrefix("### ").removePrefix("## ").trim()
-                                                Text(
-                                                    text = (if (isH3) "  • " else "") + title,
-                                                    color = PinkDunkel,
-                                                    fontSize = if (isH3) 14.sp else 16.sp,
-                                                    fontWeight = if (isH3) FontWeight.Normal else FontWeight.Bold,
-                                                    modifier = Modifier
-                                                        .fillMaxWidth()
-                                                        .clickable {
-                                                            localScope.launch {
-                                                                listState.animateScrollToItem(index + 1) // +1 because Index itself is item 0
-                                                            }
-                                                        }
-                                                        .padding(vertical = 4.dp)
-                                                )
+                if (page == 0) {
+                    // --- INDEX & SEARCH VIEW ---
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(
+                            state = listState,
+                            modifier = Modifier.fillMaxSize().padding(16.dp)
+                        ) {
+                            if (searchQuery.isBlank()) {
+                                // Group by Chapter
+                                val grouped = globalIndex.groupBy { it.chapterName }
+                                grouped.forEach { (chapterName, entries) ->
+                                    item {
+                                        Text(chapterName, fontWeight = FontWeight.Bold, color = BlauDunkel, fontSize = 20.sp, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
+                                    }
+                                    items(entries.size) { idx ->
+                                        val entry = entries[idx]
+                                        Text(
+                                            text = (if (entry.isH3) "  • " else "") + entry.title,
+                                            color = PinkDunkel,
+                                            fontSize = if (entry.isH3) 14.sp else 16.sp,
+                                            fontWeight = if (entry.isH3) FontWeight.Normal else FontWeight.Bold,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .clickable {
+                                                    coroutineScope.launch {
+                                                        pagerState.animateScrollToPage(entry.chapterIndex)
+                                                        scrollStates[entry.chapterIndex].scrollToItem(entry.blockIndex)
+                                                    }
+                                                }
+                                                .padding(vertical = 4.dp)
+                                        )
+                                    }
+                                }
+                            } else {
+                                // Search Results
+                                val searchResults = globalIndex.filter { it.title.contains(searchQuery, ignoreCase = true) }
+                                
+                                // Also search full text blocks
+                                val contentResults = mutableListOf<IndexEntry>()
+                                chapterBlocks.forEach { (chapterIdx, blocks) ->
+                                    blocks.forEachIndexed { blockIdx, blockText ->
+                                        if (blockText.contains(searchQuery, ignoreCase = true)) {
+                                            // Find the nearest heading above this block for title
+                                            val title = globalIndex.lastOrNull { it.chapterIndex == chapterIdx && it.blockIndex <= blockIdx }?.title ?: "Absatz in ${chapters[chapterIdx].title}"
+                                            contentResults.add(IndexEntry(chapterIdx, blockIdx, "$title (Texttreffer)", false, chapters[chapterIdx].title))
+                                        }
+                                    }
+                                }
+                                
+                                val allResults = (searchResults + contentResults).distinctBy { "${it.chapterIndex}-${it.blockIndex}" }
+
+                                if (allResults.isEmpty()) {
+                                    item { Text("Keine Ergebnisse für '$searchQuery'", modifier = Modifier.padding(16.dp)) }
+                                } else {
+                                    item { Text("${allResults.size} Ergebnisse gefunden:", fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp)) }
+                                    items(allResults.size) { idx ->
+                                        val entry = allResults[idx]
+                                        Card(
+                                            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).clickable {
+                                                coroutineScope.launch {
+                                                    pagerState.animateScrollToPage(entry.chapterIndex)
+                                                    scrollStates[entry.chapterIndex].scrollToItem(entry.blockIndex)
+                                                }
+                                            },
+                                            colors = CardDefaults.cardColors(containerColor = BlauHell)
+                                        ) {
+                                            Column(modifier = Modifier.padding(12.dp)) {
+                                                Text(entry.chapterName, fontSize = 12.sp, color = BlauDunkel)
+                                                Text(entry.title, fontWeight = FontWeight.Bold, color = PinkDunkel)
                                             }
                                         }
                                     }
                                 }
                             }
                         }
+                    }
+                } else {
+                    // --- NORMAL CHAPTER VIEW ---
+                    val blocks = chapterBlocks[page] ?: listOf("Lade...")
 
-                        items(blocks.size) { index ->
-                            Material3RichText(modifier = Modifier.padding(bottom = 8.dp)) {
-                                Markdown(content = blocks[index])
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        LazyColumn(
+                            state = listState,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(16.dp)
+                        ) {
+                            items(blocks.size) { index ->
+                                Material3RichText(modifier = Modifier.padding(bottom = 8.dp)) {
+                                    Markdown(content = blocks[index])
+                                }
                             }
                         }
                     }
+                }
+                
+                // Simple Scrollbar for LazyColumn
+                val isScrollable = listState.layoutInfo.totalItemsCount > 0
+                if (isScrollable) {
+                    val firstVisible = listState.firstVisibleItemIndex
+                    val totalItems = listState.layoutInfo.totalItemsCount
+                    val scrollFraction = if (totalItems > 0) firstVisible.toFloat() / totalItems.toFloat() else 0f
                     
-                    // Simple Scrollbar for LazyColumn
-                    val isScrollable = listState.layoutInfo.totalItemsCount > 0
-                    if (isScrollable) {
-                        val firstVisible = listState.firstVisibleItemIndex
-                        val totalItems = listState.layoutInfo.totalItemsCount
-                        val scrollFraction = if (totalItems > 0) firstVisible.toFloat() / totalItems.toFloat() else 0f
+                    BoxWithConstraints(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .fillMaxHeight()
+                            .padding(vertical = 16.dp, horizontal = 4.dp)
+                            .width(4.dp)
+                            .background(Color.LightGray.copy(alpha = 0.5f), RoundedCornerShape(2.dp))
+                    ) {
+                        val viewHeightPx = with(androidx.compose.ui.platform.LocalDensity.current) { maxHeight.toPx() }
+                        val thumbHeightPx = viewHeightPx * 0.1f
+                        val maxScrollOffsetPx = viewHeightPx - thumbHeightPx
+                        val yOffsetPx = (scrollFraction * maxScrollOffsetPx).toInt()
                         
-                        BoxWithConstraints(
+                        Box(
                             modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .fillMaxHeight()
-                                .padding(vertical = 16.dp, horizontal = 4.dp)
-                                .width(4.dp)
-                                .background(Color.LightGray.copy(alpha = 0.5f), RoundedCornerShape(2.dp))
-                        ) {
-                            val viewHeightPx = with(androidx.compose.ui.platform.LocalDensity.current) { maxHeight.toPx() }
-                            val thumbHeightPx = viewHeightPx * 0.1f
-                            val maxScrollOffsetPx = viewHeightPx - thumbHeightPx
-                            val yOffsetPx = (scrollFraction * maxScrollOffsetPx).toInt()
-                            
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .fillMaxHeight(0.1f)
-                                    .offset { androidx.compose.ui.unit.IntOffset(0, yOffsetPx) }
-                                    .background(BlauDunkel, RoundedCornerShape(2.dp))
-                            )
-                        }
+                                .fillMaxWidth()
+                                .fillMaxHeight(0.1f) // 10% size thumb
+                                .offset { androidx.compose.ui.unit.IntOffset(0, yOffsetPx) }
+                                .background(BlauDunkel, RoundedCornerShape(2.dp))
+                        )
                     }
                 }
             }
