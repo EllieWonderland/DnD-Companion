@@ -488,6 +488,7 @@ fun RulebookDetailView(onBack: () -> Unit) {
     val pagerState = rememberPagerState(pageCount = { chapters.size })
     val coroutineScope = rememberCoroutineScope()
     var searchQuery by remember { mutableStateOf("") }
+    var isJumpingFromIndex by remember { mutableStateOf(false) }
     
     // Store content and blocks per chapter index
     val chapterContents = remember { mutableStateMapOf<Int, String>() }
@@ -527,6 +528,17 @@ fun RulebookDetailView(onBack: () -> Unit) {
             }
         }
         globalIndex = allIndex
+    }
+    
+    LaunchedEffect(pagerState.currentPage) {
+        if (!isJumpingFromIndex) {
+            // Tab has changed manually (swipe or tab click), scroll to top
+            try {
+                scrollStates[pagerState.currentPage].scrollToItem(0)
+            } catch (e: Exception) {
+                // Ignore if list is not layouted yet
+            }
+        }
     }
 
     Column(
@@ -632,8 +644,13 @@ fun RulebookDetailView(onBack: () -> Unit) {
                                                 .fillMaxWidth()
                                                 .clickable {
                                                     coroutineScope.launch {
+                                                        isJumpingFromIndex = true
+                                                        searchQuery = ""
                                                         pagerState.animateScrollToPage(entry.chapterIndex)
+                                                        kotlinx.coroutines.delay(50) // Wait for layout
                                                         scrollStates[entry.chapterIndex].scrollToItem(entry.blockIndex)
+                                                        kotlinx.coroutines.delay(50)
+                                                        isJumpingFromIndex = false
                                                     }
                                                 }
                                                 .padding(vertical = 4.dp)
@@ -667,8 +684,13 @@ fun RulebookDetailView(onBack: () -> Unit) {
                                         Card(
                                             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).clickable {
                                                 coroutineScope.launch {
+                                                    isJumpingFromIndex = true
+                                                    searchQuery = ""
                                                     pagerState.animateScrollToPage(entry.chapterIndex)
+                                                    kotlinx.coroutines.delay(50) // Wait for layout
                                                     scrollStates[entry.chapterIndex].scrollToItem(entry.blockIndex)
+                                                    kotlinx.coroutines.delay(50)
+                                                    isJumpingFromIndex = false
                                                 }
                                             },
                                             colors = CardDefaults.cardColors(containerColor = BlauHell)
@@ -685,18 +707,29 @@ fun RulebookDetailView(onBack: () -> Unit) {
                     }
                 } else {
                     // --- NORMAL CHAPTER VIEW ---
-                    val blocks = chapterBlocks[page] ?: listOf("Lade...")
+                    val allBlocks = chapterBlocks[page] ?: listOf("Lade...")
+                    val blocks = if (searchQuery.isNotBlank()) {
+                        allBlocks.filter { it.contains(searchQuery, ignoreCase = true) }
+                    } else {
+                        allBlocks
+                    }
 
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        LazyColumn(
-                            state = listState,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .padding(16.dp)
-                        ) {
-                            items(blocks.size) { index ->
-                                Material3RichText(modifier = Modifier.padding(bottom = 8.dp)) {
-                                    Markdown(content = blocks[index])
+                    if (blocks.isEmpty()) {
+                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                            Text("Keine Ergebnisse für '$searchQuery'", color = PinkDunkel)
+                        }
+                    } else {
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            LazyColumn(
+                                state = listState,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(16.dp)
+                            ) {
+                                items(blocks.size) { index ->
+                                    Material3RichText(modifier = Modifier.padding(bottom = 8.dp)) {
+                                        Markdown(content = blocks[index])
+                                    }
                                 }
                             }
                         }
