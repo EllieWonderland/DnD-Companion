@@ -489,6 +489,7 @@ fun RulebookDetailView(onBack: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     var searchQuery by remember { mutableStateOf("") }
     var isJumpingFromIndex by remember { mutableStateOf(false) }
+    var pendingScrollItem by remember { mutableStateOf<Pair<Int, Int>?>(null) }
     
     // Store content and blocks per chapter index
     val chapterContents = remember { mutableStateMapOf<Int, String>() }
@@ -652,12 +653,8 @@ fun RulebookDetailView(onBack: () -> Unit) {
                                                     coroutineScope.launch {
                                                         isJumpingFromIndex = true
                                                         searchQuery = ""
-                                                        // Use scrollToPage for immediate switch to avoid animation cancelling the inner scroll
+                                                        pendingScrollItem = entry.chapterIndex to entry.blockIndex
                                                         pagerState.scrollToPage(entry.chapterIndex)
-                                                        kotlinx.coroutines.delay(100) // Wait for layout to settle
-                                                        scrollStates[entry.chapterIndex].scrollToItem(entry.blockIndex)
-                                                        kotlinx.coroutines.delay(50)
-                                                        isJumpingFromIndex = false
                                                     }
                                                 }
                                                 .padding(vertical = 4.dp)
@@ -693,11 +690,8 @@ fun RulebookDetailView(onBack: () -> Unit) {
                                                 coroutineScope.launch {
                                                     isJumpingFromIndex = true
                                                     searchQuery = ""
+                                                    pendingScrollItem = entry.chapterIndex to entry.blockIndex
                                                     pagerState.scrollToPage(entry.chapterIndex)
-                                                    kotlinx.coroutines.delay(100) // Wait for layout to settle
-                                                    scrollStates[entry.chapterIndex].scrollToItem(entry.blockIndex)
-                                                    kotlinx.coroutines.delay(50)
-                                                    isJumpingFromIndex = false
                                                 }
                                             },
                                             colors = CardDefaults.cardColors(containerColor = BlauHell)
@@ -719,6 +713,18 @@ fun RulebookDetailView(onBack: () -> Unit) {
                         allBlocks.filter { it.contains(searchQuery, ignoreCase = true) }
                     } else {
                         allBlocks
+                    }
+                    
+                    LaunchedEffect(pendingScrollItem) {
+                        val pending = pendingScrollItem
+                        if (pending != null && pending.first == page) {
+                            kotlinx.coroutines.delay(50) // Tiny layout buffer
+                            try {
+                                listState.scrollToItem(pending.second)
+                            } catch (e: Exception) {}
+                            pendingScrollItem = null
+                            isJumpingFromIndex = false
+                        }
                     }
 
                     if (blocks.isEmpty()) {
