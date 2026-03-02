@@ -415,8 +415,8 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                     items(filteredSpells) { catalogSpell ->
                         val alreadyInBook = viewModel.allSpells.any { it.name == catalogSpell.name }
                         val isDruidSpell = catalogSpell.classes.contains("Druide") && !catalogSpell.classes.contains("Waldläufer")
-                        val isDruidLevel1 = catalogSpell.classes.contains("Druide") && catalogSpell.level == 1
-                        val druidLevel1Count = viewModel.allSpells.count { it.classes.contains("Druide") && it.level == 1 }
+                        val isDruidLevel1 = isDruidSpell && catalogSpell.level == 1
+                        val druidLevel1Count = viewModel.allSpells.count { it.classes.contains("Druide") && !it.classes.contains("Waldläufer") && it.level == 1 }
                         
                         SpellCard(
                             spell = catalogSpell,

@@ -549,6 +549,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         freeHealingWordUsed = false
         freeFaerieFireUsed = false
         freeDarknessUsed = false
+        freeDruidSpellUsed = false
         water = 2.0f
         rations = 10
         goodberries = 0
@@ -718,6 +719,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    var freeDruidSpellUsed by mutableStateOf(prefs.getBoolean("freeDruidSpellUsed", false))
+        private set
+
+    fun useFreeDruidSpell() {
+        if (!freeDruidSpellUsed) {
+            freeDruidSpellUsed = true
+            prefs.edit { putBoolean("freeDruidSpellUsed", true) }
+        }
+    }
+
     fun takeShortRest(hitDiceSpent: Int, rolledValue: Int) {
         if (hitDiceSpent <= hitDice && currentHp < maxHp) {
             hitDice -= hitDiceSpent
@@ -775,6 +786,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         freeHealingWordUsed = false
         freeFaerieFireUsed = false
         freeDarknessUsed = false
+        freeDruidSpellUsed = false
         goodberries = 0
         geminiUsesToday = 0
         
@@ -794,6 +806,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putBoolean("freeHealingWordUsed", freeHealingWordUsed)
             putBoolean("freeFaerieFireUsed", freeFaerieFireUsed)
             putBoolean("freeDarknessUsed", freeDarknessUsed)
+            putBoolean("freeDruidSpellUsed", freeDruidSpellUsed)
             putInt("goodberries", goodberries)
             putInt("geminiUsesToday", geminiUsesToday)
         }

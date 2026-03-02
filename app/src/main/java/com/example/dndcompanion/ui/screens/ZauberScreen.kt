@@ -277,6 +277,43 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 }
             }
 
+            val freeDruidSpell = viewModel.allSpells.firstOrNull { it.classes.contains("Druide") && !it.classes.contains("Waldläufer") && it.level == 1 && it.isPrepared }
+            if (freeDruidSpell != null) {
+                // Druidenzauber Stufe 1 (Kostenlos)
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF2E7D32))
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp).fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("${freeDruidSpell.name} (Gratis)", color = Color.White, fontWeight = FontWeight.Bold)
+                                Text("Ohne Zauberplatz (1x pro Lange Rast)", color = Color.White, fontSize = 14.sp)
+                            }
+                            Text("${if (viewModel.freeDruidSpellUsed) 0 else 1} / 1", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Button(
+                            onClick = { viewModel.useFreeDruidSpell() },
+                            enabled = !viewModel.freeDruidSpellUsed,
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = PinkDunkel,
+                                disabledContainerColor = Color.Gray
+                            )
+                        ) {
+                            Text("Wirken")
+                        }
+                    }
+                }
+            }
+
             // (Standard-Taktik moved to CombatScreen)
 
             HorizontalDivider(color = BlauDunkel, thickness = 2.dp)
