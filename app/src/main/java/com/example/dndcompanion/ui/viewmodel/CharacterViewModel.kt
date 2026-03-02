@@ -933,7 +933,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 val type = object : TypeToken<List<Spell>>() {}.type
                 val items: List<Spell> = gson.fromJson(spellString, type)
                 allSpells.clear()
-                allSpells.addAll(items)
+                @Suppress("SENSELESS_COMPARISON")
+                val safeItems = items.map { spell ->
+                    if (spell.classes == null) spell.copy(classes = emptyList()) else spell
+                }
+                allSpells.addAll(safeItems)
 
                 // Migration: Fehlende Standardzauber (wie "Heilendes Wort" im Update) nachträglich einfügen
                 val defaultSpells = getAthaniaDefaultSpells()

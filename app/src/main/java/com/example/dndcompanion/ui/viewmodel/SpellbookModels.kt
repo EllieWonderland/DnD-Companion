@@ -15,7 +15,7 @@ data class SpellDto(
     @SerializedName("area_of_effect") val areaOfEffect: SpellAoeDto?,
     @SerializedName("saving_throw") val savingThrow: String?,
     val damage: SpellDamageDto?,
-    val classes: List<String>,
+    val classes: List<String>?,
     val description: String?
 ) {
     fun toSpell(): Spell {
@@ -38,7 +38,8 @@ data class SpellDto(
         if (areaOfEffect != null) {
             descBuilder.append("Wirkungsbereich: ${areaOfEffect.type} (${areaOfEffect.size} Fuß)\n")
         }
-        val classesStr = classes.joinToString(", ")
+        val actualClasses = classes ?: emptyList()
+        val classesStr = actualClasses.joinToString(", ")
         descBuilder.append("Klassen: $classesStr\n")
 
         return Spell(
@@ -53,7 +54,7 @@ data class SpellDto(
             componentsM = components?.m?.isNotBlank() == true,
             materialCost = components?.m ?: "",
             description = descBuilder.toString().trim(),
-            classes = classes,
+            classes = actualClasses,
             isPrepared = false
         )
     }
