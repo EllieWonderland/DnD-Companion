@@ -17,8 +17,22 @@
   - *Commit:* `git commit -m "fix: app navigation via back button and improve quiver ui"`
 - [x] **Handbuch / Regelwerk-Referenz einbinden:** Einen Nachschlage-Bereich in der App schaffen, der die Markdown-Dateien aus `Rules/Handbuch` ausliest. Zustände (Conditions), Kampfregeln, etc. können dort sauber formatiert und klickbar angezeigt werden. Inklusive Zauberbuch. Inkl. horizontalem Swipen, Suche und klickbarem Index.
   - *Commit:* `git commit -m "feat: enhance rulebook ui with horizontal swipe, search and jumpable index"`
-- [ ] **LLM-Kontext (RAG) erweitern:** Den eingebauten Chatbot (`gemini`) so anpassen, dass er bei Regelfragen den lokalen Text des Handbuchs einbezieht.
-  - *Commit:* `git commit -m "feat: enhance chatbot with local rulebook context (RAG)"`
+- [ ] **LLM-Kontext (RAG) erweitern (Chatbot):** 
+  - Als Quelle für den Chatbot 2 Bereiche anzeigen: Oben eine Antwort anhand der eigenen Quellen (Rules/Handbuch, Rules/Zauberbuch, Charaktersheets, Stats, etc.), unten einen Bereich mit der Antwort anhand anderer Quellen (Internet, Gemini Datenbank etc.).
+  - *Commit:* `git commit -m "feat: enhance chatbot with split answer sources for local and external data"`
+- [ ] **Regelwerk - Bugfixes & Visuals:** 
+  - Weißen Hintergrund gegen weiße Schrift auf farbigem Hintergrund tauschen.
+  - Gesuchtes Wort im Text farblich/fett markieren (Highlighting).
+  - *Commit:* `git commit -m "fix: rulebook apply dark theme and add text highlighting for search"`
+- [ ] **Rucksack - Gewicht & Gegenstands-Auswahl:** 
+  - Auf tatsächliche Gewichte aus der Datei `equipment.md` zugreifen und summiert anzeigen.
+  - Neben dem freien Eingabefeld sollten Items für den Rucksack auch über eine Liste / Suche ausgewählt werden können (Daten aus `kapitel6_equipment.md` einlesen).
+  - *Commit:* `git commit -m "feat: inventory weight tracking and equipment item selection from md"`
+- [ ] **Levelaufstieg (Level Up) - Logik & UI:** 
+  - Noch einmal auf vollständige Logik prüfen (berücksichtigt das System automatisch neue Zauberplätze, neue Zauber, Rüstungsklasse, Trefferwürfel, etc.?).
+  - Das Fenster für den Level Up muss direkt im Kampf-Fenster auftauchen, sobald man aufsteigt.
+  - 2 Buttons zur Wahl stellen: "Jetzt Level Up durchführen" (öffnet Profil/Dialog für Attributs-/Zauberauswahl) oder "Später erledigen" (Fenster taucht beim nächsten Öffnen des Charakter-Profils wieder auf).
+  - *Commit:* `git commit -m "feat: improve level up logic and add combat screen popup notification"`
 - [ ] **Bücher/Notizen in "Privat" und "Öffentlich" splitten:** Die Notizbücher (Books/Tagebücher) so umbauen, dass ein Eintrag ein Flag erhält oder es getrennte Listen für `Profil-spezifisch` und `Gruppen-Öffentlich` gibt.
   - *Commit:* `git commit -m "feat: split notebooks into private and public categories"`
 
