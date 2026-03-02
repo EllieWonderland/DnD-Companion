@@ -1,5 +1,3 @@
-# kapitel2_races.md
-
 ## Spezies (Races/Species)
 
 ### Aasimar

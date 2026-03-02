@@ -8,6 +8,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,6 +18,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.halilibo.richtext.markdown.Markdown
@@ -476,23 +479,34 @@ fun RulebookDetailView(onBack: () -> Unit) {
         RulebookChapter("4. Herkünfte", "Rules/Handbuch/Kapitel/kapitel4_origins.md"),
         RulebookChapter("5. Talente", "Rules/Handbuch/Kapitel/kapitel5_talente.md"),
         RulebookChapter("6. Ausrüstung", "Rules/Handbuch/Kapitel/kapitel6_equipment.md"),
-        RulebookChapter("7. Zauber", "Rules/Handbuch/Kapitel/kapitel7_spells.md"),
-        RulebookChapter("8. Kampf", "Rules/Handbuch/Kapitel/kapitel8_combat_conditions.md"),
+        RulebookChapter("6. Ausrüstung", "Rules/Handbuch/Kapitel/kapitel6_equipment.md"),
+        RulebookChapter("7. Kampf", "Rules/Handbuch/Kapitel/kapitel8_combat_conditions.md"),
+        RulebookChapter("8. Zauber", "Rules/Handbuch/Kapitel/kapitel7_spells.md"),
         RulebookChapter("9. Spellbook", "Rules/Zauberbuch/Spellbook.md")
     )
 
-    var selectedChapter by remember { mutableStateOf(chapters.first()) }
-    var markdownContent by remember { mutableStateOf("Lade...") }
+    val pagerState = rememberPagerState(pageCount = { chapters.size })
+    val coroutineScope = rememberCoroutineScope()
+    var searchQuery by remember { mutableStateOf("") }
+    
+    // Store content per chapter index to avoid reloading
+    val chapterContents = remember { mutableStateMapOf<Int, String>() }
+    val scrollStates = chapters.map { rememberScrollState() }
     val context = androidx.compose.ui.platform.LocalContext.current
 
-    LaunchedEffect(selectedChapter) {
-        markdownContent = withContext(Dispatchers.IO) {
-            try {
-                context.assets.open(selectedChapter.filename).bufferedReader().use { it.readText() }
-            } catch (e: Exception) {
-                "Fehler beim Laden von ${selectedChapter.filename}"
+    LaunchedEffect(pagerState.currentPage) {
+        val index = pagerState.currentPage
+        if (!chapterContents.containsKey(index)) {
+            val chapter = chapters[index]
+            chapterContents[index] = withContext(Dispatchers.IO) {
+                try {
+                    context.assets.open(chapter.filename).bufferedReader().use { it.readText() }
+                } catch (e: Exception) {
+                    "Fehler beim Laden von ${chapter.filename}"
+                }
             }
         }
+        scrollStates[index].scrollTo(0)
     }
 
     Column(
@@ -517,15 +531,17 @@ fun RulebookDetailView(onBack: () -> Unit) {
 
         // Chapter Selection (Scrollable)
         ScrollableTabRow(
-            selectedTabIndex = chapters.indexOf(selectedChapter),
+            selectedTabIndex = pagerState.currentPage,
             containerColor = BlauHell,
             contentColor = Color.White,
             edgePadding = 8.dp
         ) {
             chapters.forEachIndexed { index, chapter ->
                 Tab(
-                    selected = selectedChapter == chapter,
-                    onClick = { selectedChapter = chapter },
+                    selected = pagerState.currentPage == index,
+                    onClick = {
+                        coroutineScope.launch { pagerState.animateScrollToPage(index) }
+                    },
                     text = { Text(chapter.title, fontSize = 14.sp) },
                     selectedContentColor = GelbSand,
                     unselectedContentColor = Color.White
@@ -533,21 +549,143 @@ fun RulebookDetailView(onBack: () -> Unit) {
             }
         }
 
-        // Markdown Content
+        // Search Bar
+        Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                modifier = Modifier.fillMaxWidth().height(50.dp),
+                placeholder = { Text("Im Kapitel suchen...") },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(20.dp)) },
+                trailingIcon = {
+                    if (searchQuery.isNotEmpty()) {
+                        IconButton(onClick = { searchQuery = "" }, modifier = Modifier.size(20.dp)) {
+                            Icon(Icons.Default.Clear, contentDescription = "Suchen löschen")
+                        }
+                    }
+                },
+                singleLine = true,
+                textStyle = androidx.compose.ui.text.TextStyle(fontSize = 14.sp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color(0xFF2E7D32),
+                    unfocusedBorderColor = BlauDunkel,
+                    focusedLeadingIconColor = Color(0xFF2E7D32)
+                )
+            )
+        }
+
+        // Markdown Content with HorizontalPager
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
                 .background(Color.White, RoundedCornerShape(8.dp))
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                Material3RichText {
-                    Markdown(content = markdownContent)
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.fillMaxSize()
+            ) { page ->
+                val content = chapterContents[page] ?: "Lade..."
+                
+                // --- MARDKOWN PARSING FOR INDEX & SPLITTING ---
+                // We split by "## " (H2) and "### " (H3) to create blocks we can scroll to.
+                val blocks = remember(content, searchQuery) {
+                    if (searchQuery.isNotBlank()) {
+                        content.split("\n\n").filter { it.contains(searchQuery, ignoreCase = true) }
+                    } else {
+                        // regex to keep the delimiter: (?=^## |^### ) with multiline
+                        val regex = Regex("(?=^## |^### )", RegexOption.MULTILINE)
+                        content.split(regex).filter { it.isNotBlank() }
+                    }
+                }
+                
+                val listState = androidx.compose.foundation.lazy.rememberLazyListState()
+                
+                // Scroll to top effect on page change
+                LaunchedEffect(page) {
+                    listState.scrollToItem(0)
+                }
+
+                Box(modifier = Modifier.fillMaxSize()) {
+                    LazyColumn(
+                        state = listState,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                    ) {
+                        // Index (only if no search query and there are headings)
+                        if (searchQuery.isBlank() && blocks.size > 1) {
+                            item {
+                                Card(
+                                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                                    colors = CardDefaults.cardColors(containerColor = BlauHell)
+                                ) {
+                                    Column(modifier = Modifier.padding(12.dp)) {
+                                        Text("Inhaltsverzeichnis", fontWeight = FontWeight.Bold, color = BlauDunkel, fontSize = 18.sp)
+                                        Spacer(modifier = Modifier.height(8.dp))
+                                        val localScope = rememberCoroutineScope()
+                                        blocks.forEachIndexed { index, blockText ->
+                                            val firstLine = blockText.trimStart().substringBefore('\n')
+                                            if (firstLine.startsWith("## ") || firstLine.startsWith("### ")) {
+                                                val isH3 = firstLine.startsWith("### ")
+                                                val title = firstLine.removePrefix("### ").removePrefix("## ").trim()
+                                                Text(
+                                                    text = (if (isH3) "  • " else "") + title,
+                                                    color = PinkDunkel,
+                                                    fontSize = if (isH3) 14.sp else 16.sp,
+                                                    fontWeight = if (isH3) FontWeight.Normal else FontWeight.Bold,
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .clickable {
+                                                            localScope.launch {
+                                                                listState.animateScrollToItem(index + 1) // +1 because Index itself is item 0
+                                                            }
+                                                        }
+                                                        .padding(vertical = 4.dp)
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        items(blocks.size) { index ->
+                            Material3RichText(modifier = Modifier.padding(bottom = 8.dp)) {
+                                Markdown(content = blocks[index])
+                            }
+                        }
+                    }
+                    
+                    // Simple Scrollbar for LazyColumn
+                    val isScrollable = listState.layoutInfo.totalItemsCount > 0
+                    if (isScrollable) {
+                        val firstVisible = listState.firstVisibleItemIndex
+                        val totalItems = listState.layoutInfo.totalItemsCount
+                        val scrollFraction = if (totalItems > 0) firstVisible.toFloat() / totalItems.toFloat() else 0f
+                        
+                        BoxWithConstraints(
+                            modifier = Modifier
+                                .align(Alignment.CenterEnd)
+                                .fillMaxHeight()
+                                .padding(vertical = 16.dp, horizontal = 4.dp)
+                                .width(4.dp)
+                                .background(Color.LightGray.copy(alpha = 0.5f), RoundedCornerShape(2.dp))
+                        ) {
+                            val viewHeightPx = with(androidx.compose.ui.platform.LocalDensity.current) { maxHeight.toPx() }
+                            val thumbHeightPx = viewHeightPx * 0.1f
+                            val maxScrollOffsetPx = viewHeightPx - thumbHeightPx
+                            val yOffsetPx = (scrollFraction * maxScrollOffsetPx).toInt()
+                            
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .fillMaxHeight(0.1f)
+                                    .offset { androidx.compose.ui.unit.IntOffset(0, yOffsetPx) }
+                                    .background(BlauDunkel, RoundedCornerShape(2.dp))
+                            )
+                        }
+                    }
                 }
             }
         }
