@@ -586,8 +586,14 @@ fun RulebookDetailView(onBack: () -> Unit) {
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                modifier = Modifier.fillMaxWidth().height(50.dp),
-                placeholder = { Text("Im Kapitel suchen...") },
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = { 
+                    Text(
+                        text = if (pagerState.currentPage == 0) "Im gesamten Regelwerk suchen..." else "Im Kapitel suchen...",
+                        maxLines = 1,
+                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
+                    ) 
+                },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(20.dp)) },
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
@@ -646,8 +652,9 @@ fun RulebookDetailView(onBack: () -> Unit) {
                                                     coroutineScope.launch {
                                                         isJumpingFromIndex = true
                                                         searchQuery = ""
-                                                        pagerState.animateScrollToPage(entry.chapterIndex)
-                                                        kotlinx.coroutines.delay(50) // Wait for layout
+                                                        // Use scrollToPage for immediate switch to avoid animation cancelling the inner scroll
+                                                        pagerState.scrollToPage(entry.chapterIndex)
+                                                        kotlinx.coroutines.delay(100) // Wait for layout to settle
                                                         scrollStates[entry.chapterIndex].scrollToItem(entry.blockIndex)
                                                         kotlinx.coroutines.delay(50)
                                                         isJumpingFromIndex = false
@@ -686,8 +693,8 @@ fun RulebookDetailView(onBack: () -> Unit) {
                                                 coroutineScope.launch {
                                                     isJumpingFromIndex = true
                                                     searchQuery = ""
-                                                    pagerState.animateScrollToPage(entry.chapterIndex)
-                                                    kotlinx.coroutines.delay(50) // Wait for layout
+                                                    pagerState.scrollToPage(entry.chapterIndex)
+                                                    kotlinx.coroutines.delay(100) // Wait for layout to settle
                                                     scrollStates[entry.chapterIndex].scrollToItem(entry.blockIndex)
                                                     kotlinx.coroutines.delay(50)
                                                     isJumpingFromIndex = false
