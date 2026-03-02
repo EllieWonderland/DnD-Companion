@@ -3,6 +3,7 @@ package com.example.dndcompanion
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -55,8 +56,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun DnDApp(viewModel: CharacterViewModel) {
-    // 0 = Athania, 1 = Capy, 2 = Hilfe
+    // 0 = Athania, 1 = Capy, 2 = Hilfe, 3 = Bücher
     var currentScreen by rememberSaveable { mutableStateOf(0) }
+
+    BackHandler(enabled = currentScreen != 0) {
+        currentScreen = 0
+    }
 
     Scaffold(
         bottomBar = {
@@ -108,6 +113,12 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
     val tabs = AthaniaTab.entries.filter { it != AthaniaTab.Hilfe }
     val pagerState = rememberPagerState(initialPage = tabs.indexOf(AthaniaTab.Kampf), pageCount = { tabs.size })
     val coroutineScope = rememberCoroutineScope()
+
+    BackHandler(enabled = pagerState.currentPage != tabs.indexOf(AthaniaTab.Kampf)) {
+        coroutineScope.launch {
+            pagerState.animateScrollToPage(tabs.indexOf(AthaniaTab.Kampf))
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize()) {
         TabRow(

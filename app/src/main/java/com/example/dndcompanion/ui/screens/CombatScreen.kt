@@ -325,15 +325,17 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         Row {
                             Button(
                                 onClick = { viewModel.changeTotalArrows(-1) },
-                                colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
-                                modifier = Modifier.width(48.dp)
-                            ) { Text("-1") }
+                                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel),
+                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
+                                modifier = Modifier.height(36.dp)
+                            ) { Text("- Ablegen", fontSize = 12.sp) }
                             Spacer(modifier = Modifier.width(8.dp))
                             Button(
                                 onClick = { viewModel.changeTotalArrows(1) },
                                 colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
-                                modifier = Modifier.width(48.dp)
-                            ) { Text("+1") }
+                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
+                                modifier = Modifier.height(36.dp)
+                            ) { Text("+ Kaufen", fontSize = 12.sp) }
                         }
                     }
                 }
