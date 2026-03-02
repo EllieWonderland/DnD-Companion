@@ -1,0 +1,522 @@
+[
+    {
+        "spell_id": "eldritch_blast",
+        "name_de": "Schauerlicher Strahl",
+        "name_en": "Eldritch Blast",
+        "level": 0,
+        "school": "Hervorrufung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 120
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Energieschaden",
+            "base_dice": "1w10",
+            "upcast_dice_per_level": "1 Strahl extra (Stufe 5, 11, 17)"
+        },
+        "classes": [
+            "Hexenmeister"
+        ],
+        "description": "Der beste Schadens-Zaubertrick. Feuert einen Strahl (1W10 Energieschaden) auf 120 Fuß. Auf Stufe 5, 11 und 17 kommt jeweils ein weiterer Strahl hinzu!"
+    },
+    {
+        "spell_id": "blade_ward",
+        "name_de": "Klingenbann",
+        "name_en": "Blade Ward",
+        "level": 0,
+        "school": "Bannmagie",
+        "casting_time": "1 Reaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Zauberer",
+            "Magier"
+        ],
+        "description": "Eine Reaktion! Wenn du im Nahkampf angegriffen wirst, wirfst du diesen Zauber und der Gegner hat Nachteil auf seinen Angriff."
+    },
+    {
+        "spell_id": "chill_touch",
+        "name_de": "Gefrierende Berührung",
+        "name_en": "Chill Touch",
+        "level": 0,
+        "school": "Nekromantie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Nekrotisch",
+            "base_dice": "1w10",
+            "upcast_dice_per_level": "1w10 (Stufe 5, 11, 17)"
+        },
+        "classes": [
+            "Hexenmeister",
+            "Zauberer",
+            "Magier"
+        ],
+        "description": "Ein Nahkampf-Zauberangriff! Verursacht 1W10 Nekrotischen Schaden und das Ziel kann sich bis zum Ende deines nächsten Zuges absolut nicht heilen."
+    },
+    {
+        "spell_id": "druidcraft",
+        "name_de": "Druidenkunst",
+        "name_en": "Druidcraft",
+        "level": 0,
+        "school": "Verwandlung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Waldläufer (Kampfstil)"
+        ],
+        "description": "Ein kleiner Natur-Trick. Du kannst das Wetter der nächsten 24 Stunden vorhersagen, Blumen erblühen lassen oder kleine Effekte wie das Rascheln von Blättern erzeugen."
+    },
+    {
+        "spell_id": "guidance",
+        "name_de": "Göttliche Führung",
+        "name_en": "Guidance",
+        "level": 0,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Kleriker",
+            "Druide",
+            "Waldläufer (Kampfstil)"
+        ],
+        "description": "Ein Verbündeter (oder du selbst) darf bei einem beliebigen Attributswurf (Skill Check) 1W4 zum Ergebnis addieren."
+    },
+    {
+        "spell_id": "mage_hand",
+        "name_de": "Magierhand",
+        "name_en": "Mage Hand",
+        "level": 0,
+        "school": "Beschwörung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Zauberer",
+            "Magier"
+        ],
+        "description": "Eine fliegende, geisterhafte Hand, mit der du aus 30 Fuß Entfernung Türen öffnen, Hebel ziehen oder leichte Objekte (bis 10 Pfund) tragen kannst."
+    },
+    {
+        "spell_id": "minor_illusion",
+        "name_de": "Kleine Illusion",
+        "name_en": "Minor Illusion",
+        "level": 0,
+        "school": "Illusion",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 30
+        },
+        "components": {
+            "v": false,
+            "s": true,
+            "m": "Ein Stückchen Vlies",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Würfel",
+            "size": 5
+        },
+        "saving_throw": "INT",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Zauberer",
+            "Magier"
+        ],
+        "description": "Erschafft ein statisches, stummes Bild (wie eine Kiste, hinter der man sich verstecken kann) oder ein Geräusch für 1 Minute."
+    },
+    {
+        "spell_id": "poison_spray",
+        "name_de": "Gift versprühen",
+        "name_en": "Poison Spray",
+        "level": 0,
+        "school": "Nekromantie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Gift",
+            "base_dice": "1w12",
+            "upcast_dice_per_level": "1w12 (Stufe 5, 11, 17)"
+        },
+        "classes": [
+            "Druide",
+            "Hexenmeister",
+            "Zauberer",
+            "Magier",
+            "Waldläufer (Kampfstil)"
+        ],
+        "description": "Direkter Zauberangriff aus kurzer Distanz (30 Fuß), der massiven Schaden anrichtet (1W12 Giftschaden). Kein Rettungswurf mehr nötig (Neu in 2024)!"
+    },
+    {
+        "spell_id": "prestidigitation",
+        "name_de": "Zaubertrick",
+        "name_en": "Prestidigitation",
+        "level": 0,
+        "school": "Verwandlung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 10
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Zauberer",
+            "Magier"
+        ],
+        "description": "Ein vielseitiger Alltags-Zauber. Du kannst Kleidung reinigen/verschmutzen, Essen würzen, kleine Objekte in deiner Hand erschaffen oder Kerzen anzünden."
+    },
+    {
+        "spell_id": "produce_flame",
+        "name_de": "Flamme erzeugen",
+        "name_en": "Produce Flame",
+        "level": 0,
+        "school": "Beschwörung",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 60
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Feuer",
+            "base_dice": "1w8",
+            "upcast_dice_per_level": "1w8 (Stufe 5, 11, 17)"
+        },
+        "classes": [
+            "Druide",
+            "Waldläufer (Kampfstil)"
+        ],
+        "description": "Du erschaffst eine Flamme in deiner Hand, die Licht spendet. Du kannst sie auch als Fernkampfangriff (1W8 Feuerschaden) werfen."
+    },
+    {
+        "spell_id": "shillelagh",
+        "name_de": "Knorrenkeule",
+        "name_en": "Shillelagh",
+        "level": 0,
+        "school": "Verwandlung",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Eschenholz, ein Kleeblattblatt und ein Knüppel oder Kampfstab",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Energieschaden",
+            "base_dice": "1w8",
+            "upcast_dice_per_level": "1w10 (Stufe 5), 1w12 (Stufe 11), 2w6 (Stufe 17)"
+        },
+        "classes": [
+            "Druide",
+            "Waldläufer (Kampfstil)"
+        ],
+        "description": "Verzaubert einen Holzknüppel oder Kampfstab. Du nutzt fortan dein Zauberattribut statt Stärke für Angriff/Schaden und der Schaden wird zu 1W8 (später bis zu 2W6)."
+    },
+    {
+        "spell_id": "starry_wisp",
+        "name_de": "Sternenfunke",
+        "name_en": "Starry Wisp",
+        "level": 0,
+        "school": "Hervorrufung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 60
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Gleißend",
+            "base_dice": "1w8",
+            "upcast_dice_per_level": "1w8 (Stufe 5, 11, 17)"
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Waldläufer (Kampfstil)"
+        ],
+        "description": "Du wirfst ein Stück Sternenlicht (1W8 Gleißender Schaden). Getroffene Ziele leuchten und können bis zu deinem nächsten Zug nicht mehr unsichtbar werden."
+    },
+    {
+        "spell_id": "thorn_whip",
+        "name_de": "Dornenpeitsche",
+        "name_en": "Thorn Whip",
+        "level": 0,
+        "school": "Verwandlung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Der Stiel einer dornigen Pflanze",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Stich",
+            "base_dice": "1w6",
+            "upcast_dice_per_level": "1w6 (Stufe 5, 11, 17)"
+        },
+        "classes": [
+            "Druide",
+            "Waldläufer (Kampfstil)"
+        ],
+        "description": "Du triffst ein Ziel im Nahkampf aus bis zu 30 Fuß Entfernung (1W6 Stichschaden) und kannst es bis zu 10 Fuß zu dir heranziehen."
+    },
+    {
+        "spell_id": "toll_the_dead",
+        "name_de": "Totenglocke",
+        "name_en": "Toll the Dead",
+        "level": 0,
+        "school": "Nekromantie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 60
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "WEI",
+        "damage": {
+            "type": "Nekrotisch",
+            "base_dice": "1w8 oder 1w12 (wenn Ziel verletzt)",
+            "upcast_dice_per_level": "1w8/1w12 (Stufe 5, 11, 17)"
+        },
+        "classes": [
+            "Kleriker",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Zwingt das Ziel zu einem Rettungswurf. Schlägt es fehl, nimmt es 1W8 Nekrotischen Schaden. Fehlen dem Ziel bereits Trefferpunkte, steigt der Schaden auf 1W12!"
+    },
+    {
+        "spell_id": "true_strike",
+        "name_de": "Wahrer Schlag",
+        "name_en": "True Strike",
+        "level": 0,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": false,
+            "s": true,
+            "m": "Die Waffe, mit der du den Angriff ausführst",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Waffenschaden (kann zu Gleißend werden)",
+            "base_dice": "Waffenschaden",
+            "upcast_dice_per_level": "+1w6 Gleißend (Stufe 5), +2w6 (Stufe 11), +3w6 (Stufe 17)"
+        },
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Zauberer",
+            "Magier"
+        ],
+        "description": "Du greifst normal mit deiner Waffe an, darfst dafür aber dein Zauberattribut (statt STR/GES) nutzen. Der Schaden kann in Gleißenden Schaden umgewandelt werden und wird auf höheren Stufen massiv verstärkt."
+    }
+]

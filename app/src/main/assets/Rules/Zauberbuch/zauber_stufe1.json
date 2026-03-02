@@ -1,0 +1,855 @@
+[
+    {
+        "spell_id": "alarm",
+        "name_de": "Alarm",
+        "name_en": "Alarm",
+        "level": 1,
+        "school": "Bannmagie",
+        "casting_time": "1 Minute",
+        "range": {
+            "type": "Entfernung",
+            "distance": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Eine kleine Glocke und ein Stück feiner Silberdraht",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Würfel",
+            "size": 20
+        },
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Waldläufer",
+            "Magier"
+        ],
+        "description": "Sichert einen 20-Fuß-Bereich ab. Betritt ein Feind den Bereich, ertönt ein geistiges oder lautes Klingeln."
+    },
+    {
+        "spell_id": "animal_friendship",
+        "name_de": "Tierfreundschaft",
+        "name_en": "Animal Friendship",
+        "level": 1,
+        "school": "Verzauberung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Ein Bissen Essen",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "WEI",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Druide",
+            "Waldläufer"
+        ],
+        "description": "Bezaubert ein Wildtier, sodass es dich und deine Verbündeten für 24 Stunden nicht angreift."
+    },
+    {
+        "spell_id": "cure_wounds",
+        "name_de": "Wunden heilen",
+        "name_en": "Cure Wounds",
+        "level": 1,
+        "school": "Bannmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Heilung",
+            "base_dice": "2w8",
+            "upcast_dice_per_level": "2w8"
+        },
+        "classes": [
+            "Barde",
+            "Kleriker",
+            "Druide",
+            "Paladin",
+            "Waldläufer"
+        ],
+        "description": "Eine kraftvolle Nahkampf-Heilung (2W8 + Zauberattribut)."
+    },
+    {
+        "spell_id": "detect_poison_and_disease",
+        "name_de": "Gift und Krankheit entdecken",
+        "name_en": "Detect Poison and Disease",
+        "level": 1,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Ein Eibenblatt",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Sphäre",
+            "size": 30
+        },
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Kleriker",
+            "Druide",
+            "Paladin",
+            "Waldläufer"
+        ],
+        "description": "Du spürst 10 Minuten lang, ob in deiner Nähe Gifte, Krankheiten oder giftige Kreaturen versteckt sind."
+    },
+    {
+        "spell_id": "ensnaring_strike",
+        "name_de": "Fesselnder Schlag",
+        "name_en": "Ensnaring Strike",
+        "level": 1,
+        "school": "Beschwörung",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": "STR",
+        "damage": {
+            "type": "Stich",
+            "base_dice": "1w6",
+            "upcast_dice_per_level": "1w6"
+        },
+        "classes": [
+            "Waldläufer"
+        ],
+        "description": "Dein nächster Waffentreffer fesselt das Ziel mit dornigen Ranken (1W6 Stichschaden pro Runde und es ist festgesetzt)."
+    },
+    {
+        "spell_id": "entangle",
+        "name_de": "Verstricken",
+        "name_en": "Entangle",
+        "level": 1,
+        "school": "Beschwörung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Würfel",
+            "size": 20
+        },
+        "saving_throw": "STR",
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Waldläufer"
+        ],
+        "description": "Lässt Unkraut und Ranken aus dem Boden sprießen, die den Bereich zu schwierigem Gelände machen und Feinde festhalten (Restrained)."
+    },
+    {
+        "spell_id": "fog_cloud",
+        "name_de": "Nebelwolke",
+        "name_en": "Fog Cloud",
+        "level": 1,
+        "school": "Beschwörung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 120
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Eine Prise Erbsen oder zerkleinerte Blätter",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Sphäre",
+            "size": 20
+        },
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Waldläufer",
+            "Zauberer",
+            "Magier"
+        ],
+        "description": "Erschafft eine dichte Wolke, die einen 20-Fuß-Bereich stark verhüllt (Sichtlinie ist blockiert)."
+    },
+    {
+        "spell_id": "goodberry",
+        "name_de": "Gute Beere",
+        "name_en": "Goodberry",
+        "level": 1,
+        "school": "Verwandlung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Ein Zweig eines Mistelbuschs",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Heilung",
+            "base_dice": "1",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Druide",
+            "Waldläufer"
+        ],
+        "description": "Erschafft 10 magische Beeren. Jede Beere heilt 1 TP und liefert genug Nahrung für einen ganzen Tag."
+    },
+    {
+        "spell_id": "hail_of_thorns",
+        "name_de": "Dornenhagel",
+        "name_en": "Hail of Thorns",
+        "level": 1,
+        "school": "Beschwörung",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Sphäre",
+            "size": 5
+        },
+        "saving_throw": "GES",
+        "damage": {
+            "type": "Stich",
+            "base_dice": "1w10",
+            "upcast_dice_per_level": "1w10"
+        },
+        "classes": [
+            "Waldläufer"
+        ],
+        "description": "Wenn du das nächste Mal mit einer Fernkampfwaffe triffst, explodiert die Munition in einem Dornenhagel (1W10 extra Stichschaden für Ziel und Umstehende)."
+    },
+    {
+        "spell_id": "hunters_mark",
+        "name_de": "Zeichen des Jägers",
+        "name_en": "Hunter's Mark",
+        "level": 1,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 90
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Energieschaden",
+            "base_dice": "1w6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Waldläufer"
+        ],
+        "description": "Markiert einen Feind. Du fügst ihm 1W6 extra Waffenschaden zu und hast Vorteil darauf, ihn zu suchen oder zu verfolgen."
+    },
+    {
+        "spell_id": "jump",
+        "name_de": "Sprung",
+        "name_en": "Jump",
+        "level": 1,
+        "school": "Verwandlung",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Das Hinterbein eines Grashüpfers",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Waldläufer",
+            "Zauberer",
+            "Magier"
+        ],
+        "description": "Ein Ziel deiner Wahl kann seine Sprungdistanz 1 Minute lang drastisch erhöhen (bis zu 30 Fuß extra)."
+    },
+    {
+        "spell_id": "longstrider",
+        "name_de": "Dauerhafter Schritt",
+        "name_en": "Longstrider",
+        "level": 1,
+        "school": "Verwandlung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Eine Prise Erde",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Druide",
+            "Waldläufer",
+            "Magier"
+        ],
+        "description": "Erhöht die Bewegungsrate eines Ziels für 1 Stunde um 10 Fuß (ohne Konzentration!)."
+    },
+    {
+        "spell_id": "speak_with_animals",
+        "name_de": "Mit Tieren sprechen",
+        "name_en": "Speak with Animals",
+        "level": 1,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Druide",
+            "Waldläufer"
+        ],
+        "description": "Du kannst dich für 10 Minuten völlig normal mit Tieren unterhalten."
+    },
+    {
+        "spell_id": "armor_of_agathys",
+        "name_de": "Rüstung von Agathys",
+        "name_en": "Armor of Agathys",
+        "level": 1,
+        "school": "Bannmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Ein Becher Wasser",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Kälte",
+            "base_dice": "5",
+            "upcast_dice_per_level": "5"
+        },
+        "classes": [
+            "Hexenmeister"
+        ],
+        "description": "Du erhältst 5 temporäre TP. Jeder Gegner, der dich im Nahkampf trifft, solange du diese TP hast, erleidet sofort 5 Kälteschaden (skaliert extrem gut!)."
+    },
+    {
+        "spell_id": "arms_of_hadar",
+        "name_de": "Hadars Waffen",
+        "name_en": "Arms of Hadar",
+        "level": 1,
+        "school": "Beschwörung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Emanation",
+            "size": 10
+        },
+        "saving_throw": "STR",
+        "damage": {
+            "type": "Nekrotisch",
+            "base_dice": "2w6",
+            "upcast_dice_per_level": "1w6"
+        },
+        "classes": [
+            "Hexenmeister"
+        ],
+        "description": "Tentakel brechen aus dir heraus. Alle Feinde in 10 Fuß Umkreis nehmen 2W6 Nekrotischen Schaden und können keine Reaktionen mehr ausführen."
+    },
+    {
+        "spell_id": "charm_person",
+        "name_de": "Person bezaubern",
+        "name_en": "Charm Person",
+        "level": 1,
+        "school": "Verzauberung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "WEI",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Druide",
+            "Zauberer",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Ein Humanoider sieht dich für 1 Stunde als freundlichen Bekannten an (Vorteil auf soziale Interaktionen)."
+    },
+    {
+        "spell_id": "comprehend_languages",
+        "name_de": "Sprachen verstehen",
+        "name_en": "Comprehend Languages",
+        "level": 1,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Eine Prise Ruß und etwas Salz",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Du verstehst jede gesprochene oder geschriebene Sprache für 1 Stunde (sprechen kannst du sie dadurch aber nicht)."
+    },
+    {
+        "spell_id": "expeditious_retreat",
+        "name_de": "Hastiger Rückzug",
+        "name_en": "Expeditious Retreat",
+        "level": 1,
+        "school": "Verwandlung",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Zauberer",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Du kannst für 10 Minuten in jedem deiner Züge als Bonusaktion die Spurt-Aktion ausführen."
+    },
+    {
+        "spell_id": "false_life",
+        "name_de": "Falsches Leben",
+        "name_en": "False Life",
+        "level": 1,
+        "school": "Nekromantie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Eine kleine Menge Alkohol oder destillierter Spirituosen",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Temporäre Trefferpunkte",
+            "base_dice": "1w4+4",
+            "upcast_dice_per_level": "5"
+        },
+        "classes": [
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Du verleihst dir selbst temporäre Trefferpunkte (1W4 + 4), die Schaden absorbieren, bevor deine echten TP sinken."
+    },
+    {
+        "spell_id": "hellish_rebuke",
+        "name_de": "Höllischer Tadel",
+        "name_en": "Hellish Rebuke",
+        "level": 1,
+        "school": "Hervorrufung",
+        "casting_time": "1 Reaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 60
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "GES",
+        "damage": {
+            "type": "Feuer",
+            "base_dice": "2w10",
+            "upcast_dice_per_level": "1w10"
+        },
+        "classes": [
+            "Hexenmeister"
+        ],
+        "description": "Eine Reaktion! Wenn du Schaden nimmst, lässt du den Angreifer in Flammen aufgehen (2W10 Feuerschaden)."
+    },
+    {
+        "spell_id": "hex",
+        "name_de": "Fluch",
+        "name_en": "Hex",
+        "level": 1,
+        "school": "Verzauberung",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 90
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Das versteinerte Auge eines Molches",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Nekrotisch",
+            "base_dice": "1w6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Hexenmeister"
+        ],
+        "description": "Ein Ziel deiner Wahl erleidet 1W6 extra Nekrotischen Schaden bei jedem deiner Treffer und hat Nachteil auf Attributswürfe eines von dir gewählten Attributs."
+    },
+    {
+        "spell_id": "illusory_script",
+        "name_de": "Illusorische Schrift",
+        "name_en": "Illusory Script",
+        "level": 1,
+        "school": "Illusion",
+        "casting_time": "1 Minute",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Blei-Tinte im Wert von mindestens 10 GM",
+            "m_cost": 10,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Versteckt eine geheime Botschaft in einem scheinbar normalen Text. Nur von dir bestimmte Personen können die Wahrheit lesen."
+    },
+    {
+        "spell_id": "protection_from_evil_and_good",
+        "name_de": "Schutz vor Bösem und Gutem",
+        "name_en": "Protection from Evil and Good",
+        "level": 1,
+        "school": "Bannmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Weihwasser oder pulverisiertes Silber und Eisen",
+            "m_cost": 0,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Kleriker",
+            "Paladin",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Schützt vor Aberrationen, Feen, Untoten etc. Diese Kreaturen haben Nachteil, wenn sie das Ziel angreifen."
+    },
+    {
+        "spell_id": "unseen_servant",
+        "name_de": "Unsichtbarer Diener",
+        "name_en": "Unseen Servant",
+        "level": 1,
+        "school": "Beschwörung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 60
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Ein Stück Schnur und ein bisschen Holz",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Erschafft eine unsichtbare Kraft, die für dich einfache Aufgaben erledigt (Putzen, Türen öffnen, Sachen tragen)."
+    },
+    {
+        "spell_id": "witch_bolt",
+        "name_de": "Hexenpfeil",
+        "name_en": "Witch Bolt",
+        "level": 1,
+        "school": "Hervorrufung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Ein Zweig eines vom Blitz getroffenen Baumes",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Blitz",
+            "base_dice": "1w12",
+            "upcast_dice_per_level": "1w12"
+        },
+        "classes": [
+            "Zauberer",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Du verbindest dich durch einen Blitzstrahl mit einem Feind (1W12 Schaden). Solange du die Verbindung aufrechterhältst, kannst du ihm jeden Zug automatisch weiteren Schaden zufügen."
+    }
+]

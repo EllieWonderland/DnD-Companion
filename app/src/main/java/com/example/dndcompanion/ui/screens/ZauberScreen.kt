@@ -309,7 +309,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Zauberbuch", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+                Text("Mein Zauberbuch", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
                 IconButton(onClick = { showSpellbookEditDialog = true }) {
                     Icon(Icons.Default.Edit, contentDescription = "Zauber bearbeiten", tint = PinkDunkel)
                 }
@@ -350,7 +350,6 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("Merkmale", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
-                Icon(Icons.Default.Edit, contentDescription = "Bearbeitbar", tint = BlauDunkel)
             }
             Spacer(modifier = Modifier.height(8.dp))
             

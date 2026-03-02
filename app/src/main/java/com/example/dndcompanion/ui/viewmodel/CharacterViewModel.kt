@@ -859,7 +859,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 val type = object : TypeToken<List<SpellDto>>() {}.type
 
                 for (i in 0..9) {
-                    val fileName = "Zauberbuch/zauber_stufe$i.json"
+                    val fileName = "Rules/Zauberbuch/zauber_stufe$i.json"
                     try {
                         val jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
                         val dtos: List<SpellDto> = gson.fromJson(jsonString, type)

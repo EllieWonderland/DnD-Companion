@@ -1,0 +1,201 @@
+[
+    {
+        "spell_id": "astral_projection",
+        "name_de": "Astrale Projektion",
+        "name_en": "Astral Projection",
+        "level": 9,
+        "school": "Nekromantie",
+        "casting_time": "1 Stunde",
+        "range": {
+            "type": "Entfernung",
+            "distance": 10
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Für jede Kreatur, die du betriffst, einen Jacinth im Wert von mindestens 1.000 GM und einen kunstvoll geschnitzten Silberbarren im Wert von mindestens 100 GM",
+            "m_cost": 1100,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Spezial",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Kleriker",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Du trennst die Seelen deiner Gruppe von euren Körpern (diese fallen in Stase), um sicher durch die Astral-See zu reisen."
+    },
+    {
+        "spell_id": "foresight",
+        "name_de": "Vorahnung",
+        "name_en": "Foresight",
+        "level": 9,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Minute",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Eine Kolibrifeder",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Druide",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Berührst du einen Verbündeten, kann dieser für 8 Stunden in die Zukunft sehen. Er kann nicht überrascht werden und hat Vorteil auf **jeden** Angriff, Rettungs- oder Attributswurf, während Angriffe gegen ihn Nachteil haben."
+    },
+    {
+        "spell_id": "imprisonment",
+        "name_de": "Einkerkerung",
+        "name_en": "Imprisonment",
+        "level": 9,
+        "school": "Bannmagie",
+        "casting_time": "1 Minute",
+        "range": {
+            "type": "Entfernung",
+            "distance": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Ein Pergamentbild oder eine geschnitzte Statuette, die dem Ziel ähnelt, und eine spezielle Komponente je nach Art der Einkerkerung im Wert von mindestens 500 GM pro Trefferwürfel des Ziels",
+            "m_cost": 500,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "WEI",
+        "damage": null,
+        "classes": [
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Der ultimative Banngesang. Kerkert einen Feind (der den Save verfehlt) permanent unter der Erde, in Ketten, in einem Juwel oder in tiefem Schlaf ein. Nur ganz spezifische, von dir festgelegte Bedingungen können ihn befreien."
+    },
+    {
+        "spell_id": "power_word_kill",
+        "name_de": "Machtwort Tod",
+        "name_en": "Power Word Kill",
+        "level": 9,
+        "school": "Verzauberung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 60
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Spontan",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Zauberer",
+            "Magier"
+        ],
+        "description": "Du sprichst ein einziges Wort. Wenn das Ziel 100 Trefferpunkte oder weniger hat, stirbt es sofort. Kein Retttungswurf, kein Schaden, es ist einfach tot."
+    },
+    {
+        "spell_id": "true_polymorph",
+        "name_de": "Wahrer Gestaltwandel",
+        "name_en": "True Polymorph",
+        "level": 9,
+        "school": "Verwandlung",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 30
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Ein Tropfen Quecksilber, ein Klecks Gummi arabicum und eine Rauchwolke",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": "WEI",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Du verwandelst eine Kreatur in etwas komplett anderes, oder ein Objekt in eine Kreatur. Verwandle den feindlichen Boss in eine Maus oder dich selbst in einen ausgewachsenen Drachen. Hältst du die Konzentration für 1 Stunde, wird die Verwandlung dauerhaft."
+    },
+    {
+        "spell_id": "weird",
+        "name_de": "Grauen",
+        "name_en": "Weird",
+        "level": 9,
+        "school": "Illusion",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 120
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Sphäre",
+            "size": 30
+        },
+        "saving_throw": "WEI",
+        "damage": {
+            "type": "Psychisch",
+            "base_dice": "4w10",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Hexenmeister",
+            "Magier"
+        ],
+        "description": "Ein Flächen-Albtraum. Alle Kreaturen in 30 Fuß sind verängstigt und nehmen in jedem Zug 4W10 Psychischen Schaden durch ihre schlimmsten Ängste."
+    }
+]
