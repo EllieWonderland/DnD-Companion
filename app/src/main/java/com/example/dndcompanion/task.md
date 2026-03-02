@@ -11,6 +11,8 @@
   - *Commit:* `git commit -m "feat: add equipped badge to spell cards and filter global spellbook by character class"`
 - [x] **Rasten und Lebenspunkte:** Lange Rast warnt bei fehlendem Wasser/Nahrung. Todesrettungswürfe erhalten Reaktionen bei 3 Erfolgen/Fehlschlägen.
   - *Commit:* `git commit -m "feat: add resource warnings to long rest and dialogs for death save outcomes"`
+- [x] **Klassifikationen und Freie Zauber:** Druiden-Zauber haben eigenen Filter & grünes Design. Maximal 1 Level-1-Druidenzauber wählbar. `Feenfeuer` und `Dunkelheit` als kostenlose 1x/Tag Zauber hinzugefügt.
+  - *Commit:* `git commit -m "feat: add druid spell restrictions, styling and free casts for faerie fire and darkness"`
 - [ ] **Handbuch / Regelwerk-Referenz einbinden:** Einen Nachschlage-Bereich in der App schaffen, der die Markdown-Dateien aus `Rules/Handbuch` ausliest. Zustände (Conditions), Kampfregeln, etc. können dort sauber formatiert und klickbar angezeigt werden.
   - *Commit:* `git commit -m "feat: add rulebook reference section parsing markdown files"`
 - [ ] **LLM-Kontext (RAG) erweitern:** Den eingebauten Chatbot (`gemini`) so anpassen, dass er bei Regelfragen den lokalen Text des Handbuchs einbezieht.

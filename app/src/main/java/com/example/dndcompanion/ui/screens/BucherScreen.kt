@@ -373,10 +373,37 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                 }
             }
 
+            var selectedClassFilter by remember { mutableStateOf("Alle") }
+            val classFilters = listOf("Alle", "Waldläufer", "Druide")
+
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Klasse:", color = BlauDunkel, fontWeight = FontWeight.Bold)
+                classFilters.forEach { filterClass ->
+                    Button(
+                        onClick = { selectedClassFilter = filterClass },
+                        colors = ButtonDefaults.buttonColors(containerColor = if (selectedClassFilter == filterClass) PinkDunkel else BlauHell),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                        modifier = Modifier.height(32.dp)
+                    ) {
+                        Text(filterClass, fontSize = 12.sp, color = Color.White)
+                    }
+                }
+            }
+
             Spacer(modifier = Modifier.height(8.dp))
 
             val filteredSpells = viewModel.globalSpellbook.filter { spell -> 
-                (spell.classes.contains("Waldläufer") || spell.classes.contains("Hexenmeister")) &&
+                val matchesClass = when (selectedClassFilter) {
+                    "Waldläufer" -> spell.classes.contains("Waldläufer")
+                    "Druide" -> spell.classes.contains("Druide") && spell.level <= 1
+                    else -> spell.classes.contains("Waldläufer") || (spell.classes.contains("Druide") && spell.level <= 1)
+                }
+                
+                matchesClass &&
                 (selectedLevel == -1 || spell.level == selectedLevel) &&
                 (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
             }.sortedWith(compareBy({ it.level }, { it.name }))
@@ -387,24 +414,31 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                 LazyColumn(modifier = Modifier.weight(1f)) {
                     items(filteredSpells) { catalogSpell ->
                         val alreadyInBook = viewModel.allSpells.any { it.name == catalogSpell.name }
+                        val isDruidSpell = catalogSpell.classes.contains("Druide") && !catalogSpell.classes.contains("Waldläufer")
+                        val isDruidLevel1 = catalogSpell.classes.contains("Druide") && catalogSpell.level == 1
+                        val druidLevel1Count = viewModel.allSpells.count { it.classes.contains("Druide") && it.level == 1 }
+                        
                         SpellCard(
                             spell = catalogSpell,
                             isEditMode = false,
                             isEquipped = alreadyInBook,
                             onTogglePrep = {},
                             onDelete = null,
+                            customColor = if (isDruidSpell) Color(0xFF2E7D32) else BlauHell, // Dark Green for Druid
                             extraContent = {
+                                val canEquip = !alreadyInBook && (!isDruidLevel1 || druidLevel1Count < 1)
                                 Button(
                                     onClick = {
-                                        if (!alreadyInBook) {
+                                        if (canEquip) {
                                             viewModel.addNewSpell(catalogSpell.copy(isPrepared = true, id = java.util.UUID.randomUUID().toString()))
                                         }
                                     },
-                                    enabled = !alreadyInBook,
+                                    enabled = canEquip || alreadyInBook, // Keep enabled if already in book to show "Bereits ausgerüstet"
                                     colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel, disabledContainerColor = Color.Gray),
                                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(36.dp)
                                 ) {
-                                    Text(if (alreadyInBook) "Bereits ausgerüstet" else "+ Ausrüsten", fontSize = 14.sp)
+                                    val buttonText = if (alreadyInBook) "Bereits ausgerüstet" else if (!canEquip) "Max 1 Druidenzauber" else "+ Ausrüsten"
+                                    Text(buttonText, fontSize = 14.sp)
                                 }
                             }
                         )

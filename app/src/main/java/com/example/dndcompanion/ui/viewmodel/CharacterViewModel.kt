@@ -547,6 +547,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         huntersMarkFreeUses = 2
         freeCureWoundsUsed = false
         freeHealingWordUsed = false
+        freeFaerieFireUsed = false
+        freeDarknessUsed = false
         water = 2.0f
         rations = 10
         goodberries = 0
@@ -696,6 +698,26 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    var freeFaerieFireUsed by mutableStateOf(prefs.getBoolean("freeFaerieFireUsed", false))
+        private set
+
+    fun useFreeFaerieFire() {
+        if (!freeFaerieFireUsed) {
+            freeFaerieFireUsed = true
+            prefs.edit { putBoolean("freeFaerieFireUsed", true) }
+        }
+    }
+
+    var freeDarknessUsed by mutableStateOf(prefs.getBoolean("freeDarknessUsed", false))
+        private set
+
+    fun useFreeDarkness() {
+        if (!freeDarknessUsed) {
+            freeDarknessUsed = true
+            prefs.edit { putBoolean("freeDarknessUsed", true) }
+        }
+    }
+
     fun takeShortRest(hitDiceSpent: Int, rolledValue: Int) {
         if (hitDiceSpent <= hitDice && currentHp < maxHp) {
             hitDice -= hitDiceSpent
@@ -751,6 +773,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         huntersMarkFreeUses = 2
         freeCureWoundsUsed = false
         freeHealingWordUsed = false
+        freeFaerieFireUsed = false
+        freeDarknessUsed = false
         goodberries = 0
         geminiUsesToday = 0
         
@@ -768,6 +792,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putInt("huntersMarkFreeUses", huntersMarkFreeUses)
             putBoolean("freeCureWoundsUsed", freeCureWoundsUsed)
             putBoolean("freeHealingWordUsed", freeHealingWordUsed)
+            putBoolean("freeFaerieFireUsed", freeFaerieFireUsed)
+            putBoolean("freeDarknessUsed", freeDarknessUsed)
             putInt("goodberries", goodberries)
             putInt("geminiUsesToday", geminiUsesToday)
         }

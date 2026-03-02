@@ -202,6 +202,81 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                     }
                 }
             }
+
+            val isFaerieFirePrepared = viewModel.allSpells.any { it.name == "Feenfeuer" && it.isPrepared }
+            if (isFaerieFirePrepared) {
+                // Feenfeuer (Kostenlos)
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                    colors = CardDefaults.cardColors(containerColor = BlauHell)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp).fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Feenfeuer (Gratis)", color = Color.White, fontWeight = FontWeight.Bold)
+                                Text("Ohne Zauberplatz (1x pro Lange Rast)", color = Color.White, fontSize = 14.sp)
+                            }
+                            Text("${if (viewModel.freeFaerieFireUsed) 0 else 1} / 1", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Button(
+                            onClick = { viewModel.useFreeFaerieFire() },
+                            enabled = !viewModel.freeFaerieFireUsed,
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = PinkDunkel,
+                                disabledContainerColor = Color.Gray
+                            )
+                        ) {
+                            Text("Wirken")
+                        }
+                    }
+                }
+            }
+
+            val isDarknessPrepared = viewModel.allSpells.any { it.name == "Dunkelheit" && it.isPrepared }
+            if (isDarknessPrepared) {
+                // Dunkelheit (Kostenlos)
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                    colors = CardDefaults.cardColors(containerColor = BlauHell)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp).fillMaxWidth()
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Dunkelheit (Gratis)", color = Color.White, fontWeight = FontWeight.Bold)
+                                Text("Ohne Zauberplatz (1x pro Lange Rast)", color = Color.White, fontSize = 14.sp)
+                            }
+                            Text("${if (viewModel.freeDarknessUsed) 0 else 1} / 1", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Button(
+                            onClick = { viewModel.useFreeDarkness() },
+                            enabled = !viewModel.freeDarknessUsed,
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = PinkDunkel,
+                                disabledContainerColor = Color.Gray
+                            )
+                        ) {
+                            Text("Wirken")
+                        }
+                    }
+                }
+            }
+
             // (Standard-Taktik moved to CombatScreen)
 
             HorizontalDivider(color = BlauDunkel, thickness = 2.dp)
@@ -559,6 +634,7 @@ fun SpellCard(
     spell: Spell,
     isEditMode: Boolean = false,
     isEquipped: Boolean = false,
+    customColor: Color = BlauHell,
     onTogglePrep: () -> Unit = {},
     onDelete: (() -> Unit)? = null,
     extraContent: (@Composable () -> Unit)? = null
@@ -569,7 +645,7 @@ fun SpellCard(
             .fillMaxWidth()
             .padding(vertical = 4.dp)
             .clickable { if (!isEditMode) expanded = !expanded },
-        colors = CardDefaults.cardColors(containerColor = BlauHell)
+        colors = CardDefaults.cardColors(containerColor = customColor)
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
             Row(
