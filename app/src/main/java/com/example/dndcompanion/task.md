@@ -19,7 +19,8 @@
   - *Commit:* `git commit -m "feat: enhance rulebook ui with horizontal swipe, search and jumpable index"`
 - [x] **LLM-Kontext (RAG) erweitern (Chatbot):** 
   - Als Quelle für den Chatbot 2 Bereiche anzeigen: Oben eine Antwort anhand der eigenen Quellen (Rules/Handbuch, Rules/Zauberbuch, Charaktersheets, Stats, etc.), unten einen Bereich mit der Antwort anhand anderer Quellen (Internet, Gemini Datenbank etc.).
-  - *Commit:* `git commit -m "feat: enhance chatbot with split answer sources for local and external data"`
+  - [x] Robuste JSON-Antworten & Markdown-Rendering im Chat integriert
+  - *Commit:* `git commit -m "feat: implement JSON-structured RAG responses with Markdown rendering and chapter links"`
 - [ ] **Regelwerk - Bugfixes & Visuals:** 
   - Weißen Hintergrund gegen weiße Schrift auf farbigem Hintergrund tauschen.
   - Gesuchtes Wort im Text farblich/fett markieren (Highlighting).
