@@ -26,6 +26,9 @@ import com.example.dndcompanion.ui.theme.BlauHell
 import com.example.dndcompanion.ui.theme.PinkDunkel
 import com.example.dndcompanion.ui.theme.PinkHell
 import com.example.dndcompanion.ui.theme.GelbSand
+import com.halilibo.richtext.markdown.Markdown
+import com.halilibo.richtext.ui.material3.Material3RichText
+import androidx.compose.runtime.CompositionLocalProvider
 
 @Composable
 fun HelpScreen(viewModel: CharacterViewModel) {
@@ -207,7 +210,7 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit) {
     ) {
         Column(horizontalAlignment = if (isUser) Alignment.End else Alignment.Start) {
             if (isUser || (message.localText == null && message.externalText == null)) {
-                // Standard-Anzeige für User oder einfache Fehlermeldungen
+                // Standard-Anzeige für User oder Fehler-Rohtext
                 Card(
                     colors = CardDefaults.cardColors(containerColor = if (isUser) BlauDunkel else BlauHell),
                     shape = RoundedCornerShape(12.dp),
@@ -221,15 +224,16 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit) {
                     )
                 }
             } else {
-                // RAG-Anzeige (Split)
+                // RAG-Anzeige (Split-Screen Ansicht)
                 Column(modifier = Modifier.widthIn(max = 320.dp)) {
-                    // LOKALER TEIL
+                    
+                    // --- LOKALER TEIL (Handbuch) ---
                     if (!message.localText.isNullOrBlank()) {
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)) {
                             Icon(Icons.Default.Info, contentDescription = null, modifier = Modifier.size(14.dp), tint = PinkDunkel)
                             Spacer(Modifier.width(4.dp))
                             Text(
-                                "LOKALE QUELLEN & STATS",
+                                "LOKALES REGELWERK",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Black,
                                 color = PinkDunkel
@@ -239,19 +243,40 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit) {
                             colors = CardDefaults.cardColors(containerColor = Color.White),
                             shape = RoundedCornerShape(12.dp),
                             border = androidx.compose.foundation.BorderStroke(1.5.dp, PinkDunkel),
-                            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
+                            modifier = Modifier.fillMaxWidth().padding(bottom = 6.dp)
                         ) {
-                            Text(
-                                text = message.localText,
-                                color = BlauDunkel,
-                                modifier = Modifier.padding(12.dp),
-                                fontSize = 15.sp,
-                                lineHeight = 20.sp
-                            )
+                            Box(modifier = Modifier.padding(12.dp)) {
+                                // Rendert Markdown (macht Text fett, erstellt Listen etc.)
+                                CompositionLocalProvider(LocalContentColor provides BlauDunkel) {
+                                    Material3RichText { Markdown(content = message.localText) }
+                                }
+                            }
+                        }
+
+                        // KAPITEL-LINK BADGE
+                        if (!message.chapterLink.isNullOrBlank() && message.chapterLink != "null") {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier
+                                    .padding(bottom = 12.dp, start = 4.dp)
+                                    .background(Color(0xFF2E7D32), RoundedCornerShape(16.dp)) // Dunkelgrün wie im Regelwerk
+                                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                            ) {
+                                Text("📖", fontSize = 12.sp)
+                                Spacer(Modifier.width(4.dp))
+                                Text(
+                                    text = "Quelle: ${message.chapterLink}",
+                                    color = Color.White,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                        } else {
+                            Spacer(Modifier.height(8.dp))
                         }
                     }
 
-                    // EXTERNER TEIL
+                    // --- EXTERNER TEIL (Gemini) ---
                     if (!message.externalText.isNullOrBlank()) {
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)) {
                             Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(14.dp), tint = BlauDunkel)
@@ -268,13 +293,12 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit) {
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(
-                                text = message.externalText,
-                                color = Color.White,
-                                modifier = Modifier.padding(12.dp),
-                                fontSize = 15.sp,
-                                lineHeight = 20.sp
-                            )
+                            Box(modifier = Modifier.padding(12.dp)) {
+                                // Rendert Markdown in Weiß auf dem blauen Hintergrund
+                                CompositionLocalProvider(LocalContentColor provides Color.White) {
+                                    Material3RichText { Markdown(content = message.externalText) }
+                                }
+                            }
                         }
                     }
                 }

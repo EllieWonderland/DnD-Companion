@@ -16,6 +16,8 @@ import com.google.ai.client.generativeai.GenerativeModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
+import com.google.ai.client.generativeai.type.generationConfig
+import org.json.JSONObject
 
 // --- DATENKLASSEN & ENUMS ---
 data class InventoryItem(val name: String, val amount: Int, val weight: Double = 0.0, val category: String = "Sonstiges")
@@ -24,8 +26,10 @@ data class ChatMessage(
     val text: String, 
     val isUser: Boolean,
     val localText: String? = null,
-    val externalText: String? = null
+    val externalText: String? = null,
+    val chapterLink: String? = null // NEU: Für den Link ins Handbuch
 )
+
 data class FaqItem(val question: String, val answer: String)
 data class TraitItem(val name: String, val desc: String)
 data class BookEntry(
@@ -860,28 +864,32 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         private set
     val geminiMax = 20
 
-    private val systemPrompt = """
+     private val systemPrompt = """
         Du bist unser D&D 2024 Regel-Assistent. Dein Ziel ist es, Fragen basierend auf unseren Hausregeln (Handbuch/Zauberbuch) und dem Charakterblatt von Athania zu beantworten.
         
         FORMATRICHTLINIE (SEHR WICHTIG):
-        Antworte STETS in zwei Blöcken, getrennt durch das Trennzeichen |SPLIT|.
-        Block 1: [LOKALE_QUELLEN] - Bezieht sich NUR auf das bereitgestellte Handbuch, Zauberbuch oder Charakterwerte. Wenn nichts gefunden wurde, schreibe "Keine spezifischen Informationen in den Handbüchern gefunden."
-        Block 2: [EXTERNE_QUELLEN] - Nutze dein allgemeines Gemini-Wissen über D&D 5e (2024).
-        
-        Beispiel:
-        [LOKALE_QUELLEN]: Athania hat aktuell 40 HP und kann Shillelagh wirken.|SPLIT|[EXTERNE_QUELLEN]: In D&D 2024 ist Shillelagh ein Zaubertrick, der...
-        
-        Antworte so kurz wie möglich, präzise und auf Deutsch.
+        Antworte AUSSCHLIESSLICH im JSON-Format. Verwende exakt diese Schlüsselstruktur und erzeuge keinen Text außerhalb der JSON-Klammern:
+        {
+          "lokale_antwort": "Deine Antwort NUR basierend auf den bereitgestellten Handbüchern/Stats. Wenn nichts gefunden, schreibe 'Keine spezifischen Informationen gefunden.'",
+          "externe_antwort": "Deine Antwort basierend auf deinem allgemeinen Wissen über D&D 2024.",
+          "kapitel_link": "Der genaue Name des Kapitels (z.B. '3. Klassen' oder '8. Zauber'), aus dem die lokale Antwort stammt. Falls du nichts lokales gefunden hast, lass den Wert null."
+        }
     """.trimIndent()
 
-    private val model3Flash = GenerativeModel(
+private val model3Flash = GenerativeModel(
         modelName = "gemini-3.0-flash",
-        apiKey = BuildConfig.GEMINI_API_KEY
+        apiKey = BuildConfig.GEMINI_API_KEY,
+        generationConfig = generationConfig {
+            responseMimeType = "application/json"
+        }
     )
 
     private val model25Flash = GenerativeModel(
         modelName = "gemini-2.5-flash",
-        apiKey = BuildConfig.GEMINI_API_KEY
+        apiKey = BuildConfig.GEMINI_API_KEY,
+        generationConfig = generationConfig {
+            responseMimeType = "application/json"
+        }
     )
 
     private var activeChatSession = model3Flash.startChat()
@@ -1171,49 +1179,45 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         geminiUsesToday++
         prefs.edit { putInt("geminiUsesToday", geminiUsesToday) }
         
-        val fullText = text ?: "Keine Antwort erhalten."
+        val rawText = text?.trim() ?: "{}"
         
-        // Noch robusteres Splitten mit flexiblem Regex für die Tags
-        val localRegex = Regex("\\[?LOKALE_QUELLEN\\]?[:\\s]*", RegexOption.IGNORE_CASE)
-        val externalRegex = Regex("\\[?EXTERNE_QUELLEN\\]?[:\\s]*", RegexOption.IGNORE_CASE)
-        
-        var localPart: String? = null
-        var externalPart: String? = null
-        
-        if (fullText.contains("|SPLIT|")) {
-            val parts = fullText.split("|SPLIT|")
-            localPart = parts[0]
-            externalPart = if (parts.size > 1) parts[1] else null
-        } else {
-            val localMatch = localRegex.find(fullText)
-            val externalMatch = externalRegex.find(fullText)
+        // Diese Variablen sind absichtlich NICHT null, damit das UI IMMER in den Split-Modus geht
+        var parsedLocal: String? = "Keine spezifischen Handbuch-Einträge gefunden."
+        var parsedExternal: String? = "Keine allgemeinen Informationen von Gemini."
+        var parsedLink: String? = null
+
+        try {
+            // Falls Gemini das JSON in Markdown-Blöcke (```json ... ```) hüllt, putzen wir das weg
+            val cleanJson = rawText.removePrefix("```json").removePrefix("```").removeSuffix("```").trim()
             
-            if (localMatch != null && externalMatch != null) {
-                if (localMatch.range.first < externalMatch.range.first) {
-                    localPart = fullText.substring(localMatch.range.first, externalMatch.range.first)
-                    externalPart = fullText.substring(externalMatch.range.first)
-                } else {
-                    externalPart = fullText.substring(externalMatch.range.first, localMatch.range.first)
-                    localPart = fullText.substring(localMatch.range.first)
-                }
+            // Der native Android JSON Parser (kugelsicher)
+            val json = JSONObject(cleanJson)
+
+            if (json.has("lokale_antwort") && !json.isNull("lokale_antwort")) {
+                val l = json.getString("lokale_antwort")
+                if (l.isNotBlank()) parsedLocal = l
             }
+            if (json.has("externe_antwort") && !json.isNull("externe_antwort")) {
+                val e = json.getString("externe_antwort")
+                if (e.isNotBlank()) parsedExternal = e
+            }
+            if (json.has("kapitel_link") && !json.isNull("kapitel_link")) {
+                val k = json.getString("kapitel_link")
+                if (k.isNotBlank() && k != "null") parsedLink = k
+            }
+
+        } catch (e: Exception) {
+            // Wenn alles schiefgeht, zeigen wir den Text zumindest im externen Fenster an
+            parsedLocal = "Fehler beim Auswerten der System-Daten."
+            parsedExternal = "Rohtext von Gemini:\n$rawText"
         }
-        
-        if (localPart != null || externalPart != null) {
-            chatHistory[index] = chatHistory[index].copy(
-                text = fullText,
-                localText = localPart?.replace(localRegex, "")?.replace("**", "")?.trim(),
-                externalText = externalPart?.replace(externalRegex, "")?.replace("**", "")?.trim()
-            )
-        } else {
-            // Absoluter Fallback: Alles in den externen Teil schieben, 
-            // damit die UI auf jeden Fall den Split-Style nutzt
-            chatHistory[index] = chatHistory[index].copy(
-                text = fullText,
-                localText = "Keine spezifischen Handbuch-Einträge gefunden.",
-                externalText = fullText
-            )
-        }
+
+        chatHistory[index] = chatHistory[index].copy(
+            text = "System", // Spielt keine Rolle mehr für die UI
+            localText = parsedLocal,
+            externalText = parsedExternal,
+            chapterLink = parsedLink
+        )
     }
 
     fun resetChat() {
