@@ -19,7 +19,13 @@ import kotlinx.coroutines.launch
 
 // --- DATENKLASSEN & ENUMS ---
 data class InventoryItem(val name: String, val amount: Int, val weight: Double = 0.0, val category: String = "Sonstiges")
-data class ChatMessage(val text: String, val isUser: Boolean)
+data class ChatMessage(
+    val id: String = java.util.UUID.randomUUID().toString(),
+    val text: String, 
+    val isUser: Boolean,
+    val localText: String? = null,
+    val externalText: String? = null
+)
 data class FaqItem(val question: String, val answer: String)
 data class TraitItem(val name: String, val desc: String)
 data class BookEntry(
@@ -854,7 +860,19 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         private set
     val geminiMax = 20
 
-    private val systemPrompt = "Du bist ein Dungeons and Dragons Regel-Assistent. Beziehe dich ausschließlich auf die Regeln des Player Handbook 2024. Wir spielen nicht abwärtskompatibel. Antworte extrem kurz, präzise und leicht verständlich auf Deutsch."
+    private val systemPrompt = """
+        Du bist unser D&D 2024 Regel-Assistent. Dein Ziel ist es, Fragen basierend auf unseren Hausregeln (Handbuch/Zauberbuch) und dem Charakterblatt von Athania zu beantworten.
+        
+        FORMATRICHTLINIE (SEHR WICHTIG):
+        Antworte STETS in zwei Blöcken, getrennt durch das Trennzeichen |SPLIT|.
+        Block 1: [LOKALE_QUELLEN] - Bezieht sich NUR auf das bereitgestellte Handbuch, Zauberbuch oder Charakterwerte. Wenn nichts gefunden wurde, schreibe "Keine spezifischen Informationen in den Handbüchern gefunden."
+        Block 2: [EXTERNE_QUELLEN] - Nutze dein allgemeines Gemini-Wissen über D&D 5e (2024).
+        
+        Beispiel:
+        [LOKALE_QUELLEN]: Athania hat aktuell 40 HP und kann Shillelagh wirken.|SPLIT|[EXTERNE_QUELLEN]: In D&D 2024 ist Shillelagh ein Zaubertrick, der...
+        
+        Antworte so kurz wie möglich, präzise und auf Deutsch.
+    """.trimIndent()
 
     private val model3Flash = GenerativeModel(
         modelName = "gemini-3.0-flash",
@@ -1054,35 +1072,76 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         val geModStr = if (dexMod >= 0) "+$dexMod" else "$dexMod"
         val koModStr = if (conMod >= 0) "+$conMod" else "$conMod"
         val inModStr = if (intMod >= 0) "+$intMod" else "$intMod"
-        val weModStr = if (wisMod >= 0) "+$wisMod" else "$wisMod"
+        val weModStr = if (wisMod >= 0) "+$weMod" else "$weMod"
         val chModStr = if (chaMod >= 0) "+$chaMod" else "$chaMod"
 
         return """
-            KONTEXT ATHANIA (Level $level, EP: $currentEP):
-            HP: $currentHp/$maxHp, Trefferwürfel: $hitDice/4.
-            Zauberplätze Grad 1: $spellSlotsLevel1/3, Grad 2: $spellSlotsLevel2/2, Grad 3: $spellSlotsLevel3/2.
-            Kostenlose Zauber genutzt: Wunden heilen ($freeCureWoundsUsed), Heilendes Wort ($freeHealingWordUsed). Freies Zeichen des Jägers: $huntersMarkFreeUses/2.
-            Vorräte: $water Liter Wasser, $rations Rationen, $goodberries Gute Beeren.
-            Geld: $coinsPM PM, $coinsGM GM, $coinsEM EM, $coinsSM SM, $coinsKM KM.
-            Werte: ST $strength ($stModStr), GE $dexterity ($geModStr), KO $constitution ($koModStr), IN $intelligence ($inModStr), WE $wisdom ($weModStr), CH $charisma ($chModStr).
-            Ausrüstung: ${currentWeapon.name}.
+            KONTEXT CHARAKTERBLATT ATHANIA:
+            Level: $level, EP: $currentEP
+            HP: $currentHp/$maxHp, Trefferwürfel: $hitDice/$level
+            Werte: ST $strength ($stModStr), GE $dexterity ($geModStr), KO $constitution ($koModStr), IN $intelligence ($intModStr), WE $wisdom ($weModStr), CH $charisma ($chModStr)
+            Rüssi-Klasse: $currentArmorClass, Initiative: $geModStr
+            Waffe: ${currentWeapon.name} (Bonus: $currentAttackBonus, Schaden: $currentDamage)
+            Zauberplätze: G1: $spellSlotsLevel1, G2: $spellSlotsLevel2, G3: $spellSlotsLevel3
+            Vorrätig: $water L Wasser, $rations Rationen, $goodberries Beeren, $totalArrows Pfeile
+            Geld: $coinsGM GM, $coinsSM SM
             
-            KONTEXT CAPY (BEGLEITER):
-            Aktueller Typ: ${activeBeastType.name}.
+            BEGLEITER CAPY:
+            Typ: ${activeBeastType.name}, HP: $capyCurrentHp/$capyMaxHp, AC: $capyAc
         """.trimIndent()
+    }
+
+    private suspend fun getManualContext(query: String): String {
+        return try {
+            val context = getApplication<Application>()
+            val assets = context.assets
+            val sb = StringBuilder()
+            
+            // Suche in Handbuch-Markdown-Dateien
+            val chapters = assets.list("Rules/Handbuch/Kapitel") ?: emptyArray()
+            val keywords = query.lowercase().split(" ").filter { it.length > 3 }
+            
+            for (fileName in chapters) {
+                if (sb.length > 2000) break // Limit context size
+                val text = assets.open("Rules/Handbuch/Kapitel/$fileName").bufferedReader().use { it.readText() }
+                
+                // Sehr einfache Keyword-Suche für RAG-Light
+                if (keywords.any { text.lowercase().contains(it) }) {
+                    // Extrahiere relevanten Abschnitt (naiv: erste 500 Zeichen des Kapitels als Fallback oder Fundstellen)
+                    sb.append("\n--- Auszug aus $fileName ---\n")
+                    val index = text.lowercase().indexOf(keywords.first())
+                    val start = (index - 100).coerceAtLeast(0)
+                    val end = (index + 400).coerceAtMost(text.length)
+                    sb.append(text.substring(start, end).trim())
+                    sb.append("...")
+                }
+            }
+            
+            // Suche in globalem Zauberbuch
+            val searchSpell = globalSpellbook.find { it.name.contains(query, ignoreCase = true) }
+            if (searchSpell != null) {
+                sb.append("\n--- Zauber-Details: ${searchSpell.name} ---\n")
+                sb.append("Grad: ${searchSpell.level}, Beschreibung: ${searchSpell.description}")
+            }
+            
+            if (sb.isEmpty()) "Keine spezifischen Handbuch-Einträge gefunden." else sb.toString()
+        } catch (e: Exception) {
+            "Fehler beim Laden lokaler Regeln."
+        }
     }
 
     fun sendMessageToBot(message: String) {
         chatHistory.add(ChatMessage(message, true))
         val loadingIndex = chatHistory.size
-        chatHistory.add(ChatMessage("... überlegt ...", false))
-
-        val context = getCharacterContext()
-        val finalPrompt = "$systemPrompt\n\n$context\n\nFrage: $message"
+        chatHistory.add(ChatMessage("... analysiere Regeln ...", false))
 
         viewModelScope.launch {
             try {
                 if (geminiUsesToday < geminiMax) {
+                    val charContext = getCharacterContext()
+                    val manualContext = getManualContext(message)
+                    val finalPrompt = "$systemPrompt\n\n$charContext\n\nHANDBUCH-AUSZÜGE:\n$manualContext\n\nFRAGE: $message"
+
                     try {
                         currentUsedModel = "Gemini 3.0 Flash"
                         val response = activeChatSession.sendMessage(finalPrompt)
@@ -1095,12 +1154,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                         finalizeResponse(loadingIndex, response.text)
                     }
                 } else {
-                    throw Exception("Limit erreicht")
+                    throw Exception("Tageslimit für Gemini erreicht ($geminiMax)")
                 }
             } catch (e: Exception) {
-                // Fängt den Serialisierungsbug ab, der bei 404 (Modell nicht gefunden) auftritt
                 val errorMsg = if (e.localizedMessage?.contains("MissingFieldException") == true) {
-                    "Fehler: Das Modell konnte nicht gefunden werden. Prüfe, ob dein API-Key bereits für die 3.0 / 2.5 Modelle freigeschaltet ist."
+                    "Fehler: Das Modell konnte nicht gefunden werden (API-Key/Quota)."
                 } else {
                     "Fehler: ${e.localizedMessage}"
                 }
@@ -1112,7 +1170,50 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     private fun finalizeResponse(index: Int, text: String?) {
         geminiUsesToday++
         prefs.edit { putInt("geminiUsesToday", geminiUsesToday) }
-        chatHistory[index] = ChatMessage(text ?: "Keine Antwort.", false)
+        
+        val fullText = text ?: "Keine Antwort erhalten."
+        
+        // Noch robusteres Splitten mit flexiblem Regex für die Tags
+        val localRegex = Regex("\\[?LOKALE_QUELLEN\\]?[:\\s]*", RegexOption.IGNORE_CASE)
+        val externalRegex = Regex("\\[?EXTERNE_QUELLEN\\]?[:\\s]*", RegexOption.IGNORE_CASE)
+        
+        var localPart: String? = null
+        var externalPart: String? = null
+        
+        if (fullText.contains("|SPLIT|")) {
+            val parts = fullText.split("|SPLIT|")
+            localPart = parts[0]
+            externalPart = if (parts.size > 1) parts[1] else null
+        } else {
+            val localMatch = localRegex.find(fullText)
+            val externalMatch = externalRegex.find(fullText)
+            
+            if (localMatch != null && externalMatch != null) {
+                if (localMatch.range.first < externalMatch.range.first) {
+                    localPart = fullText.substring(localMatch.range.first, externalMatch.range.first)
+                    externalPart = fullText.substring(externalMatch.range.first)
+                } else {
+                    externalPart = fullText.substring(externalMatch.range.first, localMatch.range.first)
+                    localPart = fullText.substring(localMatch.range.first)
+                }
+            }
+        }
+        
+        if (localPart != null || externalPart != null) {
+            chatHistory[index] = chatHistory[index].copy(
+                text = fullText,
+                localText = localPart?.replace(localRegex, "")?.replace("**", "")?.trim(),
+                externalText = externalPart?.replace(externalRegex, "")?.replace("**", "")?.trim()
+            )
+        } else {
+            // Absoluter Fallback: Alles in den externen Teil schieben, 
+            // damit die UI auf jeden Fall den Split-Style nutzt
+            chatHistory[index] = chatHistory[index].copy(
+                text = fullText,
+                localText = "Keine spezifischen Handbuch-Einträge gefunden.",
+                externalText = fullText
+            )
+        }
     }
 
     fun resetChat() {

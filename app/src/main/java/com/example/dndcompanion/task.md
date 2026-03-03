@@ -17,7 +17,7 @@
   - *Commit:* `git commit -m "fix: app navigation via back button and improve quiver ui"`
 - [x] **Handbuch / Regelwerk-Referenz einbinden:** Einen Nachschlage-Bereich in der App schaffen, der die Markdown-Dateien aus `Rules/Handbuch` ausliest. Zustände (Conditions), Kampfregeln, etc. können dort sauber formatiert und klickbar angezeigt werden. Inklusive Zauberbuch. Inkl. horizontalem Swipen, Suche und klickbarem Index.
   - *Commit:* `git commit -m "feat: enhance rulebook ui with horizontal swipe, search and jumpable index"`
-- [ ] **LLM-Kontext (RAG) erweitern (Chatbot):** 
+- [x] **LLM-Kontext (RAG) erweitern (Chatbot):** 
   - Als Quelle für den Chatbot 2 Bereiche anzeigen: Oben eine Antwort anhand der eigenen Quellen (Rules/Handbuch, Rules/Zauberbuch, Charaktersheets, Stats, etc.), unten einen Bereich mit der Antwort anhand anderer Quellen (Internet, Gemini Datenbank etc.).
   - *Commit:* `git commit -m "feat: enhance chatbot with split answer sources for local and external data"`
 - [ ] **Regelwerk - Bugfixes & Visuals:** 

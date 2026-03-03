@@ -8,6 +8,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Send
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.* 
 import androidx.compose.ui.Alignment
@@ -86,12 +89,11 @@ fun ChatView(viewModel: CharacterViewModel) {
             color = PinkDunkel,
             trackColor = BlauHell
         )
-        // Chat-Verlauf
         LazyColumn(
             modifier = Modifier.weight(1f).fillMaxWidth(),
-            reverseLayout = false // Zeigt neueste unten an
+            reverseLayout = false
         ) {
-            items(viewModel.chatHistory) { message ->
+            items(viewModel.chatHistory, key = { it.id }) { message ->
                 ChatBubble(
                     message = message,
                     onSaveToFaq = { messageToFaq = message }
@@ -200,26 +202,94 @@ fun ChatView(viewModel: CharacterViewModel) {
 fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit) {
     val isUser = message.isUser
     Row(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
         horizontalArrangement = if (isUser) Arrangement.End else Arrangement.Start
     ) {
         Column(horizontalAlignment = if (isUser) Alignment.End else Alignment.Start) {
-            Card(
-                colors = CardDefaults.cardColors(containerColor = if (isUser) BlauDunkel else BlauHell),
-                shape = RoundedCornerShape(12.dp),
-                modifier = Modifier.widthIn(max = 280.dp)
-            ) {
-                Text(
-                    text = message.text,
-                    color = Color.White,
-                    modifier = Modifier.padding(12.dp),
-                    fontSize = 16.sp
-                )
+            if (isUser || (message.localText == null && message.externalText == null)) {
+                // Standard-Anzeige für User oder einfache Fehlermeldungen
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = if (isUser) BlauDunkel else BlauHell),
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.widthIn(max = 300.dp)
+                ) {
+                    Text(
+                        text = message.text,
+                        color = Color.White,
+                        modifier = Modifier.padding(12.dp),
+                        fontSize = 15.sp
+                    )
+                }
+            } else {
+                // RAG-Anzeige (Split)
+                Column(modifier = Modifier.widthIn(max = 320.dp)) {
+                    // LOKALER TEIL
+                    if (!message.localText.isNullOrBlank()) {
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)) {
+                            Icon(Icons.Default.Info, contentDescription = null, modifier = Modifier.size(14.dp), tint = PinkDunkel)
+                            Spacer(Modifier.width(4.dp))
+                            Text(
+                                "LOKALE QUELLEN & STATS",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Black,
+                                color = PinkDunkel
+                            )
+                        }
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = Color.White),
+                            shape = RoundedCornerShape(12.dp),
+                            border = androidx.compose.foundation.BorderStroke(1.5.dp, PinkDunkel),
+                            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
+                        ) {
+                            Text(
+                                text = message.localText,
+                                color = BlauDunkel,
+                                modifier = Modifier.padding(12.dp),
+                                fontSize = 15.sp,
+                                lineHeight = 20.sp
+                            )
+                        }
+                    }
+
+                    // EXTERNER TEIL
+                    if (!message.externalText.isNullOrBlank()) {
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)) {
+                            Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(14.dp), tint = BlauDunkel)
+                            Spacer(Modifier.width(4.dp))
+                            Text(
+                                "GEMINI WISSEN (D&D 2024)",
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Black,
+                                color = BlauDunkel
+                            )
+                        }
+                        Card(
+                            colors = CardDefaults.cardColors(containerColor = BlauHell),
+                            shape = RoundedCornerShape(12.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text(
+                                text = message.externalText,
+                                color = Color.White,
+                                modifier = Modifier.padding(12.dp),
+                                fontSize = 15.sp,
+                                lineHeight = 20.sp
+                            )
+                        }
+                    }
+                }
             }
+
             // Bot-Nachrichten bekommen den "Ins FAQ"-Button
             if (!isUser) {
-                TextButton(onClick = onSaveToFaq, contentPadding = PaddingValues(0.dp)) {
-                    Text("+ Ins FAQ", color = PinkDunkel, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                TextButton(
+                    onClick = onSaveToFaq, 
+                    contentPadding = PaddingValues(0.dp),
+                    modifier = Modifier.align(Alignment.Start)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(14.dp), tint = PinkDunkel)
+                    Spacer(Modifier.width(4.dp))
+                    Text("Ins FAQ", color = PinkDunkel, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
