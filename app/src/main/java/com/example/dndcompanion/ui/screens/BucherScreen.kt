@@ -649,7 +649,7 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, onT
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-                .background(androidx.compose.material3.MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
+                .background(GelbSand, RoundedCornerShape(8.dp))
         ) {
             HorizontalPager(
                 state = pagerState,
