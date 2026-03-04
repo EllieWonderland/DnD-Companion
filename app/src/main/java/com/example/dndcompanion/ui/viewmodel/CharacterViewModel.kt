@@ -27,7 +27,8 @@ data class ChatMessage(
     val isUser: Boolean,
     val localText: String? = null,
     val externalText: String? = null,
-    val chapterLink: String? = null // NEU: Für den Link ins Handbuch
+    val chapterLink: String? = null,
+    val chapterSearchTerm: String? = null // NEU: Für zielgenaues Scrollen
 )
 
 data class FaqItem(val question: String, val answer: String)
@@ -144,6 +145,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     fun dismissLevelUpDialog() {
         showLevelUpDialog = false
     }
+
+    var targetRulebookChapter by mutableStateOf<String?>(null)
+    var targetRulebookSearch by mutableStateOf<String?>(null)
 
     fun applyHpIncrease(conModifier: Int, rolledHp: Int = 6) {
         val hpIncrease = rolledHp + conModifier
@@ -871,8 +875,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         Antworte AUSSCHLIESSLICH im JSON-Format. Verwende exakt diese Schlüsselstruktur und erzeuge keinen Text außerhalb der JSON-Klammern:
         {
           "lokale_antwort": "Deine Antwort NUR basierend auf den bereitgestellten Handbüchern/Stats. Wenn nichts gefunden, schreibe 'Keine spezifischen Informationen gefunden.'",
-          "externe_antwort": "Deine Antwort basierend auf deinem allgemeinen Wissen über D&D 2024.",
-          "kapitel_link": "Der genaue Name des Kapitels (z.B. '3. Klassen' oder '8. Zauber'), aus dem die lokale Antwort stammt. Falls du nichts lokales gefunden hast, lass den Wert null."
+          "externe_antwort": "Deine Antwort basierend auf deinem allgemeinen Wissen über D&D 2024. Gehe auf die Klasse und das Volk des Charakters ein, falls relevant.",
+          "kapitel_link": "Der exakte Name der Quelle (z.B. '3. Klassen'), wie er bei '--- Quelle: ... ---' angegeben wurde. Falls du nichts lokales gefunden hast, lass den Wert null.",
+          "suchbegriff": "Ein kurzes Stichwort (1-2 Worte) aus dem Kapitel, das exakt zu deiner Antwort passt, um im UI genau zu dieser Regel zu scrollen (z.B. 'Zaubertricks' oder 'Kampfstile')."
         }
     """.trimIndent()
 
@@ -1080,22 +1085,40 @@ private val model3Flash = GenerativeModel(
         val geModStr = if (dexMod >= 0) "+$dexMod" else "$dexMod"
         val koModStr = if (conMod >= 0) "+$conMod" else "$conMod"
         val inModStr = if (intMod >= 0) "+$intMod" else "$intMod"
-        val weModStr = if (wisMod >= 0) "+$weMod" else "$weMod"
+        val weModStr = if (wisMod >= 0) "+$wisMod" else "$wisMod" // Fix: wisMod statt weMod
         val chModStr = if (chaMod >= 0) "+$chaMod" else "$chaMod"
+
+        val preparedSpells = allSpells.filter { it.isPrepared }.joinToString(", ") { "${it.name} (Lvl ${it.level})" }
+        val inventoryStr = customLoot.joinToString(", ") { "${it.amount}x ${it.name}" }
+        val notes = generalBookEntries.joinToString(" | ") { it.text }
+        val grudges = grudgeBookEntries.joinToString(" | ") { it.text }
+        val traitsStr = customTraits.joinToString(" | ") { "${it.name}: ${it.desc.replace("\n", " ")}" }
 
         return """
             KONTEXT CHARAKTERBLATT ATHANIA:
+            Klasse: Waldläufer (Beast Master)
+            Volk: Elf (Waldelf / Feenblut)
             Level: $level, EP: $currentEP
             HP: $currentHp/$maxHp, Trefferwürfel: $hitDice/$level
-            Werte: ST $strength ($stModStr), GE $dexterity ($geModStr), KO $constitution ($koModStr), IN $intelligence ($intModStr), WE $wisdom ($weModStr), CH $charisma ($chModStr)
+            Werte: ST $strength ($stModStr), GE $dexterity ($geModStr), KO $constitution ($koModStr), IN $intelligence ($inModStr), WE $wisdom ($weModStr), CH $charisma ($chModStr)
             Rüssi-Klasse: $currentArmorClass, Initiative: $geModStr
-            Waffe: ${currentWeapon.name} (Bonus: $currentAttackBonus, Schaden: $currentDamage)
+            Waffe: ${currentWeapon.name} (Bonus: +$currentAttackBonus, Schaden: $currentDamage)
             Zauberplätze: G1: $spellSlotsLevel1, G2: $spellSlotsLevel2, G3: $spellSlotsLevel3
+            Vorbereitete Zauber: $preparedSpells
+            Merkmale/Fähigkeiten: $traitsStr
             Vorrätig: $water L Wasser, $rations Rationen, $goodberries Beeren, $totalArrows Pfeile
             Geld: $coinsGM GM, $coinsSM SM
+            Inventar: $inventoryStr
+            Notizbuch: $notes
+            Buch des Grolls: $grudges
             
-            BEGLEITER CAPY:
-            Typ: ${activeBeastType.name}, HP: $capyCurrentHp/$capyMaxHp, AC: $capyAc
+            BEGLEITER CAPY (Urtier):
+            Typ: ${activeBeastType.name}
+            HP: $capyCurrentHp/$capyMaxHp, AC: $capyAc
+            Angriffsbonus: +$spellAttackBonus
+            Schaden: $capyDamage
+            Besondere Fähigkeit: $capySpecial
+            Rettungswürfe: Bonus auf alle +$proficiencyBonus
         """.trimIndent()
     }
 
@@ -1104,44 +1127,138 @@ private val model3Flash = GenerativeModel(
             val context = getApplication<Application>()
             val assets = context.assets
             val sb = StringBuilder()
+
+            // 1. Satzzeichen entfernen, alles in Kleinbuchstaben
+            val cleanQuery = query.lowercase().replace(Regex("[^a-zäöüß0-9 ]"), "")
             
-            // Suche in Handbuch-Markdown-Dateien
+            // 2. Füllwörter ignorieren, auch Wortstämme (vereinfacht) berücksichtigen
+            val stopWords = setOf("was", "wie", "ist", "ein", "eine", "der", "die", "das", "und", "oder", "kann", "ich", "mich", "mir", "für", "von", "aus", "mit", "sind", "macht", "darf", "wenn", "dann", "wir", "ihr", "sie", "als", "auf", "bei", "bis", "gibt", "es", "mein", "meine", "welche", "welcher", "habe", "tun", "soll", "werden", "können", "muss")
+            // Zuweisung auch von Teilbegriffen (z.b. "Zaubertricks" -> "Tricks" oder "Zauber", aber wir suchen einfach als Substring)
+            val keywords = cleanQuery.split(" ").filter { it.length > 3 && !stopWords.contains(it) }.toMutableList()
+            
+            // Spezifische D&D Begriffs-Helfer: Wenn "zaubertricks" gefragt wird, erweitere das auf "tricks" und "zaubertrick", da es in der markdown evtl "Tricks" heißt.
+            if ("zaubertricks" in keywords) keywords.add("tricks")
+            if ("zaubertrick" in keywords) keywords.add("trick")
+            if ("langbogen" in keywords) keywords.add("bogen")
+
+            if (keywords.isEmpty()) return "Keine spezifischen Handbuch-Einträge gefunden."
+
+            // 3. Durchsuche das Handbuch nach den besten Absätzen
             val chapters = assets.list("Rules/Handbuch/Kapitel") ?: emptyArray()
-            val keywords = query.lowercase().split(" ").filter { it.length > 3 }
+            val spells = assets.list("Rules/Zauberbuch") ?: emptyArray()
             
+            val chapterMapping = mapOf(
+                "kapitel1_gameplay.md" to "1. Gameplay",
+                "kapitel2_races.md" to "2. Völker",
+                "kapitel3_classes.md" to "3. Klassen",
+                "kapitel4_origins.md" to "4. Herkünfte",
+                "kapitel5_talente.md" to "5. Talente",
+                "kapitel6_equipment.md" to "6. Ausrüstung",
+                "kapitel8_combat_conditions.md" to "7. Kampf",
+                "kapitel7_spells.md" to "8. Zauber"
+            )
+            
+            // Speichert die Absätze zusammen mit ihrer "Relevanz-Punktzahl"
+            val bestParagraphs = mutableListOf<Pair<Int, String>>() 
+            
+            // Verarbeite Handbuch-Kapitel
             for (fileName in chapters) {
-                if (sb.length > 2000) break // Limit context size
+                if (!fileName.endsWith(".md")) continue
                 val text = assets.open("Rules/Handbuch/Kapitel/$fileName").bufferedReader().use { it.readText() }
                 
-                // Sehr einfache Keyword-Suche für RAG-Light
-                if (keywords.any { text.lowercase().contains(it) }) {
-                    // Extrahiere relevanten Abschnitt (naiv: erste 500 Zeichen des Kapitels als Fallback oder Fundstellen)
-                    sb.append("\n--- Auszug aus $fileName ---\n")
-                    val index = text.lowercase().indexOf(keywords.first())
-                    val start = (index - 100).coerceAtLeast(0)
-                    val end = (index + 400).coerceAtMost(text.length)
-                    sb.append(text.substring(start, end).trim())
-                    sb.append("...")
+                // Macht den Dateinamen als Überschrift passend zu den UI-Tabs
+                val prettyName = chapterMapping[fileName] ?: fileName.replace(".md", "").replace("_", " ").uppercase()
+                
+                // Zerlegt das Kapitel in Absätze (getrennt durch doppelte Zeilenumbrüche)
+                val paragraphs = text.split("\n\n", "\r\n\r\n")
+                
+                for (paragraph in paragraphs) {
+                    val pLower = paragraph.lowercase()
+                    // Zähle, wie oft die Suchwörter vorkommen
+                    var score = 0
+                    for (kw in keywords) {
+                        if (pLower.contains(kw)) {
+                            score += 1
+                        }
+                    }
+                    if (score > 0) {
+                        // Füge den Absatz plus Quellenangabe hinzu
+                        bestParagraphs.add(Pair(score, "--- Quelle: $prettyName ---\n$paragraph"))
+                    }
+                }
+            }
+
+            // Verarbeite Zauberbuch (Sowohl Spellbook.md als auch JSONs)
+            for (fileName in spells) {
+                if (fileName.endsWith(".md")) {
+                    val text = assets.open("Rules/Zauberbuch/$fileName").bufferedReader().use { it.readText() }
+                    val paragraphs = text.split("\n\n", "\r\n\r\n")
+                    for (paragraph in paragraphs) {
+                        val pLower = paragraph.lowercase()
+                        var score = 0
+                        for (kw in keywords) {
+                            if (pLower.contains(kw)) score += 1
+                        }
+                        if (score > 0) {
+                            bestParagraphs.add(Pair(score, "--- Quelle: Zauberbuch Übersicht ---\n$paragraph"))
+                        }
+                    }
+                } else if (fileName.endsWith(".json")) {
+                    try {
+                        val text = assets.open("Rules/Zauberbuch/$fileName").bufferedReader().use { it.readText() }
+                        val jsonArray = org.json.JSONArray(text)
+                        for (i in 0 until jsonArray.length()) {
+                            val spell = jsonArray.getJSONObject(i)
+                            val name = spell.optString("name_de", "")
+                            val desc = spell.optString("description", "")
+                            val classes = spell.optJSONArray("classes")?.let { arr -> 
+                                (0 until arr.length()).map { arr.getString(it) }.joinToString()
+                            } ?: ""
+                            
+                            val spellText = "Zauber: $name\nKlassen: $classes\nBeschreibung: $desc"
+                            val pLower = spellText.lowercase()
+                            var score = 0
+                            for (kw in keywords) {
+                                if (pLower.contains(kw)) score += 1
+                            }
+                            if (score > 0) {
+                                bestParagraphs.add(Pair(score, "--- Quelle: Zauberbuch Detail ---\n$spellText"))
+                            }
+                        }
+                    } catch (e: Exception) {
+                        // ignoriere leere oder ungültige JSON
+                    }
                 }
             }
             
-            // Suche in globalem Zauberbuch
-            val searchSpell = globalSpellbook.find { it.name.contains(query, ignoreCase = true) }
-            if (searchSpell != null) {
-                sb.append("\n--- Zauber-Details: ${searchSpell.name} ---\n")
-                sb.append("Grad: ${searchSpell.level}, Beschreibung: ${searchSpell.description}")
+            // 4. Sortiere nach den meisten Treffern und nimm die besten 10 Absätze für mehr Kontext
+            bestParagraphs.sortByDescending { it.first }
+            bestParagraphs.take(10).forEach { 
+                sb.append(it.second).append("\n")
             }
             
-            if (sb.isEmpty()) "Keine spezifischen Handbuch-Einträge gefunden." else sb.toString()
+            // 5. Durchsuche zusätzlich das Zauberbuch
+            val searchSpell = globalSpellbook.find { spell -> 
+                keywords.any { kw -> spell.name.lowercase().contains(kw) }
+            }
+            if (searchSpell != null) {
+                sb.append("\n--- Quelle: ZAUBERBUCH ---\n")
+                sb.append("Zauber: ${searchSpell.name} (Grad ${searchSpell.level})\nBeschreibung: ${searchSpell.description}\n")
+            }
+            
+            // Fallback, falls absolut gar kein Wort aus der Frage im Buch steht
+            if (sb.isEmpty()) "Keine spezifischen Handbuch-Einträge gefunden für: ${keywords.joinToString(", ")}" else sb.toString()
+            
         } catch (e: Exception) {
             "Fehler beim Laden lokaler Regeln."
         }
     }
 
     fun sendMessageToBot(message: String) {
-        chatHistory.add(ChatMessage(message, true))
+        // Fix: Parameter explizit benennen (text = ..., isUser = ...)
+        chatHistory.add(ChatMessage(text = message, isUser = true))
         val loadingIndex = chatHistory.size
-        chatHistory.add(ChatMessage("... analysiere Regeln ...", false))
+        chatHistory.add(ChatMessage(text = "... analysiere Regeln ...", isUser = false))
 
         viewModelScope.launch {
             try {
@@ -1166,11 +1283,18 @@ private val model3Flash = GenerativeModel(
                 }
             } catch (e: Exception) {
                 val errorMsg = if (e.localizedMessage?.contains("MissingFieldException") == true) {
-                    "Fehler: Das Modell konnte nicht gefunden werden (API-Key/Quota)."
+                    "Das Modell konnte nicht gefunden werden (API-Key/Quota)."
                 } else {
-                    "Fehler: ${e.localizedMessage}"
+                    e.localizedMessage ?: "Unbekannter Fehler"
                 }
-                chatHistory[loadingIndex] = ChatMessage(errorMsg, false)
+                
+                // Wir zwingen auch den Fehler in die Split-Ansicht, damit du ihn sehen kannst!
+                chatHistory[loadingIndex] = chatHistory[loadingIndex].copy(
+                    text = "System",
+                    localText = "SYSTEMFEHLER",
+                    externalText = "Die Anfrage konnte nicht verarbeitet werden.\nGrund: $errorMsg",
+                    chapterLink = null
+                )
             }
         }
     }
@@ -1179,18 +1303,19 @@ private val model3Flash = GenerativeModel(
         geminiUsesToday++
         prefs.edit { putInt("geminiUsesToday", geminiUsesToday) }
         
-        val rawText = text?.trim() ?: "{}"
+        val rawText = text ?: "{}"
         
-        // Diese Variablen sind absichtlich NICHT null, damit das UI IMMER in den Split-Modus geht
         var parsedLocal: String? = "Keine spezifischen Handbuch-Einträge gefunden."
         var parsedExternal: String? = "Keine allgemeinen Informationen von Gemini."
         var parsedLink: String? = null
+        var parsedSearchTerm: String? = null
 
         try {
-            // Falls Gemini das JSON in Markdown-Blöcke (```json ... ```) hüllt, putzen wir das weg
-            val cleanJson = rawText.removePrefix("```json").removePrefix("```").removeSuffix("```").trim()
+            // Sicherer Regex, der alle Varianten von Markdown-JSON-Blöcken entfernt
+            val cleanJson = rawText.replace(Regex("```json\n?", RegexOption.IGNORE_CASE), "")
+                                   .replace(Regex("```\n?", RegexOption.IGNORE_CASE), "")
+                                   .trim()
             
-            // Der native Android JSON Parser (kugelsicher)
             val json = JSONObject(cleanJson)
 
             if (json.has("lokale_antwort") && !json.isNull("lokale_antwort")) {
@@ -1205,18 +1330,22 @@ private val model3Flash = GenerativeModel(
                 val k = json.getString("kapitel_link")
                 if (k.isNotBlank() && k != "null") parsedLink = k
             }
+            if (json.has("suchbegriff") && !json.isNull("suchbegriff")) {
+                val s = json.getString("suchbegriff")
+                if (s.isNotBlank() && s != "null") parsedSearchTerm = s
+            }
 
         } catch (e: Exception) {
-            // Wenn alles schiefgeht, zeigen wir den Text zumindest im externen Fenster an
-            parsedLocal = "Fehler beim Auswerten der System-Daten."
-            parsedExternal = "Rohtext von Gemini:\n$rawText"
+            parsedLocal = "Fehler beim Auswerten der Daten."
+            parsedExternal = "Konnte das JSON nicht parsen.\nRohtext von Gemini:\n$rawText"
         }
 
         chatHistory[index] = chatHistory[index].copy(
-            text = "System", // Spielt keine Rolle mehr für die UI
+            text = "System",
             localText = parsedLocal,
             externalText = parsedExternal,
-            chapterLink = parsedLink
+            chapterLink = parsedLink,
+            chapterSearchTerm = parsedSearchTerm
         )
     }
 

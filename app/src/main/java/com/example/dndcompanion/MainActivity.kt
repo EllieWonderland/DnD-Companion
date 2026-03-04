@@ -101,7 +101,11 @@ fun DnDApp(viewModel: CharacterViewModel) {
             when (currentScreen) {
                 0 -> AthaniaScreen(viewModel)
                 1 -> CapyScreen(viewModel)
-                2 -> HelpScreen(viewModel)
+                2 -> HelpScreen(viewModel, onNavigateToRulebook = { chapter, search -> 
+                    viewModel.targetRulebookChapter = chapter
+                    viewModel.targetRulebookSearch = search
+                    currentScreen = 3
+                })
                 3 -> BucherScreen(viewModel)
             }
         }

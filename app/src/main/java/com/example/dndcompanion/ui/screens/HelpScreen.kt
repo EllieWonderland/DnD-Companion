@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -31,7 +32,7 @@ import com.halilibo.richtext.ui.material3.Material3RichText
 import androidx.compose.runtime.CompositionLocalProvider
 
 @Composable
-fun HelpScreen(viewModel: CharacterViewModel) {
+fun HelpScreen(viewModel: CharacterViewModel, onNavigateToRulebook: (String, String?) -> Unit = { _, _ -> }) {
     var selectedTab by remember { mutableStateOf(0) }
     val tabs = listOf("Regel-Chat", "Mein FAQ")
 
@@ -54,7 +55,7 @@ fun HelpScreen(viewModel: CharacterViewModel) {
 
         Box(modifier = Modifier.fillMaxSize()) {
             when (selectedTab) {
-                0 -> ChatView(viewModel)
+                0 -> ChatView(viewModel, onNavigateToRulebook)
                 1 -> FaqView(viewModel)
             }
         }
@@ -62,7 +63,7 @@ fun HelpScreen(viewModel: CharacterViewModel) {
 }
 
 @Composable
-fun ChatView(viewModel: CharacterViewModel) {
+fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, String?) -> Unit) {
     var inputText by remember { mutableStateOf("") }
     // Speichert die Nachricht, die wir gerade ins FAQ aufnehmen wollen
     var messageToFaq by remember { mutableStateOf<ChatMessage?>(null) }
@@ -99,7 +100,8 @@ fun ChatView(viewModel: CharacterViewModel) {
             items(viewModel.chatHistory, key = { it.id }) { message ->
                 ChatBubble(
                     message = message,
-                    onSaveToFaq = { messageToFaq = message }
+                    onSaveToFaq = { messageToFaq = message },
+                    onNavigateToRulebook = onNavigateToRulebook
                 )
             }
         }
@@ -202,7 +204,7 @@ fun ChatView(viewModel: CharacterViewModel) {
 }
 
 @Composable
-fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit) {
+fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebook: (String, String?) -> Unit) {
     val isUser = message.isUser
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
@@ -260,6 +262,7 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit) {
                                 modifier = Modifier
                                     .padding(bottom = 12.dp, start = 4.dp)
                                     .background(Color(0xFF2E7D32), RoundedCornerShape(16.dp)) // Dunkelgrün wie im Regelwerk
+                                    .clickable { onNavigateToRulebook(message.chapterLink, message.chapterSearchTerm) }
                                     .padding(horizontal = 10.dp, vertical = 4.dp)
                             ) {
                                 Text("📖", fontSize = 12.sp)

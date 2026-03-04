@@ -20,8 +20,14 @@
 - [x] **LLM-Kontext (RAG) erweitern (Chatbot):** 
   - Als Quelle für den Chatbot 2 Bereiche anzeigen: Oben eine Antwort anhand der eigenen Quellen (Rules/Handbuch, Rules/Zauberbuch, Charaktersheets, Stats, etc.), unten einen Bereich mit der Antwort anhand anderer Quellen (Internet, Gemini Datenbank etc.).
   - [x] Robuste JSON-Antworten & Markdown-Rendering im Chat integriert
-  - *Commit:* `git commit -m "feat: implement JSON-structured RAG responses with Markdown rendering and chapter links"`
-- [ ] **Regelwerk - Bugfixes & Visuals:** 
+  - [x] Klickbare Chapter-Links zur Navigation ins Regelbuch implementiert
+  - [x] RAG-Kontext um Charakterklasse (Waldläufer, Beast Master) und Volk erweitert
+  - [x] Chat Source Link klickbar machen und Styling anpassen (Kapitel-Badge)
+  - [x] Navigation: Klick auf Source Link öffnet BucherScreen und scrollt zum entsprechenden Kapitel/Absatz
+  - [x] LLM Context Expansion: Sicherstellen, dass Gemini Profile, Stats, Rucksack, Capy, Notizbuch und Buch des Grolls sehen kann
+  - [x] Lokale Suche Verbessern: Suchfunktion muss "Zaubertricks" auch in den Zauberbüchern / Spellbook.md finden und nutzen (Zauber JSONs durchsuchen)
+  - *Commit:* `git commit -m "feat: make chatbot source links clickable to navigate to rulebook chapters"`
+- [x] **Regelwerk - Bugfixes & Visuals:** 
   - Weißen Hintergrund gegen weiße Schrift auf farbigem Hintergrund tauschen.
   - Gesuchtes Wort im Text farblich/fett markieren (Highlighting).
   - *Commit:* `git commit -m "fix: rulebook apply dark theme and add text highlighting for search"`

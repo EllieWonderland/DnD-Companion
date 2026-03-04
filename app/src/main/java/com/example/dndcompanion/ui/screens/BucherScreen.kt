@@ -46,6 +46,12 @@ enum class BookType {
 fun BucherScreen(viewModel: CharacterViewModel) {
     var activeBook by remember { mutableStateOf<BookType?>(null) }
 
+    LaunchedEffect(viewModel.targetRulebookChapter) {
+        if (viewModel.targetRulebookChapter != null) {
+            activeBook = BookType.RULEBOOK
+        }
+    }
+
     if (activeBook == null) {
         LibraryView(onBookSelected = { activeBook = it })
     } else {
@@ -56,7 +62,17 @@ fun BucherScreen(viewModel: CharacterViewModel) {
             )
         } else if (activeBook == BookType.RULEBOOK) {
             RulebookDetailView(
-                onBack = { activeBook = null }
+                targetChapter = viewModel.targetRulebookChapter,
+                targetSearch = viewModel.targetRulebookSearch,
+                onTargetConsumed = { 
+                    viewModel.targetRulebookChapter = null 
+                    viewModel.targetRulebookSearch = null
+                },
+                onBack = { 
+                    activeBook = null 
+                    viewModel.targetRulebookChapter = null
+                    viewModel.targetRulebookSearch = null
+                }
             )
         } else {
             BookDetailView(
@@ -471,7 +487,7 @@ data class RulebookChapter(val title: String, val filename: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RulebookDetailView(onBack: () -> Unit) {
+fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, onTargetConsumed: () -> Unit, onBack: () -> Unit) {
     val chapters = listOf(
         RulebookChapter("Index", ""), // Fake chapter for Index/Search Tab
         RulebookChapter("1. Gameplay", "Rules/Handbuch/Kapitel/kapitel1_gameplay.md"),
@@ -539,6 +555,21 @@ fun RulebookDetailView(onBack: () -> Unit) {
             } catch (e: Exception) {
                 // Ignore if list is not layouted yet
             }
+        }
+    }
+
+    LaunchedEffect(targetChapter) {
+        if (targetChapter != null) {
+            val index = chapters.indexOfFirst { 
+                it.title.contains(targetChapter, ignoreCase = true) || targetChapter.contains(it.title, ignoreCase = true) 
+            }
+            if (index != -1) {
+                pagerState.scrollToPage(index)
+            }
+            if (targetSearch != null) {
+                searchQuery = targetSearch
+            }
+            onTargetConsumed()
         }
     }
 
@@ -618,7 +649,7 @@ fun RulebookDetailView(onBack: () -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-                .background(Color.White, RoundedCornerShape(8.dp))
+                .background(androidx.compose.material3.MaterialTheme.colorScheme.surface, RoundedCornerShape(8.dp))
         ) {
             HorizontalPager(
                 state = pagerState,
@@ -740,8 +771,16 @@ fun RulebookDetailView(onBack: () -> Unit) {
                                     .padding(16.dp)
                             ) {
                                 items(blocks.size) { index ->
+                                    val originalText = blocks[index]
+                                    val highlightedText = if (searchQuery.isNotBlank() && originalText.contains(searchQuery, ignoreCase = true)) {
+                                        // Highlight the search query in bold
+                                        originalText.replace(Regex("(?i)(${Regex.escape(searchQuery)})"), "**$1**")
+                                    } else {
+                                        originalText
+                                    }
+                                    
                                     Material3RichText(modifier = Modifier.padding(bottom = 8.dp)) {
-                                        Markdown(content = blocks[index])
+                                        Markdown(content = highlightedText)
                                     }
                                 }
                             }
