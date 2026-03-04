@@ -882,8 +882,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         {
           "lokale_antwort": "Deine Antwort NUR basierend auf den bereitgestellten Handbüchern/Stats. Wenn nichts gefunden, schreibe 'Keine spezifischen Informationen gefunden.'",
           "externe_antwort": "Deine Antwort basierend auf deinem allgemeinen Wissen über D&D 2024. Gehe auf die Klasse und das Volk des Charakters ein, falls relevant.",
-          "kapitel_link": "Der exakte Name der Quelle (z.B. '3. Klassen'), wie er bei '--- Quelle: ... ---' angegeben wurde. Falls du nichts lokales gefunden hast, lass den Wert null.",
-          "suchbegriff": "Ein kurzes Stichwort (1-2 Worte) aus dem Kapitel, das exakt zu deiner Antwort passt, um im UI genau zu dieser Regel zu scrollen (z.B. 'Zaubertricks' oder 'Kampfstile')."
+          "kapitel_link": "NUR der exakte Name eines HANDBUCH-Kapitels aus den '--- Quelle: ... ---' Markierungen (z.B. '3. Klassen', '7. Kampf'). Erlaubte Werte: '1. Gameplay', '2. Völker', '3. Klassen', '4. Herkünfte', '5. Talente', '6. Ausrüstung', '7. Kampf', '8. Zauber', 'Zauberbuch Übersicht'. WICHTIG: Wenn die Antwort aus dem CHARAKTERBLATT kommt (Stats, Begleiter/Capys, Inventar, Zauberplätze, Notizbuch etc.) und NICHT aus einem Handbuch-Kapitel, setze den Wert auf null!",
+          "suchbegriff": "Ein kurzes Stichwort (1-2 Worte) aus dem Kapitel, das exakt zu deiner Antwort passt, um im UI genau zu dieser Regel zu scrollen (z.B. 'Zaubertricks' oder 'Kampfstile'). Nur setzen wenn kapitel_link gesetzt ist."
         }
     """.trimIndent()
 
@@ -1426,11 +1426,19 @@ private val model3Flash = GenerativeModel(
                 val e = json.getString("externe_antwort")
                 if (e.isNotBlank()) parsedExternal = e
             }
+            // Validierung: kapitel_link nur akzeptieren, wenn er einem echten Kapitel entspricht
+            val validChapters = setOf(
+                "1. Gameplay", "2. Völker", "3. Klassen", "4. Herkünfte",
+                "5. Talente", "6. Ausrüstung", "7. Kampf", "8. Zauber",
+                "Zauberbuch Übersicht", "Zauberbuch Detail"
+            )
             if (json.has("kapitel_link") && !json.isNull("kapitel_link")) {
                 val k = json.getString("kapitel_link")
-                if (k.isNotBlank() && k != "null") parsedLink = k
+                if (k.isNotBlank() && k != "null" && validChapters.any { k.contains(it, ignoreCase = true) }) {
+                    parsedLink = k
+                }
             }
-            if (json.has("suchbegriff") && !json.isNull("suchbegriff")) {
+            if (json.has("suchbegriff") && !json.isNull("suchbegriff") && parsedLink != null) {
                 val s = json.getString("suchbegriff")
                 if (s.isNotBlank() && s != "null") parsedSearchTerm = s
             }
