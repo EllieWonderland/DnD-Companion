@@ -1204,19 +1204,19 @@ private val model3Flash = GenerativeModel(
             Notizbuch: $notes
             Buch des Grolls: $grudges
             
-            --- BEGLEITER CAPYS (alle 3 Urtier-Formen) ---
+            --- BEGLEITER (alle 3 Urtier-Formen) ---
             Aktuell aktiv: ${activeBeastType.name} (HP: $capyCurrentHp/$capyMaxHp)
             Angriffsbonus (alle): +$spellAttackBonus, Rettungswürfe (alle): +$proficiencyBonus
             
-            LAND-CAPY: HP: $landHp/$landHp, AC: $beastAc
+            Urtier des Landes: HP: $landHp/$landHp, AC: $beastAc
             Schaden: 1W8 + $wisMod Hieb, Geschwindigkeit: Laufen 12m, Klettern 12m
             Spezial: Ansturm
             
-            HIMMELS-CAPY: HP: $skyHp/$skyHp, AC: $beastAc
+            Urtier des Himmels: HP: $skyHp/$skyHp, AC: $beastAc
             Schaden: 1W4 + $wisMod Hieb, Geschwindigkeit: Fliegen 18m, Laufen 3m
             Spezial: Vorbeifliegen
             
-            SEE-CAPY: HP: $seaHp/$seaHp, AC: $beastAc
+            Urtier des Meeres: HP: $seaHp/$seaHp, AC: $beastAc
             Schaden: 1W6 + $wisMod Stich, Geschwindigkeit: Schwimmen 18m, Laufen 1.5m
             Spezial: Unter Wasser atmen, Amphibisch
         """.trimIndent()
@@ -1426,15 +1426,15 @@ private val model3Flash = GenerativeModel(
                 val e = json.getString("externe_antwort")
                 if (e.isNotBlank()) parsedExternal = e
             }
-            // Validierung: kapitel_link nur akzeptieren, wenn er einem echten Kapitel entspricht
-            val validChapters = setOf(
-                "1. Gameplay", "2. Völker", "3. Klassen", "4. Herkünfte",
-                "5. Talente", "6. Ausrüstung", "7. Kampf", "8. Zauber",
-                "Zauberbuch Übersicht", "Zauberbuch Detail"
+            // Validierung: kapitel_link nur akzeptieren, wenn ein valides Keyword drinsteckt
+            // Damit kleine Abweichungen (z.B. "1. gameplay" vs "Gameplay") toleriert werden.
+            val validChapterKeywords = listOf(
+                "gameplay", "völker", "klassen", "herkünfte", "talente",
+                "ausrüstung", "kampf", "zauber", "zauberbuch"
             )
             if (json.has("kapitel_link") && !json.isNull("kapitel_link")) {
                 val k = json.getString("kapitel_link")
-                if (k.isNotBlank() && k != "null" && validChapters.any { k.contains(it, ignoreCase = true) }) {
+                if (k.isNotBlank() && k != "null" && validChapterKeywords.any { k.contains(it, ignoreCase = true) }) {
                     parsedLink = k
                 }
             }
