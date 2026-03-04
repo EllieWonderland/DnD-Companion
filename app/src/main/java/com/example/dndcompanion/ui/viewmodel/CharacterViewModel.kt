@@ -61,6 +61,12 @@ enum class ActiveWeapon {
     SHILLELAGH_SCHILD
 }
 
+data class EquipmentDefinition(
+    val name: String,
+    val weight: Double,
+    val category: String
+)
+
 enum class BeastType {
     LAND,
     SKY,
@@ -938,6 +944,7 @@ private val model3Flash = GenerativeModel(
         loadFaqs()
         loadSpells()
         loadGlobalSpellbook()
+        loadEquipment()
     }
 
     private fun saveSpells() {
@@ -966,6 +973,84 @@ private val model3Flash = GenerativeModel(
                 globalSpellbook.addAll(spellList)
             } catch (e: Exception) {
                 // ignore
+            }
+        }
+    }
+
+    val allEquipment = mutableStateListOf<EquipmentDefinition>()
+
+    private fun loadEquipment() {
+        viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
+            try {
+                val context = getApplication<Application>()
+                val text = context.assets.open("Rules/Handbuch/Kapitel/kapitel6_equipment.md").bufferedReader().use { it.readText() }
+                
+                val equipmentList = mutableListOf<EquipmentDefinition>()
+                var currentCategory = "Sonstiges"
+                
+                val lines = text.lines()
+                for (line in lines) {
+                    val trimmed = line.trim()
+                    
+                    // Kategorienerkennung
+                    if (trimmed.startsWith("## 2.") || trimmed.startsWith("## 3.")) {
+                        currentCategory = "Rüstung & Waffen"
+                    } else if (trimmed.startsWith("## 4.")) {
+                        currentCategory = "Werkzeug"
+                    } else if (trimmed.startsWith("## 5.")) {
+                        currentCategory = "Ausrüstung"
+                    } else if (trimmed.startsWith("## 6.")) {
+                        currentCategory = "Reittiere & Fahrzeuge"
+                    } else if (trimmed.startsWith("## 7.")) {
+                        currentCategory = "Dienstleistungen"
+                    }
+
+                    // Tabellenzeilen parsen (ignorieren von Titel- und Trennzeilen)
+                    if (trimmed.startsWith("|") && !trimmed.startsWith("| :---") && !trimmed.contains("Waffe (Name)") && !trimmed.contains("Rüstungstyp") && !trimmed.contains("Werkzeug |") && !trimmed.contains("Gegenstand |") && !trimmed.contains("Tier (Animal)") && !trimmed.contains("Schiffstyp") && !trimmed.contains("Qualität |")) {
+                        
+                        // Überschrift innerhalb einer Tabelle (z.B. "**Leichte Rüstung**") überspringen
+                        if (trimmed.startsWith("| **") && trimmed.indexOf("|", startIndex = 2) < 0) continue
+
+                        val parts = trimmed.split("|").map { it.trim() }
+                        // Die Split-Methode erzeugt ein leeres Element am Anfang und Ende, wenn die Zeile mit | beginnt/endet
+                        if (parts.size >= 4) { 
+                            val rawName = parts[1].replace("**", "") // Entferne Fettmarkierungen
+                            var name = rawName
+                            
+                            // Bereinige den Namen (falls englischer Name in Klammern steht, nimm den deutschen Teil)
+                            val bracketIndex = rawName.indexOf("(")
+                            if (bracketIndex > 0) {
+                                name = rawName.substring(0, bracketIndex).trim()
+                            }
+                            
+                            if (name.isNotEmpty() && !name.startsWith("**")) {
+                                // Gewicht extrahieren. Es ist typischerweise in der vorletzten Spalte (bei Waffen/Rüstungen/Ausrüstung)
+                                // Wir suchen in allen Spalten nach "Pfd." oder "Tonnen"
+                                var weight = 0.0
+                                for (part in parts) {
+                                    if (part.contains("Pfd.")) {
+                                        val weightStr = part.replace(" Pfd.", "").replace(",", ".")
+                                        weight = weightStr.toDoubleOrNull() ?: 0.0
+                                        break
+                                    } else if (part.contains("Tonnen") || part.contains("Tonne")) {
+                                        val weightStr = part.replace(" Tonnen", "").replace(" Tonne", "").replace(",", ".")
+                                        weight = (weightStr.toDoubleOrNull() ?: 0.0) * 2000.0 // 1 Tonne = 2000 Pfd
+                                        break
+                                    }
+                                }
+                                
+                                equipmentList.add(EquipmentDefinition(name, weight, currentCategory))
+                            }
+                        }
+                    }
+                }
+                
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                    allEquipment.clear()
+                    allEquipment.addAll(equipmentList)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

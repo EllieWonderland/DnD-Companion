@@ -1,9 +1,13 @@
 # ToDo & Roadmap D&D Companion
 
 ## Aktuell (Phase 1: Athania Perfektionieren)
+- [x] **Projekt-Sync:** Projekt von GitHub aktualisiert (`git pull`), um auf dem neuesten Stand zu sein.
+  - *Commit:* (Kein Commit notwendig, da nur Pull-Vorgang)
+- [x] **Testen in Antigravity:** Automatisierte Unit-Tests (`./gradlew test`) und Build-Checks funktionieren direkt hier. Ich kann Logik-Fehler finden, ohne dass du zu Android Studio wechseln musst.
+  - *Commit:* (Interne Prüfung)
 - [x] **Fehler beheben:** Workflow `/error-fix` ausführen, Build reparieren.
   - *Commit:* `git commit -m "fix: resolve AGP 9.0 & Kotlin plugin incompatibility in gradle.properties"`
-- [/] **Übungsbonus in Profil-UI anzeigen:** Den berechneten `proficiencyBonus` sichtbar im ProfilScreen einbauen.
+- [ ] **Übungsbonus in Profil-UI anzeigen:** Den berechneten `proficiencyBonus` sichtbar im ProfilScreen einbauen.
   - *Commit:* `git commit -m "feat: show proficiency bonus on profile screen"`
 - [x] **Zauberbuch integrieren:** Die neuen JSON-Dateien aus `Rules/Zauberbuch` (Stufe 0-9) per JSON-Parser in die App einlesen und ein durchsuchbares, filterbares Zauberbuch (`SpellbookScreen`) implementieren. So kann man vorbereitete Zauber direkt aus der kompletten Liste auswählen.
   - *Commit:* `git commit -m "feat: integrate full spellbook catalog from JSON assets and replace manual entry"`
@@ -31,7 +35,9 @@
   - Weißen Hintergrund gegen weiße Schrift auf farbigem Hintergrund tauschen.
   - Gesuchtes Wort im Text farblich/fett markieren (Highlighting).
   - *Commit:* `git commit -m "fix: rulebook apply dark theme and add text highlighting for search"`
-- [ ] **Rucksack - Gewicht & Gegenstands-Auswahl:** 
+- [ ] **Hilfe - Regelchat:** Bisher nur Zugriff auf das ausgerüstete Tier (Capy) statt auf alle. Prüfen, ob auch nur auf ausgerüstete Zauber zugegriffen wird und das anpassen.
+  - *Commit:* `git commit -m "feat: provide full beast and spell context to chatbot"`
+- [x] **Rucksack - Gewicht & Gegenstands-Auswahl:** 
   - Auf tatsächliche Gewichte aus der Datei `equipment.md` zugreifen und summiert anzeigen.
   - Neben dem freien Eingabefeld sollten Items für den Rucksack auch über eine Liste / Suche ausgewählt werden können (Daten aus `kapitel6_equipment.md` einlesen).
   - *Commit:* `git commit -m "feat: inventory weight tracking and equipment item selection from md"`

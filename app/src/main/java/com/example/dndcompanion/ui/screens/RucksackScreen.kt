@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.ExpandLess
@@ -147,20 +148,44 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
         Spacer(modifier = Modifier.height(8.dp))
 
         // Neues Item hinzufügen
+        // Vorschlagsliste (ohne Popup, damit Tastatur offen bleibt)
+        var selectedFromSuggestion by remember { mutableStateOf(false) }
+        val matchingEquipment = remember(newItemName, viewModel.allEquipment.size, selectedFromSuggestion) {
+            if (!selectedFromSuggestion && newItemName.trim().length >= 2) {
+                viewModel.allEquipment.filter {
+                    it.name.lowercase().contains(newItemName.trim().lowercase())
+                }.take(5)
+            } else emptyList()
+        }
+
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedTextField(
                 value = newItemName,
-                onValueChange = { newItemName = it },
+                onValueChange = { 
+                    newItemName = it
+                    selectedFromSuggestion = false
+                },
                 label = { Text("Gegenstand") },
-                modifier = Modifier.weight(1f),
                 singleLine = true,
+                trailingIcon = {
+                    if (newItemName.isNotEmpty()) {
+                        IconButton(onClick = { 
+                            newItemName = ""
+                            newItemWeight = ""
+                            selectedFromSuggestion = false
+                        }) {
+                            Icon(Icons.Default.Clear, contentDescription = "Löschen", tint = Color.Gray)
+                        }
+                    }
+                },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = PinkDunkel,
                     focusedLabelColor = PinkDunkel
-                )
+                ),
+                modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.width(8.dp))
             OutlinedTextField(
@@ -179,6 +204,44 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                     focusedLabelColor = PinkDunkel
                 )
             )
+        }
+
+        // Inline-Vorschläge (kein Popup = kein Fokusverlust)
+        if (matchingEquipment.isNotEmpty()) {
+            Card(
+                modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                shape = RoundedCornerShape(8.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            ) {
+                Column(modifier = Modifier.padding(4.dp)) {
+                    matchingEquipment.forEach { equipment ->
+                        Surface(
+                            onClick = {
+                                newItemName = equipment.name
+                                newItemWeight = if (equipment.weight > 0.0) equipment.weight.toString() else ""
+                                newItemCategory = equipment.category
+                                selectedFromSuggestion = true
+                            },
+                            color = Color.Transparent,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(equipment.name, fontWeight = FontWeight.Bold, fontSize = 14.sp, color = BlauDunkel)
+                                    Text(equipment.category, fontSize = 11.sp, color = Color.Gray)
+                                }
+                                if (equipment.weight > 0.0) {
+                                    Text("${equipment.weight} Pfd.", fontSize = 12.sp, color = PinkDunkel, fontWeight = FontWeight.Bold)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
         Spacer(modifier = Modifier.height(8.dp))
         Row(
