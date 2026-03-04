@@ -1,10 +1,13 @@
 package com.example.dndcompanion.ui.screens
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -12,16 +15,19 @@ import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.* 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.viewmodel.ChatMessage
+import com.example.dndcompanion.ui.viewmodel.FaqItem
 import com.example.dndcompanion.ui.theme.BlauDunkel
 import com.example.dndcompanion.ui.theme.BlauHell
 import com.example.dndcompanion.ui.theme.PinkDunkel
@@ -30,6 +36,7 @@ import com.example.dndcompanion.ui.theme.GelbSand
 import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.material3.Material3RichText
 import androidx.compose.runtime.CompositionLocalProvider
+import kotlinx.coroutines.delay
 
 @Composable
 fun HelpScreen(viewModel: CharacterViewModel, onNavigateToRulebook: (String, String?) -> Unit = { _, _ -> }) {
@@ -67,6 +74,16 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
     var inputText by remember { mutableStateOf("") }
     // Speichert die Nachricht, die wir gerade ins FAQ aufnehmen wollen
     var messageToFaq by remember { mutableStateOf<ChatMessage?>(null) }
+    // NEU: Bestätigungsdialog für Chat-Reset
+    var showResetDialog by remember { mutableStateOf(false) }
+
+    // NEU: Auto-Scroll
+    val listState = rememberLazyListState()
+    LaunchedEffect(viewModel.chatHistory.size) {
+        if (viewModel.chatHistory.isNotEmpty()) {
+            listState.animateScrollToItem(viewModel.chatHistory.size - 1)
+        }
+    }
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp).imePadding()) {
         // Status-Leiste für Modell und Limits
@@ -94,6 +111,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
             trackColor = BlauHell
         )
         LazyColumn(
+            state = listState,
             modifier = Modifier.weight(1f).fillMaxWidth(),
             reverseLayout = false
         ) {
@@ -108,13 +126,13 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // NEU: Chat zurücksetzen Button
+        // Chat zurücksetzen Button
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End // Rechts ausgerichtet
+            horizontalArrangement = Arrangement.End
         ) {
             Button(
-                onClick = { viewModel.resetChat() },
+                onClick = { showResetDialog = true },
                 colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel),
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
@@ -127,13 +145,14 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
         // Eingabefeld
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Bottom
         ) {
             OutlinedTextField(
                 value = inputText,
                 onValueChange = { inputText = it },
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("Frage nach einer Regel...") },
+                maxLines = 4,
+                placeholder = { Text("z.B. Wie funktioniert Zeichen des Jägers?") },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = PinkDunkel,
                     focusedContainerColor = Color.White,
@@ -148,7 +167,11 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
                         inputText = ""
                     }
                 },
-                modifier = Modifier.background(BlauDunkel, RoundedCornerShape(8.dp))
+                enabled = inputText.isNotBlank(),
+                modifier = Modifier.background(
+                    if (inputText.isNotBlank()) BlauDunkel else BlauDunkel.copy(alpha = 0.4f),
+                    RoundedCornerShape(8.dp)
+                )
             ) {
                 Icon(Icons.Default.Send, contentDescription = "Senden", tint = Color.White)
             }
@@ -201,17 +224,82 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
             }
         )
     }
+
+    // NEU: Bestätigungsdialog für Chat-Reset
+    if (showResetDialog) {
+        AlertDialog(
+            onDismissRequest = { showResetDialog = false },
+            containerColor = GelbSand,
+            title = { Text("Chat zurücksetzen?", color = BlauDunkel, fontWeight = FontWeight.Bold) },
+            text = { Text("Alle Nachrichten werden unwiderruflich gelöscht.", color = BlauDunkel) },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        viewModel.resetChat()
+                        showResetDialog = false
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                ) {
+                    Text("Ja, löschen", color = Color.White)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showResetDialog = false }) {
+                    Text("Abbrechen", color = BlauDunkel)
+                }
+            }
+        )
+    }
+}
+
+// NEU: Animierter Typing-Indikator
+@Composable
+fun TypingIndicator() {
+    val infiniteTransition = rememberInfiniteTransition(label = "typing")
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(12.dp)
+    ) {
+        for (i in 0..2) {
+            val alpha by infiniteTransition.animateFloat(
+                initialValue = 0.3f,
+                targetValue = 1f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(600, easing = LinearEasing, delayMillis = i * 200),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "dot_$i"
+            )
+            Box(
+                modifier = Modifier
+                    .size(8.dp)
+                    .alpha(alpha)
+                    .background(Color.White, CircleShape)
+            )
+        }
+    }
 }
 
 @Composable
 fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebook: (String, String?) -> Unit) {
     val isUser = message.isUser
+    val isLoading = !isUser && message.text == "... analysiere Regeln ..." && message.localText == null && message.externalText == null
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp),
         horizontalArrangement = if (isUser) Arrangement.End else Arrangement.Start
     ) {
         Column(horizontalAlignment = if (isUser) Alignment.End else Alignment.Start) {
-            if (isUser || (message.localText == null && message.externalText == null)) {
+            if (isLoading) {
+                // NEU: Animierter Typing-Indikator statt statischer Text
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = BlauHell),
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier.widthIn(max = 300.dp)
+                ) {
+                    TypingIndicator()
+                }
+            } else if (isUser || (message.localText == null && message.externalText == null)) {
                 // Standard-Anzeige für User oder Fehler-Rohtext
                 Card(
                     colors = CardDefaults.cardColors(containerColor = if (isUser) BlauDunkel else BlauHell),
@@ -307,8 +395,8 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                 }
             }
 
-            // Bot-Nachrichten bekommen den "Ins FAQ"-Button
-            if (!isUser) {
+            // Bot-Nachrichten bekommen den "Ins FAQ"-Button (aber nicht während des Ladens)
+            if (!isUser && !isLoading) {
                 TextButton(
                     onClick = onSaveToFaq, 
                     contentPadding = PaddingValues(0.dp),
@@ -325,6 +413,9 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
 
 @Composable
 fun FaqView(viewModel: CharacterViewModel) {
+    // NEU: FAQ Edit-Dialog State
+    var editingFaq by remember { mutableStateOf<FaqItem?>(null) }
+
     if (viewModel.faqList.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text("Dein FAQ ist noch leer. Frag den Bot nach Regeln!", color = BlauDunkel)
@@ -344,18 +435,78 @@ fun FaqView(viewModel: CharacterViewModel) {
                             verticalAlignment = Alignment.Top
                         ) {
                             Text(text = faq.question, fontWeight = FontWeight.Bold, color = PinkDunkel, fontSize = 18.sp, modifier = Modifier.weight(1f))
-                            IconButton(
-                                onClick = { viewModel.removeFaq(faq) },
-                                modifier = Modifier.size(24.dp)
-                            ) {
-                                Icon(Icons.Default.Delete, contentDescription = "Löschen", tint = Color.Gray)
+                            Row {
+                                IconButton(
+                                    onClick = { editingFaq = faq },
+                                    modifier = Modifier.size(24.dp)
+                                ) {
+                                    Icon(Icons.Default.Edit, contentDescription = "Bearbeiten", tint = BlauDunkel)
+                                }
+                                Spacer(Modifier.width(8.dp))
+                                IconButton(
+                                    onClick = { viewModel.removeFaq(faq) },
+                                    modifier = Modifier.size(24.dp)
+                                ) {
+                                    Icon(Icons.Default.Delete, contentDescription = "Löschen", tint = Color.Gray)
+                                }
                             }
                         }
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = faq.answer, color = BlauDunkel, fontSize = 16.sp)
+                        // NEU: Markdown-Rendering statt Plaintext
+                        CompositionLocalProvider(LocalContentColor provides BlauDunkel) {
+                            Material3RichText { Markdown(content = faq.answer) }
+                        }
                     }
                 }
             }
         }
+    }
+
+    // NEU: Edit-Dialog für FAQ-Einträge
+    if (editingFaq != null) {
+        var editQuestion by remember(editingFaq) { mutableStateOf(editingFaq!!.question) }
+        var editAnswer by remember(editingFaq) { mutableStateOf(editingFaq!!.answer) }
+
+        AlertDialog(
+            onDismissRequest = { editingFaq = null },
+            containerColor = GelbSand,
+            title = { Text("FAQ bearbeiten", color = BlauDunkel, fontWeight = FontWeight.Bold) },
+            text = {
+                Column {
+                    OutlinedTextField(
+                        value = editQuestion,
+                        onValueChange = { editQuestion = it },
+                        label = { Text("Frage / Schlagwort") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    OutlinedTextField(
+                        value = editAnswer,
+                        onValueChange = { editAnswer = it },
+                        label = { Text("Antwort") },
+                        modifier = Modifier.fillMaxWidth().height(150.dp)
+                    )
+                }
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        if (editQuestion.isNotBlank() && editAnswer.isNotBlank()) {
+                            viewModel.updateFaq(editingFaq!!, editQuestion, editAnswer)
+                            editingFaq = null
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                ) {
+                    Text("Speichern", color = Color.White)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { editingFaq = null }) {
+                    Text("Abbrechen", color = BlauDunkel)
+                }
+            }
+        )
     }
 }

@@ -35,8 +35,8 @@
   - Weißen Hintergrund gegen weiße Schrift auf farbigem Hintergrund tauschen.
   - Gesuchtes Wort im Text farblich/fett markieren (Highlighting).
   - *Commit:* `git commit -m "fix: rulebook apply dark theme and add text highlighting for search"`
-- [ ] **Hilfe - Regelchat:** Bisher nur Zugriff auf das ausgerüstete Tier (Capy) statt auf alle. Prüfen, ob auch nur auf ausgerüstete Zauber zugegriffen wird und das anpassen.
-  - *Commit:* `git commit -m "feat: provide full beast and spell context to chatbot"`
+- [x] **Hilfe - Regelchat:** Alle 3 Urtier-Formen im Kontext, alle Zauber (nicht nur vorbereitete), Auto-Scroll, animierte Lade-Punkte, Bestätigungsdialog für Reset, mehrzeiliges Eingabefeld, deaktivierter Send-Button, FAQ Markdown + Edit.
+  - *Commit:* `git commit -m "feat: regel-chat ux improvements (beast context, auto-scroll, typing indicator, faq edit)"`
 - [x] **Rucksack - Gewicht & Gegenstands-Auswahl:** 
   - Auf tatsächliche Gewichte aus der Datei `equipment.md` zugreifen und summiert anzeigen.
   - Neben dem freien Eingabefeld sollten Items für den Rucksack auch über eine Liste / Suche ausgewählt werden können (Daten aus `kapitel6_equipment.md` einlesen).

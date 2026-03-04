@@ -1170,14 +1170,20 @@ private val model3Flash = GenerativeModel(
         val geModStr = if (dexMod >= 0) "+$dexMod" else "$dexMod"
         val koModStr = if (conMod >= 0) "+$conMod" else "$conMod"
         val inModStr = if (intMod >= 0) "+$intMod" else "$intMod"
-        val weModStr = if (wisMod >= 0) "+$wisMod" else "$wisMod" // Fix: wisMod statt weMod
+        val weModStr = if (wisMod >= 0) "+$wisMod" else "$wisMod"
         val chModStr = if (chaMod >= 0) "+$chaMod" else "$chaMod"
 
         val preparedSpells = allSpells.filter { it.isPrepared }.joinToString(", ") { "${it.name} (Lvl ${it.level})" }
+        val allKnownSpells = allSpells.joinToString(", ") { "${it.name} (Lvl ${it.level})" }
         val inventoryStr = customLoot.joinToString(", ") { "${it.amount}x ${it.name}" }
         val notes = generalBookEntries.joinToString(" | ") { it.text }
         val grudges = grudgeBookEntries.joinToString(" | ") { it.text }
         val traitsStr = customTraits.joinToString(" | ") { "${it.name}: ${it.desc.replace("\n", " ")}" }
+
+        val landHp = 5 + 5 * level
+        val skyHp = 4 + 4 * level
+        val seaHp = 4 + 4 * level
+        val beastAc = 13 + proficiencyBonus
 
         return """
             KONTEXT CHARAKTERBLATT ATHANIA:
@@ -1190,6 +1196,7 @@ private val model3Flash = GenerativeModel(
             Waffe: ${currentWeapon.name} (Bonus: +$currentAttackBonus, Schaden: $currentDamage)
             Zauberplätze: G1: $spellSlotsLevel1, G2: $spellSlotsLevel2, G3: $spellSlotsLevel3
             Vorbereitete Zauber: $preparedSpells
+            Alle bekannten Zauber: $allKnownSpells
             Merkmale/Fähigkeiten: $traitsStr
             Vorrätig: $water L Wasser, $rations Rationen, $goodberries Beeren, $totalArrows Pfeile
             Geld: $coinsGM GM, $coinsSM SM
@@ -1197,13 +1204,21 @@ private val model3Flash = GenerativeModel(
             Notizbuch: $notes
             Buch des Grolls: $grudges
             
-            BEGLEITER CAPY (Urtier):
-            Typ: ${activeBeastType.name}
-            HP: $capyCurrentHp/$capyMaxHp, AC: $capyAc
-            Angriffsbonus: +$spellAttackBonus
-            Schaden: $capyDamage
-            Besondere Fähigkeit: $capySpecial
-            Rettungswürfe: Bonus auf alle +$proficiencyBonus
+            --- BEGLEITER CAPYS (alle 3 Urtier-Formen) ---
+            Aktuell aktiv: ${activeBeastType.name} (HP: $capyCurrentHp/$capyMaxHp)
+            Angriffsbonus (alle): +$spellAttackBonus, Rettungswürfe (alle): +$proficiencyBonus
+            
+            LAND-CAPY: HP: $landHp/$landHp, AC: $beastAc
+            Schaden: 1W8 + $wisMod Hieb, Geschwindigkeit: Laufen 12m, Klettern 12m
+            Spezial: Ansturm
+            
+            HIMMELS-CAPY: HP: $skyHp/$skyHp, AC: $beastAc
+            Schaden: 1W4 + $wisMod Hieb, Geschwindigkeit: Fliegen 18m, Laufen 3m
+            Spezial: Vorbeifliegen
+            
+            SEE-CAPY: HP: $seaHp/$seaHp, AC: $beastAc
+            Schaden: 1W6 + $wisMod Stich, Geschwindigkeit: Schwimmen 18m, Laufen 1.5m
+            Spezial: Unter Wasser atmen, Amphibisch
         """.trimIndent()
     }
 
@@ -1448,5 +1463,13 @@ private val model3Flash = GenerativeModel(
     fun removeFaq(item: FaqItem) {
         faqList.remove(item)
         saveFaqs()
+    }
+
+    fun updateFaq(oldItem: FaqItem, newQuestion: String, newAnswer: String) {
+        val index = faqList.indexOf(oldItem)
+        if (index != -1) {
+            faqList[index] = FaqItem(newQuestion, newAnswer)
+            saveFaqs()
+        }
     }
 }
