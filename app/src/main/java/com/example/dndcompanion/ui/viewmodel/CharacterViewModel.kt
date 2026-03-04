@@ -107,6 +107,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     var showLevelUpDialog by mutableStateOf(false)
         private set
 
+    var showLevelUpNotification by mutableStateOf(false)
+        private set
+
     fun addExperience(amount: Int) {
         currentEP += amount
         prefs.edit { putInt("currentEP", currentEP) }
@@ -120,6 +123,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             level = newLevel
             prefs.edit { putInt("level", level) }
             showLevelUpDialog = true
+            showLevelUpNotification = true
             
             // --- AUTOMATISIERUNGEN FÜR WALDLÄUFER & BEAST MASTER (2024) ---
             for (lvl in (oldLevel + 1)..newLevel) {
@@ -150,6 +154,10 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun dismissLevelUpDialog() {
         showLevelUpDialog = false
+    }
+
+    fun dismissLevelUpNotification() {
+        showLevelUpNotification = false
     }
 
     var targetRulebookChapter by mutableStateOf<String?>(null)

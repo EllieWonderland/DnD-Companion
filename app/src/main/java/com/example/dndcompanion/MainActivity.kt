@@ -151,11 +151,18 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
         ) { page ->
             when (tabs[page]) {
                 AthaniaTab.Profil -> ProfilScreen(viewModel)
-                AthaniaTab.Kampf -> CombatScreen(viewModel, onNavigateToRucksack = { 
-                    coroutineScope.launch {
-                        pagerState.animateScrollToPage(tabs.indexOf(AthaniaTab.Rucksack))
+                AthaniaTab.Kampf -> CombatScreen(viewModel, 
+                    onNavigateToRucksack = { 
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(tabs.indexOf(AthaniaTab.Rucksack))
+                        }
+                    },
+                    onNavigateToProfile = {
+                        coroutineScope.launch {
+                            pagerState.animateScrollToPage(tabs.indexOf(AthaniaTab.Profil))
+                        }
                     }
-                })
+                )
                 AthaniaTab.Zauber -> ZauberScreen(viewModel)
                 AthaniaTab.Rucksack -> RucksackScreen(viewModel)
                 else -> ProfilScreen(viewModel)

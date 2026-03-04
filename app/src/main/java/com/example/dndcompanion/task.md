@@ -7,8 +7,8 @@
   - *Commit:* (Interne Prüfung)
 - [x] **Fehler beheben:** Workflow `/error-fix` ausführen, Build reparieren.
   - *Commit:* `git commit -m "fix: resolve AGP 9.0 & Kotlin plugin incompatibility in gradle.properties"`
-- [ ] **Übungsbonus in Profil-UI anzeigen:** Den berechneten `proficiencyBonus` sichtbar im ProfilScreen einbauen.
-  - *Commit:* `git commit -m "feat: show proficiency bonus on profile screen"`
+- [x] **Übungsbonus in Profil-UI anzeigen:** Den berechneten `proficiencyBonus` sichtbar im ProfilScreen einbauen. (War bereits implementiert).
+  - *Commit:* (Kein Commit nötig, da bereits vorhanden)
 - [x] **Zauberbuch integrieren:** Die neuen JSON-Dateien aus `Rules/Zauberbuch` (Stufe 0-9) per JSON-Parser in die App einlesen und ein durchsuchbares, filterbares Zauberbuch (`SpellbookScreen`) implementieren. So kann man vorbereitete Zauber direkt aus der kompletten Liste auswählen.
   - *Commit:* `git commit -m "feat: integrate full spellbook catalog from JSON assets and replace manual entry"`
 - [x] **Zauberbuch anpassen:** Eingeklappte Icons anzeigen für ausgerüstete Zauber in der Bibliothek. Die Zauber nach der Klasse "Waldläufer" oder "Hexenmeister" filtern.
@@ -41,13 +41,14 @@
   - Auf tatsächliche Gewichte aus der Datei `equipment.md` zugreifen und summiert anzeigen.
   - Neben dem freien Eingabefeld sollten Items für den Rucksack auch über eine Liste / Suche ausgewählt werden können (Daten aus `kapitel6_equipment.md` einlesen).
   - *Commit:* `git commit -m "feat: inventory weight tracking and equipment item selection from md"`
-- [ ] **Levelaufstieg (Level Up) - Logik & UI:** 
+- [x] **Levelaufstieg (Level Up) - Logik & UI:** 
   - Noch einmal auf vollständige Logik prüfen (berücksichtigt das System automatisch neue Zauberplätze, neue Zauber, Rüstungsklasse, Trefferwürfel, etc.?).
   - Das Fenster für den Level Up muss direkt im Kampf-Fenster auftauchen, sobald man aufsteigt.
   - 2 Buttons zur Wahl stellen: "Jetzt Level Up durchführen" (öffnet Profil/Dialog für Attributs-/Zauberauswahl) oder "Später erledigen" (Fenster taucht beim nächsten Öffnen des Charakter-Profils wieder auf).
   - *Commit:* `git commit -m "feat: improve level up logic and add combat screen popup notification"`
 - [ ] **Bücher/Notizen in "Privat" und "Öffentlich" splitten:** Die Notizbücher (Books/Tagebücher) so umbauen, dass ein Eintrag ein Flag erhält oder es getrennte Listen für `Profil-spezifisch` und `Gruppen-Öffentlich` gibt.
-  - *Commit:* `git commit -m "feat: split notebooks into private and public categories"`
+- [ ] **Chat Source Links fixen:** Aktuell wird gar kein Link mehr unter der RAG-Antwort angezeigt, weil die Validierung entweder fehlschlägt oder Gemini den Link immer `null` setzt. Prüfen, ob der systemPrompt in `CharacterViewModel.kt` zu streng ist oder das Parsing fehlerhaft.
+  - *Commit:* `git commit -m "fix: restore chat source links"`
 
 ## Bald (Phase 2: Fundament für Multi-Charakter)
 - [ ] **CharacterViewModel abstrahieren:** Die harten Werte für "Athania" in eine flexiblere Datenklasse `CharacterData` auslagern. Das ViewModel sollte die aktuellen Daten basierend auf dem gewählten Charakter laden.

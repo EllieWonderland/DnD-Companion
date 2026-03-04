@@ -30,7 +30,7 @@ import com.example.dndcompanion.ui.theme.PinkHell
 import com.example.dndcompanion.ui.theme.GelbSand
 
 @Composable
-fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit) {
+fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit, onNavigateToProfile: () -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -191,6 +191,32 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                 dismissButton = {
                     TextButton(onClick = { showEpDialog = false }) {
                         Text("Abbrechen", color = BlauDunkel)
+                    }
+                }
+            )
+        }
+
+        // NEU: Level Up Benachrichtigung im Kampfscreen
+        if (viewModel.showLevelUpNotification) {
+            AlertDialog(
+                onDismissRequest = { viewModel.dismissLevelUpNotification() },
+                containerColor = GelbSand,
+                title = { Text("Level Up! Stufe ${viewModel.level} erreicht!", color = BlauDunkel, fontWeight = FontWeight.Bold, fontSize = 20.sp) },
+                text = { Text("Glückwunsch! Deine Erfahrungspunkte reichen für einen Stufenaufstieg. Möchtest du deinen Charakter jetzt verbessern?", color = BlauDunkel) },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            viewModel.dismissLevelUpNotification()
+                            onNavigateToProfile()
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                    ) {
+                        Text("Jetzt anpassen")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { viewModel.dismissLevelUpNotification() }) {
+                        Text("Später erledigen", color = BlauDunkel)
                     }
                 }
             )
