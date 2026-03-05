@@ -984,15 +984,13 @@ private val model3Flash = GenerativeModel(
                 val spellList = mutableListOf<Spell>()
                 val type = object : TypeToken<List<SpellDto>>() {}.type
 
-                for (i in 0..9) {
-                    val fileName = "Rules/Zauberbuch/zauber_stufe$i.json"
-                    try {
-                        val jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
-                        val dtos: List<SpellDto> = gson.fromJson(jsonString, type)
-                        spellList.addAll(dtos.map { it.toSpell() })
-                    } catch (e: Exception) {
-                        // ignore missing files
-                    }
+                val fileName = "Rules/Zauberbuch/spellbook.json"
+                try {
+                    val jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
+                    val dtos: List<SpellDto> = gson.fromJson(jsonString, type)
+                    spellList.addAll(dtos.map { it.toSpell() })
+                } catch (e: Exception) {
+                    println("Error loading spellbook: ${e.message}")
                 }
                 globalSpellbook.clear()
                 globalSpellbook.addAll(spellList)
