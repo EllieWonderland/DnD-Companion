@@ -39,7 +39,7 @@
     },
     {
         "spell_id": "conjure_barrage",
-        "name_de": "Kugelhagel beschwören",
+        "name_de": "Pfeilsalve beschwören",
         "name_en": "Conjure Barrage",
         "level": 3,
         "school": "Hervorrufung",

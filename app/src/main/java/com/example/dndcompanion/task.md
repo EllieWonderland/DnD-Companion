@@ -1,14 +1,10 @@
 # ToDo & Roadmap D&D Companion
 
 ## Aktuell (Phase 1: Athania Perfektionieren)
-- [x] **Projekt-Sync:** Projekt von GitHub aktualisiert (`git pull`), um auf dem neuesten Stand zu sein.
-  - *Commit:* (Kein Commit notwendig, da nur Pull-Vorgang)
-- [x] **Testen in Antigravity:** Automatisierte Unit-Tests (`./gradlew test`) und Build-Checks funktionieren direkt hier. Ich kann Logik-Fehler finden, ohne dass du zu Android Studio wechseln musst.
-  - *Commit:* (Interne Prüfung)
 - [x] **Fehler beheben:** Workflow `/error-fix` ausführen, Build reparieren.
   - *Commit:* `git commit -m "fix: resolve AGP 9.0 & Kotlin plugin incompatibility in gradle.properties"`
-- [x] **Übungsbonus in Profil-UI anzeigen:** Den berechneten `proficiencyBonus` sichtbar im ProfilScreen einbauen. (War bereits implementiert).
-  - *Commit:* (Kein Commit nötig, da bereits vorhanden)
+- [/] **Übungsbonus in Profil-UI anzeigen:** Den berechneten `proficiencyBonus` sichtbar im ProfilScreen einbauen.
+  - *Commit:* `git commit -m "feat: show proficiency bonus on profile screen"`
 - [x] **Zauberbuch integrieren:** Die neuen JSON-Dateien aus `Rules/Zauberbuch` (Stufe 0-9) per JSON-Parser in die App einlesen und ein durchsuchbares, filterbares Zauberbuch (`SpellbookScreen`) implementieren. So kann man vorbereitete Zauber direkt aus der kompletten Liste auswählen.
   - *Commit:* `git commit -m "feat: integrate full spellbook catalog from JSON assets and replace manual entry"`
 - [x] **Zauberbuch anpassen:** Eingeklappte Icons anzeigen für ausgerüstete Zauber in der Bibliothek. Die Zauber nach der Klasse "Waldläufer" oder "Hexenmeister" filtern.
@@ -35,20 +31,17 @@
   - Weißen Hintergrund gegen weiße Schrift auf farbigem Hintergrund tauschen.
   - Gesuchtes Wort im Text farblich/fett markieren (Highlighting).
   - *Commit:* `git commit -m "fix: rulebook apply dark theme and add text highlighting for search"`
-- [x] **Hilfe - Regelchat:** Alle 3 Urtier-Formen im Kontext, alle Zauber (nicht nur vorbereitete), Auto-Scroll, animierte Lade-Punkte, Bestätigungsdialog für Reset, mehrzeiliges Eingabefeld, deaktivierter Send-Button, FAQ Markdown + Edit.
-  - *Commit:* `git commit -m "feat: regel-chat ux improvements (beast context, auto-scroll, typing indicator, faq edit)"`
-- [x] **Rucksack - Gewicht & Gegenstands-Auswahl:** 
+- [ ] **Rucksack - Gewicht & Gegenstands-Auswahl:** 
   - Auf tatsächliche Gewichte aus der Datei `equipment.md` zugreifen und summiert anzeigen.
   - Neben dem freien Eingabefeld sollten Items für den Rucksack auch über eine Liste / Suche ausgewählt werden können (Daten aus `kapitel6_equipment.md` einlesen).
   - *Commit:* `git commit -m "feat: inventory weight tracking and equipment item selection from md"`
-- [x] **Levelaufstieg (Level Up) - Logik & UI:** 
+- [ ] **Levelaufstieg (Level Up) - Logik & UI:** 
   - Noch einmal auf vollständige Logik prüfen (berücksichtigt das System automatisch neue Zauberplätze, neue Zauber, Rüstungsklasse, Trefferwürfel, etc.?).
   - Das Fenster für den Level Up muss direkt im Kampf-Fenster auftauchen, sobald man aufsteigt.
   - 2 Buttons zur Wahl stellen: "Jetzt Level Up durchführen" (öffnet Profil/Dialog für Attributs-/Zauberauswahl) oder "Später erledigen" (Fenster taucht beim nächsten Öffnen des Charakter-Profils wieder auf).
   - *Commit:* `git commit -m "feat: improve level up logic and add combat screen popup notification"`
 - [ ] **Bücher/Notizen in "Privat" und "Öffentlich" splitten:** Die Notizbücher (Books/Tagebücher) so umbauen, dass ein Eintrag ein Flag erhält oder es getrennte Listen für `Profil-spezifisch` und `Gruppen-Öffentlich` gibt.
-- [ ] **Chat Source Links fixen:** Aktuell wird gar kein Link mehr unter der RAG-Antwort angezeigt, weil die Validierung entweder fehlschlägt oder Gemini den Link immer `null` setzt. Prüfen, ob der systemPrompt in `CharacterViewModel.kt` zu streng ist oder das Parsing fehlerhaft.
-  - *Commit:* `git commit -m "fix: restore chat source links"`
+  - *Commit:* `git commit -m "feat: split notebooks into private and public categories"`
 
 ## Bald (Phase 2: Fundament für Multi-Charakter)
 - [ ] **CharacterViewModel abstrahieren:** Die harten Werte für "Athania" in eine flexiblere Datenklasse `CharacterData` auslagern. Das ViewModel sollte die aktuellen Daten basierend auf dem gewählten Charakter laden.

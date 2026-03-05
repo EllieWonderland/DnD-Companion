@@ -446,7 +446,7 @@
     },
     {
         "spell_id": "silence",
-        "name_de": "Stille",
+        "name_de": "Magische Stille",
         "name_en": "Silence",
         "level": 2,
         "school": "Illusion",
@@ -612,5 +612,540 @@
             "Waldläufer"
         ],
         "description": "Ruft einen bestialischen Geist (Land, Wasser oder Luft), der an deiner Seite kämpft."
+    },
+    {
+        "spell_id": "arkane_vitalitaet",
+        "name_de": "Arkane Vitalität",
+        "name_en": "Arcane Vitality",
+        "level": 2,
+        "school": "Bannmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Du zapfst deine Lebenskraft an, um dich zu heilen. Würfle mit einem oder zwei deiner unverbrauchten Trefferpunktewürfel, und du erhältst Trefferpunkte in Höhe des Gesamtergebnisses plus deines Zauberwirken-Attributsmodifikators zurück. Die Würfel werden verbraucht."
+    },
+    {
+        "spell_id": "arkanes_schloss",
+        "name_de": "Arkanes Schloss",
+        "name_en": "Arcane Lock",
+        "level": 2,
+        "school": "Bannmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Goldstaub",
+            "m_cost": 25,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Dauerhaft",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Magier"
+        ],
+        "description": "Du verschließt eine Tür, ein Fenster, ein Tor, einen Behälter oder eine Luke auf magische Art. Du und bestimmte Kreaturen können sie normal öffnen. Du kannst auch ein Kennwort festlegen."
+    },
+    {
+        "spell_id": "beistand",
+        "name_de": "Beistand",
+        "name_en": "Aid",
+        "level": 2,
+        "school": "Bannmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein weißer Stoffstreifen",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Druide",
+            "Kleriker",
+            "Paladin",
+            "Waldläufer"
+        ],
+        "description": "Wähle bis zu drei Kreaturen aus. Für 8 Stunden werden Trefferpunktemaximum sowie aktuelle Trefferpunkte jedes Ziels um 5 erhöht."
+    },
+    {
+        "spell_id": "blindheit_taubheit",
+        "name_de": "Blindheit/Taubheit",
+        "name_en": "Blindness/Deafness",
+        "level": 2,
+        "school": "Verwandlungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "1 Minute",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "CON",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Kleriker",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Eine Kreatur muss einen Konstitutionsrettungswurf bestehen, oder sie ist für die Wirkungsdauer blind oder taub (nach deiner Wahl)."
+    },
+    {
+        "spell_id": "dauerhafte_flamme",
+        "name_de": "Dauerhafte Flamme",
+        "name_en": "Continual Flame",
+        "level": 2,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Rubinstaub",
+            "m_cost": 50,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Dauerhaft",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Kleriker",
+            "Magier"
+        ],
+        "description": "Eine Flamme bricht aus einem berührten Gegenstand hervor. Sie spendet helles Licht (6m) und dämmriges Licht (weitere 6m), erzeugt jedoch keine Wärme und verbraucht keinen Brennstoff."
+    },
+    {
+        "spell_id": "dunkelsicht",
+        "name_de": "Dunkelsicht",
+        "name_en": "Darkvision",
+        "level": 2,
+        "school": "Verwandlungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine getrocknete Karotte",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "8 Stunden",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Magier",
+            "Waldläufer",
+            "Zauberer"
+        ],
+        "description": "Für die Wirkungsdauer hat eine bereitwillige Kreatur, die du berührst, Dunkelsicht mit einer Reichweite von 45 Metern."
+    },
+    {
+        "spell_id": "fallen_finden",
+        "name_de": "Fallen finden",
+        "name_en": "Find Traps",
+        "level": 2,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Kleriker",
+            "Waldläufer"
+        ],
+        "description": "Du erspürst die Anwesenheit aller Fallen, die sich in Reichweite und in deiner Sichtlinie befinden, sowie die allgemeine Art der Gefahr."
+    },
+    {
+        "spell_id": "fesseln",
+        "name_de": "Fesseln",
+        "name_en": "Enthrall",
+        "level": 2,
+        "school": "Verzauberungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": "WIS",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Hexenmeister"
+        ],
+        "description": "Ziele in Reichweite müssen einen Weisheitsrettungswurf bestehen, sonst haben sie einen Malus von -10 auf Weisheitswürfe (Wahrnehmung) und Passive Wahrnehmung."
+    },
+    {
+        "spell_id": "flammenklinge",
+        "name_de": "Flammenklinge",
+        "name_en": "Flame Blade",
+        "level": 2,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Sumach-Blatt",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "3W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Druide",
+            "Zauberer"
+        ],
+        "description": "Du erschaffst eine feurige Klinge in deiner Hand. Bei einem Nahkampf-Zauberangriff bewirkt sie 3W6 + Zauberwirken-Modifikator Feuerschaden."
+    },
+    {
+        "spell_id": "flammenkugel",
+        "name_de": "Flammenkugel",
+        "name_en": "Flaming Sphere",
+        "level": 2,
+        "school": "Beschwörungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Kugel aus Wachs",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 1.5
+        },
+        "saving_throw": "DEX",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "2W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Druide",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Du erzeugst eine flammende Kugel. Kreaturen, die ihren Zug daneben beenden, erleiden 2W6 Feuerschaden (DEX-Save für halben). Du kannst sie als Bonusaktion bewegen."
+    },
+    {
+        "spell_id": "gebet_der_heilung",
+        "name_de": "Gebet der Heilung",
+        "name_en": "Prayer of Healing",
+        "level": 2,
+        "school": "Bannmagie",
+        "casting_time": "10 Minuten",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Kleriker",
+            "Paladin"
+        ],
+        "description": "Bis zu fünf Kreaturen erhalten die Vorzüge einer kurzen Rast und 2W8 Trefferpunkte zurück."
+    },
+    {
+        "spell_id": "gedanken_wahrnehmen",
+        "name_de": "Gedanken wahrnehmen",
+        "name_en": "Detect Thoughts",
+        "level": 2,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "1 Kupfermünze",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 9
+        },
+        "saving_throw": "WIS",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Erlaubt dir das Spüren von Gedanken im Umkreis von 9 Metern oder das Lesen der oberflächlichen Gedanken einer ausgewählten Kreatur."
+    },
+    {
+        "spell_id": "gedankendorn",
+        "name_de": "Gedankendorn",
+        "name_en": "Mind Spike",
+        "level": 2,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": false,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": "WIS",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "3W8",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Hexenmeister",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Ein Splitter psionischer Energie trifft ein Ziel. Es erleidet 3W8 psychischen Schaden (WIS-Save für halben) und du kennst seinen Aufenthaltsort, solange der Zauber anhält."
+    },
+    {
+        "spell_id": "gefuehle_besaenftigen",
+        "name_de": "Gefühle besänftigen",
+        "name_en": "Calm Emotions",
+        "level": 2,
+        "school": "Verzauberungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 6
+        },
+        "saving_throw": "CHA",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Kleriker"
+        ],
+        "description": "Humanoiden in einer 6m-Kugel müssen einen Charismarettungswurf bestehen, oder Zustände wie Bezaubert/Verängstigt werden unterdrückt, oder sie werden friedlich."
+    },
+    {
+        "spell_id": "gegenstand_aufspueren",
+        "name_de": "Gegenstand aufspüren",
+        "name_en": "Locate Object",
+        "level": 2,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein gegabelter Zweig",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 300
+        },
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Druide",
+            "Kleriker",
+            "Magier",
+            "Paladin",
+            "Waldläufer"
+        ],
+        "description": "Du spürst die Richtung zu einem bekannten Gegenstand im Umkreis von bis zu 300 Metern."
+    },
+    {
+        "spell_id": "gestalt_veraendern",
+        "name_de": "Gestalt verändern",
+        "name_en": "Alter Self",
+        "level": 2,
+        "school": "Verwandlungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Du veränderst deine physische Gestalt. Optionen: Aquatische Anpassung (Wasser atmen, Schwimmen), Aussehen ändern oder Natürliche Waffen wachsen lassen."
     }
 ]

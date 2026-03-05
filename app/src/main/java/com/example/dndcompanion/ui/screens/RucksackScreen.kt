@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material3.*
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.clickable
@@ -21,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.theme.BlauDunkel
@@ -35,6 +37,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
     var newItemWeight by remember { mutableStateOf("") }
     var newItemCategory by remember { mutableStateOf("Sonstiges") }
     var isMoneyBagExpanded by remember { mutableStateOf(false) }
+    var showEquipmentPicker by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -45,14 +48,38 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
     ) {
         // --- GEWICHT ---
         Row(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+            modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("Traglast", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
             val weightColor = if (viewModel.currentWeight > viewModel.maxWeight) Color.Red else BlauDunkel
-            Text(String.format(java.util.Locale.US, "%.1f / %.1f kg", viewModel.currentWeight, viewModel.maxWeight), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = weightColor)
+            Text(String.format(java.util.Locale.US, "%.1f / %.0f Pfd.", viewModel.currentWeight, viewModel.maxWeight), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = weightColor)
         }
+
+        // --- GEWICHTS-BALKEN ---
+        val weightRatio = (viewModel.currentWeight / viewModel.maxWeight).toFloat().coerceIn(0f, 1f)
+        val barColor = when {
+            weightRatio > 0.9f -> Color.Red
+            weightRatio > 0.7f -> Color(0xFFFF9800) // Orange
+            else -> BlauDunkel
+        }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(8.dp)
+                .clip(RoundedCornerShape(4.dp))
+                .background(BlauHell.copy(alpha = 0.3f))
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth(weightRatio)
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(barColor)
+            )
+        }
+        Spacer(modifier = Modifier.height(12.dp))
 
         // --- FESTER RUCKSACK NACH OBEN ---
         Text("Fester Rucksack", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
@@ -195,7 +222,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                         newItemWeight = it 
                     }
                 },
-                label = { Text("kg") },
+                label = { Text("Pfd.") },
                 modifier = Modifier.width(70.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
@@ -302,6 +329,23 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
             }
         }
 
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // --- KATALOG-BUTTON ---
+        OutlinedButton(
+            onClick = { showEquipmentPicker = true },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = BlauDunkel),
+            border = ButtonDefaults.outlinedButtonBorder.copy(
+                brush = androidx.compose.ui.graphics.SolidColor(BlauDunkel)
+            ),
+            shape = RoundedCornerShape(8.dp)
+        ) {
+            Icon(Icons.Default.MenuBook, contentDescription = null, modifier = Modifier.size(20.dp))
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Aus Katalog auswählen", fontWeight = FontWeight.SemiBold)
+        }
+
         Spacer(modifier = Modifier.height(16.dp))
 
         // Liste des flexiblen Loots gruppiert nach Kategorie
@@ -343,6 +387,17 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
             }
         }
     }
+
+    // --- EQUIPMENT PICKER DIALOG ---
+    if (showEquipmentPicker) {
+        EquipmentPickerDialog(
+            catalog = viewModel.equipmentCatalog,
+            onItemSelected = { item ->
+                viewModel.addFromCatalog(item)
+            },
+            onDismiss = { showEquipmentPicker = false }
+        )
+    }
 }
 
 @Composable
@@ -364,7 +419,7 @@ fun InventoryRow(name: String, amount: String, weight: Double? = null, onMinus: 
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = name, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
                 if (weight != null && weight > 0.0) {
-                    Text(text = "${weight} kg", fontSize = 14.sp, color = GelbSand)
+                    Text(text = "${weight} Pfd.", fontSize = 14.sp, color = GelbSand)
                 }
             }
 

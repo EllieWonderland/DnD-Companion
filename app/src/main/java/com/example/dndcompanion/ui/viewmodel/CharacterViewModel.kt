@@ -421,14 +421,20 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         prefs.edit { putInt("totalArrows", totalArrows) }
     }
 
-    // --- GEWICHTS-BERECHNUNG ---
-    val maxWeight: Double = 60.0
+    // --- EQUIPMENT-KATALOG ---
+    val equipmentCatalog: List<EquipmentCatalogItem> by lazy {
+        EquipmentCatalogParser.loadFromAssets(getApplication())
+    }
+
+    // --- GEWICHTS-BERECHNUNG (in Pfund / lbs) ---
+    val maxWeight: Double
+        get() = strength * 15.0  // D&D Traglast = STR × 15 Pfd.
     val currentWeight: Double
         get() {
             var total = 0.0
-            total += water * 2.0          // 1 Tag Wasser = ca. 2kg
-            total += rations * 1.0        // 1 Ration = ca. 1kg
-            total += totalArrows * 0.05   // 1 Pfeil = ca. 0.05kg
+            total += water * 5.0          // 1 Trinkschlauch (voll) = 5 Pfd.
+            total += rations * 2.0        // 1 Ration = 2 Pfd.
+            total += totalArrows * 0.05   // 1 Pfeil = ca. 0.05 Pfd.
             total += customLoot.sumOf { it.amount * it.weight }
             return total
         }
@@ -470,18 +476,18 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun getAthaniaDefaultLoot(): List<InventoryItem> {
         return listOf(
-            InventoryItem("Beschlagene Lederrüstung", 1, 6.0, "Rüstung & Waffen"),
-            InventoryItem("Langbogen", 1, 1.0, "Rüstung & Waffen"),
-            InventoryItem("Kurzschwert", 1, 1.0, "Rüstung & Waffen"),
-            InventoryItem("Kampfstab", 1, 2.0, "Rüstung & Waffen"),
-            InventoryItem("Peitsche", 1, 1.5, "Rüstung & Waffen"),
-            InventoryItem("Schild", 1, 3.0, "Rüstung & Waffen"),
-            InventoryItem("Reisekleidung", 1, 2.0, "Ausrüstung"),
-            InventoryItem("Rucksack", 1, 2.5, "Ausrüstung"),
-            InventoryItem("Kleine Onyxstatue (Fokus)", 1, 0.5, "Magie"),
-            InventoryItem("Kräuterkundeset", 1, 1.5, "Werkzeug"),
+            InventoryItem("Beschlagene Lederrüstung", 1, 13.0, "Rüstung & Waffen"),
+            InventoryItem("Langbogen", 1, 2.0, "Rüstung & Waffen"),
+            InventoryItem("Kurzschwert", 1, 2.0, "Rüstung & Waffen"),
+            InventoryItem("Kampfstab", 1, 4.0, "Rüstung & Waffen"),
+            InventoryItem("Peitsche", 1, 3.0, "Rüstung & Waffen"),
+            InventoryItem("Schild", 1, 6.0, "Rüstung & Waffen"),
+            InventoryItem("Reisekleidung", 1, 4.0, "Ausrüstung"),
+            InventoryItem("Rucksack", 1, 5.0, "Ausrüstung"),
+            InventoryItem("Kleine Onyxstatue (Fokus)", 1, 1.0, "Magie"),
+            InventoryItem("Kräuterkundeset", 1, 3.0, "Werkzeug"),
             InventoryItem("Schwarzer Onyxschädel", 1, 1.0, "Sonstiges"),
-            InventoryItem("Wasserschlauch (halb)", 2, 1.0, "Ausrüstung"),
+            InventoryItem("Wasserschlauch (halb)", 2, 2.5, "Ausrüstung"),
             InventoryItem("Trank der Rinderhaut", 1, 0.5, "Tränke"),
             InventoryItem("Gift (Flasche)", 2, 0.5, "Tränke"),
             InventoryItem("Heiltrank", 1, 0.5, "Tränke"),
@@ -498,6 +504,17 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             customLoot.add(InventoryItem(itemName, 1, weight, category))
         }
         saveLoot()
+    }
+
+    fun addFromCatalog(item: EquipmentCatalogItem) {
+        val inventoryCategory = when {
+            item.category.startsWith("Waffen") -> "Rüstung & Waffen"
+            item.category == "Rüstung" -> "Rüstung & Waffen"
+            item.category == "Werkzeug" -> "Werkzeug"
+            item.category == "Ausrüstung" -> "Ausrüstung"
+            else -> "Sonstiges"
+        }
+        addCustomLoot(item.name, item.weight, inventoryCategory)
     }
 
     // --- FREIE MERKMALE (TRAITS) ---

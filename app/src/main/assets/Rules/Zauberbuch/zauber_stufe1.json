@@ -8,12 +8,12 @@
         "casting_time": "1 Minute",
         "range": {
             "type": "Entfernung",
-            "distance": 30
+            "distance": 9
         },
         "components": {
             "v": true,
             "s": true,
-            "m": "Eine kleine Glocke und ein Stück feiner Silberdraht",
+            "m": "Glocke und Silberdraht",
             "m_cost": 0,
             "m_consumed": false
         },
@@ -23,31 +23,388 @@
         },
         "area_of_effect": {
             "type": "Würfel",
-            "size": 20
+            "size": 6
         },
         "saving_throw": null,
         "damage": null,
         "classes": [
-            "Waldläufer",
-            "Magier"
+            "Magier",
+            "Waldläufer"
         ],
-        "description": "Sichert einen 20-Fuß-Bereich ab. Betritt ein Feind den Bereich, ertönt ein geistiges oder lautes Klingeln."
+        "description": "Du erschaffst einen Alarm gegen Eindringen. Wähle eine Tür, ein Fenster oder einen Bereich aus. Ein akustischer oder mentaler Alarm warnt dich, wenn eine unbefugte Kreatur eindringt."
     },
     {
-        "spell_id": "animal_friendship",
-        "name_de": "Tierfreundschaft",
-        "name_en": "Animal Friendship",
+        "spell_id": "arme_von_hadar",
+        "name_de": "Arme von Hadar",
+        "name_en": "Arms of Hadar",
         "level": 1,
-        "school": "Verzauberung",
+        "school": "Beschwörungsmagie",
         "casting_time": "1 Aktion",
         "range": {
-            "type": "Entfernung",
-            "distance": 30
+            "type": "Selbst",
+            "distance": 3
         },
         "components": {
             "v": true,
             "s": true,
-            "m": "Ein Bissen Essen",
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 3
+        },
+        "saving_throw": "STR",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "2W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Hexenmeister"
+        ],
+        "description": "Lässt Tentakel aus dir hervorbrechen. Jede Kreatur in einer Ausströmung von 3 Metern muss einen STR-Rettungswurf bestehen oder erleidet 2W6 nekrotischen Schaden und verliert ihre Reaktion."
+    },
+    {
+        "spell_id": "befehl",
+        "name_de": "Befehl",
+        "name_en": "Command",
+        "level": 1,
+        "school": "Verzauberungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "1 Runde",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "WIS",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Kleriker",
+            "Paladin"
+        ],
+        "description": "Du gibst einer Kreatur einen ein Wort langen Befehl (z.B. Anhalten, Fliehen, Herkommen). Ziel muss einen WIS-Rettungswurf bestehen oder den Befehl im nächsten Zug ausführen."
+    },
+    {
+        "spell_id": "brennende_haende",
+        "name_de": "Brennende Hände",
+        "name_en": "Burning Hands",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 4.5
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Kegel",
+            "size": 4.5
+        },
+        "saving_throw": "DEX",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "3W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Verschießt ein Flammenband in einem 4,5m-Kegel. Ziele müssen einen DEX-Rettungswurf bestehen oder 3W6 Feuerschaden erleiden (Hälfte bei Erfolg). Brennbare Gegenstände fangen Feuer."
+    },
+    {
+        "spell_id": "chromatische_kugel",
+        "name_de": "Chromatische Kugel",
+        "name_en": "Chromatic Orb",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 27
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Diamant",
+            "m_cost": 50,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "3W8",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Schleudert eine Kugel (Blitz, Feuer, Gift, Kälte, Säure oder Schall). Fernkampf-Zauberangriff. Bei Treffer 3W8 Schaden. Fällt bei zwei Würfeln die gleiche Zahl, springt die Kugel zu einem weiteren Ziel."
+    },
+    {
+        "spell_id": "dissonantes_fluestern",
+        "name_de": "Dissonantes Flüstern",
+        "name_en": "Dissonant Whispers",
+        "level": 1,
+        "school": "Verzauberungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "WIS",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "3W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Barde"
+        ],
+        "description": "Ziel hört eine misstönende Melodie. WIS-Rettungswurf. Bei Fehlschlag 3W6 psychischer Schaden und Ziel muss seine Reaktion verwenden, um wegzulaufen."
+    },
+    {
+        "spell_id": "donnerndes_niederstrecken",
+        "name_de": "Donnerndes Niederstrecken",
+        "name_en": "Thunderous Smite",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "STR",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "2W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Paladin"
+        ],
+        "description": "Sofort auszuführen bei einem Treffer: Fügt 2W6 Schallschaden zu. Ziel muss STR-Rettungswurf bestehen oder wird 3m weggestoßen und fällt hin."
+    },
+    {
+        "spell_id": "donnerwoge",
+        "name_de": "Donnerwoge",
+        "name_en": "Thunderwave",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 4.5
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Würfel",
+            "size": 4.5
+        },
+        "saving_throw": "CON",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "2W8",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Welle aus donnernder Energie im 4,5m-Würfel. CON-Rettungswurf. Bei Fehlschlag 2W8 Schallschaden und 3m wegstoßen. Das Geräusch ist 90m weit zu hören."
+    },
+    {
+        "spell_id": "dornenhagel",
+        "name_de": "Dornenhagel",
+        "name_en": "Hail of Thorns",
+        "level": 1,
+        "school": "Beschwörungsmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 1.5
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 1.5
+        },
+        "saving_throw": "DEX",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "1W10",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Waldläufer"
+        ],
+        "description": "Nach einem Fernkampftreffer prasselt ein Dornenhagel herab. Ziel und alle im Umkreis von 1,5m müssen einen DEX-Rettungswurf bestehen oder erleiden 1W10 Stichschaden."
+    },
+    {
+        "spell_id": "eismesser",
+        "name_de": "Eismesser",
+        "name_en": "Ice Knife",
+        "level": 1,
+        "school": "Beschwörungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": false,
+            "s": true,
+            "m": "Wassertropfen oder Eisstück",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 1.5
+        },
+        "saving_throw": "DEX",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "1W10+2W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Druide",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Fernkampf-Zauberangriff. Bei Treffer 1W10 Stichschaden. Die Eisscherbe explodiert danach (DEX-Save für Ziel und alle in 1,5m, bei Fehlschlag 2W6 Kälteschaden)."
+    },
+    {
+        "spell_id": "falsches_leben",
+        "name_de": "Falsches Leben",
+        "name_en": "False Life",
+        "level": 1,
+        "school": "Nekromantie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Alkohol",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Du erhältst 2W4+4 temporäre Trefferpunkte."
+    },
+    {
+        "spell_id": "federfall",
+        "name_de": "Federfall",
+        "name_en": "Feather Fall",
+        "level": 1,
+        "school": "Verwandlungsmagie",
+        "casting_time": "1 Reaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "Feder",
             "m_cost": 0,
             "m_consumed": false
         },
@@ -56,17 +413,686 @@
             "concentration": false
         },
         "area_of_effect": null,
-        "saving_throw": "WEI",
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Bis zu fünf fallende Kreaturen stürzen extrem langsam (18 Meter pro Runde) und erleiden keinen Sturzschaden, wenn sie landen."
+    },
+    {
+        "spell_id": "feenfeuer",
+        "name_de": "Feenfeuer",
+        "name_en": "Faerie Fire",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Würfel",
+            "size": 6
+        },
+        "saving_throw": "DEX",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Druide"
+        ],
+        "description": "Gegenstände und Kreaturen in einem 6m-Würfel werden mit Licht umrahmt. Angriffe gegen diese Ziele haben Vorteil, und sie können nicht unsichtbar sein."
+    },
+    {
+        "spell_id": "fesselnder_schlag",
+        "name_de": "Fesselnder Schlag",
+        "name_en": "Ensnaring Strike",
+        "level": 1,
+        "school": "Beschwörungsmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": "STR",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "1W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Waldläufer"
+        ],
+        "description": "Wenn du das Ziel triffst, erscheinen greifende Ranken. STR-Rettungswurf oder das Ziel ist festgesetzt und erleidet 1W6 Stichschaden pro Runde."
+    },
+    {
+        "spell_id": "gift_und_krankheit_entdecken",
+        "name_de": "Gift und Krankheit entdecken",
+        "name_en": "Detect Poison and Disease",
+        "level": 1,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Eibenblatt",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Kleriker",
+            "Paladin",
+            "Waldläufer"
+        ],
+        "description": "Nimmst die Position und Art von Giften, giftigen Kreaturen und magischen Ansteckungen im Umkreis von 9 Metern wahr."
+    },
+    {
+        "spell_id": "goettliche_gunst",
+        "name_de": "Göttliche Gunst",
+        "name_en": "Divine Favor",
+        "level": 1,
+        "school": "Verwandlungsmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "1W4",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Paladin"
+        ],
+        "description": "Für die Wirkungsdauer bewirkst du mit Waffenangriffen bei jedem Treffer zusätzlich 1W4 gleißenden Schaden."
+    },
+    {
+        "spell_id": "goettliches_niederstrecken",
+        "name_de": "Göttliches Niederstrecken",
+        "name_en": "Divine Smite",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "2W8",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Paladin"
+        ],
+        "description": "Sofort bei Treffer ausgeführt: Das Ziel erleidet 2W8 zusätzlichen gleißenden Schaden (3W8 bei Unholden oder Untoten)."
+    },
+    {
+        "spell_id": "gute_beeren",
+        "name_de": "Gute Beeren",
+        "name_en": "Goodberry",
+        "level": 1,
+        "school": "Beschwörungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Mistelzweig",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Waldläufer"
+        ],
+        "description": "Erschafft 10 magische Beeren. Der Verzehr einer Beere kostet eine Bonusaktion, heilt 1 TP und sättigt für einen Tag."
+    },
+    {
+        "spell_id": "heilendes_wort",
+        "name_de": "Heilendes Wort",
+        "name_en": "Healing Word",
+        "level": 1,
+        "school": "Bannmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
         "damage": null,
         "classes": [
             "Barde",
             "Druide",
-            "Waldläufer"
+            "Kleriker"
         ],
-        "description": "Bezaubert ein Wildtier, sodass es dich und deine Verbündeten für 24 Stunden nicht angreift."
+        "description": "Heilt ein Ziel in Sichtweite um 2W4 + Zauberwirken-Modifikator Trefferpunkte."
     },
     {
-        "spell_id": "cure_wounds",
+        "spell_id": "heiligtum",
+        "name_de": "Heiligtum",
+        "name_en": "Sanctuary",
+        "level": 1,
+        "school": "Bannmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Spiegelscherbe",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "WIS",
+        "damage": null,
+        "classes": [
+            "Kleriker"
+        ],
+        "description": "Jeder Gegner, der die geschützte Kreatur angreift, muss einen WIS-Rettungswurf bestehen oder den Angriff umleiten. Der Zauber endet, wenn die geschützte Kreatur angreift."
+    },
+    {
+        "spell_id": "heldenmut",
+        "name_de": "Heldenmut",
+        "name_en": "Heroism",
+        "level": 1,
+        "school": "Verzauberungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Paladin"
+        ],
+        "description": "Ziel ist gegen Angst immun und erhält zu Beginn jedes seiner Züge temporäre Trefferpunkte in Höhe deines Zauberwirken-Modifikators."
+    },
+    {
+        "spell_id": "hexenpfeil",
+        "name_de": "Hexenpfeil",
+        "name_en": "Witch Bolt",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Zweig",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "2W12",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Hexenmeister",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Fernkampf-Zauberangriff. Bei Treffer 2W12 Blitzschaden. In Folgezügen kannst du als Bonusaktion 1W12 Blitzschaden zufügen, solange das Ziel in Reichweite bleibt."
+    },
+    {
+        "spell_id": "hoellischer_tadel",
+        "name_de": "Höllischer Tadel",
+        "name_en": "Hellish Rebuke",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Reaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "DEX",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "2W10",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Hexenmeister"
+        ],
+        "description": "Ausgelöst durch erlittenen Schaden. Angreifer muss einen DEX-Rettungswurf bestehen oder erleidet 2W10 Feuerschaden (Hälfte bei Erfolg)."
+    },
+    {
+        "spell_id": "identifizieren",
+        "name_de": "Identifizieren",
+        "name_en": "Identify",
+        "level": 1,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Minute",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Perle",
+            "m_cost": 100,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Magier"
+        ],
+        "description": "Berühre einen Gegenstand, um seine magischen Eigenschaften, erforderliche Einstimmung und Ladungen zu erkennen."
+    },
+    {
+        "spell_id": "lange_schritte",
+        "name_de": "Lange Schritte",
+        "name_en": "Longstrider",
+        "level": 1,
+        "school": "Verwandlungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Erde",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Druide",
+            "Magier",
+            "Waldläufer"
+        ],
+        "description": "Die Bewegungsrate einer berührten Kreatur erhöht sich um 3 Meter (10 Fuß) für die Wirkungsdauer von 1 Stunde."
+    },
+    {
+        "spell_id": "lautloses_trugbild",
+        "name_de": "Lautloses Trugbild",
+        "name_en": "Silent Image",
+        "level": 1,
+        "school": "Illusionsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Stück Vlies",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Würfel",
+            "size": 4.5
+        },
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Erschafft ein visuelles Trugbild (bis zu 4,5m groß) ohne Geräusche. Du kannst das Bild als magische Aktion natürlich bewegen."
+    },
+    {
+        "spell_id": "lenkendes_geschoss",
+        "name_de": "Lenkendes Geschoss",
+        "name_en": "Guiding Bolt",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "1 Runde",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "4W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Kleriker"
+        ],
+        "description": "Schleudert einen Lichtblitz. Bei einem Fernkampftreffer 4W6 gleißender Schaden. Der nächste Angriff gegen das Ziel hat Vorteil."
+    },
+    {
+        "spell_id": "magie_entdecken",
+        "name_de": "Magie entdecken",
+        "name_en": "Detect Magic",
+        "level": 1,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 9
+        },
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Hexenmeister",
+            "Kleriker",
+            "Magier",
+            "Paladin",
+            "Waldläufer",
+            "Zauberer"
+        ],
+        "description": "Du spürst die Präsenz von Magie und kannst Auren um magische Gegenstände sehen."
+    },
+    {
+        "spell_id": "magierruestung",
+        "name_de": "Magierrüstung",
+        "name_en": "Mage Armor",
+        "level": 1,
+        "school": "Bannmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Stück Leder",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Gibt einem nicht gerüsteten Ziel eine Basis-RK von 13 + DEX-Modifikator."
+    },
+    {
+        "spell_id": "magisches_geschoss",
+        "name_de": "Magisches Geschoss",
+        "name_en": "Magic Missile",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "1W4+1",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Erschafft drei magische Pfeile, die automatisch treffen. Jeder bewirkt 1W4+1 Energieschaden."
+    },
+    {
+        "spell_id": "person_bezaubern",
+        "name_de": "Person bezaubern",
+        "name_en": "Charm Person",
+        "level": 1,
+        "school": "Verzauberungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "WIS",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Druide",
+            "Hexenmeister",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Ziel (Humanoide) muss einen WIS-Rettungswurf bestehen oder ist bezaubert und dir freundlich gesinnt."
+    },
+    {
+        "spell_id": "verstricken",
+        "name_de": "Verstricken",
+        "name_en": "Entangle",
+        "level": 1,
+        "school": "Beschwörungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 27
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Würfel",
+            "size": 6
+        },
+        "saving_throw": "STR",
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Waldläufer"
+        ],
+        "description": "Lässt Unkraut und Ranken sprießen, die einen 6m-Würfel zu schwierigem Gelände machen. Kreaturen müssen einen STR-Rettungswurf bestehen oder sind festgesetzt."
+    },
+    {
+        "spell_id": "wunden_heilen",
         "name_de": "Wunden heilen",
         "name_en": "Cure Wounds",
         "level": 1,
@@ -84,16 +1110,12 @@
             "m_consumed": false
         },
         "duration": {
-            "type": "Spontan",
+            "type": "Unmittelbar",
             "concentration": false
         },
         "area_of_effect": null,
         "saving_throw": null,
-        "damage": {
-            "type": "Heilung",
-            "base_dice": "2w8",
-            "upcast_dice_per_level": "2w8"
-        },
+        "damage": null,
         "classes": [
             "Barde",
             "Kleriker",
@@ -101,54 +1123,18 @@
             "Paladin",
             "Waldläufer"
         ],
-        "description": "Eine kraftvolle Nahkampf-Heilung (2W8 + Zauberattribut)."
+        "description": "Eine berührte Kreatur erhält Trefferpunkte in Höhe von 2W8 plus deinem Zauberwirken-Attributsmodifikator zurück."
     },
     {
-        "spell_id": "detect_poison_and_disease",
-        "name_de": "Gift und Krankheit entdecken",
-        "name_en": "Detect Poison and Disease",
+        "spell_id": "zeichen_des_jaegers",
+        "name_de": "Zeichen des Jägers",
+        "name_en": "Hunter's Mark",
         "level": 1,
         "school": "Erkenntnismagie",
-        "casting_time": "1 Aktion",
-        "range": {
-            "type": "Selbst",
-            "distance": 0
-        },
-        "components": {
-            "v": true,
-            "s": true,
-            "m": "Ein Eibenblatt",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Festgelegte Zeit",
-            "concentration": true
-        },
-        "area_of_effect": {
-            "type": "Sphäre",
-            "size": 30
-        },
-        "saving_throw": null,
-        "damage": null,
-        "classes": [
-            "Kleriker",
-            "Druide",
-            "Paladin",
-            "Waldläufer"
-        ],
-        "description": "Du spürst 10 Minuten lang, ob in deiner Nähe Gifte, Krankheiten oder giftige Kreaturen versteckt sind."
-    },
-    {
-        "spell_id": "ensnaring_strike",
-        "name_de": "Fesselnder Schlag",
-        "name_en": "Ensnaring Strike",
-        "level": 1,
-        "school": "Beschwörung",
         "casting_time": "1 Bonusaktion",
         "range": {
-            "type": "Selbst",
-            "distance": 0
+            "type": "Entfernung",
+            "distance": 27
         },
         "components": {
             "v": true,
@@ -162,31 +1148,266 @@
             "concentration": true
         },
         "area_of_effect": null,
-        "saving_throw": "STR",
+        "saving_throw": null,
         "damage": {
-            "type": "Stich",
-            "base_dice": "1w6",
-            "upcast_dice_per_level": "1w6"
+            "type": "Unbekannt",
+            "base_dice": "1W6",
+            "upcast_dice_per_level": null
         },
         "classes": [
             "Waldläufer"
         ],
-        "description": "Dein nächster Waffentreffer fesselt das Ziel mit dornigen Ranken (1W6 Stichschaden pro Runde und es ist festgesetzt)."
+        "description": "Markiere eine Kreatur. Deine Angriffe richten gegen sie zusätzlich 1W6 Schaden an. Du hast Vorteil auf Wahrnehmung/Überleben, um das Ziel aufzuspüren."
     },
     {
-        "spell_id": "entangle",
-        "name_de": "Verstricken",
-        "name_en": "Entangle",
+        "spell_id": "befehl",
+        "name_de": "Befehl",
+        "name_en": "Command",
         "level": 1,
-        "school": "Beschwörung",
+        "school": "Verzauberungsmagie",
         "casting_time": "1 Aktion",
         "range": {
             "type": "Entfernung",
-            "distance": 90
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "1 Runde",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "WIS",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Kleriker",
+            "Paladin"
+        ],
+        "description": "Du gibst einer Kreatur einen ein Wort langen Befehl (z.B. Anhalten, Fliehen, Herkommen). Ziel muss einen WIS-Rettungswurf bestehen oder den Befehl in seinem nächsten Zug ausführen."
+    },
+    {
+        "spell_id": "brennende_haende",
+        "name_de": "Brennende Hände",
+        "name_en": "Burning Hands",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 4.5
         },
         "components": {
             "v": true,
             "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Kegel",
+            "size": 4.5
+        },
+        "saving_throw": "DEX",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "3W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Verschießt ein Flammenband in einem 4,5m-Kegel. Ziele müssen einen DEX-Rettungswurf bestehen oder 3W6 Feuerschaden erleiden (Hälfte bei Erfolg). Brennbare Gegenstände fangen Feuer."
+    },
+    {
+        "spell_id": "chromatische_kugel",
+        "name_de": "Chromatische Kugel",
+        "name_en": "Chromatic Orb",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 27
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Diamant",
+            "m_cost": 50,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "3W8",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Fernkampf-Zauberangriff (Wähle: Blitz, Feuer, Gift, Kälte, Säure oder Schall). Bei Treffer 3W8 Schaden. Fällt bei zwei Würfeln die gleiche Zahl, springt die Kugel zu einem weiteren Ziel innerhalb von 9 Metern."
+    },
+    {
+        "spell_id": "dissonantes_fluestern",
+        "name_de": "Dissonantes Flüstern",
+        "name_en": "Dissonant Whispers",
+        "level": 1,
+        "school": "Verzauberungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "WIS",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "3W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Barde"
+        ],
+        "description": "Ziel hört eine misstönende Melodie. WIS-Rettungswurf. Bei Fehlschlag 3W6 psychischer Schaden und Ziel muss seine Reaktion verwenden, um so weit wie möglich wegzulaufen."
+    },
+    {
+        "spell_id": "donnerndes_niederstrecken",
+        "name_de": "Donnerndes Niederstrecken",
+        "name_en": "Thunderous Smite",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "STR",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "2W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Paladin"
+        ],
+        "description": "Sofort auszuführen bei einem Treffer: Fügt 2W6 Schallschaden zu. Ziel muss STR-Rettungswurf bestehen oder wird 3m weggestoßen und fällt hin."
+    },
+    {
+        "spell_id": "erzwungenes_duell",
+        "name_de": "Erzwungenes Duell",
+        "name_en": "Compelled Duel",
+        "level": 1,
+        "school": "Verzauberungsmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": "WIS",
+        "damage": null,
+        "classes": [
+            "Paladin"
+        ],
+        "description": "Ziel muss WIS-Rettungswurf bestehen. Bei Fehlschlag hat es Nachteil auf Angriffe gegen andere und muss einen Rettungswurf bestehen, um sich weiter als 9m von dir zu entfernen."
+    },
+    {
+        "spell_id": "federfall",
+        "name_de": "Federfall",
+        "name_en": "Feather Fall",
+        "level": 1,
+        "school": "Verwandlungsmagie",
+        "casting_time": "1 Reaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "Eine kleine Feder",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Bis zu fünf fallende Kreaturen stürzen extrem langsam (18 Meter pro Runde) und erleiden keinen Sturzschaden, wenn sie landen."
+    },
+    {
+        "spell_id": "feenfeuer",
+        "name_de": "Feenfeuer",
+        "name_en": "Faerie Fire",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": false,
             "m": "",
             "m_cost": 0,
             "m_consumed": false
@@ -197,231 +1418,23 @@
         },
         "area_of_effect": {
             "type": "Würfel",
-            "size": 20
+            "size": 6
         },
-        "saving_throw": "STR",
-        "damage": null,
-        "classes": [
-            "Druide",
-            "Waldläufer"
-        ],
-        "description": "Lässt Unkraut und Ranken aus dem Boden sprießen, die den Bereich zu schwierigem Gelände machen und Feinde festhalten (Restrained)."
-    },
-    {
-        "spell_id": "fog_cloud",
-        "name_de": "Nebelwolke",
-        "name_en": "Fog Cloud",
-        "level": 1,
-        "school": "Beschwörung",
-        "casting_time": "1 Aktion",
-        "range": {
-            "type": "Entfernung",
-            "distance": 120
-        },
-        "components": {
-            "v": true,
-            "s": true,
-            "m": "Eine Prise Erbsen oder zerkleinerte Blätter",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Festgelegte Zeit",
-            "concentration": true
-        },
-        "area_of_effect": {
-            "type": "Sphäre",
-            "size": 20
-        },
-        "saving_throw": null,
-        "damage": null,
-        "classes": [
-            "Druide",
-            "Waldläufer",
-            "Zauberer",
-            "Magier"
-        ],
-        "description": "Erschafft eine dichte Wolke, die einen 20-Fuß-Bereich stark verhüllt (Sichtlinie ist blockiert)."
-    },
-    {
-        "spell_id": "goodberry",
-        "name_de": "Gute Beere",
-        "name_en": "Goodberry",
-        "level": 1,
-        "school": "Verwandlung",
-        "casting_time": "1 Aktion",
-        "range": {
-            "type": "Berührung",
-            "distance": 0
-        },
-        "components": {
-            "v": true,
-            "s": true,
-            "m": "Ein Zweig eines Mistelbuschs",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Spontan",
-            "concentration": false
-        },
-        "area_of_effect": null,
-        "saving_throw": null,
-        "damage": {
-            "type": "Heilung",
-            "base_dice": "1",
-            "upcast_dice_per_level": null
-        },
-        "classes": [
-            "Druide",
-            "Waldläufer"
-        ],
-        "description": "Erschafft 10 magische Beeren. Jede Beere heilt 1 TP und liefert genug Nahrung für einen ganzen Tag."
-    },
-    {
-        "spell_id": "hail_of_thorns",
-        "name_de": "Dornenhagel",
-        "name_en": "Hail of Thorns",
-        "level": 1,
-        "school": "Beschwörung",
-        "casting_time": "1 Bonusaktion",
-        "range": {
-            "type": "Selbst",
-            "distance": 0
-        },
-        "components": {
-            "v": true,
-            "s": false,
-            "m": "",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Festgelegte Zeit",
-            "concentration": true
-        },
-        "area_of_effect": {
-            "type": "Sphäre",
-            "size": 5
-        },
-        "saving_throw": "GES",
-        "damage": {
-            "type": "Stich",
-            "base_dice": "1w10",
-            "upcast_dice_per_level": "1w10"
-        },
-        "classes": [
-            "Waldläufer"
-        ],
-        "description": "Wenn du das nächste Mal mit einer Fernkampfwaffe triffst, explodiert die Munition in einem Dornenhagel (1W10 extra Stichschaden für Ziel und Umstehende)."
-    },
-    {
-        "spell_id": "hunters_mark",
-        "name_de": "Zeichen des Jägers",
-        "name_en": "Hunter's Mark",
-        "level": 1,
-        "school": "Erkenntnismagie",
-        "casting_time": "1 Bonusaktion",
-        "range": {
-            "type": "Entfernung",
-            "distance": 90
-        },
-        "components": {
-            "v": true,
-            "s": false,
-            "m": "",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Festgelegte Zeit",
-            "concentration": true
-        },
-        "area_of_effect": null,
-        "saving_throw": null,
-        "damage": {
-            "type": "Energieschaden",
-            "base_dice": "1w6",
-            "upcast_dice_per_level": null
-        },
-        "classes": [
-            "Waldläufer"
-        ],
-        "description": "Markiert einen Feind. Du fügst ihm 1W6 extra Waffenschaden zu und hast Vorteil darauf, ihn zu suchen oder zu verfolgen."
-    },
-    {
-        "spell_id": "jump",
-        "name_de": "Sprung",
-        "name_en": "Jump",
-        "level": 1,
-        "school": "Verwandlung",
-        "casting_time": "1 Bonusaktion",
-        "range": {
-            "type": "Berührung",
-            "distance": 0
-        },
-        "components": {
-            "v": true,
-            "s": true,
-            "m": "Das Hinterbein eines Grashüpfers",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Festgelegte Zeit",
-            "concentration": false
-        },
-        "area_of_effect": null,
-        "saving_throw": null,
-        "damage": null,
-        "classes": [
-            "Druide",
-            "Waldläufer",
-            "Zauberer",
-            "Magier"
-        ],
-        "description": "Ein Ziel deiner Wahl kann seine Sprungdistanz 1 Minute lang drastisch erhöhen (bis zu 30 Fuß extra)."
-    },
-    {
-        "spell_id": "longstrider",
-        "name_de": "Dauerhafter Schritt",
-        "name_en": "Longstrider",
-        "level": 1,
-        "school": "Verwandlung",
-        "casting_time": "1 Aktion",
-        "range": {
-            "type": "Berührung",
-            "distance": 0
-        },
-        "components": {
-            "v": true,
-            "s": true,
-            "m": "Eine Prise Erde",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Festgelegte Zeit",
-            "concentration": false
-        },
-        "area_of_effect": null,
-        "saving_throw": null,
+        "saving_throw": "DEX",
         "damage": null,
         "classes": [
             "Barde",
-            "Druide",
-            "Waldläufer",
-            "Magier"
+            "Druide"
         ],
-        "description": "Erhöht die Bewegungsrate eines Ziels für 1 Stunde um 10 Fuß (ohne Konzentration!)."
+        "description": "Gegenstände und Kreaturen in einem 6m-Würfel werden mit Licht umrahmt (DEX-Rettungswurf negiert). Angriffe gegen umrahmte Ziele haben Vorteil, sie können nicht unsichtbar sein."
     },
     {
-        "spell_id": "speak_with_animals",
-        "name_de": "Mit Tieren sprechen",
-        "name_en": "Speak with Animals",
+        "spell_id": "goettliche_gunst",
+        "name_de": "Göttliche Gunst",
+        "name_en": "Divine Favor",
         "level": 1,
-        "school": "Erkenntnismagie",
-        "casting_time": "1 Aktion",
+        "school": "Verwandlungsmagie",
+        "casting_time": "1 Bonusaktion",
         "range": {
             "type": "Selbst",
             "distance": 0
@@ -435,61 +1448,159 @@
         },
         "duration": {
             "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "1W4",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Paladin"
+        ],
+        "description": "Deine Waffenangriffe richten bei einem Treffer zusätzlich 1W4 gleißenden Schaden an."
+    },
+    {
+        "spell_id": "goettliches_niederstrecken",
+        "name_de": "Göttliches Niederstrecken",
+        "name_en": "Divine Smite",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
             "concentration": false
         },
         "area_of_effect": null,
         "saving_throw": null,
-        "damage": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "2W8",
+            "upcast_dice_per_level": null
+        },
         "classes": [
-            "Barde",
-            "Druide",
-            "Waldläufer"
+            "Paladin"
         ],
-        "description": "Du kannst dich für 10 Minuten völlig normal mit Tieren unterhalten."
+        "description": "Sofort bei Treffer ausgeführt: Das Ziel erleidet 2W8 zusätzlichen gleißenden Schaden (3W8 bei Unholden oder Untoten)."
     },
     {
-        "spell_id": "armor_of_agathys",
-        "name_de": "Rüstung von Agathys",
-        "name_en": "Armor of Agathys",
+        "spell_id": "gutes_und_boeses_entdecken",
+        "name_de": "Gutes und Böses entdecken",
+        "name_en": "Detect Evil and Good",
+        "level": 1,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 9
+        },
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Kleriker",
+            "Paladin"
+        ],
+        "description": "Du spürst Aberrationen, Celestische Wesen, Elementare, Feenwesen, Unholde oder Untote im Umkreis von 9 Metern sowie geweihte oder entweihte Orte."
+    },
+    {
+        "spell_id": "heilendes_wort",
+        "name_de": "Heilendes Wort",
+        "name_en": "Healing Word",
         "level": 1,
         "school": "Bannmagie",
-        "casting_time": "1 Aktion",
+        "casting_time": "1 Bonusaktion",
         "range": {
-            "type": "Selbst",
-            "distance": 0
+            "type": "Entfernung",
+            "distance": 18
         },
         "components": {
             "v": true,
-            "s": true,
-            "m": "Ein Becher Wasser",
+            "s": false,
+            "m": "",
             "m_cost": 0,
             "m_consumed": false
         },
         "duration": {
-            "type": "Festgelegte Zeit",
+            "type": "Unmittelbar",
             "concentration": false
         },
         "area_of_effect": null,
         "saving_throw": null,
-        "damage": {
-            "type": "Kälte",
-            "base_dice": "5",
-            "upcast_dice_per_level": "5"
-        },
+        "damage": null,
         "classes": [
-            "Hexenmeister"
+            "Barde",
+            "Druide",
+            "Kleriker"
         ],
-        "description": "Du erhältst 5 temporäre TP. Jeder Gegner, der dich im Nahkampf trifft, solange du diese TP hast, erleidet sofort 5 Kälteschaden (skaliert extrem gut!)."
+        "description": "Heilt ein Ziel in Sichtweite um 2W4 + Zauberwirken-Modifikator Trefferpunkte."
     },
     {
-        "spell_id": "arms_of_hadar",
-        "name_de": "Hadars Waffen",
-        "name_en": "Arms of Hadar",
+        "spell_id": "heiligtum",
+        "name_de": "Heiligtum",
+        "name_en": "Sanctuary",
         "level": 1,
-        "school": "Beschwörung",
+        "school": "Bannmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Kleiner Silberspiegel",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "WIS",
+        "damage": null,
+        "classes": [
+            "Kleriker"
+        ],
+        "description": "Jeder Gegner, der die geschützte Kreatur angreift, muss einen WIS-Rettungswurf bestehen oder den Angriff umleiten. Endet vorzeitig, wenn die geschützte Kreatur angreift."
+    },
+    {
+        "spell_id": "heldenmut",
+        "name_de": "Heldenmut",
+        "name_en": "Heroism",
+        "level": 1,
+        "school": "Verzauberungsmagie",
         "casting_time": "1 Aktion",
         "range": {
-            "type": "Selbst",
+            "type": "Berührung",
             "distance": 0
         },
         "components": {
@@ -500,231 +1611,24 @@
             "m_consumed": false
         },
         "duration": {
-            "type": "Spontan",
-            "concentration": false
-        },
-        "area_of_effect": {
-            "type": "Emanation",
-            "size": 10
-        },
-        "saving_throw": "STR",
-        "damage": {
-            "type": "Nekrotisch",
-            "base_dice": "2w6",
-            "upcast_dice_per_level": "1w6"
-        },
-        "classes": [
-            "Hexenmeister"
-        ],
-        "description": "Tentakel brechen aus dir heraus. Alle Feinde in 10 Fuß Umkreis nehmen 2W6 Nekrotischen Schaden und können keine Reaktionen mehr ausführen."
-    },
-    {
-        "spell_id": "charm_person",
-        "name_de": "Person bezaubern",
-        "name_en": "Charm Person",
-        "level": 1,
-        "school": "Verzauberung",
-        "casting_time": "1 Aktion",
-        "range": {
-            "type": "Entfernung",
-            "distance": 30
-        },
-        "components": {
-            "v": true,
-            "s": true,
-            "m": "",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
             "type": "Festgelegte Zeit",
-            "concentration": false
+            "concentration": true
         },
         "area_of_effect": null,
-        "saving_throw": "WEI",
+        "saving_throw": null,
         "damage": null,
         "classes": [
             "Barde",
-            "Druide",
-            "Zauberer",
-            "Hexenmeister",
-            "Magier"
+            "Paladin"
         ],
-        "description": "Ein Humanoider sieht dich für 1 Stunde als freundlichen Bekannten an (Vorteil auf soziale Interaktionen)."
+        "description": "Ziel ist immun gegen den Zustand Verängstigt und erhält zu Beginn jedes seiner Züge temporäre Trefferpunkte in Höhe deines Zauberwirken-Modifikators."
     },
     {
-        "spell_id": "comprehend_languages",
-        "name_de": "Sprachen verstehen",
-        "name_en": "Comprehend Languages",
+        "spell_id": "identifizieren",
+        "name_de": "Identifizieren",
+        "name_en": "Identify",
         "level": 1,
         "school": "Erkenntnismagie",
-        "casting_time": "1 Aktion",
-        "range": {
-            "type": "Selbst",
-            "distance": 0
-        },
-        "components": {
-            "v": true,
-            "s": true,
-            "m": "Eine Prise Ruß und etwas Salz",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Festgelegte Zeit",
-            "concentration": false
-        },
-        "area_of_effect": null,
-        "saving_throw": null,
-        "damage": null,
-        "classes": [
-            "Barde",
-            "Hexenmeister",
-            "Magier"
-        ],
-        "description": "Du verstehst jede gesprochene oder geschriebene Sprache für 1 Stunde (sprechen kannst du sie dadurch aber nicht)."
-    },
-    {
-        "spell_id": "expeditious_retreat",
-        "name_de": "Hastiger Rückzug",
-        "name_en": "Expeditious Retreat",
-        "level": 1,
-        "school": "Verwandlung",
-        "casting_time": "1 Bonusaktion",
-        "range": {
-            "type": "Selbst",
-            "distance": 0
-        },
-        "components": {
-            "v": true,
-            "s": true,
-            "m": "",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Festgelegte Zeit",
-            "concentration": true
-        },
-        "area_of_effect": null,
-        "saving_throw": null,
-        "damage": null,
-        "classes": [
-            "Zauberer",
-            "Hexenmeister",
-            "Magier"
-        ],
-        "description": "Du kannst für 10 Minuten in jedem deiner Züge als Bonusaktion die Spurt-Aktion ausführen."
-    },
-    {
-        "spell_id": "false_life",
-        "name_de": "Falsches Leben",
-        "name_en": "False Life",
-        "level": 1,
-        "school": "Nekromantie",
-        "casting_time": "1 Aktion",
-        "range": {
-            "type": "Selbst",
-            "distance": 0
-        },
-        "components": {
-            "v": true,
-            "s": true,
-            "m": "Eine kleine Menge Alkohol oder destillierter Spirituosen",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Festgelegte Zeit",
-            "concentration": false
-        },
-        "area_of_effect": null,
-        "saving_throw": null,
-        "damage": {
-            "type": "Temporäre Trefferpunkte",
-            "base_dice": "1w4+4",
-            "upcast_dice_per_level": "5"
-        },
-        "classes": [
-            "Hexenmeister",
-            "Magier"
-        ],
-        "description": "Du verleihst dir selbst temporäre Trefferpunkte (1W4 + 4), die Schaden absorbieren, bevor deine echten TP sinken."
-    },
-    {
-        "spell_id": "hellish_rebuke",
-        "name_de": "Höllischer Tadel",
-        "name_en": "Hellish Rebuke",
-        "level": 1,
-        "school": "Hervorrufung",
-        "casting_time": "1 Reaktion",
-        "range": {
-            "type": "Entfernung",
-            "distance": 60
-        },
-        "components": {
-            "v": true,
-            "s": true,
-            "m": "",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Spontan",
-            "concentration": false
-        },
-        "area_of_effect": null,
-        "saving_throw": "GES",
-        "damage": {
-            "type": "Feuer",
-            "base_dice": "2w10",
-            "upcast_dice_per_level": "1w10"
-        },
-        "classes": [
-            "Hexenmeister"
-        ],
-        "description": "Eine Reaktion! Wenn du Schaden nimmst, lässt du den Angreifer in Flammen aufgehen (2W10 Feuerschaden)."
-    },
-    {
-        "spell_id": "hex",
-        "name_de": "Fluch",
-        "name_en": "Hex",
-        "level": 1,
-        "school": "Verzauberung",
-        "casting_time": "1 Bonusaktion",
-        "range": {
-            "type": "Entfernung",
-            "distance": 90
-        },
-        "components": {
-            "v": true,
-            "s": true,
-            "m": "Das versteinerte Auge eines Molches",
-            "m_cost": 0,
-            "m_consumed": false
-        },
-        "duration": {
-            "type": "Festgelegte Zeit",
-            "concentration": true
-        },
-        "area_of_effect": null,
-        "saving_throw": null,
-        "damage": {
-            "type": "Nekrotisch",
-            "base_dice": "1w6",
-            "upcast_dice_per_level": null
-        },
-        "classes": [
-            "Hexenmeister"
-        ],
-        "description": "Ein Ziel deiner Wahl erleidet 1W6 extra Nekrotischen Schaden bei jedem deiner Treffer und hat Nachteil auf Attributswürfe eines von dir gewählten Attributs."
-    },
-    {
-        "spell_id": "illusory_script",
-        "name_de": "Illusorische Schrift",
-        "name_en": "Illusory Script",
-        "level": 1,
-        "school": "Illusion",
         "casting_time": "1 Minute",
         "range": {
             "type": "Berührung",
@@ -733,12 +1637,12 @@
         "components": {
             "v": true,
             "s": true,
-            "m": "Blei-Tinte im Wert von mindestens 10 GM",
-            "m_cost": 10,
-            "m_consumed": true
+            "m": "Perle",
+            "m_cost": 100,
+            "m_consumed": false
         },
         "duration": {
-            "type": "Festgelegte Zeit",
+            "type": "Unmittelbar",
             "concentration": false
         },
         "area_of_effect": null,
@@ -746,15 +1650,123 @@
         "damage": null,
         "classes": [
             "Barde",
-            "Hexenmeister",
             "Magier"
         ],
-        "description": "Versteckt eine geheime Botschaft in einem scheinbar normalen Text. Nur von dir bestimmte Personen können die Wahrheit lesen."
+        "description": "Berühre einen Gegenstand, um seine magischen Eigenschaften, erforderliche Einstimmung und Ladungen zu erkennen."
     },
     {
-        "spell_id": "protection_from_evil_and_good",
-        "name_de": "Schutz vor Bösem und Gutem",
-        "name_en": "Protection from Evil and Good",
+        "spell_id": "lautloses_trugbild",
+        "name_de": "Lautloses Trugbild",
+        "name_en": "Silent Image",
+        "level": 1,
+        "school": "Illusionsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Stück Vlies",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Würfel",
+            "size": 4.5
+        },
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Erschafft ein visuelles Trugbild (bis zu 4,5m groß) ohne Geräusche. Du kannst das Bild als Aktion natürlich bewegen lassen."
+    },
+    {
+        "spell_id": "lenkendes_geschoss",
+        "name_de": "Lenkendes Geschoss",
+        "name_en": "Guiding Bolt",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "1 Runde",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "4W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Kleriker"
+        ],
+        "description": "Schleudert einen Lichtblitz. Bei einem Fernkampftreffer 4W6 gleißender Schaden. Der nächste Angriff gegen das Ziel vor Ende deines nächsten Zugs hat Vorteil."
+    },
+    {
+        "spell_id": "magie_entdecken",
+        "name_de": "Magie entdecken",
+        "name_en": "Detect Magic",
+        "level": 1,
+        "school": "Erkenntnismagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 9
+        },
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Druide",
+            "Hexenmeister",
+            "Kleriker",
+            "Magier",
+            "Paladin",
+            "Waldläufer",
+            "Zauberer"
+        ],
+        "description": "Du spürst die Präsenz von Magie im Umkreis von 9 Metern und kannst magische Auren sehen und deren Schule erkennen."
+    },
+    {
+        "spell_id": "magierruestung",
+        "name_de": "Magierrüstung",
+        "name_en": "Mage Armor",
         "level": 1,
         "school": "Bannmagie",
         "casting_time": "1 Aktion",
@@ -765,9 +1777,141 @@
         "components": {
             "v": true,
             "s": true,
-            "m": "Weihwasser oder pulverisiertes Silber und Eisen",
+            "m": "Stück gehärtetes Leder",
             "m_cost": 0,
-            "m_consumed": true
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Gibt einem ungerüsteten Ziel für 8 Stunden eine Basis-Rüstungsklasse von 13 + Geschicklichkeitsmodifikator."
+    },
+    {
+        "spell_id": "magisches_geschoss",
+        "name_de": "Magisches Geschoss",
+        "name_en": "Magic Missile",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "1W4+1",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Erschafft drei magische Pfeile, die automatisch treffen. Jeder bewirkt 1W4+1 Energieschaden."
+    },
+    {
+        "spell_id": "nahrung_und_wasser_reinigen",
+        "name_de": "Nahrung und Wasser reinigen",
+        "name_en": "Purify Food and Drink",
+        "level": 1,
+        "school": "Verwandlungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 3
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 1.5
+        },
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Druide",
+            "Kleriker",
+            "Paladin"
+        ],
+        "description": "Alle nichtmagischen Speisen und Getränke in einer Kugel mit 1,5m Radius werden von Gift und Krankheit gereinigt."
+    },
+    {
+        "spell_id": "schild",
+        "name_de": "Schild",
+        "name_en": "Shield",
+        "level": 1,
+        "school": "Bannmagie",
+        "casting_time": "1 Reaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "1 Runde",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Als Reaktion auf einen Treffer oder Magisches Geschoss erhältst du +5 auf deine Rüstungsklasse bis zum Beginn deines nächsten Zugs und blockst Magisches Geschoss."
+    },
+    {
+        "spell_id": "schild_des_glaubens",
+        "name_de": "Schild des Glaubens",
+        "name_en": "Shield of Faith",
+        "level": 1,
+        "school": "Bannmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Kleines Pergament mit heiligem Text",
+            "m_cost": 0,
+            "m_consumed": false
         },
         "duration": {
             "type": "Festgelegte Zeit",
@@ -778,27 +1922,124 @@
         "damage": null,
         "classes": [
             "Kleriker",
-            "Paladin",
-            "Hexenmeister",
-            "Magier"
+            "Paladin"
         ],
-        "description": "Schützt vor Aberrationen, Feen, Untoten etc. Diese Kreaturen haben Nachteil, wenn sie das Ziel angreifen."
+        "description": "Ein schimmerndes Feld umgibt eine Kreatur deiner Wahl in Reichweite und verleiht ihr einen Bonus von +2 auf die Rüstungsklasse."
     },
     {
-        "spell_id": "unseen_servant",
-        "name_de": "Unsichtbarer Diener",
-        "name_en": "Unseen Servant",
+        "spell_id": "schlaf",
+        "name_de": "Schlaf",
+        "name_en": "Sleep",
         "level": 1,
-        "school": "Beschwörung",
+        "school": "Verzauberungsmagie",
         "casting_time": "1 Aktion",
         "range": {
             "type": "Entfernung",
-            "distance": 60
+            "distance": 27
         },
         "components": {
             "v": true,
             "s": true,
-            "m": "Ein Stück Schnur und ein bisschen Holz",
+            "m": "Eine Prise feiner Sand oder Rosenblätter",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": {
+            "type": "Kugel",
+            "size": 6
+        },
+        "saving_throw": "WIS",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Kreaturen in einer 6m-Kugel müssen einen WIS-Rettungswurf bestehen oder erhalten den Zustand Kampfunfähig. Der Wurf wird am Ende jedes Zugs wiederholt."
+    },
+    {
+        "spell_id": "schmieren",
+        "name_de": "Schmieren",
+        "name_en": "Grease",
+        "level": 1,
+        "school": "Beschwörungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Ein Stückchen Schweinespeck",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Quadrat",
+            "size": 3
+        },
+        "saving_throw": "DEX",
+        "damage": null,
+        "classes": [
+            "Magier"
+        ],
+        "description": "Bedeckt ein 3m-Quadrat mit rutschigem Fett, das schwieriges Gelände erzeugt. Kreaturen im Bereich müssen einen DEX-Rettungswurf bestehen oder fallen hin."
+    },
+    {
+        "spell_id": "segnen",
+        "name_de": "Segnen",
+        "name_en": "Bless",
+        "level": 1,
+        "school": "Verzauberungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Tropfen Weihwasser",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
+            "Kleriker",
+            "Paladin"
+        ],
+        "description": "Du segnest bis zu drei Kreaturen. Sie dürfen 1W4 werfen und das Ergebnis zu jedem Angriffs- oder Rettungswurf addieren."
+    },
+    {
+        "spell_id": "selbstverkleidung",
+        "name_de": "Selbstverkleidung",
+        "name_en": "Disguise Self",
+        "level": 1,
+        "school": "Illusionsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
             "m_cost": 0,
             "m_consumed": false
         },
@@ -811,26 +2052,26 @@
         "damage": null,
         "classes": [
             "Barde",
-            "Hexenmeister",
-            "Magier"
+            "Magier",
+            "Zauberer"
         ],
-        "description": "Erschafft eine unsichtbare Kraft, die für dich einfache Aufgaben erledigt (Putzen, Türen öffnen, Sachen tragen)."
+        "description": "Du veränderst durch eine Illusion dein Aussehen. Du kannst bis zu 30 cm größer/kleiner wirken, aber deine grundlegende Körperform bleibt gleich."
     },
     {
-        "spell_id": "witch_bolt",
-        "name_de": "Hexenpfeil",
-        "name_en": "Witch Bolt",
+        "spell_id": "sengendes_niederstrecken",
+        "name_de": "Sengendes Niederstrecken",
+        "name_en": "Searing Smite",
         "level": 1,
-        "school": "Hervorrufung",
-        "casting_time": "1 Aktion",
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Bonusaktion",
         "range": {
-            "type": "Entfernung",
-            "distance": 30
+            "type": "Selbst",
+            "distance": 0
         },
         "components": {
             "v": true,
-            "s": true,
-            "m": "Ein Zweig eines vom Blitz getroffenen Baumes",
+            "s": false,
+            "m": "",
             "m_cost": 0,
             "m_consumed": false
         },
@@ -839,17 +2080,213 @@
             "concentration": true
         },
         "area_of_effect": null,
-        "saving_throw": null,
+        "saving_throw": "CON",
         "damage": {
-            "type": "Blitz",
-            "base_dice": "1w12",
-            "upcast_dice_per_level": "1w12"
+            "type": "Unbekannt",
+            "base_dice": "1W6",
+            "upcast_dice_per_level": null
         },
         "classes": [
-            "Zauberer",
-            "Hexenmeister",
+            "Paladin"
+        ],
+        "description": "Sofort bei Treffer ausgeführt: Fügt 1W6 Feuerschaden zu und entzündet das Ziel. Ziel erleidet zu Beginn seines Zugs 1W6 Feuerschaden, bis es einen CON-Rettungswurf besteht."
+    },
+    {
+        "spell_id": "spruehende_farben",
+        "name_de": "Sprühende Farben",
+        "name_en": "Color Spray",
+        "level": 1,
+        "school": "Illusionsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 4.5
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Buntes Pulver",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "1 Runde",
+            "concentration": false
+        },
+        "area_of_effect": {
+            "type": "Kegel",
+            "size": 4.5
+        },
+        "saving_throw": "WIS",
+        "damage": null,
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Ein blendender Farbblitz in einem 4,5m-Kegel. Jede Kreatur im Bereich muss einen WIS-Rettungswurf bestehen oder erhält den Zustand Blind."
+    },
+    {
+        "spell_id": "strahl_der_uebelkeit",
+        "name_de": "Strahl der Übelkeit",
+        "name_en": "Ray of Sickness",
+        "level": 1,
+        "school": "Nekromantie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "1 Runde",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": "CON",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "2W8",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "description": "Fernkampf-Zauberangriff. Bei Treffer 2W8 Giftschaden und das Ziel muss einen CON-Rettungswurf bestehen oder erhält den Zustand Vergiftet."
+    },
+    {
+        "spell_id": "verderben",
+        "name_de": "Verderben",
+        "name_en": "Bane",
+        "level": 1,
+        "school": "Verzauberungsmagie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Ein Tropfen Blut",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": "CHA",
+        "damage": null,
+        "classes": [
+            "Barde",
+            "Kleriker"
+        ],
+        "description": "Bis zu drei Kreaturen müssen einen CHA-Rettungswurf bestehen. Bei Fehlschlag müssen sie bei jedem Angriffs- oder Rettungswurf 1W4 abziehen."
+    },
+    {
+        "spell_id": "vertrauten_finden",
+        "name_de": "Vertrauten finden",
+        "name_en": "Find Familiar",
+        "level": 1,
+        "school": "Beschwörungsmagie",
+        "casting_time": "1 Stunde",
+        "range": {
+            "type": "Entfernung",
+            "distance": 3
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Holzkohle, Kräuter und Weihrauch",
+            "m_cost": 10,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": null,
+        "classes": [
             "Magier"
         ],
-        "description": "Du verbindest dich durch einen Blitzstrahl mit einem Feind (1W12 Schaden). Solange du die Verbindung aufrechterhältst, kannst du ihm jeden Zug automatisch weiteren Schaden zufügen."
+        "description": "Beschwört einen tierischen Geist als deinen Vertrauten. Er agiert unabhängig, gehorcht aber deinen Befehlen und du kannst durch seine Augen sehen."
+    },
+    {
+        "spell_id": "wunden_verursachen",
+        "name_de": "Wunden verursachen",
+        "name_en": "Inflict Wounds",
+        "level": 1,
+        "school": "Nekromantie",
+        "casting_time": "1 Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "area_of_effect": null,
+        "saving_throw": null,
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "2W10",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Kleriker"
+        ],
+        "description": "Nahkampf-Zauberangriff gegen eine Kreatur. Bei einem Treffer erleidet das Ziel 2W10 nekrotischen Schaden."
+    },
+    {
+        "spell_id": "zorniges_niederstrecken",
+        "name_de": "Zorniges Niederstrecken",
+        "name_en": "Wrathful Smite",
+        "level": 1,
+        "school": "Hervorrufungsmagie",
+        "casting_time": "1 Bonusaktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Festgelegte Zeit",
+            "concentration": true
+        },
+        "area_of_effect": null,
+        "saving_throw": "WIS",
+        "damage": {
+            "type": "Unbekannt",
+            "base_dice": "1W6",
+            "upcast_dice_per_level": null
+        },
+        "classes": [
+            "Paladin"
+        ],
+        "description": "Sofort bei Treffer ausgeführt: Fügt 1W6 psychischen Schaden zu. Ziel muss WIS-Rettungswurf bestehen oder ist verängstigt von dir, bis der Zauber endet."
     }
 ]
