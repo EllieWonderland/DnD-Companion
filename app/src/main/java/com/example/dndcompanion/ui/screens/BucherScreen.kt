@@ -409,7 +409,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
 
             var selectedClassFilter by remember { mutableStateOf("Alle") }
             val classFilters = remember(viewModel.globalSpellbook) {
-                listOf("Alle") + viewModel.globalSpellbook.flatMap { it.classes }.distinct().sorted()
+                listOf("Alle") + viewModel.globalSpellbook.flatMap { it.classes }.map { it.trim() }.distinct().sorted()
             }
 
             val classScrollState = rememberScrollState()
@@ -433,10 +433,37 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            var selectedSchoolFilter by remember { mutableStateOf("Alle") }
+            val schoolFilters = remember(viewModel.globalSpellbook) {
+                listOf("Alle") + viewModel.globalSpellbook.map { it.school.trim() }.distinct().sorted()
+            }
+
+            val schoolScrollState = rememberScrollState()
+            Row(
+                modifier = Modifier.fillMaxWidth().horizontalScroll(schoolScrollState).padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Schule:", color = BlauDunkel, fontWeight = FontWeight.Bold)
+                schoolFilters.forEach { filterSchool ->
+                    Button(
+                        onClick = { selectedSchoolFilter = filterSchool },
+                        colors = ButtonDefaults.buttonColors(containerColor = if (selectedSchoolFilter == filterSchool) PinkDunkel else BlauHell),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                        modifier = Modifier.height(32.dp)
+                    ) {
+                        Text(filterSchool, fontSize = 12.sp, color = Color.White)
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
             val filteredSpells = viewModel.globalSpellbook.filter { spell -> 
-                val matchesClass = if (selectedClassFilter == "Alle") true else spell.classes.contains(selectedClassFilter)
+                val matchesClass = if (selectedClassFilter == "Alle") true else spell.classes.map { it.trim() }.contains(selectedClassFilter)
+                val matchesSchool = if (selectedSchoolFilter == "Alle") true else spell.school.trim() == selectedSchoolFilter
                 
-                matchesClass &&
+                matchesClass && matchesSchool &&
                 (selectedLevel == -1 || spell.level == selectedLevel) &&
                 (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
             }.sortedWith(compareBy({ it.level }, { it.name }))
@@ -457,7 +484,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             isEquipped = alreadyInBook,
                             onTogglePrep = {},
                             onDelete = null,
-                            customColor = if (isDruidSpell) Color(0xFF2E7D32) else BlauHell, // Dark Green for Druid
+                            customColor = BlauDunkel, // Unified background
                             extraContent = {
                                 val canEquip = !alreadyInBook && (!isDruidLevel1 || druidLevel1Count < 1)
                                 Button(

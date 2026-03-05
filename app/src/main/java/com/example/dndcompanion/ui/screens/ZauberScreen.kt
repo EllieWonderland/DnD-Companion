@@ -671,7 +671,7 @@ fun SpellCard(
     spell: Spell,
     isEditMode: Boolean = false,
     isEquipped: Boolean = false,
-    customColor: Color = BlauHell,
+    customColor: Color = com.example.dndcompanion.ui.theme.BlauDunkel,
     onTogglePrep: () -> Unit = {},
     onDelete: (() -> Unit)? = null,
     extraContent: (@Composable () -> Unit)? = null
@@ -691,9 +691,9 @@ fun SpellCard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(spell.name, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                    Text(spell.name, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                     val type = if (spell.level == 0) "Zaubertrick" else "Stufe ${spell.level}"
-                    Text(type, color = GelbSand, fontSize = 14.sp)
+                    Text(type, color = GelbSand, fontSize = 15.sp)
                 }
                 if (isEquipped) {
                     Icon(
@@ -718,7 +718,7 @@ fun SpellCard(
             }
             if (expanded || isEditMode) {
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("Zeit: ${spell.castingTime} | Dauer: ${spell.duration} | Reichweite: ${spell.range}", color = Color.White, fontSize = 14.sp)
+                Text("Zeit: ${spell.castingTime} | Dauer: ${spell.duration} | Reichweite: ${spell.range}", color = Color.White, fontSize = 15.sp)
 
                 // Komponenten String bauen
                 val comps = mutableListOf<String>()
@@ -729,11 +729,11 @@ fun SpellCard(
                     comps.add(m)
                 }
                 if (comps.isNotEmpty()) {
-                    Text("Komponenten: ${comps.joinToString(", ")}", color = com.example.dndcompanion.ui.theme.PinkHell, fontSize = 14.sp)
+                    Text("Komponenten: ${comps.joinToString(", ")}", color = com.example.dndcompanion.ui.theme.PinkHell, fontSize = 15.sp)
                 }
 
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(spell.description, color = Color.White, fontSize = 14.sp)
+                Text(spell.description, color = Color.White, fontSize = 15.sp)
                 if (isEditMode && onDelete != null) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(
