@@ -348,6 +348,16 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedLevel by remember { mutableIntStateOf(-1) }
 
+    var selectedClassFilter by remember { mutableStateOf("Alle") }
+    val classFilters = remember(viewModel.globalSpellbook) {
+        listOf("Alle") + viewModel.globalSpellbook.flatMap { it.classes }.map { it.trim() }.distinct().sorted()
+    }
+
+    var selectedSchoolFilter by remember { mutableStateOf("Alle") }
+    val schoolFilters = remember(viewModel.globalSpellbook) {
+        listOf("Alle") + viewModel.globalSpellbook.map { it.school.trim() }.distinct().sorted()
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -421,11 +431,6 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                 }
             }
 
-            var selectedClassFilter by remember { mutableStateOf("Alle") }
-            val classFilters = remember(viewModel.globalSpellbook) {
-                listOf("Alle") + viewModel.globalSpellbook.flatMap { it.classes }.map { it.trim() }.distinct().sorted()
-            }
-
             val classScrollState = rememberScrollState()
             Row(
                 modifier = Modifier.fillMaxWidth().horizontalScroll(classScrollState).padding(bottom = 8.dp),
@@ -455,11 +460,6 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
             }
 
             Spacer(modifier = Modifier.height(8.dp))
-
-            var selectedSchoolFilter by remember { mutableStateOf("Alle") }
-            val schoolFilters = remember(viewModel.globalSpellbook) {
-                listOf("Alle") + viewModel.globalSpellbook.map { it.school.trim() }.distinct().sorted()
-            }
 
             val schoolScrollState = rememberScrollState()
             Row(
