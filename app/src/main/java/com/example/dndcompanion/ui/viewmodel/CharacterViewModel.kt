@@ -52,6 +52,7 @@ data class Spell(
     val materialCost: String = "",
     val description: String,
     val classes: List<String> = emptyList(),
+    val school: String = "Unbekannt",
     var isPrepared: Boolean = false
 )
 
