@@ -62,7 +62,7 @@ data class SpellDto(
 
 data class SpellRangeDto(
     val type: String,
-    val distance: Int
+    val distance: Double
 )
 
 data class SpellComponentsDto(

@@ -408,10 +408,13 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
             }
 
             var selectedClassFilter by remember { mutableStateOf("Alle") }
-            val classFilters = listOf("Alle", "Waldläufer", "Druide")
+            val classFilters = remember(viewModel.globalSpellbook) {
+                listOf("Alle") + viewModel.globalSpellbook.flatMap { it.classes }.distinct().sorted()
+            }
 
+            val classScrollState = rememberScrollState()
             Row(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                modifier = Modifier.fillMaxWidth().horizontalScroll(classScrollState).padding(bottom = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -431,11 +434,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
             Spacer(modifier = Modifier.height(8.dp))
 
             val filteredSpells = viewModel.globalSpellbook.filter { spell -> 
-                val matchesClass = when (selectedClassFilter) {
-                    "Waldläufer" -> spell.classes.contains("Waldläufer")
-                    "Druide" -> spell.classes.contains("Druide") && spell.level <= 1
-                    else -> spell.classes.contains("Waldläufer") || (spell.classes.contains("Druide") && spell.level <= 1)
-                }
+                val matchesClass = if (selectedClassFilter == "Alle") true else spell.classes.contains(selectedClassFilter)
                 
                 matchesClass &&
                 (selectedLevel == -1 || spell.level == selectedLevel) &&
