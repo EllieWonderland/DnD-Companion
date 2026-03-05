@@ -8592,5 +8592,2425 @@
         ],
         "summon_stat_block": null,
         "description": "Für die Wirkungsdauer verstehst du die wörtliche Bedeutung jeder Sprache, die du hörst oder liest. Außerdem verstehst du jede Schriftsprache, die du liest, sofern du die Oberfläche berührst, auf der die Worte geschrieben stehen. Eine Seite Text zu lesen dauert etwa eine Minute. Dieser Zauber entschlüsselt weder Symbole noch Geheimbotschaften. "
+    },
+    {
+        "spell_id": "spiegelbilder",
+        "name_de": "Spiegelbilder",
+        "name_en": "Mirror Image",
+        "level": 2,
+        "school": "Illusionszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "In deinem Bereich erscheinen drei illusionäre Duplikate deiner selbst. Für die Wirkungsdauer bewegen sich die Duplikate mit dir und imitieren deine Aktionen sowie deine Position, sodass die reale Version unmöglich zu erkennen ist. Wann immer dich eine Kreatur während der Wirkungsdauer des Zaubers mit einem Angriffswurf trifft, würfle für jedes verbleibende Duplikat mit einem 1W6. Würfelst du jeweils mindestens eine 3, wird statt dir das entsprechende Duplikat getroffen und dabei zerstört. Die Duplikate ignorieren alle anderen Schadensquellen und Effekte. Wenn alle drei Duplikate zerstört wurden, endet der Zauber. Eine Kreatur ist von diesem Zauber nicht betroffen, wenn sie den Zustand Blind hat oder aber über Blindsicht oder Wahrer Blick verfügt. "
+    },
+    {
+        "spell_id": "spinnenklettern",
+        "name_de": "Spinnenklettern",
+        "name_en": "Spider Climb",
+        "level": 2,
+        "school": "Verwandlungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "etwas Pech und eine Spinne",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": true
+        },
+        "classes": [
+            "Hexenmeister",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Eine bereitwillige Kreatur, die du berührst, erhält für die Wirkungsdauer die Fähigkeit, sich in alle Richtungen und mit freien Händen über senkrechte Oberflächen sowie an Decken zu bewegen. Außerdem erhält das Ziel eine Kletterbewegungsrate in Höhe seiner Bewegungsrate. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 2. kannst du auf eine weitere Kreatur zielen. "
+    },
+    {
+        "spell_id": "springen",
+        "name_de": "Springen",
+        "name_en": "Jump",
+        "level": 1,
+        "school": "Verwandlungszauber",
+        "casting_time": "Bonusaktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Hinterbein einer Heuschrecke",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": false
+        },
+        "classes": [
+            "Druide",
+            "Magier",
+            "Waldläufer",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du berührst eine bereitwillige Kreatur. Für die Wirkungsdauer kann diese Kreatur in jedem ihrer Züge bis zu neun Meter weit springen, indem sie drei Meter ihrer Bewegungsrate verbraucht. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 1. kannst du auf eine weitere Kreatur zielen. "
+    },
+    {
+        "spell_id": "spruehende_farben",
+        "name_de": "Sprühende Farben",
+        "name_en": "Color Spray",
+        "level": 1,
+        "school": "Illusionszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Prise bunter Sand",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du entfesselst schillernde bunte Lichter. Jede Kreatur in einem von dir ausgehenden Kegel von 4,5 Metern muss einen Konstitutionsrettungswurf bestehen, oder sie ist bis zum Ende deines nächsten Zugs blind. "
+    },
+    {
+        "spell_id": "spurloses_gehen",
+        "name_de": "Spurloses Gehen",
+        "name_en": "Pass without Trace",
+        "level": 2,
+        "school": "Bannzauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Asche eines Mistelzweigs",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": true
+        },
+        "classes": [
+            "Druide",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "Von dir geht für die Wirkungsdauer eine verhüllende Aura mit einer Ausströmung von neun Metern aus. Du und jede Kreatur deiner Wahl habt in der Aura einen Bonus von 10 auf Geschicklichkeitswürfe (Heimlichkeit) und ihr hinterlasst keine Spuren. "
+    },
+    {
+        "spell_id": "stahlwindschlag",
+        "name_de": "Stahlwindschlag",
+        "name_en": "Steel Wind Strike",
+        "level": 5,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": false,
+            "s": true,
+            "m": "eine Nahkampfwaffe im Wert von mindestens 1 SM",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Magier",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du schwingst die Waffe, die du zum Wirken des Zaubers verwendet hast, und verschwindest dann, um zuzuschlagen wie der Wind. Wähle bis zu fünf Kreaturen in Reichweite aus, die du sehen kannst. Führe einen Nahkampf-Zauberangriff gegen jedes Ziel aus. Bei einem Treffer erleidet ein Ziel 6W10 Energieschaden. Dann teleportierst du dich in einen freien Bereich, den du sehen kannst und der im Abstand von bis zu 1,5 Metern von einem der Ziele liegt. "
+    },
+    {
+        "spell_id": "stein_formen",
+        "name_de": "Stein formen",
+        "name_en": "Stone Shape",
+        "level": 4,
+        "school": "Verwandlungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "weicher Lehm",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Druide",
+            "Kleriker",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du berührst einen steinernen Gegenstand von höchstens mittelgroßer Größe oder einen Abschnitt aus Stein, der in keiner Abmessung größer als 1,5 Meter sein darf, und verformst ihn nach deinen Wünschen. Du könntest beispielsweise eine Waffe, eine Statue oder eine Truhe aus einem Felsbrocken formen oder einen kleinen Durchgang in einer Mauer schaffen, die höchstens 1,5 Meter dick ist. Du könntest auch eine Steintür oder ihren Rahmen teilweise umformen, um sie zu versiegeln. Der von dir erschaffene Gegenstand kann bis zu zwei Scharniere und einen Riegel besitzen, feinere mechanische Details sind jedoch nicht möglich. "
+    },
+    {
+        "spell_id": "steinhaut",
+        "name_de": "Steinhaut",
+        "name_en": "Stoneskin",
+        "level": 4,
+        "school": "Verwandlungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Diamantstaub im Wert von mindestens 100 GM, den der Zauber verbraucht",
+            "m_cost": 100,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": true
+        },
+        "classes": [
+            "Druide",
+            "Magier",
+            "Waldläufer",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Bis der Zauber endet, ist eine bereitwillige Kreatur, die du berührst, gegen Hieb-, Stich- und Wuchtschaden resistent. "
+    },
+    {
+        "spell_id": "steinwand",
+        "name_de": "Steinwand",
+        "name_en": "Wall of Stone",
+        "level": 5,
+        "school": "Hervorrufungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Granitwürfel",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 10,
+            "duration_unit": "Minuten",
+            "concentration": true
+        },
+        "classes": [
+            "Druide",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "An einem Punkt deiner Wahl in Reichweite erscheint eine nichtmagische Wand aus massivem Stein. Sie ist 15 Zentimeter dick und besteht aus zehn quadratischen Platten mit drei Metern Kantenlänge. Jede Platte muss an eine andere angrenzen. Alternativ kannst du drei Meter mal sechs Meter große Platten erschaffen, die nur 7,5 Zentimeter dick sind. Erschaffst du die Wand so, dass sie den Bereich einer Kreatur durchdringt, so wird die Kreatur auf eine Seite der Wand (nach deiner Wahl) gestoßen. Wenn eine Kreatur auf allen Seiten von der Wand umschlossen (oder zwischen der Wand und einer anderen soliden Oberfläche eingeschlossen) wäre, kann diese Kreatur einen Geschicklichkeitsrettungswurf ausführen. Bei einem Erfolg kann sie ihre Reaktion verwenden, um sich bis zu ihrer Bewegungsrate zu bewegen, sodass sie nicht länger eingeschlossen ist. Die Wand kann jede gewünschte Form annehmen, jedoch nicht denselben Bereich wie eine Kreatur oder ein Gegenstand einnehmen. Sie muss nicht senkrecht sein oder auf festem Untergrund stehen. Allerdings muss sie mit bestehendem Stein verschmelzen und von ihm getragen werden. Somit kannst du diesen Zauber verwenden, um eine Schlucht zu überwinden oder eine Rampe zu erschaffen. Wenn du eine Brücke von mehr als sechs Metern Länge erschaffen willst, musst du die halbe Größe jeder Platte für Stützpfeiler verbrauchen. Du kannst die Steinwand grob formen, um Wehranlagen und dergleichen zu erschaffen. Die Wand ist ein Gegenstand aus Stein, der beschädigt und somit durchbrochen werden kann. Jede Platte besitzt eine RK von 15, 30 Trefferpunkte pro 2,5 Zentimetern Dicke und ist gegen Giftschaden und psychischen Schaden immun. Wenn die Trefferpunkte einer Platte auf 0 sinken, wird sie zerstört, was angrenzende Platten nach Ermessen des SL zum Einsturz bringen könnte. Konzentrierst du dich für die gesamte Wirkungsdauer auf diesen Zauber, so wird die Wand dauerhaft und kann nicht gebannt werden. Anderenfalls verschwindet sie, wenn der Zauber endet. "
+    },
+    {
+        "spell_id": "sternenfunke",
+        "name_de": "Sternenfunke",
+        "name_en": "Starry Wisp",
+        "level": 0,
+        "school": "Hervorrufungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Druide"
+        ],
+        "summon_stat_block": null,
+        "description": "Du schleuderst einen Lichtfunken auf eine Kreatur oder einen Gegenstand in Reichweite. Führe einen Fernkampf-Zauberangriff gegen das Ziel aus. Bei einem Treffer erleidet das Ziel 1W8 gleißenden Schaden, und bis zum Ende deines nächsten Zugs spendet es in einem Radius von drei Metern dämmriges Licht und kann nicht unsichtbar werden. Zaubertrick-Aufwertung: Der Schaden wird um jeweils 1W8 erhöht, wenn du die 5. (2W8), die 11. (3W8) und die 17. (4W8) Stufe erreichst. "
+    },
+    {
+        "spell_id": "stille",
+        "name_de": "Stille",
+        "name_en": "Silence",
+        "level": 2,
+        "school": "Illusionszauber",
+        "casting_time": "Aktion oder Ritual",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 10,
+            "duration_unit": "Minuten",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Kleriker",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "Für die Wirkungsdauer kann in einer Kugel mit einem Radius von sechs Metern kein Geräusch erzeugt werden, und kein Geräusch kann in die Kugel dringen. Die Kugel wird an einem Ort deiner Wahl in Reichweite erzeugt. Alle Kreaturen und Gegenstände, die sich vollständig in der Kugel befinden, sind taub und gegen Schallschaden immun. In der Kugel können keine Zauber mit Verbalkomponenten gewirkt werden. "
+    },
+    {
+        "spell_id": "stinkende_wolke",
+        "name_de": "Stinkende Wolke",
+        "name_en": "Stinking Cloud",
+        "level": 3,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 27
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein faules Ei",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erschaffst eine Kugel mit einem Radius von sechs Metern um einen Punkt in Reichweite, die mit gelbem, übelriechendem Gas gefüllt ist. Die Wolke ist komplett verschleiert. Sie bleibt für die Wirkungsdauer in der Luft, oder bis starker Wind (wie solcher durch Windstoß) sie auflöst. Jede Kreatur, die ihren Zug in der Kugel beginnt, muss einen Konstitutionsrettungswurf bestehen, oder sie ist bis zum Ende des aktuellen Zugs vergiftet. Eine auf diese Art vergiftete Kreatur kann weder eine Aktion noch eine Bonusaktion ausführen. "
+    },
+    {
+        "spell_id": "strahl_der_uebelkeit",
+        "name_de": "Strahl der Übelkeit",
+        "name_en": "Ray of Sickness",
+        "level": 1,
+        "school": "Nekromantiezauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du verschießt einen grünlichen Strahl auf eine Kreatur in Reichweite. Führe einen Fernkampf-Zauberangriff gegen das Ziel aus. Bei einem Treffer erleidet das Ziel 2W8 Giftschaden und ist bis zum Ende deines nächsten Zugs vergiftet. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 1. wird der Schaden um 1W8 erhöht. "
+    },
+    {
+        "spell_id": "strahlendes_niederstrecken",
+        "name_de": "Strahlendes Niederstrecken",
+        "name_en": "Radiant Smite",
+        "level": 2,
+        "school": "Verwandlungszauber",
+        "casting_time": "Bonusaktion, die du sofort ausführst, wenn du eine Kreatur mit einer Nahkampfwaffe oder einem waffenlosen Angriff getroffen hast",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Paladin"
+        ],
+        "summon_stat_block": null,
+        "description": "Das Ziel des Schlags erleidet zusätzlich 2W6 gleißenden Schaden. Bis der Zauber endet, spendet das Ziel in einem Radius von 1,5 Metern helles Licht, Angriffswürfe gegen es sind im Vorteil, und es kann nicht unsichtbar werden. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 2. wird der Schaden um 1W6 erhöht. "
+    },
+    {
+        "spell_id": "sturm_der_vergeltung",
+        "name_de": "Sturm der Vergeltung",
+        "name_en": "Storm of Vengeance",
+        "level": 9,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 1600
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Druide"
+        ],
+        "summon_stat_block": null,
+        "description": "Für die Wirkungsdauer bildet sich um einen Punkt in Reichweite eine brodelnde Sturmwolke und breitet sich in einem Radius von 90 Metern aus. Jede Kreatur unter der Wolke muss einen Konstitutionsrettungswurf bestehen, oder sie erleidet 2W6 Schallschaden und ist für die Wirkungsdauer taub. Zu Beginn jedes deiner folgenden Züge bringt die Sturmwolke andere Effekte hervor wie unten ausgeführt. Runde 2: Es fällt Säureregen. Alle Kreaturen und Gegenstände unter der Wolke erleiden 4W6 Säureschaden. Runde 3: Du rufst sechs Blitze aus der Wolke hervor, die sechs verschiedene Kreaturen oder Gegenstände darunter treffen. Die Kreatur muss einen Geschicklichkeitsrettungswurf ausführen. Scheitert der Wurf, so erleidet sie 10W6 Blitzschaden, anderenfalls die Hälfte. Runde 4: Hagelkörner prasseln herab. Jede Kreatur unter der Wolke erleidet 2W6 Wuchtschaden. Runden 5-10: Durch den Bereich unter der Wolke peitschen Windstöße und Eisregen. Jede Kreatur im Bereich erleidet 1W6 Kälteschaden. Bis der Zauber endet, ist der Bereich schwieriges Gelände sowie komplett verschleiert, Fernkampfwaffenangriffe sind darin nicht möglich, und starke Stürme fegen hindurch. "
+    },
+    {
+        "spell_id": "symbol",
+        "name_de": "Symbol",
+        "name_en": "Symbol",
+        "level": 7,
+        "school": "Bannzauber",
+        "casting_time": "1 Minute",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Diamantpulver im Wert von mindestens 1.000 GM, das der Zauber verbraucht",
+            "m_cost": 1000,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Bis der Zauber gebannt oder die Glyphe ausgelöst wird",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Kleriker",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du zeichnest eine schädliche Glyphe entweder auf eine Oberfläche (wie den Fußboden oder eine Wand) oder in einen Gegenstand (wie ein Buch oder eine Truhe), der geschlossen werden kann. Die Glyphe kann höchstens in einem Radius von 1,5 Metern wirken. Wählst du einen Gegenstand aus, so muss dieser an seinem Standort bleiben. Wenn er um mehr als drei Meter von der Stelle entfernt wird, an der du den Zauber gewirkt hast, wird die Glyphe zerstört, und der Zauber endet, ohne ausgelöst zu werden. Die Glyphe ist kaum wahrnehmbar. Es ist ein erfolgreicher Weisheitswurf (Wahrnehmung) gegen deinen Zauberrettungswurf-SG erforderlich, um sie zu bemerken. Wenn du die Glyphe zeichnest, bestimmst du ihren Auslöser und entscheidest, welchen Effekt das Symbol trägt: Betäubung, Furcht, Schlaf, Schmerz, Tod oder Zwietracht. Die Effekte sind unten erläutert. Auslöser bestimmen: Wenn du den Zauber wirkst, bestimmst du einen Auslöser für die Glyphe. Glyphen auf Oberflächen werden meist dadurch ausgelöst, dass jemand sie berührt oder betritt, einen Gegenstand bewegt, der die Glyphe verdeckt, oder einen Mindestabstand zur Glyphe unterschreitet. Glyphen in Gegenständen werden meist dadurch ausgelöst, dass jemand den Gegenstand öffnet oder die Glyphe sieht. Du kannst den Auslöser verfeinern, sodass die Glyphe nur von bestimmten Kreaturentypen ausgelöst wird (beispielsweise könnte die Glyphe nur auf Aberrationen wirken). Du kannst auch Bedingungen festlegen, unter denen die Glyphe nicht ausgelöst wird, beispielsweise wenn ein bestimmtes Kennwort ausgesprochen wird. Sobald die Glyphe ausgelöst wurde, beginnt sie zu leuchten und erfüllt eine Kugel mit einem Radius von 18 Metern zehn Minuten lang mit dämmrigem Licht. Danach endet der Zauber. Jede Kreatur, die sich beim Aktivieren der Glyphe in der Kugel befindet, diese in ihrem Zug erstmals betritt oder ihren Zug darin beendet, wird zum Ziel des vorher festgelegten Effekts. Eine Kreatur kann nur einmal pro Zug zum Ziel werden. Betäubung: Jedes Ziel muss einen Weisheitsrettungswurf bestehen, oder es ist eine Minute lang betäubt. Furcht: Jedes Ziel muss einen Weisheitsrettungswurf bestehen, oder es ist eine Minute lang verängstigt. Ein verängstigtes Ziel muss sich in jedem seiner Züge um mindestens neun Meter von der Glyphe entfernen, sofern dies möglich ist. Schlaf: Jedes Ziel muss einen Weisheitsrettungswurf bestehen, oder es ist zehn Minuten lang bewusstlos. Eine Kreatur erwacht, wenn sie Schaden erleidet oder jemand eine Aktion ausführt, um sie wachzurütteln. Schmerz: jedes Ziel muss einen Konstitutionsrettungswurf bestehen, oder es ist eine Minute lang kampfunfähig. Tod: Jedes Ziel führt einen Konstitutionsrettungswurf aus. Scheitert der Wurf, so erleidet das Ziel 10W10 nekrotischen Schaden, anderenfalls die Hälfte. Zwietracht: Jedes Ziel führt einen Weisheitsrettungswurf aus. Scheitert der Wurf, so streitet sich das Ziel eine Minute lang mit anderen Kreaturen. Während dieser Zeit ist es nicht zu sinnvollen Gesprächen in der Lage und bei Angriffs- sowie Attributswürfen im Nachteil. "
+    },
+    {
+        "spell_id": "synaptisches_rauschen",
+        "name_de": "Synaptisches Rauschen",
+        "name_en": "Synaptic Static",
+        "level": 5,
+        "school": "Verzauberungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du lässt psychische Energie an einem Punkt in Reichweite explodieren. Jede Kreatur in einer Kugel mit einem Radius von sechs Metern um diesen Punkt führt einen Intelligenzrettungswurf aus. Scheitert der Wurf, so erleidet sie 8W6 psychischen Schaden, anderenfalls die Hälfte. Scheitert der Wurf, so sind außerdem die Gedanken des Ziels eine Minute lang verwirrt. Während dieser Dauer zieht es 1W6 von all seinen Angriffs- und Attributswürfen sowie von Konstitutionsrettungswürfen ab, die es ausführt, um seine Konzentration aufrechtzuerhalten. Das Ziel führt am Ende jedes seiner Züge einen Intelligenzrettungswurf aus. Bei einem Erfolg endet der Effekt. "
+    },
+    {
+        "spell_id": "tageslicht",
+        "name_de": "Tageslicht",
+        "name_en": "Daylight",
+        "level": 3,
+        "school": "Hervorrufungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": false
+        },
+        "classes": [
+            "Druide",
+            "Kleriker",
+            "Paladin",
+            "Waldläufer",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Für die Wirkungsdauer breitet sich Sonnenlicht von einem Punkt in Reichweite zu einer Kugel mit einem Radius von 18 Metern aus. Beim Bereich des Sonnenlichts handelt es sich um helles Licht. Er spendet im Radius von weiteren 18 Metern dämmriges Licht. Alternativ kannst du den Zauber auf einen Gegenstand wirken, der nicht getragen oder gehalten wird. In diesem Fall erfüllt das Sonnenlicht eine Ausströmung von 18 Metern um den Gegenstand. Wird der Gegenstand mit etwas Undurchsichtigem wie einer Schüssel oder einem Helm bedeckt, so wird das Sonnenlicht blockiert. "
+    },
+    {
+        "spell_id": "tanzende_lichter",
+        "name_de": "Tanzende Lichter",
+        "name_en": "Dancing Lights",
+        "level": 0,
+        "school": "Illusionszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "etwas Phosphor",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du kannst bis zu vier Lichter in Fackelgröße in Reichweite erzeugen und als Fackeln, Laternen oder Leuchtkugeln erscheinen lassen, die für die Wirkungsdauer in der Luft schweben. Alternativ kannst du die vier Lichter zu einer leuchtenden, entfernt humanoiden Gestalt mittlerer Größe kombinieren. Unabhängig von der Form spendet jedes Licht dämmriges Licht in einem Radius von drei Metern. Als Bonusaktion kannst du die Lichter bis zu 18 Meter weit in einen Bereich in Reichweite bewegen. Jedes Licht muss sich im Abstand von bis zu sechs Metern von einem anderen durch diesen Zauber erzeugten Licht befinden. Wenn ein Licht die Reichweite des Zaubers verlässt, erlischt es. "
+    },
+    {
+        "spell_id": "taschenspielerei",
+        "name_de": "Taschenspielerei",
+        "name_en": "Prestidigitation",
+        "level": 0,
+        "school": "Verwandlungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 3
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erzeugst einen magischen Effekt in Reichweite. Wähle den Effekt aus den Optionen unten aus. Wenn du diesen Zauber mehrmals wirkst, können bis zu drei der langfristigen Effekte gleichzeitig aktiv sein. Sensorischer Effekt: Du erzeugst einen unmittelbaren, harmlosen sensorischen Effekt, beispielsweise einen Funkenregen, einen Windstoß, eine leise Melodie oder einen merkwürdigen Geruch. Feuerspiel: Du entzündest oder löschst unmittelbar eine Kerze, eine Fackel oder ein kleines Lagerfeuer. Sauber oder schmutzig: Du kannst unmittelbar einen Gegenstand, der nicht größer als ein Würfel mit 30 Zentimetern Kantenlänge ist, säubern oder verschmutzen. Einfache Sinneswahrnehmung: Du kannst unbelebtes Material, das nicht größer als ein Würfel mit 30 Zentimetern Kantenlänge ist, abkühlen, erhitzen oder würzen. Dies hält eine Stunde lang an. Magisches Zeichen: Du lässt eine Stunde lang einen Farbfleck, ein Mal oder ein Symbol auf einem Gegenstand oder einer Oberfläche erscheinen. Einfache Schöpfung: Du erzeugst ein nichtmagisches Schmuckstück oder ein illusionäres Bild, das in deine Hand passt. Es bleibt bis zum Ende deines nächsten Zugs bestehen. Diese Schöpfung kann keinen Schaden bewirken und hat keinen Geldwert. "
+    },
+    {
+        "spell_id": "tashas_brodelnder_kessel",
+        "name_de": "Tashas brodelnder Kessel",
+        "name_en": "Tasha's Bubbling Cauldron",
+        "level": 6,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 1.5
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine vergoldete Schöpfkelle im Wert von mindestens 500 GM",
+            "m_cost": 500,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 10,
+            "duration_unit": "Minuten",
+            "concentration": false
+        },
+        "classes": [
+            "Hexenmeister",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du beschwörst einen klauenfüßigen Kessel, der mit einer blubbernden Flüssigkeit gefüllt ist. Der Kessel erscheint in einem freien Bereich auf dem Boden im Abstand von bis zu 1,5 Metern von dir und bleibt für die Wirkungsdauer bestehen. Der Kessel kann nicht bewegt werden, und er verschwindet mitsamt seinem Inhalt, wenn der Zauber endet. Die Flüssigkeit im Kessel hat die Eigenschaften eines gewöhnlichen oder eines ungewöhnlichen Tranks deiner Wahl (beispielsweise die von einem Heiltrank). Als Bonusaktion kannst du - oder ein Verbündeter - in den Kessel greifen und einen Trank dieser Art herausholen. Der Trank ist in einer Phiole enthalten, die verschwindet, wenn der Trank konsumiert wurde. Der Kessel kann eine Anzahl dieser Tränke in Höhe deines Zauberwirken-Attributsmodifikators (mindestens 1) erzeugen. Wenn der letzte dieser Tränke aus dem Kessel geholt wurde, verschwindet der Kessel, und der Zauber endet. Tränke, die aus dem Kessel geholt, aber nicht konsumiert wurden, verschwinden, wenn du diesen Zauber erneut wirkst. "
+    },
+    {
+        "spell_id": "tashas_fuerchterlicher_lachanfall",
+        "name_de": "Tashas fürchterlicher Lachanfall",
+        "name_en": "Tasha's Hideous Laughter",
+        "level": 1,
+        "school": "Verzauberungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Torte und eine Feder",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Eine Kreatur deiner Wahl in Reichweite, die du sehen kannst, führt einen Weisheitsrettungswurf aus. Scheitert der Wurf, so hat sie für die Wirkungsdauer die Zustände Liegend sowie Kampfunfähig. Während dieser Dauer lacht sie unkontrollierbar, sofern sie lachen kann, und kann den Zustand Liegend bei sich nicht beenden. Am Ende jedes ihrer Züge und jedes Mal, wenn sie Schaden erleidet, führt die Kreatur einen weiteren Weisheitsrettungswurf aus. Dabei ist sie im Vorteil, wenn der Rettungswurf durch Schaden ausgelöst wurde. Bei einem erfolgreichen Rettungswurf endet der Zauber. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 1. kannst du auf eine weitere Kreatur zielen. "
+    },
+    {
+        "spell_id": "telekinese",
+        "name_de": "Telekinese",
+        "name_en": "Telekinesis",
+        "level": 5,
+        "school": "Verwandlungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 10,
+            "duration_unit": "Minuten",
+            "concentration": true
+        },
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erhältst die Fähigkeit, Kreaturen oder Gegenstände mit deinen Gedanken zu bewegen oder zu manipulieren. Wenn du den Zauber wirkst - und als magische Aktion in deinen folgenden Zügen, ehe der Zauber endet - kannst du deinen Willen auf ein Ziel (Kreatur oder Gegenstand) in Reichweite richten, das du sehen kannst, und den entsprechenden Effekt auslösen. Du kannst in jeder Runde dasselbe Ziel beeinflussen oder ein neues auswählen. Wenn du das Ziel wechselst, ist das vorige nicht mehr vom Zauber betroffen. Kreatur: Du kannst versuchen, eine Kreatur von höchstens riesiger Größe zu bewegen. Das Ziel muss einen Stärkerettungswurf bestehen, oder du bewegst es um bis zu neun Meter in eine beliebige Richtung in Reichweite des Zaubers. Die Kreatur ist bis zum Ende deines nächsten Zugs festgesetzt, und wenn du sie in die Luft hebst, schwebt sie und verbleibt dort. Am Ende deines nächsten Zugs fällt sie herunter, sofern du diese Option nicht erneut auf sie anwendest und ihr Rettungswurf scheitert. Gegenstand: Du kannst versuchen, einen Gegenstand von höchstens riesiger Größe zu bewegen. Wird der Gegenstand weder getragen noch gehalten, so bewegst du ihn automatisch um bis zu neun Meter in eine beliebige Richtung in Reichweite des Zaubers. Wenn der Gegenstand von einer Kreatur getragen oder gehalten wird, muss diese Kreatur einen Stärkerettungswurf bestehen, oder du entwindest ihr den Gegenstand und bewegst ihn um bis zu neun Meter in eine beliebige Richtung in Reichweite des Zaubers. Du kannst mit deinem telekinetischen Griff Gegenstände präzise steuern, beispielsweise ein einfaches Werkzeug verwenden, eine Tür oder einen Behälter öffnen, einen Gegenstand aus einem offenen Behälter holen, einen Gegenstand in einem offenen Behälter verstauen oder den Inhalt einer Phiole ausgießen. "
+    },
+    {
+        "spell_id": "telepathie",
+        "name_de": "Telepathie",
+        "name_en": "Telepathy",
+        "level": 8,
+        "school": "Erkenntniszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Unbegrenzt",
+            "distance": null
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Paar verbundene Silberringe",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 24,
+            "duration_unit": "Stunden",
+            "concentration": false
+        },
+        "classes": [
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erzeugst eine telepathische Verbindung zwischen dir und einer bereitwilligen Kreatur, mit der du vertraut bist. Die Kreatur kann sich an einem beliebigen Ort auf derselben Existenzebene wie du befinden. Der Zauber endet, wenn du und das Ziel euch nicht mehr auf der gleichen Ebene befindet. Für die Wirkungsdauer könnt du und das Ziel euch über die Verbindung Worte, Bilder, Geräusche und andere sensorische Botschaften übermitteln. Das Ziel erkennt dich als Kommunikationspartner. Der Zauber ermöglicht einer Kreatur, die Bedeutung deiner übermittelten Worte und sensorischen Botschaften zu verstehen. "
+    },
+    {
+        "spell_id": "teleportieren",
+        "name_de": "Teleportieren",
+        "name_en": "Teleport",
+        "level": 7,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 3
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Dieser Zauber transportiert dich und bis zu acht bereitwillige Kreaturen (oder aber einen Gegenstand) in Reichweite, die du sehen kannst, sofort zu einem von dir ausgewählten Ort. Ein Gegenstand muss von höchstens großer Größe sein und darf nicht von einer Kreatur gehalten oder getragen werden, die nicht bereitwillig ist. Der Zielort muss dir bekannt sein und sich auf derselben Existenzebene wie du befinden. Deine Vertrautheit mit dem Zielort bestimmt, ob du erfolgreich dort eintriffst. Der SL würfelt mit 1W100 und konsultiert die Tabelle Ergebnis der Teleportation sowie die entsprechenden Erläuterungen. Vertrautheit: Mit dauerhafter Kreis ist ein dauerhafter Kreis der Teleportation gemeint, dessen Siegelsequenz dir bekannt ist. Bezugsgegenstand bedeutet, dass du einen Gegenstand besitzt, der innerhalb der letzten sechs Monate vom gewünschten Zielort genommen wurde. Sehr vertraut beschreibt einen Ort, den du oft aufgesucht oder genau studiert hast oder den du beim Wirken des Zaubers sehen kannst. Mehrfach gesehen bezeichnet einen Ort, den du mehr als einmal gesehen hast. Einmal gesehen oder Beschreibung erhalten beschreibt einen Ort, den du einmal gesehen hast oder der dir beschrieben wurde. Falscher Zielort bedeutet, dass ein Ort nicht existiert. Missgeschick: Die unberechenbare Magie des Zaubers führt zu einer holprigen Reise. Jede teleportierte Kreatur (oder der Zielgegenstand) erleidet 3W10 Energieschaden. Zudem würfelt der SL anhand der Tabelle, um zu bestimmen, wo ihr landet. Es kann zu mehreren Unglücken kommen, die jeweils Schaden bewirken. Ähnliches Gebiet: Du erscheinst in einem anderen Gebiet, das dem Zielort visuell oder thematisch ähnlich ist. Abseits des Zielorts: Du erscheinst 2W12 mal 1,6 Kilometer abseits des Zielorts. Würfle mit 1W8, um die Richtung zu bestimmen: 1: Osten, 2: Südosten, 3: Süden, 4: Südwesten, 5: Westen, 6: Nordwesten, 7: Norden, 8: Nordosten. Am Zielort: Du erscheinst dort, wo du hinwolltest. "
+    },
+    {
+        "spell_id": "tensers_schwebende_scheibe",
+        "name_de": "Tensers schwebende Scheibe",
+        "name_en": "Tenser's Floating Disk",
+        "level": 1,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion oder Ritual",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Tropfen Quecksilber",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": false
+        },
+        "classes": [
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Dieser Zauber erschafft eine waagerechte runde Fläche aus Energie mit einem Durchmesser von 90 Zentimetern und einer Dicke von 2,5 Zentimetern. Sie schwebt in einem freien Bereich deiner Wahl in Reichweite, den du sehen kannst, 90 Zentimeter über dem Boden. Die Scheibe bleibt für die Wirkungsdauer bestehen und kann bis zu 250 Kilogramm tragen. Wenn sie mit mehr Gewicht belastet wird, endet der Zauber, und alles auf der Scheibe fällt zu Boden. Die Scheibe ist unbeweglich, solange du dich im Abstand von bis zu sechs Metern von ihr befindest. Entfernst du dich mehr als sechs Meter von ihr, so folgt dir die Scheibe, sodass sie im Abstand von bis zu sechs Metern von dir bleibt. Sie kann sich über unebenes Gelände, Treppen, Abhänge und dergleichen bewegen, jedoch keinen Höhenunterschied von mindestens drei Metern überwinden. Beispielsweise kann die Scheibe nicht über eine drei Meter tiefe Grube hinwegschweben oder eine solche Grube verlassen, falls sie darin erschaffen wurde. Wenn du dich um mehr als 30 Meter von der Scheibe entfernst (meist, weil sie sich nicht um ein Hindernis bewegen kann, um dir zu folgen), endet der Zauber. "
+    },
+    {
+        "spell_id": "thaumaturgie",
+        "name_de": "Thaumaturgie",
+        "name_en": "Thaumaturgy",
+        "level": 0,
+        "school": "Verwandlungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": false
+        },
+        "classes": [
+            "Kleriker"
+        ],
+        "summon_stat_block": null,
+        "description": "Du manifestierst in Reichweite ein kleines Wunder. Du bewirkst in Reichweite einen der Effekte unten. Wenn du diesen Zauber mehrmals wirkst, können bis zu drei seiner einminütigen Effekte gleichzeitig wirken. Du kannst einen solchen Effekt verwerfen (keine Aktion erforderlich). Beben: Du bewirkst ein harmloses Erdbeben, das eine Minute lang andauert. Dröhnende Stimme: Deine Stimme ertönt eine Minute lang bis zu dreimal so laut wie sonst. Für die Wirkungsdauer bist du bei Charismawürfen (Einschüchtern) im Vorteil. Feuerspiel: Du lässt eine Minute lang Flammen auflodern, stärker oder schwächer leuchten oder ihre Farbe ändern. Phantomgeräusch: Du erzeugst ein unmittelbares Geräusch, das von einem Punkt deiner Wahl in Reichweite ausgeht, beispielsweise Donnergrollen, Rabenkrächzen oder bedrohliches Flüstern. Unsichtbare Hand: Du lässt unmittelbar eine unverschlossene Tür oder ein unverschlossenes Fenster auffliegen oder zuschlagen. Veränderte Augen: Du veränderst für eine Minute das Aussehen deiner Augen. "
+    },
+    {
+        "spell_id": "tier_beherrschen",
+        "name_de": "Tier beherrschen",
+        "name_en": "Dominate Beast",
+        "level": 4,
+        "school": "Verzauberungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Druide",
+            "Waldläufer",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Ein Tier in Reichweite, das du sehen kannst, muss einen Weisheitsrettungswurf bestehen, oder es ist für die Wirkungsdauer bezaubert. Wenn du oder deine Verbündeten gegen das Ziel kämpfen, ist es beim Rettungswurf im Vorteil. Wann immer das Ziel Schaden erleidet, wiederholt es den Rettungswurf. Bei einem Erfolg endet der Zauber bei ihm. Du verfügst über eine telepathische Verbindung mit dem bezauberten Ziel, solange ihr euch auf derselben Existenzebene befindet. Diese Verbindung kannst du in deinem Zug nutzen, um dem Ziel Befehle zu erteilen (keine Aktion erforderlich), beispielsweise „Greife diese Kreatur an“, „Laufe dorthin“ oder „Hole diesen Gegenstand“. Das Ziel gehorcht in seinem Zug, so gut es kann. Wenn es den Befehl ausgeführt hat und keine weiteren Anweisungen von dir erhält, verhält es sich nach seinen Wünschen und versucht vor allem, sich zu schützen. Du kannst dem Ziel befehlen, eine Reaktion auszuführen, musst dazu allerdings selbst eine Reaktion ausführen. Verwenden von Zauberplätzen höheren Grades: Deine Konzentration kann länger andauern: bei einem Zauberplatz des 5. Grades bis zu zehn Minuten, bei einem Zauberplatz des 6. Grades bis zu einer Stunde und bei einem Zauberplatz ab dem 7. Grad bis zu acht Stunden. "
+    },
+    {
+        "spell_id": "tier_herbeirufen",
+        "name_de": "Tier herbeirufen",
+        "name_en": "Summon Beast",
+        "level": 2,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 27
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Feder, ein Fellbüschel und ein Fischschwanz in einer vergoldeten Eichel im Wert von mindestens 200 GM",
+            "m_cost": 200,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": true
+        },
+        "classes": [
+            "Druide",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du rufst einen Tiergeist herbei. Er erscheint in einem freien Bereich in Reichweite, den du sehen kannst, und verwendet den Wertekasten eines Tiergeists. Wenn du den Zauber wirkst, wähle eine der folgenden Umgebungen aus: Land, Luft oder Wasser. Die Kreatur sieht aus wie ein Tier, das in dieser Umgebung zu Hause ist, wodurch einige Details im Wertekasten bestimmt werden. Die Kreatur verschwindet, wenn ihre Trefferpunkte auf 0 sinken oder der Zauber endet. Die Kreatur ist mit dir und deinen Verbündeten verbündet. Im Kampf nutzt sie deinen Initiativewert und ist direkt nach dir am Zug. Sie gehorcht deinen mündlichen Befehlen (keine Aktion deinerseits erforderlich). Befiehlst du ihr nichts, so führt sie die Ausweichaktion aus und nutzt ihre Bewegung, um Gefahren zu vermeiden. Verwenden von Zauberplätzen höheren Grades: Verwende den Zauberplatzgrad als Zaubergrad im Wertekasten.\n\n**Tiergeist:** Kleines Tier, neutral. RK: 11 + Zaubergrad. TP: 20 (nur Luft) oder 30 (nur Land und Wasser) + 5 für jeden Zaubergrad ab dem 3. Bewegungsrate: 9 m, Klettern 9 m (nur Land), Fliegen 18 m (nur Luft), Schwimmen 9 m (nur Wasser). Werte: STA 18 (+4), GES 11 (+0), KON 16 (+3), INT 4 (-3), WEI 14 (+2), CHA 5 (-3). Sinne: Dunkelsicht 18 m, Passive Wahrnehmung 12. Sprachen: Versteht die Sprachen, die du sprichst. \n*Merkmale:* Rudeltaktik (nur Land und Wasser): Der Geist ist beim Angriffswurf gegen eine Kreatur im Vorteil, wenn sich mindestens einer seiner Verbündeten, der nicht kampfunfähig ist, im Abstand von bis zu 1,5 Metern von der Kreatur befindet. Vorbeifliegen (nur Luft): Der Geist provoziert keine Gelegenheitsangriffe, wenn er die Reichweite eines Gegners verlässt. Wasser atmen (nur Wasser): Der Geist kann nur unter Wasser atmen. \n*Aktionen:* Mehrfachangriff: Der Geist führt eine Anzahl von Zerfetzen-Angriffen aus, die der Hälfte des Zaubergrads entspricht (abgerundet). Zerfetzen: Nahkampfangriffswurf: Bonus in Höhe deines Angriffszauber-Modifikators, Reichweite 1,5 Meter. Treffer: 1W8 + 4 + Zaubergrad Stichschaden. "
+    },
+    {
+        "spell_id": "tierbote",
+        "name_de": "Tierbote",
+        "name_en": "Animal Messenger",
+        "level": 2,
+        "school": "Verzauberungszauber",
+        "casting_time": "Aktion oder Ritual",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Happen Nahrung",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 24,
+            "duration_unit": "Stunden",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "Ein winziges Tier deiner Wahl in Reichweite, das du sehen kannst, muss einen Charismarettungswurf bestehen. Scheitert der Wurf, so muss das Ziel versuchen, in deinem Namen eine Botschaft zu überbringen (dies gelingt dem Ziel automatisch, sofern sein Herausforderungsgrad nicht gleich null ist). Bestimme einen Ort, an dem du schon einmal warst, und einen Empfänger, der einer allgemeinen Beschreibung wie „eine Person in Stadtwachenuniform“ oder „ein rothaariger Zwerg mit spitzem Hut“ entspricht. Dann kommunizierst du eine Botschaft mit bis zu 25 Worten. Das Tier reist für die Wirkungsdauer in Richtung Zielort, wobei es in 24 Stunden etwa 40 Kilometer zurücklegt - oder 80 Kilometer, wenn es fliegen kann. Am Zielort übermittelt das Tier der Kreatur, die du beschrieben hast, deine Botschaft und imitiert dabei deine Art der Kommunikation. Erreicht das Tier während der Wirkungsdauer sein Ziel nicht, so geht die Botschaft verloren, und das Tier kehrt an den Ort zurück, an dem du den Zauber gewirkt hast. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 2. wird die Wirkungsdauer des Zaubers um 48 Stunden erhöht. "
+    },
+    {
+        "spell_id": "tiere_beschwoeren",
+        "name_de": "Tiere beschwören",
+        "name_en": "Conjure Animals",
+        "level": 3,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 10,
+            "duration_unit": "Minuten",
+            "concentration": true
+        },
+        "classes": [
+            "Druide",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du beschwörst Naturgeister. Diese nehmen die Form eines großen Rudels geisterhafter, immaterieller Tiere in einem freien Bereich in Reichweite an, den du sehen kannst. Das Rudel bleibt für die Wirkungsdauer bestehen. Du wählst die Tierform der Geister aus, beispielsweise Wölfe, Schlangen oder Vögel. Du bist bei Stärkerettungswürfen im Vorteil, solange du dich im Abstand von bis zu 1,5 Metern vom Rudel befindest. Wenn du dich in deinem Zug bewegst, kannst du auch das Rudel um bis zu neun Meter in einen freien Bereich bewegen, den du sehen kannst. Wann immer das Rudel sich einer Kreatur, die du sehen kannst, auf höchstens drei Meter nähert, und wann immer eine Kreatur, die du sehen kannst, einen Bereich im Abstand von bis zu drei Metern vom Rudel betritt oder ihren Zug dort beendet, kannst du die Kreatur zu einem Geschicklichkeitsrettungswurf zwingen. Scheitert der Wurf, so erleidet die Kreatur 3W10 Hiebschaden. Eine Kreatur kann diesen Rettungswurf nur einmal pro Zug ausführen. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 3. wird der Schaden um 1W10 erhöht. "
+    },
+    {
+        "spell_id": "tiere_oder_pflanzen_aufspueren",
+        "name_de": "Tiere oder Pflanzen aufspüren",
+        "name_en": "Locate Animals or Plants",
+        "level": 2,
+        "school": "Erkenntniszauber",
+        "casting_time": "Aktion oder Ritual",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "etwas Fell von einem Bluthund",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "Beschreibe oder nenne eine bestimmte Art von Tier, Pflanzenkreatur oder nichtmagischer Pflanze. Du erfährst, in welcher Entfernung und Richtung im Abstand von bis zu acht Kilometern sich die nächste Kreatur dieser Art befindet, sofern vorhanden. "
+    },
+    {
+        "spell_id": "tierform",
+        "name_de": "Tierform",
+        "name_en": "Animal Shapes",
+        "level": 8,
+        "school": "Verwandlungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 24,
+            "duration_unit": "Stunden",
+            "concentration": false
+        },
+        "classes": [
+            "Druide"
+        ],
+        "summon_stat_block": null,
+        "description": "Wähle eine beliebige Anzahl bereitwilliger Kreaturen in Reichweite aus, die du sehen kannst. Jedes Ziel verwandelt sich in ein Tier deiner Wahl von höchstens großer Größe mit einem Herausforderungsgrad von höchstens 4. Du kannst für jedes Ziel eine andere Gestalt bestimmen. In deinen folgenden Zügen kannst du eine magische Aktion ausführen, um die Ziele erneut zu verwandeln. Die Spielwerte eines Ziels werden durch die Werte des jeweiligen Tieres ersetzt. Das Ziel behält jedoch seinen Kreaturentyp, seine Trefferpunkte sowie Trefferpunktewürfel, seine Gesinnung, seine Kommunikationsfähigkeit sowie seine Werte für Intelligenz, Weisheit und Charisma bei. Die Aktionen des Ziels sind durch die Anatomie der Tiergestalt begrenzt. Das Ziel kann keine Zauber wirken. Seine Ausrüstung verschmilzt mit der neuen Gestalt, und das Ziel kann seine Ausrüstung in dieser Gestalt nicht verwenden. Das Ziel erhält eine Anzahl von temporären Trefferpunkten, die der Anzahl von Trefferpunkten der ersten Tiergestalt entspricht, in die es sich verwandelt. Wenn nach dem Ende der Verwandlung von diesen temporären Trefferpunkten noch welche übrig sind, verschwinden sie. Die Verwandlung bleibt bei jedem Ziel bestehen, bis der Zauber endet oder bis es die Tiergestalt als Bonusaktion aufgibt. "
+    },
+    {
+        "spell_id": "tierfreundschaft",
+        "name_de": "Tierfreundschaft",
+        "name_en": "Animal Friendship",
+        "level": 1,
+        "school": "Verzauberungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Happen Nahrung",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 24,
+            "duration_unit": "Stunden",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "Ziele auf ein Tier in Reichweite, das du sehen kannst. Das Ziel muss einen Weisheitsrettungswurf bestehen, oder es ist für die Wirkungsdauer bezaubert. Wenn du oder einer deiner Verbündeten dem Ziel Schaden zufügt, endet der Zauber. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 1. kannst du auf ein weiteres Tier zielen. "
+    },
+    {
+        "spell_id": "tiersinn",
+        "name_de": "Tiersinn",
+        "name_en": "Beast Sense",
+        "level": 2,
+        "school": "Erkenntniszauber",
+        "casting_time": "Aktion oder Ritual",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": false,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": true
+        },
+        "classes": [
+            "Druide",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du berührst ein bereitwilliges Tier. Für die Wirkungsdauer kannst du nicht nur mit deinen eigenen Sinnen wahrnehmen, sondern auch mit denen des Tieres. Dabei kannst du auch alle Spezialsinne nutzen, die das Tier möglicherweise hat. "
+    },
+    {
+        "spell_id": "todeskreis",
+        "name_de": "Todeskreis",
+        "name_en": "Circle of Death",
+        "level": 6,
+        "school": "Nekromantiezauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 45
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Pulver einer zerstoßenen schwarzen Perle im Wert von mindestens 500 GM",
+            "m_cost": 500,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Hexenmeister",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Von einem Punkt deiner Wahl in Reichweite breitet sich negative Energie zu einer Kugel mit einem Radius von 18 Metern aus. Jede Kreatur in diesem Bereich führt einen Konstitutionsrettungswurf aus. Scheitert der Wurf, so erleidet sie 8W8 nekrotischen Schaden, anderenfalls die Hälfte. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 6. wird der Schaden um 2W8 erhöht. "
+    },
+    {
+        "spell_id": "todesschutz",
+        "name_de": "Todesschutz",
+        "name_en": "Death Ward",
+        "level": 4,
+        "school": "Bannzauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 8,
+            "duration_unit": "Stunden",
+            "concentration": false
+        },
+        "classes": [
+            "Kleriker",
+            "Paladin"
+        ],
+        "summon_stat_block": null,
+        "description": "Du berührst eine Kreatur und verleihst ihr einen gewissen Schutz vor dem Tod. Wenn die Trefferpunkte des Ziels während der Wirkungsdauer erstmals auf 0 sinken würden, sinken sie stattdessen auf 1 Trefferpunkt, und der Zauber endet. Erleidet das Ziel während der Wirkungsdauer einen Effekt, der es sofort töten würde, ohne Schaden zu bewirken, so ist das Ziel nicht von diesem Effekt betroffen, und der Zauber endet. "
+    },
+    {
+        "spell_id": "todeswolke",
+        "name_de": "Todeswolke",
+        "name_en": "Cloudkill",
+        "level": 5,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 10,
+            "duration_unit": "Minuten",
+            "concentration": true
+        },
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erschaffst eine Kugel aus gelbgrünem Nebel mit einem Radius von sechs Metern um einen Punkt in Reichweite. Der Nebel bleibt für die Wirkungsdauer bestehen, oder bis starker Wind (wie solcher durch Windstoß) ihn auflöst, wodurch der Zauber endet. Der Bereich der Kugel ist komplett verschleiert. Jede Kreatur in der Kugel führt einen Konstitutionsrettungswurf aus. Scheitert der Wurf, so erleidet sie 5W8 Giftschaden, anderenfalls die Hälfte. Eine Kreatur muss den Konstitutionsrettungswurf auch dann ausführen, wenn die Kugel sich in ihren Bereich bewegt, wenn die Kreatur die Kugel betritt oder wenn sie ihren Zug darin beendet. Eine Kreatur kann diesen Rettungswurf nur einmal pro Zug ausführen. Zu Beginn jedes deiner Züge bewegt sich die Kugel um drei Meter von dir weg. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 5. wird der Schaden um 1W8 erhöht. "
+    },
+    {
+        "spell_id": "toedliches_phantom",
+        "name_de": "Tödliches Phantom",
+        "name_en": "Phantasmal Killer",
+        "level": 4,
+        "school": "Illusionszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du zapfst die Alpträume einer Kreatur in Reichweite an, die du sehen kannst, und erschaffst eine Illusion ihrer tiefsten Ängste, die nur für diese Kreatur sichtbar ist. Das Ziel führt einen Weisheitsrettungswurf aus. Scheitert der Wurf, so erleidet das Ziel 4W10 psychischen Schaden und ist für die Wirkungsdauer bei Attributswürfen sowie Angriffswürfen im Nachteil. Bei einem erfolgreichen Rettungswurf erleidet das Ziel halb so viel Schaden, und der Zauber endet. Für die Wirkungsdauer kann das Ziel am Ende jedes seiner Züge einen Weisheitsrettungswurf ausführen. Scheitert der Wurf, so erleidet es den psychischen Schaden erneut. Bei einem erfolgreichen Rettungswurf endet der Zauber. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 4. wird der Schaden um 1W10 erhöht. "
+    },
+    {
+        "spell_id": "tor",
+        "name_de": "Tor",
+        "name_en": "Gate",
+        "level": 9,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Diamant im Wert von mindestens 5.000 GM",
+            "m_cost": 5000,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Hexenmeister",
+            "Kleriker",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du beschwörst ein Portal, das einen freien Bereich in Reichweite, den du sehen kannst, mit einem bestimmten Ort auf einer anderen Existenzebene verbindet. Beim Portal handelt es sich um eine kreisrunde Öffnung mit einem Radius von 1,5 bis sechs Metern. Du kannst das Portal in jede beliebige Richtung ausrichten. Es bleibt für die Wirkungsdauer bestehen, und der Zielort ist durch das Portal hindurch sichtbar. Das Portal hat auf beiden Ebenen eine Vorder- und eine Rückseite. Reisen durch das Portal sind nur durch die Vorderseite möglich. Alles, was das Portal passiert, wird sofort auf die andere Ebene transportiert und erscheint in einem freien Bereich, der dem Portal am nächsten liegt. Gottheiten und andere Herrscher über die Ebenen können verhindern, dass sich Portale dieses Zaubers in ihrer Gegenwart oder in ihren Domänen öffnen. Wenn du diesen Zauber wirkst, kannst du den Namen einer bestimmten Kreatur aussprechen (Pseudonyme, Titel und Spitznamen funktionieren nicht). Befindet sich die Kreatur auf einer anderen Ebene als du, so öffnet sich das Portal neben ihr und transportiert sie in den nächstgelegenen freien Bereich auf deiner Seite des Portals. Du erlangst keine besondere Macht über die Kreatur, und sie handelt nach Ermessen des SL. Sie kann verschwinden, dich angreifen oder dir helfen. "
+    },
+    {
+        "spell_id": "tote_beleben",
+        "name_de": "Tote beleben",
+        "name_en": "Animate Dead",
+        "level": 3,
+        "school": "Nekromantiezauber",
+        "casting_time": "1 Minute",
+        "range": {
+            "type": "Entfernung",
+            "distance": 3
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Tropfen Blut, ein Stück Fleisch und eine Prise Knochenstaub",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Kleriker",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Wähle einen Knochenhaufen oder die Leiche eines kleinen oder mittelgroßen Humanoiden in Reichweite aus. Das Ziel wird zu einer untoten Kreatur: zu einem Skelett, wenn du Knochen ausgewählt hast, oder zu einem Zombie, wenn du eine Leiche ausgewählt hast (jeweilige Wertekästen siehe Anhang B). Du kannst in jedem deiner Züge eine Bonusaktion ausführen, um jede Kreatur, die du mit diesem Zauber erschaffen hast und die sich im Abstand von bis zu 18 Metern von dir befindet, mental zu befehligen. Handelt es sich um mehrere Kreaturen, so kannst du beliebig viele von ihnen gleichzeitig befehligen, wobei jeweils der gleiche Befehl erteilt wird. Du entscheidest über die Aktion und die Bewegung der Kreatur in ihrem nächsten Zug. Alternativ kannst du einen allgemeinen Befehl erteilen, beispielsweise eine bestimmte Kammer oder einen Korridor zu bewachen. Wenn du keine Befehle erteilst, führt die Kreatur die Ausweichaktion aus und bewegt sich nur, um Schaden zu vermeiden. Sobald die Kreatur einen Befehl erhalten hat, führt sie ihn aus, bis die Aufgabe abgeschlossen ist. Die Kreatur steht 24 Stunden lang unter deiner Kontrolle. Danach folgt sie keinem deiner Befehle mehr. Um für weitere 24 Stunden die Kontrolle über die Kreatur zu behalten, musst du diesen Zauber erneut auf die Kreatur wirken, ehe die ersten 24 Stunden abgelaufen sind. In diesem Fall verlängerst du die Kontrolle über bis zu vier Kreaturen, die du mit diesem Zauber erschaffen hast, anstatt eine neue Kreatur zu erschaffen. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 3. erschaffst du zwei zusätzliche untote Kreaturen oder verlängerst die Kontrolle über zwei zusätzliche untote Kreaturen. Du benötigst für jede Kreatur eine separate Leiche oder einen separaten Knochenhaufen. "
+    },
+    {
+        "spell_id": "tote_erwecken",
+        "name_de": "Tote erwecken",
+        "name_en": "Raise Dead",
+        "level": 5,
+        "school": "Nekromantiezauber",
+        "casting_time": "1 Stunde",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Diamant im Wert von mindestens 500 GM, den der Zauber verbraucht",
+            "m_cost": 500,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Kleriker",
+            "Paladin"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erweckst eine tote Kreatur durch eine Berührung wieder zum Leben, sofern sie höchstens zehn Tage lang tot und nicht untot war, als sie starb. Sie wird mit 1 Trefferpunkt wieder lebendig. Dieser Zauber neutralisiert zudem sämtliche Gifte, die zum Zeitpunkt des Todes auf das Ziel gewirkt haben. Der Zauber schließt alle tödlichen Wunden, kann jedoch keine abgetrennten Gliedmaßen wiederherstellen. Fehlen der Kreatur lebensnotwendige Körperteile oder Organe, beispielsweise ihr Kopf, so scheitert der Zauber automatisch. Von den Toten aufzuerstehen ist eine Tortur. Das Ziel erleidet einen Malus von -4 auf W20-Prüfungen. Nach jeder langen Rast wird der Malus um 1 verringert, bis er 0 beträgt. "
+    },
+    {
+        "spell_id": "totenlaeuten",
+        "name_de": "Totenläuten",
+        "name_en": "Toll the Dead",
+        "level": 0,
+        "school": "Nekromantiezauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Hexenmeister",
+            "Kleriker",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du deutest auf eine Kreatur in Reichweite, die du sehen kannst. Ein einzelnes Läuten einer Totenglocke ist im Abstand von bis zu drei Metern um das Ziel hörbar. Das Ziel muss einen Weisheitsrettungswurf bestehen, oder es erleidet 1W8 nekrotischen Schaden. Wenn dem Ziel Trefferpunkte fehlen, erleidet es stattdessen 1W12 nekrotischen Schaden. Zaubertrick-Aufwertung: Der Schaden wird um jeweils einen Würfel erhöht, wenn du die 5. (2W8 oder 2W12), die 11. (3W8 oder 3W12) und die 17. (4W8 oder 4W12) Stufe erreichst. "
+    },
+    {
+        "spell_id": "totstellen",
+        "name_de": "Totstellen",
+        "name_en": "Feign Death",
+        "level": 3,
+        "school": "Nekromantiezauber",
+        "casting_time": "Aktion oder Ritual",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Prise Friedhofserde",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Kleriker",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du berührst eine bereitwillige Kreatur und versetzt sie in einen Zustand der Starre, der vom Tod nicht zu unterscheiden ist. Für die Wirkungsdauer erscheint das Ziel bei äußeren Untersuchungen sowie bei Zaubern zum Bestimmen des Status als tot. Das Ziel ist blind und kampfunfähig und seine Bewegungsrate beträgt 0. Es ist gegen alle Schadensarten bis auf psychischen Schaden resistent und gegen den Zustand Vergiftet immun. "
+    },
+    {
+        "spell_id": "traum",
+        "name_de": "Traum",
+        "name_en": "Dream",
+        "level": 5,
+        "school": "Illusionszauber",
+        "casting_time": "1 Minute",
+        "range": {
+            "type": "Besonders",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Handvoll Sand",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 8,
+            "duration_unit": "Stunden",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du zielst auf eine Kreatur, die du kennst und die sich auf derselben Existenzebene befindet wie du. Der Zauber versetzt dich selbst oder eine bereitwillige Kreatur, die du berührst, in eine Trance, um als Traumbote zu fungieren. In der Trance ist der Bote kampfunfähig und hat eine Bewegungsrate von 0. Wenn das Ziel schläft, erscheint der Bote in seinen Träumen und kann für die Wirkungsdauer des Zaubers mit ihm sprechen. Der Bote kann zudem die Umgebung des Traums gestalten und Landschaften, Gegenstände oder andere Bilder erschaffen. Der Bote kann die Trance und damit den Zauber jederzeit beenden. Das Ziel erinnert sich beim Aufwachen genau an den Traum. Ist das Ziel wach, wenn du den Zauber wirkst, so weiß der Bote dies und kann entweder die Trance (und den Zauber) beenden oder warten, bis das Ziel schläft, und dann in dessen Träumen erscheinen. Du kannst den Boten für das Ziel furchteinflößend erscheinen lassen. In diesem Fall kann der Bote eine Nachricht von höchstens zehn Worten übermitteln. Dann führt das Ziel einen Weisheitsrettungswurf aus. Scheitert der Wurf, so gewährt die Rast dem Ziel keine Vorzüge, und es erleidet beim Erwachen 3W6 psychischen Schaden. "
+    },
+    {
+        "spell_id": "trugbild_projizieren",
+        "name_de": "Trugbild projizieren",
+        "name_en": "Project Image",
+        "level": 7,
+        "school": "Illusionszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 800000
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Statuette von dir im Wert von mindestens 5 GM",
+            "m_cost": 5,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Tag",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erschaffst ein illusionäres Abbild von dir selbst, das für die Wirkungsdauer bestehen bleibt. Das Abbild kann unabhängig von Hindernissen an einem beliebigen Ort in Reichweite erscheinen, den du schon einmal gesehen hast. Die Illusion sieht aus und klingt wie du, ist aber immateriell. Erleidet die Illusion Schaden, so verschwindet sie, und der Zauber endet. Du kannst durch ihre Augen sehen und durch ihre Ohren hören, als befändest du dich in ihrem Bereich. Als magische Aktion kannst du die Illusion bis zu 18 Meter weit bewegen und sie gestikulieren, sprechen und auf eine beliebige Art handeln lassen. Sie ahmt dein Verhalten perfekt nach. Physische Interaktionen mit dem Abbild enttarnen es als illusionär, da Dinge es einfach durchdringen können. Eine Kreatur, die das Abbild mit der Studieren-Aktion untersucht, kann mit einem erfolgreichen Intelligenzwurf (Nachforschungen) gegen deinen Zauberrettungswurf-SG erkennen, dass es sich um eine Illusion handelt. Erkennt eine Kreatur die Illusion als solche, so wird das Abbild für sie durchscheinend, und sämtliche Geräusche klingen für sie hohl. "
+    },
+    {
+        "spell_id": "tsunami",
+        "name_de": "Tsunami",
+        "name_en": "Tsunami",
+        "level": 8,
+        "school": "Beschwörungszauber",
+        "casting_time": "1 Minute",
+        "range": {
+            "type": "Entfernung",
+            "distance": 1600
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 6,
+            "duration_unit": "Runden",
+            "concentration": true
+        },
+        "classes": [
+            "Druide"
+        ],
+        "summon_stat_block": null,
+        "description": "An einem Punkt deiner Wahl in Reichweite erscheint eine Wasserwand. Du kannst sie bis zu 90 Meter lang, 90 Meter hoch und 15 Meter dick sein lassen. Die Wand bleibt für die Wirkungsdauer bestehen. Wenn die Wand erscheint, führt jede Kreatur in ihrem Bereich einen Stärkerettungswurf aus. Scheitert der Wurf, so erleidet die Kreatur 6W10 Wuchtschaden, anderenfalls die Hälfte. Zu Beginn jedes deiner Züge nach Erscheinen der Wand bewegt diese sich und alle Kreaturen darin 15 Meter von dir weg. Alle Kreaturen von höchstens riesiger Größe, die sich in der Wand befinden oder in deren Bereiche die Wand sich bewegt, müssen einen Stärkerettungswurf bestehen, oder sie erleiden 5W10 Wuchtschaden. Eine Kreatur kann diesen Schaden nur einmal pro Runde erleiden. Am Ende des Zugs ist die Höhe der Wand um 15 Meter verringert, und der Schaden, den die Wand in späteren Runden bewirkt, ist um 1W10 verringert. Wenn die Höhe der Wand auf 0 sinkt, endet der Zauber. Eine Kreatur in der Wand kann sich schwimmend bewegen. Aufgrund der Wucht der Welle muss die Kreatur jedoch einen Stärkewurf (Athletik) gegen deinen Zauberrettungswurf-SG bestehen, um sich überhaupt bewegen zu können. Scheitert der Wurf, so kann die Kreatur sich nicht bewegen. Wenn eine Kreatur die Wand verlässt, fällt sie zu Boden. "
+    },
+    {
+        "spell_id": "unauffindbarkeit",
+        "name_de": "Unauffindbarkeit",
+        "name_en": "Nondetection",
+        "level": 3,
+        "school": "Bannzauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Prise Diamantstaub im Wert von mindestens 25 GM, den der Zauber verbraucht",
+            "m_cost": 25,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 8,
+            "duration_unit": "Stunden",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Magier",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du berührst ein Ziel, um es für die Wirkungsdauer vor Erkenntniszaubern zu verstecken. Das Ziel kann eine bereitwillige Kreatur, ein Ort oder ein Gegenstand sein. Es darf in keiner Abmessung größer als drei Meter sein. Es kann weder durch Erkenntniszauber noch durch magische Ausspähungssensoren wahrgenommen werden. "
+    },
+    {
+        "spell_id": "unheimliches_schicksal",
+        "name_de": "Unheimliches Schicksal",
+        "name_en": "Weird",
+        "level": 9,
+        "school": "Illusionszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Hexenmeister",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du versuchst, illusionäre Schrecken im Geiste anderer zu erzeugen. Jede Kreatur deiner Wahl in einer Kugel mit einem Radius von neun Metern um einen Punkt in Reichweite führt einen Weisheitsrettungswurf aus. Scheitert der Wurf, so erleidet die Kreatur 10W10 psychischen Schaden und ist für die Wirkungsdauer verängstigt. Bei einem erfolgreichen Rettungswurf erleidet die Kreatur nur halb so viel Schaden. Ein verängstigtes Ziel führt am Ende jedes seiner Züge einen Weisheitsrettungswurf aus. Scheitert der Wurf, so erleidet es 5W10 psychischen Schaden. Bei einem erfolgreichen Rettungswurf endet der Zauber bei diesem Ziel. "
+    },
+    {
+        "spell_id": "unhold_herbeirufen",
+        "name_de": "Unhold herbeirufen",
+        "name_en": "Summon Fiend",
+        "level": 6,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 27
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine blutige Phiole im Wert von mindestens 600 GM",
+            "m_cost": 600,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": true
+        },
+        "classes": [
+            "Hexenmeister",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du rufst einen Unholdgeist herbei. Er erscheint in einem freien Bereich in Reichweite, den du sehen kannst, und verwendet den Wertekasten eines Unholdgeists. Wenn du den Zauber wirkst, wähle zwischen Dämon, Teufel und Yugoloth. Die Kreatur sieht aus wie ein Unhold des ausgewählten Typs, wodurch einige Details im Wertekasten bestimmt werden. Die Kreatur verschwindet, wenn ihre Trefferpunkte auf 0 sinken oder der Zauber endet. Die Kreatur ist mit dir und deinen Verbündeten verbündet. Im Kampf nutzt sie deinen Initiativewert und ist direkt nach dir am Zug. Sie gehorcht deinen mündlichen Befehlen (keine Aktion deinerseits erforderlich). Befiehlst du ihr nichts, so führt sie die Ausweichaktion aus und nutzt ihre Bewegung, um Gefahren zu vermeiden. Verwenden von Zauberplätzen höheren Grades: Verwende den Zauberplatzgrad als Zaubergrad im Wertekasten.\n\n**Unholdgeist:** Großer Unhold, neutral. RK: 12 + Zaubergrad. TP: 50 (nur Dämon) oder 40 (nur Teufel) oder 60 (nur Yugoloth) + 15 für jeden Zaubergrad ab dem 7. Bewegungsrate: 12 m, Klettern 12 m (nur Dämon), Fliegen 18 m (nur Teufel). Werte: STA 13 (+1), GES 16 (+3), KON 15 (+2), INT 10 (+0), WEI 10 (+0), CHA 16 (+3). Resistenzen: Feuer. Immunitäten: Gift, Vergiftet. Sinne: Dunkelsicht 18 m, Passive Wahrnehmung 10. Sprachen: Abyssisch, Infernalisch, Telepathie auf 18 m. \n*Merkmale:* Magieresistenz: Der Geist ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil. Teufelssicht (nur Teufel): Magische Dunkelheit beeinträchtigt die Dunkelsicht des Geists nicht. Todeszuckungen (nur Dämon): Wenn die Trefferpunkte des Geists auf 0 sinken oder der Zauber endet, explodiert der Geist. Geschicklichkeitsrettungswurf: Der SG entspricht deinem Zauberrettungswurf-SG, alle Kreaturen in einer Ausströmung von drei Metern um den Geist. Misserfolg: 2W10 plus Zaubergrad Feuerschaden. Erfolg: Halber Schaden. \n*Aktionen:* Mehrfachangriff: Der Geist führt eine Anzahl von Angriffen aus, die der Hälfte des Zaubergrads entspricht (abgerundet). Biss (nur Dämon): Nahkampfangriffswurf: Bonus in Höhe deines Angriffszauber-Modifikators, Reichweite 1,5 Meter. Treffer: 1W12 + 3 + Zaubergrad nekrotischer Schaden. Klauen (nur Yugoloth): Nahkampfangriffswurf: Bonus in Höhe deines Angriffszauber-Modifikators, Reichweite 1,5 Meter. Treffer: 1W8 + 3 + Zaubergrad Hiebschaden. Sofort, nachdem der Angriff getroffen oder verfehlt hat, kann sich der Geist bis zu neun Meter weit in einen Bereich teleportieren, den er sehen kann. Feuriger Schlag (nur Teufel): Nahkampf- oder Fernkampfangriffswurf: Bonus in Höhe deines Angriffszauber-Modifikators, Reichweite 1,5 Meter oder 45 Meter. Treffer: 2W6 + 3 + Zaubergrad Feuerschaden. "
+    },
+    {
+        "spell_id": "unsichtbarer_diener",
+        "name_de": "Unsichtbarer Diener",
+        "name_en": "Unseen Servant",
+        "level": 1,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion oder Ritual",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Stück Schnur und etwas Holz",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Dieser Zauber erschafft eine mittelgroße unsichtbare, geist- und formlose Kraft, die auf deinen Befehl einfache Aufgaben erfüllt, bis der Zauber endet. Der Diener erscheint in Reichweite in einem freien Bereich auf dem Boden. Er besitzt eine RK von 10, einen Stärkewert von 2, 1 Trefferpunkt und kann nicht angreifen. Wenn seine Trefferpunkte auf 0 sinken, endet der Zauber. Als Bonusaktion kannst du in jedem deiner Züge dem Diener mental befehlen, sich um bis zu 4,5 Meter zu bewegen und mit einem Gegenstand zu interagieren. Der Diener kann einfache Aufgaben übernehmen, die auch ein Mensch ausführen könnte: Dinge holen, reinigen und reparieren, Kleidung zusammenlegen, Feuer entfachen, Speisen servieren und Getränke einschenken. Sobald du einen Befehl erteilst, erfüllt der Diener diesen nach Kräften, bis die Aufgabe erledigt ist. Dann wartet er auf deinen nächsten Befehl. Wenn du dem Diener befiehlst, sich für eine Aufgabe mehr als 18 Meter weit von dir zu entfernen, endet der Zauber. "
+    },
+    {
+        "spell_id": "unsichtbares_sehen",
+        "name_de": "Unsichtbares sehen",
+        "name_en": "See Invisibility",
+        "level": 2,
+        "school": "Erkenntniszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Prise Talk",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Für die Wirkungsdauer siehst du unsichtbare Kreaturen und Gegenstände, als wären sie sichtbar. Du kannst zudem in die Ätherebene blicken. Kreaturen und Gegenstände dort erscheinen geisterhaft. "
+    },
+    {
+        "spell_id": "unsichtbarkeit",
+        "name_de": "Unsichtbarkeit",
+        "name_en": "Invisibility",
+        "level": 2,
+        "school": "Illusionszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Wimper in Gummiarabikum",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Eine Kreatur, die du berührst, wird unsichtbar, bis der Zauber endet. Der Zauber endet vorzeitig, sobald das Ziel einen Angriffswurf ausgeführt, Schaden bewirkt oder selbst einen Zauber gewirkt hat. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 2. kannst du auf eine weitere Kreatur zielen. "
+    },
+    {
+        "spell_id": "untote_erschaffen",
+        "name_de": "Untote erschaffen",
+        "name_en": "Create Undead",
+        "level": 6,
+        "school": "Nekromantiezauber",
+        "casting_time": "1 Minute",
+        "range": {
+            "type": "Entfernung",
+            "distance": 3
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein schwarzer Onyx im Wert von mindestens 150 GM für jeden Leichnam",
+            "m_cost": 150,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Hexenmeister",
+            "Kleriker",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du kannst diesen Zauber nur nachts wirken. Wähle bis zu drei Leichen von Humanoiden kleiner oder mittelgroßer Größe in Reichweite aus. Jede Leiche wird zu einem Ghul unter deiner Kontrolle (den Wertekasten findest du im Monsterhandbuch). Als Bonusaktion in jedem deiner Züge kannst du jede untote Kreatur, die du mit diesem Zauber erschaffen hast und die sich im Abstand von bis zu 36 Metern von dir befindet, mental befehligen. Handelt es sich um mehrere Kreaturen, so kannst du beliebig viele von ihnen gleichzeitig befehligen, wobei jeweils der gleiche Befehl erteilt wird. Du entscheidest über die Aktion und die Bewegung der Kreatur in ihrem nächsten Zug. Alternativ kannst du einen allgemeinen Befehl erteilen, beispielsweise einen bestimmten Ort zu bewachen. Wenn du keine Befehle erteilst, führt die Kreatur die Ausweichaktion aus und bewegt sich nur, um Schaden zu vermeiden. Sobald die Kreatur einen Befehl erhalten hat, führt sie ihn aus, bis die Aufgabe abgeschlossen ist. Die Kreatur steht 24 Stunden lang unter deiner Kontrolle. Danach folgt sie keinem deiner Befehle mehr. Um die Kontrolle über die Kreatur für weitere 24 Stunden zu behalten, musst du diesen Zauber erneut auf die Kreatur wirken, ehe die ersten 24 Stunden abgelaufen sind. In diesem Fall verlängerst du die Kontrolle über bis zu drei Kreaturen, die du mit diesem Zauber erschaffen hast, anstatt eine neue Kreatur zu erschaffen. Verwenden von Zauberplätzen höheren Grades: Bei einem Zauberplatz des 7. Grades kannst du vier Ghule erschaffen oder wieder unter deine Kontrolle bringen. Bei einem Zauberplatz des 8. Grades kannst du fünf Ghule oder zwei Grufte oder zwei Gruftschrecken erschaffen oder wieder unter deine Kontrolle bringen. Bei einem Zauberplatz des 9. Grades kannst du sechs Ghule oder drei Grufte oder drei Gruftschrecken oder zwei Mumien erschaffen oder wieder unter deine Kontrolle bringen. Die jeweiligen Wertekästen findest du im Monsterhandbuch. "
+    },
+    {
+        "spell_id": "untoten_herbeirufen",
+        "name_de": "Untoten herbeirufen",
+        "name_en": "Summon Undead",
+        "level": 3,
+        "school": "Nekromantiezauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 27
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein vergoldeter Schädel im Wert von mindestens 300 GM",
+            "m_cost": 300,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": true
+        },
+        "classes": [
+            "Hexenmeister",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du rufst einen untoten Geist herbei. Er erscheint in einem freien Bereich in Reichweite, den du sehen kannst, und verwendet den Wertekasten eines Untoten Geists. Wenn du den Zauber wirkst, wähle die Gestalt der Kreatur aus: geisterhaft, skelettartig oder verwesend. Der Geist sieht aus wie ein Untoter der ausgewählten Gestalt, wodurch einige Details im Wertekasten bestimmt werden. Die Kreatur verschwindet, wenn ihre Trefferpunkte auf 0 sinken oder der Zauber endet. Die Kreatur ist mit dir und deinen Verbündeten verbündet. Im Kampf nutzt sie deinen Initiativewert und ist direkt nach dir am Zug. Sie gehorcht deinen mündlichen Befehlen (keine Aktion deinerseits erforderlich). Befiehlst du ihr nichts, so führt sie die Ausweichaktion aus und nutzt ihre Bewegung, um Gefahren zu vermeiden. Verwenden von Zauberplätzen höheren Grades: Verwende den Zauberplatzgrad als Zaubergrad im Wertekasten.\n\n**Untoter Geist:** Mittelgroßer Untoter, neutral. RK: 11 + Zaubergrad. TP: 30 (nur Geisterhaft und Verwesend) oder 20 (nur Skelettartig) + 10 für jeden Zaubergrad ab dem 4. Bewegungsrate: 9 m, Fliegen 12 m (Schweben, nur Geisterhaft). Werte: STA 12 (+1), GES 16 (+3), KON 15 (+2), INT 4 (-3), WEI 10 (+0), CHA 9 (-1). Immunitäten: Gift, Nekrotisch; Erschöpft, Gelähmt, Verängstigt, Vergiftet. Sinne: Dunkelsicht 18 m, Passive Wahrnehmung 10. Sprachen: Versteht die Sprachen, die du sprichst. \n*Merkmale:* Faulige Aura (nur Verwesend): Konstitutionsrettungswurf: Der SG entspricht deinem Zauberrettungswurf-SG, eine Kreatur (außer dir), die ihren Zug in einer Ausströmung von 1,5 Metern beginnt, die vom Geist ausgeht. Misserfolg: Die Kreatur ist bis zum Beginn ihres nächsten Zugs vergiftet. Körperloser Durchgang (nur Geisterhaft): Der Geist kann sich durch andere Kreaturen und Gegenstände bewegen, als wären sie schwieriges Gelände. Wenn er seinen Zug in einem Gegenstand beendet, wird er zum nächsten freien Bereich geschoben und erleidet pro zurückgelegten 1,5 Metern 1W10 Energieschaden. \n*Aktionen:* Mehrfachangriff: Der Geist führt eine Anzahl von Angriffen aus, die der Hälfte des Zaubergrads entspricht (abgerundet). Todesberührung (nur Geisterhaft): Nahkampfangriffswurf: Bonus in Höhe deines Angriffszauber-Modifikators, Reichweite 1,5 Meter. Treffer: 1W8 + 3 + Zaubergrad nekrotischer Schaden, und das Ziel ist bis zum Ende seines nächsten Zugs verängstigt. Verrottende Klaue (nur Verwesend): Nahkampfangriffswurf: Bonus in Höhe deines Angriffszauber-Modifikators, Reichweite 1,5 Meter. Treffer: 1W6 + 3 + Zaubergrad Hiebschaden. Wenn das Ziel vergiftet ist, so ist es bis zum Ende seines nächsten Zugs gelähmt. Grabesblitz (nur Skelettartig): Fernkampfangriffswurf: Bonus in Höhe deines Angriffszauber-Modifikators, Reichweite 45 Meter. Treffer: 2W4 + 3 + Zaubergrad nekrotischer Schaden. "
+    },
+    {
+        "spell_id": "vampirgriff",
+        "name_de": "Vampirgriff",
+        "name_en": "Vampiric Touch",
+        "level": 3,
+        "school": "Nekromantiezauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Hexenmeister",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Die Berührung deiner in Schatten gehüllten Hand kann anderen Kreaturen Lebenskraft entziehen, um dich zu heilen. Führe einen Nahkampf-Zauberangriff gegen eine Kreatur in Reichweite aus. Bei einem Treffer erleidet das Ziel 3W6 nekrotischen Schaden, und du erhältst Trefferpunkte in Höhe der Hälfte des nekrotischen Schadens zurück. Für die Wirkungsdauer kannst du in jedem deiner Züge den Angriff als magische Aktion wiederholen und dabei auf dieselbe oder auf eine andere Kreatur zielen. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 3. wird der Schaden um 1W6 erhöht. "
+    },
+    {
+        "spell_id": "verarbeitung",
+        "name_de": "Verarbeitung",
+        "name_en": "Fabricate",
+        "level": 4,
+        "school": "Verwandlungszauber",
+        "casting_time": "10 Minuten",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du wandelst Rohmaterial in Erzeugnisse aus dem gleichen Material um. Du kannst beispielsweise aus einem Stück Baum eine Holzbrücke erschaffen, aus etwas Hanf ein Seil, aus Flachs oder Wolle Kleidung. Wähle Rohmaterial in Reichweite aus, das du sehen kannst. Du kannst einen Gegenstand von höchstens großer Größe herstellen, der in einen Würfel mit drei Metern Kantenlänge oder in acht verbundene Würfel mit jeweils 1,5 Metern Kantenlänge passt, sofern du über genügend Material verfügst. Wenn du mit Metall, Stein oder einem anderen Mineral arbeitest, kann der hergestellte Gegenstand von höchstens mittelgroßer Größe sein. Er muss in einen Würfel mit 1,5 Metern Kantenlänge passen. Die Qualität der mit dem Zauber erschaffenen Gegenstände hängt von der Qualität des Rohmaterials ab. Mit diesem Zauber können weder Kreaturen noch magische Gegenstände erschaffen werden. Du kannst zudem keine Gegenstände wie Schmuck, Waffen, Glas oder Rüstung erschaffen, die ein hohes Maß an Können erfordern, es sei denn, du bist im Umgang mit dem passenden Handwerkszeug geübt. "
+    },
+    {
+        "spell_id": "verbannendes_niederstrecken",
+        "name_de": "Verbannendes Niederstrecken",
+        "name_en": "Banishing Smite",
+        "level": 5,
+        "school": "Beschwörungszauber",
+        "casting_time": "Bonusaktion, die du sofort ausführst, wenn du eine Kreatur mit einer Nahkampfwaffe oder einem waffenlosen Angriff getroffen hast",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Paladin"
+        ],
+        "summon_stat_block": null,
+        "description": "Das Ziel des Angriffswurfs erleidet zusätzlich 5W10 Energieschaden. Wenn der Angriff die Trefferpunkte des Ziels auf höchstens 50 verringert, muss das Ziel einen Charismarettungswurf bestehen, oder es wird für die Wirkungsdauer auf eine harmlose Halbebene transportiert. Solange das Ziel sich dort befindet, ist es kampfunfähig. Wenn der Zauber endet, erscheint das Ziel in dem Bereich, aus dem es wegteleportiert wurde, oder im nächstgelegenen freien Bereich wieder, falls der ursprüngliche inzwischen besetzt ist. "
+    },
+    {
+        "spell_id": "verbannung",
+        "name_de": "Verbannung",
+        "name_en": "Banishment",
+        "level": 4,
+        "school": "Bannzauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Pentakel",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Hexenmeister",
+            "Kleriker",
+            "Magier",
+            "Paladin",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Eine Kreatur in Reichweite, die du sehen kannst, muss einen Charismarettungswurf bestehen, oder sie wird für die Wirkungsdauer auf eine harmlose Halbebene transportiert. Solange das Ziel sich dort befindet, ist es kampfunfähig. Wenn der Zauber endet, erscheint das Ziel in dem Bereich, aus dem es wegteleportiert wurde, oder im nächstgelegenen freien Bereich wieder, falls der ursprüngliche inzwischen besetzt ist. Falls das Ziel eine Aberration, ein celestisches Wesen, ein Elementar, ein Feenwesen oder ein Unhold ist, kehrt es nicht zurück, sofern der Zauber eine Minute lang wirkt. Stattdessen gelangt es an einen zufälligen Ort auf einer Ebene (nach Wahl des SL), die mit seinem Kreaturentyp assoziiert ist. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 4. kannst du auf eine weitere Kreatur zielen. "
+    },
+    {
+        "spell_id": "verbergen",
+        "name_de": "Verbergen",
+        "name_en": "Sequester",
+        "level": 7,
+        "school": "Verwandlungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Edelsteinpulver im Wert von mindestens 5.000 GM, das der Zauber verbraucht",
+            "m_cost": 5000,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Bis der Zauber gebannt wird",
+            "concentration": false
+        },
+        "classes": [
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du verbirgst einen Gegenstand oder eine bereitwillige Kreatur auf magische Art, indem du das Ziel berührst. Für die Wirkungsdauer ist das Ziel unsichtbar und kann nicht Ziel von Erkenntniszaubern werden, von Magie aufgespürt oder magisch aus der Ferne betrachtet werden. Wenn das Ziel eine Kreatur ist, fällt es in einen scheintoten Zustand: Es ist bewusstlos, altert nicht und benötigt weder Nahrung noch Wasser noch Luft. Du kannst eine Bedingung festlegen, durch die der Zauber vorzeitig endet. Dabei hast du freie Wahl, solange die Bedingung im Abstand von bis zu 1,6 Kilometern um das Ziel eintritt oder sichtbar ist. Beispiele dafür wären „Nach 1.000 Jahren\" oder „Wenn die Tarraske erwacht\". Dieser Zauber endet auch dann, wenn das Ziel Schaden erleidet. "
+    },
+    {
+        "spell_id": "verbuendeter_aus_den_ebenen",
+        "name_de": "Verbündeter aus den Ebenen",
+        "name_en": "Planar Ally",
+        "level": 6,
+        "school": "Beschwörungszauber",
+        "casting_time": "10 Minuten",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Kleriker"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erfiehst den Beistand eines außerweltlichen Wesens. Dieses Wesen muss dir bekannt sein – eine Gottheit, ein Dämonenprinz oder ein anderes Wesen von kosmischer Macht. Es schickt ein ihm treu ergebenes celestisches Wesen, einen Elementar oder einen Unhold, um dir zu helfen. Diese Kreatur erscheint in einem freien Bereich in Reichweite. Kennst du den Namen einer bestimmten Kreatur, so kannst du ihn beim Wirken des Zaubers aussprechen und so um diese Kreatur bitten. Nach Wahl des SL erhältst du möglicherweise trotzdem eine andere Kreatur. Wenn die Kreatur erscheint, ist sie nicht gezwungen, sich auf eine bestimmte Weise zu verhalten. Du kannst sie bitten, einen Dienst gegen Bezahlung auszuführen. Sie ist dazu jedoch nicht verpflichtet. Die Aufgabe kann einfach oder komplex sein, von „Fliege uns über den Abgrund!\" oder „Hilf uns im Kampf!\" bis zu „Spioniere unsere Feinde aus!\" oder „Beschütze uns, während wir in das Gewölbe vordringen!\" Du musst mit der Kreatur kommunizieren können, damit du um ihre Dienste feilschen kannst. Die Bezahlung kann auf verschiedene Arten erfolgen. Ein celestisches Wesen verlangt möglicherweise eine beträchtliche Spende an Gold oder magischen Gegenständen, während ein Unhold ein lebendiges Opfer oder einen Schatz erwartet. Manche Kreaturen erwarten für ihre Dienste, dass du im Gegenzug eine Mission für sie erfüllst. Eine Aufgabe, die in Minuten gemessen wird, erfordert eine Bezahlung von 100 GM pro Minute. Eine Aufgabe, die in Stunden gemessen wird, kostet 1.000 GM pro Stunde. Eine Aufgabe, die in Tagen gemessen wird (höchstens zehn Tage), erfordert 10.000 GM pro Tag. Der SL kann die Bezahlung an die Umstände anpassen, unter denen du den Zauber wirkst. Entspricht die Aufgabe dem Ethos der Kreatur, so kann die Bezahlung halbiert werden oder ganz entfallen. Ungefährliche Aufgaben erfordern meist nur die Hälfte der genannten Bezahlung, während besonders gefährliche Aufgaben eine größere Spende benötigen. Kreaturen nehmen selten Aufgaben an, die selbstmörderisch erscheinen. Wenn die Kreatur den Auftrag abgeschlossen hat oder die vereinbarte Dauer des Dienstes endet, erstattet die Kreatur dir Bericht, sofern möglich, und kehrt dann auf ihre Heimatebene zurück. Wenn du dich mit der Kreatur nicht auf einen Preis für ihren Dienst einigen kannst, kehrt sie sofort auf ihre Heimatebene zurück. "
+    },
+    {
+        "spell_id": "verderben",
+        "name_de": "Verderben",
+        "name_en": "Bane",
+        "level": 1,
+        "school": "Verzauberungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Tropfen Blut",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Hexenmeister",
+            "Kleriker"
+        ],
+        "summon_stat_block": null,
+        "description": "Bis zu drei Kreaturen deiner Wahl in Reichweite, die du sehen kannst, führen jeweils einen Charismarettungswurf aus. Wenn ein Ziel, dessen Rettungswurf scheitert, während der Wirkungsdauer einen Angriffs- oder Rettungswurf ausführt, muss es 1W4 von seinem Angriffs- oder Rettungswurf abziehen. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 1. kannst du auf eine weitere Kreatur zielen. "
+    },
+    {
+        "spell_id": "vergroessern_verkleinern",
+        "name_de": "Vergrößern/Verkleinern",
+        "name_en": "Enlarge/Reduce",
+        "level": 2,
+        "school": "Verwandlungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 9
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Prise Eisenpulver",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Für die Wirkungsdauer vergrößert oder verkleinert der Zauber ein Ziel (Kreatur oder Gegenstand) in Reichweite, das du sehen kannst (ausgewählter Effekt siehe unten). Ein Gegenstand als Ziel darf nicht getragen oder gehalten werden. Wenn das Ziel eine nicht bereitwillige Kreatur ist, kann es einen Konstitutionsrettungswurf ausführen. Bei einem erfolgreichen Rettungswurf hat der Zauber keine Wirkung. Alles, was eine Zielkreatur trägt oder hält, verändert mit ihr die Größe. Lässt sie einen Gegenstand fallen, so nimmt dieser sofort seine normale Größe an. Wurfwaffen und Geschosse nehmen ihre normale Größe an, sobald sie ein Ziel getroffen oder verfehlt haben. Vergrößern: Die Größe des Ziels steigt um eine Kategorie, beispielsweise von Mittelgroß auf Groß. Das Ziel ist außerdem bei Stärkewürfen und Stärkerettungswürfen im Vorteil. Die Angriffe des Ziels mit seinen vergrößerten Waffen sowie seine waffenlosen Angriffe bewirken bei einem Treffer zusätzlich 1W4 Schaden. Verkleinern: Die Größe des Ziels sinkt um eine Kategorie, beispielsweise von Mittelgroß auf Klein. Das Ziel ist außerdem bei Stärkewürfen und Stärkerettungswürfen im Nachteil. Die Angriffe des Ziels mit seinen verkleinerten Waffen sowie seine waffenlosen Angriffe bewirken bei einem Treffer 1W4 Schaden weniger (der Schaden kann jedoch nicht unter 1 verringert werden). "
+    },
+    {
+        "spell_id": "verlangsamen",
+        "name_de": "Verlangsamen",
+        "name_en": "Slow",
+        "level": 3,
+        "school": "Verwandlungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Tropfen Melasse",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du verlangsamst um bis zu sechs Kreaturen deiner Wahl einem Würfel mit zwölf Metern Kantenlänge in Reichweite die Zeit. Jedes Ziel muss einen Weisheitsrettungswurf bestehen, oder es ist für die Wirkungsdauer von diesem Zauber betroffen. Die Bewegungsrate eines betroffenen Ziels wird halbiert, es erleidet einen Malus von -2 auf seine RK und auf Geschicklichkeitsrettungswürfe. Außerdem kann es keine Reaktionen ausführen. Es kann in seinem Zug eine Aktion oder eine Bonusaktion verwenden, jedoch nicht beides. Wenn es die Angriffsaktion ausführt, kann es nur einen Angriff ausführen. Wenn es einen Zauber mit Gestenkomponente wirkt, besteht eine Chance von 25 Prozent, dass der Zauber scheitert, weil das Ziel die Gesten zu langsam ausführt. Ein betroffenes Ziel wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Effekt. "
+    },
+    {
+        "spell_id": "verschonung_der_sterbenden",
+        "name_de": "Verschonung der Sterbenden",
+        "name_en": "Spare the Dying",
+        "level": 0,
+        "school": "Nekromantiezauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 4.5
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Druide",
+            "Kleriker"
+        ],
+        "summon_stat_block": null,
+        "description": "Wähle eine Kreatur in Reichweite aus, deren Trefferpunkte auf 0 gesunken sind, die jedoch noch nicht tot ist. Die Kreatur wird stabil. Zaubertrick-Aufwertung: Die Reichweite wird jeweils verdoppelt, wenn du die 5. (neun Meter), die 11. (18 Meter) und die 17. (36 Meter) Stufe erreichst. "
+    },
+    {
+        "spell_id": "verschwimmen",
+        "name_de": "Verschwimmen",
+        "name_en": "Blur",
+        "level": 2,
+        "school": "Illusionszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": false,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Dein Körper wird unscharf. Für die Wirkungsdauer sind Kreaturen bei Angriffswürfen gegen dich im Nachteil. Angreifer, die dich mit Blindsicht oder Wahrer Blick wahrnehmen, sind gegen diesen Effekt immun. "
+    },
+    {
+        "spell_id": "verstaendigung",
+        "name_de": "Verständigung",
+        "name_en": "Sending",
+        "level": 3,
+        "school": "Erkenntniszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Unbegrenzt",
+            "distance": null
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Stück Kupferdraht",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Kleriker",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du sendest eine kurze Botschaft von höchstens 25 Worten an eine Kreatur, der du begegnet bist oder die dir von jemandem beschrieben wurde, der ihr begegnet ist. Das Ziel hört die Botschaft in seinem Kopf, erkennt dich als Absender, sofern es dich kennt, und kann auf gleiche Weise sofort antworten. Der Zauber ermöglicht dem Ziel, die Bedeutung deiner Botschaft zu verstehen. Du kannst die Botschaft über beliebige Entfernungen und sogar auf andere Existenzebenen senden. Wenn sich das Ziel jedoch auf einer anderen Ebene befindet als du, besteht ein Risiko von fünf Prozent, dass die Botschaft nicht ankommt. Ist dies der Fall, so weißt du, dass sie nicht angekommen ist. Wenn eine Kreatur deine Botschaft erhalten hat, kann sie für die nächsten acht Stunden verhindern, dass du sie erneut mit diesem Zauber erreichst. Versuchst du in diesem Fall, ihr eine weitere Botschaft zu senden, so erfährst du, dass du blockiert wurdest, und der Zauber scheitert. "
+    },
+    {
+        "spell_id": "verstricken",
+        "name_de": "Verstricken",
+        "name_en": "Entangle",
+        "level": 1,
+        "school": "Beschwörungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 27
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Druide",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "In einem quadratischen Bereich mit sechs Metern Kantenlänge in Reichweite wachsen greifende Pflanzen aus dem Boden. Diese Pflanzen verwandeln den Boden im Bereich für die Wirkungsdauer in schwieriges Gelände. Wenn der Zauber endet, verschwinden sie. Jede Kreatur außer dir, die sich in dem Bereich befindet, wenn du den Zauber wirkst, muss einen Stärkerettungswurf bestehen, oder sie ist festgesetzt, bis der Zauber endet. Eine festgesetzte Kreatur kann mit einer Aktion einen Stärkewurf (Athletik) gegen deinen Zauberrettungswurf-SG ausführen. Bei einem Erfolg befreit sie sich von den greifenden Pflanzen und ist nicht mehr von ihnen festgesetzt. "
+    },
+    {
+        "spell_id": "vertrauten_finden",
+        "name_de": "Vertrauten finden",
+        "name_en": "Find Familiar",
+        "level": 1,
+        "school": "Beschwörungszauber",
+        "casting_time": "1 Stunde oder Ritual",
+        "range": {
+            "type": "Entfernung",
+            "distance": 3
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "brennender Weihrauch im Wert von mindestens 10 GM, den der Zauber verbraucht",
+            "m_cost": 10,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erhältst die Dienste eines Vertrauten eines Geistes, der eine Tiergestalt deiner Wahl annimmt: Eidechse, Eule, Falke, Fledermaus, Frosch, Katze, Oktopus, Rabe, Ratte, Spinne, Wiesel oder ein anderes Tier mit einem Herausforderungsgrad von 0. Der Vertraute erscheint in einem freien Bereich in Reichweite. Er hat die Spielwerte der gewählten Gestalt (siehe Anhang B), ist jedoch tatsächlich ein celestisches Wesen, ein Feenwesen oder ein Unhold (nach deiner Wahl) und kein Tier. Dein Vertrauter agiert unabhängig von dir, befolgt aber deine Befehle. Telepathische Verbindung: Solange sich dein Vertrauter im Abstand von bis zu 30 Metern von dir befindet, kannst du telepathisch mit ihm kommunizieren. Zudem kannst du als Bonusaktion bis zum Beginn deines nächsten Zugs durch die Sinne des Vertrauten hören und sehen. Dabei kannst du auch etwaige Spezialsinne des Vertrauten nutzen. Wenn du einen Zauber mit Berührungsreichweite wirkst, kann dein Vertrauter die Berührung ausführen. Dazu muss er sich im Abstand von bis zu 30 Metern von dir befinden und die Berührung als Reaktion ausführen, wenn du den Zauber wirkst. Kampf: Der Vertraute ist mit dir und deinen Verbündeten verbündet. Er würfelt seine eigene Initiative aus und handelt in seinem eigenen Zug. Ein Vertrauter kann nicht angreifen, jedoch andere Aktionen normal ausführen. Verschwinden des Vertrauten: Sinken die Trefferpunkte des Vertrauten auf 0, so verschwindet er. Er erscheint wieder, wenn du den Zauber erneut wirkst. Als magische Aktion kannst du den Vertrauten vorübergehend verwerfen und in eine Taschendimension schicken. Alternativ kannst du ihn für immer verwerfen. Wenn du deinen Vertrauten vorübergehend verworfen hast, kannst du ihn als magische Aktion in einem freien Bereich im Abstand von bis zu neun Metern von dir wieder erscheinen lassen. Wann immer die Trefferpunkte des Vertrauten auf 0 sinken oder der Vertraute in einer Taschendimension verschwindet, bleibt alles, was er getragen oder gehalten hat, in seinem Bereich liegen. Nur ein Vertrauter: Du kannst nur jeweils einen Vertrauten haben. Wirkst du diesen Zauber, während du einen Vertrauten hast, so lässt du diesen stattdessen eine neue verfügbare Gestalt annehmen. "
+    },
+    {
+        "spell_id": "verwandlung",
+        "name_de": "Verwandlung",
+        "name_en": "Polymorph",
+        "level": 4,
+        "school": "Verwandlungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Kokon einer Raupe",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du versuchst eine Kreatur in Reichweite, die du sehen kannst, in ein Tier zu verwandeln. Das Ziel muss einen Weisheitsrettungswurf bestehen, oder es nimmt für die Wirkungsdauer eine Tiergestalt an. Dabei kann es sich um ein beliebiges Tier deiner Wahl handeln, dessen Herausforderungsgrad nicht höher als der des Ziels ist (wenn das Ziel keinen Herausforderungsgrad hat, verwende seine Stufe). Die Spielwerte des Ziels werden vom Wertekasten des Tieres ersetzt. Das Ziel behält jedoch Gesinnung, Persönlichkeit, Kreaturentyp, Trefferpunkte sowie Trefferpunktewürfel bei. Beispiele für Wertekästen von Tieren findest du in Anhang B. Das Ziel erhält eine Anzahl von temporären Trefferpunkten, die der Anzahl von Trefferpunkten der Tiergestalt entspricht. Der Zauber endet beim Ziel vorzeitig, wenn es keine temporären Trefferpunkte übrig hat. Wenn nach dem Ende der Verwandlung von diesen temporären Trefferpunkten noch welche übrig sind, verschwinden sie. Das Ziel kann nur Aktionen ausführen, die in seiner neuen Gestalt anatomisch möglich sind. Es kann weder sprechen noch Zauber wirken. Die Ausrüstung des Ziels verschmilzt mit seiner neuen Gestalt. Die Kreatur kann die Ausrüstung nicht verwenden oder anderweitig nutzen. "
+    },
+    {
+        "spell_id": "verwirrung",
+        "name_de": "Verwirrung",
+        "name_en": "Confusion",
+        "level": 4,
+        "school": "Verzauberungszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 27
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "drei Nussschalen",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Magier",
+            "Zauberer"
+        ],
+        "summon_stat_block": null,
+        "description": "Jede Kreatur in einer Kugel mit einem Radius von drei Metern um einen Punkt deiner Wahl in Reichweite muss einen Weisheitsrettungswurf bestehen, oder sie kann weder Bonusaktionen noch Reaktionen ausführen und muss zu Beginn jedes ihrer Züge mit 1W10 würfeln, um ihr Verhalten in diesem Zug zu bestimmen: Bei einer 1 führt das Ziel keine Aktion aus und verwendet seine gesamte Bewegungsrate, um sich zu bewegen (Würfle die Richtung mit 1W4 aus: 1: Norden, 2: Osten, 3: Süden, 4: Westen). Bei einer 2-6 bewegt sich das Ziel nicht und führt keine Aktionen aus. Bei einer 7-8 bewegt sich das Ziel nicht; es führt die Angriffsaktion aus, um einen Nahkampfangriff gegen eine zufällige Kreatur in Reichweite auszuführen (wenn sich keine Kreaturen in Reichweite befinden, führt das Ziel keine Aktionen aus). Bei einer 9-10 wählt das Ziel sein Verhalten selbst aus. Ein betroffenes Ziel wiederholt den Rettungswurf am Ende jedes seiner Züge. Bei einem Erfolg endet der Zauber bei diesem Ziel. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 4. wird der Radius der Kugel um 1,5 Meter erhöht. "
+    },
+    {
+        "spell_id": "verwuenschen",
+        "name_de": "Verwünschen",
+        "name_en": "Hex",
+        "level": 1,
+        "school": "Verzauberungszauber",
+        "casting_time": "Bonusaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 27
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "versteinertes Auge eines Molchs",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Stunde",
+            "concentration": true
+        },
+        "classes": [
+            "Hexenmeister"
+        ],
+        "summon_stat_block": null,
+        "description": "Du verfluchst eine Kreatur in Reichweite, die du sehen kannst. Für die Wirkungsdauer fügst du dem Ziel, wann immer du es mit einem Angriffswurf triffst, zusätzlich 1W6 nekrotischen Schaden zu. Wähle außerdem ein Attribut aus, wenn du den Zauber wirkst. Das Ziel ist bei allen entsprechenden Attributswürfen im Nachteil. Wenn die Trefferpunkte des Ziels auf 0 sinken, bevor der Zauber endet, kannst du in deinen folgenden Zügen eine Bonusaktion ausführen, um eine andere Kreatur zu verfluchen. Verwenden von Zauberplätzen höheren Grades: Deine Konzentration kann länger andauern: bei einem Zauberplatz des 2. Grades bis zu vier Stunden, bei einem Zauberplatz des 3. und 4. Grades bis zu acht Stunden und bei einem Zauberplatz ab dem 5. Grad bis zu 24 Stunden. "
+    },
+    {
+        "spell_id": "vollstaendige_genesung",
+        "name_de": "Vollständige Genesung",
+        "name_en": "Greater Restoration",
+        "level": 5,
+        "school": "Bannzauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Diamantstaub im Wert von mindestens 100 GM, den der Zauber verbraucht",
+            "m_cost": 100,
+            "m_consumed": true
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Kleriker",
+            "Paladin",
+            "Waldläufer"
+        ],
+        "summon_stat_block": null,
+        "description": "Du berührst eine Kreatur und hebst auf magische Art einen der folgenden Effekte bei ihr auf: 1 Erschöpfungsstufe, einen der Zustände Bezaubert oder Versteinert, einen Fluch oder die Einstimmung des Ziels auf einen verfluchten magischen Gegenstand, jegliche Verringerung eines der Attributswerte des Ziels, oder jegliche Verringerung des Trefferpunktemaximums des Ziels. "
+    },
+    {
+        "spell_id": "vorahnung",
+        "name_de": "Vorahnung",
+        "name_en": "Augury",
+        "level": 2,
+        "school": "Erkenntniszauber",
+        "casting_time": "1 Minute oder Ritual",
+        "range": {
+            "type": "Selbst",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "besonders markierte Stöcke, Knochen, Karten oder andere Weissagungsgegenstände im Wert von mindestens 25 GM",
+            "m_cost": 25,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Unmittelbar",
+            "concentration": false
+        },
+        "classes": [
+            "Druide",
+            "Kleriker",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erhältst ein Omen von einem außerweltlichen Wesen zum Ergebnis eines Vorhabens, das innerhalb der nächsten 30 Minuten geplant ist. Der SL wählt das Omen aus: Wohl (Gut), Wehe (Schlecht), Wohl und Wehe (Gut und schlecht) oder Gleichgültig (Weder gut noch schlecht). Der Zauber berücksichtigt keinerlei Umstände wie andere Zauber, die das Ergebnis ändern könnten. Wenn du den Zauber vor einer langen Rast häufiger als einmal wirkst, erhöht dies das Risiko, keine Antwort zu erhalten, mit jedem Wirken nach dem ersten um jeweils 25 Prozent. "
+    },
+    {
+        "spell_id": "voraussicht",
+        "name_de": "Voraussicht",
+        "name_en": "Foresight",
+        "level": 9,
+        "school": "Erkenntniszauber",
+        "casting_time": "1 Minute",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "eine Kolibrifeder",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 8,
+            "duration_unit": "Stunden",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Druide",
+            "Hexenmeister",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du berührst eine bereitwillige Kreatur und verleihst ihr die eingeschränkte Fähigkeit, in die unmittelbare Zukunft zu blicken. Für die Wirkungsdauer ist das Ziel bei W20-Prüfungen im Vorteil, und andere Kreaturen sind bei Angriffswürfen gegen das Ziel im Nachteil. Der Zauber endet vorzeitig, wenn du ihn erneut wirkst. "
+    },
+    {
+        "spell_id": "vorbestimmtes_trugbild",
+        "name_de": "Vorbestimmtes Trugbild",
+        "name_en": "Programmed Illusion",
+        "level": 6,
+        "school": "Illusionszauber",
+        "casting_time": "Aktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 36
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "Jadestaub im Wert von mindestens 25 GM",
+            "m_cost": 25,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Bis der Zauber gebannt wird",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erschaffst die Illusion eines Gegenstands, einer Kreatur oder eines anderen sichtbaren Phänomens in Reichweite, die von einem bestimmten Auslöser aktiviert wird. Bis dahin ist die Illusion nicht wahrnehmbar. Sie darf nicht größer als ein Würfel mit neun Metern Kantenlänge sein. Beim Wirken des Zaubers bestimmst du, wie sich die Illusion verhält und welche Geräusche sie macht. Diese vorbestimmte Darbietung kann bis zu fünf Minuten andauern. Tritt der festgelegte Auslöser auf, so entsteht die Illusion und verhält sich auf die von dir beschriebene Weise. Sobald die Illusion ihre Darbietung beendet hat, verschwindet sie und ist zehn Minuten lang inaktiv. Danach kann sie erneut aktiviert werden. Der Auslöser kann beliebig allgemein oder detailliert sein. Er muss jedoch auf sichtbaren und hörbaren Phänomenen basieren, die im Abstand von bis zu neun Metern um den Bereich auftreten. Beispielsweise könntest du eine Illusion deiner selbst erschaffen, die andere davor warnt, eine Tür mit einer Falle zu öffnen. Physische Interaktionen mit dem Abbild enttarnen es als illusionär, da Dinge es einfach durchdringen können. Eine Kreatur, die das Abbild mit der Studieren-Aktion untersucht, kann mit einem erfolgreichen Intelligenzwurf (Nachforschungen) gegen deinen Zauberrettungswurf-SG erkennen, dass es sich um eine Illusion handelt. Erkennt eine Kreatur die Illusion als solche, so wird das Abbild für sie durchscheinend, und sämtliche Geräusche klingen für sie hohl. "
+    },
+    {
+        "spell_id": "waechter_und_hueter",
+        "name_de": "Wächter und Hüter",
+        "name_en": "Guards and Wards",
+        "level": 6,
+        "school": "Bannzauber",
+        "casting_time": "1 Stunde",
+        "range": {
+            "type": "Berührung",
+            "distance": 0
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "ein Silberstab im Wert von mindestens 10 GM",
+            "m_cost": 10,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 24,
+            "duration_unit": "Stunden",
+            "concentration": false
+        },
+        "classes": [
+            "Barde",
+            "Magier"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erschaffst einen Schutz, der einen Bereich von bis zu 232 Quadratmetern auf dem Boden abdeckt. Der geschützte Bereich kann bis zu sechs Meter hoch sein. Du kannst ihn als Quadrat mit 15 Metern Kantenlänge, als hundert aneinandergrenzende Quadrate mit 1,5 Metern Kantenlänge oder als 25 aneinandergrenzende Quadrate mit drei Metern Kantenlänge formen. Wenn du diesen Zauber wirkst, kannst du Individuen bestimmen, die von seinen Effekten nicht betroffen sind. Du kannst auch ein Kennwort festlegen, das den Sprecher gegen die Effekte immunisiert, wenn es im Abstand von bis zu 1,5 Metern vom geschützten Bereich ausgesprochen wird. Der Zauber erzeugt im geschützten Bereich die unten genannten Effekte. Magie bannen hat keinen Effekt auf Wächter und Hüter selbst, aber jeder der folgenden Effekte kann gebannt werden. Werden alle vier Effekte gebannt, so endet Wächter und Hüter. Wenn du den Zauber 365 Tage lang täglich auf denselben Bereich wirkst, bleibt er wirksam, bis seine Effekte aufgelöst werden. Korridore: Alle geschützten Korridore sind mit Nebel erfüllt und dadurch komplett verschleiert. Außerdem besteht an jeder Kreuzung oder Abzweigung eine Chance von 50 Prozent, dass eine Kreatur (außer dir selbst) glaubt, in die entgegengesetzte Richtung zu gehen. Treppen: Alle Treppen im geschützten Bereich werden von der Decke bis zum Boden von Spinnennetzen blockiert, so wie beim Zauber Netz. Wenn die Fäden zerstört werden, wachsen sie für die Wirkungsdauer von Wächter und Hüter innerhalb von zehn Minuten nach. Türen: Alle Türen im geschützten Bereich sind auf magische Art verschlossen, wie durch den Zauber Arkanes Schloss. Außerdem kannst du bis zu zehn Türen mit einer Illusion verbergen, sodass sie als normale Wand erscheinen. Andere Zaubereffekte: Platziere einen der folgenden magischen Effekte im geschützten Bereich: Einflüsterung in einem Würfel mit 1,5 Metern Kantenlänge (Jede Kreatur, die den Würfel betritt, erhält die Einflüsterung mental), Magischer Mund an zwei Orten, Stinkende Wolke an zwei Orten (solange Wächter und Hüter wirkt, kehren die Dämpfe nach zehn Minuten zurück, wenn sie aufgelöst werden), Tanzende Lichter in vier Korridoren mit einem einfachen Muster (das die Lichter für die Wirkungsdauer von Wächter und Hüter wiederholen) oder Windstoß in einem Korridor oder Raum (der Wind weht für die Wirkungsdauer kontinuierlich). "
+    },
+    {
+        "spell_id": "waffe_des_glaubens",
+        "name_de": "Waffe des Glaubens",
+        "name_en": "Spiritual Weapon",
+        "level": 2,
+        "school": "Hervorrufungszauber",
+        "casting_time": "Bonusaktion",
+        "range": {
+            "type": "Entfernung",
+            "distance": 18
+        },
+        "components": {
+            "v": true,
+            "s": true,
+            "m": "",
+            "m_cost": 0,
+            "m_consumed": false
+        },
+        "duration": {
+            "type": "Zeitspanne",
+            "duration_value": 1,
+            "duration_unit": "Minute",
+            "concentration": true
+        },
+        "classes": [
+            "Kleriker"
+        ],
+        "summon_stat_block": null,
+        "description": "Du erzeugst eine schwebende geisterhafte Kraft, die wie eine Waffe deiner Wahl aussieht und für die Wirkungsdauer bestehen bleibt. Die Kraft erscheint in einem Bereich deiner Wahl in Reichweite, und du kannst sofort einen Nahkampf-Zauberangriff gegen eine Kreatur im Abstand von bis zu 1,5 Metern von der Kraft ausführen. Bei einem Treffer erleidet das Ziel Energieschaden in Höhe von 1W8 plus deinem Zauberwirken-Attributsmodifikator. In deinen folgenden Zügen kannst du die Waffe als Bonusaktion um bis zu sechs Meter bewegen und einen weiteren Angriff gegen eine Kreatur im Abstand von bis zu 1,5 Metern von ihr ausführen. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 2. wird der Schaden um 1W8 erhöht. "
     }
 ]
