@@ -862,7 +862,7 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 * **Fertigkeiten (Skill Proficiencies):** Wähle 3 aus: Akrobatik (Acrobatics), Athletik (Athletics), Heimlichkeit (Stealth), Mit Tieren umgehen (Animal Handling), Motiv erkennen (Insight), Naturkunde (Nature), Überleben (Survival) oder Wahrnehmung (Perception)
 * **Waffen-Übungsbonus (Weapon Proficiencies):** Einfache Waffen (Simple Weapons), Kriegswaffen (Martial Weapons)
 * **Rüstungstraining (Armor Training):** Leichte Rüstung (Light Armor), Mittelschwere Rüstung (Medium Armor), Schilde (Shields)
-* **Startausrüstung:** Wähle A oder B: (A) Beschlagene Lederrüstung, Kurzschwert, Krummsäbel, Langbogen, 20 Pfeile, Köcher, Druidischer Fokus (Zweig), Entdeckerausrüstung und 14 GM; oder (B) 150 GM
+* **Startausrüstung:** Wähle A oder B: (A) Beschlagene Lederrüstung, Kurzschwert, Krummsäbel, Langbogen, 20 Pfeile, Köcher, Druidischer Fokus (Zweig), Entdeckerausrüstung und 7 GM; oder (B) 150 GM
 
 ### Klassenmerkmale
 
@@ -873,7 +873,7 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 * **Zauber-Rettungswurf-SG:** 8 + dein Weisheits-Modifikator + dein Übungsbonus
 * **Zauber-Angriffsbonus:** Dein Weisheits-Modifikator + dein Übungsbonus
 
-**Stufe 1: Bevorzugter Feind (Favored Enemy)**
+**Stufe 1: Erzfeind (Favored Enemy)**
 * Der Zauber *Zeichen des Jägers (Hunter's Mark)* ist für dich immer vorbereitet und zählt nicht gegen die Anzahl deiner vorbereiteten Zauber.
 * Du kannst *Zeichen des Jägers* zweimal pro Langer Rast wirken, ohne einen Zauberplatz zu verbrauchen.
 
@@ -882,9 +882,9 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 * Bei einer Langen Rast kannst du eine gewählte Waffenart durch eine andere austauschen.
 
 **Stufe 2: Kampfstil (Fighting Style)**
-* Wähle einen Kampfstil als Talent: Bogenschießen (Archery), Verteidigung (Defense), Duellieren (Dueling) oder Kampf mit zwei Waffen (Two-Weapon Fighting).
+* Wähle einen Kampfstil als Talent: Bogenschießen (Archery), Verteidigung (Defense), Duellieren (Dueling), Kampf mit zwei Waffen (Two-Weapon Fighting) oder **Druidischer Krieger** (erlernst zwei Druidenzaubertricks, z.B. Göttliche Führung und Sternenfunke, die mit Weisheit gewirkt werden).
 
-**Stufe 2: Gewandter Entdecker (Deft Explorer)**
+**Stufe 2: Geschickte Erkundung (Deft Explorer)**
 * **Expertise:** Wähle eine deiner Waldläufer-Fertigkeiten aus; dein Übungsbonus wird für diese Fertigkeit verdoppelt.
 * **Sprachen:** Du erlernst zwei Sprachen deiner Wahl.
 
@@ -897,7 +897,7 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 **Stufe 5: Extra-Angriff (Extra Attack)**
 * Du kannst zweimal statt einmal angreifen, wenn du in deinem Zug die Angriffsaktion (Attack Action) wählst.
 
-**Stufe 6: Umherstreifen (Roving)**
+**Stufe 6: Vagabund (Roving)**
 * Deine Bewegungsrate (Walking Speed) erhöht sich um 10 Fuß, solange du keine Schwere Rüstung trägst.
 * Du erhältst eine Kletter- und Schwimmbewegungsrate in Höhe deiner Bewegungsrate.
 
@@ -911,11 +911,11 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 **Stufe 13: Unnachgiebiger Jäger (Relentless Hunter)**
 * Schaden, den du erleidest, kann deine Konzentration auf den Zauber *Zeichen des Jägers* nicht brechen.
 
-**Stufe 14: Schleier der Natur (Nature's Veil)**
-* Du kannst einen Zauberplatz der Stufe 1 oder höher verbrauchen, um als Bonusaktion bis zum Ende deines nächsten Zuges Unsichtbar (Invisible) zu werden.
+**Stufe 14: Naturschleier (Nature's Veil)**
+* Du kannst als Bonusaktion bis zum Ende deines nächsten Zuges Unsichtbar (Invisible) werden. Du kannst dieses Merkmal in Höhe deines Weisheits-Modifikators (Minimum 1) anwenden und erhältst alle Anwendungen nach einer Langen Rast zurück.
 
 **Stufe 17: Präziser Jäger (Precise Hunter)**
-* Du hast Vorteil auf den ersten Angriffswurf in deinem Zug gegen das Ziel deines *Zeichen des Jägers*.
+* Du hast generellen Vorteil bei Angriffswürfen gegen die Kreatur, die mit deinem *Zeichen des Jägers* markiert ist.
 
 **Stufe 18: Wilde Sinne (Feral Senses)**
 * Du erhältst Blindsicht (Blindsight) mit einer Reichweite von 30 Fuß.
@@ -930,25 +930,25 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 
 ### Unterklassen
 
-#### Herr der Bestien (Beast Master)
+#### Herr der Tiere (Beast Master)
 * **Stufe 3: Ursprünglicher Gefährte (Primal Companion):** Du rufst ein magisches Tier herbei (Tier des Landes, des Meeres oder des Himmels). Es handelt in deinem Zug. Du kannst als Bonusaktion oder durch das Ersetzen einer deiner Angriffe in der Angriffsaktion dem Gefährten befehlen, anzugreifen. Ohne Befehl weicht es aus (Dodge).
 * **Stufe 7: Außergewöhnliches Training (Exceptional Training):** Du kannst als Bonusaktion dem Tier befehlen, die Aktionen Spurt (Dash), Rückzug (Disengage), Ausweichen (Dodge) oder Helfen (Help) auszuführen. Die Angriffe des Tiers gelten als magisch für das Überwinden von Resistenzen.
 * **Stufe 11: Bestialischer Zorn (Bestial Fury):** Wenn du deinem Tier befiehlst anzugreifen, kann es zweimal zuschlagen. Profitierst du vom *Zeichen des Jägers*, fügt auch das Tier dem markierten Ziel den Bonusschaden zu.
 * **Stufe 15: Gemeinsame Zauber (Share Spells):** Wenn du einen Zauber auf dich selbst wirkst, kannst du denselben Zauber auf deinen Gefährten wirken, solange er innerhalb von 30 Fuß ist.
 
-#### Düsterer Lauerer (Gloom Stalker)
-* **Stufe 3: Düsterer Hinterhalt (Dread Ambusher):** In der ersten Runde eines Kampfes steigt deine Bewegungsrate um 10 Fuß. Du kannst diesen Vorteil auf Angriffe in Höhe deines Weisheits-Modifikators pro Langer Rast nutzen: Wenn du eine Kreatur triffst, fügst du 1W8 (später 2W8) nekrotischen Schaden zu und kannst versuchen, das Ziel oder eine angrenzende Kreatur zu verängstigen (Frightened).
+#### Düsterpirscher (Gloom Stalker)
+* **Stufe 3: Düsterer Hinterhalt (Dread Ambusher):** In der ersten Runde eines Kampfes steigt deine Bewegungsrate um 10 Fuß. Du kannst diesen Vorteil auf Angriffe in Höhe deines Weisheits-Modifikators pro Langer Rast nutzen: Wenn du eine Kreatur triffst, fügst du durch Grässliche Schläge zusätzlich **2W6 psychischen Schaden** zu.
 * **Stufe 3: Umbrale Sicht (Umbral Sight):** Du erhältst 60 Fuß Dunkelsicht (oder erweiterst bestehende um 60 Fuß). Du bist für Kreaturen, die sich auf Dunkelsicht verlassen, in absoluter Dunkelheit unsichtbar.
 * **Stufe 7: Eiserner Verstand (Iron Mind):** Du erhältst Übung in Weisheits-Rettungswürfen.
-* **Stufe 11: Hagel des Lauerers (Stalker's Flurry):** Wenn du die Eigenschaft *Düsterer Hinterhalt* einsetzt, kannst du sofort einen zusätzlichen Waffenangriff auf das gleiche oder ein anderes Ziel ausführen.
+* **Stufe 11: Schlaghagel des Pirschers (Stalker's Flurry):** Wenn du *Düsterer Hinterhalt* (Grässliche Schläge) einsetzt, erhöht sich der psychische Schaden auf **2W8**. Zudem wählst du bei Nutzung einen von zwei Effekten: Entweder **Plötzlicher Schlag** (ein weiterer Angriff auf eine andere Kreatur im Abstand von 1,5 Metern) oder **Massenfurcht** (Ziel und alle Kreaturen im Abstand von 3 Metern müssen einen Weisheitsrettungswurf ablegen oder sind verängstigt).
 * **Stufe 15: Schattenhaftes Ausweichen (Shadowy Dodge):** Wenn du angegriffen wirst, kannst du als Reaktion 30 Fuß teleportieren. Dadurch erhält der Angriff gegen dich Nachteil.
 
 #### Jäger (Hunter)
-* **Stufe 3: Beute des Jägers (Hunter's Prey):** Wähle einen von drei Vorteilen (Gigantentöter/Retaliator, Hordenbrecher oder Koloss-Schlächter). Du kannst diese Wahl nach einer Kurzen oder Langen Rast ändern.
+* **Stufe 3: Beute des Jägers (Hunter's Prey):** Wähle einen von zwei Vorteilen (**Hordenbrecher** oder **Kolossschlächter**). Du kannst diese Wahl nach einer Kurzen oder Langen Rast ändern.
 * **Stufe 3: Wissen des Jägers (Hunter's Lore):** Du kennst die Resistenzen, Immunitäten und Verwundbarkeiten der Kreatur, die durch dein *Zeichen des Jägers* markiert ist.
-* **Stufe 7: Defensive Taktiken (Defensive Tactics):** Wähle einen Verteidigungsvorteil (Flucht vor der Horde, Multiangriffs-Verteidigung, Stählerner Wille). Änderbar nach einer Kurzen oder Langen Rast.
-* **Stufe 11: Überragende Beute des Jägers (Superior Hunter's Prey):** Wähle einen weiteren Vorteil der Stufe 3, den du ebenfalls einsetzen kannst.
-* **Stufe 15: Überragende Verteidigung des Jägers (Superior Hunter's Defense):** Wähle einen weiteren Vorteil der Stufe 7, den du ebenfalls einsetzen kannst.
+* **Stufe 7: Defensive Taktiken (Defensive Tactics):** Wähle einen Verteidigungsvorteil (**Der Horde entkommen** oder **Verteidigung gegen Mehrfachangriffe**). Änderbar nach einer Kurzen oder Langen Rast.
+* **Stufe 11: Beute des überlegenen Jägers (Superior Hunter's Prey):** Du darfst einmal pro Zug den zusätzlichen Schaden deines Zaubers *Zeichen des Jägers* auf eine weitere Kreatur übertragen, die sich im Abstand von bis zu 9 Metern vom ersten Ziel befindet.
+* **Stufe 15: Verteidigung des überlegenen Jägers (Superior Hunter's Defense):** Wenn du Schaden erleidest, kannst du eine Reaktion ausführen, um bis zum Ende deines aktuellen Zugs Resistenz gegen diesen Schaden und jeden anderen Schaden der gleichen Art zu erhalten.
 
 #### Feenwanderer (Fey Wanderer)
 * **Stufe 3: Schreckensschläge (Dreadful Strikes):** Einmal pro Zug pro Ziel kannst du einen Treffer mit einer Waffe um 1W4 (später 1W6) psychischen Schaden verstärken.
@@ -1067,7 +1067,7 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 * **Primäres Attribut:** Charisma
 * **Trefferwürfel:** W8 pro Hexenmeisterstufe
 * **Rettungswürfe:** Weisheit, Charisma
-* **Fertigkeiten (Wähle 2):** Arkanes Wissen, Einschüchtern, Geschichte, Nachforschungen, Naturkunde, Religion, Täuschung
+* **Fertigkeiten (Wähle 2):** Arkane Kunde, Einschüchtern, Geschichte, Nachforschungen, Naturkunde, Religion, Täuschen
 * **Waffen-Übung:** Einfache Waffen
 * **Rüstungs-Übung:** Leichte Rüstung
 * **Startausrüstung:** Wähle A oder B: (A) Lederrüstung, Sichel, 2 Dolche, Arkaner Fokus (Kugel), Buch (okkultes Wissen), Gelehrtenpaket und 15 GM; oder (B) 100 GM
@@ -1077,14 +1077,14 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 | Stufe | Übungsbonus | Merkmale | Schauerliche Anrufungen | Zaubertricks | Vorbereitete Zauber | Zauberplätze | Platz-Stufe |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | +2 | Paktmagie, Schauerliche Anrufungen | 1 | 2 | 2 | 1 | 1 |
-| 2 | +2 | Magische List | 2 | 2 | 3 | 2 | 1 |
+| 2 | +2 | Magische Raffinesse | 2 | 2 | 3 | 2 | 1 |
 | 3 | +2 | Hexenmeister-Unterklasse | 2 | 2 | 4 | 2 | 2 |
 | 4 | +2 | Attributswertverbesserung | 3 | 3 | 5 | 2 | 2 |
 | 5 | +3 | - | 3 | 3 | 6 | 2 | 3 |
 | 6 | +3 | Unterklassenmerkmal | 3 | 3 | 7 | 2 | 3 |
 | 7 | +3 | - | 4 | 3 | 8 | 2 | 4 |
 | 8 | +3 | Attributswertverbesserung | 4 | 3 | 9 | 2 | 4 |
-| 9 | +4 | Kontakt zum Patron | 5 | 3 | 10 | 2 | 5 |
+| 9 | +4 | Schutzherrn kontaktieren | 5 | 3 | 10 | 2 | 5 |
 | 10 | +4 | Unterklassenmerkmal | 5 | 4 | 10 | 2 | 5 |
 | 11 | +4 | Mystisches Arkanum (Stufe 6) | 5 | 4 | 11 | 3 | 5 |
 | 12 | +4 | Attributswertverbesserung | 6 | 4 | 11 | 3 | 5 |
@@ -1094,8 +1094,8 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 | 16 | +5 | Attributswertverbesserung | 7 | 4 | 13 | 3 | 5 |
 | 17 | +6 | Mystisches Arkanum (Stufe 9) | 8 | 4 | 14 | 4 | 5 |
 | 18 | +6 | - | 8 | 4 | 14 | 4 | 5 |
-| 19 | +6 | Epische Wohltat | 9 | 4 | 15 | 4 | 5 |
-| 20 | +6 | Schauerlicher Meister | 9 | 4 | 15 | 4 | 5 |
+| 19 | +6 | Epische Gabe | 9 | 4 | 15 | 4 | 5 |
+| 20 | +6 | Mystischer Meister | 9 | 4 | 15 | 4 | 5 |
 
 ### Klassenmerkmale
 
@@ -1109,27 +1109,27 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 **Stufe 1: Schauerliche Anrufungen (Eldritch Invocations)**
 Du erhältst verbotenes arkanes Wissen in Form von Anrufungen. (Details siehe Liste unten).
 
-**Stufe 2: Magische List (Magical Cunning)**
+**Stufe 2: Magische Raffinesse (Magical Cunning)**
 Du kannst einen esoterischen Ritus von 1 Minute Dauer durchführen. Danach erhältst du verbrauchte Paktmagie-Zauberplätze in Höhe der Hälfte deines Maximums (aufgerundet) zurück. 1x pro Langer Rast.
 
 **Stufe 3: Hexenmeister-Unterklasse**
-Wähle einen Patron (siehe unten).
+Wähle einen Schutzherrn (siehe unten).
 
 **Stufe 4: Attributswertverbesserung**
 Du erhältst ein Talent. Erneut auf Stufe 8, 12 und 16.
 
-**Stufe 9: Kontakt zum Patron (Contact Patron)**
-Du hast *Kontakt zu anderen Ebenen (Contact Other Plane)* immer vorbereitet. Du kannst den Zauber 1x pro Langer Rast kostenlos wirken, um direkt deinen Patron zu kontaktieren, und bestehst den Rettungswurf des Zaubers dabei automatisch.
+**Stufe 9: Schutzherrn kontaktieren (Contact Patron)**
+Du hast *Kontakt zu anderen Ebenen (Contact Other Plane)* immer vorbereitet. Du kannst den Zauber 1x pro Langer Rast kostenlos wirken, um direkt deinen Schutzherrn zu kontaktieren, und bestehst den Rettungswurf des Zaubers dabei automatisch.
 
 **Stufe 11: Mystisches Arkanum (Mystic Arcanum)**
-Dein Patron gewährt dir ein Arkanum: Du wählst einen Hexenmeister-Zauber der 6. Stufe. Du kannst diesen 1x pro Langer Rast ohne Zauberplatz wirken.
+Dein Schutzherr gewährt dir ein Arkanum: Du wählst einen Hexenmeister-Zauber der 6. Stufe. Du kannst diesen 1x pro Langer Rast ohne Zauberplatz wirken.
 Du erhältst weitere Zauber auf höheren Stufen: 7. Stufe (Level 13), 8. Stufe (Level 15) und 9. Stufe (Level 17). Bei jedem Stufenaufstieg kannst du einen Arkanum-Zauber gegen einen anderen seiner Stufe tauschen.
 
-**Stufe 19: Epische Wohltat (Epic Boon)**
-Wähle ein Talent für Epische Wohltaten.
+**Stufe 19: Epische Gabe (Epic Boon)**
+Wähle ein Talent für Epische Gaben.
 
-**Stufe 20: Schauerlicher Meister (Eldritch Master)**
-Wenn du *Magische List* verwendest, regenerierst du stattdessen *alle* verbrauchten Paktmagie-Zauberplätze.
+**Stufe 20: Mystischer Meister (Eldritch Master)**
+Wenn du *Magische Raffinesse* verwendest, regenerierst du stattdessen *alle* verbrauchten Paktmagie-Zauberplätze.
 
 ---
 
@@ -1137,46 +1137,46 @@ Wenn du *Magische List* verwendest, regenerierst du stattdessen *alle* verbrauch
 
 *(Voraussetzungen, falls vorhanden, in Klammern).*
 
-* **Aufsteigender Schritt (Stufe 5):** Wirke *Schweben* auf dich selbst ohne Zauberplatz.
-* **Blick zweier Geister (Stufe 5):** Als Bonusaktion berührst du eine willige Kreatur und nimmst bis Ende deines nächsten Zuges durch ihre Sinne wahr. Mit Bonusaktion (solange selbe Ebene) aufrechtzuerhalten. Du kannst Zauber aus ihrer Position wirken (bis 60 Fuß Entfernung).
+* **Aufsteigen der Schritt (Stufe 5):** Wirke *Schweben* auf dich selbst ohne Zauberplatz.
+* **Gedankenblick (Stufe 5):** Als Bonusaktion berührst du eine willige Kreatur und nimmst bis Ende deines nächsten Zuges durch ihre Sinne wahr. Mit Bonusaktion (solange selbe Ebene) aufrechtzuerhalten. Du kannst Zauber aus ihrer Position wirken (bis 60 Fuß Entfernung).
 * **Dürstende Klinge (Stufe 5, Pakt der Klinge):** Du erhältst das Merkmal *Zusätzlicher Angriff*, das aber nur für deine Paktwaffe gilt.
-* **Eins mit den Schatten (Stufe 5):** In schwachem Licht oder Dunkelheit: Wirke *Unsichtbarkeit* auf dich selbst ohne Zauberplatz.
-* **Flüstern des Grabes (Stufe 7):** Wirke *Mit Toten sprechen* ohne Zauberplatz.
-* **Gabe der Beschützer (Stufe 9, Pakt des Folianten):** Eine Seite im Buch enthält Namen (Anzahl = CHA-Modifikator). Fällt ein Genannter auf 0 TP (ohne Soforttod), fällt er stattdessen auf 1 TP. 1x pro Langer Rast.
+* **Mit den Schatten verschmelzen (Stufe 5):** In schwachem Licht oder Dunkelheit: Wirke *Unsichtbarkeit* auf dich selbst ohne Zauberplatz.
+* **Grabesflüstern (Stufe 7):** Wirke *Mit Toten sprechen* ohne Zauberplatz.
+* **Gabe der Beschützer (Stufe 9, Pakt des Buches):** Eine Seite im Buch enthält Namen (Anzahl = CHA-Modifikator). Fällt ein Genannter auf 0 TP (ohne Soforttod), fällt er stattdessen auf 1 TP. 1x pro Langer Rast.
 * **Gabe der Tiefen (Stufe 5):** Du kannst unter Wasser atmen, erhältst eine Schwimmrate gleich deiner Bewegungsrate und kannst *Wasseratmen* 1x pro Langer Rast ohne Zauberplatz wirken.
 * **Hexensicht (Stufe 15):** Du hast Wahren Blick (Truesight) mit 30 Fuß Reichweite.
-* **Investitur des Kettenmeisters (Stufe 5, Pakt der Kette):** Vertrauter erhält Flug/Schwimmrate 40 Fuß. Ergreift Angriff per Bonusaktion von dir. Darf Nekrotischen/Gleißenden Schaden statt dem normalen verursachen. Nutzt deinen Spell-DC. Du kannst als Reaktion Resistenz gewähren, wenn er Schaden nimmt.
-* **Lebensfresser (Stufe 9, Pakt der Klinge):** 1x pro Zug bei Treffer mit Paktwaffe: +1W6 (Nekrotisch, Psychisch oder Gleißend) Schaden. Du kannst einen deiner Trefferwürfel ausgeben, würfeln und das Ergebnis + KON-Modifikator heilen.
-* **Lehren der Ersten (Stufe 2):** Wähle ein Ursprungstalent. (Mehrfach wählbar).
+* **Gabe des Kettenmeisters (Stufe 5, Pakt der Kette):** Vertrauter erhält Flug/Schwimmrate 40 Fuß. Ergreift Angriff per Bonusaktion von dir. Darf Nekrotischen/Gleißenden Schaden statt dem normalen verursachen. Nutzt deinen Spell-DC. Du kannst als Reaktion Resistenz gewähren, wenn er Schaden nimmt.
+* **Lebenstrinker (Stufe 9, Pakt der Klinge):** 1x pro Zug bei Treffer mit Paktwaffe: +1W6 (Nekrotisch, Psychisch oder Gleißend) Schaden. Du kannst einen deiner Trefferwürfel ausgeben, würfeln und das Ergebnis + KON-Modifikator heilen.
+* **Lektionen der Ältesten (Stufe 2):** Wähle ein Ursprungstalent. (Mehrfach wählbar).
 * **Maske der vielen Gesichter (Stufe 2):** Wirke *Selbstverkleidung* ohne Zauberplatz.
-* **Meister der unzähligen Formen (Stufe 5):** Wirke *Gestalt verändern* ohne Zauberplatz.
+* **Meister der Myriaden Formen (Stufe 5):** Wirke *Gestalt verändern* ohne Zauberplatz.
 * **Neblige Visionen (Stufe 2):** Wirke *Lautloses Trugbild* ohne Zauberplatz.
 * **Pakt der Kette:** Du lernst *Vertrauten finden*. Wirke ihn ohne Zauberplatz (als Magie-Aktion). Zusätzliche Formen (Quasit, Pseudodrache, Imp etc.). Du kannst im Zug einen eigenen Angriff opfern, um den Vertrauten als Reaktion angreifen zu lassen.
 * **Pakt der Klinge:** Beschwöre als Bonusaktion eine Nahkampfwaffe (oder binde eine berührte Magische Waffe). Du bist geübt, sie gilt als Fokus, greift mit Charisma (statt STR/DEX) an und kann Nekrotischen, Psychischen oder Gleißenden Schaden anrichten.
-* **Pakt des Folianten:** Beschwöre ein Buch nach einer Rast. Wähle 3 Zaubertricks und 2 Stufe-1-Rituale (von jeder Liste). Sie gelten für dich als vorbereitet und sind Hexenmeister-Zauber. Fokus.
+* **Pakt des Buches:** Beschwöre ein Buch nach einer Rast. Wähle 3 Zaubertricks und 2 Stufe-1-Rituale (von jeder Liste). Sie gelten für dich als vorbereitet und sind Hexenmeister-Zauber. Fokus.
 * **Qualvoller Strahl (Stufe 2, ein Schadens-Zaubertrick):** Wähle einen Schadens-Zaubertrick. Addiere CHA-Modifikator zum Schaden. (Mehrfach wählbar für andere Zaubertricks).
-* **Rüstung der Schatten:** Wirke *Magierrüstung* auf dich ohne Zauberplatz.
-* **Schauerlicher Geist:** Vorteil auf KON-Rettungswürfe zur Konzentration.
-* **Schauerlicher Speer (Stufe 2, ein Schadens-Zaubertrick ab 10 Fuß):** Wähle einen Zaubertrick: Die Reichweite erhöht sich um (30 x Hexenmeisterstufe) Fuß. (Mehrfach wählbar für andere Zaubertricks).
-* **Schauerliches Zerschmettern (Stufe 5, Pakt der Klinge):** 1x pro Zug bei Treffer: Verbrauche Zauberplatz für +1W8 Energieschaden (Force) + 1W8 pro Zauberplatzstufe. Wirft Größe Riesig oder kleiner *Liegend*.
-* **Teuflische Lebenskraft (Stufe 2):** Wirke *Falsches Leben* auf dich ohne Zauberplatz (kein Würfeln für Temporäre TP, nimm den maximalen Würfelwert).
+* **Schattenrüstung:** Wirke *Magierrüstung* auf dich ohne Zauberplatz.
+* **Schauerlicher Verstand:** Vorteil auf KON-Rettungswürfe zur Konzentration.
+* **Unheimlicher Speer (Stufe 2, ein Schadens-Zaubertrick ab 10 Fuß):** Wähle einen Zaubertrick: Die Reichweite erhöht sich um (30 x Hexenmeisterstufe) Fuß. (Mehrfach wählbar für andere Zaubertricks).
+* **Schauerliches Niederstrecken (Stufe 5, Pakt der Klinge):** 1x pro Zug bei Treffer: Verbrauche Zauberplatz für +1W8 Energieschaden (Force) + 1W8 pro Zauberplatzstufe. Wirft Größe Riesig oder kleiner *Liegend*.
+* **Unholde Vitalität (Stufe 2):** Wirke *Falsches Leben* auf dich ohne Zauberplatz (kein Würfeln für Temporäre TP, nimm den maximalen Würfelwert).
 * **Teufelssicht (Stufe 2):** Normale Sicht in (magischer und nichtmagischer) Dunkelheit und Dämmerlicht bis 120 Fuß.
-* **Übernatürlicher Sprung (Stufe 2):** Wirke *Springen* auf dich ohne Zauberplatz.
+* **Außerweltlicher Sprung (Stufe 2):** Wirke *Springen* auf dich ohne Zauberplatz.
 * **Verschlingende Klinge (Stufe 12, Dürstende Klinge):** Die Extra-Attacke der Paktwaffe erlaubt nun zwei zusätzliche Angriffe statt einem.
-* **Visionen ferner Reiche (Stufe 9):** Wirke *Arkanes Auge* ohne Zauberplatz.
-* **Zurückstoßender Strahl (Stufe 2, Angriffs-Zaubertrick):** Treffer drückt Ziel (Größe Groß oder kleiner) 10 Fuß weg. (Mehrfach wählbar für andere Zaubertricks).
+* **Visionen von fernen Gefilden (Stufe 9):** Wirke *Arkanes Auge* ohne Zauberplatz.
+* **Zurückdrängender Strahl (Stufe 2, Angriffs-Zaubertrick):** Treffer drückt Ziel (Größe Groß oder kleiner) 10 Fuß weg. (Mehrfach wählbar für andere Zaubertricks).
 
 ---
 
-#### Patron der Erzfee (Archfey Patron)
+#### Erzfee-Schutzherr (Archfey Patron)
 
 **Stufe 3: Zauber der Erzfee**
 Du hast folgende Zauber immer vorbereitet:
 
-* Stufe 3: *Gefühle besänftigen, Feenfeuer, Nebelschritt, Phantasmagorische Kraft, Schlaf*
+* Stufe 3: *Gefühle besänftigen, Feenfeuer, Nebelschritt, Macht der Vorstellungskraft, Schlaf*
 * Stufe 5: *Flimmern, Pflanzenwachstum*
 * Stufe 7: *Tier beherrschen, Größere Unsichtbarkeit*
-* Stufe 9: *Person beherrschen, Schein*
+* Stufe 9: *Person beherrschen, Äußerlichkeiten*
 
 **Stufe 3: Schritte der Fee (Steps of the Fey)**
 Du kannst *Nebelschritt* kostenlos wirken (Nutzungen = CHA-Modifikator pro Langer Rast). Zusatzeffekt nach dem Teleport (wähle einen):
@@ -1198,7 +1198,7 @@ Wirkst du einen Verzauberungs- oder Illusionszauber (als Aktion mit Zauberplatz)
 
 ---
 
-#### Himmlischer Patron (Celestial Patron)
+#### Celestischer Schutzherr (Celestial Patron)
 
 **Stufe 3: Himmlische Zauber**
 Du hast folgende Zauber immer vorbereitet:
@@ -1206,7 +1206,7 @@ Du hast folgende Zauber immer vorbereitet:
 * Stufe 3: *Beistand, Wunden heilen, Lenkendes Geschoss, Schwächere Genesung, Licht, Heilige Flamme*
 * Stufe 5: *Tageslicht, Wiederbeleben*
 * Stufe 7: *Wächter des Glaubens, Feuerwand*
-* Stufe 9: *Höhere Genesung, Himmlisches Wesen beschwören*
+* Stufe 9: *Höhere Genesung, Celestisches Wesen herbeirufen*
 
 **Stufe 3: Heilendes Licht (Healing Light)**
 Du hast einen Pool aus W6-Würfeln (Anzahl = Hexenmeisterstufe + 1). Als Bonusaktion kannst du dich oder eine Kreatur in 60 Fuß heilen. Gib Würfel bis zum Maximum deines CHA-Modifikators (Minimum 1) aus, würfle und heile die Summe. Pool regeneriert nach Langer Rast.
@@ -1214,15 +1214,15 @@ Du hast einen Pool aus W6-Würfeln (Anzahl = Hexenmeisterstufe + 1). Als Bonusak
 **Stufe 6: Gleißende Seele (Radiant Soul)**
 Resistenz gegen Gleißenden Schaden (Radiant). Wirkst du einen Zauber, der Feuer- oder Gleißenden Schaden verursacht, kannst du 1x pro Zug deinen CHA-Modifikator auf den Schaden gegen ein Ziel addieren.
 
-**Stufe 10: Himmlische Widerstandsfähigkeit (Celestial Resilience)**
-Erhältst du nach Kurzer/Langer Rast oder *Magischer List* Zauberplätze zurück, gewinnst du Temporäre TP = Hexenmeisterstufe + CHA-Modifikator. Wähle bis zu 5 Verbündete: Sie erhalten Temporäre TP = halbe Hexenmeisterstufe + CHA-Modifikator.
+**Stufe 10: Celestische Widerstandskraft (Celestial Resilience)**
+Erhältst du nach Kurzer/Langer Rast oder *Magischer Raffinesse* Zauberplätze zurück, gewinnst du Temporäre TP = Hexenmeisterstufe + CHA-Modifikator. Wähle bis zu 5 Verbündete: Sie erhalten Temporäre TP = halbe Hexenmeisterstufe + CHA-Modifikator.
 
 **Stufe 14: Sengende Rache (Searing Vengeance)**
 Musst du (oder ein Verbündeter in 60 Fuß) einen Todesrettungswurf ablegen, heilt das Ziel stattdessen die Hälfte seiner maximalen TP und steht auf. Feinde im Umkreis von 30 Fuß nehmen 2W8 + CHA-Modifikator Gleißenden Schaden und sind bis Ende des aktuellen Zuges *Blind*. 1x pro Langer Rast.
 
 ---
 
-#### Unterweltlicher Patron (Fiend Patron)
+#### Unhold-Schutzherr (Fiend Patron)
 
 **Stufe 3: Segen des Dunklen (Dark One's Blessing)**
 Reduzierst du (oder ein Verbündeter in 10 Fuß Umkreis) einen Gegner auf 0 TP, erhältst du Temporäre TP = CHA-Modifikator + Hexenmeisterstufe.
@@ -1235,18 +1235,18 @@ Du hast folgende Zauber immer vorbereitet:
 * Stufe 7: *Feuerschild, Feuerwand*
 * Stufe 9: *Geas, Insektenplage*
 
-**Stufe 6: Glück des Dunklen (Dark One's Own Luck)**
+**Stufe 6: Schicksal des Dunklen Meisters (Dark One's Own Luck)**
 Nach einem Attributs- oder Rettungswurf kannst du 1W10 zum Resultat addieren (nach Ansicht des Wurfes, vor Abwicklung der Effekte). Nutzungen = CHA-Modifikator pro Langer Rast.
 
 **Stufe 10: Teuflische Widerstandsfähigkeit (Fiendish Resilience)**
 Wähle bei Abschluss einer Kurzen oder Langen Rast einen Schadenstyp (außer Energieschaden). Du erhältst Resistenz dagegen bis zum nächsten Wechsel.
 
-**Stufe 14: Durch die Hölle schleudern (Hurl Through Hell)**
+**Stufe 14: Schlund des Wahnsinns (Hurl Through Hell)**
 1x pro Zug bei einem Treffer mit Angriffswurf: Ziel muss CHA-Rettungswurf ablegen. Fehlschlag: Verschwindet kurzzeitig, nimmt 8W10 Psychischen Schaden (sofern kein Unterweltler/Fiend) und ist bis Ende deines nächsten Zuges *Kampfunfähig (Incapacitated)*, ehe es auf seinen alten Platz zurückkehrt. 1x pro Langer Rast (oder durch Ausgabe eines Zauberplatzes).
 
 ---
 
-#### Patron der Großen Alten (Great Old One Patron)
+#### Großer-Alter-Schutzherr (Great Old One Patron)
 
 **Stufe 3: Erwachter Geist (Awakened Mind)**
 Bonusaktion: Telepathische Verbindung mit einer Kreatur in 30 Fuß. Hält in Minuten = Hexenmeisterstufe. Reichweite in Meilen = CHA-Modifikator. (Ihr müsst mental eine gemeinsame Sprache nutzen). Endet, wenn auf anderes Ziel gewirkt.
@@ -1265,11 +1265,11 @@ Du kannst den Schaden von Hexenmeister-Schadenszaubern in Psychischen Schaden um
 **Stufe 6: Hellseherischer Kämpfer (Clairvoyant Combatant)**
 Du kannst eine mental verbundene Kreatur (*Erwachter Geist*) zu einem WIS-Rettungswurf zwingen. Fehlschlag: Sie hat Nachteil auf Angriffe gegen dich, du hast Vorteil auf Angriffe gegen sie, solange die Verbindung besteht. 1x pro Kurzer/Langer Rast (oder durch Ausgabe eines Zauberplatzes).
 
-**Stufe 10: Schauerlicher Fluch (Eldritch Hex)**
-Der Zauber *Fluch (Hex)* ist immer vorbereitet. Wirkst du ihn, hat das Ziel zusätzlich zu den normalen Effekten auch Nachteil auf Rettungswürfe des für den Fluch gewählten Attributs.
+**Stufe 10: Schauerliches Verwünschen (Eldritch Hex)**
+Der Zauber *Verwünschen (Hex)* ist immer vorbereitet. Wirkst du ihn, hat das Ziel zusätzlich zu den normalen Effekten auch Nachteil auf Rettungswürfe des für den Verwünschen gewählten Attributs.
 
 **Stufe 10: Gedankenschild (Thought Shield)**
 Deine Gedanken können nicht gelesen werden. Resistenz gegen Psychischen Schaden. Fügt dir eine Kreatur Psychischen Schaden zu, erleidet sie dieselbe Menge an Schaden.
 
-**Stufe 14: Sklaven erschaffen (Create Thrall)**
-Wirkst du *Aberration beschwören*, benötigt es keine Konzentration (Dauer dann exakt 1 Minute). Die Kreatur erhält Temporäre TP = Hexenmeisterstufe + CHA-Modifikator. Trifft die Aberration 1x im Zug ein Ziel unter deinem *Fluch (Hex)*, verursacht sie zusätzlichen Psychischen Schaden in Höhe des Fluch-Zusatzschadens.
+**Stufe 14: Diener erschaffen (Create Thrall)**
+Wirkst du *Aberration beschwören*, benötigt es keine Konzentration (Dauer dann exakt 1 Minute). Die Kreatur erhält Temporäre TP = Hexenmeisterstufe + CHA-Modifikator. Trifft die Aberration 1x im Zug ein Ziel unter deinem *Verwünschen (Hex)*, verursacht sie zusätzlichen Psychischen Schaden in Höhe des Verwünschen-Zusatzschadens.
