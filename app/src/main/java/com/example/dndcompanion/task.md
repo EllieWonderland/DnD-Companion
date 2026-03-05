@@ -31,11 +31,11 @@
   - Weißen Hintergrund gegen weiße Schrift auf farbigem Hintergrund tauschen.
   - Gesuchtes Wort im Text farblich/fett markieren (Highlighting).
   - *Commit:* `git commit -m "fix: rulebook apply dark theme and add text highlighting for search"`
-- [ ] **Rucksack - Gewicht & Gegenstands-Auswahl:** 
+- [x] **Rucksack - Gewicht & Gegenstands-Auswahl:** 
   - Auf tatsächliche Gewichte aus der Datei `equipment.md` zugreifen und summiert anzeigen.
   - Neben dem freien Eingabefeld sollten Items für den Rucksack auch über eine Liste / Suche ausgewählt werden können (Daten aus `kapitel6_equipment.md` einlesen).
   - *Commit:* `git commit -m "feat: inventory weight tracking and equipment item selection from md"`
-- [ ] **Levelaufstieg (Level Up) - Logik & UI:** 
+- [x] **Levelaufstieg (Level Up) - Logik & UI:** 
   - Noch einmal auf vollständige Logik prüfen (berücksichtigt das System automatisch neue Zauberplätze, neue Zauber, Rüstungsklasse, Trefferwürfel, etc.?).
   - Das Fenster für den Level Up muss direkt im Kampf-Fenster auftauchen, sobald man aufsteigt.
   - 2 Buttons zur Wahl stellen: "Jetzt Level Up durchführen" (öffnet Profil/Dialog für Attributs-/Zauberauswahl) oder "Später erledigen" (Fenster taucht beim nächsten Öffnen des Charakter-Profils wieder auf).
