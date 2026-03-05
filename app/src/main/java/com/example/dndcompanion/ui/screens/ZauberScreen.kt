@@ -923,17 +923,29 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                 )
                 
                 val scrollRowState = rememberScrollState()
-                Row(modifier = Modifier.fillMaxWidth().horizontalScroll(scrollRowState).padding(bottom = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().horizontalScroll(scrollRowState).padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Stufe:", color = BlauDunkel, fontWeight = FontWeight.Bold)
                     val levels = listOf(-1) + (0..9).toList()
                     levels.forEach { lvl ->
+                        val hasSpells = lvl == -1 || viewModel.globalSpellbook.any { spell ->
+                            spell.level == lvl && (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
+                        }
                         Button(
                             onClick = { selectedLevel = lvl },
-                            colors = ButtonDefaults.buttonColors(containerColor = if (selectedLevel == lvl) PinkDunkel else BlauHell),
+                            enabled = hasSpells,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (selectedLevel == lvl) PinkDunkel else BlauHell,
+                                disabledContainerColor = Color.LightGray
+                            ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                             modifier = Modifier.height(32.dp)
                         ) {
                             val label = if (lvl == -1) "Alle" else if (lvl == 0) "Tricks" else "Grad $lvl"
-                            Text(label, fontSize = 12.sp, color = Color.White)
+                            Text(label, fontSize = 12.sp, color = if (hasSpells) Color.White else Color.DarkGray)
                         }
                     }
                 }

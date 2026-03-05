@@ -392,17 +392,31 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
             Spacer(modifier = Modifier.height(16.dp))
 
             val scrollRowState = rememberScrollState()
-            Row(modifier = Modifier.fillMaxWidth().horizontalScroll(scrollRowState).padding(bottom = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth().horizontalScroll(scrollRowState).padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Stufe:", color = BlauDunkel, fontWeight = FontWeight.Bold)
                 val levels = listOf(-1) + (0..9).toList()
                 levels.forEach { lvl ->
+                    val hasSpells = lvl == -1 || viewModel.globalSpellbook.any { spell ->
+                        spell.level == lvl &&
+                        (selectedClassFilter == "Alle" || spell.classes.map { it.trim() }.contains(selectedClassFilter)) &&
+                        (selectedSchoolFilter == "Alle" || spell.school.trim() == selectedSchoolFilter)
+                    }
                     Button(
                         onClick = { selectedLevel = lvl },
-                        colors = ButtonDefaults.buttonColors(containerColor = if (selectedLevel == lvl) PinkDunkel else BlauHell),
+                        enabled = hasSpells,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (selectedLevel == lvl) PinkDunkel else BlauHell,
+                            disabledContainerColor = Color.LightGray
+                        ),
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                         modifier = Modifier.height(32.dp)
                     ) {
                         val label = if (lvl == -1) "Alle" else if (lvl == 0) "Tricks" else "Grad $lvl"
-                        Text(label, fontSize = 12.sp, color = Color.White)
+                        Text(label, fontSize = 12.sp, color = if (hasSpells) Color.White else Color.DarkGray)
                     }
                 }
             }
@@ -420,13 +434,22 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
             ) {
                 Text("Klasse:", color = BlauDunkel, fontWeight = FontWeight.Bold)
                 classFilters.forEach { filterClass ->
+                    val hasSpells = filterClass == "Alle" || viewModel.globalSpellbook.any { spell ->
+                        spell.classes.map { it.trim() }.contains(filterClass) &&
+                        (selectedLevel == -1 || spell.level == selectedLevel) &&
+                        (selectedSchoolFilter == "Alle" || spell.school.trim() == selectedSchoolFilter)
+                    }
                     Button(
                         onClick = { selectedClassFilter = filterClass },
-                        colors = ButtonDefaults.buttonColors(containerColor = if (selectedClassFilter == filterClass) PinkDunkel else BlauHell),
+                        enabled = hasSpells,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (selectedClassFilter == filterClass) PinkDunkel else BlauHell,
+                            disabledContainerColor = Color.LightGray
+                        ),
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                         modifier = Modifier.height(32.dp)
                     ) {
-                        Text(filterClass, fontSize = 12.sp, color = Color.White)
+                        Text(filterClass, fontSize = 12.sp, color = if (hasSpells) Color.White else Color.DarkGray)
                     }
                 }
             }
@@ -446,13 +469,22 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
             ) {
                 Text("Schule:", color = BlauDunkel, fontWeight = FontWeight.Bold)
                 schoolFilters.forEach { filterSchool ->
+                    val hasSpells = filterSchool == "Alle" || viewModel.globalSpellbook.any { spell ->
+                        spell.school.trim() == filterSchool &&
+                        (selectedLevel == -1 || spell.level == selectedLevel) &&
+                        (selectedClassFilter == "Alle" || spell.classes.map { it.trim() }.contains(selectedClassFilter))
+                    }
                     Button(
                         onClick = { selectedSchoolFilter = filterSchool },
-                        colors = ButtonDefaults.buttonColors(containerColor = if (selectedSchoolFilter == filterSchool) PinkDunkel else BlauHell),
+                        enabled = hasSpells,
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (selectedSchoolFilter == filterSchool) PinkDunkel else BlauHell,
+                            disabledContainerColor = Color.LightGray
+                        ),
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                         modifier = Modifier.height(32.dp)
                     ) {
-                        Text(filterSchool, fontSize = 12.sp, color = Color.White)
+                        Text(filterSchool, fontSize = 12.sp, color = if (hasSpells) Color.White else Color.DarkGray)
                     }
                 }
             }
