@@ -39,7 +39,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 enum class BookType {
-    GENERAL, GRUDGE, SPELLBOOK, RULEBOOK
+    GENERAL, GRUDGE, SPELLBOOK, RULEBOOK, GROUP_CHAT
 }
 
 @Composable
@@ -77,6 +77,11 @@ fun BucherScreen(viewModel: CharacterViewModel) {
         } else {
             BookDetailView(
                 bookType = activeBook!!,
+                viewModel = viewModel,
+                onBack = { activeBook = null }
+            )
+        } else if (activeBook == BookType.GROUP_CHAT) {
+            GroupChatDetailView(
                 viewModel = viewModel,
                 onBack = { activeBook = null }
             )
@@ -129,6 +134,18 @@ fun LibraryView(onBookSelected: (BookType) -> Unit) {
                 subtitle = "Handbuch & D&D Regeln",
                 color = Color(0xFF2E7D32), // Dark green for Rulebook
                 onClick = { onBookSelected(BookType.RULEBOOK) }
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            BookCard(
+                title = "Gruppen-Chat",
+                subtitle = "IC & OOC Nachrichten",
+                color = Color(0xFF7B1FA2), // Purple for Chat
+                onClick = { onBookSelected(BookType.GROUP_CHAT) }
             )
         }
     }
@@ -901,6 +918,154 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, onT
                     }
                 }
             }
+        }
+    }
+}
+
+import androidx.compose.ui.draw.scale
+import androidx.compose.material3.*
+
+@Composable
+fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
+    var newMessageText by remember { mutableStateOf("") }
+    var isOoc by remember { mutableStateOf(false) }
+    val listState = androidx.compose.foundation.lazy.rememberLazyListState()
+
+    LaunchedEffect(viewModel.groupChatMessages.size) {
+        if (viewModel.groupChatMessages.isNotEmpty()) {
+            listState.animateScrollToItem(viewModel.groupChatMessages.size - 1)
+        }
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(GelbSand)
+    ) {
+        // Top Bar
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFF7B1FA2))
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = onBack) {
+                Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Gruppen-Chat", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        }
+
+        // Messages List
+        LazyColumn(
+            state = listState,
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        ) {
+            items(viewModel.groupChatMessages) { message ->
+                GroupChatMessageCard(message)
+            }
+        }
+
+        // Message Input
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            colors = CardDefaults.cardColors(containerColor = BlauHell),
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+        ) {
+            Column(modifier = Modifier.padding(8.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("In-Character (IC)", color = Color.White, fontSize = 12.sp)
+                    Switch(
+                        checked = isOoc,
+                        onCheckedChange = { isOoc = it },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = PinkDunkel,
+                            checkedTrackColor = PinkDunkel.copy(alpha = 0.5f),
+                            uncheckedThumbColor = BlauDunkel,
+                            uncheckedTrackColor = BlauDunkel.copy(alpha = 0.5f)
+                        ),
+                        modifier = Modifier.scale(0.8f).padding(horizontal = 8.dp)
+                    )
+                    Text("Out-Of-Character (OOC)", color = Color.White, fontSize = 12.sp)
+                }
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        value = newMessageText,
+                        onValueChange = { newMessageText = it },
+                        modifier = Modifier.weight(1f),
+                        placeholder = { Text(if (isOoc) "Schreibe etwas OOC..." else "Sprich als dein Charakter...", color = Color.LightGray) },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = if (isOoc) Color.Gray else PinkDunkel,
+                            unfocusedTextColor = Color.White,
+                            focusedTextColor = Color.White
+                        ),
+                        maxLines = 3
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    IconButton(
+                        onClick = {
+                            if (newMessageText.isNotBlank()) {
+                                viewModel.sendGroupMessage(newMessageText, isOoc)
+                                newMessageText = ""
+                            }
+                        },
+                        modifier = Modifier
+                            .size(50.dp)
+                            .background(if (isOoc) Color.Gray else PinkDunkel, RoundedCornerShape(25.dp))
+                    ) {
+                        Text("?", color = Color.White, fontSize = 20.sp)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun GroupChatMessageCard(message: com.example.dndcompanion.ui.viewmodel.GroupChatMessage) {
+    val dateStr = remember(message.timestamp) {
+        val sdf = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
+        sdf.format(java.util.Date(message.timestamp))
+    }
+    
+    val nameColor = if (message.isOoc) Color.Gray else if (message.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) BlauDunkel else PinkDunkel
+    
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+        colors = CardDefaults.cardColors(containerColor = if (message.isOoc) Color(0xFFF5F5F5) else Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+    ) {
+        Column(modifier = Modifier.padding(8.dp)) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(
+                    text = if (message.isOoc) "[OOC] ${message.author}" else message.author,
+                    fontWeight = FontWeight.Bold,
+                    color = nameColor,
+                    fontSize = 14.sp
+                )
+                Text(dateStr, fontSize = 10.sp, color = Color.Gray)
+            }
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = message.text, 
+                fontSize = 15.sp, 
+                color = BlauDunkel,
+                fontStyle = if (message.isOoc) androidx.compose.ui.text.font.FontStyle.Italic else androidx.compose.ui.text.font.FontStyle.Normal
+            )
         }
     }
 }

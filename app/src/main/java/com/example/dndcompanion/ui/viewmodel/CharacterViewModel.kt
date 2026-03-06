@@ -45,6 +45,15 @@ data class BookEntry(
     val author: String = "Athania"
 )
 
+data class GroupChatMessage(
+    val id: String = java.util.UUID.randomUUID().toString(),
+    val text: String = "",
+    val timestamp: Long = System.currentTimeMillis(),
+    val author: String = "Athania",
+    val charClass: CharacterClass = CharacterClass.RANGER,
+    val isOoc: Boolean = false
+)
+
 data class Spell(
     val id: String = java.util.UUID.randomUUID().toString(),
     val name: String,
@@ -673,8 +682,43 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     val publicGeneralBookEntries = mutableStateListOf<BookEntry>()
     val publicGrudgeBookEntries = mutableStateListOf<BookEntry>()
+    val groupChatMessages = mutableStateListOf<GroupChatMessage>()
 
     private val db = FirebaseFirestore.getInstance()
+
+    init {
+        listenToPublicNotes()
+        listenToGroupChat()
+    }
+
+    private fun listenToGroupChat() {
+        db.collection("groupChat")
+            .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.ASCENDING)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) return@addSnapshotListener
+                if (snapshot != null) {
+                    groupChatMessages.clear()
+                    for (doc in snapshot.documents) {
+                        val msg = doc.toObject(GroupChatMessage::class.java)
+                        if (msg != null) {
+                            groupChatMessages.add(msg)
+                        }
+                    }
+                }
+            }
+    }
+
+    fun sendGroupMessage(text: String, isOoc: Boolean) {
+        if (text.isNotBlank()) {
+            val msg = GroupChatMessage(
+                text = text.trim(),
+                author = characterData.name,
+                charClass = characterData.charClass,
+                isOoc = isOoc
+            )
+            db.collection("groupChat").document(msg.id).set(msg)
+        }
+    }
 
     private fun listenToPublicNotes() {
         // Listener für allgemeine öffentliche Notizen
