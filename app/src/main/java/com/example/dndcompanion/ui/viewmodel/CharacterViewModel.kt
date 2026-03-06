@@ -18,6 +18,10 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 import com.google.ai.client.generativeai.type.generationConfig
 import org.json.JSONObject
+import com.google.firebase.firestore.FirebaseFirestore
+import com.example.dndcompanion.data.CharacterData
+import com.example.dndcompanion.data.CharacterRepository
+import com.example.dndcompanion.data.CharacterClass
 
 // --- DATENKLASSEN & ENUMS ---
 data class InventoryItem(val name: String, val amount: Int, val weight: Double = 0.0, val category: String = "Sonstiges")
@@ -35,8 +39,10 @@ data class FaqItem(val question: String, val answer: String)
 data class TraitItem(val name: String, val desc: String)
 data class BookEntry(
     val id: String = java.util.UUID.randomUUID().toString(),
-    val text: String,
-    val timestamp: Long = System.currentTimeMillis()
+    val text: String = "",
+    val timestamp: Long = System.currentTimeMillis(),
+    val isPublic: Boolean = false,
+    val author: String = "Athania"
 )
 
 data class Spell(
@@ -76,7 +82,13 @@ enum class BeastType {
 
 class CharacterViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val prefs = application.getSharedPreferences("AthaniaSaveGame", Context.MODE_PRIVATE)
+    var activeCharacterId by mutableStateOf("Athania")
+        private set
+
+    var characterData by mutableStateOf(CharacterRepository.getCharacter("Athania"))
+        private set
+
+    private var prefs = application.getSharedPreferences("AthaniaSaveGame", Context.MODE_PRIVATE)
     private val gson = Gson()
 
     // --- BASISWERTE ---
@@ -86,23 +98,23 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000
     )
 
-    var currentEP by mutableIntStateOf(prefs.getInt("currentEP", 3606))
+    var currentEP by mutableIntStateOf(prefs.getInt("currentEP", characterData.baseEP))
         private set
 
-    var level by mutableIntStateOf(prefs.getInt("level", 4))
+    var level by mutableIntStateOf(prefs.getInt("level", characterData.baseLevel))
         private set
 
-    var strength by mutableIntStateOf(prefs.getInt("strength", 8))
+    var strength by mutableIntStateOf(prefs.getInt("strength", characterData.baseStrength))
         private set
-    var dexterity by mutableIntStateOf(prefs.getInt("dexterity", 18))
+    var dexterity by mutableIntStateOf(prefs.getInt("dexterity", characterData.baseDexterity))
         private set
-    var constitution by mutableIntStateOf(prefs.getInt("constitution", 16))
+    var constitution by mutableIntStateOf(prefs.getInt("constitution", characterData.baseConstitution))
         private set
-    var intelligence by mutableIntStateOf(prefs.getInt("intelligence", 10))
+    var intelligence by mutableIntStateOf(prefs.getInt("intelligence", characterData.baseIntelligence))
         private set
-    var wisdom by mutableIntStateOf(prefs.getInt("wisdom", 14))
+    var wisdom by mutableIntStateOf(prefs.getInt("wisdom", characterData.baseWisdom))
         private set
-    var charisma by mutableIntStateOf(prefs.getInt("charisma", 8))
+    var charisma by mutableIntStateOf(prefs.getInt("charisma", characterData.baseCharisma))
         private set
 
     var showLevelUpDialog by mutableStateOf(false)
@@ -126,28 +138,32 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             showLevelUpDialog = true
             showLevelUpNotification = true
             
-            // --- AUTOMATISIERUNGEN FÜR WALDLÄUFER & BEAST MASTER (2024) ---
+            // --- AUTOMATISIERUNGEN FÜR KLASSEN ---
             for (lvl in (oldLevel + 1)..newLevel) {
-                when (lvl) {
-                    5 -> {
-                        spellSlotsLevel2 = 2
-                        prefs.edit { putInt("spellSlotsLevel2", spellSlotsLevel2) }
-                        addCustomTrait("Zusätzlicher Angriff (Level 5)", "Du kannst zweimal angreifen, wenn du die Angriffsaktion ausführst.")
+                if (characterData.charClass == CharacterClass.RANGER) {
+                    when (lvl) {
+                        5 -> {
+                            spellSlotsLevel2 = 2
+                            prefs.edit { putInt("spellSlotsLevel2", spellSlotsLevel2) }
+                            addCustomTrait("Zusätzlicher Angriff (Level 5)", "Du kannst zweimal angreifen, wenn du die Angriffsaktion ausführst.")
+                        }
+                        6 -> {
+                            addCustomTrait("Umherziehen / Roving (Level 6)", "Deine Bewegungsrate erhöht sich um 3m, wenn du keine schwere Rüstung trägst. Du erhältst eine Kletter- und Schwimmrate in Höhe deiner Gehgeschwindigkeit.")
+                        }
+                        7 -> {
+                            addCustomTrait("Außergewöhnliches Training (Level 7)", "Die Bestie kann Spurt, Rückzug, Ausweichen oder Hilfe als Bonusaktion nutzen. Ihre Angriffe können nun Wuchtschaden oder Energieschaden (Force) verursachen.")
+                        }
+                        9 -> {
+                            spellSlotsLevel3 = 2
+                            prefs.edit { putInt("spellSlotsLevel3", spellSlotsLevel3) }
+                            addCustomTrait("Expertise 2 (Level 9)", "Wähle zwei weitere Fertigkeiten für Expertise aus dem Handbuch.")
+                        }
+                        10 -> {
+                            addCustomTrait("Unermüdlich / Tireless (Level 10)", "Temporäre Trefferpunkte: Als Magie-Aktion erhältst du 1W8 + WIS-Mod TP (Nutzungen = WIS-Mod pro Tag). Erschöpfung: Eine Kurze Rast verringert deine Erschöpfung um 1 Stufe.")
+                        }
                     }
-                    6 -> {
-                        addCustomTrait("Umherziehen / Roving (Level 6)", "Deine Bewegungsrate erhöht sich um 3m, wenn du keine schwere Rüstung trägst. Du erhältst eine Kletter- und Schwimmrate in Höhe deiner Gehgeschwindigkeit.")
-                    }
-                    7 -> {
-                        addCustomTrait("Außergewöhnliches Training (Level 7)", "Die Bestie kann Spurt, Rückzug, Ausweichen oder Hilfe als Bonusaktion nutzen. Ihre Angriffe können nun Wuchtschaden oder Energieschaden (Force) verursachen.")
-                    }
-                    9 -> {
-                        spellSlotsLevel3 = 2
-                        prefs.edit { putInt("spellSlotsLevel3", spellSlotsLevel3) }
-                        addCustomTrait("Expertise 2 (Level 9)", "Wähle zwei weitere Fertigkeiten für Expertise aus dem Handbuch.")
-                    }
-                    10 -> {
-                        addCustomTrait("Unermüdlich / Tireless (Level 10)", "Temporäre Trefferpunkte: Als Magie-Aktion erhältst du 1W8 + WIS-Mod TP (Nutzungen = WIS-Mod pro Tag). Erschöpfung: Eine Kurze Rast verringert deine Erschöpfung um 1 Stufe.")
-                    }
+                } else if (characterData.charClass == CharacterClass.WARLOCK) {
+                    // Warlock spezifische Automatisierungen (Phase 3) kommen hierhin
                 }
             }
         }
@@ -213,11 +229,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val spellAttackBonus: Int get() = proficiencyBonus + wisMod
     val spellSaveDc: Int get() = 8 + proficiencyBonus + wisMod
 
-    var maxHp by mutableIntStateOf(prefs.getInt("maxHp", 40))
+    var maxHp by mutableIntStateOf(prefs.getInt("maxHp", characterData.baseMaxHp))
         private set
     var currentHp by mutableIntStateOf(prefs.getInt("currentHp", maxHp))
         private set
-    var hitDice by mutableIntStateOf(prefs.getInt("hitDice", 4))
+    var hitDice by mutableIntStateOf(prefs.getInt("hitDice", characterData.baseHitDice))
         private set
 
     var deathSaveSuccesses by mutableIntStateOf(prefs.getInt("deathSaveSuccesses", 0))
@@ -280,11 +296,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             ActiveWeapon.SHILLELAGH_SCHILD -> "1W8 + $wisMod Wucht (Umstoßen: ST-Save 12)"
         }
 
-    var spellSlotsLevel1 by mutableIntStateOf(prefs.getInt("spellSlotsLevel1", 3))
+    var spellSlotsLevel1 by mutableIntStateOf(prefs.getInt("spellSlotsLevel1", characterData.baseSpellSlotsLevel1))
         private set
-    var spellSlotsLevel2 by mutableIntStateOf(prefs.getInt("spellSlotsLevel2", 0))
+    var spellSlotsLevel2 by mutableIntStateOf(prefs.getInt("spellSlotsLevel2", characterData.baseSpellSlotsLevel2))
         private set
-    var spellSlotsLevel3 by mutableIntStateOf(prefs.getInt("spellSlotsLevel3", 0))
+    var spellSlotsLevel3 by mutableIntStateOf(prefs.getInt("spellSlotsLevel3", characterData.baseSpellSlotsLevel3))
         private set
 
     var huntersMarkFreeUses by mutableIntStateOf(prefs.getInt("huntersMarkFreeUses", 2))
@@ -470,30 +486,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             }
         } else {
             // Initiale Gegenstände beim allerersten Start laden
-            customLoot.addAll(getAthaniaDefaultLoot())
+            customLoot.addAll(characterData.defaultLoot)
             saveLoot()
         }
-    }
-
-    private fun getAthaniaDefaultLoot(): List<InventoryItem> {
-        return listOf(
-            InventoryItem("Beschlagene Lederrüstung", 1, 13.0, "Rüstung & Waffen"),
-            InventoryItem("Langbogen", 1, 2.0, "Rüstung & Waffen"),
-            InventoryItem("Kurzschwert", 1, 2.0, "Rüstung & Waffen"),
-            InventoryItem("Kampfstab", 1, 4.0, "Rüstung & Waffen"),
-            InventoryItem("Peitsche", 1, 3.0, "Rüstung & Waffen"),
-            InventoryItem("Schild", 1, 6.0, "Rüstung & Waffen"),
-            InventoryItem("Reisekleidung", 1, 4.0, "Ausrüstung"),
-            InventoryItem("Rucksack", 1, 5.0, "Ausrüstung"),
-            InventoryItem("Kleine Onyxstatue (Fokus)", 1, 1.0, "Magie"),
-            InventoryItem("Kräuterkundeset", 1, 3.0, "Werkzeug"),
-            InventoryItem("Schwarzer Onyxschädel", 1, 1.0, "Sonstiges"),
-            InventoryItem("Wasserschlauch (halb)", 2, 2.5, "Ausrüstung"),
-            InventoryItem("Trank der Rinderhaut", 1, 0.5, "Tränke"),
-            InventoryItem("Gift (Flasche)", 2, 0.5, "Tränke"),
-            InventoryItem("Heiltrank", 1, 0.5, "Tränke"),
-            InventoryItem("Hämatit", 1, 0.1, "Schätze")
-        )
     }
 
     fun addCustomLoot(itemName: String, weight: Double = 0.0, category: String = "Sonstiges") {
@@ -538,18 +533,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             }
         } else {
             // Initiale Merkmale beim allerersten Start laden
-            customTraits.addAll(getDefaultTraits())
+            customTraits.addAll(characterData.defaultTraits)
             saveTraits()
         }
-    }
-
-    private fun getDefaultTraits(): List<TraitItem> {
-        return listOf(
-            TraitItem("Urbegleiter (Land, Himmel, Meer)", "Bonusaktion: Urtier befehligen\nAktion: Urtier Angriff\nZauberslot: Urtier beleben (volle HP)"),
-            TraitItem("Trance", "Du musst nicht schlafen. Lange Rast dauert 4 Std in Meditation."),
-            TraitItem("Feenblut", "Vorteil bei Rettungswürfen gegen Bezauberung."),
-            TraitItem("Messerstecher", "Bei Stichschaden 1x pro Zug 1 Angriffswürfel neu würfeln. Bei Krit 1 zus. Schadenswürfel.")
-        )
     }
 
     fun addCustomTrait(name: String, desc: String) {
@@ -573,23 +559,23 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     // --- WERTE ZURÜCKSETZEN ---
     fun resetToDefaults() {
-        // Alle SharedPreferences löschen und Grundwerte gemäß stats.md setzen
+        // Alle SharedPreferences löschen und Grundwerte gemäß characterData setzen
         prefs.edit { clear() }
 
-        currentEP = 3606
-        level = 4
-        strength = 8
-        dexterity = 18
-        constitution = 16
-        intelligence = 10
-        wisdom = 14
-        charisma = 8
-        maxHp = 40
-        currentHp = 40
-        hitDice = 4
-        spellSlotsLevel1 = 3
-        spellSlotsLevel2 = 0
-        spellSlotsLevel3 = 0
+        currentEP = characterData.baseEP
+        level = characterData.baseLevel
+        strength = characterData.baseStrength
+        dexterity = characterData.baseDexterity
+        constitution = characterData.baseConstitution
+        intelligence = characterData.baseIntelligence
+        wisdom = characterData.baseWisdom
+        charisma = characterData.baseCharisma
+        maxHp = characterData.baseMaxHp
+        currentHp = characterData.baseMaxHp
+        hitDice = characterData.baseHitDice
+        spellSlotsLevel1 = characterData.baseSpellSlotsLevel1
+        spellSlotsLevel2 = characterData.baseSpellSlotsLevel2
+        spellSlotsLevel3 = characterData.baseSpellSlotsLevel3
         huntersMarkFreeUses = 2
         freeCureWoundsUsed = false
         freeHealingWordUsed = false
@@ -614,20 +600,119 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         saveGeneralBookEntries()
         grudgeBookEntries.clear()
         saveGrudgeBookEntries()
-        standardTactic = "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen"
+        standardTactic = if (characterData.id == "Athania") "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen" else ""
 
         // Loot und Traits zurücksetzen
         customLoot.clear()
-        customLoot.addAll(getAthaniaDefaultLoot())
+        customLoot.addAll(characterData.defaultLoot)
         saveLoot()
         customTraits.clear()
-        customTraits.addAll(getDefaultTraits())
+        customTraits.addAll(characterData.defaultTraits)
         saveTraits()
+    }
+
+    // --- PROFIL WECHSELN ---
+    fun loadProfile(characterId: String) {
+        if (activeCharacterId == characterId) return
+        activeCharacterId = characterId
+        characterData = CharacterRepository.getCharacter(characterId)
+        prefs = getApplication<Application>().getSharedPreferences("${characterId}SaveGame", Context.MODE_PRIVATE)
+
+        currentEP = prefs.getInt("currentEP", characterData.baseEP)
+        level = prefs.getInt("level", characterData.baseLevel)
+        strength = prefs.getInt("strength", characterData.baseStrength)
+        dexterity = prefs.getInt("dexterity", characterData.baseDexterity)
+        constitution = prefs.getInt("constitution", characterData.baseConstitution)
+        intelligence = prefs.getInt("intelligence", characterData.baseIntelligence)
+        wisdom = prefs.getInt("wisdom", characterData.baseWisdom)
+        charisma = prefs.getInt("charisma", characterData.baseCharisma)
+        maxHp = prefs.getInt("maxHp", characterData.baseMaxHp)
+        currentHp = prefs.getInt("currentHp", maxHp)
+        hitDice = prefs.getInt("hitDice", characterData.baseHitDice)
+        
+        deathSaveSuccesses = prefs.getInt("deathSaveSuccesses", 0)
+        deathSaveFailures = prefs.getInt("deathSaveFailures", 0)
+        
+        spellSlotsLevel1 = prefs.getInt("spellSlotsLevel1", characterData.baseSpellSlotsLevel1)
+        spellSlotsLevel2 = prefs.getInt("spellSlotsLevel2", characterData.baseSpellSlotsLevel2)
+        spellSlotsLevel3 = prefs.getInt("spellSlotsLevel3", characterData.baseSpellSlotsLevel3)
+        huntersMarkFreeUses = prefs.getInt("huntersMarkFreeUses", 2)
+        
+        freeCureWoundsUsed = prefs.getBoolean("freeCureWoundsUsed", false)
+        freeHealingWordUsed = prefs.getBoolean("freeHealingWordUsed", false)
+        freeFaerieFireUsed = prefs.getBoolean("freeFaerieFireUsed", false)
+        freeDarknessUsed = prefs.getBoolean("freeDarknessUsed", false)
+        freeDruidSpellUsed = prefs.getBoolean("freeDruidSpellUsed", false)
+        
+        water = prefs.getFloat("water", 2.0f)
+        rations = prefs.getInt("rations", 10)
+        goodberries = prefs.getInt("goodberries", 0)
+        
+        coinsKM = prefs.getInt("coinsKM", 0)
+        coinsSM = prefs.getInt("coinsSM", 0)
+        coinsEM = prefs.getInt("coinsEM", 0)
+        coinsGM = prefs.getInt("coinsGM", 0)
+        coinsPM = prefs.getInt("coinsPM", 0)
+        
+        totalArrows = prefs.getInt("totalArrows", 20)
+        shotArrows = prefs.getInt("shotArrows", 0)
+        
+        val savedWeaponName = prefs.getString("currentWeapon", ActiveWeapon.LANGBOGEN.name) ?: ActiveWeapon.LANGBOGEN.name
+        currentWeapon = ActiveWeapon.valueOf(savedWeaponName)
+        
+        standardTactic = prefs.getString("standardTactic", if (characterId == "Athania") "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen" else "") ?: ""
+        
+        loadLoot()
+        loadTraits()
+        loadBooks()
     }
 
     // --- BÜCHER & TAKTIK ---
     val generalBookEntries = mutableStateListOf<BookEntry>()
     val grudgeBookEntries = mutableStateListOf<BookEntry>()
+
+    val publicGeneralBookEntries = mutableStateListOf<BookEntry>()
+    val publicGrudgeBookEntries = mutableStateListOf<BookEntry>()
+
+    private val db = FirebaseFirestore.getInstance()
+
+    private fun listenToPublicNotes() {
+        // Listener für allgemeine öffentliche Notizen
+        db.collection("publicGeneralNotes")
+            .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    publicGeneralBookEntries.clear()
+                    for (doc in snapshot.documents) {
+                        val entry = doc.toObject(BookEntry::class.java)
+                        if (entry != null) {
+                            publicGeneralBookEntries.add(entry)
+                        }
+                    }
+                }
+            }
+
+        // Listener für das öffentliche Buch des Grolls
+        db.collection("publicGrudgeNotes")
+            .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    publicGrudgeBookEntries.clear()
+                    for (doc in snapshot.documents) {
+                        val entry = doc.toObject(BookEntry::class.java)
+                        if (entry != null) {
+                            publicGrudgeBookEntries.add(entry)
+                        }
+                    }
+                }
+            }
+    }
 
     private fun saveGeneralBookEntries() {
         prefs.edit { putString("generalBookEntries", gson.toJson(generalBookEntries)) }
@@ -668,33 +753,55 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun addGeneralBookEntry(text: String) {
+    fun addGeneralBookEntry(text: String, isPublic: Boolean = false) {
         if (text.isNotBlank()) {
-            generalBookEntries.add(0, BookEntry(text = text.trim()))
-            saveGeneralBookEntries()
+            val entry = BookEntry(text = text.trim(), isPublic = isPublic)
+            if (isPublic) {
+                db.collection("publicGeneralNotes").document(entry.id).set(entry)
+            } else {
+                generalBookEntries.add(0, entry)
+                saveGeneralBookEntries()
+            }
         }
     }
 
-    fun updateGeneralBookEntry(id: String, newText: String) {
-        val index = generalBookEntries.indexOfFirst { it.id == id }
-        if (index != -1 && newText.isNotBlank()) {
-            generalBookEntries[index] = generalBookEntries[index].copy(text = newText.trim())
-            saveGeneralBookEntries()
+    fun updateGeneralBookEntry(id: String, newText: String, isPublic: Boolean = false) {
+        if (newText.isNotBlank()) {
+            if (isPublic) {
+                db.collection("publicGeneralNotes").document(id).update("text", newText.trim())
+            } else {
+                val index = generalBookEntries.indexOfFirst { it.id == id }
+                if (index != -1) {
+                    generalBookEntries[index] = generalBookEntries[index].copy(text = newText.trim())
+                    saveGeneralBookEntries()
+                }
+            }
         }
     }
 
-    fun addGrudgeBookEntry(text: String) {
+    fun addGrudgeBookEntry(text: String, isPublic: Boolean = false) {
         if (text.isNotBlank()) {
-            grudgeBookEntries.add(0, BookEntry(text = text.trim()))
-            saveGrudgeBookEntries()
+            val entry = BookEntry(text = text.trim(), isPublic = isPublic)
+            if (isPublic) {
+                db.collection("publicGrudgeNotes").document(entry.id).set(entry)
+            } else {
+                grudgeBookEntries.add(0, entry)
+                saveGrudgeBookEntries()
+            }
         }
     }
 
-    fun updateGrudgeBookEntry(id: String, newText: String) {
-        val index = grudgeBookEntries.indexOfFirst { it.id == id }
-        if (index != -1 && newText.isNotBlank()) {
-            grudgeBookEntries[index] = grudgeBookEntries[index].copy(text = newText.trim())
-            saveGrudgeBookEntries()
+    fun updateGrudgeBookEntry(id: String, newText: String, isPublic: Boolean = false) {
+        if (newText.isNotBlank()) {
+            if (isPublic) {
+                db.collection("publicGrudgeNotes").document(id).update("text", newText.trim())
+            } else {
+                val index = grudgeBookEntries.indexOfFirst { it.id == id }
+                if (index != -1) {
+                    grudgeBookEntries[index] = grudgeBookEntries[index].copy(text = newText.trim())
+                    saveGrudgeBookEntries()
+                }
+            }
         }
     }
 
@@ -710,6 +817,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         loadLoot()
         loadTraits()
         loadBooks()
+        listenToPublicNotes()
     }
 
     fun removeCustomLoot(itemName: String) {

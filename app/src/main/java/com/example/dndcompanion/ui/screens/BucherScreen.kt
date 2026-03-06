@@ -162,16 +162,20 @@ fun BookCard(title: String, subtitle: String, color: Color, onClick: () -> Unit)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, onBack: () -> Unit) {
-    val entries = if (bookType == BookType.GENERAL) viewModel.generalBookEntries else viewModel.grudgeBookEntries
+    val privateEntries = if (bookType == BookType.GENERAL) viewModel.generalBookEntries else viewModel.grudgeBookEntries
+    val publicEntries = if (bookType == BookType.GENERAL) viewModel.publicGeneralBookEntries else viewModel.publicGrudgeBookEntries
+    
     val title = if (bookType == BookType.GENERAL) "Notizbuch" else "Buch des Grolls"
     val tintColor = if (bookType == BookType.GENERAL) BlauDunkel else PinkDunkel
 
+    var showPublicTab by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
     var newEntryText by remember { mutableStateOf("") }
     var editingEntryId by remember { mutableStateOf<String?>(null) }
     var editText by remember { mutableStateOf("") }
 
-    val filteredEntries = entries.filter { it.text.contains(searchQuery, ignoreCase = true) }
+    val currentEntries = if (showPublicTab) publicEntries else privateEntries
+    val filteredEntries = currentEntries.filter { it.text.contains(searchQuery, ignoreCase = true) }
 
     Column(
         modifier = Modifier
@@ -193,13 +197,34 @@ fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, onBack: ()
             Text(title, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
         }
 
+        TabRow(
+            selectedTabIndex = if (showPublicTab) 1 else 0,
+            containerColor = BlauHell,
+            contentColor = Color.White
+        ) {
+            Tab(
+                selected = !showPublicTab,
+                onClick = { showPublicTab = false },
+                text = { Text("Persönlich") },
+                selectedContentColor = GelbSand,
+                unselectedContentColor = Color.White
+            )
+            Tab(
+                selected = showPublicTab,
+                onClick = { showPublicTab = true },
+                text = { Text("Gruppe") },
+                selectedContentColor = GelbSand,
+                unselectedContentColor = Color.White
+            )
+        }
+
         Column(modifier = Modifier.padding(16.dp)) {
             // Search Bar
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Einträge durchsuchen...") },
+                placeholder = { Text(if (showPublicTab) "Gruppen-Einträge durchsuchen..." else "Eigene Einträge durchsuchen...") },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
@@ -228,7 +253,7 @@ fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, onBack: ()
                             value = newEntryText,
                             onValueChange = { newEntryText = it },
                             modifier = Modifier.fillMaxWidth().height(100.dp),
-                            placeholder = { Text("Neuer Eintrag...", color = Color.LightGray) },
+                            placeholder = { Text(if (showPublicTab) "Neue globale Notiz..." else "Neuer persönlicher Eintrag...", color = Color.LightGray) },
                             colors = OutlinedTextFieldDefaults.colors(
                                 focusedBorderColor = tintColor,
                                 unfocusedTextColor = Color.White,
@@ -239,9 +264,9 @@ fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, onBack: ()
                         Button(
                             onClick = {
                                 if (bookType == BookType.GENERAL) {
-                                    viewModel.addGeneralBookEntry(newEntryText)
+                                    viewModel.addGeneralBookEntry(newEntryText, showPublicTab)
                                 } else {
-                                    viewModel.addGrudgeBookEntry(newEntryText)
+                                    viewModel.addGrudgeBookEntry(newEntryText, showPublicTab)
                                 }
                                 newEntryText = ""
                             },
@@ -279,9 +304,9 @@ fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, onBack: ()
                             Button(
                                 onClick = {
                                     if (bookType == BookType.GENERAL) {
-                                        viewModel.updateGeneralBookEntry(editingEntryId!!, editText)
+                                        viewModel.updateGeneralBookEntry(editingEntryId!!, editText, showPublicTab)
                                     } else {
-                                        viewModel.updateGrudgeBookEntry(editingEntryId!!, editText)
+                                        viewModel.updateGrudgeBookEntry(editingEntryId!!, editText, showPublicTab)
                                     }
                                     editingEntryId = null
                                 },

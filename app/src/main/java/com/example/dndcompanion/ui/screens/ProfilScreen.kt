@@ -21,6 +21,10 @@ import com.example.dndcompanion.ui.theme.BlauHell
 import com.example.dndcompanion.ui.theme.PinkDunkel
 import com.example.dndcompanion.ui.theme.GelbSand
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowDropDown
+import com.example.dndcompanion.data.CharacterClass
+
 @Composable
 fun ProfilScreen(viewModel: CharacterViewModel) {
     var epInput by remember { mutableStateOf("") }
@@ -31,7 +35,43 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             .padding(12.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        Text("Charakter Profil", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Charakter Profil", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+
+            var expanded by remember { mutableStateOf(false) }
+            Box {
+                Button(
+                    onClick = { expanded = true },
+                    colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                ) {
+                    Text(viewModel.characterData.name)
+                    Icon(Icons.Default.ArrowDropDown, contentDescription = "Profil wechseln")
+                }
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Athania") },
+                        onClick = {
+                            viewModel.loadProfile("Athania")
+                            expanded = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Delat") },
+                        onClick = {
+                            viewModel.loadProfile("Delat")
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
         Spacer(modifier = Modifier.height(16.dp))
 
         // Grunddaten
@@ -40,11 +80,19 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             colors = CardDefaults.cardColors(containerColor = BlauHell)
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
-                Text("Athania", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                Text("Waldläufer (Herrin der Tiere) | Stufe ${viewModel.level}", color = GelbSand)
+                Text(viewModel.characterData.name, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                
+                val className = if (viewModel.characterData.charClass == CharacterClass.RANGER) "Waldläufer (Herrin der Tiere)" else "Warlock (Pakt der Klinge)"
+                Text("$className | Stufe ${viewModel.level}", color = GelbSand)
+                
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("Volk: Elf-Drow | Hintergrund: Wegfinder", color = Color.White)
-                Text("Gesinnung: Chaotisch Gut | EP: ${viewModel.currentEP}", color = Color.White)
+                
+                val volk = if (viewModel.characterData.name == "Athania") "Elf-Drow | Hintergrund: Wegfinder" else "Mensch | Hintergrund: Gelehrter"
+                Text("Volk: $volk", color = Color.White)
+                
+                val gesinnung = if (viewModel.characterData.name == "Athania") "Chaotisch Gut" else "Rechtschaffen Neutral"
+                Text("Gesinnung: $gesinnung | EP: ${viewModel.currentEP}", color = Color.White)
+                
                 HorizontalDivider(color = GelbSand, thickness = 1.dp, modifier = Modifier.padding(vertical = 4.dp))
                 Text("Übungsbonus: +${viewModel.proficiencyBonus}", color = PinkDunkel, fontWeight = FontWeight.Bold, fontSize = 16.sp)
             }
@@ -121,17 +169,31 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             colors = CardDefaults.cardColors(containerColor = BlauHell)
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
-                Text("Aussehen: Magisches Tattoo (Blutige Hand eines Kindes)", color = Color.White)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text("Sprachen: Gemeinsprache, Gebärden-Gemeinsprache, Halblingisch, Zwergisch, Elfisch", color = Color.White)
-                HorizontalDivider(color = GelbSand, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
-                
-                Text("Ideal (Höheres Ziel):", fontWeight = FontWeight.Bold, color = GelbSand)
-                Text("Es ist die Verantwortung jeder Einzelnen, für das Wohl des Stammes zu sorgen.", color = Color.White)
-                Spacer(modifier = Modifier.height(8.dp))
-                
-                Text("Makel (Nachtragend):", fontWeight = FontWeight.Bold, color = GelbSand)
-                Text("Ich erinnere mich an jede einzelne Beleidigung, die mir galt, und hege eine stumme Abneigung gegen all jene, die mich schon einmal falsch behandelt haben.", color = Color.White)
+                if (viewModel.characterData.name == "Athania") {
+                    Text("Aussehen: Magisches Tattoo (Blutige Hand eines Kindes)", color = Color.White)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Sprachen: Gemeinsprache, Gebärden-Gemeinsprache, Halblingisch, Zwergisch, Elfisch", color = Color.White)
+                    HorizontalDivider(color = GelbSand, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
+                    
+                    Text("Ideal (Höheres Ziel):", fontWeight = FontWeight.Bold, color = GelbSand)
+                    Text("Es ist die Verantwortung jeder Einzelnen, für das Wohl des Stammes zu sorgen.", color = Color.White)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    
+                    Text("Makel (Nachtragend):", fontWeight = FontWeight.Bold, color = GelbSand)
+                    Text("Ich erinnere mich an jede einzelne Beleidigung, die mir galt, und hege eine stumme Abneigung gegen all jene, die mich schon einmal falsch behandelt haben.", color = Color.White)
+                } else {
+                    Text("Aussehen: Gepflegt, mysteriöses Buch immer in der Hand", color = Color.White)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Sprachen: Gemeinsprache, Drakonisch, Abyssal", color = Color.White)
+                    HorizontalDivider(color = GelbSand, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
+                    
+                    Text("Ideal (Macht):", fontWeight = FontWeight.Bold, color = GelbSand)
+                    Text("Wissen ist Macht, und ich werde alles tun, um mehr davon zu erlangen.", color = Color.White)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    
+                    Text("Makel (Arroganz):", fontWeight = FontWeight.Bold, color = GelbSand)
+                    Text("Ich unterschätze oft andere, weil ich glaube, dass ich klüger bin als sie.", color = Color.White)
+                }
             }
         }
     }

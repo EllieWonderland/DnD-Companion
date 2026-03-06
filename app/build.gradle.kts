@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.services)
 }
 
 val properties = Properties()
@@ -71,6 +72,10 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Firebase (Firestore & BoM)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.firestore)
 
     // Einfaches SDK ohne Firebase-Cloud-Zwang
     implementation(libs.google.generativeai)

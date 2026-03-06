@@ -40,17 +40,19 @@
   - Das Fenster für den Level Up muss direkt im Kampf-Fenster auftauchen, sobald man aufsteigt.
   - 2 Buttons zur Wahl stellen: "Jetzt Level Up durchführen" (öffnet Profil/Dialog für Attributs-/Zauberauswahl) oder "Später erledigen" (Fenster taucht beim nächsten Öffnen des Charakter-Profils wieder auf).
   - *Commit:* `git commit -m "feat: improve level up logic and add combat screen popup notification"`
-- [ ] **Bücher/Notizen in "Privat" und "Öffentlich" splitten:** Die Notizbücher (Books/Tagebücher) so umbauen, dass ein Eintrag ein Flag erhält oder es getrennte Listen für `Profil-spezifisch` und `Gruppen-Öffentlich` gibt.
-  - *Commit:* `git commit -m "feat: split notebooks into private and public categories"`
+- [x] **Bücher/Notizen in "Privat" und "Öffentlich" splitten:** Die Notizbücher (Books/Tagebücher) so umbauen, dass ein Eintrag ein Flag erhält oder es getrennte Listen für `Profil-spezifisch` und `Gruppen-Öffentlich` gibt. Öffentliche Notizen werden in Echtzeit über Firebase Firestore zwischen den Geräten synchronisiert.
+  - *Commit:* `git commit -m "feat: split notebooks into private and public categories and sync via firestore"`
 
 ## Bald (Phase 2: Fundament für Multi-Charakter)
-- [ ] **CharacterViewModel abstrahieren:** Die harten Werte für "Athania" in eine flexiblere Datenklasse `CharacterData` auslagern. Das ViewModel sollte die aktuellen Daten basierend auf dem gewählten Charakter laden.
+- [x] **CharacterViewModel abstrahieren:** Die harten Werte für "Athania" in eine flexiblere Datenklasse `CharacterData` auslagern. Das ViewModel sollte die aktuellen Daten basierend auf dem gewählten Charakter laden.
   - *Commit:* `git commit -m "refactor: abstract CharacterViewModel to use flexible CharacterData class"`
-- [ ] **Ressourcen trennen:** Globale Daten (Handbuch, Zauberbuch-Definitionen, gemeinsame Notizen) werden von charakterspezifischen Instanz-Daten (Inventar, HP, Attributswerte, vorbereitete Zauber, FAQ) getrennt gespeichert. 
+- [x] **Ressourcen trennen:** Globale Daten (Handbuch, Zauberbuch-Definitionen, gemeinsame Notizen) werden von charakterspezifischen Instanz-Daten (Inventar, HP, Attributswerte, vorbereitete Zauber, FAQ) getrennt gespeichert. 
   - *Commit:* `git commit -m "refactor: separate global resources from character-specific instance data"`
+- [ ] **In-App Gruppen-Chat (IC & OOC):** Über Firebase einen Chat einbauen, bei dem Spieler "In-Character" oder "Out-Of-Character" miteinander am Tisch texten können (z.B. für Heimlichkeiten).
+- [ ] **Geteiltes Questlog:** Ein synchronisiertes Auftragsbuch einbauen. Sobald ein Spieler eine aktive Quest anlegt oder als erfüllt markiert, wird das bei allen geupdatet.
 
 ## Später (Phase 3: Hexenmeister Delat hinzufügen)
-- [ ] **Profil-Wechsler UI:** Einen Screen oder einen Button in der Navigation basteln, um in Echtzeit zwischen Athania (`Ranger`) und Delat (`Warlock`) zu wechseln.
+- [x] **Profil-Wechsler UI:** Einen Screen oder einen Button in der Navigation basteln, um in Echtzeit zwischen Athania (`Ranger`) und Delat (`Warlock`) zu wechseln.
   - *Commit:* `git commit -m "feat: implement profile switcher UI for multiple characters"`
 - [ ] **Dynamisches Menü:** Je nach aktiver Klasse das Burger-Menü anpassen. Ein Ranger sieht seine `Bestie`, ein Warlock sieht `Paktmagie`-Management oder `Schauerliche Anrufungen`.
   - *Commit:* `git commit -m "feat: add dynamic navigation menu based on active character class"`
@@ -58,3 +60,8 @@
   - *Commit:* `git commit -m "feat: implement warlock-specific logic, pact magic and eldritch invocations"`
 - [ ] **FAQ privatisieren:** FAQ für Athania und Delat getrennt laden und editierbar machen.
   - *Commit:* `git commit -m "feat: separate FAQ datastore per character profile"`
+
+## Ideen für die Zukunft (Phase 4: Gruppen-Features)
+- [ ] **Geteilte Schatztruhe (Gruppen-Loot):** Ein Inventar, aus dem jeder Spieler in Echtzeit Gold und Items nehmen oder hineinlegen kann.
+- [ ] **Echtzeit-Initiative-Tracker:** Ein eigener Kampf-Bildschirm, der die Zug-Reihenfolge live bei allen Spielern anzeigt und den aktiven Spieler grün markiert.
+- [ ] **Status-Ping & SOS (Gruppen-Ansicht):** Ein Übersichtsscreen, auf dem z.B. der Heiler live die Lebenspunkte, Status-Effekte (Vergiftet) etc. der anderen Gruppenmitglieder sehen kann.

@@ -69,17 +69,19 @@ fun DnDApp(viewModel: CharacterViewModel) {
                 NavigationBarItem(
                     selected = currentScreen == 0,
                     onClick = { currentScreen = 0 },
-                    icon = { Text("🧝‍♀️") },
-                    label = { Text("Athania") },
+                    icon = { Text(if (viewModel.characterData.name == "Athania") "🧝‍♀️" else "🧙‍♂️") },
+                    label = { Text(viewModel.characterData.name) },
                     colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
                 )
-                NavigationBarItem(
-                    selected = currentScreen == 1,
-                    onClick = { currentScreen = 1 },
-                    icon = { Text("🐾") },
-                    label = { Text("Capy") },
-                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
-                )
+                if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
+                    NavigationBarItem(
+                        selected = currentScreen == 1,
+                        onClick = { currentScreen = 1 },
+                        icon = { Text("🐾") },
+                        label = { Text("Capy") },
+                        colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
+                    )
+                }
                 NavigationBarItem(
                     selected = currentScreen == 2, // Hilfe
                     onClick = { currentScreen = 2 },
