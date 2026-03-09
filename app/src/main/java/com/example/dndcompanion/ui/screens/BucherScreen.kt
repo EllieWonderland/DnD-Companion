@@ -74,14 +74,14 @@ fun BucherScreen(viewModel: CharacterViewModel) {
                     viewModel.targetRulebookSearch = null
                 }
             )
-        } else {
-            BookDetailView(
-                bookType = activeBook!!,
+        } else if (activeBook == BookType.GROUP_CHAT) {
+            GroupChatDetailView(
                 viewModel = viewModel,
                 onBack = { activeBook = null }
             )
-        } else if (activeBook == BookType.GROUP_CHAT) {
-            GroupChatDetailView(
+        } else {
+            BookDetailView(
+                bookType = activeBook!!,
                 viewModel = viewModel,
                 onBack = { activeBook = null }
             )
@@ -951,7 +951,7 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
+                Icon(Icons.Default.ArrowBack, contentDescription = "ZurÃ¼ck", tint = Color.White)
             }
             Spacer(modifier = Modifier.width(8.dp))
             Text("Gruppen-Chat", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)

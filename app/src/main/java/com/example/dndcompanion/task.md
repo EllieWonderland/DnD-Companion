@@ -48,8 +48,6 @@
   - *Commit:* `git commit -m "refactor: abstract CharacterViewModel to use flexible CharacterData class"`
 - [x] **Ressourcen trennen:** Globale Daten (Handbuch, Zauberbuch-Definitionen, gemeinsame Notizen) werden von charakterspezifischen Instanz-Daten (Inventar, HP, Attributswerte, vorbereitete Zauber, FAQ) getrennt gespeichert. 
   - *Commit:* `git commit -m "refactor: separate global resources from character-specific instance data"`
-- [ ] **In-App Gruppen-Chat (IC & OOC):** Über Firebase einen Chat einbauen, bei dem Spieler "In-Character" oder "Out-Of-Character" miteinander am Tisch texten können (z.B. für Heimlichkeiten).
-- [ ] **Geteiltes Questlog:** Ein synchronisiertes Auftragsbuch einbauen. Sobald ein Spieler eine aktive Quest anlegt oder als erfüllt markiert, wird das bei allen geupdatet.
 
 ## Später (Phase 3: Hexenmeister Delat hinzufügen)
 - [x] **Profil-Wechsler UI:** Einen Screen oder einen Button in der Navigation basteln, um in Echtzeit zwischen Athania (`Ranger`) und Delat (`Warlock`) zu wechseln.
@@ -60,6 +58,8 @@
   - *Commit:* `git commit -m "feat: implement warlock-specific logic, pact magic and eldritch invocations"`
 - [ ] **FAQ privatisieren:** FAQ für Athania und Delat getrennt laden und editierbar machen.
   - *Commit:* `git commit -m "feat: separate FAQ datastore per character profile"`
+  - [ ] **In-App Gruppen-Chat (IC & OOC):** Über Firebase einen Chat einbauen, bei dem Spieler "In-Character" oder "Out-Of-Character" miteinander am Tisch texten können (z.B. für Heimlichkeiten).
+- [ ] **Geteiltes Questlog:** Ein synchronisiertes Auftragsbuch einbauen. Sobald ein Spieler eine aktive Quest anlegt oder als erfüllt markiert, wird das bei allen geupdatet.
 
 ## Ideen für die Zukunft (Phase 4: Gruppen-Features)
 - [ ] **Geteilte Schatztruhe (Gruppen-Loot):** Ein Inventar, aus dem jeder Spieler in Echtzeit Gold und Items nehmen oder hineinlegen kann.
