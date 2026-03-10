@@ -82,7 +82,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
         ) {
             Text("Traglast", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
             val weightColor = if (viewModel.currentWeight > viewModel.maxWeight) Color.Red else BlauDunkel
-            Text(String.format(java.util.Locale.US, "%.1f / %.0f Pfd.", viewModel.currentWeight, viewModel.maxWeight), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = weightColor)
+            Text(String.format(java.util.Locale.US, "%.1f / %.0f kg", viewModel.currentWeight, viewModel.maxWeight), fontSize = 20.sp, fontWeight = FontWeight.Bold, color = weightColor)
         }
 
         // --- GEWICHTS-BALKEN ---
@@ -250,7 +250,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                         newItemWeight = it 
                     }
                 },
-                label = { Text("Pfd.") },
+                label = { Text("kg") },
                 modifier = Modifier.width(70.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 singleLine = true,
@@ -290,7 +290,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                                     Text(equipment.category, fontSize = 11.sp, color = Color.Gray)
                                 }
                                 if (equipment.weight > 0.0) {
-                                    Text("${equipment.weight} Pfd.", fontSize = 12.sp, color = PinkDunkel, fontWeight = FontWeight.Bold)
+                                    Text("${equipment.weight} kg", fontSize = 12.sp, color = PinkDunkel, fontWeight = FontWeight.Bold)
                                 }
                             }
                         }
@@ -451,7 +451,7 @@ fun InventoryRow(name: String, amount: String, weight: Double? = null, onMinus: 
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = name, fontSize = 18.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
                 if (weight != null && weight > 0.0) {
-                    Text(text = "${weight} Pfd.", fontSize = 14.sp, color = GelbSand)
+                    Text(text = "${weight} kg", fontSize = 14.sp, color = GelbSand)
                 }
             }
 

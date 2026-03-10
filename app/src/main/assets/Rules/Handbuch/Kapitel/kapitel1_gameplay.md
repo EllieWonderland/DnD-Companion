@@ -262,7 +262,7 @@ Häufige Aktionen im Kampf umfassen:
 * **Spurt (Dash):** Du erhältst zusätzliche Bewegung für den aktuellen Zug in Höhe deiner Bewegungsrate.
 * **Rückzug (Disengage):** Wenn du dich in diesem Zug bewegst, provozierst du keine Gelegenheitsangriffe.
 * **Ausweichen (Dodge):** Bis zu deinem nächsten Zug haben Angriffe gegen dich Nachteil (sofern du den Angreifer sehen kannst) und du hast Vorteil auf Geschicklichkeits-Rettungswürfe.
-* **Hilfe (Help):** Du gibst einem Verbündeten Vorteil bei einer Attributsprüfung oder beim nächsten Angriffswurf gegen eine Kreatur in 5 Fuß Reichweite.
+* **Hilfe (Help):** Du gibst einem Verbündeten Vorteil bei einer Attributsprüfung oder beim nächsten Angriffswurf gegen eine Kreatur in 1,5 m / 1 Felder Reichweite.
 * **Verstecken (Hide):** Du machst eine Geschicklichkeits-Prüfung (Heimlichkeit), um dich vor Feinden zu verbergen.
 * **Suchen (Search):** Du suchst aufmerksam nach etwas Verborgenem (oft Weisheit (Wahrnehmung) oder Intelligenz (Nachforschung)).
 * **Bereitmachen (Ready):** Du verzögerst eine Aktion, bis ein bestimmter Auslöser eintritt. Du nutzt deine Reaktion, um die Aktion dann auszuführen.
@@ -364,8 +364,8 @@ Du kannst dich in deinem Zug bis zu deiner **Bewegungsrate (Speed)** weit bewege
 ### Einen Angriff ausführen (Making an Attack)
 Ganz gleich, ob du mit einem Schwert zuschlägst oder einen Pfeil abfeuerst, ein Angriff folgt einer einfachen Struktur: Wähle ein Ziel, bestimme Modifikatoren (z.B. Deckung oder *Vorteil*) und löse den Angriff durch einen **Angriffswurf** ab.
 
-* **Nahkampfangriffe (Melee):** Typischerweise in 5 Fuß Reichweite. Bei unbewaffneten Schlägen nutzt du Stärke und machst 1 + STR-Modifikator Wuchtschaden. Du kannst den Schlag auch nutzen, um den Gegner zu packen (Grapple) oder zu Boden zu stoßen (Shove).
-* **Fernkampfangriffe (Ranged):** Wenn du einen Fernkampfangriff gegen ein Ziel machst und ein *nicht kampfunfähiger Feind* sich im Nahkampf (5 Fuß) um dich befindet, hast du **Nachteil** auf den Angriffswurf.
+* **Nahkampfangriffe (Melee):** Typischerweise in 1,5 m / 1 Felder Reichweite. Bei unbewaffneten Schlägen nutzt du Stärke und machst 1 + STR-Modifikator Wuchtschaden. Du kannst den Schlag auch nutzen, um den Gegner zu packen (Grapple) oder zu Boden zu stoßen (Shove).
+* **Fernkampfangriffe (Ranged):** Wenn du einen Fernkampfangriff gegen ein Ziel machst und ein *nicht kampfunfähiger Feind* sich im Nahkampf (1,5 m / 1 Felder) um dich befindet, hast du **Nachteil** auf den Angriffswurf.
 * **Gelegenheitsangriffe (Opportunity Attacks):** Wenn eine feindliche Kreatur, die du sehen kannst, deine Nahkampfreichweite verlässt, kannst du als Reaktion einen einzelnen Nahkampfangriff gegen sie ausführen. (Tritt vor ihrer Bewegung in Kraft).
 * **Leichte Waffen (Light) / Zwei-Waffen-Kampf:** Wenn du mit einer Waffe der Eigenschaft *Leicht* (z.B. Kurzschwert) die Angriffsaktion nutzt, kannst du einmalig in demselben Zug eine weitere *Leichte* Waffe in der anderen Hand zuschlagen lassen. Der zweite Angriff kostet keine Bonusaktion mehr, erhält aber den Attributsmodifikator *nicht* auf den Schaden.
 
@@ -409,10 +409,10 @@ Einige Zauber und Effekte verleihen "Temporäre TP". Diese sind wie ein Schild. 
 
 Zustände verändern deine Fähigkeiten im Spiel, oft zum Schlechten. Die häufigsten sind:
 * **Betäubt (Stunned):** Kampfunfähig, scheitert automatisch an STR/DEX-Rettungswürfen, Angriffe gegen das Ziel haben Vorteil.
-* **Bewusstlos (Unconscious):** Liegend, kampfunfähig, lässt alles fallen. Angriffe gegen das Ziel haben Vorteil (Nahkampftreffer in 5 Fuß sind automatische kritische Treffer).
+* **Bewusstlos (Unconscious):** Liegend, kampfunfähig, lässt alles fallen. Angriffe gegen das Ziel haben Vorteil (Nahkampftreffer in 1,5 m / 1 Felder sind automatische kritische Treffer).
 * **Bezaubert (Charmed):** Das Ziel kann den Bezauberer nicht angreifen. Der Bezauberer hat Vorteil auf soziale Prüfungen gegen das Ziel.
 * **Blind (Blinded):** Ziel sieht nichts, automatische Fehlschläge bei Sichtprüfungen. Angriffe gegen das Ziel haben Vorteil, Angriffe *vom* Ziel haben Nachteil.
-* **Erschöpft (Exhaustion):** Hat 6 Stufen. Jede Stufe verringert d20-Tests um 1 und die Bewegungsrate um 5 Fuß. Bei Stufe 6 stirbt man. Lange/Kurze Rasten bauen Erschöpfung ab.
+* **Erschöpft (Exhaustion):** Hat 6 Stufen. Jede Stufe verringert d20-Tests um 1 und die Bewegungsrate um 1,5 m / 1 Felder. Bei Stufe 6 stirbt man. Lange/Kurze Rasten bauen Erschöpfung ab.
 * **Gepackt (Grappled):** Bewegungsrate ist 0.
 * **Liegend (Prone):** Darf nur kriechen. Angriffe haben Nachteil. Nahkampfangriffe gegen das Ziel haben Vorteil, Fernkampfangriffe haben Nachteil.
 * **Unsichtbar (Invisible):** Angriffe gegen das Ziel haben Nachteil, eigene Angriffe haben Vorteil.

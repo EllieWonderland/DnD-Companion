@@ -118,10 +118,10 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 * **Stufe 3: Ursprüngliches Wissen (Primal Knowledge):** Du erhältst Übung in einer weiteren Barbaren-Fertigkeit. Während *Kampfrausch* aktiv ist, kannst du Stärke statt des normalen Attributs für Würfe auf Akrobatik, Einschüchtern, Heimlichkeit, Überleben oder Wahrnehmung nutzen.
 * **Stufe 3: Barbaren-Unterklasse:** Wähle einen Pfad.
 * **Stufe 5: Extra-Angriff (Extra Attack):** Du greifst zweimal pro Angriffsaktion an.
-* **Stufe 5: Schnelle Bewegung:** +10 Fuß Bewegungsrate.
+* **Stufe 5: Schnelle Bewegung:** +3 m / 2 Felder Bewegungsrate.
 * **Stufe 7: Wilder Instinkt (Feral Instinct):** Vorteil auf Initiative-Würfe.
 * **Stufe 7: Instinktiver Sprung (Instinctive Pounce):** Als Teil der Bonusaktion zum Starten des Kampfrauschs kannst du dich bis zur Hälfte deiner Bewegungsrate bewegen.
-* **Stufe 9: Brutaler Schlag (Brutal Strike):** Verzichtest du auf den Vorteil eines *Rücksichtslosen Angriffs*, fügst du bei einem Treffer +1W10 Schaden hinzu und kannst das Ziel 15 Fuß wegstoßen oder seine Bewegung um 15 Fuß reduzieren.
+* **Stufe 9: Brutaler Schlag (Brutal Strike):** Verzichtest du auf den Vorteil eines *Rücksichtslosen Angriffs*, fügst du bei einem Treffer +1W10 Schaden hinzu und kannst das Ziel 4,5 m / 3 Felder wegstoßen oder seine Bewegung um 4,5 m / 3 Felder reduzieren.
 * **Stufe 11: Unerbittlicher Kampfrausch (Relentless Rage):** Fällst du auf 0 TP, kannst du einen SG 10 KON-Rettungswurf ablegen (steigt pro Nutzung), um auf 1 TP zu bleiben.
 * **Stufe 13: Verbesserter Brutaler Schlag:** Der Extra-Schaden wird +2W10. Zwei neue Effekte stehen zur Wahl (Nachteil auf den nächsten Rettungswurf des Ziels ODER Ziel wegstoßen und selbst ohne Gelegenheitsangriff nachrücken).
 * **Stufe 15: Anhaltender Kampfrausch (Persistent Rage):** Kampfrausch hält ohne Aufrechterhaltung volle 10 Minuten. Wenn du Initiative würfelst und 0 Nutzungen hast, erhältst du 1 Nutzung zurück.
@@ -133,36 +133,36 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 ### Pfad des Berserkers (Path of the Berserker)
 * **Stufe 3: Raserei (Frenzy):** Wenn du in *Kampfrausch* bist und *Rücksichtslosen Angriff* nutzt, fügst du dem ersten Ziel, das du in deinem Zug triffst, zusätzlich 1W6 Schaden des Waffentyps zu. (Steigt auf 2W6 auf Stufe 9, 3W6 auf Stufe 16, 4W6 auf Stufe 20).
 * **Stufe 6: Gedankenlose Raserei (Mindless Rage):** Du bist immun gegen die Zustände *Bezaubert* und *Verängstigt*, während du im *Kampfrausch* bist. Wenn du bezaubert oder verängstigt bist, unterbricht das Starten des *Kampfrauschs* diese Zustände für seine Dauer.
-* **Stufe 10: Vergeltung (Retaliation):** Wenn du von einer Kreatur innerhalb von 5 Fuß Schaden nimmst, kannst du als Reaktion einen Nahkampfangriff gegen sie ausführen.
-* **Stufe 14: Einschüchternde Präsenz (Intimidating Presence):** Als Bonusaktion (kostet 1 Nutzung *Kampfrausch*) müssen alle Feinde innerhalb von 30 Fuß einen WIS-Rettungswurf (SG = 8 + STR-Mod + ÜB) ablegen. Fehlschlag: Sie sind für 1 Minute *Verängstigt*. Sie wiederholen den Wurf am Ende jedes ihrer Züge.
+* **Stufe 10: Vergeltung (Retaliation):** Wenn du von einer Kreatur innerhalb von 1,5 m / 1 Felder Schaden nimmst, kannst du als Reaktion einen Nahkampfangriff gegen sie ausführen.
+* **Stufe 14: Einschüchternde Präsenz (Intimidating Presence):** Als Bonusaktion (kostet 1 Nutzung *Kampfrausch*) müssen alle Feinde innerhalb von 9 m / 6 Felder einen WIS-Rettungswurf (SG = 8 + STR-Mod + ÜB) ablegen. Fehlschlag: Sie sind für 1 Minute *Verängstigt*. Sie wiederholen den Wurf am Ende jedes ihrer Züge.
 
 ### Pfad des Wilden Herzens (Path of the Wild Heart)
 * **Stufe 3: Tierisches Herz (Animal Heart):** Wenn du in *Kampfrausch* gehst, wählst du ein Tier (austauschbar bei jedem Kampfrausch):
   * *Bär:* Du hast Resistenz gegen jeden Schaden außer Psychisch.
   * *Adler:* Feinde haben Nachteil auf Gelegenheitsangriffe gegen dich. Du kannst Spurt als Bonusaktion nutzen.
-  * *Wolf:* Verbündete haben Vorteil auf Nahkampfangriffe gegen Feinde in 5 Fuß um dich herum.
+  * *Wolf:* Verbündete haben Vorteil auf Nahkampfangriffe gegen Feinde in 1,5 m / 1 Felder um dich herum.
 * **Stufe 3: Magie der Wildnis (Wilderness Magic):** Du hast die Zauber *Mit Tieren sprechen* und *Tiersinn* als immer vorbereitete Rituale.
 * **Stufe 6: Aspekt der Wildnis (Aspect of the Wild):** Wähle einen passiven Bonus (änderbar bei Langer Rast):
-  * *Eule:* Dunkelsicht 60 Fuß, Übung in *Heimlichkeit*.
+  * *Eule:* Dunkelsicht 18 m / 12 Felder, Übung in *Heimlichkeit*.
   * *Panther:* Kletterbewegungsrate gleich deiner Laufgeschwindigkeit. Vorteil auf Akrobatik und Athletik.
   * *Lachs:* Schwimmbewegungsrate gleich deiner Laufgeschwindigkeit. Du kannst den Atem eine Stunde lang anhalten.
 * **Stufe 10: Naturwandler (Nature Speaker):** Du hast den Zauber *Mit Pflanzen sprechen* als immer vorbereitetes Ritual. Du kannst *Kommune mit der Natur* als Ritual wirken.
 * **Stufe 14: Macht der Wildnis (Power of the Wild):** Wenn du in *Kampfrausch* gehst, wählst du eine weitere Tier-Macht (austauschbar bei jedem Kampfrausch):
   * *Falke:* Du erhältst eine Flugbewegungsrate gleich deiner Laufgeschwindigkeit, solange du nichts Schweres trägst. Du fällst am Ende deines Zuges, wenn du nicht auf dem Boden stehst.
-  * *Löwe:* Alle deine Feinde in 5 Fuß Entfernung haben Nachteil auf Angriffe gegen deine Verbündeten.
+  * *Löwe:* Alle deine Feinde in 1,5 m / 1 Felder Entfernung haben Nachteil auf Angriffe gegen deine Verbündeten.
   * *Widder:* Triffst du eine Kreatur in deinem Zug mit einem Nahkampfangriff, kannst du sie 1x pro Zug sofort ohne Rettungswurf zu Boden stoßen (*Liegend*).
 
 ### Pfad des Weltenbaums (Path of the World Tree)
-* **Stufe 3: Vitalität des Baumes (Vitality of the Tree):** Wenn du deinen *Kampfrausch* aktivierst, erhältst du Temp. TP in Höhe deiner Barbarenstufe. Zusätzlich kannst du zu Beginn jedes deiner Züge im Kampfrausch einer Kreatur in 10 Fuß Entfernung Temp. TP gewähren (1W6 + STR-Modifikator).
-* **Stufe 6: Äste des Baumes (Branches of the Tree):** Während du im Kampfrausch bist, kannst du zu Beginn deines Zuges eine Kreatur in 30 Fuß Entfernung wählen. Diese muss einen STR-Rettungswurf ablegen (Verbündete können ihn automatisch fehlschlagen lassen). Bei einem Fehlschlag teleportierst du sie an einen unbesetzten Platz in 5 Fuß Entfernung von dir oder in deinen unmittelbaren Greif-Bereich.
-* **Stufe 10: Rammende Wurzeln (Battering Roots):** Während du in *Kampfrausch* bist, erhöht sich die Reichweite all deiner Nahkampfwaffen um 10 Fuß. Du kannst die Meisterschafts-Eigenschaften *Drücken* (Push) oder *Umwerfen* (Topple) zu deinen Angriffen hinzufügen.
-* **Stufe 14: Reisen entlang des Baumes (Travel Along the Tree):** Wenn du in Kampfrausch gehst und 1x pro Zug als Bonusaktion im Kampfrausch, kannst du dich bis zu 60 Fuß weit teleportieren. Du kannst beim Starten bis zu 6 willige Verbündete mit dir teleportieren.
+* **Stufe 3: Vitalität des Baumes (Vitality of the Tree):** Wenn du deinen *Kampfrausch* aktivierst, erhältst du Temp. TP in Höhe deiner Barbarenstufe. Zusätzlich kannst du zu Beginn jedes deiner Züge im Kampfrausch einer Kreatur in 3 m / 2 Felder Entfernung Temp. TP gewähren (1W6 + STR-Modifikator).
+* **Stufe 6: Äste des Baumes (Branches of the Tree):** Während du im Kampfrausch bist, kannst du zu Beginn deines Zuges eine Kreatur in 9 m / 6 Felder Entfernung wählen. Diese muss einen STR-Rettungswurf ablegen (Verbündete können ihn automatisch fehlschlagen lassen). Bei einem Fehlschlag teleportierst du sie an einen unbesetzten Platz in 1,5 m / 1 Felder Entfernung von dir oder in deinen unmittelbaren Greif-Bereich.
+* **Stufe 10: Rammende Wurzeln (Battering Roots):** Während du in *Kampfrausch* bist, erhöht sich die Reichweite all deiner Nahkampfwaffen um 3 m / 2 Felder. Du kannst die Meisterschafts-Eigenschaften *Drücken* (Push) oder *Umwerfen* (Topple) zu deinen Angriffen hinzufügen.
+* **Stufe 14: Reisen entlang des Baumes (Travel Along the Tree):** Wenn du in Kampfrausch gehst und 1x pro Zug als Bonusaktion im Kampfrausch, kannst du dich bis zu 18 m / 12 Felder weit teleportieren. Du kannst beim Starten bis zu 6 willige Verbündete mit dir teleportieren.
 
 ### Pfad des Eiferers (Path of the Zealot)
 * **Stufe 3: Göttlicher Zorn (Divine Fury):** Der erste Treffer in jedem deiner Züge im *Kampfrausch* fügt zusätzlich Nekrotischen oder Gleißenden Schaden zu (1W6 + halbe Barbaren-Stufe).
 * **Stufe 3: Krieger der Götter (Warrior of the Gods):** Wenn du magische Heilung (Zauber/Trank/Merkmal) erhältst, kannst du eine Anzahl an W12-Würfeln rollen und die TP zusätzlich heilen. (Würfelanzahl = Nutzungen deines Kampfrausches pro Tag).
 * **Stufe 6: Fanatischer Fokus (Fanatical Focus):** Wenn du einen Rettungswurf nicht bestehst, kannst du eine Nutzung *Kampfrausch* opfern, um den Wurf zu wiederholen (du musst das zweite Ergebnis nehmen).
-* **Stufe 10: Eifrige Präsenz (Zealous Presence):** Als Bonusaktion gewährst du bis zu 10 Kreaturen (inkl. dir selbst) in 60 Fuß Entfernung Vorteil auf Angriffs- und Rettungswürfe bis zum Start deines nächsten Zuges. (1x pro Langer Rast oder kostet 1 Nutzung *Kampfrausch*).
+* **Stufe 10: Eifrige Präsenz (Zealous Presence):** Als Bonusaktion gewährst du bis zu 10 Kreaturen (inkl. dir selbst) in 18 m / 12 Felder Entfernung Vorteil auf Angriffs- und Rettungswürfe bis zum Start deines nächsten Zuges. (1x pro Langer Rast oder kostet 1 Nutzung *Kampfrausch*).
 * **Stufe 14: Zorn der Götter (Rage of the Gods):** Wenn du deinen *Kampfrausch* aktivierst, kannst du für 1 Minute zur fliegenden Naturgewalt werden. Du erhältst Fluggeschwindigkeit gleich deiner Laufgeschwindigkeit, Resistenz gegen Nekrotisch/Gleißend. Fällst du auf 0 TP, verhinderst du dies, fällst stattdessen auf 1 TP und erhältst TP in Höhe deines Max-Wertes. (1x pro Langer Rast).
 
 ---
@@ -179,17 +179,17 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 * **Startausrüstung:** Wähle A oder B: (A) Lederrüstung, 2 Dolche, Musikinstrument, Unterhalterpaket und 19 GM; oder (B) 100 GM
 
 ### Klassenmerkmale
-* **Stufe 1: Bardische Inspiration (Bardic Inspiration):** Du hast einen Pool an W6 (Anzahl = CHA-Modifikator). Als Bonusaktion in 60 Fuß verleihen. Hält 1 Stunde. Ziel kann den Würfel für einen fehlgeschlagenen D20-Test (Angriff, Wurf, Rettungswurf) nutzen.
+* **Stufe 1: Bardische Inspiration (Bardic Inspiration):** Du hast einen Pool an W6 (Anzahl = CHA-Modifikator). Als Bonusaktion in 18 m / 12 Felder verleihen. Hält 1 Stunde. Ziel kann den Würfel für einen fehlgeschlagenen D20-Test (Angriff, Wurf, Rettungswurf) nutzen.
 * **Stufe 1: Zauberwirken (Spellcasting):** Du nutzt Charisma und kannst Musikinstrumente als Fokus verwenden.
 * **Stufe 2: Alleskönner (Jack of All Trades):** Du addierst deinen halben Übungsbonus (abgerundet) auf alle Attributswürfe, in denen du keine Übung hast.
 * **Stufe 2: Expertise:** Verdopple den Übungsbonus für zwei deiner Fertigkeiten. (Erneut auf Stufe 9).
 * **Stufe 3: Barden-Unterklasse:** Wähle eine Barden-Schule.
 * **Stufe 5: Quell der Inspiration (Font of Inspiration):** Bardische Inspiration regeneriert sich nun auch bei einer Kurzen Rast. Du kannst zudem einen Zauberplatz ausgeben, um eine Nutzung zurückzuerhalten (keine Aktion).
 * **Stufe 5: Verbesserte Inspiration:** Der Würfel wird zu einem W8 (W10 auf Stufe 10, W12 auf Stufe 15).
-* **Stufe 7: Gegenzauber-Melodie (Countercharm):** Wenn eine Kreatur in 30 Fuß einen Rettungswurf gegen den Zustand *Bezaubert* oder *Verängstigt* ablegen muss, kannst du per Reaktion Vorteil auf diesen Wurf gewähren.
+* **Stufe 7: Gegenzauber-Melodie (Countercharm):** Wenn eine Kreatur in 9 m / 6 Felder einen Rettungswurf gegen den Zustand *Bezaubert* oder *Verängstigt* ablegen muss, kannst du per Reaktion Vorteil auf diesen Wurf gewähren.
 * **Stufe 10: Magische Geheimnisse (Magical Secrets):** Immer wenn du von nun an Zauber vorbereitest, kannst du für diese Plätze auch Zauber aus den Listen von Kleriker, Druide oder Magier wählen (diese zählen dann als Barden-Zauber).
 * **Stufe 18: Überragende Inspiration (Superior Inspiration):** Wenn du Initiative würfelst und 0 Nutzungen hast, erhältst du 2 Nutzungen zurück.
-* **Stufe 20: Worte der Schöpfung (Words of Creation):** Die Zauber *Wort der Heilung* (Power Word Heal) und *Machtwort Tod* (Power Word Kill) sind immer vorbereitet. Wenn du sie wirkst, kannst du ein zweites Ziel in 10 Fuß Entfernung des ersten Ziels wählen.
+* **Stufe 20: Worte der Schöpfung (Words of Creation):** Die Zauber *Wort der Heilung* (Power Word Heal) und *Machtwort Tod* (Power Word Kill) sind immer vorbereitet. Wenn du sie wirkst, kannst du ein zweites Ziel in 3 m / 2 Felder Entfernung des ersten Ziels wählen.
 
 ## Unterklassen des Barden (Bard)
 
@@ -198,20 +198,20 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 * **Stufe 3: Blendende Beinarbeit (Dazzling Footwork):** Du erhältst folgende Vorteile (nur ungerüstet oder in Leichter Rüstung ohne Schild):
   * *Tänzerische Schläge:* Deine unbewaffneten Schläge nutzen GES und verursachen Schaden basierend auf deinem Bardischen Inspirationswürfel (W6, W8, W10, W12).
   * *Bardische Schläge:* Wenn du Bardische Inspiration nutzt, kannst du als Teil derselben Bonusaktion einen unbewaffneten Schlag ausführen.
-* **Stufe 6: Inspirierende Bewegung (Inspiring Movement):** Wenn ein Feind einen Zug in 5 Fuß Entfernung von einem Verbündeten beendet (innerhalb von 60 Fuß von dir), kannst du eine Bardische Inspiration ausgeben. Der Verbündete kann sich sofort bis zur halben Geschwindigkeit bewegen (keine Gelegenheitsangriffe) und du selbst ebenfalls.
-* **Stufe 6: Führendes Ausweichen (Leading Evasion):** Bei einem GES-Rettungswurf, bei dem du halben Schaden nehmen würdest (wie *Feuerball*), nimmst du bei Erfolg keinen und bei Fehlschlag nur halben Schaden. Dies gilt auch für alle Verbündeten in 5 Fuß Entfernung.
-* **Stufe 14: Tanzendes Entrinnen (Tandem Footwork):** Wenn du Initiative würfelst, kannst du eine Bardische Inspiration ausgeben. Du und willige Verbündete (bis zu deinem CHA-Modifikator) in 60 Fuß addieren den gewürfelten Wert auf ihren Initiative-Wurf.
+* **Stufe 6: Inspirierende Bewegung (Inspiring Movement):** Wenn ein Feind einen Zug in 1,5 m / 1 Felder Entfernung von einem Verbündeten beendet (innerhalb von 18 m / 12 Felder von dir), kannst du eine Bardische Inspiration ausgeben. Der Verbündete kann sich sofort bis zur halben Geschwindigkeit bewegen (keine Gelegenheitsangriffe) und du selbst ebenfalls.
+* **Stufe 6: Führendes Ausweichen (Leading Evasion):** Bei einem GES-Rettungswurf, bei dem du halben Schaden nehmen würdest (wie *Feuerball*), nimmst du bei Erfolg keinen und bei Fehlschlag nur halben Schaden. Dies gilt auch für alle Verbündeten in 1,5 m / 1 Felder Entfernung.
+* **Stufe 14: Tanzendes Entrinnen (Tandem Footwork):** Wenn du Initiative würfelst, kannst du eine Bardische Inspiration ausgeben. Du und willige Verbündete (bis zu deinem CHA-Modifikator) in 18 m / 12 Felder addieren den gewürfelten Wert auf ihren Initiative-Wurf.
 * **Stufe 14: Unaufhaltsamer Tanz (Irresistible Dance):** Du hast den Zauber *Ottos unwiderstehlicher Tanz* immer vorbereitet. Du kannst ihn 1x pro Langer Rast ohne Zauberplatz wirken. Erhältst du nach Initiative-Wurf deine Bardischen Inspirationen zurück, gewinnst du auch diese kostenlose Nutzung zurück.
 
 ### Schule des Glamours (College of Glamour)
-* **Stufe 3: Betörende Magie (Beguiling Magic):** Du hast die Zauber *Person bezaubern* und *Spiegelbilder* immer vorbereitet. Wirkst du einen Bezauberungs-/Illusions-Zauber, kannst du als Reaktion eine Kreatur in 60 Fuß zu einem WIS-Rettungswurf zwingen. Bei Fehlschlag ist sie bis zum Ende deines nächsten Zuges von dir *Bezaubert* oder *Verängstigt* (deine Wahl).
-* **Stufe 3: Mantel der Inspiration (Mantle of Inspiration):** Bonusaktion (kostet 1 Bardische Inspiration): Wähle Kreaturen in 60 Fuß (bis CHA-Modifikator). Sie erhalten Temp. TP = 2x Inspirationswürfel (gewürfelt) und können sofort als Reaktion ihre halbe Bewegungsrate laufen (ohne Gelegenheitsangriffe zu provozieren).
+* **Stufe 3: Betörende Magie (Beguiling Magic):** Du hast die Zauber *Person bezaubern* und *Spiegelbilder* immer vorbereitet. Wirkst du einen Bezauberungs-/Illusions-Zauber, kannst du als Reaktion eine Kreatur in 18 m / 12 Felder zu einem WIS-Rettungswurf zwingen. Bei Fehlschlag ist sie bis zum Ende deines nächsten Zuges von dir *Bezaubert* oder *Verängstigt* (deine Wahl).
+* **Stufe 3: Mantel der Inspiration (Mantle of Inspiration):** Bonusaktion (kostet 1 Bardische Inspiration): Wähle Kreaturen in 18 m / 12 Felder (bis CHA-Modifikator). Sie erhalten Temp. TP = 2x Inspirationswürfel (gewürfelt) und können sofort als Reaktion ihre halbe Bewegungsrate laufen (ohne Gelegenheitsangriffe zu provozieren).
 * **Stufe 6: Mantel der Majestät (Mantle of Majesty):** Du hast den Zauber *Befehl* immer vorbereitet. Als Bonusaktion kannst du den Mantel für 1 Minute aktivieren (Konzentration nötig). Währenddessen kannst du in jedem Zug *Befehl* als Bonusaktion ohne Zauberplatz wirken. (1x pro Langer Rast oder kostet 1 Zauberplatz ab Stufe 3).
 * **Stufe 14: Unbrechbare Majestät (Unbreakable Majesty):** Als Bonusaktion aktivierbar (1 Minute Dauer): Jeder, der dich angreift, muss erst einen CHA-Rettungswurf bestehen. Bei Fehlschlag muss der Angriff auf ein anderes Ziel gerichtet werden (oder verfällt). Ein bestandener Rettungswurf gibt dem Angreifer auf dich zwar Erfolg, jedoch erhältst du auf deinen nächsten Angriff oder Zauber gegen diesen Angreifer bis zum Ende deines nächsten Zuges Vorteil. (1x pro Langer Rast oder kostet 1 Zauberplatz ab Stufe 3).
 
 ### Schule des Wissens (College of Lore)
 * **Stufe 3: Bonus-Übungen (Bonus Proficiencies):** Du erhältst Übung in 3 beliebigen Fertigkeiten deiner Wahl.
-* **Stufe 3: Schneidende Worte (Cutting Words):** Wenn eine Kreatur in 60 Fuß einen Attributswurf, einen Angriffswurf oder einen Schadenswurf durchführt, kannst du per Reaktion 1 Bardische Inspiration abziehen. (Auch nach dem Wurf anwendbar, aber bevor der SL die Effekte nennt).
+* **Stufe 3: Schneidende Worte (Cutting Words):** Wenn eine Kreatur in 18 m / 12 Felder einen Attributswurf, einen Angriffswurf oder einen Schadenswurf durchführt, kannst du per Reaktion 1 Bardische Inspiration abziehen. (Auch nach dem Wurf anwendbar, aber bevor der SL die Effekte nennt).
 * **Stufe 6: Magische Entdeckungen (Magical Discoveries):** Du erlernst 2 zusätzliche Zauber von jeglicher Zauber-Klasse. Sie zählen für dich als Barden-Zauber und sind immer vorbereitet.
 * **Stufe 14: Unvergleichliches Können (Peerless Skill):** Wenn du einen Attributswurf oder Rettungswurf machst, kannst du 1 Bardische Inspiration einsetzen und auf das Ergebnis addieren (auch nachdem du gewürfelt hast). Schlägt der Wurf trotzdem fehl, verbrauchst du den Inspirationswürfel nicht.
 
@@ -269,19 +269,19 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 * **Stufe 3: Waffenbindung (Weapon Bond):** Binde über eine 1-stündige Rast bis zu zwei Waffen an dich. Sie können nicht entwaffnet werden und per Bonusaktion aus der ganzen Ebene in deine Hand teleportiert werden.
 * **Stufe 7: Kriegsmagie (War Magic):** Wenn du die Angriffsaktion ausführst, kannst du einen Angriff durch das Wirken eines Zaubertricks (Cantrips) austauschen.
 * **Stufe 10: Mystischer Schlag (Eldritch Strike):** Wenn du eine Kreatur mit einer Waffe triffst, hat sie auf den nächsten Rettungswurf gegen einen deiner Zauber (bis Ende deines nächsten Zuges) Nachteil.
-* **Stufe 15: Arkaner Ansturm (Arcane Charge):** Nutzt du deine *Aktionswoge (Action Surge)*, kannst du dich bis zu 30 Fuß an einen unbesetzten Platz teleportieren (davor oder danach).
+* **Stufe 15: Arkaner Ansturm (Arcane Charge):** Nutzt du deine *Aktionswoge (Action Surge)*, kannst du dich bis zu 9 m / 6 Felder an einen unbesetzten Platz teleportieren (davor oder danach).
 * **Stufe 18: Verbesserte Kriegsmagie (Improved War Magic):** Wenn du die Angriffsaktion ausführst, kannst du zwei Angriffe (statt einem) durch das Wirken eines beliebigen Zaubers (Zauberstufe 1 oder 2) austauschen.
 
 ### Psi-Krieger (Psi Warrior)
 * **Stufe 3: Psionische Kraft (Psionic Power):** Du erhältst einen Pool von Psionik-Würfeln (Stufe 3 = W8). Anzahl = 2x Kämpferstufe. Regneration: Alle bei Langer Rast. Nach einer Kurzen Rast kannst du per Bonusaktion 1 Würfel gratis regenerieren. Nutzung:
   * *Psionischer Schlag:* 1 Würfel beim Waffentreffer ausgeben: + 1W8 + INT-Mod Force-Schaden.
-  * *Telekinetische Bewegung:* 1 Objekt/Kreatur (Bereitwillig) in 30 Fuß bis zu 30 Fuß bewegen. 1x frei pro Kurzer Rast, danach kostet es 1 Würfel.
-  * *Schutzfeld:* Reaktion bei Schaden (auf dich/Verbündeten in 30 Fuß): Reduziere Schaden um 1W8 + INT-Mod.
+  * *Telekinetische Bewegung:* 1 Objekt/Kreatur (Bereitwillig) in 9 m / 6 Felder bis zu 9 m / 6 Felder bewegen. 1x frei pro Kurzer Rast, danach kostet es 1 Würfel.
+  * *Schutzfeld:* Reaktion bei Schaden (auf dich/Verbündeten in 9 m / 6 Felder): Reduziere Schaden um 1W8 + INT-Mod.
 * **Stufe 7: Telekinetischer Experte (Telekinetic Adept):**
   * *Psi-verstärkter Sprung:* Bonusaktion (kostet 1 Würfel oder ist 1x frei): Fluggeschwindigkeit gleich Laufgeschwindigkeit bis zum Ende des Zuges.
-  * *Telekinetischer Stoß:* Wenn du Psionischen Schlag nutzt, muss das Ziel (SG auf INT-Basis) einen STR-Save bestehen, sonst wird es *Liegend* oder 10 Fuß weggestoßen.
+  * *Telekinetischer Stoß:* Wenn du Psionischen Schlag nutzt, muss das Ziel (SG auf INT-Basis) einen STR-Save bestehen, sonst wird es *Liegend* oder 3 m / 2 Felder weggestoßen.
 * **Stufe 10: Geschützter Geist (Guarded Mind):** Resistenz gegen Psychischen Schaden. Beginnst du deinen Zug Bezaubert oder Verängstigt, kannst du 1 Würfel opfern, um den Zustand zu beenden.
-* **Stufe 15: Bollwerk der Kraft (Bulwark of Force):** Als Bonusaktion (kostet 1 Würfel oder ist 1x frei): Du und bis zu INT-Mod Verbündete in 30 Fuß erhalten 1 Minute lang Halbe Deckung (+2 RK und GES-Saves).
+* **Stufe 15: Bollwerk der Kraft (Bulwark of Force):** Als Bonusaktion (kostet 1 Würfel oder ist 1x frei): Du und bis zu INT-Mod Verbündete in 9 m / 6 Felder erhalten 1 Minute lang Halbe Deckung (+2 RK und GES-Saves).
 * **Stufe 18: Telekinetischer Meister (Telekinetic Master):** Du kannst *Telekinese* wirken (ohne Komponenten, nutzt INT). Während du dich konzentrierst, kannst du als Bonusaktion Waffenangriffe ausführen. (1x frei pro Langer Rast, danach für 1 Würfel).
 ---
 
@@ -303,8 +303,8 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
   * **Schlaghagel:** 1 Fokus = 2 unbewaffnete Schläge als Bonusaktion.
   * **Geduldige Verteidigung:** Ausweichen als Bonusaktion (Kostenlos) ODER Ausweichen + Rückzug als Bonusaktion für 1 Fokus.
   * **Schritt des Windes:** Spurt + Rückzug als Bonusaktion (Kostenlos) ODER beides + doppelte Sprungweite als Bonusaktion für 1 Fokus.
-* **Stufe 2: Ungerüstete Bewegung:** +10 Fuß Bewegungsrate. (Skaliert weiter).
-* **Stufe 3: Angriffe abwehren (Deflect Attacks):** Als Reaktion auf Hieb-, Stich- oder Wuchtschaden (Nah- oder Fernkampf!) reduzierst du den Schaden um 1W10 + GES-Modifikator + Mönchsstufe. Sinkt der Schaden auf 0, kannst du 1 Fokus ausgeben, um den Angriff auf ein Ziel in 5 Fuß (oder 60 Fuß bei Fernkampf) umzuleiten (Ziel macht GES-Rettungswurf gegen Schaden).
+* **Stufe 2: Ungerüstete Bewegung:** +3 m / 2 Felder Bewegungsrate. (Skaliert weiter).
+* **Stufe 3: Angriffe abwehren (Deflect Attacks):** Als Reaktion auf Hieb-, Stich- oder Wuchtschaden (Nah- oder Fernkampf!) reduzierst du den Schaden um 1W10 + GES-Modifikator + Mönchsstufe. Sinkt der Schaden auf 0, kannst du 1 Fokus ausgeben, um den Angriff auf ein Ziel in 1,5 m / 1 Felder (oder 18 m / 12 Felder bei Fernkampf) umzuleiten (Ziel macht GES-Rettungswurf gegen Schaden).
 * **Stufe 3: Mönchs-Unterklasse:** Wähle eine Krieger-Tradition.
 * **Stufe 4: Langsamer Fall (Slow Fall):** Als Reaktion reduzierst du Fallschaden um (5 x Mönchsstufe).
 * **Stufe 5: Betäubender Schlag (Stunning Strike):** Wenn du mit einer Waffe oder unbewaffnet triffst, kannst du 1 Fokus ausgeben. Ziel macht KON-Rettungswurf (Fehlschlag: Betäubt bis Beginn deines nächsten Zuges. Erfolg: Ziel erleidet Energieschaden / Force Damage).
@@ -328,13 +328,13 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 * **Stufe 17: Hand der ultimativen Barmherzigkeit (Hand of Ultimate Mercy):** Du kannst 5 Fokus-Punkte ausgeben, um eine Kreatur, die vor maximal 24 Stunden gestorben ist, mit vollen TP aufwecken, alle Zustände entfernen und Erschöpfung heilen. (1x pro Langer Rast).
 
 ### Krieger der Schatten (Warrior of Shadow)
-* **Stufe 3: Schattenkünste (Shadow Arts):** Du erhältst Dunkelsicht (60 Fuß). Du kannst 1 Fokus ausgeben, um *Dunkelheit (Darkness)* zu wirken (du selbst kannst durch diese magische Dunkelheit normal sehen und der Zauber erfordert für dich keine Konzentration, wenn er mit diesem Merkmal gewirkt wird). Du kannst die Sphäre zu Beginn deines Zuges um 60 Fuß verschieben.
-* **Stufe 6: Schattenschritt (Shadow Step):** Als Bonusaktion teleportierst du dich bis zu 60 Fuß von einem Bereich in dämmrigem Licht oder Dunkelheit zu einem anderen unbesetzten, dämmrigen/dunklen Bereich. Du erhältst Vorteil auf deinen nächsten Nahkampfangriff im selben Zug.
+* **Stufe 3: Schattenkünste (Shadow Arts):** Du erhältst Dunkelsicht (18 m / 12 Felder). Du kannst 1 Fokus ausgeben, um *Dunkelheit (Darkness)* zu wirken (du selbst kannst durch diese magische Dunkelheit normal sehen und der Zauber erfordert für dich keine Konzentration, wenn er mit diesem Merkmal gewirkt wird). Du kannst die Sphäre zu Beginn deines Zuges um 18 m / 12 Felder verschieben.
+* **Stufe 6: Schattenschritt (Shadow Step):** Als Bonusaktion teleportierst du dich bis zu 18 m / 12 Felder von einem Bereich in dämmrigem Licht oder Dunkelheit zu einem anderen unbesetzten, dämmrigen/dunklen Bereich. Du erhältst Vorteil auf deinen nächsten Nahkampfangriff im selben Zug.
 * **Stufe 11: Verbesserter Schattenschritt (Improved Shadow Step):** Du kannst den Schattenschritt nun machen, ohne dass du dich im Schatten befinden musst (der Zielort muss weiterhin Schatten sein). Du kannst auch nach einem Angriff als Teil der Angriffsaktion als Bonusaktion teleportieren.
 * **Stufe 17: Umhang der Schatten (Cloak of Shadows):** Als Bonusaktion (für 3 Fokus) wirst du für 1 Minute völlig unsichtbar (auch wenn du angreifst oder zauberst) und kannst durch Objekte/Kreaturen gehen, als wären sie schwieriges Gelände. (Du nimmst Force-Schaden, wenn du in Objekten den Zug beendest).
 
 ### Krieger der Elemente (Warrior of the Elements)
-* **Stufe 3: Elementare Abstimmung (Elemental Attunement):** Du kennst den Zaubertrick *Elementarismus*. Zu Beginn deines Zuges kannst du 1 Fokus ausgeben, um deine Angriffe auf Elementarmagie einzustimmen (10 Minuten Dauer): Die Reichweite deiner unbewaffneten Schläge erhöht sich um 10 Fuß. Schadenstyp wird zu Säure, Kälte, Feuer, Blitz oder Donner. Triffst du, kannst du das Ziel (STR-Save) 10 Fuß zu dir hinziehen oder von dir wegstoßen.
+* **Stufe 3: Elementare Abstimmung (Elemental Attunement):** Du kennst den Zaubertrick *Elementarismus*. Zu Beginn deines Zuges kannst du 1 Fokus ausgeben, um deine Angriffe auf Elementarmagie einzustimmen (10 Minuten Dauer): Die Reichweite deiner unbewaffneten Schläge erhöht sich um 3 m / 2 Felder. Schadenstyp wird zu Säure, Kälte, Feuer, Blitz oder Donner. Triffst du, kannst du das Ziel (STR-Save) 3 m / 2 Felder zu dir hinziehen oder von dir wegstoßen.
 * **Stufe 6: Umwelt-Explosion (Environmental Burst):** Als Magische Aktion erzeugst du eine 20-Fuß-Emanation um dich (GES-Save für alle Gegner). Schaden: Deine Waffenschadens-Würfel (Säure, Kälte, Feuer, Blitz oder Donner). Wenn du *Schritt des Windes* nutzt, kannst du diese Explosion automatisch 1x kostenlos als Teil der Bewegung triggern.
 * **Stufe 11: Elementarer Schritt (Elemental Step):** Wenn du *Schritt des Windes* verwendest, erhältst du bis zum Ende deines Zuges eine Flug- und Schwimmbewegungsrate, die deiner Laufgeschwindigkeit entspricht.
 * **Stufe 17: Zerstörerischer Meister (Destructive Mastery):** Die *Elementare Abstimmung* kostet keinen Fokus mehr. Du kannst zudem Resistenz gegen zwei der Elementar-Typen wählen (änderbar).
@@ -342,7 +342,7 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 ### Krieger der Offenen Hand (Warrior of the Open Hand)
 * **Stufe 3: Technik der Offenen Hand (Open Hand Technique):** Wenn du jemanden mit einem *Schlaghagel*-Treffer triffst, kannst du einen Effekt hinzufügen:
   * Ziel muss GES-Save bestehen oder fällt zu Boden (*Liegend*).
-  * Ziel muss STR-Save bestehen oder wird 15 Fuß weggestoßen.
+  * Ziel muss STR-Save bestehen oder wird 4,5 m / 3 Felder weggestoßen.
   * Ziel kann bis zum Ende seines nächsten Zuges keine Gelegenheitsangriffe mehr machen.
 * **Stufe 6: Ganzheit des Körpers (Wholeness of Body):** Du kannst dich als Bonusaktion um TP in Höhe von (Mönch-Würfel rollen + WEI-Modifikator) heilen. Nutzungen = WEI-Modifikator pro Langer Rast.
 * **Stufe 11: Flinke Schritte (Fleet Step):** Wenn du *Schritt des Windes* nutzt, kannst du eine unbewaffnete Attacke als Teil derselben Bonusaktion ausführen. Du kannst auch andere Fokus-Fähigkeiten flüssiger verbinden (Schritt des Windes kann gratis vor einem Schlaghagel gewirkt werden).
@@ -369,8 +369,8 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 * **Stufe 3: Paladin-Unterklasse:** Wähle einen Eid.
 * **Stufe 3: Göttliche Macht fokussieren (Channel Divinity):** 2 Nutzungen pro Kurzer/Langer Rast. Basis-Merkmal: *Feinde bannen* (Aktion: Gegner zwingen, einen WEI-Save abzulegen. Fehlschlag = Verängstigt, Zustand endet wenn sie Schaden nehmen. Erfolg = Geschwindigkeit wird halbiert).
 * **Stufe 5: Treues Ross (Faithful Steed):** Du hast *Ross finden (Find Steed)* immer vorbereitet und kannst es 1x pro Tag ohne Zauberplatz wirken.
-* **Stufe 6: Aura des Schutzes (Aura of Protection):** Gewährt dir und Verbündeten in 10 Fuß einen Bonus auf alle Rettungswürfe in Höhe deines Charisma-Modifikators. (Erweitert sich auf 30 Fuß auf Stufe 18).
-* **Stufe 10: Aura des Mutes (Aura of Courage):** Du und Verbündete in 10 Fuß sind immun gegen *Verängstigt*.
+* **Stufe 6: Aura des Schutzes (Aura of Protection):** Gewährt dir und Verbündeten in 3 m / 2 Felder einen Bonus auf alle Rettungswürfe in Höhe deines Charisma-Modifikators. (Erweitert sich auf 9 m / 6 Felder auf Stufe 18).
+* **Stufe 10: Aura des Mutes (Aura of Courage):** Du und Verbündete in 3 m / 2 Felder sind immun gegen *Verängstigt*.
 * **Stufe 11: Strahlende Schläge (Radiant Strikes):** Deine Nahkampfwaffenangriffe verursachen zusätzlich 1W8 Gleißenden Schaden.
 * **Stufe 14: Reinigung durch Berührung (Restoring Touch):** Wenn du *Handauflegen* auf eine Kreatur anwendest, kannst du für 5 aufgewendete TP aus deinem Pool einen der folgenden Zustände entfernen: Blind, Bezaubert, Taub, Verängstigt, Vergiftet oder Betäubt.
 
@@ -379,31 +379,31 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 ### Eid der Hingabe (Oath of Devotion)
 * **Stufe 3: Eidzauber:** *Schutz vor Bösem und Gutem, Heiligtum* (Stufe 3), *Schwächere Genesung, Zone der Wahrheit* (Stufe 5), *Leuchtfeuer der Hoffnung, Magie bannen* (Stufe 9), *Bewegungsfreiheit, Wächter des Glaubens* (Stufe 13), *Flammenschlag, Größere Genesung* (Stufe 17).
 * **Stufe 3: Heilige Waffe (Sacred Weapon):** Fokussiere Göttliche Macht (Bonusaktion): Waffe leuchtet. Für 1 Minute addierst du deinen CHA-Modifikator zu den Angriffswürfen der Waffe. Du kannst die Waffe auch als Zauberfokus nutzen.
-* **Stufe 7: Aura der Hingabe (Aura of Devotion):** Du und Verbündete in 10 Fuß (später 30) sind immun gegen den Zustand *Bezaubert*.
+* **Stufe 7: Aura der Hingabe (Aura of Devotion):** Du und Verbündete in 3 m / 2 Felder (später 30) sind immun gegen den Zustand *Bezaubert*.
 * **Stufe 15: Reinheit des Geistes (Purity of Spirit):** Du stehst permanent unter dem Effekt von *Schutz vor Bösem und Gutem* (keine Konzentration nötig).
-* **Stufe 20: Heiliger Nimbus (Holy Nimbus):** Als Bonusaktion (1 Minute): Du strahlst helles Licht (30 Fuß) aus. Zu Beginn deiner Züge nehmen Feinde im Licht 10 Gleißenden Schaden. Du hast Vorteil auf Rettungswürfe gegen Zauber von Unterweltlern und Untoten. (1x/Langer Rast oder 5. Stufe-Slot).
+* **Stufe 20: Heiliger Nimbus (Holy Nimbus):** Als Bonusaktion (1 Minute): Du strahlst helles Licht (9 m / 6 Felder) aus. Zu Beginn deiner Züge nehmen Feinde im Licht 10 Gleißenden Schaden. Du hast Vorteil auf Rettungswürfe gegen Zauber von Unterweltlern und Untoten. (1x/Langer Rast oder 5. Stufe-Slot).
 
 ### Eid des Ruhms (Oath of Glory)
 * **Stufe 3: Eidzauber:** *Lenkendes Geschoss, Heldentum* (3), *Magische Waffe, Spurloses Gehen* (5), *Hast, Schutz vor Energie* (9), *Zwang, Bewegungsfreiheit* (13), *Kommune, Flammenschlag* (17).
-* **Stufe 3: Unvergleichlicher Athlet (Peerless Athlete):** Fokussiere Göttliche Macht (Bonusaktion): Vorteil auf Athletik-/Akrobatik-Würfe, Tragekapazität verdoppelt, Weit-/Hochsprungweite um 10 Fuß erhöht (für 1 Stunde).
-* **Stufe 3: Inspirierendes Niederstrecken (Inspiring Smite):** Wenn du *Göttliches Niederstrecken* nutzt, kannst du direkt im Anschluss *Göttliche Macht fokussieren* als Teil der Aktion nutzen, um Temp. TP (2W8 + Paladinstufe) an Verbündete in 30 Fuß aufzuteilen.
-* **Stufe 7: Aura der Schnelligkeit (Aura of Alacrity):** Deine Laufgeschwindigkeit erhöht sich um 10 Fuß. Willige Verbündete in 10 Fuß (später 30), die ihren Zug dort beginnen, erhalten +10 Fuß Bewegung bis zum Ende ihres Zugs.
-* **Stufe 15: Glorreiche Verteidigung (Glorious Defense):** Wenn dich (oder jemand in 10 Fuß) jemand angreift, kannst du per Reaktion CHA-Mod auf die RK addieren. Verfehlt der Angriff, kannst du (wenn in Reichweite) sofort einen Gegenangriff mit der Waffe machen. (Nutzungen = CHA-Mod pro Rast).
+* **Stufe 3: Unvergleichlicher Athlet (Peerless Athlete):** Fokussiere Göttliche Macht (Bonusaktion): Vorteil auf Athletik-/Akrobatik-Würfe, Tragekapazität verdoppelt, Weit-/Hochsprungweite um 3 m / 2 Felder erhöht (für 1 Stunde).
+* **Stufe 3: Inspirierendes Niederstrecken (Inspiring Smite):** Wenn du *Göttliches Niederstrecken* nutzt, kannst du direkt im Anschluss *Göttliche Macht fokussieren* als Teil der Aktion nutzen, um Temp. TP (2W8 + Paladinstufe) an Verbündete in 9 m / 6 Felder aufzuteilen.
+* **Stufe 7: Aura der Schnelligkeit (Aura of Alacrity):** Deine Laufgeschwindigkeit erhöht sich um 3 m / 2 Felder. Willige Verbündete in 3 m / 2 Felder (später 30), die ihren Zug dort beginnen, erhalten +3 m / 2 Felder Bewegung bis zum Ende ihres Zugs.
+* **Stufe 15: Glorreiche Verteidigung (Glorious Defense):** Wenn dich (oder jemand in 3 m / 2 Felder) jemand angreift, kannst du per Reaktion CHA-Mod auf die RK addieren. Verfehlt der Angriff, kannst du (wenn in Reichweite) sofort einen Gegenangriff mit der Waffe machen. (Nutzungen = CHA-Mod pro Rast).
 * **Stufe 20: Lebende Legende (Living Legend):** Bonusaktion (1 Minute Dauer): Gesegnet von den Göttern. Einmal pro Zug kannst du bei einem verfehlten Waffentest treffen. Einmal pro Zug kannst du einen misslungenen Charisma-Test sofort wiederholen (zweites Resultat bindend). (1x/Langer Rast oder 5. Stufe-Slot).
 
 ### Eid der Alten (Oath of the Ancients)
 * **Stufe 3: Eidzauber:** *Tierfreundschaft, Mit Tieren sprechen* (3), *Mondstrahl, Nebelschritt* (5), *Pflanzenwachstum, Schutz vor Energie* (9), *Eissturm, Steinhaut* (13), *Kommune mit der Natur, Baumschritt* (17).
-* **Stufe 3: Zorn der Natur (Nature's Wrath):** Fokussiere Göttliche Macht (Aktion): Ranken schießen aus dem Boden. Eine Kreatur in 15 Fuß muss einen STR-Rettungswurf bestehen oder ist *Festgesetzt (Restrained)* (1 Minute Dauer). Wurf am Ende jedes Zuges wiederholbar.
-* **Stufe 7: Aura des Schutzes vor Magie (Aura of Warding):** Du und Verbündete in 10 Fuß (später 30) haben Resistenz gegen jeglichen Schaden, der von Zaubern stammt.
+* **Stufe 3: Zorn der Natur (Nature's Wrath):** Fokussiere Göttliche Macht (Aktion): Ranken schießen aus dem Boden. Eine Kreatur in 4,5 m / 3 Felder muss einen STR-Rettungswurf bestehen oder ist *Festgesetzt (Restrained)* (1 Minute Dauer). Wurf am Ende jedes Zuges wiederholbar.
+* **Stufe 7: Aura des Schutzes vor Magie (Aura of Warding):** Du und Verbündete in 3 m / 2 Felder (später 30) haben Resistenz gegen jeglichen Schaden, der von Zaubern stammt.
 * **Stufe 15: Unsterblicher Wächter (Undying Sentinel):** Fällst du auf 0 TP ohne sofort zu sterben, kannst du entscheiden, auf 1 TP zu bleiben. (1x pro Langer Rast). Du alterst nicht magisch und leidest nicht unter Alterserscheinungen.
-* **Stufe 20: Ältester Champion (Elder Champion):** Bonusaktion (1 Minute Dauer): Am Anfang deiner Züge heilst du 10 TP. Das Wirken von Paladin-Zaubern mit Aktionszeit 1 Aktion dauert für dich nur 1 Bonusaktion. Feinde haben Nachteil gegen deine Paladin-Zauber in 10 Fuß Umkreis. (1x/Langer Rast oder 5. Stufe-Slot).
+* **Stufe 20: Ältester Champion (Elder Champion):** Bonusaktion (1 Minute Dauer): Am Anfang deiner Züge heilst du 10 TP. Das Wirken von Paladin-Zaubern mit Aktionszeit 1 Aktion dauert für dich nur 1 Bonusaktion. Feinde haben Nachteil gegen deine Paladin-Zauber in 3 m / 2 Felder Umkreis. (1x/Langer Rast oder 5. Stufe-Slot).
 
 ### Eid der Vergeltung (Oath of Vengeance)
 * **Stufe 3: Eidzauber:** *Fluch (Bane), Mal des Jägers* (3), *Person festhalten, Nebelschritt* (5), *Hast, Schutz vor Energie* (9), *Dimensionstür, Monster festhalten* (13), *Person beherrschen, Ausspähung* (17).
-* **Stufe 3: Schwur der Feindschaft (Vow of Enmity):** Fokussiere Göttliche Macht (Keine Aktion, sondern als Teil einer Angriffsaktion wählbar): Du markierst ein Ziel in 10 Fuß. Du hast für 1 Minute Vorteil auf alle Angriffswürfe gegen das Ziel. Stirbt das Ziel (oder fällt auf 0 TP), kannst du den Schwur ohne neue Kosten auf ein neues Ziel in Reichweite übertragen.
+* **Stufe 3: Schwur der Feindschaft (Vow of Enmity):** Fokussiere Göttliche Macht (Keine Aktion, sondern als Teil einer Angriffsaktion wählbar): Du markierst ein Ziel in 3 m / 2 Felder. Du hast für 1 Minute Vorteil auf alle Angriffswürfe gegen das Ziel. Stirbt das Ziel (oder fällt auf 0 TP), kannst du den Schwur ohne neue Kosten auf ein neues Ziel in Reichweite übertragen.
 * **Stufe 7: Unerbittlicher Rächer (Relentless Avenger):** Wenn du einen Gegner mit einem Gelegenheitsangriff triffst, kannst du dich sofort bis zur halben Bewegungsrate wegbewegen. (Provoziert keine neuen Angriffe).
 * **Stufe 15: Seele der Rache (Soul of Vengeance):** Wenn das Ziel deines *Schwurs der Feindschaft* in deiner Reichweite einen Angriff macht, kannst du per Reaktion einen Nahkampfangriff gegen das Ziel machen.
-* **Stufe 20: Rächender Engel (Avenging Angel):** Bonusaktion (1 Minute): Flügel aus Schatten (60 Fuß Flug). Kreaturen deiner Wahl in 30 Fuß (bei Aktivierung) müssen einen WIS-Rettungswurf ablegen (Fehlschlag: 1 Minute lang *Verängstigt*). Auf Angriffe gegen Feinde, die durch dich verängstigt sind, hast du automatisch Vorteil. (1x/Langer Rast oder 5. Stufe-Slot).
+* **Stufe 20: Rächender Engel (Avenging Angel):** Bonusaktion (1 Minute): Flügel aus Schatten (18 m / 12 Felder Flug). Kreaturen deiner Wahl in 9 m / 6 Felder (bei Aktivierung) müssen einen WIS-Rettungswurf ablegen (Fehlschlag: 1 Minute lang *Verängstigt*). Auf Angriffe gegen Feinde, die durch dich verängstigt sind, hast du automatisch Vorteil. (1x/Langer Rast oder 5. Stufe-Slot).
 
 ---
 
@@ -420,7 +420,7 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 
 ### Klassenmerkmale
 * **Stufe 1: Expertise:** Verdopple deinen Übungsbonus für zwei deiner Fertigkeiten. (Erneut auf Stufe 6).
-* **Stufe 1: Hinterhältiger Angriff (Sneak Attack):** 1x pro Zug fügst du bei einem Treffer +1W6 Schaden zu (skaliert nach Tabelle), wenn du Vorteil hast oder ein Verbündeter in 5 Fuß zum Ziel steht und du keinen Nachteil hast. Erfordert Finesse- oder Fernkampfwaffe.
+* **Stufe 1: Hinterhältiger Angriff (Sneak Attack):** 1x pro Zug fügst du bei einem Treffer +1W6 Schaden zu (skaliert nach Tabelle), wenn du Vorteil hast oder ein Verbündeter in 1,5 m / 1 Felder zum Ziel steht und du keinen Nachteil hast. Erfordert Finesse- oder Fernkampfwaffe.
 * **Stufe 1: Diebessprache (Thieves' Cant).**
 * **Stufe 2: Listige Aktion (Cunning Action):** Du kannst Spurt, Rückzug oder Verstecken als Bonusaktion ausführen.
 * **Stufe 3: Ruhiges Zielen (Steady Aim):** Als Bonusaktion gibst du dir Vorteil auf deinen nächsten Angriff in diesem Zug. Du kannst dich in diesem Zug aber überhaupt nicht mehr bewegen (Bewegungsrate = 0).
@@ -441,8 +441,8 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 * **Stufe 3: Zauberwirken (Spellcasting):** Du erlernst Magier-Zauber (INT ist Zauberattribut). Es gibt keine Beschränkung der Zauberschulen mehr.
 * **Stufe 3: Magierhand-Taschenspielerei (Mage Hand Legerdemain):** *Magierhand* wird erlernt. Sie ist unsichtbar. Du kannst mit ihr Schlösser knacken, Fallen entschärfen und Objekte stehlen (mit *Fingerfertigkeit*). Du kannst sie als Bonusaktion steuern.
 * **Stufe 9: Magischer Hinterhalt (Magical Ambush):** Wenn du versteckt (Hidden) bist und einen Zauber auf eine Kreatur wirkst, hat diese Nachteil auf alle Rettungswürfe gegen den Zauber in dieser Runde.
-* **Stufe 13: Vielseitiger Trickbetrüger (Versatile Trickster):** Wenn deine *Magierhand* sich innerhalb von 5 Fuß um ein Ziel befindet, kannst du als Teil der Bonusaktion, mit der du die Hand kontrollierst, versuchen das Ziel abzulenken. Das gibt dir Vorteil auf Angriffe gegen dieses Ziel bis zum Ende des Zuges (löst Hinterhältigen Angriff aus).
-* **Stufe 17: Zauberdieb (Spell Thief):** Wenn jemand in 60 Fuß einen Zauber auf dich wirkt oder du im Bereich bist, kannst du (als Reaktion) den Zauber stehlen (Kreatur macht Rettungswurf auf dein Zauberattribut). Bei Erfolg der Ablenkung negierst du den Zauber für dich. Hast du einen Zauberplatz auf diesem Level, lernst du den Zauber für 8 Stunden (und der Gegner vergisst ihn für 8 Stunden).
+* **Stufe 13: Vielseitiger Trickbetrüger (Versatile Trickster):** Wenn deine *Magierhand* sich innerhalb von 1,5 m / 1 Felder um ein Ziel befindet, kannst du als Teil der Bonusaktion, mit der du die Hand kontrollierst, versuchen das Ziel abzulenken. Das gibt dir Vorteil auf Angriffe gegen dieses Ziel bis zum Ende des Zuges (löst Hinterhältigen Angriff aus).
+* **Stufe 17: Zauberdieb (Spell Thief):** Wenn jemand in 18 m / 12 Felder einen Zauber auf dich wirkt oder du im Bereich bist, kannst du (als Reaktion) den Zauber stehlen (Kreatur macht Rettungswurf auf dein Zauberattribut). Bei Erfolg der Ablenkung negierst du den Zauber für dich. Hast du einen Zauberplatz auf diesem Level, lernst du den Zauber für 8 Stunden (und der Gegner vergisst ihn für 8 Stunden).
 
 ### Meuchelmörder (Assassin)
 * **Stufe 3: Meucheln (Assassinate):** Du erhältst Vorteil auf Initiative. Auf Kreaturen, die im Kampf noch keinen Zug hatten, hast du Vorteil beim Angriff. Triffst du in der allerersten Runde eines Kampfes einen Gegner, fügst du extra Schaden in Höhe deiner Schurken-Stufe zu.
@@ -454,10 +454,10 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 * **Stufe 3: Psionische Kraft (Psionic Power):** Pool von Würfeln (W8). (2x Schurkenstufe). Alle bei Langer Rast neu, 1 frei pro Kurzer Rast. Optionen:
   * *Verstärktes Talent:* Schlägt ein Attributswurf fehl (mit einer geübten Fertigkeit), würfle 1 Psi-Würfel und addiere ihn. Schlägt es trotzdem fehl, behältst du den Würfel.
   * *Psychisches Flüstern:* Telepathische Verbindung mit Kreaturen (bis zu ÜB). Dauer = gewürfelter Psi-Würfel in Stunden. 1 Meile Reichweite. (1x frei, danach 1 Würfel).
-* **Stufe 3: Psychische Klingen (Psychic Blades):** Bei der Angriffsaktion erschaffst du Finesse-/Wurfwaffen (60 Fuß) aus psionischer Energie in deinen leeren Händen (1W6 Psychischer Schaden, verschwinden nach Treffer/Fehlschlag). Triffst du mit der ersten Klinge, kannst du als Bonusaktion sofort eine zweite erschaffen und werfen (1W4 Schaden).
+* **Stufe 3: Psychische Klingen (Psychic Blades):** Bei der Angriffsaktion erschaffst du Finesse-/Wurfwaffen (18 m / 12 Felder) aus psionischer Energie in deinen leeren Händen (1W6 Psychischer Schaden, verschwinden nach Treffer/Fehlschlag). Triffst du mit der ersten Klinge, kannst du als Bonusaktion sofort eine zweite erschaffen und werfen (1W4 Schaden).
 * **Stufe 9: Seelenklingen (Soul Blades):**
   * *Zielsuchender Schlag:* Wenn du mit einer Klinge verfehlst, würfle 1 Psi-Würfel und addiere ihn auf den Angriff. Trifft er dann immer noch nicht, behältst du den Würfel.
-  * *Psychische Teleportation:* Wirf die Klinge an einen leeren Ort (Reichweite = Psi-Würfel-Ergebnis x 10 Fuß) und teleportiere sofort als Bonusaktion dorthin.
+  * *Psychische Teleportation:* Wirf die Klinge an einen leeren Ort (Reichweite = Psi-Würfel-Ergebnis x 3 m / 2 Felder) und teleportiere sofort als Bonusaktion dorthin.
 * **Stufe 13: Psychischer Schleier (Psychic Veil):** Du wirst als Aktion für 1 Stunde *Unsichtbar* (bricht, wenn du Schaden machst oder Gegner zu Saves zwingst). 1x frei, danach 1 Psi-Würfel pro Nutzung.
 * **Stufe 17: Zerreißen des Verstandes (Rend Mind):** Triffst du mit deiner Psychischen Klinge (und wendest Sneak Attack an), zwingst du das Ziel zu einem WIS-Save. Bei Fehlschlag ist das Ziel *Betäubt* (Stunned) für 1 Minute (Rettungswurf wiederholbar am Ende des Zuges). 1x frei, danach kostet es 3 Psi-Würfel.
 
@@ -495,7 +495,7 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 ### Bannbeschwörer (Abjurer)
 * **Stufe 3: Gelehrter der Bannmagie (Abjuration Savant):** Erlernst du einen Zauber der Bannmagie (Abjuration) für dein Buch, kostet das nur halb so viel Zeit und Gold.
 * **Stufe 3: Arkaner Schutz (Arcane Ward):** Wirkst du einen Bannzauber (ab Stufe 1), erzeugst du einen magischen Schutz (Pool = Magier-Stufe x 2 + INT-Modifikator). Nimmst du Schaden, fängt das Schild ihn ab, bis es leer ist. Wirkst du erneut Bannzauber, lädt sich der Schild auf (Zauberstufe x 2).
-* **Stufe 6: Projizierter Schutz (Projected Ward):** Wenn eine Kreatur, die du in 30 Fuß Entfernung sehen kannst, Schaden erleidet, kannst du als Reaktion deinen *Arkanen Schutz* aufwenden, um den Schaden der Kreatur in der Höhe deines Pools abzufangen.
+* **Stufe 6: Projizierter Schutz (Projected Ward):** Wenn eine Kreatur, die du in 9 m / 6 Felder Entfernung sehen kannst, Schaden erleidet, kannst du als Reaktion deinen *Arkanen Schutz* aufwenden, um den Schaden der Kreatur in der Höhe deines Pools abzufangen.
 * **Stufe 10: Zauber-Unterbrecher (Spellbreaker):** Hast du *Gegenzauber* (Counterspell) und *Magie bannen* vorbereitet, werden sie so behandelt, als hättest du sie mit einem um 1 höheren Zauberplatz gewirkt, was dir massiven Vorteil gibt, feindliche Magie auszuhebeln. (2024 Regel).
 * **Stufe 14: Magie-Resistenz (Spell Resistance):** Du hast permanent Vorteil auf alle Rettungswürfe gegen Zauber. Außerdem bist du resistent gegen jeden Schaden, der von Zaubern verursacht wird.
 
@@ -503,7 +503,7 @@ Jede Klasse wählt auf Stufe 3 eine Spezialisierung. Hier sind die mechanisch g�
 * **Stufe 3: Gelehrter der Erkenntnismagie (Divination Savant):** Halbierte Kosten für Erkenntnismagie-Zauber.
 * **Stufe 3: Vorzeichen (Portent):** Nach einer Langen Rast würfelst du 2W20 und notierst die Zahlen. Du kannst diese Zahlen einsetzen, um einen Wurf (Angriff, Save, Attributswurf) von dir oder Kreaturen, die du sehen kannst, exakt mit diesem Ergebnis zu überschreiben, BEVOR der Wurf ausgeführt wird. (Steigt auf 3W20 auf Stufe 14).
 * **Stufe 6: Experte der Erkenntnismagie (Expert Divination):** Wirkst du einen Erkenntnismagie-Zauber von Stufe 2 oder höher, erhältst du einen verbrauchten Zauberplatz zurück (der Level des zurückerhaltenen Platzes muss mind. 1 Stufe niedriger sein, als der gewirkte). Max-Rückgabe ist Stufe 5.
-* **Stufe 10: Das Dritte Auge (The Third Eye):** Du kannst als Bonusaktion für 1 Stunde Dunkelsicht (120 Fuß), die Fähigkeit das Unsichtbare zu sehen (See Invisibility) oder *Ätherische Sicht* (Ethereal Sight) aktivieren. Du wechselst den Modus ebenfalls als Bonusaktion. Nutzungen = 1x frei, danach durch Zauberplätze wiederaufladbar.
+* **Stufe 10: Das Dritte Auge (The Third Eye):** Du kannst als Bonusaktion für 1 Stunde Dunkelsicht (36 m / 24 Felder), die Fähigkeit das Unsichtbare zu sehen (See Invisibility) oder *Ätherische Sicht* (Ethereal Sight) aktivieren. Du wechselst den Modus ebenfalls als Bonusaktion. Nutzungen = 1x frei, danach durch Zauberplätze wiederaufladbar.
 
 ### Hervorrufer (Evoker)
 * **Stufe 3: Gelehrter der Hervorrufung (Evocation Savant):** Halbierte Kosten für Hervorrufungs-Zauber.
@@ -571,8 +571,8 @@ Wähle eine Option:
 **Stufe 2: Göttliche Macht fokussieren (Channel Divinity)**
 Du kannst göttliche Energie kanalisieren. Du hast zu Beginn 2 Nutzungen pro Kurzer oder Langer Rast.
 
-* **Heiliges Strahlen (Divine Spark):** Als Magie-Aktion fokussierst du göttliche Macht auf eine Kreatur in 30 Fuß. Entweder heilt sie oder sie muss einen KON-Rettungswurf ablegen (Fehlschlag: Gleißender oder Nekrotischer Schaden – deine Wahl). Effekt = Eine Anzahl an W8 in Höhe deines Übungsbonus.
-* **Untote vertreiben (Turn Undead):** Als Magie-Aktion müssen Untote in 30 Fuß einen WIS-Rettungswurf bestehen oder sind für 1 Minute *Verängstigt*. Der Effekt endet, wenn sie Schaden erleiden.
+* **Heiliges Strahlen (Divine Spark):** Als Magie-Aktion fokussierst du göttliche Macht auf eine Kreatur in 9 m / 6 Felder. Entweder heilt sie oder sie muss einen KON-Rettungswurf ablegen (Fehlschlag: Gleißender oder Nekrotischer Schaden – deine Wahl). Effekt = Eine Anzahl an W8 in Höhe deines Übungsbonus.
+* **Untote vertreiben (Turn Undead):** Als Magie-Aktion müssen Untote in 9 m / 6 Felder einen WIS-Rettungswurf bestehen oder sind für 1 Minute *Verängstigt*. Der Effekt endet, wenn sie Schaden erleiden.
 
 **Stufe 5: Untote versengen (Sear Undead)**
 Wenn du *Untote vertreiben* nutzt, kannst du eine Anzahl von W8 in Höhe deines Weisheits-Modifikators (Minimum 1W8) rollen und die Ergebnisse addieren. Jeder Untote, der den Rettungswurf nicht besteht, erleidet Gleißenden Schaden in Höhe dieses Gesamtwertes. Dieser Schaden beendet den Furcht-Effekt von *Untote vertreiben* nicht.
@@ -588,7 +588,7 @@ Als Magische Aktion kannst du einen beliebigen Kleriker-Zauber der Stufe 5 oder 
 **Stufe 14: Verbesserte Gesegnete Schläge (Improved Blessed Strikes)**
 Die Wahl, die du auf Stufe 7 getroffen hast, wird mächtiger:
 * **Göttliche Macht:** Der Extra-Schaden steigt auf 2W8.
-* **Machtvolles Zauberwirken:** Wenn du einen Kleriker-Zaubertrick wirkst und einer Kreatur damit Schaden zufügst, kannst du dir selbst oder einer Kreatur in 60 Fuß Temporäre Trefferpunkte in Höhe deines doppelten Weisheits-Modifikators geben.
+* **Machtvolles Zauberwirken:** Wenn du einen Kleriker-Zaubertrick wirkst und einer Kreatur damit Schaden zufügst, kannst du dir selbst oder einer Kreatur in 18 m / 12 Felder Temporäre Trefferpunkte in Höhe deines doppelten Weisheits-Modifikators geben.
 
 ---
 
@@ -604,8 +604,8 @@ Die Wahl, die du auf Stufe 7 getroffen hast, wird mächtiger:
 #### Domäne des Lichts (Light Domain)
 
 * **Stufe 3: Domänenzauber:** *Brennende Hände, Licht, Heilige Flamme, Gleißendes Geschoss, Sengender Strahl, Tageslicht, Feuerball*.
-* **Stufe 3: Schützendes Licht:** Wenn eine Kreatur in 30 Fuß dich angreift, kannst du als Reaktion Nachteil auf den Wurf geben. Nutzungen = Übungsbonus pro Langer Rast.
-* **Stufe 6: Glühendes Strahlen:** Als Aktion fokussierst du Göttliche Macht: Feinde in 30 Fuß müssen KON-Rettungswurf bestehen (Fehlschlag: 2W10 + Klerikerstufe Feuerschaden).
+* **Stufe 3: Schützendes Licht:** Wenn eine Kreatur in 9 m / 6 Felder dich angreift, kannst du als Reaktion Nachteil auf den Wurf geben. Nutzungen = Übungsbonus pro Langer Rast.
+* **Stufe 6: Glühendes Strahlen:** Als Aktion fokussierst du Göttliche Macht: Feinde in 9 m / 6 Felder müssen KON-Rettungswurf bestehen (Fehlschlag: 2W10 + Klerikerstufe Feuerschaden).
 * **Stufe 17: Korona des Lichts:** Als Aktion strahlst du 1 Minute lang Licht aus. Feinde haben Nachteil auf Rettungswürfe gegen Feuer- oder Gleißenden Schaden von dir.
 
 #### Domäne der List (Trickery Domain)
@@ -619,7 +619,7 @@ Die Wahl, die du auf Stufe 7 getroffen hast, wird mächtiger:
 
 * **Stufe 3: Domänenzauber:** *Schild des Glaubens, Göttliche Gunst, Geistige Waffe, Magische Waffe, Geisterwächter, Kreuzfahrer-Mantel*.
 * **Stufe 3: Kriegs priester:** Bonusaktion-Angriff nach Angriffsaktion. Nutzungen = WIS-Mod pro Langer Rast.
-* **Stufe 6: Geführter Schlag:** Wenn du (oder ein Verbündeter in 30 Fuß) verfehlst, gib +10 auf den Angriffswurf (kostet 1x Fokus).
+* **Stufe 6: Geführter Schlag:** Wenn du (oder ein Verbündeter in 9 m / 6 Felder) verfehlst, gib +10 auf den Angriffswurf (kostet 1x Fokus).
 * **Stufe 17: Avatar der Schlacht:** Resistenz gegen Wucht-, Stich- und Schnittschaden von nicht-magischen Waffen.
 
 ---
@@ -714,7 +714,7 @@ Wähle eine Option:
 **Stufe 15: Verbesserter Elementarer Zorn (Improved Elemental Fury)**
 Deine Wahl aus Stufe 7 wird verbessert:
 
-* **Machtvolles Zauberwirken:** Druiden-Zaubertricks mit einer Reichweite von mind. 10 Fuß erhalten +300 Fuß Reichweite.
+* **Machtvolles Zauberwirken:** Druiden-Zaubertricks mit einer Reichweite von mind. 3 m / 2 Felder erhalten +90 m / 60 Felder Reichweite.
 * **Ursprünglicher Schlag:** Der Zusatzschaden steigt auf 2W8.
 
 **Stufe 18: Bestienzauber (Beast Spells)**
@@ -742,7 +742,7 @@ Nach einer Langen Rast wählst du einen Landtyp (Arid, Polar, Gemäßigt (Temper
 * **Tropisch:** Stufe 3 (*Säurespritzer, Krankheitsstrahl, Spinnennetz*), Stufe 5 (*Stinkende Wolke*), Stufe 7 (*Verwandlung*), Stufe 9 (*Insektenplage*).
 
 **Stufe 3: Hilfe des Landes (Land's Aid)**
-Als Magie-Aktion kannst du eine Nutzung *Tiergestalt* ausgeben und einen Punkt innerhalb von 60 Fuß wählen (10-Fuß-Radius Sphäre). Jede gewählte Kreatur dort muss einen KON-Rettungswurf ablegen (Fehlschlag: 2W6 nekrotischer Schaden, Erfolg: Hälfte). Ein gewählter Verbündeter in der Sphäre heilt 2W6 TP. Schaden und Heilung steigen auf 3W6 (Stufe 10) und 4W6 (Stufe 14).
+Als Magie-Aktion kannst du eine Nutzung *Tiergestalt* ausgeben und einen Punkt innerhalb von 18 m / 12 Felder wählen (10-Fuß-Radius Sphäre). Jede gewählte Kreatur dort muss einen KON-Rettungswurf ablegen (Fehlschlag: 2W6 nekrotischer Schaden, Erfolg: Hälfte). Ein gewählter Verbündeter in der Sphäre heilt 2W6 TP. Schaden und Heilung steigen auf 3W6 (Stufe 10) und 4W6 (Stufe 14).
 
 **Stufe 6: Natürliche Erholung (Natural Recovery)**
 
@@ -753,7 +753,7 @@ Als Magie-Aktion kannst du eine Nutzung *Tiergestalt* ausgeben und einen Punkt i
 Du bist immun gegen den Zustand *Vergiftet*. Du erhältst Resistenz basierend auf deinem aktuell gewählten Landtyp: Arid (Feuer), Polar (Kälte), Gemäßigt (Blitz), Tropisch (Gift).
 
 **Stufe 14: Zuflucht der Natur (Nature's Sanctuary)**
-Als Magie-Aktion (kostet 1 Nutzung *Tiergestalt*) erschaffst du spektrale Bäume/Ranken in einem 15-Fuß-Kubus auf dem Boden (innerhalb 120 Fuß). Hält 1 Minute. Du und Verbündete darin haben Halbe Deckung und die Resistenz deines *Schutz der Natur*. Du kannst den Kubus als Bonusaktion bis zu 60 Fuß weit bewegen (innerhalb von 120 Fuß um dich herum).
+Als Magie-Aktion (kostet 1 Nutzung *Tiergestalt*) erschaffst du spektrale Bäume/Ranken in einem 15-Fuß-Kubus auf dem Boden (innerhalb 36 m / 24 Felder). Hält 1 Minute. Du und Verbündete darin haben Halbe Deckung und die Resistenz deines *Schutz der Natur*. Du kannst den Kubus als Bonusaktion bis zu 18 m / 12 Felder weit bewegen (innerhalb von 36 m / 24 Felder um dich herum).
 
 
 
@@ -781,12 +781,12 @@ In Tiergestalt:
 * Du addierst deinen Weisheitsmodifikator zu deinen Konstitutions-Rettungswürfen.
 
 **Stufe 10: Mondschritt (Moonlight Step)**
-Als Bonusaktion kannst du dich bis zu 30 Fuß weit teleportieren. Du bist danach im Vorteil auf deinen nächsten Angriffswurf im selben Zug. Nutzungen = Weisheitsmodifikator (Minimum 1) pro Langer Rast. (Zusätzliche Nutzungen können durch Ausgabe von Zauberplätzen der Stufe 2+ zurückgekauft werden).
+Als Bonusaktion kannst du dich bis zu 9 m / 6 Felder weit teleportieren. Du bist danach im Vorteil auf deinen nächsten Angriffswurf im selben Zug. Nutzungen = Weisheitsmodifikator (Minimum 1) pro Langer Rast. (Zusätzliche Nutzungen können durch Ausgabe von Zauberplätzen der Stufe 2+ zurückgekauft werden).
 
 **Stufe 14: Mondgestalt (Lunar Form)**
 
 * **Verbesserter Gleißender Schaden:** 1x pro Zug kannst du 2W10 zusätzlichen gleißenden Schaden bei einem Treffer in Tiergestalt verursachen.
-* **Geteiltes Mondlicht:** Du kannst beim *Mondschritt* eine willige Kreatur innerhalb von 10 Fuß mitnehmen (erscheint innerhalb von 10 Fuß vom Zielort).
+* **Geteiltes Mondlicht:** Du kannst beim *Mondschritt* eine willige Kreatur innerhalb von 3 m / 2 Felder mitnehmen (erscheint innerhalb von 3 m / 2 Felder vom Zielort).
 
 
 
@@ -801,11 +801,11 @@ Folgende Zauber sind immer vorbereitet:
 * Stufe 9: *Elementar beschwören, Monster festhalten*
 
 **Stufe 3: Zorn des Meeres (Wrath of the Sea)**
-Als Bonusaktion (kostet 1 Nutzung *Tiergestalt*) erschaffst du eine 5-Fuß-Emanation aus Gischt um dich herum (hält 10 Minuten). Beim Aktivieren, sowie als Bonusaktion in folgenden Zügen, kannst du eine Kreatur in der Emanation zwingen, einen KON-Rettungswurf abzulegen. Fehlschlag: Kälteschaden in Höhe einer Anzahl an W6, die deinem Weisheitsmodifikator entspricht (Minimum 1). Ist das Ziel "Groß" (Large) oder kleiner, wird es bis zu 15 Fuß von dir weggestoßen.
+Als Bonusaktion (kostet 1 Nutzung *Tiergestalt*) erschaffst du eine 5-Fuß-Emanation aus Gischt um dich herum (hält 10 Minuten). Beim Aktivieren, sowie als Bonusaktion in folgenden Zügen, kannst du eine Kreatur in der Emanation zwingen, einen KON-Rettungswurf abzulegen. Fehlschlag: Kälteschaden in Höhe einer Anzahl an W6, die deinem Weisheitsmodifikator entspricht (Minimum 1). Ist das Ziel "Groß" (Large) oder kleiner, wird es bis zu 4,5 m / 3 Felder von dir weggestoßen.
 
 **Stufe 6: Aquatische Affinität (Aquatic Affinity)**
 
-* Die Emanation von *Zorn des Meeres* wächst auf 10 Fuß an.
+* Die Emanation von *Zorn des Meeres* wächst auf 3 m / 2 Felder an.
 * Du erhältst eine Schwimmbewegungsrate in Höhe deiner normalen Bewegungsrate.
 
 **Stufe 10: Sturmgeboren (Stormborn)**
@@ -815,7 +815,7 @@ Während *Zorn des Meeres* aktiv ist, erhältst du:
 * Resistenz gegen Kälte, Blitz und Donner.
 
 **Stufe 14: Ozeanisches Geschenk (Oceanic Gift)**
-Du kannst *Zorn des Meeres* (als Emanation) auch um eine willige Kreatur innerhalb von 60 Fuß manifestieren. Diese nutzt dann deine Werte (Spell DC, WIS-Mod) für die Effekte. Du kannst die Emanation für 2 Nutzungen *Tiergestalt* zeitgleich um dich selbst UND den Verbündeten erschaffen.
+Du kannst *Zorn des Meeres* (als Emanation) auch um eine willige Kreatur innerhalb von 18 m / 12 Felder manifestieren. Diese nutzt dann deine Werte (Spell DC, WIS-Mod) für die Effekte. Du kannst die Emanation für 2 Nutzungen *Tiergestalt* zeitgleich um dich selbst UND den Verbündeten erschaffen.
 
 
 
@@ -829,23 +829,23 @@ Du erhältst einen Winzigen (Tiny) Fokus.
 * Wiederherstellung der Karte dauert 1 Stunde (während einer Rast).
 
 **Stufe 3: Sternengestalt (Starry Form)**
-Als Bonusaktion (kostet 1 Nutzung *Tiergestalt*) leuchtest du 10 Minuten lang wie ein Sternbild (10 Fuß helles Licht / 10 Fuß schwaches Licht). Deine Spielwerte ändern sich nicht. Wähle eine Konstellation:
+Als Bonusaktion (kostet 1 Nutzung *Tiergestalt*) leuchtest du 10 Minuten lang wie ein Sternbild (3 m / 2 Felder helles Licht / 3 m / 2 Felder schwaches Licht). Deine Spielwerte ändern sich nicht. Wähle eine Konstellation:
 
-* **Bogenschütze (Archer):** Beim Aktivieren und als Bonusaktion in Folgezügen: Ranged Spell Attack (60 Fuß) auf 1 Kreatur. Treffer: 1W8 + WIS-Mod gleißender Schaden.
-* **Kelch (Chalice):** Wenn du einen Heilzauber (der TP mit einem Zauberplatz heilt) wirkst, heilt eine Kreatur deiner Wahl innerhalb von 30 Fuß um dich 1W8 + WIS-Mod TP.
+* **Bogenschütze (Archer):** Beim Aktivieren und als Bonusaktion in Folgezügen: Ranged Spell Attack (18 m / 12 Felder) auf 1 Kreatur. Treffer: 1W8 + WIS-Mod gleißender Schaden.
+* **Kelch (Chalice):** Wenn du einen Heilzauber (der TP mit einem Zauberplatz heilt) wirkst, heilt eine Kreatur deiner Wahl innerhalb von 9 m / 6 Felder um dich 1W8 + WIS-Mod TP.
 * **Drache (Dragon):** Bei Intelligenz-, Weisheits- oder Konstitutions-(Konzentration)-Prüfungen behandelst du einen Würfelwurf von 9 oder niedriger auf dem W20 als eine 10.
 
 **Stufe 6: Kosmisches Omen (Cosmic Omen)**
 Nach einer Langen Rast würfelst du einen beliebigen Würfel, um dein Omen bis zur nächsten Rast zu bestimmen:
 
-* **Wohl / Gerade (Weal):** Als Reaktion, wenn eine Kreatur innerhalb von 30 Fuß einen W20-Test macht, kannst du 1W6 zum Wurf addieren.
-* **Wehe / Ungerade (Woe):** Als Reaktion, wenn eine Kreatur innerhalb von 30 Fuß einen W20-Test macht, kannst du 1W6 vom Wurf subtrahieren.
+* **Wohl / Gerade (Weal):** Als Reaktion, wenn eine Kreatur innerhalb von 9 m / 6 Felder einen W20-Test macht, kannst du 1W6 zum Wurf addieren.
+* **Wehe / Ungerade (Woe):** Als Reaktion, wenn eine Kreatur innerhalb von 9 m / 6 Felder einen W20-Test macht, kannst du 1W6 vom Wurf subtrahieren.
 Nutzungen der Reaktion = Weisheitsmodifikator pro Langer Rast.
 
 **Stufe 10: Funkelnde Sternenbilder (Twinkling Constellations)**
 
 * Der W8 vom *Bogenschützen* und *Kelch* wird zu 2W8.
-* Der *Drache* gibt dir nun eine Flugbewegungsrate von 20 Fuß (inklusive Schweben / Hover).
+* Der *Drache* gibt dir nun eine Flugbewegungsrate von 6 m / 4 Felder (inklusive Schweben / Hover).
 * Du kannst zu Beginn jedes deiner Züge in Sternengestalt die aktive Konstellation kostenlos wechseln.
 
 **Stufe 14: Voller Sterne (Full of Stars)**
@@ -898,7 +898,7 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 * Du kannst zweimal statt einmal angreifen, wenn du in deinem Zug die Angriffsaktion (Attack Action) wählst.
 
 **Stufe 6: Vagabund (Roving)**
-* Deine Bewegungsrate (Walking Speed) erhöht sich um 10 Fuß, solange du keine Schwere Rüstung trägst.
+* Deine Bewegungsrate (Walking Speed) erhöht sich um 3 m / 2 Felder, solange du keine Schwere Rüstung trägst.
 * Du erhältst eine Kletter- und Schwimmbewegungsrate in Höhe deiner Bewegungsrate.
 
 **Stufe 9: Expertise**
@@ -918,7 +918,7 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 * Du hast generellen Vorteil bei Angriffswürfen gegen die Kreatur, die mit deinem *Zeichen des Jägers* markiert ist.
 
 **Stufe 18: Wilde Sinne (Feral Senses)**
-* Du erhältst Blindsicht (Blindsight) mit einer Reichweite von 30 Fuß.
+* Du erhältst Blindsicht (Blindsight) mit einer Reichweite von 9 m / 6 Felder.
 
 **Stufe 19: Epischer Segen (Epic Boon)**
 * Du erhältst ein Epischer Segen-Talent (Epic Boon Feat).
@@ -934,14 +934,14 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 * **Stufe 3: Ursprünglicher Gefährte (Primal Companion):** Du rufst ein magisches Tier herbei (Tier des Landes, des Meeres oder des Himmels). Es handelt in deinem Zug. Du kannst als Bonusaktion oder durch das Ersetzen einer deiner Angriffe in der Angriffsaktion dem Gefährten befehlen, anzugreifen. Ohne Befehl weicht es aus (Dodge).
 * **Stufe 7: Außergewöhnliches Training (Exceptional Training):** Du kannst als Bonusaktion dem Tier befehlen, die Aktionen Spurt (Dash), Rückzug (Disengage), Ausweichen (Dodge) oder Helfen (Help) auszuführen. Die Angriffe des Tiers gelten als magisch für das Überwinden von Resistenzen.
 * **Stufe 11: Bestialischer Zorn (Bestial Fury):** Wenn du deinem Tier befiehlst anzugreifen, kann es zweimal zuschlagen. Profitierst du vom *Zeichen des Jägers*, fügt auch das Tier dem markierten Ziel den Bonusschaden zu.
-* **Stufe 15: Gemeinsame Zauber (Share Spells):** Wenn du einen Zauber auf dich selbst wirkst, kannst du denselben Zauber auf deinen Gefährten wirken, solange er innerhalb von 30 Fuß ist.
+* **Stufe 15: Gemeinsame Zauber (Share Spells):** Wenn du einen Zauber auf dich selbst wirkst, kannst du denselben Zauber auf deinen Gefährten wirken, solange er innerhalb von 9 m / 6 Felder ist.
 
 #### Düsterpirscher (Gloom Stalker)
-* **Stufe 3: Düsterer Hinterhalt (Dread Ambusher):** In der ersten Runde eines Kampfes steigt deine Bewegungsrate um 10 Fuß. Du kannst diesen Vorteil auf Angriffe in Höhe deines Weisheits-Modifikators pro Langer Rast nutzen: Wenn du eine Kreatur triffst, fügst du durch Grässliche Schläge zusätzlich **2W6 psychischen Schaden** zu.
-* **Stufe 3: Umbrale Sicht (Umbral Sight):** Du erhältst 60 Fuß Dunkelsicht (oder erweiterst bestehende um 60 Fuß). Du bist für Kreaturen, die sich auf Dunkelsicht verlassen, in absoluter Dunkelheit unsichtbar.
+* **Stufe 3: Düsterer Hinterhalt (Dread Ambusher):** In der ersten Runde eines Kampfes steigt deine Bewegungsrate um 3 m / 2 Felder. Du kannst diesen Vorteil auf Angriffe in Höhe deines Weisheits-Modifikators pro Langer Rast nutzen: Wenn du eine Kreatur triffst, fügst du durch Grässliche Schläge zusätzlich **2W6 psychischen Schaden** zu.
+* **Stufe 3: Umbrale Sicht (Umbral Sight):** Du erhältst 18 m / 12 Felder Dunkelsicht (oder erweiterst bestehende um 18 m / 12 Felder). Du bist für Kreaturen, die sich auf Dunkelsicht verlassen, in absoluter Dunkelheit unsichtbar.
 * **Stufe 7: Eiserner Verstand (Iron Mind):** Du erhältst Übung in Weisheits-Rettungswürfen.
 * **Stufe 11: Schlaghagel des Pirschers (Stalker's Flurry):** Wenn du *Düsterer Hinterhalt* (Grässliche Schläge) einsetzt, erhöht sich der psychische Schaden auf **2W8**. Zudem wählst du bei Nutzung einen von zwei Effekten: Entweder **Plötzlicher Schlag** (ein weiterer Angriff auf eine andere Kreatur im Abstand von 1,5 Metern) oder **Massenfurcht** (Ziel und alle Kreaturen im Abstand von 3 Metern müssen einen Weisheitsrettungswurf ablegen oder sind verängstigt).
-* **Stufe 15: Schattenhaftes Ausweichen (Shadowy Dodge):** Wenn du angegriffen wirst, kannst du als Reaktion 30 Fuß teleportieren. Dadurch erhält der Angriff gegen dich Nachteil.
+* **Stufe 15: Schattenhaftes Ausweichen (Shadowy Dodge):** Wenn du angegriffen wirst, kannst du als Reaktion 9 m / 6 Felder teleportieren. Dadurch erhält der Angriff gegen dich Nachteil.
 
 #### Jäger (Hunter)
 * **Stufe 3: Beute des Jägers (Hunter's Prey):** Wähle einen von zwei Vorteilen (**Hordenbrecher** oder **Kolossschlächter**). Du kannst diese Wahl nach einer Kurzen oder Langen Rast ändern.
@@ -953,9 +953,9 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 #### Feenwanderer (Fey Wanderer)
 * **Stufe 3: Schreckensschläge (Dreadful Strikes):** Einmal pro Zug pro Ziel kannst du einen Treffer mit einer Waffe um 1W4 (später 1W6) psychischen Schaden verstärken.
 * **Stufe 3: Andersweltlicher Glamour (Otherworldly Glamour):** Du addierst deinen Weisheits-Modifikator zu Charisma-Würfen. Du erhältst Übung in Täuschen, Auftreten oder Überreden.
-* **Stufe 7: Betörende Wendung (Beguiling Twist):** Du hast Vorteil auf Rettungswürfe gegen den Zustand Bezaubert (Charmed) und Verängstigt (Frightened). Gelingt dir oder einem Verbündeten in 120 Fuß solch ein Rettungswurf, kannst du eine Kreatur deiner Wahl innerhalb von 120 Fuß für 1 Minute bezaubern oder verängstigen (Rettungswurf nötig).
+* **Stufe 7: Betörende Wendung (Beguiling Twist):** Du hast Vorteil auf Rettungswürfe gegen den Zustand Bezaubert (Charmed) und Verängstigt (Frightened). Gelingt dir oder einem Verbündeten in 36 m / 24 Felder solch ein Rettungswurf, kannst du eine Kreatur deiner Wahl innerhalb von 36 m / 24 Felder für 1 Minute bezaubern oder verängstigen (Rettungswurf nötig).
 * **Stufe 11: Feen-Verstärkung (Fey Reinforcements):** Du hast den Zauber *Feengeist herbeirufen (Summon Fey)* immer vorbereitet. Du kannst ihn einmal pro Tag ohne Materialkomponenten und ohne Konzentration wirken (Dauer sinkt auf 1 Minute).
-* **Stufe 15: Nebelhafter Wanderer (Misty Wanderer):** Du kannst den Zauber *Nebeltritt (Misty Step)* in Höhe deines Weisheits-Modifikators pro Langer Rast wirken, ohne einen Zauberplatz zu verbrauchen. Du kannst dabei einen Verbündeten innerhalb von 5 Fuß mitnehmen.
+* **Stufe 15: Nebelhafter Wanderer (Misty Wanderer):** Du kannst den Zauber *Nebeltritt (Misty Step)* in Höhe deines Weisheits-Modifikators pro Langer Rast wirken, ohne einen Zauberplatz zu verbrauchen. Du kannst dabei einen Verbündeten innerhalb von 1,5 m / 1 Felder mitnehmen.
 
 ## Zauberer (Sorcerer)
 
@@ -996,7 +996,7 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
   * **Beschleunigter Zauber (Quickened Spell):** 2 Punkte. Ändert die Zauberzeit von 1 Aktion auf 1 Bonusaktion. (Nicht möglich, wenn bereits ein Zauber der Stufe 1+ im selben Zug gewirkt wurde).
   * **Erhöhter Zauber (Heightened Spell):** 2 Punkte. Ein Ziel des Zaubers erhält Nachteil auf Rettungswürfe gegen den Zauber.
   * **Erweiterter Zauber (Extended Spell):** 1 Punkt. Verdoppelt die Wirkungsdauer (maximal 24 Stunden). Gewährt Vorteil auf Rettungswürfe für das Aufrechterhalten der Konzentration des Zaubers.
-  * **Fernzauber (Distant Spell):** 1 Punkt. Verdoppelt die Reichweite, oder ändert eine Berührungs-Reichweite auf 30 Fuß.
+  * **Fernzauber (Distant Spell):** 1 Punkt. Verdoppelt die Reichweite, oder ändert eine Berührungs-Reichweite auf 9 m / 6 Felder.
   * **Sorgfältiger Zauber (Careful Spell):** 1 Punkt. Lasse eine Anzahl von Kreaturen (bis zu deinem Charisma-Modifikator, mind. 1) ihren Rettungswurf automatisch bestehen. Sie erleiden keinerlei Schaden durch diesen Zauber, selbst wenn sie bei einem Erfolg normalerweise halben Schaden erleiden würden.
   * **Subtiler Zauber (Subtle Spell):** 1 Punkt. Wirke den Zauber ohne verbale, somatische oder materialle Komponenten (es sei denn, die Materialkomponente wird verbraucht oder hat Goldkosten).
   * **Suchender Zauber (Seeking Spell):** 1 Punkt. Bei einem verfehlten Zauberangriff kannst du den W20 neu würfeln und musst das neue Ergebnis nehmen. Kann mit einer anderen Metamagie kombiniert werden.
@@ -1029,16 +1029,16 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 
 #### Aberrante Zauberei (Aberrant Sorcery)
 * **Stufe 3: Psionische Zauber:** Du erhältst stufenweise spezifische Zauber als immer vorbereitet.
-* **Stufe 3: Telepathische Sprache:** Als Bonusaktion verbindest du dich telepathisch mit einer Kreatur in 30 Fuß. Die Reichweite danach entspricht deinem Charisma-Modifikator in Meilen und der Effekt hält eine Anzahl an Minuten in Höhe deiner Stufe an.
+* **Stufe 3: Telepathische Sprache:** Als Bonusaktion verbindest du dich telepathisch mit einer Kreatur in 9 m / 6 Felder. Die Reichweite danach entspricht deinem Charisma-Modifikator in Meilen und der Effekt hält eine Anzahl an Minuten in Höhe deiner Stufe an.
 * **Stufe 6: Psionische Zauberei:** Du kannst psionische Zauber wirken, indem du Zaubereipunkte in Höhe des Zauberlevels anstelle eines Zauberplatzes ausgibst. Der Zauber benötigt dann keine verbalen, somatischen oder kostenlosen materiellen Komponenten.
 * **Stufe 6: Psychische Verteidigung:** Du hast Resistenz gegen Psychischen Schaden und Vorteil auf Rettungswürfe gegen die Zustände Bezaubert und Verängstigt.
 * **Stufe 14: Offenbarung im Fleisch:** Als Bonusaktion kannst du für 10 Minuten deinen Körper modifizieren. Für jeden ausgegebenen Zaubereipunkt erhältst du einen Vorteil (Schwimmen/Wasseratmung, Fliegen/Schweben, Unsichtbare sehen oder das Bewegen durch enge Lücken von 1 Zoll).
-* **Stufe 18: Verzerrende Implosion:** Als Magische Aktion teleportierst du dich bis zu 120 Fuß weit. Kreaturen in einem 30-Fuß-Radius deines Ausgangsorts müssen einen Stärke-Rettungswurf ablegen (Fehlschlag: 3d10 Energieschaden und sie werden in die Mitte gezogen). Einmal pro Langer Rast oder für 5 Zaubereipunkte.
+* **Stufe 18: Verzerrende Implosion:** Als Magische Aktion teleportierst du dich bis zu 36 m / 24 Felder weit. Kreaturen in einem 30-Fuß-Radius deines Ausgangsorts müssen einen Stärke-Rettungswurf ablegen (Fehlschlag: 3d10 Energieschaden und sie werden in die Mitte gezogen). Einmal pro Langer Rast oder für 5 Zaubereipunkte.
 
 #### Uhrwerk-Zauberei (Clockwork Sorcery)
 * **Stufe 3: Uhrwerk-Zauber:** Du erhältst stufenweise spezifische Zauber als immer vorbereitet.
-* **Stufe 3: Gleichgewicht wiederherstellen:** Wenn eine Kreatur in 60 Fuß einen W20 mit Vorteil oder Nachteil würfelt, kannst du das per Reaktion aufheben. Nutzungen: Charisma-Modifikator pro Langer Rast.
-* **Stufe 6: Bastion des Gesetzes:** Als Magische Aktion (1-5 Zaubereipunkte) gibst du einer Kreatur in 30 Fuß W8-Würfel in Höhe der ausgegebenen Punkte als magischen Schutz. Nimmt sie Schaden, kann sie Würfel aufwenden, um den Schaden um das Wurfergebnis zu reduzieren.
+* **Stufe 3: Gleichgewicht wiederherstellen:** Wenn eine Kreatur in 18 m / 12 Felder einen W20 mit Vorteil oder Nachteil würfelt, kannst du das per Reaktion aufheben. Nutzungen: Charisma-Modifikator pro Langer Rast.
+* **Stufe 6: Bastion des Gesetzes:** Als Magische Aktion (1-5 Zaubereipunkte) gibst du einer Kreatur in 9 m / 6 Felder W8-Würfel in Höhe der ausgegebenen Punkte als magischen Schutz. Nimmt sie Schaden, kann sie Würfel aufwenden, um den Schaden um das Wurfergebnis zu reduzieren.
 * **Stufe 14: Trance der Ordnung:** Als Bonusaktion gehst du für 1 Minute in Trance. Angriffe gegen dich haben keinen Vorteil und eigene W20-Tests, die eine 9 oder niedriger zeigen, gelten als 10. Einmal pro Langer Rast oder für 5 Zaubereipunkte.
 * **Stufe 18: Uhrwerk-Kavalkade:** Als Magische Aktion rufst du Geister in einem 30-Fuß-Würfel. Sie heilen aufteilbar 100 TP, reparieren Objekte und bannen Zauber der Stufe 6 oder niedriger. Einmal pro Langer Rast oder für 7 Zaubereipunkte.
 
@@ -1046,13 +1046,13 @@ Während die Sternengestalt aktiv ist, hast du Resistenz gegen Wucht-, Stich- un
 * **Stufe 3: Drakonische Widerstandsfähigkeit:** Dein Trefferpunktemaximum steigt um 3 (plus 1 für jede weitere Stufe). Ohne Rüstung beträgt deine Rüstungsklasse 10 + Geschicklichkeits-Modifikator + Charisma-Modifikator.
 * **Stufe 3: Drakonische Zauber:** Du erhältst stufenweise spezifische Zauber als immer vorbereitet.
 * **Stufe 6: Elementare Affinität:** Wähle einen drachischen Schadenstyp (Säure, Kälte, Feuer, Blitz oder Gift). Du erhältst Resistenz dagegen und darfst bei einem entsprechenden Zauber deinen Charisma-Modifikator zu einem Schadenswurf addieren.
-* **Stufe 14: Drachenflügel:** Als Bonusaktion wachsen dir für 1 Stunde Flügel (60 Fuß Fluggeschwindigkeit). Einmal pro Langer Rast oder für 3 Zaubereipunkte.
+* **Stufe 14: Drachenflügel:** Als Bonusaktion wachsen dir für 1 Stunde Flügel (18 m / 12 Felder Fluggeschwindigkeit). Einmal pro Langer Rast oder für 3 Zaubereipunkte.
 * **Stufe 18: Drachengefährte:** Du kannst *Drachen beschwören* einmal ohne Zauberplatz und Materialkomponente wirken (erholt sich bei Langer Rast). Du kannst beim Wirken festlegen, dass der Zauber keine Konzentration erfordert; die Dauer verringert sich dann auf 1 Minute.
 
 #### Wilde Magie-Zauberei (Wild Magic Sorcery)
 * **Stufe 3: Wilde Magie-Woge:** Einmal pro Zug, wenn du einen Zauber mit einem Zauberplatz wirkst, kannst du 1W20 rollen. Bei einer 20 wird ein Effekt auf der Woge-Tabelle ausgelöst.
 * **Stufe 3: Gezeiten des Chaos:** Du kannst dir Vorteil auf einen W20-Test gewähren. Du erhältst dieses Merkmal erst nach einer Langen Rast zurück, oder wenn du einen Zauber mit Zauberplatz wirkst (wodurch du dann aber automatisch einen Effekt auf der Woge-Tabelle auslöst).
-* **Stufe 6: Glück beugen:** Wenn eine Kreatur in 60 Fuß einen W20-Test macht, kannst du per Reaktion für 1 Zaubereipunkt 1W4 zum Ergebnis addieren oder subtrahieren.
+* **Stufe 6: Glück beugen:** Wenn eine Kreatur in 18 m / 12 Felder einen W20-Test macht, kannst du per Reaktion für 1 Zaubereipunkt 1W4 zum Ergebnis addieren oder subtrahieren.
 * **Stufe 14: Kontrolliertes Chaos:** Wenn du auf der Woge-Tabelle rollen musst, rollst du zweimal und wählst das für dich passendere Ergebnis aus.
 * **Stufe 18: Gezähmte Woge:** Du kannst nach dem Wirken eines Zaubers gezielt einen beliebigen Effekt (außer dem letzten) von der Woge-Tabelle auslösen, anstatt auszuwürfeln. Einmal pro Langer Rast.
 
@@ -1138,14 +1138,14 @@ Wenn du *Magische Raffinesse* verwendest, regenerierst du stattdessen *alle* ver
 *(Voraussetzungen, falls vorhanden, in Klammern).*
 
 * **Aufsteigen der Schritt (Stufe 5):** Wirke *Schweben* auf dich selbst ohne Zauberplatz.
-* **Gedankenblick (Stufe 5):** Als Bonusaktion berührst du eine willige Kreatur und nimmst bis Ende deines nächsten Zuges durch ihre Sinne wahr. Mit Bonusaktion (solange selbe Ebene) aufrechtzuerhalten. Du kannst Zauber aus ihrer Position wirken (bis 60 Fuß Entfernung).
+* **Gedankenblick (Stufe 5):** Als Bonusaktion berührst du eine willige Kreatur und nimmst bis Ende deines nächsten Zuges durch ihre Sinne wahr. Mit Bonusaktion (solange selbe Ebene) aufrechtzuerhalten. Du kannst Zauber aus ihrer Position wirken (bis 18 m / 12 Felder Entfernung).
 * **Dürstende Klinge (Stufe 5, Pakt der Klinge):** Du erhältst das Merkmal *Zusätzlicher Angriff*, das aber nur für deine Paktwaffe gilt.
 * **Mit den Schatten verschmelzen (Stufe 5):** In schwachem Licht oder Dunkelheit: Wirke *Unsichtbarkeit* auf dich selbst ohne Zauberplatz.
 * **Grabesflüstern (Stufe 7):** Wirke *Mit Toten sprechen* ohne Zauberplatz.
 * **Gabe der Beschützer (Stufe 9, Pakt des Buches):** Eine Seite im Buch enthält Namen (Anzahl = CHA-Modifikator). Fällt ein Genannter auf 0 TP (ohne Soforttod), fällt er stattdessen auf 1 TP. 1x pro Langer Rast.
 * **Gabe der Tiefen (Stufe 5):** Du kannst unter Wasser atmen, erhältst eine Schwimmrate gleich deiner Bewegungsrate und kannst *Wasseratmen* 1x pro Langer Rast ohne Zauberplatz wirken.
-* **Hexensicht (Stufe 15):** Du hast Wahren Blick (Truesight) mit 30 Fuß Reichweite.
-* **Gabe des Kettenmeisters (Stufe 5, Pakt der Kette):** Vertrauter erhält Flug/Schwimmrate 40 Fuß. Ergreift Angriff per Bonusaktion von dir. Darf Nekrotischen/Gleißenden Schaden statt dem normalen verursachen. Nutzt deinen Spell-DC. Du kannst als Reaktion Resistenz gewähren, wenn er Schaden nimmt.
+* **Hexensicht (Stufe 15):** Du hast Wahren Blick (Truesight) mit 9 m / 6 Felder Reichweite.
+* **Gabe des Kettenmeisters (Stufe 5, Pakt der Kette):** Vertrauter erhält Flug/Schwimmrate 12 m / 8 Felder. Ergreift Angriff per Bonusaktion von dir. Darf Nekrotischen/Gleißenden Schaden statt dem normalen verursachen. Nutzt deinen Spell-DC. Du kannst als Reaktion Resistenz gewähren, wenn er Schaden nimmt.
 * **Lebenstrinker (Stufe 9, Pakt der Klinge):** 1x pro Zug bei Treffer mit Paktwaffe: +1W6 (Nekrotisch, Psychisch oder Gleißend) Schaden. Du kannst einen deiner Trefferwürfel ausgeben, würfeln und das Ergebnis + KON-Modifikator heilen.
 * **Lektionen der Ältesten (Stufe 2):** Wähle ein Ursprungstalent. (Mehrfach wählbar).
 * **Maske der vielen Gesichter (Stufe 2):** Wirke *Selbstverkleidung* ohne Zauberplatz.
@@ -1157,14 +1157,14 @@ Wenn du *Magische Raffinesse* verwendest, regenerierst du stattdessen *alle* ver
 * **Qualvoller Strahl (Stufe 2, ein Schadens-Zaubertrick):** Wähle einen Schadens-Zaubertrick. Addiere CHA-Modifikator zum Schaden. (Mehrfach wählbar für andere Zaubertricks).
 * **Schattenrüstung:** Wirke *Magierrüstung* auf dich ohne Zauberplatz.
 * **Schauerlicher Verstand:** Vorteil auf KON-Rettungswürfe zur Konzentration.
-* **Unheimlicher Speer (Stufe 2, ein Schadens-Zaubertrick ab 10 Fuß):** Wähle einen Zaubertrick: Die Reichweite erhöht sich um (30 x Hexenmeisterstufe) Fuß. (Mehrfach wählbar für andere Zaubertricks).
+* **Unheimlicher Speer (Stufe 2, ein Schadens-Zaubertrick ab 3 m / 2 Felder):** Wähle einen Zaubertrick: Die Reichweite erhöht sich um (30 x Hexenmeisterstufe) Fuß. (Mehrfach wählbar für andere Zaubertricks).
 * **Schauerliches Niederstrecken (Stufe 5, Pakt der Klinge):** 1x pro Zug bei Treffer: Verbrauche Zauberplatz für +1W8 Energieschaden (Force) + 1W8 pro Zauberplatzstufe. Wirft Größe Riesig oder kleiner *Liegend*.
 * **Unholde Vitalität (Stufe 2):** Wirke *Falsches Leben* auf dich ohne Zauberplatz (kein Würfeln für Temporäre TP, nimm den maximalen Würfelwert).
-* **Teufelssicht (Stufe 2):** Normale Sicht in (magischer und nichtmagischer) Dunkelheit und Dämmerlicht bis 120 Fuß.
+* **Teufelssicht (Stufe 2):** Normale Sicht in (magischer und nichtmagischer) Dunkelheit und Dämmerlicht bis 36 m / 24 Felder.
 * **Außerweltlicher Sprung (Stufe 2):** Wirke *Springen* auf dich ohne Zauberplatz.
 * **Verschlingende Klinge (Stufe 12, Dürstende Klinge):** Die Extra-Attacke der Paktwaffe erlaubt nun zwei zusätzliche Angriffe statt einem.
 * **Visionen von fernen Gefilden (Stufe 9):** Wirke *Arkanes Auge* ohne Zauberplatz.
-* **Zurückdrängender Strahl (Stufe 2, Angriffs-Zaubertrick):** Treffer drückt Ziel (Größe Groß oder kleiner) 10 Fuß weg. (Mehrfach wählbar für andere Zaubertricks).
+* **Zurückdrängender Strahl (Stufe 2, Angriffs-Zaubertrick):** Treffer drückt Ziel (Größe Groß oder kleiner) 3 m / 2 Felder weg. (Mehrfach wählbar für andere Zaubertricks).
 
 ---
 
@@ -1181,14 +1181,14 @@ Du hast folgende Zauber immer vorbereitet:
 **Stufe 3: Schritte der Fee (Steps of the Fey)**
 Du kannst *Nebelschritt* kostenlos wirken (Nutzungen = CHA-Modifikator pro Langer Rast). Zusatzeffekt nach dem Teleport (wähle einen):
 
-* **Erfrischender Schritt:** Du oder eine Kreatur in 10 Fuß erhalten 1W10 Temporäre TP.
-* **Spottender Schritt:** Kreaturen im Umkreis von 5 Fuß um deinen Startpunkt müssen WIS-Rettungswurf ablegen. Fehlschlag: Nachteil auf Angriffe gegen andere (außer dir) bis Start deines nächsten Zuges.
+* **Erfrischender Schritt:** Du oder eine Kreatur in 3 m / 2 Felder erhalten 1W10 Temporäre TP.
+* **Spottender Schritt:** Kreaturen im Umkreis von 1,5 m / 1 Felder um deinen Startpunkt müssen WIS-Rettungswurf ablegen. Fehlschlag: Nachteil auf Angriffe gegen andere (außer dir) bis Start deines nächsten Zuges.
 
 **Stufe 6: Neblige Flucht (Misty Escape)**
 Du kannst *Nebelschritt* als Reaktion auf erlittenen Schaden wirken. Neue Zusatzeffekte wählbar:
 
 * **Verschwindender Schritt:** Unsichtbar bis zum Start deines nächsten Zuges (oder bis du angreifst/Schaden machst/Zauber wirkst).
-* **Schrecklicher Schritt:** Kreaturen im Umkreis von 5 Fuß um Start- ODER Zielpunkt müssen WIS-Rettungswurf ablegen. Fehlschlag: 2W10 Psychischer Schaden.
+* **Schrecklicher Schritt:** Kreaturen im Umkreis von 1,5 m / 1 Felder um Start- ODER Zielpunkt müssen WIS-Rettungswurf ablegen. Fehlschlag: 2W10 Psychischer Schaden.
 
 **Stufe 10: Betörende Verteidigungen (Beguiling Defenses)**
 Immunität gegen den Zustand *Bezaubert*. Wird du von einem Angriff getroffen, kannst du als Reaktion den erlittenen Schaden halbieren. Angreifer macht WIS-Rettungswurf (Fehlschlag: Erleidet Psychischen Schaden in Höhe des von dir erlittenen Schadens). 1x pro Langer Rast (oder Ausgabe eines Zauberplatzes).
@@ -1209,7 +1209,7 @@ Du hast folgende Zauber immer vorbereitet:
 * Stufe 9: *Höhere Genesung, Celestisches Wesen herbeirufen*
 
 **Stufe 3: Heilendes Licht (Healing Light)**
-Du hast einen Pool aus W6-Würfeln (Anzahl = Hexenmeisterstufe + 1). Als Bonusaktion kannst du dich oder eine Kreatur in 60 Fuß heilen. Gib Würfel bis zum Maximum deines CHA-Modifikators (Minimum 1) aus, würfle und heile die Summe. Pool regeneriert nach Langer Rast.
+Du hast einen Pool aus W6-Würfeln (Anzahl = Hexenmeisterstufe + 1). Als Bonusaktion kannst du dich oder eine Kreatur in 18 m / 12 Felder heilen. Gib Würfel bis zum Maximum deines CHA-Modifikators (Minimum 1) aus, würfle und heile die Summe. Pool regeneriert nach Langer Rast.
 
 **Stufe 6: Gleißende Seele (Radiant Soul)**
 Resistenz gegen Gleißenden Schaden (Radiant). Wirkst du einen Zauber, der Feuer- oder Gleißenden Schaden verursacht, kannst du 1x pro Zug deinen CHA-Modifikator auf den Schaden gegen ein Ziel addieren.
@@ -1218,14 +1218,14 @@ Resistenz gegen Gleißenden Schaden (Radiant). Wirkst du einen Zauber, der Feuer
 Erhältst du nach Kurzer/Langer Rast oder *Magischer Raffinesse* Zauberplätze zurück, gewinnst du Temporäre TP = Hexenmeisterstufe + CHA-Modifikator. Wähle bis zu 5 Verbündete: Sie erhalten Temporäre TP = halbe Hexenmeisterstufe + CHA-Modifikator.
 
 **Stufe 14: Sengende Rache (Searing Vengeance)**
-Musst du (oder ein Verbündeter in 60 Fuß) einen Todesrettungswurf ablegen, heilt das Ziel stattdessen die Hälfte seiner maximalen TP und steht auf. Feinde im Umkreis von 30 Fuß nehmen 2W8 + CHA-Modifikator Gleißenden Schaden und sind bis Ende des aktuellen Zuges *Blind*. 1x pro Langer Rast.
+Musst du (oder ein Verbündeter in 18 m / 12 Felder) einen Todesrettungswurf ablegen, heilt das Ziel stattdessen die Hälfte seiner maximalen TP und steht auf. Feinde im Umkreis von 9 m / 6 Felder nehmen 2W8 + CHA-Modifikator Gleißenden Schaden und sind bis Ende des aktuellen Zuges *Blind*. 1x pro Langer Rast.
 
 ---
 
 #### Unhold-Schutzherr (Fiend Patron)
 
 **Stufe 3: Segen des Dunklen (Dark One's Blessing)**
-Reduzierst du (oder ein Verbündeter in 10 Fuß Umkreis) einen Gegner auf 0 TP, erhältst du Temporäre TP = CHA-Modifikator + Hexenmeisterstufe.
+Reduzierst du (oder ein Verbündeter in 3 m / 2 Felder Umkreis) einen Gegner auf 0 TP, erhältst du Temporäre TP = CHA-Modifikator + Hexenmeisterstufe.
 
 **Stufe 3: Unterweltliche Zauber**
 Du hast folgende Zauber immer vorbereitet:
@@ -1249,7 +1249,7 @@ Wähle bei Abschluss einer Kurzen oder Langen Rast einen Schadenstyp (außer Ene
 #### Großer-Alter-Schutzherr (Great Old One Patron)
 
 **Stufe 3: Erwachter Geist (Awakened Mind)**
-Bonusaktion: Telepathische Verbindung mit einer Kreatur in 30 Fuß. Hält in Minuten = Hexenmeisterstufe. Reichweite in Meilen = CHA-Modifikator. (Ihr müsst mental eine gemeinsame Sprache nutzen). Endet, wenn auf anderes Ziel gewirkt.
+Bonusaktion: Telepathische Verbindung mit einer Kreatur in 9 m / 6 Felder. Hält in Minuten = Hexenmeisterstufe. Reichweite in Meilen = CHA-Modifikator. (Ihr müsst mental eine gemeinsame Sprache nutzen). Endet, wenn auf anderes Ziel gewirkt.
 
 **Stufe 3: Zauber der Großen Alten**
 Du hast folgende Zauber immer vorbereitet:

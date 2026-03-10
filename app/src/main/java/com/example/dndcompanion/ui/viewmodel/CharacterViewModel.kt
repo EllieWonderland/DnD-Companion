@@ -490,15 +490,15 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         EquipmentCatalogParser.loadFromAssets(getApplication())
     }
 
-    // --- GEWICHTS-BERECHNUNG (in Pfund / lbs) ---
+    // --- GEWICHTS-BERECHNUNG (in kg) ---
     val maxWeight: Double
-        get() = strength * 15.0  // D&D Traglast = STR × 15 Pfd.
+        get() = strength * 7.5  // D&D Traglast = STR × 15 Pfd. = STR × 7.5 kg
     val currentWeight: Double
         get() {
             var total = 0.0
-            total += water * 5.0          // 1 Trinkschlauch (voll) = 5 Pfd.
-            total += rations * 2.0        // 1 Ration = 2 Pfd.
-            total += totalArrows * 0.05   // 1 Pfeil = ca. 0.05 Pfd.
+            total += water * 2.5          // 1 Trinkschlauch (voll) = 2.5 kg
+            total += rations * 1.0        // 1 Ration = 1 kg
+            total += totalArrows * 0.02   // 1 Pfeil = ca. 0.02 kg
             total += customLoot.sumOf { it.amount * it.weight }
             return total
         }
@@ -1212,20 +1212,21 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     """.trimIndent()
 
-private val model31Pro = GenerativeModel(
-        modelName = "gemini-3.1-pro-preview",
-        apiKey = BuildConfig.GEMINI_API_KEY
-    )
-
-    private val model25Flash = GenerativeModel(
+private val model25Flash = GenerativeModel(
         modelName = "gemini-2.5-flash",
         apiKey = BuildConfig.GEMINI_API_KEY
     )
 
-    private var activeChatSession = model31Pro.startChat()
+    private val model25FlashLite = GenerativeModel(
+        modelName = "gemini-2.5-flash-lite-preview",
+        apiKey = BuildConfig.GEMINI_API_KEY
+    )
+
+    private var activeChatSession = model25Flash.startChat()
 
     fun loadFaqs() {
-        val faqString = prefs.getString("savedFaqs", "") ?: ""
+        val faqKey = "savedFaqs_${characterData.name}"
+        val faqString = prefs.getString(faqKey, "") ?: ""
         if (faqString.isNotEmpty()) {
             if (faqString.startsWith("[")) {
                 // Es ist sehr wahrscheinlich ein JSON-String
@@ -1246,12 +1247,15 @@ private val model31Pro = GenerativeModel(
                 faqList.clear()
                 faqList.addAll(items)
             }
+        } else {
+            faqList.clear()
         }
     }
 
     private fun saveFaqs() {
+        val faqKey = "savedFaqs_${characterData.name}"
         val json = gson.toJson(faqList)
-        prefs.edit { putString("savedFaqs", json) }
+        prefs.edit { putString(faqKey, json) }
     }
 
     // --- SPELBOOK (ZAUBERBUCH) ---
@@ -1343,10 +1347,11 @@ private val model31Pro = GenerativeModel(
                             if (name.isNotEmpty() && !name.startsWith("**")) {
                                 // Gewicht extrahieren. Es ist typischerweise in der vorletzten Spalte (bei Waffen/Rüstungen/Ausrüstung)
                                 // Wir suchen in allen Spalten nach "Pfd." oder "Tonnen"
+                                // Wir suchen in allen Spalten nach "kg" oder "Tonnen"
                                 var weight = 0.0
                                 for (part in parts) {
-                                    if (part.contains("Pfd.")) {
-                                        val weightStr = part.replace(" Pfd.", "").replace(",", ".")
+                                    if (part.contains("kg")) {
+                                        val weightStr = part.replace(" kg", "").replace(",", ".")
                                         weight = weightStr.toDoubleOrNull() ?: 0.0
                                         break
                                     } else if (part.contains("Tonnen") || part.contains("Tonne")) {
@@ -1685,12 +1690,12 @@ private val model31Pro = GenerativeModel(
                     val finalPrompt = "$systemPrompt\n\n$charContext\n\nHANDBUCH-AUSZÜGE:\n$manualContext\n\nFRAGE: $message"
 
                     try {
-                        currentUsedModel = "Gemini 3.1 Pro (Preview)"
+                        currentUsedModel = "Gemini 2.5 Flash"
                         val response = activeChatSession.sendMessage(finalPrompt)
                         finalizeResponse(loadingIndex, response.text)
                     } catch (e: Exception) {
-                        currentUsedModel = "Gemini 2.5 Flash (Fallback)"
-                        val fallbackSession = model25Flash.startChat(history = activeChatSession.history)
+                        currentUsedModel = "Gemini 2.5 Flash-Lite (Fallback)"
+                        val fallbackSession = model25FlashLite.startChat(history = activeChatSession.history)
                         val response = fallbackSession.sendMessage(finalPrompt)
                         activeChatSession = fallbackSession
                         finalizeResponse(loadingIndex, response.text)

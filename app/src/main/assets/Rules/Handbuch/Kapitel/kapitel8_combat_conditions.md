@@ -31,7 +31,7 @@ Das 2024-Regelwerk hat die Kampfaktionen standardisiert und klar definiert:
 * **Ausweichen (Dodge):** Bis zum Beginn deines nächsten Zuges hat jeder Angriffswurf gegen dich Nachteil (vorausgesetzt du siehst den Angreifer). Du hast Vorteil auf GES-Rettungswürfe. Dieser Effekt endet sofort, wenn du *Kampfunfähig (Incapacitated)* bist.
 * **Beeinflussen (Influence - NEU):** Du nutzt eine Aktion, um eine Kreatur durch Charisma (Täuschen, Einschüchtern, Überreden oder Mit Tieren umgehen) zu beeinflussen.
 * **Benutzen (Utilize - NEU):** Du interagierst mit einem Gegenstand (z. B. einen Trank trinken, ein Schloss knacken, ein zweites Objekt ziehen).
-* **Helfen (Help):** Du hilfst einer Kreatur, wodurch sie auf ihren nächsten Attributswurf Vorteil hat. Alternativ lenkst du einen Feind in 5 Fuß Entfernung ab, wodurch der nächste Angriff eines Verbündeten gegen diesen Feind Vorteil hat.
+* **Helfen (Help):** Du hilfst einer Kreatur, wodurch sie auf ihren nächsten Attributswurf Vorteil hat. Alternativ lenkst du einen Feind in 1,5 m / 1 Felder Entfernung ab, wodurch der nächste Angriff eines Verbündeten gegen diesen Feind Vorteil hat.
 * **Magie (Magic - NEU):** Ersetzt "Zauber wirken". Du wirkst einen Zauber, der eine Aktionszeit von 1 Aktion hat, oder aktivierst ein magisches Item, das eine Aktion erfordert.
 * **Rückzug (Disengage):** Wenn du dich für den Rest deines Zuges bewegst, provozierst du absolut keine Gelegenheitsangriffe.
 * **Spurt (Dash):** Du erhältst für den aktuellen Zug zusätzliche Bewegung in Höhe deiner normalen Bewegungsrate.
@@ -66,7 +66,7 @@ Zustände verändern deine Fähigkeiten drastisch. Das 2024-Regelwerk hat viele 
   * Du bist *Kampfunfähig*, fällst sofort *Liegend (Prone)* und lässt fallen, was du in den Händen hältst.
   * Du fällst automatisch bei jedem STR- und GES-Rettungswurf durch.
   * Angriffswürfe gegen dich haben Vorteil.
-  * Jeder Angriff, der dich aus 5 Fuß Entfernung oder näher trifft, ist ein automatischer **Kritischer Treffer**.
+  * Jeder Angriff, der dich aus 1,5 m / 1 Felder Entfernung oder näher trifft, ist ein automatischer **Kritischer Treffer**.
 * **Bezaubert (Charmed)**
   * Du kannst die Kreatur, die dich bezaubert hat, nicht angreifen oder mit schädlichen Fähigkeiten/Zaubern anvisieren.
   * Der Bezaubernde hat Vorteil bei allen Charisma-Würfen, um sozial mit dir zu interagieren.
@@ -95,7 +95,7 @@ Zustände verändern deine Fähigkeiten drastisch. Das 2024-Regelwerk hat viele 
   * Du hast Nachteil auf Geschicklichkeits-Rettungswürfe.
 * **Gelähmt (Paralyzed)**
   * Wie *Betäubt* (Kampfunfähig, STR/GES-Fails, Angriffe gegen dich haben Vorteil).
-  * **Zusätzlich:** Jeder Angriff, der dich aus 5 Fuß Entfernung oder näher trifft, ist ein automatischer **Kritischer Treffer**.
+  * **Zusätzlich:** Jeder Angriff, der dich aus 1,5 m / 1 Felder Entfernung oder näher trifft, ist ein automatischer **Kritischer Treffer**.
 * **Kampfunfähig (Incapacitated) - NEU IN 2024**
   * Du kannst keine Aktionen, Bonusaktionen oder Reaktionen ausführen.
   * Deine Konzentration auf Zauber bricht **sofort** ab.
@@ -104,8 +104,8 @@ Zustände verändern deine Fähigkeiten drastisch. Das 2024-Regelwerk hat viele 
 * **Liegend (Prone) - NEU IN 2024**
   * Du kannst dich nur kriechend bewegen, es sei denn, du stehst auf (kostet halbe Bewegung).
   * Du hast Nachteil auf Angriffswürfe.
-  * Angriffswürfe gegen dich haben **Vorteil**, wenn der Angreifer in **5 Fuß** Entfernung ist.
-  * Angriffswürfe gegen dich haben **Nachteil**, wenn der Angreifer **weiter als 5 Fuß** entfernt ist (dies betrifft auch Fernkampfangriffe).
+  * Angriffswürfe gegen dich haben **Vorteil**, wenn der Angreifer in **1,5 m / 1 Felder** Entfernung ist.
+  * Angriffswürfe gegen dich haben **Nachteil**, wenn der Angreifer **weiter als 1,5 m / 1 Felder** entfernt ist (dies betrifft auch Fernkampfangriffe).
 * **Taub (Deafened)**
   * Du kannst nichts hören. Du fällst bei jedem Attributswurf durch, der Gehör erfordert.
 * **Unsichtbar (Invisible) - NEU IN 2024**

@@ -14,7 +14,7 @@ Dieses Kapitel liefert alle relevanten mechanischen Tabellen für die Ausrüstun
 | Goldstück (GM / GP) | 1 GM |
 | Platinmünze (PM / PP) | 10 GM |
 
-*(Hinweis: 50 Münzen wiegen zusammen exakt 1 Pfund.)*
+*(Hinweis: 50 Münzen wiegen zusammen exakt 0,5 kg.)*
 
 ---
 
@@ -25,7 +25,7 @@ Dieses Kapitel liefert alle relevanten mechanischen Tabellen für die Ausrüstun
 * **Leicht (Light):** Wenn du die Angriffsaktion nutzt, um mit einer leichten Waffe anzugreifen, kannst du als Bonusaktion einen Angriff mit einer anderen leichten Waffe ausführen. (Attributsmodifikator wird nicht zum Schaden der Bonusaktion addiert, es sei denn, er ist negativ).
 * **Ladeeigenschaft (Loading):** Du kannst nur eine Munition pro Aktion, Bonusaktion oder Reaktion abfeuern, unabhängig davon, wie viele Angriffe du normalerweise machen darfst.
 * **Munition (Ammunition):** Erfordert Projektile. Nach einem Kampf kann die Hälfte der verbrauchten Munition zurückgewonnen werden.
-* **Reichweite (Range / Reach):** Nahkampfwaffen mit *Reach* erhöhen deine Reichweite um 5 Fuß. Fernkampfwaffen oder Wurfwaffen geben in Klammern (Normale Reichweite / Maximale Reichweite) an.
+* **Reichweite (Range / Reach):** Nahkampfwaffen mit *Reach* erhöhen deine Reichweite um 1,5 m / 1 Felder. Fernkampfwaffen oder Wurfwaffen geben in Klammern (Normale Reichweite / Maximale Reichweite) an.
 * **Schwer (Heavy):** Du hast Nachteil auf Angriffswürfe, wenn die Waffe eine Nahkampfwaffe ist und deine Stärke unter 13 liegt, oder wenn es eine Fernkampfwaffe ist und deine Geschicklichkeit unter 13 liegt.
 * **Vielseitig (Versatile):** Kann einhändig oder zweihändig geführt werden (Schaden für den zweihändigen Griff steht in Klammern).
 * **Wurfwaffe (Thrown):** Kann für einen Fernkampfangriff geworfen werden (nutzt dasselbe Attribut wie im Nahkampf).
@@ -36,11 +36,11 @@ Um diese nutzen zu können, benötigt der Charakter ein entsprechendes Merkmal (
 * **Ärgern / Irritieren (Vex):** Triffst du und verursachst Schaden, hast du Vorteil auf deinen nächsten Angriffswurf gegen dieses Ziel (hält bis zum Ende deines nächsten Zuges).
 * **Kerbe (Nick):** Der zusätzliche Angriff der Eigenschaft *Leicht* (Light) kann als Teil der Angriffsaktion statt als Bonusaktion ausgeführt werden (nur 1x pro Zug).
 * **Schwächen (Sap):** Triffst du, hat das Ziel Nachteil auf seinen nächsten Angriffswurf (hält bis zum Beginn deines nächsten Zuges).
-* **Spalten (Cleave):** Triffst du, kannst du einen Extra-Nahkampfangriff gegen eine zweite Kreatur in 5 Fuß Entfernung machen. Der Attributsmodifikator wird dem Extraschaden nicht hinzugefügt (nur 1x pro Zug).
-* **Stoß (Push):** Triffst du eine Kreatur der Größe Groß oder kleiner, kannst du sie 10 Fuß von dir wegstoßen.
+* **Spalten (Cleave):** Triffst du, kannst du einen Extra-Nahkampfangriff gegen eine zweite Kreatur in 1,5 m / 1 Felder Entfernung machen. Der Attributsmodifikator wird dem Extraschaden nicht hinzugefügt (nur 1x pro Zug).
+* **Stoß (Push):** Triffst du eine Kreatur der Größe Groß oder kleiner, kannst du sie 3 m / 2 Felder von dir wegstoßen.
 * **Streifen (Graze):** Verfehlst du, fügst du Schaden in Höhe deines genutzten Attributsmodifikators zu (keine Modifikatoren-Erhöhung durch andere Effekte).
 * **Umwerfen (Topple):** Triffst du, muss das Ziel einen KON-Rettungswurf (SG = 8 + genutzter Angriffs-Modifikator + Übungsbonus) bestehen oder erleidet den Zustand *Liegend* (Prone).
-* **Verlangsamen (Slow):** Triffst du und machst Schaden, sinkt die Bewegungsrate des Ziels um 10 Fuß bis zum Beginn deines nächsten Zuges.
+* **Verlangsamen (Slow):** Triffst du und machst Schaden, sinkt die Bewegungsrate des Ziels um 3 m / 2 Felder bis zum Beginn deines nächsten Zuges.
 
 ### Waffen-Tabelle
 
@@ -198,7 +198,7 @@ Jedes dieser Werkzeuge erfordert eine eigene Übung (Proficiency).
 | Karten-/Schriftrollenbehälter (Case, Map/Scroll)| 1 GM | 1 Pfd. |
 | Karte (Map) | 1 GM | - |
 | Kerze (Candle) | 1 KM | - |
-| Kette, 10 Fuß (Chain) | 5 GM | 10 Pfd. |
+| Kette, 3 m / 2 Felder (Chain) | 5 GM | 10 Pfd. |
 | Kleidung, fein (Clothes, Fine) | 15 GM | 6 Pfd. |
 | Kleidung, Reise (Clothes, Traveler's) | 2 GM | 4 Pfd. |
 | Kletterausrüstung (Climber's Kit) | 25 GM | 12 Pfd. |
@@ -210,7 +210,7 @@ Jedes dieser Werkzeuge erfordert eine eigene Übung (Proficiency).
 | Lampe (Lamp) | 5 SM | 1 Pfd. |
 | Lanterne, Blend- (Lantern, Bullseye) | 10 GM | 2 Pfd. |
 | Lanterne, Kapuzen- (Lantern, Hooded) | 5 GM | 2 Pfd. |
-| Leiter, 10 Fuß (Ladder) | 1 SM | 25 Pfd. |
+| Leiter, 3 m / 2 Felder (Ladder) | 1 SM | 25 Pfd. |
 | Lupe (Magnifying Glass) | 100 GM | - |
 | Materialkomponentenbeutel (Component Pouch)| 25 GM | 2 Pfd. |
 | Metallkügelchen (Ball Bearings) | 1 GM | 2 Pfd. |
@@ -235,13 +235,13 @@ Jedes dieser Werkzeuge erfordert eine eigene Übung (Proficiency).
 | Schaufel (Shovel) | 2 GM | 5 Pfd. |
 | Schlafsack (Bedroll) | 1 GM | 7 Pfd. |
 | Schloss (Lock) | 10 GM | 1 Pfd. |
-| Schnur, 10 Fuß (String) | 1 SM | - |
+| Schnur, 3 m / 2 Felder (String) | 1 SM | - |
 | Schreibfeder (Ink Pen) | 2 KM | - |
-| Seil, 50 Fuß (Rope) | 1 GM | 5 Pfd. |
+| Seil, 15 m / 10 Felder (Rope) | 1 GM | 5 Pfd. |
 | Signalpfeife (Signal Whistle) | 5 KM | - |
 | Spiegel, Stahl (Mirror) | 5 GM | 0.5 Pfd. |
 | Spikes, Eisen (Spikes, Iron, 10 Stück) | 1 GM | 5 Pfd. |
-| Stange, 10 Fuß (Pole) | 5 KM | 7 Pfd. |
+| Stange, 3 m / 2 Felder (Pole) | 5 KM | 7 Pfd. |
 | Tinte (Ink) | 10 GM | - |
 | Tasche / Beutel (Pouch) | 5 SM | 1 Pfd. |
 | Truhe (Chest) | 5 GM | 25 Pfd. |

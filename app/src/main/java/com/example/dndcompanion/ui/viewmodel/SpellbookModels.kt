@@ -19,7 +19,16 @@ data class SpellDto(
     val description: String?
 ) {
     fun toSpell(): Spell {
-        val rangeStr = if (range != null) "${range.type} ${if (range.distance > 0) range.distance.toString() + " Fuß" else ""}" else "Berührung"
+        val rangeStr = if (range != null) {
+            if (range.distance > 0) {
+                val m = range.distance * 0.3
+                val mStr = if (m % 1.0 == 0.0) m.toInt().toString() else m.toString()
+                val f = (range.distance / 5.0).toInt()
+                "${range.type} $mStr m / $f Felder"
+            } else {
+                range.type
+            }
+        } else "Berührung"
         val durationStr = if (duration != null) "${duration.type}${if (duration.concentration) " (Konzentration)" else ""}" else "Spontan"
         
         val descBuilder = StringBuilder()
@@ -36,7 +45,10 @@ data class SpellDto(
             descBuilder.append("\n")
         }
         if (areaOfEffect != null) {
-            descBuilder.append("Wirkungsbereich: ${areaOfEffect.type} (${areaOfEffect.size} Fuß)\n")
+            val sizeM = areaOfEffect.size * 0.3
+            val sizeMStr = if (sizeM % 1.0 == 0.0) sizeM.toInt().toString() else sizeM.toString()
+            val sizeF = areaOfEffect.size / 5
+            descBuilder.append("Wirkungsbereich: ${areaOfEffect.type} ($sizeMStr m / $sizeF Felder)\n")
         }
         val actualClasses = classes ?: emptyList()
         val classesStr = actualClasses.joinToString(", ")

@@ -203,7 +203,7 @@ private fun CatalogItemCard(item: EquipmentCatalogItem, onAdd: () -> Unit) {
                 ) {
                     if (item.weight > 0.0) {
                         Text(
-                            text = "${item.weight} Pfd.",
+                            text = "${item.weight} kg",
                             fontSize = 13.sp,
                             color = GelbSand
                         )

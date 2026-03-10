@@ -120,7 +120,7 @@ object EquipmentCatalogParser {
 
     private fun parseWeight(raw: String): Double {
         val cleaned = raw.trim()
-            .replace("Pfd.", "")
+            .replace("kg", "")
             .replace("lb.", "")
             .replace(",", ".")
             .replace(" ", "")

@@ -5,53 +5,53 @@ Dieses Zauberbuch hilft dir, die Kernmechaniken der Zauber aus deiner Liste schn
 ---
 
 ## Stufe 0 (Taschenspielereis / Cantrips)
-* **Dornenpeitsche (Thorn Whip):** Du triffst ein Ziel im Nahkampf aus bis zu 30 Fuß Entfernung (1W6 Stichschaden) und kannst es bis zu 10 Fuß zu dir heranziehen.
+* **Dornenpeitsche (Thorn Whip):** Du triffst ein Ziel im Nahkampf aus bis zu 9 m / 6 Felder Entfernung (1W6 Stichschaden) und kannst es bis zu 3 m / 2 Felder zu dir heranziehen.
 * **Druidenkunst (Druidcraft):** Ein kleiner Natur-Trick. Du kannst das Wetter der nächsten 24 Stunden vorhersagen, Blumen erblühen lassen oder kleine Effekte wie das Rascheln von Blättern erzeugen.
 * **Flamme erzeugen (Produce Flame):** Du erschaffst eine Flamme in deiner Hand, die Licht spendet. Du kannst sie auch als Fernkampfangriff (1W8 Feuerschaden) werfen.
 * **Kalte Hand (Chill Touch):** Ein Nahkampf-Zauberangriff! Verursacht 1W10 Nekrotischen Schaden und das Ziel kann sich bis zum Ende deines nächsten Zuges absolut nicht heilen.
-* **Gift versprühen (Poison Spray):** Direkter Zauberangriff aus kurzer Distanz (30 Fuß), der massiven Schaden anrichtet (1W12 Giftschaden). Kein Rettungswurf mehr nötig (Neu in 2024)!
+* **Gift versprühen (Poison Spray):** Direkter Zauberangriff aus kurzer Distanz (9 m / 6 Felder), der massiven Schaden anrichtet (1W12 Giftschaden). Kein Rettungswurf mehr nötig (Neu in 2024)!
 * **Göttliche Führung (Guidance):** Ein Verbündeter (oder du selbst) darf bei einem beliebigen Attributswurf (Skill Check) 1W4 zum Ergebnis addieren.
 * **Klingenbann (Blade Ward):** Eine Reaktion! Wenn du im Nahkampf angegriffen wirst, wirfst du diesen Zauber und der Gegner hat Nachteil auf seinen Angriff.
 * **Geringe Illusion (Minor Illusion):** Erschafft ein statisches, stummes Bild (wie eine Kiste, hinter der man sich verstecken kann) oder ein Geräusch für 1 Minute.
 * **Shillelagh (Shillelagh):** Verzaubert einen Holzknüppel oder Kampfstab. Du nutzt fortan dein Zauberattribut statt Stärke für Angriff/Schaden und der Schaden wird zu 1W8 (später bis zu 2W6).
-* **Magierhand (Mage Hand):** Eine fliegende, geisterhafte Hand, mit der du aus 30 Fuß Entfernung Türen öffnen, Hebel ziehen oder leichte Objekte (bis 10 Pfund) tragen kannst.
-* **Schauriger Strahl (Eldritch Blast):** Der beste Schadens-Taschenspielerei. Feuert einen Strahl (1W10 Energieschaden) auf 120 Fuß. Auf Stufe 5, 11 und 17 kommt jeweils ein weiterer Strahl hinzu!
+* **Magierhand (Mage Hand):** Eine fliegende, geisterhafte Hand, mit der du aus 9 m / 6 Felder Entfernung Türen öffnen, Hebel ziehen oder leichte Objekte (bis 5 kg) tragen kannst.
+* **Schauriger Strahl (Eldritch Blast):** Der beste Schadens-Taschenspielerei. Feuert einen Strahl (1W10 Energieschaden) auf 36 m / 24 Felder. Auf Stufe 5, 11 und 17 kommt jeweils ein weiterer Strahl hinzu!
 * **Sternenfunke (Starry Wisp):** Du wirfst ein Stück Sternenlicht (1W8 Gleißender Schaden). Getroffene Ziele leuchten und können bis zu deinem nächsten Zug nicht mehr unsichtbar werden.
 * **Totenläuten (Toll the Dead):** Zwingt das Ziel zu einem Rettungswurf. Schlägt es fehl, nimmt es 1W8 Nekrotischen Schaden. Fehlen dem Ziel bereits Trefferpunkte, steigt der Schaden auf 1W12!
 * **Treffsicherer Schlag (True Strike):** Du greifst normal mit deiner Waffe an, darfst dafür aber dein Zauberattribut (statt STR/GES) nutzen. Der Schaden kann in Gleißenden Schaden umgewandelt werden und wird auf höheren Stufen massiv verstärkt.
 * **Taschenspielerei (Prestidigitation):** Ein vielseitiger Alltags-Zauber. Du kannst Kleidung reinigen/verschmutzen, Essen würzen, kleine Objekte in deiner Hand erschaffen oder Kerzen anzünden.
-* **Ausbessern (Mending):** Dieser Zauber repariert einen berührten Gegenstand, der eine Bruchstelle oder einen Riss aufweist (max. 1 Fuß / 30 cm Ausmaß).
-* **Botschaft (Message):** Du flüsterst eine Botschaft, die nur eine bestimmte Kreatur in bis zu 120 Fuß Entfernung hört. Das Ziel kann auf dieselbe Weise mental antworten.
-* **Donnerschlag (Thunderclap):** Erzeugt einen lauten Donnerhall. Jede Kreatur im Umkreis von 5 Fuß muss einen Konstitutionsrettungswurf bestehen oder 1W6 Schallschaden erleiden.
-* **Dornenpeitsche (Thorn Whip):** Du triffst ein Ziel im Nahkampf aus bis zu 30 Fuß Entfernung (1W6 Stichschaden) und kannst es bis zu 10 Fuß zu dir heranziehen.
+* **Ausbessern (Mending):** Dieser Zauber repariert einen berührten Gegenstand, der eine Bruchstelle oder einen Riss aufweist (max. 0,3 m / 0 Felder / 30 cm Ausmaß).
+* **Botschaft (Message):** Du flüsterst eine Botschaft, die nur eine bestimmte Kreatur in bis zu 36 m / 24 Felder Entfernung hört. Das Ziel kann auf dieselbe Weise mental antworten.
+* **Donnerschlag (Thunderclap):** Erzeugt einen lauten Donnerhall. Jede Kreatur im Umkreis von 1,5 m / 1 Felder muss einen Konstitutionsrettungswurf bestehen oder 1W6 Schallschaden erleiden.
+* **Dornenpeitsche (Thorn Whip):** Du triffst ein Ziel im Nahkampf aus bis zu 9 m / 6 Felder Entfernung (1W6 Stichschaden) und kannst es bis zu 3 m / 2 Felder zu dir heranziehen.
 * **Druidenkunst (Druidcraft):** Du erschaffst kleine Natur-Effekte, wie eine Wettervorhersage, das sofortige Erblühen einer Pflanze, harmlose sensorische Effekte oder das Entzünden/Löschen kleiner Flammen.
-* **Einfache Illusion (Minor Illusion):** Du erschaffst für 1 Minute ein Geräusch oder das Abbild eines Gegenstands (max. 5 Fuß Kantenlänge) in bis zu 30 Fuß Entfernung.
-* **Elementalismus (Elementalism):** Du kontrollierst die Elemente, um kleine Effekte in bis zu 30 Fuß Entfernung zu erzeugen: Forme Luft, Erde, Feuer oder Wasser, erzeuge dünne Staubschichten, Windstöße oder Wasser.
-* **Explosion der Zauberei (Sorcerous Burst):** Ein Fernkampf-Zauberangriff in bis zu 120 Fuß (1W8 Schaden; Wähle: Blitz, Feuer, Gift, Kälte, Psychisch, Säure oder Schall). Fällt eine 8, darfst du einen weiteren W8 werfen und addieren.
-* **Feuerpfeil (Fire Bolt):** Du schleuderst einen Feuerfunken auf ein Ziel in bis zu 120 Fuß Entfernung. Bei einem Treffer erleidet es 1W10 Feuerschaden. Brennbare, nicht getragene Gegenstände fangen Feuer.
-* **Flammen erzeugen (Produce Flame):** Du erschaffst eine Flamme in deiner Hand, die Licht spendet. Du kannst sie auch als Aktion auf ein Ziel in bis zu 60 Fuß Entfernung schleudern (Fernkampf-Zauberangriff, 1W8 Feuerschaden).
-* **Freundschaft (Friends):** Ein Ziel in bis zu 10 Fuß Entfernung muss einen Weisheitsrettungswurf bestehen oder ist für 1 Minute bezaubert. Nach Ablauf weiß das Ziel, dass es bezaubert wurde.
-* **Gedankensplitter (Mind Sliver):** Ein Ziel in bis zu 60 Fuß Entfernung muss einen Intelligenzrettungswurf bestehen, sonst erleidet es 1W6 psychischen Schaden und muss 1W4 von seinem nächsten Rettungswurf abziehen.
-* **Gehässiger Spott (Vicious Mockery):** Eine Kreatur in bis zu 60 Fuß Entfernung muss einen Weisheitsrettungswurf bestehen, sonst erleidet sie 1W6 psychischen Schaden und ist bei ihrem nächsten Angriffswurf im Nachteil.
-* **Gift versprühen (Poison Spray):** Fernkampf-Zauberangriff gegen ein Ziel in bis zu 30 Fuß Entfernung. Bei einem Treffer erleidet es 1W12 Giftschaden.
+* **Einfache Illusion (Minor Illusion):** Du erschaffst für 1 Minute ein Geräusch oder das Abbild eines Gegenstands (max. 1,5 m / 1 Felder Kantenlänge) in bis zu 9 m / 6 Felder Entfernung.
+* **Elementalismus (Elementalism):** Du kontrollierst die Elemente, um kleine Effekte in bis zu 9 m / 6 Felder Entfernung zu erzeugen: Forme Luft, Erde, Feuer oder Wasser, erzeuge dünne Staubschichten, Windstöße oder Wasser.
+* **Explosion der Zauberei (Sorcerous Burst):** Ein Fernkampf-Zauberangriff in bis zu 36 m / 24 Felder (1W8 Schaden; Wähle: Blitz, Feuer, Gift, Kälte, Psychisch, Säure oder Schall). Fällt eine 8, darfst du einen weiteren W8 werfen und addieren.
+* **Feuerpfeil (Fire Bolt):** Du schleuderst einen Feuerfunken auf ein Ziel in bis zu 36 m / 24 Felder Entfernung. Bei einem Treffer erleidet es 1W10 Feuerschaden. Brennbare, nicht getragene Gegenstände fangen Feuer.
+* **Flammen erzeugen (Produce Flame):** Du erschaffst eine Flamme in deiner Hand, die Licht spendet. Du kannst sie auch als Aktion auf ein Ziel in bis zu 18 m / 12 Felder Entfernung schleudern (Fernkampf-Zauberangriff, 1W8 Feuerschaden).
+* **Freundschaft (Friends):** Ein Ziel in bis zu 3 m / 2 Felder Entfernung muss einen Weisheitsrettungswurf bestehen oder ist für 1 Minute bezaubert. Nach Ablauf weiß das Ziel, dass es bezaubert wurde.
+* **Gedankensplitter (Mind Sliver):** Ein Ziel in bis zu 18 m / 12 Felder Entfernung muss einen Intelligenzrettungswurf bestehen, sonst erleidet es 1W6 psychischen Schaden und muss 1W4 von seinem nächsten Rettungswurf abziehen.
+* **Gehässiger Spott (Vicious Mockery):** Eine Kreatur in bis zu 18 m / 12 Felder Entfernung muss einen Weisheitsrettungswurf bestehen, sonst erleidet sie 1W6 psychischen Schaden und ist bei ihrem nächsten Angriffswurf im Nachteil.
+* **Gift versprühen (Poison Spray):** Fernkampf-Zauberangriff gegen ein Ziel in bis zu 9 m / 6 Felder Entfernung. Bei einem Treffer erleidet es 1W12 Giftschaden.
 * **Göttliche Führung (Guidance):** Du berührst eine bereitwillige Kreatur. Sie kann vor Ablauf der Wirkungsdauer einmalig 1W4 zu einem Attributswurf hinzufügen.
-* **Heilige Flamme (Sacred Flame):** Auf ein Ziel in bis zu 60 Fuß Entfernung schießt ein Strahl aus Licht herab. Es muss einen Geschicklichkeitsrettungswurf (ohne Bonus durch Deckung) bestehen oder erleidet 1W8 gleißenden Schaden.
+* **Heilige Flamme (Sacred Flame):** Auf ein Ziel in bis zu 18 m / 12 Felder Entfernung schießt ein Strahl aus Licht herab. Es muss einen Geschicklichkeitsrettungswurf (ohne Bonus durch Deckung) bestehen oder erleidet 1W8 gleißenden Schaden.
 * **Kalte Hand (Chill Touch):** Nahkampf-Zauberangriff. Bei einem Treffer erleidet das Ziel 1W10 nekrotischen Schaden und kann bis zum Ende deines nächsten Zugs keine Trefferpunkte zurückerhalten.
-* **Kältestrahl (Ray of Frost):** Fernkampf-Zauberangriff auf bis zu 60 Fuß. Bei einem Treffer erleidet das Ziel 1W8 Kälteschaden und seine Bewegungsrate wird bis zum Beginn deines nächsten Zugs um 10 Fuß verringert.
+* **Kältestrahl (Ray of Frost):** Fernkampf-Zauberangriff auf bis zu 18 m / 12 Felder. Bei einem Treffer erleidet das Ziel 1W8 Kälteschaden und seine Bewegungsrate wird bis zum Beginn deines nächsten Zugs um 3 m / 2 Felder verringert.
 * **Klingenbann (Blade Ward):** Wann immer dich eine Kreatur während der Wirkungsdauer mit einem Angriffswurf angreift, zieht sie 1W4 von diesem Wurf ab.
-* **Licht (Light):** Du berührst einen Gegenstand (nicht von anderen getragen), der fortan für 1 Stunde helles Licht in einem Radius von 20 Fuß und dämmriges Licht für weitere 20 Fuß spendet.
-* **Magierhand (Mage Hand):** Du erschaffst eine unsichtbare, schwebende Hand in bis zu 30 Fuß Entfernung, mit der du Objekte (max. 10 Pfund) manipulieren oder Türen öffnen kannst.
-* **Säurespritzer (Acid Splash):** Erzeugt in bis zu 60 Fuß Entfernung eine Säureblase, die in einer 5-Fuß-Kugel explodiert. Jede Kreatur darin muss einen Geschicklichkeitsrettungswurf bestehen oder 1W6 Säureschaden erleiden.
-* **Schauriger Strahl (Eldritch Blast):** Fernkampf-Zauberangriff in bis zu 120 Fuß Entfernung. Bei einem Treffer erleidet das Ziel 1W10 Energieschaden.
+* **Licht (Light):** Du berührst einen Gegenstand (nicht von anderen getragen), der fortan für 1 Stunde helles Licht in einem Radius von 6 m / 4 Felder und dämmriges Licht für weitere 6 m / 4 Felder spendet.
+* **Magierhand (Mage Hand):** Du erschaffst eine unsichtbare, schwebende Hand in bis zu 9 m / 6 Felder Entfernung, mit der du Objekte (max. 5 kg) manipulieren oder Türen öffnen kannst.
+* **Säurespritzer (Acid Splash):** Erzeugt in bis zu 18 m / 12 Felder Entfernung eine Säureblase, die in einer 5-Fuß-Kugel explodiert. Jede Kreatur darin muss einen Geschicklichkeitsrettungswurf bestehen oder 1W6 Säureschaden erleiden.
+* **Schauriger Strahl (Eldritch Blast):** Fernkampf-Zauberangriff in bis zu 36 m / 24 Felder Entfernung. Bei einem Treffer erleidet das Ziel 1W10 Energieschaden.
 * **Schockgriff (Shocking Grasp):** Nahkampf-Zauberangriff gegen eine Kreatur. Bei einem Treffer erleidet das Ziel 1W8 Blitzschaden und kann bis zum Beginn seines nächsten Zugs keine Gelegenheitsangriffe ausführen.
 * **Shillelagh (Shillelagh):** Ein Knüppel oder Kampfstab wird magisch. Du kannst dein Attribut zum Zauberwirken für Angriffs- und Schadenswürfe nutzen und der Schaden wird zu 1W8 (Energieschaden oder Waffen-Schadensart).
-* **Sternenfunke (Starry Wisp):** Fernkampf-Zauberangriff auf bis zu 60 Fuß. Bei Treffer erleidet das Ziel 1W8 gleißenden Schaden, spendet bis zum Ende deines nächsten Zugs dämmriges Licht und kann nicht unsichtbar werden.
-* **Tanzende Lichter (Dancing Lights):** Du erzeugst bis zu vier Lichter (max. 120 Fuß Entfernung), die in einem Radius von 10 Fuß dämmriges Licht spenden. Du kannst sie als Bonusaktion bewegen.
-* **Taschenspielerei (Prestidigitation):** Erzeugt kleine, harmlose magische Effekte in 10 Fuß Entfernung (z. B. Funken, Windstöße), reinigt/verschmutzt ein Objekt, entzündet/löscht Kerzen oder formt kleine, illusionäre Bilder.
-* **Thaumaturgie (Thaumaturgy):** Manifestiert kleine Wunder in 30 Fuß Entfernung, wie eine dröhnende Stimme (Vorteil auf Einschüchtern), flackernde Flammen, Phantomgeräusche oder das Auffliegen von Türen.
-* **Verschonung der Sterbenden (Spare the Dying):** Du wählst eine Kreatur mit 0 Trefferpunkten in bis zu 15 Fuß Entfernung. Die Kreatur wird sofort stabilisiert.
+* **Sternenfunke (Starry Wisp):** Fernkampf-Zauberangriff auf bis zu 18 m / 12 Felder. Bei Treffer erleidet das Ziel 1W8 gleißenden Schaden, spendet bis zum Ende deines nächsten Zugs dämmriges Licht und kann nicht unsichtbar werden.
+* **Tanzende Lichter (Dancing Lights):** Du erzeugst bis zu vier Lichter (max. 36 m / 24 Felder Entfernung), die in einem Radius von 3 m / 2 Felder dämmriges Licht spenden. Du kannst sie als Bonusaktion bewegen.
+* **Taschenspielerei (Prestidigitation):** Erzeugt kleine, harmlose magische Effekte in 3 m / 2 Felder Entfernung (z. B. Funken, Windstöße), reinigt/verschmutzt ein Objekt, entzündet/löscht Kerzen oder formt kleine, illusionäre Bilder.
+* **Thaumaturgie (Thaumaturgy):** Manifestiert kleine Wunder in 9 m / 6 Felder Entfernung, wie eine dröhnende Stimme (Vorteil auf Einschüchtern), flackernde Flammen, Phantomgeräusche oder das Auffliegen von Türen.
+* **Verschonung der Sterbenden (Spare the Dying):** Du wählst eine Kreatur mit 0 Trefferpunkten in bis zu 4,5 m / 3 Felder Entfernung. Die Kreatur wird sofort stabilisiert.
 * **Widerstand (Resistance):** Du berührst eine bereitwillige Kreatur und wählst eine Schadensart (z. B. Blitz, Feuer, Kälte). Wenn sie diesen Schaden erleidet, verringert sie ihn um 1W4.
-* **Wort des Strahlens (Word of Radiance):** Jede Kreatur deiner Wahl im Umkreis von 5 Fuß muss einen Konstitutionsrettungswurf bestehen oder 1W6 gleißenden Schaden erleiden.
+* **Wort des Strahlens (Word of Radiance):** Jede Kreatur deiner Wahl im Umkreis von 1,5 m / 1 Felder muss einen Konstitutionsrettungswurf bestehen oder 1W6 gleißenden Schaden erleiden.
 * **Zielsicherer Schlag (True Strike):** Du führst einen Angriff mit der Waffe aus, die du zum Zaubern nutzt. Dein Zauberwirken-Attribut gilt für Angriff und Schaden. Der Schaden kann gleißend oder normal sein.
 ---
 
@@ -95,12 +95,12 @@ Dieses Zauberbuch hilft dir, die Kernmechaniken der Zauber aus deiner Liste schn
 * **Attribut verbessern (Enhance Ability):** Du gibst dir oder einem Verbündeten für 1 Stunde Vorteil auf Attributswürfe eines von dir gewählten Attributs (z. B. Stärke für Athletik).
 * **Bestie beschwören (Summon Beast):** Ruft einen bestialischen Geist (Land, Wasser oder Luft), der an deiner Seite kämpft.
 * **Dolchwolke (Cloud of Daggers):** Ein 5-Fuß-Würfel füllt sich mit fliegenden Klingen. Jeder, der dort startet oder hineinläuft, nimmt garantiert 4W4 Hiebschaden.
-* **Dornenwuchs (Spike Growth):** Verwandelt den Boden in ein dorniges Feld. Verursacht jedes Mal 2W4 Stichschaden, wenn sich jemand 5 Fuß darin bewegt.
+* **Dornenwuchs (Spike Growth):** Verwandelt den Boden in ein dorniges Feld. Verursacht jedes Mal 2W4 Stichschaden, wenn sich jemand 1,5 m / 1 Felder darin bewegt.
 * **Dunkelheit (Darkness):** Erschafft magische Dunkelheit, durch die selbst normale Dunkelsicht nicht hindurchblicken kann.
 * **Einflüsterung (Suggestion):** Du gibst einer Kreatur einen vernünftig klingenden Befehl (z. B. "Lauf weg und gib dein Schwert dem nächsten Bettler"), den sie 8 Stunden lang befolgt.
 * **Klirren (Shatter):** Eine laute, ohrenbetäubende Explosion (3W8 Donnerschaden). Zerstört auch Gegenstände aus Glas, Stein oder Metall in der Umgebung.
 * **Magische Waffe (Magic Weapon):** Macht eine nicht-magische Waffe magisch und gibt ihr einen Bonus von +1 auf Angriffs- und Schadenswürfe.
-* **Nebelschritt (Misty Step):** Als Bonusaktion teleportierst du dich bis zu 30 Fuß weit an einen Ort, den du sehen kannst.
+* **Nebelschritt (Misty Step):** Als Bonusaktion teleportierst du dich bis zu 9 m / 6 Felder weit an einen Ort, den du sehen kannst.
 * **Person festhalten (Hold Person):** Paralysiert einen Humanoiden völlig. Nahkampfangriffe gegen ihn sind automatisch kritische Treffer!
 * **Rindenhaut (Barkskin):** Als Bonusaktion! Die Haut des Ziels wird zu Rinde. Gewährt zu Beginn jedes Zugs Temp. TP und einen festen Basiswert für die Rüstungsklasse.
 * **Schwächere Genesung (Lesser Restoration):** Heilt eine Krankheit oder entfernt einen der Zustände: Blind, Taub, Gelähmt oder Vergiftet.
@@ -115,8 +115,8 @@ Dieses Zauberbuch hilft dir, die Kernmechaniken der Zauber aus deiner Liste schn
 
 ## Stufe 3
 * **Blitzpfeil (Lightning Arrow):** Dein nächster Fernkampfangriff wird zu einem Blitz (4W8 Schaden) und fügt auch Kreaturen in der Nähe des Ziels Flächenschaden zu.
-* **Donnerschritt (Thunder Step):** Du teleportierst dich 90 Fuß weit weg. An der Stelle, die du verlässt, gibt es einen lauten Knall (3W10 Donnerschaden). Du darfst einen Verbündeten mitnehmen!
-* **Fliegen (Fly):** Das Ziel erhält eine Flugbewegungsrate von 60 Fuß für 10 Minuten.
+* **Donnerschritt (Thunder Step):** Du teleportierst dich 27 m / 18 Felder weit weg. An der Stelle, die du verlässt, gibt es einen lauten Knall (3W10 Donnerschaden). Du darfst einen Verbündeten mitnehmen!
+* **Fliegen (Fly):** Das Ziel erhält eine Flugbewegungsrate von 18 m / 12 Felder für 10 Minuten.
 * **Gegenzauber (Counterspell):** Eine Reaktion. Du versuchst den Zauber eines Feindes abzubrechen. Der Feind muss nun einen Konstitutions-Rettungswurf ablegen, sonst verpufft sein Zauber.
 * **Hunger von Hadar (Hunger of Hadar):** Öffnet ein Tor in die Leere. Der Bereich ist pechschwarz (blindmachend), verursacht Kälteschaden beim Betreten und Säureschaden beim Rundenende.
 * **Hypnotisches Muster (Hypnotic Pattern):** Erzeugt tanzende Farben. Alle Feinde im Bereich, die den Rettungswurf fehlschlagen, starren gebannt in die Luft und tun absolut gar nichts (Kampfunfähig), bis sie Schaden nehmen.
@@ -166,11 +166,11 @@ Dieses Zauberbuch hilft dir, die Kernmechaniken der Zauber aus deiner Liste schn
 ## Stufe 4
 * **Aberration beschwören (Summon Aberration):** Ruft einen außerirdischen Geist (Beholderkin, Slaad oder Star Spawn), der für dich kämpft.
 * **Bewegungsfreiheit (Freedom of Movement):** Das Ziel ignoriert schwieriges Gelände, kann nicht magisch verlangsamt werden und befreit sich automatisch aus Fesselungen.
-* **Dimensionstür (Dimension Door):** Teleportiert dich sofort bis zu 500 Fuß weit, selbst wenn du das Ziel nicht sehen kannst.
+* **Dimensionstür (Dimension Door):** Teleportiert dich sofort bis zu 150 m / 100 Felder weit, selbst wenn du das Ziel nicht sehen kannst.
 * **Dürre (Blight):** Zieht dem Ziel alle Feuchtigkeit aus dem Körper (8W8 Nekrotischer Schaden). Pflanzenkreaturen haben Nachteil auf den Save und nehmen extremen Schaden.
-* **Greifende Ranke (Grasping Vine):** Eine riesige Ranke packt Feinde und zieht sie 20 Fuß durch die Luft zu sich heran.
+* **Greifende Ranke (Grasping Vine):** Eine riesige Ranke packt Feinde und zieht sie 6 m / 4 Felder durch die Luft zu sich heran.
 * **Halluzinatorisches Gelände (Hallucinatory Terrain):** Verändert das Aussehen eines riesigen Gebiets (z.B. ein Sumpf sieht aus wie eine Wiese).
-* **Kreatur aufspüren (Locate Creature):** Zeigt dir für 1 Stunde die genaue Richtung zu einer bestimmten Kreatur an, solange sie in 1000 Fuß Umkreis ist.
+* **Kreatur aufspüren (Locate Creature):** Zeigt dir für 1 Stunde die genaue Richtung zu einer bestimmten Kreatur an, solange sie in 300 m / 200 Felder Umkreis ist.
 * **Monster bezaubern (Charm Monster):** Funktioniert wie *Person bezaubern*, klappt aber bei fast jeder Kreaturenart (auch Drachen, Elementare etc.).
 * **Steinhaut (Stoneskin):** Die Haut des Ziels wird hart wie Stein (Resistenz gegen alle physischen Angriffe, kostet 100 GM Diamantstaub pro Anwendung).
 * **Verbannung (Banishment):** Wirft ein Ziel vorübergehend in eine kleine Taschendimension. Stammt es ursprünglich aus einer anderen Ebene, kehrt es dorthin zurück.
@@ -181,7 +181,7 @@ Dieses Zauberbuch hilft dir, die Kernmechaniken der Zauber aus deiner Liste schn
 ## Stufe 5
 * **Andere Ebene befragen (Contact Other Plane):** Du stellst einer außerweltlichen Entität 5 Fragen. Du musst aber einen Intelligenz-Save schaffen, sonst wirst du verrückt und nimmst Schaden!
 * **Ausspähung (Scrying):** Erzeugt einen unsichtbaren Sensor, mit dem du eine Person an einem anderen Ort belauschen und beobachten kannst.
-* **Baumschritt (Tree Stride):** Du kannst in einen Baum treten und sofort aus einem anderen Baum (bis zu 500 Fuß entfernt) wieder heraustreten.
+* **Baumschritt (Tree Stride):** Du kannst in einen Baum treten und sofort aus einem anderen Baum (bis zu 150 m / 100 Felder entfernt) wieder heraustreten.
 * **Einswerden mit der Natur (Commune with Nature):** Du verbindest dich mit dem Land und erfährst Fakten über das Terrain in 3 Meilen Umkreis (Ruinen, Monster, Wasserquellen).
 * **Monster festhalten (Hold Monster):** Funktioniert wie *Person festhalten* (Paralyse, garantierte kritische Treffer), wirkt aber auf jede Art von Kreatur!
 * **Salve beschwören (Conjure Volley):** Eine gigantische Version von Kugelhagel. Es regnet in einem riesigen 40-Fuß-Zylinder Waffen (8W8 Schaden).
@@ -191,7 +191,7 @@ Dieses Zauberbuch hilft dir, die Kernmechaniken der Zauber aus deiner Liste schn
 ---
 
 ## Stufe 6 (Hexenmeister)
-* **Arkanes Tor (Arcane Gate):** Erschafft zwei verbundene Portale (bis 500 Fuß entfernt), durch die man beliebig oft hindurchgehen kann.
+* **Arkanes Tor (Arcane Gate):** Erschafft zwei verbundene Portale (bis 150 m / 100 Felder entfernt), durch die man beliebig oft hindurchgehen kann.
 * **Böser Blick (Eyebite):** Du erhältst für 1 Minute einen finsteren Blick. Du kannst jede Runde als Aktion einen Feind ansehen, um ihn einschlafen zu lassen, in Panik zu versetzen oder ihn zu verkrüppeln (Nachteil auf alles).
 * **Fee beschwören (Conjure Fey):** Umgibt dich mit hochstufiger Feenmagie. Erlaubt es dir, dich in völliger Dunkelheit/Unsichtbarkeit zu bewegen und fügt massiven Psychischen Schaden zu.
 * **Fleisch zu Stein (Flesh to Stone):** Der klassische Medusa-Effekt. Wenn das Ziel seine Konstitutions-Rettungswürfe mehrfach versemmelt, wird es permanent zu einer Steinstatue.
@@ -223,7 +223,7 @@ Dieses Zauberbuch hilft dir, die Kernmechaniken der Zauber aus deiner Liste schn
 ## Stufe 9 (Hexenmeister)
 * **Astrale Projektion (Astral Projection):** Du trennst die Seelen deiner Gruppe von euren Körpern (diese fallen in Stase), um sicher durch die Astral-See zu reisen.
 * **Einkerkerung (Imprisonment):** Der ultimative Banngesang. Kerkert einen Feind (der den Save verfehlt) permanent unter der Erde, in Ketten, in einem Juwel oder in tiefem Schlaf ein. Nur ganz spezifische, von dir festgelegte Bedingungen können ihn befreien.
-* **Grauen (Weird):** Ein Flächen-Albtraum. Alle Kreaturen in 30 Fuß sind verängstigt und nehmen in jedem Zug 4W10 Psychischen Schaden durch ihre schlimmsten Ängste.
+* **Grauen (Weird):** Ein Flächen-Albtraum. Alle Kreaturen in 9 m / 6 Felder sind verängstigt und nehmen in jedem Zug 4W10 Psychischen Schaden durch ihre schlimmsten Ängste.
 * **Machtwort Tod (Power Word Kill):** Du sprichst ein einziges Wort. Wenn das Ziel 100 Trefferpunkte oder weniger hat, stirbt es sofort. Kein Retttungswurf, kein Schaden, es ist einfach tot.
 * **Vorahnung (Foresight):** Berührst du einen Verbündeten, kann dieser für 8 Stunden in die Zukunft sehen. Er kann nicht überrascht werden und hat Vorteil auf **jeden** Angriff, Rettungs- oder Attributswurf, während Angriffe gegen ihn Nachteil haben.
 * **Wahrer Gestaltwandel (True Polymorph):** Du verwandelst eine Kreatur in etwas komplett anderes, oder ein Objekt in eine Kreatur. Verwandle den feindlichen Boss in eine Maus oder dich selbst in einen ausgewachsenen Drachen. Hältst du die Konzentration für 1 Stunde, wird die Verwandlung dauerhaft.
