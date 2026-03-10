@@ -1212,23 +1212,23 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     """.trimIndent()
 
-private val model20Flash = GenerativeModel(
-        modelName = "gemini-2.0-flash",
+private val model31Pro = GenerativeModel(
+        modelName = "gemini-3.1-pro-preview",
         apiKey = BuildConfig.GEMINI_API_KEY,
         generationConfig = generationConfig {
             responseMimeType = "application/json"
         }
     )
 
-    private val model15Flash = GenerativeModel(
-        modelName = "gemini-1.5-flash",
+    private val model25Flash = GenerativeModel(
+        modelName = "gemini-2.5-flash",
         apiKey = BuildConfig.GEMINI_API_KEY,
         generationConfig = generationConfig {
             responseMimeType = "application/json"
         }
     )
 
-    private var activeChatSession = model20Flash.startChat()
+    private var activeChatSession = model31Pro.startChat()
 
     fun loadFaqs() {
         val faqString = prefs.getString("savedFaqs", "") ?: ""
@@ -1691,12 +1691,12 @@ private val model20Flash = GenerativeModel(
                     val finalPrompt = "$systemPrompt\n\n$charContext\n\nHANDBUCH-AUSZÜGE:\n$manualContext\n\nFRAGE: $message"
 
                     try {
-                        currentUsedModel = "Gemini 2.0 Flash"
+                        currentUsedModel = "Gemini 3.1 Pro (Preview)"
                         val response = activeChatSession.sendMessage(finalPrompt)
                         finalizeResponse(loadingIndex, response.text)
                     } catch (e: Exception) {
-                        currentUsedModel = "Gemini 1.5 Flash (Fallback)"
-                        val fallbackSession = model15Flash.startChat(history = activeChatSession.history)
+                        currentUsedModel = "Gemini 2.5 Flash (Fallback)"
+                        val fallbackSession = model25Flash.startChat(history = activeChatSession.history)
                         val response = fallbackSession.sendMessage(finalPrompt)
                         activeChatSession = fallbackSession
                         finalizeResponse(loadingIndex, response.text)
@@ -1782,7 +1782,7 @@ private val model20Flash = GenerativeModel(
 
     fun resetChat() {
         chatHistory.clear()
-        activeChatSession = model20Flash.startChat()
+        activeChatSession = model31Pro.startChat()
         currentUsedModel = "Bereit"
     }
 
