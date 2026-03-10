@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import com.google.ai.client.generativeai.type.generationConfig
 import org.json.JSONObject
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.PropertyName
 import com.example.dndcompanion.data.CharacterData
 import com.example.dndcompanion.data.CharacterRepository
 import com.example.dndcompanion.data.CharacterClass
@@ -52,6 +53,16 @@ data class GroupChatMessage(
     val author: String = "Athania",
     val charClass: CharacterClass = CharacterClass.RANGER,
     val isOoc: Boolean = false
+)
+
+data class Quest(
+    val id: String = java.util.UUID.randomUUID().toString(),
+    val title: String = "",
+    val description: String = "",
+    @get:PropertyName("isCompleted")
+    @set:PropertyName("isCompleted")
+    var isCompleted: Boolean = false,
+    val timestamp: Long = System.currentTimeMillis()
 )
 
 data class Spell(
@@ -698,12 +709,14 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val publicGeneralBookEntries = mutableStateListOf<BookEntry>()
     val publicGrudgeBookEntries = mutableStateListOf<BookEntry>()
     val groupChatMessages = mutableStateListOf<GroupChatMessage>()
+    val globalQuests = mutableStateListOf<Quest>()
 
     private val db = FirebaseFirestore.getInstance()
 
     init {
         listenToPublicNotes()
         listenToGroupChat()
+        listenToQuests()
     }
 
     private fun listenToGroupChat() {
@@ -733,6 +746,49 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             )
             db.collection("groupChat").document(msg.id).set(msg)
         }
+    }
+
+    private fun listenToQuests() {
+        db.collection("globalQuests")
+            .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) return@addSnapshotListener
+                if (snapshot != null) {
+                    globalQuests.clear()
+                    for (doc in snapshot.documents) {
+                        val quest = doc.toObject(Quest::class.java)
+                        if (quest != null) {
+                            globalQuests.add(quest)
+                        }
+                    }
+                }
+            }
+    }
+
+    fun addQuest(title: String, description: String) {
+        if (title.isNotBlank()) {
+            val quest = Quest(
+                title = title.trim(),
+                description = description.trim()
+            )
+            db.collection("globalQuests").document(quest.id).set(quest)
+        }
+    }
+
+    fun toggleQuestCompletion(quest: Quest) {
+        val newState = !quest.isCompleted
+        db.collection("globalQuests").document(quest.id).update("isCompleted", newState)
+    }
+
+    fun updateQuest(questId: String, title: String, description: String) {
+        db.collection("globalQuests").document(questId).update(
+            "title", title.trim(),
+            "description", description.trim()
+        )
+    }
+
+    fun deleteQuest(questId: String) {
+        db.collection("globalQuests").document(questId).delete()
     }
 
     private fun listenToPublicNotes() {

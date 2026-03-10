@@ -59,7 +59,7 @@
 - [x] **FAQ privatisieren:** FAQ für Athania und Delat getrennt laden und editierbar machen.
   - *Commit:* `git commit -m "feat: separate FAQ datastore per character profile"`
   - [x] **In-App Gruppen-Chat (IC & OOC):** Über Firebase einen Chat einbauen, bei dem Spieler "In-Character" oder "Out-Of-Character" miteinander am Tisch texten können (z.B. für Heimlichkeiten).
-- [ ] **Geteiltes Questlog:** Ein synchronisiertes Auftragsbuch einbauen. Sobald ein Spieler eine aktive Quest anlegt oder als erfüllt markiert, wird das bei allen geupdatet.
+- [x] **Geteiltes Questlog:** Ein synchronisiertes Auftragsbuch einbauen. Sobald ein Spieler eine aktive Quest anlegt oder als erfüllt markiert, wird das bei allen geupdatet.
 
 ## Ideen für die Zukunft (Phase 4: Gruppen-Features)
 - [ ] **Geteilte Schatztruhe (Gruppen-Loot):** Ein Inventar, aus dem jeder Spieler in Echtzeit Gold und Items nehmen oder hineinlegen kann.

@@ -40,7 +40,7 @@ import java.util.*
 import androidx.compose.ui.draw.scale
 
 enum class BookType {
-    GENERAL, GRUDGE, SPELLBOOK, RULEBOOK, GROUP_CHAT
+    GENERAL, GRUDGE, SPELLBOOK, RULEBOOK, GROUP_CHAT, QUESTLOG
 }
 
 @Composable
@@ -77,6 +77,11 @@ fun BucherScreen(viewModel: CharacterViewModel) {
             )
         } else if (activeBook == BookType.GROUP_CHAT) {
             GroupChatDetailView(
+                viewModel = viewModel,
+                onBack = { activeBook = null }
+            )
+        } else if (activeBook == BookType.QUESTLOG) {
+            QuestlogDetailView(
                 viewModel = viewModel,
                 onBack = { activeBook = null }
             )
@@ -140,13 +145,19 @@ fun LibraryView(onBookSelected: (BookType) -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             BookCard(
                 title = "Gruppen-Chat",
                 subtitle = "IC & OOC Nachrichten",
                 color = Color(0xFF7B1FA2), // Purple for Chat
                 onClick = { onBookSelected(BookType.GROUP_CHAT) }
+            )
+            BookCard(
+                title = "Questlog",
+                subtitle = "Aktive & fertige Aufträge",
+                color = Color(0xFFD84315), // Deep Orange for Quests
+                onClick = { onBookSelected(BookType.QUESTLOG) }
             )
         }
     }
@@ -1063,6 +1074,157 @@ fun GroupChatMessageCard(message: com.example.dndcompanion.ui.viewmodel.GroupCha
                 color = BlauDunkel,
                 fontStyle = if (message.isOoc) androidx.compose.ui.text.font.FontStyle.Italic else androidx.compose.ui.text.font.FontStyle.Normal
             )
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun QuestlogDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
+    var newQuestTitle by remember { mutableStateOf("") }
+    var newQuestDesc by remember { mutableStateOf("") }
+    var showCompleted by remember { mutableStateOf(false) }
+    
+    val currentQuests = viewModel.globalQuests.filter { it.isCompleted == showCompleted }
+        .sortedByDescending { it.timestamp }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(GelbSand)
+    ) {
+        // Top Bar
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFFD84315))
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            IconButton(onClick = onBack) {
+                Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Questlog", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        }
+
+        TabRow(
+            selectedTabIndex = if (showCompleted) 1 else 0,
+            containerColor = BlauHell,
+            contentColor = Color.White
+        ) {
+            Tab(
+                selected = !showCompleted,
+                onClick = { showCompleted = false },
+                text = { Text("Aktive Quests") },
+                selectedContentColor = GelbSand,
+                unselectedContentColor = Color.White
+            )
+            Tab(
+                selected = showCompleted,
+                onClick = { showCompleted = true },
+                text = { Text("Abgeschlossen") },
+                selectedContentColor = GelbSand,
+                unselectedContentColor = Color.White
+            )
+        }
+
+        Column(modifier = Modifier.padding(16.dp).weight(1f)) {
+            // New Quest Input
+            if (!showCompleted) {
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                    colors = CardDefaults.cardColors(containerColor = BlauHell)
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        OutlinedTextField(
+                            value = newQuestTitle,
+                            onValueChange = { newQuestTitle = it },
+                            modifier = Modifier.fillMaxWidth(),
+                            placeholder = { Text("Quest-Titel...", color = Color.LightGray) },
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Color(0xFFD84315),
+                                unfocusedTextColor = Color.White,
+                                focusedTextColor = Color.White
+                            ),
+                            singleLine = true
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = newQuestDesc,
+                            onValueChange = { newQuestDesc = it },
+                            modifier = Modifier.fillMaxWidth().height(80.dp),
+                            placeholder = { Text("Beschreibung (optional)...", color = Color.LightGray) },
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Color(0xFFD84315),
+                                unfocusedTextColor = Color.White,
+                                focusedTextColor = Color.White
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Button(
+                            onClick = {
+                                if (newQuestTitle.isNotBlank()) {
+                                    viewModel.addQuest(newQuestTitle, newQuestDesc)
+                                    newQuestTitle = ""
+                                    newQuestDesc = ""
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD84315)),
+                            modifier = Modifier.align(Alignment.End)
+                        ) {
+                            Text("Quest hinzufügen")
+                        }
+                    }
+                }
+            }
+
+            // Quest List
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(currentQuests) { quest ->
+                    Card(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                        colors = CardDefaults.cardColors(containerColor = if (quest.isCompleted) Color(0xFFE0E0E0) else Color.White),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = quest.title, 
+                                    fontSize = 18.sp, 
+                                    fontWeight = FontWeight.Bold, 
+                                    color = if (quest.isCompleted) Color.Gray else BlauDunkel,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Checkbox(
+                                    checked = quest.isCompleted,
+                                    onCheckedChange = { viewModel.toggleQuestCompletion(quest) },
+                                    colors = CheckboxDefaults.colors(checkedColor = Color(0xFFD84315))
+                                )
+                                IconButton(
+                                    onClick = { viewModel.deleteQuest(quest.id) },
+                                    modifier = Modifier.size(24.dp).padding(start = 4.dp)
+                                ) {
+                                    Icon(Icons.Default.Clear, contentDescription = "Löschen", tint = Color.Red)
+                                }
+                            }
+                            if (quest.description.isNotBlank()) {
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = quest.description, 
+                                    fontSize = 14.sp, 
+                                    color = if (quest.isCompleted) Color.Gray else Color.DarkGray
+                                )
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
