@@ -180,8 +180,8 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
 
     // Popup-Dialog zum Anpassen der FAQ-Antwort
     if (messageToFaq != null) {
-        var faqQuestion by remember { mutableStateOf("Regelklärung") }
-        var faqAnswer by remember { mutableStateOf(messageToFaq!!.text) }
+        var faqQuestion by remember { mutableStateOf(messageToFaq!!.chapterSearchTerm ?: "Regelklärung") }
+        var faqAnswer by remember { mutableStateOf(messageToFaq!!.localText ?: messageToFaq!!.externalText ?: messageToFaq!!.text) }
 
         AlertDialog(
             onDismissRequest = { messageToFaq = null },

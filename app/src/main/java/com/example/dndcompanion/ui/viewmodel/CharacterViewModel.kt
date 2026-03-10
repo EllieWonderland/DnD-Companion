@@ -1214,18 +1214,12 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
 private val model31Pro = GenerativeModel(
         modelName = "gemini-3.1-pro-preview",
-        apiKey = BuildConfig.GEMINI_API_KEY,
-        generationConfig = generationConfig {
-            responseMimeType = "application/json"
-        }
+        apiKey = BuildConfig.GEMINI_API_KEY
     )
 
     private val model25Flash = GenerativeModel(
         modelName = "gemini-2.5-flash",
-        apiKey = BuildConfig.GEMINI_API_KEY,
-        generationConfig = generationConfig {
-            responseMimeType = "application/json"
-        }
+        apiKey = BuildConfig.GEMINI_API_KEY
     )
 
     private var activeChatSession = model31Pro.startChat()
