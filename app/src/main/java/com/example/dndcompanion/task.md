@@ -56,7 +56,7 @@
   - *Commit:* `git commit -m "feat: add dynamic navigation menu based on active character class"`
 - [x] **Warlock-Logik (Delat) hinterlegen:** Paktmagie-Slots (die nach einer kurzen Rast zurückkehren!), Zaubertricks und warlock-spezifische Eigenheiten in den Stats hinterlegen.
   - *Commit:* `git commit -m "feat: implement warlock-specific logic, pact magic and eldritch invocations"`
-- [ ] **FAQ privatisieren:** FAQ für Athania und Delat getrennt laden und editierbar machen.
+- [x] **FAQ privatisieren:** FAQ für Athania und Delat getrennt laden und editierbar machen.
   - *Commit:* `git commit -m "feat: separate FAQ datastore per character profile"`
   - [ ] **In-App Gruppen-Chat (IC & OOC):** Über Firebase einen Chat einbauen, bei dem Spieler "In-Character" oder "Out-Of-Character" miteinander am Tisch texten können (z.B. für Heimlichkeiten).
 - [ ] **Geteiltes Questlog:** Ein synchronisiertes Auftragsbuch einbauen. Sobald ein Spieler eine aktive Quest anlegt oder als erfüllt markiert, wird das bei allen geupdatet.

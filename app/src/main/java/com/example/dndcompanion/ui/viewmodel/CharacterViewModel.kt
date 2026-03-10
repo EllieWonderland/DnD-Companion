@@ -687,6 +687,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         loadLoot()
         loadTraits()
         loadBooks()
+        loadFaqs()
+        loadSpells()
     }
 
     // --- BÜCHER & TAKTIK ---
