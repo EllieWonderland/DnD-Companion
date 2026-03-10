@@ -1705,6 +1705,7 @@ private val model31Pro = GenerativeModel(
                     throw Exception("Tageslimit für Gemini erreicht ($geminiMax)")
                 }
             } catch (e: Exception) {
+                android.util.Log.e("GeminiError", "Error during Gemini API call", e)
                 val errorMsg = if (e.localizedMessage?.contains("MissingFieldException") == true) {
                     "Das Modell konnte nicht gefunden werden (API-Key/Quota)."
                 } else {
