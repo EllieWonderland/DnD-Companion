@@ -81,6 +81,14 @@ fun DnDApp(viewModel: CharacterViewModel) {
                         label = { Text("Capy") },
                         colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
                     )
+                } else if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.WARLOCK) {
+                    NavigationBarItem(
+                        selected = currentScreen == 1,
+                        onClick = { currentScreen = 1 },
+                        icon = { Text("🔮") },
+                        label = { Text("Pakt") },
+                        colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
+                    )
                 }
                 NavigationBarItem(
                     selected = currentScreen == 2, // Hilfe
@@ -102,7 +110,13 @@ fun DnDApp(viewModel: CharacterViewModel) {
         Box(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
             when (currentScreen) {
                 0 -> AthaniaScreen(viewModel)
-                1 -> CapyScreen(viewModel)
+                1 -> {
+                    if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
+                        CapyScreen(viewModel)
+                    } else {
+                        com.example.dndcompanion.ui.screens.WarlockScreen(viewModel)
+                    }
+                }
                 2 -> HelpScreen(viewModel, onNavigateToRulebook = { chapter, search -> 
                     viewModel.targetRulebookChapter = chapter
                     viewModel.targetRulebookSearch = search

@@ -37,6 +37,7 @@ import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.viewmodel.BookEntry
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.compose.ui.draw.scale
 
 enum class BookType {
     GENERAL, GRUDGE, SPELLBOOK, RULEBOOK, GROUP_CHAT
@@ -921,10 +922,6 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, onT
         }
     }
 }
-
-import androidx.compose.ui.draw.scale
-import androidx.compose.material3.*
-
 @Composable
 fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
     var newMessageText by remember { mutableStateOf("") }

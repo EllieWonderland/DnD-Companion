@@ -336,6 +336,19 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    fun resetWarlockSlots() {
+        spellSlotsLevel2 = characterData.baseSpellSlotsLevel2
+        prefs.edit { putInt("spellSlotsLevel2", spellSlotsLevel2) }
+    }
+
+    fun applyMagicalCunning() {
+        val maxSlots = characterData.baseSpellSlotsLevel2
+        val toRegain = kotlin.math.ceil(maxSlots / 2.0).toInt()
+        val newSlots = (spellSlotsLevel2 + toRegain).coerceAtMost(maxSlots)
+        spellSlotsLevel2 = newSlots
+        prefs.edit { putInt("spellSlotsLevel2", spellSlotsLevel2) }
+    }
+
     fun useHuntersMarkFree() {
         if (huntersMarkFreeUses > 0) {
             huntersMarkFreeUses--

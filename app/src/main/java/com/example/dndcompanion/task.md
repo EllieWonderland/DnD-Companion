@@ -52,9 +52,9 @@
 ## Später (Phase 3: Hexenmeister Delat hinzufügen)
 - [x] **Profil-Wechsler UI:** Einen Screen oder einen Button in der Navigation basteln, um in Echtzeit zwischen Athania (`Ranger`) und Delat (`Warlock`) zu wechseln.
   - *Commit:* `git commit -m "feat: implement profile switcher UI for multiple characters"`
-- [ ] **Dynamisches Menü:** Je nach aktiver Klasse das Burger-Menü anpassen. Ein Ranger sieht seine `Bestie`, ein Warlock sieht `Paktmagie`-Management oder `Schauerliche Anrufungen`.
+- [x] **Dynamisches Menü:** Je nach aktiver Klasse das Burger-Menü anpassen. Ein Ranger sieht seine `Bestie`, ein Warlock sieht `Paktmagie`-Management oder `Schauerliche Anrufungen`.
   - *Commit:* `git commit -m "feat: add dynamic navigation menu based on active character class"`
-- [ ] **Warlock-Logik (Delat) hinterlegen:** Paktmagie-Slots (die nach einer kurzen Rast zurückkehren!), Zaubertricks und warlock-spezifische Eigenheiten in den Stats hinterlegen.
+- [x] **Warlock-Logik (Delat) hinterlegen:** Paktmagie-Slots (die nach einer kurzen Rast zurückkehren!), Zaubertricks und warlock-spezifische Eigenheiten in den Stats hinterlegen.
   - *Commit:* `git commit -m "feat: implement warlock-specific logic, pact magic and eldritch invocations"`
 - [ ] **FAQ privatisieren:** FAQ für Athania und Delat getrennt laden und editierbar machen.
   - *Commit:* `git commit -m "feat: separate FAQ datastore per character profile"`
