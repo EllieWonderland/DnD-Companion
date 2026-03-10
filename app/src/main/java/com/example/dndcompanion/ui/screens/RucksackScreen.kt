@@ -39,13 +39,41 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
     var isMoneyBagExpanded by remember { mutableStateOf(false) }
     var showEquipmentPicker by remember { mutableStateOf(false) }
 
+    var showGroupLoot by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(GelbSand)
-            .padding(12.dp)
-            .verticalScroll(rememberScrollState())
     ) {
+        TabRow(
+            selectedTabIndex = if (showGroupLoot) 1 else 0,
+            containerColor = BlauHell,
+            contentColor = Color.White
+        ) {
+            Tab(
+                selected = !showGroupLoot,
+                onClick = { showGroupLoot = false },
+                text = { Text("Persönlich") },
+                selectedContentColor = GelbSand,
+                unselectedContentColor = Color.White
+            )
+            Tab(
+                selected = showGroupLoot,
+                onClick = { showGroupLoot = true },
+                text = { Text("Gruppen-Loot") },
+                selectedContentColor = GelbSand,
+                unselectedContentColor = Color.White
+            )
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(12.dp)
+                .verticalScroll(rememberScrollState())
+        ) {
+            if (!showGroupLoot) {
         // --- GEWICHT ---
         Row(
             modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
@@ -386,6 +414,10 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                 }
             }
         }
+            } else {
+                GroupLootView(viewModel = viewModel)
+            }
+        }
     }
 
     // --- EQUIPMENT PICKER DIALOG ---
@@ -465,6 +497,88 @@ fun CoinRow(name: String, amount: String, onMinus: (Int) -> Unit, onPlus: (Int) 
                 Spacer(modifier = Modifier.width(4.dp))
                 Button(onClick = { onPlus(10) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(32.dp)) { Text("+10", fontSize = 12.sp) }
             }
+        }
+    }
+}
+
+@Composable
+fun GroupLootView(viewModel: CharacterViewModel) {
+    var newItemName by remember { mutableStateOf("") }
+    var isMoneyBagExpanded by remember { mutableStateOf(false) }
+
+    // Gruppen-Geldbeutel
+    Row(
+        modifier = Modifier.fillMaxWidth().clickable { isMoneyBagExpanded = !isMoneyBagExpanded },
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text("Gruppenkasse", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+        if (!isMoneyBagExpanded) {
+            Text(
+                "${viewModel.sharedCoins.km}KM | ${viewModel.sharedCoins.sm}SM | ${viewModel.sharedCoins.em}EM | ${viewModel.sharedCoins.gm}GM | ${viewModel.sharedCoins.pm}PM",
+                fontSize = 14.sp,
+                color = PinkDunkel,
+                fontWeight = FontWeight.Bold
+            )
+        } else {
+            Text("Einklappen ▲", fontSize = 14.sp, color = BlauDunkel)
+        }
+    }
+    Spacer(modifier = Modifier.height(8.dp))
+
+    if (isMoneyBagExpanded) {
+        CoinRow("Kupfer (KM)", viewModel.sharedCoins.km.toString(), onMinus = { viewModel.updateSharedCoins((viewModel.sharedCoins.km - it).coerceAtLeast(0), viewModel.sharedCoins.sm, viewModel.sharedCoins.em, viewModel.sharedCoins.gm, viewModel.sharedCoins.pm) }, onPlus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km + it, viewModel.sharedCoins.sm, viewModel.sharedCoins.em, viewModel.sharedCoins.gm, viewModel.sharedCoins.pm) })
+        CoinRow("Silber (SM)", viewModel.sharedCoins.sm.toString(), onMinus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, (viewModel.sharedCoins.sm - it).coerceAtLeast(0), viewModel.sharedCoins.em, viewModel.sharedCoins.gm, viewModel.sharedCoins.pm) }, onPlus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, viewModel.sharedCoins.sm + it, viewModel.sharedCoins.em, viewModel.sharedCoins.gm, viewModel.sharedCoins.pm) })
+        CoinRow("Elektrum (EM)", viewModel.sharedCoins.em.toString(), onMinus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, viewModel.sharedCoins.sm, (viewModel.sharedCoins.em - it).coerceAtLeast(0), viewModel.sharedCoins.gm, viewModel.sharedCoins.pm) }, onPlus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, viewModel.sharedCoins.sm, viewModel.sharedCoins.em + it, viewModel.sharedCoins.gm, viewModel.sharedCoins.pm) })
+        CoinRow("Gold (GM)", viewModel.sharedCoins.gm.toString(), onMinus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, viewModel.sharedCoins.sm, viewModel.sharedCoins.em, (viewModel.sharedCoins.gm - it).coerceAtLeast(0), viewModel.sharedCoins.pm) }, onPlus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, viewModel.sharedCoins.sm, viewModel.sharedCoins.em, viewModel.sharedCoins.gm + it, viewModel.sharedCoins.pm) })
+        CoinRow("Platin (PM)", viewModel.sharedCoins.pm.toString(), onMinus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, viewModel.sharedCoins.sm, viewModel.sharedCoins.em, viewModel.sharedCoins.gm, (viewModel.sharedCoins.pm - it).coerceAtLeast(0)) }, onPlus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, viewModel.sharedCoins.sm, viewModel.sharedCoins.em, viewModel.sharedCoins.gm, viewModel.sharedCoins.pm + it) })
+        Spacer(modifier = Modifier.height(16.dp))
+    }
+
+    Spacer(modifier = Modifier.height(16.dp))
+    Text("Geteilte Gegenstände", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+    Spacer(modifier = Modifier.height(8.dp))
+
+    // Neues Item hinzufügen
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        OutlinedTextField(
+            value = newItemName,
+            onValueChange = { newItemName = it },
+            label = { Text("Gegenstand") },
+            singleLine = true,
+            modifier = Modifier.weight(1f),
+            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = PinkDunkel, focusedLabelColor = PinkDunkel)
+        )
+        Spacer(modifier = Modifier.width(8.dp))
+        Button(
+            onClick = {
+                if (newItemName.isNotBlank()) {
+                    viewModel.addSharedLootItem(newItemName.trim(), 1, 0.0, "Sonstiges")
+                    newItemName = ""
+                }
+            },
+            colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)
+        ) {
+            Text("Hinzufügen")
+        }
+    }
+    
+    Spacer(modifier = Modifier.height(16.dp))
+
+    val groupedLoot = viewModel.sharedLootItems.groupBy { it.category }
+    groupedLoot.forEach { (category, items) ->
+        Text(category, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel, modifier = Modifier.padding(vertical = 4.dp))
+        items.forEach { item ->
+            InventoryRow(
+                name = item.name,
+                amount = item.amount.toString(),
+                weight = item.weight,
+                onMinus = { viewModel.updateSharedLootItem(item.id, item.amount - 1) },
+                onPlus = { viewModel.updateSharedLootItem(item.id, item.amount + 1) }
+            )
         }
     }
 }

@@ -56,13 +56,27 @@ data class GroupChatMessage(
 )
 
 data class Quest(
-    val id: String = java.util.UUID.randomUUID().toString(),
-    val title: String = "",
-    val description: String = "",
-    @get:PropertyName("isCompleted")
-    @set:PropertyName("isCompleted")
-    var isCompleted: Boolean = false,
-    val timestamp: Long = System.currentTimeMillis()
+    @get:PropertyName("id") @set:PropertyName("id") var id: String = java.util.UUID.randomUUID().toString(),
+    @get:PropertyName("title") @set:PropertyName("title") var title: String = "",
+    @get:PropertyName("description") @set:PropertyName("description") var description: String = "",
+    @get:PropertyName("isCompleted") @set:PropertyName("isCompleted") var isCompleted: Boolean = false,
+    @get:PropertyName("timestamp") @set:PropertyName("timestamp") var timestamp: Long = System.currentTimeMillis()
+)
+
+data class GroupLootItem(
+    @get:PropertyName("id") @set:PropertyName("id") var id: String = java.util.UUID.randomUUID().toString(),
+    @get:PropertyName("name") @set:PropertyName("name") var name: String = "",
+    @get:PropertyName("amount") @set:PropertyName("amount") var amount: Int = 0,
+    @get:PropertyName("weight") @set:PropertyName("weight") var weight: Double = 0.0,
+    @get:PropertyName("category") @set:PropertyName("category") var category: String = "Sonstiges"
+)
+
+data class SharedCoins(
+    @get:PropertyName("km") @set:PropertyName("km") var km: Int = 0,
+    @get:PropertyName("sm") @set:PropertyName("sm") var sm: Int = 0,
+    @get:PropertyName("em") @set:PropertyName("em") var em: Int = 0,
+    @get:PropertyName("gm") @set:PropertyName("gm") var gm: Int = 0,
+    @get:PropertyName("pm") @set:PropertyName("pm") var pm: Int = 0
 )
 
 data class Spell(
@@ -700,6 +714,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         loadBooks()
         loadFaqs()
         loadSpells()
+        listenToSharedLoot()
     }
 
     // --- BÜCHER & TAKTIK ---
@@ -710,6 +725,10 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val publicGrudgeBookEntries = mutableStateListOf<BookEntry>()
     val groupChatMessages = mutableStateListOf<GroupChatMessage>()
     val globalQuests = mutableStateListOf<Quest>()
+    
+    // Group Loot States
+    var sharedCoins by mutableStateOf(SharedCoins())
+    val sharedLootItems = mutableStateListOf<GroupLootItem>()
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -717,6 +736,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         listenToPublicNotes()
         listenToGroupChat()
         listenToQuests()
+        listenToSharedLoot()
     }
 
     private fun listenToGroupChat() {
@@ -789,6 +809,62 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun deleteQuest(questId: String) {
         db.collection("globalQuests").document(questId).delete()
+    }
+
+    // --- SHARED GROUP LOOT ---
+    private fun listenToSharedLoot() {
+        // Listen to Shared Coins
+        db.collection("groupLootCoins").document("shared").addSnapshotListener { snapshot, e ->
+            if (e == null && snapshot != null && snapshot.exists()) {
+                val coins = snapshot.toObject(SharedCoins::class.java)
+                if (coins != null) {
+                    sharedCoins = coins
+                }
+            }
+        }
+        // Listen to Shared Items
+        db.collection("groupLootItems").addSnapshotListener { snapshot, e ->
+            if (e == null && snapshot != null) {
+                sharedLootItems.clear()
+                for (doc in snapshot.documents) {
+                    val item = doc.toObject(GroupLootItem::class.java)
+                    if (item != null) sharedLootItems.add(item)
+                }
+            }
+        }
+    }
+
+    fun updateSharedCoins(km: Int, sm: Int, em: Int, gm: Int, pm: Int) {
+        val newCoins = SharedCoins(km, sm, em, gm, pm)
+        db.collection("groupLootCoins").document("shared").set(newCoins)
+    }
+
+    fun addSharedLootItem(name: String, amount: Int, weight: Double, category: String) {
+        // Check if item with exact name already exists to increment amount
+        val existing = sharedLootItems.find { it.name.trim().equals(name.trim(), ignoreCase = true) }
+        if (existing != null) {
+            val updatedAmount = existing.amount + amount
+            if (updatedAmount <= 0) {
+                db.collection("groupLootItems").document(existing.id).delete()
+            } else {
+                db.collection("groupLootItems").document(existing.id).update("amount", updatedAmount)
+            }
+        } else if (amount > 0) {
+            val item = GroupLootItem(name = name.trim(), amount = amount, weight = weight, category = category)
+            db.collection("groupLootItems").document(item.id).set(item)
+        }
+    }
+
+    fun updateSharedLootItem(id: String, amount: Int) {
+        if (amount <= 0) {
+            db.collection("groupLootItems").document(id).delete()
+        } else {
+            db.collection("groupLootItems").document(id).update("amount", amount)
+        }
+    }
+
+    fun deleteSharedLootItem(id: String) {
+        db.collection("groupLootItems").document(id).delete()
     }
 
     private fun listenToPublicNotes() {

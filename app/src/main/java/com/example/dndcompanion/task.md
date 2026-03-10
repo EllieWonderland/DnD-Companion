@@ -62,6 +62,6 @@
 - [x] **Geteiltes Questlog:** Ein synchronisiertes Auftragsbuch einbauen. Sobald ein Spieler eine aktive Quest anlegt oder als erfüllt markiert, wird das bei allen geupdatet.
 
 ## Ideen für die Zukunft (Phase 4: Gruppen-Features)
-- [ ] **Geteilte Schatztruhe (Gruppen-Loot):** Ein Inventar, aus dem jeder Spieler in Echtzeit Gold und Items nehmen oder hineinlegen kann.
+- [x] **Geteilte Schatztruhe (Gruppen-Loot):** Ein Inventar, aus dem jeder Spieler in Echtzeit Gold und Items nehmen oder hineinlegen kann.
 - [ ] **Echtzeit-Initiative-Tracker:** Ein eigener Kampf-Bildschirm, der die Zug-Reihenfolge live bei allen Spielern anzeigt und den aktiven Spieler grün markiert.
 - [ ] **Status-Ping & SOS (Gruppen-Ansicht):** Ein Übersichtsscreen, auf dem z.B. der Heiler live die Lebenspunkte, Status-Effekte (Vergiftet) etc. der anderen Gruppenmitglieder sehen kann.
