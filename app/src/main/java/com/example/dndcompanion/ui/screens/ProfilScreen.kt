@@ -309,7 +309,7 @@ fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: 
                 Image(
                     painter = painterResource(id = iconRes),
                     contentDescription = "$name Icon",
-                    modifier = Modifier.size(48.dp).padding(bottom = 2.dp),
+                    modifier = Modifier.size(80.dp).padding(bottom = 2.dp),
                     contentScale = ContentScale.Fit
                 )
             }

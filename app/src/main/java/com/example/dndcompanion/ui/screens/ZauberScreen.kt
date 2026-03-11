@@ -745,7 +745,7 @@ fun SpellCard(
                 Column(modifier = Modifier.weight(1f)) {
                     Text(spell.name, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                     val type = if (spell.level == 0) "Zaubertrick" else "Stufe ${spell.level}"
-                    Text(type, color = com.example.dndcompanion.ui.theme.PergamentDunkel, fontSize = 15.sp)
+                    Text(type, color = com.example.dndcompanion.ui.theme.PergamentHell, fontSize = 15.sp)
                 }
                 if (isEquipped) {
                     Icon(
@@ -805,15 +805,15 @@ fun SpellCard(
 }
 
 @Composable
-fun TraitCard(title: String, desc: String) {
+fun TraitCard(title: String, description: String) {
     Card(
         modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
         colors = CardDefaults.cardColors(containerColor = PergamentDunkel)
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
-            Text(title, color = WaldGold, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+            Text(title, color = OchsenblutRot, fontWeight = FontWeight.Bold, fontSize = 18.sp)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(desc, color = TintenSchwarz, fontSize = 16.sp)
+            Text(description, color = TintenSchwarz, fontSize = 16.sp)
         }
     }
 }
@@ -832,7 +832,7 @@ fun EditableTraitCard(title: String, desc: String, onEdit: () -> Unit, onDelete:
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(title, color = WaldGold, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                    Text(title, color = OchsenblutRot, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(desc, color = TintenSchwarz, fontSize = 16.sp)
                 }
