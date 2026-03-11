@@ -151,3 +151,5 @@
 - [x] **Konsistenzcheck:** Buttongrößen vereinheitlicht (Weapon 130dp, HP 60dp). Athania/Delat Talente-Layout angeglichen.
 - [ ] **Stats Check:** Überprüfe nochmal die Stats von Athania und Delat. Sind alle Werte korrekt? Sind alle Zauber und Merkmale hinterlegt?
 - [x] **Kostenlose Zauber:** Layout für Athania umgesetzt (kompakte Sektion). 1/LR Tracking visuell integriert.
+- [ ] **Zauberbuch:** Die Schrift ist auf dem Hintergrund im Zauberbuch immernoch nicht lesba (Stufe 9 beachten!)
+- [ ] **Free Spells:** Sieh dir die freespells.md an und setze die darin beschriebenen Inhalte um.
