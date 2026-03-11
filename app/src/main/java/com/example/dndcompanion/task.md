@@ -60,8 +60,45 @@
   - *Commit:* `git commit -m "feat: separate FAQ datastore per character profile"`
   - [x] **In-App Gruppen-Chat (IC & OOC):** Über Firebase einen Chat einbauen, bei dem Spieler "In-Character" oder "Out-Of-Character" miteinander am Tisch texten können (z.B. für Heimlichkeiten).
 - [x] **Geteiltes Questlog:** Ein synchronisiertes Auftragsbuch einbauen. Sobald ein Spieler eine aktive Quest anlegt oder als erfüllt markiert, wird das bei allen geupdatet.
+## Phase 4: Metrisches System, FAQ & Gemini Update
+- [x] **Gemini Update:** Standard-Modell auf `gemini-2.5-flash` und Fallback auf `gemini-2.5-flash-lite` ändern.
+- [x] **FAQ Privatisieren:** FAQ für jeden Charakter getrennt speichern und laden.
+- [x] **Metrisches System (Gewicht):** Alle "Pfd." durch "kg" ersetzen (auch in der Traglastberechnung und Parsing-Logik).
+- [x] **Metrisches System (Reichweiten):** Alle Entfernungen/Reichweiten ("Fuß", "ft.") in Meter und Felder (".m / . Felder") umwandeln.
+- [x] **Dauerhafte und temporäre HP:** Athania hat 40 dauerhafte HP, Delat aber nur 35 dauerhafte HP und 12 temporäre HP.
+- [x] **Stats korrekt ziehen:** Delat zieht die noch nicht seine eigenen Stats (Waffen, Rucksack, Zauber etc.), sondern die von Athania. Umstellen auf stats_delat.md
 
-## Ideen für die Zukunft (Phase 4: Gruppen-Features)
+## Phase 5: Neues Layout (Pergament & Stein-Optik)
+- [ ] **Machbarkeits-Check & Assets** (Status: Teilweise möglich, Texturen/Fonts fehlen noch im Repo)
+  - [ ] Vorhandene Bilder nutzen: `athania.png`, `delat.png`, `zauberbuch.png`, `regelwerk.png`, `notizbuch.png`, `grollbuch.png`.
+  - [ ] Fehlende Texturen besorgen/erstellen: Pergament-Hintergrund, Steinmetz-Platten-Textur.
+  - [ ] Fehlende Schriftarten (Fonts) einbinden: Fantasy-Serife, Gotisch/Runen-Type.
+- [ ] **Fundament: Farbpalette und Texturen**
+  - [ ] Hintergrund: Helles Gelb durch verwitterte Pergamenttextur ersetzen.
+  - [ ] Farbakzente: Tiefes Waldgrün für Header, Ochsenblutrot/Dunkelbraun für Buttons/Akzente.
+  - [ ] Tiefe: Dezente Schatten für übereinanderliegende Pergamentstücke und Lederriemen.
+  - [ ] Profil-Karten: Attribute als Steinmetz-Platten oder Pergamentrollen mit Wachssiegeln gestalten.
+- [ ] **Typografie & Schriftarten**
+  - [ ] Fantasy-Schriftarten integrieren (Grenze Gotisch, Almendra und MedievalSharp von Google Fonts hinzufügen).
+  - [ ] Zahlenwerte: Klobigere, graviert aussehende Schrift für HP und Attribute.
+- [ ] **Ikonographie & Symbole**
+  - [ ] Navigations-Icons als Holzschnitte/Tintenzeichnungen gestalten.
+  - [ ] Capy-Icon: Detaillierterer Capybara-Kopf oder heraldische Pfote.
+  - [ ] Attributs-Icons: Faust (STR), geflügelter Schuh (DEX), Herz (CON), Geist (INT), Auge (WIS), Maske (CHA).
+- [ ] **Layout-Details & UI-Elemente**
+  - [ ] Verwitterte Ränder: Unregelmäßige, zerrissene Kanten für alle Karten und Tabellen.
+  - [ ] HP-Leiste: Glasampulle (Flüssigkeits-Optik) oder leuchtende, erlöschende Runen.
+  - [ ] HP-Buttons: Schaltflächen als Bronze- oder Eisenplättchen-Optik.
+  - [ ] Angriffs-Boxen: Gravierte Metallschilde oder Holztafeln für "Bestienschlag" etc.
+
+## Phase 6: Gruppen-Features & Ausblick
 - [x] **Geteilte Schatztruhe (Gruppen-Loot):** Ein Inventar, aus dem jeder Spieler in Echtzeit Gold und Items nehmen oder hineinlegen kann.
-- [ ] **Echtzeit-Initiative-Tracker:** Ein eigener Kampf-Bildschirm, der die Zug-Reihenfolge live bei allen Spielern anzeigt und den aktiven Spieler grün markiert.
-- [ ] **Status-Ping & SOS (Gruppen-Ansicht):** Ein Übersichtsscreen, auf dem z.B. der Heiler live die Lebenspunkte, Status-Effekte (Vergiftet) etc. der anderen Gruppenmitglieder sehen kann.
+- [ ] **Echtzeit-Initiative-Tracker:** Ein eigener Kampf-Bildschirm, der die Zug-Reihenfolge live zeigt.
+- [ ] **Status-Ping & SOS (Gruppen-Ansicht):** Heiler-Ansicht für HP und Zustände der Gruppe.
+
+## Phase 7: Bugfixes
+- [ ] **Chatbot-Identität:** Der Chatbot nennt den Charakter manchmal noch "Athania", auch wenn Delat aktiv ist.
+- [ ] **Temporäre HP Button:** Der Zauber/das Merkmal "Unholde Vitalität" (False Life) für Delat sollte einen direkt nutzbaren Button haben, um die 12 Temp HP (oder 1W8+4 nach 2024er Regeln) schnell zu erneuern.
+
+
+

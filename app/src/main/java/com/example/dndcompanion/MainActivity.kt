@@ -81,14 +81,6 @@ fun DnDApp(viewModel: CharacterViewModel) {
                         label = { Text("Capy") },
                         colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
                     )
-                } else if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.WARLOCK) {
-                    NavigationBarItem(
-                        selected = currentScreen == 1,
-                        onClick = { currentScreen = 1 },
-                        icon = { Text("🔮") },
-                        label = { Text("Pakt") },
-                        colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
-                    )
                 }
                 NavigationBarItem(
                     selected = currentScreen == 2, // Hilfe
@@ -114,7 +106,8 @@ fun DnDApp(viewModel: CharacterViewModel) {
                     if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
                         CapyScreen(viewModel)
                     } else {
-                        com.example.dndcompanion.ui.screens.WarlockScreen(viewModel)
+                        // Falls Warlock hier landet (sollte nicht passieren da das Icon weg ist, aber als Fallback Profil anzeigen)
+                        ProfilScreen(viewModel)
                     }
                 }
                 2 -> HelpScreen(viewModel, onNavigateToRulebook = { chapter, search -> 

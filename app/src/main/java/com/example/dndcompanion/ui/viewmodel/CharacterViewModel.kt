@@ -99,7 +99,9 @@ data class Spell(
 enum class ActiveWeapon {
     LANGBOGEN,
     KURZSCHWERT_SCHILD,
-    SHILLELAGH_SCHILD
+    SHILLELAGH_SCHILD,
+    KRIEGSHAMMER_PAKT,
+    SPEER_PAKT
 }
 
 data class EquipmentDefinition(
@@ -197,7 +199,36 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                         }
                     }
                 } else if (characterData.charClass == CharacterClass.WARLOCK) {
-                    // Warlock spezifische Automatisierungen (Phase 3) kommen hierhin
+                    when (lvl) {
+                        5 -> {
+                            spellSlotsLevel2 = 0 
+                            spellSlotsLevel3 = 2
+                            prefs.edit { putInt("spellSlotsLevel2", 0); putInt("spellSlotsLevel3", 2) }
+                            addCustomTrait("Schauerliche Anrufung (Level 5)", "Du erlernst eine neue Anrufung. Empfehlung für Nahkämpfer: 'Dürstende Klinge' (Extra-Angriff) oder 'Schauerliches Niederstrecken'.")
+                        }
+                        6 -> {
+                            addCustomTrait("Hellseherischer Kämpfer / Clairvoyant Combatant (Level 6)", "Du kannst eine mental verbundene Kreatur (Erwachter Geist) zu einem WIS-Rettungswurf zwingen. Fehlschlag: Sie hat Nachteil auf Angriffe gegen dich, du hast Vorteil auf Angriffe gegen sie. (1x pro Rast oder Zauberplatz).")
+                        }
+                        7 -> {
+                            spellSlotsLevel3 = 0
+                            spellSlotsLevel4 = 2 
+                            prefs.edit { putInt("spellSlotsLevel3", 0); putInt("spellSlotsLevel4", 2) }
+                            addCustomTrait("Schauerliche Anrufung (Level 7)", "Du erlernst eine neue Anrufung (insgesamt 4).")
+                        }
+                        8 -> {
+                            addCustomTrait("Attributswertverbesserung (Level 8)", "Wähle ein neues Talent oder erhöhe Attribute (z.B. Charisma auf 20).")
+                        }
+                        9 -> {
+                            spellSlotsLevel4 = 0
+                            spellSlotsLevel5 = 2
+                            prefs.edit { putInt("spellSlotsLevel4", 0); putInt("spellSlotsLevel5", 2) }
+                            addCustomTrait("Schutzherrn kontaktieren (Level 9)", "Du hast 'Kontakt zu anderen Ebenen' vorbereitet. Du kannst ihn 1x pro Langer Rast kostenlos wirken und bestehst den Rettungswurf automatisch.")
+                        }
+                        10 -> {
+                            addCustomTrait("Schauerliches Verwünschen (Level 10)", "Der Zauber 'Verwünschen (Hex)' ist immer vorbereitet. Er verursacht zusätzlich Nachteil auf Rettungswürfe des gewählten Attributs.")
+                            addCustomTrait("Gedankenschild (Level 10)", "Deine Gedanken können nicht gelesen werden. Resistenz gegen Psychischen Schaden. Wer dir Psychischen Schaden zufügt, erleidet dieselbe Menge an Schaden.")
+                        }
+                    }
                 }
             }
         }
@@ -215,7 +246,10 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     var targetRulebookSearch by mutableStateOf<String?>(null)
 
     fun applyHpIncrease(conModifier: Int, rolledHp: Int = 6) {
-        val hpIncrease = rolledHp + conModifier
+        var hpIncrease = rolledHp + conModifier
+        if (characterData.id == "Delat") {
+            hpIncrease += 1
+        }
         maxHp += hpIncrease
         hitDice += 1
         currentHp = (currentHp + hpIncrease).coerceAtMost(maxHp)
@@ -267,6 +301,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         private set
     var currentHp by mutableIntStateOf(prefs.getInt("currentHp", maxHp))
         private set
+    var tempHp by mutableIntStateOf(prefs.getInt("tempHp", 0))
+        private set
     var hitDice by mutableIntStateOf(prefs.getInt("hitDice", characterData.baseHitDice))
         private set
 
@@ -285,11 +321,25 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun takeDamage(amount: Int) {
-        currentHp = (currentHp - amount).coerceAtLeast(0)
-        if (currentHp > 0) {
-            updateDeathSaves(0, 0)
+        var remainingDamage = amount
+        if (tempHp > 0) {
+            if (tempHp >= remainingDamage) {
+                tempHp -= remainingDamage
+                remainingDamage = 0
+            } else {
+                remainingDamage -= tempHp
+                tempHp = 0
+            }
+            prefs.edit { putInt("tempHp", tempHp) }
         }
-        prefs.edit { putInt("currentHp", currentHp) }
+
+        if (remainingDamage > 0) {
+            currentHp = (currentHp - remainingDamage).coerceAtLeast(0)
+            if (currentHp > 0) {
+                updateDeathSaves(0, 0)
+            }
+            prefs.edit { putInt("currentHp", currentHp) }
+        }
     }
 
     fun healManual(amount: Int) {
@@ -298,6 +348,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             updateDeathSaves(0, 0)
         }
         prefs.edit { putInt("currentHp", currentHp) }
+    }
+
+    fun modifyTempHp(amount: Int) {
+        tempHp = (tempHp + amount).coerceAtLeast(0)
+        prefs.edit { putInt("tempHp", tempHp) }
     }
 
     private val savedWeaponName = prefs.getString("currentWeapon", ActiveWeapon.LANGBOGEN.name) ?: ActiveWeapon.LANGBOGEN.name
@@ -314,6 +369,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             ActiveWeapon.LANGBOGEN -> 12 + dexMod
             ActiveWeapon.KURZSCHWERT_SCHILD -> 12 + dexMod + 2
             ActiveWeapon.SHILLELAGH_SCHILD -> 12 + dexMod + 2
+            ActiveWeapon.KRIEGSHAMMER_PAKT -> 14 + dexMod
+            ActiveWeapon.SPEER_PAKT -> 14 + dexMod
         }
 
     val currentAttackBonus: String
@@ -321,6 +378,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             ActiveWeapon.LANGBOGEN -> "+${proficiencyBonus + dexMod + 2}"
             ActiveWeapon.KURZSCHWERT_SCHILD -> "+${proficiencyBonus + dexMod}"
             ActiveWeapon.SHILLELAGH_SCHILD -> "+${proficiencyBonus + wisMod}"
+            ActiveWeapon.KRIEGSHAMMER_PAKT -> "+${proficiencyBonus + chaMod}"
+            ActiveWeapon.SPEER_PAKT -> "+${proficiencyBonus + chaMod}"
         }
 
     val currentDamage: String
@@ -328,6 +387,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             ActiveWeapon.LANGBOGEN -> "1W8 + $dexMod Stich (Gegner -3m Tempo)"
             ActiveWeapon.KURZSCHWERT_SCHILD -> "1W6 + $dexMod Stich (Vorteil auf nächsten Angriff)"
             ActiveWeapon.SHILLELAGH_SCHILD -> "1W8 + $wisMod Wucht (Umstoßen: ST-Save 12)"
+            ActiveWeapon.KRIEGSHAMMER_PAKT -> "1W8 + $chaMod Wucht (Optional: Nekrotisch/Psychisch/Gleißend)"
+            ActiveWeapon.SPEER_PAKT -> "1W6 + $chaMod Stich (Optional: Nekrotisch/Psychisch/Gleißend)"
         }
 
     var spellSlotsLevel1 by mutableIntStateOf(prefs.getInt("spellSlotsLevel1", characterData.baseSpellSlotsLevel1))
@@ -335,6 +396,10 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     var spellSlotsLevel2 by mutableIntStateOf(prefs.getInt("spellSlotsLevel2", characterData.baseSpellSlotsLevel2))
         private set
     var spellSlotsLevel3 by mutableIntStateOf(prefs.getInt("spellSlotsLevel3", characterData.baseSpellSlotsLevel3))
+        private set
+    var spellSlotsLevel4 by mutableIntStateOf(prefs.getInt("spellSlotsLevel4", 0))
+        private set
+    var spellSlotsLevel5 by mutableIntStateOf(prefs.getInt("spellSlotsLevel5", 0))
         private set
 
     var huntersMarkFreeUses by mutableIntStateOf(prefs.getInt("huntersMarkFreeUses", 2))
@@ -367,11 +432,22 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun applyMagicalCunning() {
-        val maxSlots = characterData.baseSpellSlotsLevel2
+        val maxSlots = if (level >= 17) 4 else if (level >= 11) 3 else 2
         val toRegain = kotlin.math.ceil(maxSlots / 2.0).toInt()
-        val newSlots = (spellSlotsLevel2 + toRegain).coerceAtMost(maxSlots)
-        spellSlotsLevel2 = newSlots
-        prefs.edit { putInt("spellSlotsLevel2", spellSlotsLevel2) }
+        
+        if (level >= 9) {
+            spellSlotsLevel5 = (spellSlotsLevel5 + toRegain).coerceAtMost(maxSlots)
+            prefs.edit { putInt("spellSlotsLevel5", spellSlotsLevel5) }
+        } else if (level >= 7) {
+            spellSlotsLevel4 = (spellSlotsLevel4 + toRegain).coerceAtMost(maxSlots)
+            prefs.edit { putInt("spellSlotsLevel4", spellSlotsLevel4) }
+        } else if (level >= 5) {
+            spellSlotsLevel3 = (spellSlotsLevel3 + toRegain).coerceAtMost(maxSlots)
+            prefs.edit { putInt("spellSlotsLevel3", spellSlotsLevel3) }
+        } else {
+            spellSlotsLevel2 = (spellSlotsLevel2 + toRegain).coerceAtMost(maxSlots)
+            prefs.edit { putInt("spellSlotsLevel2", spellSlotsLevel2) }
+        }
     }
 
     fun useHuntersMarkFree() {
@@ -675,6 +751,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         charisma = prefs.getInt("charisma", characterData.baseCharisma)
         maxHp = prefs.getInt("maxHp", characterData.baseMaxHp)
         currentHp = prefs.getInt("currentHp", maxHp)
+        tempHp = prefs.getInt("tempHp", if (characterId == "Delat") 12 else 0)
         hitDice = prefs.getInt("hitDice", characterData.baseHitDice)
         
         deathSaveSuccesses = prefs.getInt("deathSaveSuccesses", 0)
@@ -1085,6 +1162,22 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 putInt("currentHp", currentHp)
             }
         }
+        
+        // Paktmagie-Regeneration für Hexenmeister
+        if (characterData.charClass == CharacterClass.WARLOCK) {
+            if (level >= 11) spellSlotsLevel5 = 3
+            else if (level >= 9) spellSlotsLevel5 = 2
+            else if (level >= 7) spellSlotsLevel4 = 2
+            else if (level >= 5) spellSlotsLevel3 = 2
+            else spellSlotsLevel2 = 2
+            
+            prefs.edit { 
+                putInt("spellSlotsLevel2", spellSlotsLevel2)
+                putInt("spellSlotsLevel3", spellSlotsLevel3)
+                putInt("spellSlotsLevel4", spellSlotsLevel4)
+                putInt("spellSlotsLevel5", spellSlotsLevel5)
+            }
+        }
     }
 
     var showRestWarningDialog by mutableStateOf(false)
@@ -1199,8 +1292,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         private set
     val geminiMax = 20
 
-     private val systemPrompt = """
-        Du bist unser D&D 2024 Regel-Assistent. Dein Ziel ist es, Fragen basierend auf unseren Hausregeln (Handbuch/Zauberbuch) und dem Charakterblatt von Athania zu beantworten.
+    private val systemPrompt: String get() = """
+        Du bist unser D&D 2024 Regel-Assistent. Dein Ziel ist es, Fragen basierend auf unseren Hausregeln (Handbuch/Zauberbuch) und dem Charakterblatt von ${characterData.name} zu beantworten.
         
         FORMATRICHTLINIE (SEHR WICHTIG):
         Antworte AUSSCHLIESSLICH im JSON-Format. Verwende exakt diese Schlüsselstruktur und erzeuge keinen Text außerhalb der JSON-Klammern:
@@ -1390,8 +1483,8 @@ private val model25Flash = GenerativeModel(
                 }
                 allSpells.addAll(safeItems)
 
-                // Migration: Fehlende Standardzauber (wie "Heilendes Wort" im Update) nachträglich einfügen
-                val defaultSpells = getAthaniaDefaultSpells()
+                // Migration: Fehlende Standardzauber nachträglich einfügen
+                val defaultSpells = getDefaultSpells()
                 var addedNew = false
                 defaultSpells.forEach { defaultSpell ->
                     if (allSpells.none { it.name == defaultSpell.name }) {
@@ -1405,10 +1498,60 @@ private val model25Flash = GenerativeModel(
                 // Bei Fehlern nicht abstürzen
             }
         } else {
-            // Wenn leer, Standard-Zauber von Athania laden
-            allSpells.addAll(getAthaniaDefaultSpells())
+            // Wenn leer, Standard-Zauber laden
+            allSpells.addAll(getDefaultSpells())
             saveSpells()
         }
+    }
+
+    private fun getDefaultSpells(): List<Spell> {
+        return if (characterData.id == "Delat") getDelatDefaultSpells() else getAthaniaDefaultSpells()
+    }
+
+    private fun getDelatDefaultSpells(): List<Spell> {
+        return listOf(
+            Spell(
+                name = "Schauerlicher Strahl",
+                level = 0,
+                castingTime = "1 Aktion",
+                range = "36 m",
+                duration = "Sofort",
+                componentsV = true, componentsS = true, componentsM = false,
+                description = "Ein Strahl knisternder Energie schießt auf eine Kreatur zu. Bei einem Treffer fügt er 1d10 Kraftschaden zu.",
+                isPrepared = true
+            ),
+            Spell(
+                name = "Totenläuten",
+                level = 0,
+                castingTime = "1 Aktion",
+                range = "18 m",
+                duration = "Sofort",
+                componentsV = true, componentsS = true, componentsM = false,
+                description = "Du zeigst auf eine Kreatur. Sie muss einen WIS RW bestehen oder nimmt 1W8 Nekrotischen Schaden (1W12 falls keine vollen HP mehr).",
+                isPrepared = true
+            ),
+            Spell(
+                name = "Dissonantes Flüstern",
+                level = 1,
+                castingTime = "1 Aktion",
+                range = "18 m",
+                duration = "Sofort",
+                componentsV = true, componentsS = false, componentsM = false,
+                description = "Eine Kreatur muss einen WIS RW bestehen. Bei Fehlschlag 3W6 psychischer Schaden und die Kreatur muss ihre Reaktion nutzen, um wegzulaufen. (Immer vorbereitet).",
+                isPrepared = true
+            ),
+            Spell(
+                name = "Macht der Vorstellungskraft",
+                level = 2,
+                castingTime = "1 Aktion",
+                range = "18 m",
+                duration = "Konzentration, 1 Min.",
+                componentsV = true, componentsS = true, componentsM = true,
+                materialCost = "Ein Stück Schafswolle",
+                description = "Du erzeugst eine Illusion im Verstand einer Kreatur (INT RW). Nimmt 1W6 psychischen Schaden pro Zug und behandelt die Illusion als real. (Immer vorbereitet)",
+                isPrepared = true
+            )
+        )
     }
 
     fun toggleSpellPrepared(spellId: String) {
@@ -1502,21 +1645,24 @@ private val model25Flash = GenerativeModel(
         val grudges = grudgeBookEntries.joinToString(" | ") { it.text }
         val traitsStr = customTraits.joinToString(" | ") { "${it.name}: ${it.desc.replace("\n", " ")}" }
 
-        val landHp = 5 + 5 * level
-        val skyHp = 4 + 4 * level
-        val seaHp = 4 + 4 * level
-        val beastAc = 13 + proficiencyBonus
+        val className = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) "Waldläufer (Beast Master)" else "Warlock (Pakt der Klinge)"
+        val race = if (characterData.name == "Athania") "Elf (Waldelf / Feenblut)" else "Mensch"
+        val primaryCastingInfo = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
+            "Zauberplätze: G1: $spellSlotsLevel1, G2: $spellSlotsLevel2, G3: $spellSlotsLevel3"
+        } else {
+            "Paktmagie: $spellSlotsLevel2/$spellSlotsLevel2 (Level 2 Slots)"
+        }
 
-        return """
-            KONTEXT CHARAKTERBLATT ATHANIA:
-            Klasse: Waldläufer (Beast Master)
-            Volk: Elf (Waldelf / Feenblut)
+        val baseContext = """
+            KONTEXT CHARAKTERBLATT ${characterData.name.uppercase()}:
+            Klasse: $className
+            Volk: $race
             Level: $level, EP: $currentEP
-            HP: $currentHp/$maxHp, Trefferwürfel: $hitDice/$level
+            HP: $currentHp/$maxHp (Temp HP: $tempHp), Trefferwürfel: $hitDice/$level
             Werte: ST $strength ($stModStr), GE $dexterity ($geModStr), KO $constitution ($koModStr), IN $intelligence ($inModStr), WE $wisdom ($weModStr), CH $charisma ($chModStr)
             Rüssi-Klasse: $currentArmorClass, Initiative: $geModStr
             Waffe: ${currentWeapon.name} (Bonus: +$currentAttackBonus, Schaden: $currentDamage)
-            Zauberplätze: G1: $spellSlotsLevel1, G2: $spellSlotsLevel2, G3: $spellSlotsLevel3
+            $primaryCastingInfo
             Vorbereitete Zauber: $preparedSpells
             Alle bekannten Zauber: $allKnownSpells
             Merkmale/Fähigkeiten: $traitsStr
@@ -1525,23 +1671,34 @@ private val model25Flash = GenerativeModel(
             Inventar: $inventoryStr
             Notizbuch: $notes
             Buch des Grolls: $grudges
-            
-            --- BEGLEITER (alle 3 Urtier-Formen) ---
-            Aktuell aktiv: ${activeBeastType.name} (HP: $capyCurrentHp/$capyMaxHp)
-            Angriffsbonus (alle): +$spellAttackBonus, Rettungswürfe (alle): +$proficiencyBonus
-            
-            Urtier des Landes: HP: $landHp/$landHp, AC: $beastAc
-            Schaden: 1W8 + $wisMod Hieb, Geschwindigkeit: Laufen 12m, Klettern 12m
-            Spezial: Ansturm
-            
-            Urtier des Himmels: HP: $skyHp/$skyHp, AC: $beastAc
-            Schaden: 1W4 + $wisMod Hieb, Geschwindigkeit: Fliegen 18m, Laufen 3m
-            Spezial: Vorbeifliegen
-            
-            Urtier des Meeres: HP: $seaHp/$seaHp, AC: $beastAc
-            Schaden: 1W6 + $wisMod Stich, Geschwindigkeit: Schwimmen 18m, Laufen 1.5m
-            Spezial: Unter Wasser atmen, Amphibisch
         """.trimIndent()
+
+        if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
+            val landHp = 5 + 5 * level
+            val skyHp = 4 + 4 * level
+            val seaHp = 4 + 4 * level
+            val beastAc = 13 + proficiencyBonus
+
+            return baseContext + "\n\n" + """
+                --- BEGLEITER (alle 3 Urtier-Formen) ---
+                Aktuell aktiv: ${activeBeastType.name} (HP: $capyCurrentHp/$capyMaxHp)
+                Angriffsbonus (alle): +$spellAttackBonus, Rettungswürfe (alle): +$proficiencyBonus
+                
+                Urtier des Landes: HP: $landHp/$landHp, AC: $beastAc
+                Schaden: 1W8 + $wisMod Hieb, Geschwindigkeit: Laufen 12m, Klettern 12m
+                Spezial: Ansturm
+                
+                Urtier des Himmels: HP: $skyHp/$skyHp, AC: $beastAc
+                Schaden: 1W4 + $wisMod Hieb, Geschwindigkeit: Fliegen 18m, Laufen 3m
+                Spezial: Vorbeifliegen
+                
+                Urtier des Meeres: HP: $seaHp/$seaHp, AC: $beastAc
+                Schaden: 1W6 + $wisMod Stich, Geschwindigkeit: Schwimmen 18m, Laufen 1.5m
+                Spezial: Unter Wasser atmen, Amphibisch
+            """.trimIndent()
+        }
+
+        return baseContext
     }
 
     private suspend fun getManualContext(query: String): String {
@@ -1782,7 +1939,7 @@ private val model25Flash = GenerativeModel(
 
     fun resetChat() {
         chatHistory.clear()
-        activeChatSession = model31Pro.startChat()
+        activeChatSession = model25Flash.startChat()
         currentUsedModel = "Bereit"
     }
 

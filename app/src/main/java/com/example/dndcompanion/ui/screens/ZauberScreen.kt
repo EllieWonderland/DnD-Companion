@@ -319,38 +319,9 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             HorizontalDivider(color = BlauDunkel, thickness = 2.dp)
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Zauberplätze Grad 1
-            Card(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-                colors = CardDefaults.cardColors(containerColor = BlauHell)
-            ) {
-                Row(
-                    modifier = Modifier.padding(12.dp).fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Column {
-                        Text("Zauberplätze Grad 1", color = Color.White, fontWeight = FontWeight.Bold)
-                        Text("Heilung, Nebel, Beeren...", color = Color.White, fontSize = 14.sp)
-                    }
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("${viewModel.spellSlotsLevel1} / 3", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
-                        Button(
-                            onClick = { viewModel.useSpellSlotLevel1() },
-                            enabled = viewModel.spellSlotsLevel1 > 0,
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = PinkDunkel,
-                                disabledContainerColor = Color.Gray
-                            )
-                        ) {
-                            Text("Wirken")
-                        }
-                    }
-                }
-            }
-
-            if (viewModel.level >= 5) {
-                // Zauberplätze Grad 2
+            if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
+                // --- RANGER ZAUBERPLÄTZE ---
+                // Zauberplätze Grad 1
                 Card(
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
                     colors = CardDefaults.cardColors(containerColor = BlauHell)
@@ -361,14 +332,14 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column {
-                            Text("Zauberplätze Grad 2", color = Color.White, fontWeight = FontWeight.Bold)
-                            Text("Pass Without Trace, Spike Growth...", color = Color.White, fontSize = 14.sp)
+                            Text("Zauberplätze Grad 1", color = Color.White, fontWeight = FontWeight.Bold)
+                            Text("Heilung, Nebel, Beeren...", color = Color.White, fontSize = 14.sp)
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("${viewModel.spellSlotsLevel2} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                            Text("${viewModel.spellSlotsLevel1} / 3", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                             Button(
-                                onClick = { viewModel.useSpellSlotLevel2() },
-                                enabled = viewModel.spellSlotsLevel2 > 0,
+                                onClick = { viewModel.useSpellSlotLevel1() },
+                                enabled = viewModel.spellSlotsLevel1 > 0,
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = PinkDunkel,
                                     disabledContainerColor = Color.Gray
@@ -379,34 +350,119 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         }
                     }
                 }
-            }
 
-            if (viewModel.level >= 9) {
-                // Zauberplätze Grad 3
+                if (viewModel.level >= 5) {
+                    // Zauberplätze Grad 2
+                    Card(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                        colors = CardDefaults.cardColors(containerColor = BlauHell)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(12.dp).fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Text("Zauberplätze Grad 2", color = Color.White, fontWeight = FontWeight.Bold)
+                                Text("Pass Without Trace, Spike Growth...", color = Color.White, fontSize = 14.sp)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text("${viewModel.spellSlotsLevel2} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                                Button(
+                                    onClick = { viewModel.useSpellSlotLevel2() },
+                                    enabled = viewModel.spellSlotsLevel2 > 0,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = PinkDunkel,
+                                        disabledContainerColor = Color.Gray
+                                    )
+                                ) {
+                                    Text("Wirken")
+                                }
+                            }
+                        }
+                    }
+                }
+
+                if (viewModel.level >= 9) {
+                    // Zauberplätze Grad 3
+                    Card(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                        colors = CardDefaults.cardColors(containerColor = BlauHell)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(12.dp).fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Text("Zauberplätze Grad 3", color = Color.White, fontWeight = FontWeight.Bold)
+                                Text("Conjure Animals, Revivify...", color = Color.White, fontSize = 14.sp)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text("${viewModel.spellSlotsLevel3} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                                Button(
+                                    onClick = { viewModel.useSpellSlotLevel3() },
+                                    enabled = viewModel.spellSlotsLevel3 > 0,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = PinkDunkel,
+                                        disabledContainerColor = Color.Gray
+                                    )
+                                ) {
+                                    Text("Wirken")
+                                }
+                            }
+                        }
+                    }
+                }
+            } else if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.WARLOCK) {
+                // --- WARLOCK PAKTMAGIE ---
+                val maxSlotsLevel2 = viewModel.characterData.baseSpellSlotsLevel2
+                val currentSlotsLevel2 = viewModel.spellSlotsLevel2
+
                 Card(
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
                     colors = CardDefaults.cardColors(containerColor = BlauHell)
                 ) {
-                    Row(
-                        modifier = Modifier.padding(12.dp).fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Column {
-                            Text("Zauberplätze Grad 3", color = Color.White, fontWeight = FontWeight.Bold)
-                            Text("Conjure Animals, Revivify...", color = Color.White, fontSize = 14.sp)
+                    Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column {
+                                Text("Paktmagie (Level 2)", color = Color.White, fontWeight = FontWeight.Bold)
+                                Text("Slots erholen sich bei kurzer Rast", color = Color.White, fontSize = 14.sp)
+                            }
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Text("$currentSlotsLevel2 / $maxSlotsLevel2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                                Button(
+                                    onClick = { viewModel.useSpellSlotLevel2() },
+                                    enabled = currentSlotsLevel2 > 0,
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = PinkDunkel,
+                                        disabledContainerColor = Color.Gray
+                                    )
+                                ) {
+                                    Text("Wirken")
+                                }
+                            }
                         }
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("${viewModel.spellSlotsLevel3} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                        
+                        Spacer(modifier = Modifier.height(12.dp))
+                        
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                             Button(
-                                onClick = { viewModel.useSpellSlotLevel3() },
-                                enabled = viewModel.spellSlotsLevel3 > 0,
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = PinkDunkel,
-                                    disabledContainerColor = Color.Gray
-                                )
+                                onClick = { viewModel.resetWarlockSlots() },
+                                colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)
                             ) {
-                                Text("Wirken")
+                                Text("Kurze Rast Reg.", fontSize = 12.sp)
+                            }
+                            
+                            Button(
+                                onClick = { viewModel.applyMagicalCunning() },
+                                colors = ButtonDefaults.buttonColors(containerColor = PinkHell)
+                            ) {
+                                Text("Magische Rafinesse", color = BlauDunkel, fontSize = 12.sp)
                             }
                         }
                     }

@@ -89,7 +89,7 @@ object CharacterRepository {
                 baseIntelligence = 10,
                 baseWisdom = 10,
                 baseCharisma = 18,
-                baseMaxHp = 47,
+                baseMaxHp = 35,
                 baseHitDice = 4,
                 baseSpellSlotsLevel1 = 0,
                 baseSpellSlotsLevel2 = 2,

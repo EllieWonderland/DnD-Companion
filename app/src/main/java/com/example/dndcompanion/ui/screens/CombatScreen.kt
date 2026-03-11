@@ -63,7 +63,12 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Bottom
                 ) {
-                    Text("HP: ${viewModel.currentHp} / ${viewModel.maxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Column {
+                        Text("HP: ${viewModel.currentHp} / ${viewModel.maxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                        if (viewModel.tempHp > 0) {
+                            Text("+${viewModel.tempHp} Temp HP", fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
+                        }
+                    }
                     Text("Trefferwürfel: ${viewModel.hitDice}/4", color = BlauDunkel, fontWeight = FontWeight.Bold)
                 }
 
@@ -85,15 +90,31 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // Schnell-Buttons für Schaden und Heilung
+                // Schnell-Buttons für Schaden und Heilung (Nutzen automatisch auch Temp HP)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Button(onClick = { viewModel.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)) { Text("-5", fontSize = 16.sp) }
-                    Button(onClick = { viewModel.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)) { Text("-1", fontSize = 16.sp) }
-                    Button(onClick = { viewModel.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) { Text("+1", fontSize = 16.sp) }
-                    Button(onClick = { viewModel.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) { Text("+5", fontSize = 16.sp) }
+                    Button(onClick = { viewModel.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)) { Text("-5 HP", fontSize = 16.sp) }
+                    Button(onClick = { viewModel.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)) { Text("-1 HP", fontSize = 16.sp) }
+                    Button(onClick = { viewModel.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) { Text("+1 HP", fontSize = 16.sp) }
+                    Button(onClick = { viewModel.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) { Text("+5 HP", fontSize = 16.sp) }
+                }
+
+                Spacer(modifier = Modifier.height(8.dp))
+                HorizontalDivider(color = Color.White.copy(alpha = 0.3f))
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Temp HP Buttons
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Temp HP:", color = BlauDunkel, fontWeight = FontWeight.Bold)
+                    Button(onClick = { viewModel.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel.copy(alpha = 0.5f))) { Text("-1", fontSize = 14.sp) }
+                    Button(onClick = { viewModel.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel.copy(alpha = 0.5f))) { Text("+1", fontSize = 14.sp) }
+                    Button(onClick = { viewModel.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) { Text("+12", fontSize = 14.sp) } // Für Unholde Vitalität
                 }
             }
         }
@@ -230,21 +251,34 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            WeaponButton(
-                title = "Langbogen",
-                isSelected = viewModel.currentWeapon == ActiveWeapon.LANGBOGEN,
-                onClick = { viewModel.equipWeapon(ActiveWeapon.LANGBOGEN) }
-            )
-            WeaponButton(
-                title = "Kurzschwert\n& Schild",
-                isSelected = viewModel.currentWeapon == ActiveWeapon.KURZSCHWERT_SCHILD,
-                onClick = { viewModel.equipWeapon(ActiveWeapon.KURZSCHWERT_SCHILD) }
-            )
-            WeaponButton(
-                title = "Shillelagh\n& Schild",
-                isSelected = viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD,
-                onClick = { viewModel.equipWeapon(ActiveWeapon.SHILLELAGH_SCHILD) }
-            )
+            if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
+                WeaponButton(
+                    title = "Langbogen",
+                    isSelected = viewModel.currentWeapon == ActiveWeapon.LANGBOGEN,
+                    onClick = { viewModel.equipWeapon(ActiveWeapon.LANGBOGEN) }
+                )
+                WeaponButton(
+                    title = "Kurzschwert\n& Schild",
+                    isSelected = viewModel.currentWeapon == ActiveWeapon.KURZSCHWERT_SCHILD,
+                    onClick = { viewModel.equipWeapon(ActiveWeapon.KURZSCHWERT_SCHILD) }
+                )
+                WeaponButton(
+                    title = "Shillelagh\n& Schild",
+                    isSelected = viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD,
+                    onClick = { viewModel.equipWeapon(ActiveWeapon.SHILLELAGH_SCHILD) }
+                )
+            } else {
+                WeaponButton(
+                    title = "Kriegshammer\n(Pakt)",
+                    isSelected = viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT,
+                    onClick = { viewModel.equipWeapon(ActiveWeapon.KRIEGSHAMMER_PAKT) }
+                )
+                WeaponButton(
+                    title = "Speer\n(Pakt)",
+                    isSelected = viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT,
+                    onClick = { viewModel.equipWeapon(ActiveWeapon.SPEER_PAKT) }
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -267,6 +301,8 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     ActiveWeapon.LANGBOGEN -> "Verlangsamen: Ziel -3 Bewegung.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
                     ActiveWeapon.KURZSCHWERT_SCHILD -> "Plagen: Nächster Angriff hat Vorteil.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
                     ActiveWeapon.SHILLELAGH_SCHILD -> "Umstoßen (Mastery): Gegner muss bei Treffer Kon-Save (DC 12) bestehen oder liegt am Boden."
+                    ActiveWeapon.KRIEGSHAMMER_PAKT -> "Paktwaffe: Nutzt Charisma. Umstoßen (Mastery): Gegner muss bei Treffer Kon-Save bestehen oder liegt am Boden."
+                    ActiveWeapon.SPEER_PAKT -> "Paktwaffe: Nutzt Charisma. Sap (Mastery): Nächster Angriff des Gegners hat Nachteil."
                 }
 
                 Text(

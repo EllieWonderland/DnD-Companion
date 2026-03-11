@@ -19,6 +19,7 @@ import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.theme.BlauDunkel
 import com.example.dndcompanion.ui.theme.BlauHell
 import com.example.dndcompanion.ui.theme.PinkDunkel
+import com.example.dndcompanion.ui.theme.PinkHell
 import com.example.dndcompanion.ui.theme.GelbSand
 
 import androidx.compose.material.icons.Icons
@@ -80,7 +81,19 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             colors = CardDefaults.cardColors(containerColor = BlauHell)
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
-                Text(viewModel.characterData.name, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(viewModel.characterData.name, fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                    Column(horizontalAlignment = Alignment.End) {
+                        Text("HP: ${viewModel.currentHp} / ${viewModel.maxHp}", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = PinkHell)
+                        if (viewModel.tempHp > 0) {
+                            Text("+${viewModel.tempHp} Temp HP", fontSize = 14.sp, fontWeight = FontWeight.SemiBold, color = PinkHell)
+                        }
+                    }
+                }
                 
                 val className = if (viewModel.characterData.charClass == CharacterClass.RANGER) "Waldläufer (Herrin der Tiere)" else "Warlock (Pakt der Klinge)"
                 Text("$className | Stufe ${viewModel.level}", color = GelbSand)
