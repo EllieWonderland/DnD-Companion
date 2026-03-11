@@ -82,21 +82,22 @@
 - [x] **Bottom-Navigation**: WaldgruenDunkel-Hintergrund, WaldGold-Icons, Almendra-Schrift.
 
 ### Stufe 3: ProfilScreen
-- [/] Hintergrund & Charakter-Karte (Wachssiegel-Optik).
-- [ ] **Attribut-Boxen**: Stein-Hintergrund, `Grenze Gotisch` Schrift für Werte.
-- [ ] **Merkmale/Traits**: Pergament-Rollen-Design.
+- [x] Hintergrund & Charakter-Karte (Wachssiegel-Optik).
+- [x] **Attribut-Boxen**: Stein-Hintergrund, `Grenze Gotisch` Schrift für Werte.
+- [x] **Merkmale/Traits**: Pergament-Rollen-Design.
 
 ### Stufe 4: CombatScreen
-- [ ] **HP-Anzeige**: Glasampullen/Runen, **Temp HP** als oberer Eisblau-Balken (zuerst abbauen).
-- [ ] **Buttons & Retter**: Bronze-HP-Buttons, Runen-Todesrettungswürfe.
-- [ ] **Waffen-Boxen**: Athania (Holztafeln), Delat (Metallschilde).
-- [ ] **Angriffs-Boxen**: Metallschild-Optik, charakterspezifische Akzente (`WaldGold` vs `HexenLila`).
-- [ ] **Urtier-Sektion (Athania)**: Eigener Pergament-Rahmen, Capy-Holzschnitt, Beast-Type Tabs.
+- [x] **HP-Anzeige**: Glasampullen/Runen, **Temp HP** als oberer Eisblau-Balken (zuerst abbauen).
+- [x] **Buttons & Retter**: Bronze-HP-Buttons, Runen-Todesrettungswürfe.
+- [x] **Waffen-Boxen**: Athania (Holztafeln), Delat (Metallschilde).
+- [x] **Angriffs-Boxen**: Metallschild-Optik, charakterspezifische Akzente (`WaldGold` vs `HexenLila`).
+- [x] **Urtier-Sektion (Athania)**: Eigener Pergament-Rahmen, Capy-Holzschnitt, Beast-Type Tabs.
 
 ### Stufe 5: ZauberScreen
-- [ ] **Slots**: Kristall-Fläschchen (Ranger), Runen (Warlock). Skalierung mit Level (G2/G3).
-- [ ] **Tracker (Delat)**: Wachssiegel für Talent-Zauber (Segnen, Nebelschritt, Magierrüstung).
-- [ ] **SpellCards**: Spielkarten-Optik mit Schule-Symbol und Pergament-Finish.
+- [x] **Slots**: Kristall-Fläschchen (Ranger), Runen (Warlock). Skalierung mit Level (G2/G3).
+- [x] **Hintergrund**: Dunkleres Pergament für die Zauberliste.
+- [x] **Dialoge**: "Rasten"-Dialoge im Pergament-Look.
+- [x] **Buttons**: Bronze für Kurze Rast, Waldgruen für Lange Rast. Schule-Symbol und Pergament-Finish.
 
 ### Stufe 6: RucksackScreen & Dialoge
 - [ ] **Traglast**: Seil-/Ketten-Balken (Gefahrenfarben orange/rot).
