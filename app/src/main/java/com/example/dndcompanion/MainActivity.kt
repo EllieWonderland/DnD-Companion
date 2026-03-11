@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
+            DnDCompanionTheme {
                 val viewModel: CharacterViewModel = viewModel()
                 DnDApp(viewModel)
             }
@@ -65,36 +65,63 @@ fun DnDApp(viewModel: CharacterViewModel) {
 
     Scaffold(
         bottomBar = {
-            NavigationBar(containerColor = BlauHell) {
+            NavigationBar(
+                containerColor = WaldgruenDunkel,
+                contentColor = PergamentHell
+            ) {
                 NavigationBarItem(
                     selected = currentScreen == 0,
                     onClick = { currentScreen = 0 },
                     icon = { Text(if (viewModel.characterData.name == "Athania") "🧝‍♀️" else "🧙‍♂️") },
-                    label = { Text(viewModel.characterData.name) },
-                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
+                    label = { Text(viewModel.characterData.name, fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = WaldGold,
+                        selectedTextColor = WaldGold,
+                        unselectedIconColor = PergamentDunkel,
+                        unselectedTextColor = PergamentDunkel,
+                        indicatorColor = Waldgruen
+                    )
                 )
                 if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
                     NavigationBarItem(
                         selected = currentScreen == 1,
                         onClick = { currentScreen = 1 },
                         icon = { Text("🐾") },
-                        label = { Text("Capy") },
-                        colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
+                        label = { Text("Capy", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
+                        colors = NavigationBarItemDefaults.colors(
+                            selectedIconColor = WaldGold,
+                            selectedTextColor = WaldGold,
+                            unselectedIconColor = PergamentDunkel,
+                            unselectedTextColor = PergamentDunkel,
+                            indicatorColor = Waldgruen
+                        )
                     )
                 }
                 NavigationBarItem(
                     selected = currentScreen == 2, // Hilfe
                     onClick = { currentScreen = 2 },
                     icon = { Text("💬") },
-                    label = { Text("Hilfe") },
-                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
+                    label = { Text("Hilfe", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = WaldGold,
+                        selectedTextColor = WaldGold,
+                        unselectedIconColor = PergamentDunkel,
+                        unselectedTextColor = PergamentDunkel,
+                        indicatorColor = Waldgruen
+                    )
                 )
                 NavigationBarItem(
                     selected = currentScreen == 3, // Bücher
                     onClick = { currentScreen = 3 },
                     icon = { Text("📖") },
-                    label = { Text("Bücher") },
-                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color.White, indicatorColor = BlauDunkel)
+                    label = { Text("Bücher", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = WaldGold,
+                        selectedTextColor = WaldGold,
+                        unselectedIconColor = PergamentDunkel,
+                        unselectedTextColor = PergamentDunkel,
+                        indicatorColor = Waldgruen
+                    )
                 )
             }
         }

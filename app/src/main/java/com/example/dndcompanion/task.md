@@ -71,18 +71,18 @@
 ## Phase 5: Neues Layout (Pergament & Stein-Optik)
 
 ### Stufe 1: Design-Fundament (Theme, Fonts, Farben, Assets)
-- [ ] **Farbpalette erweitern** (`Color.kt`): `Pergament`, `Waldgruen`, `OchsenblutRot`, `Bronze`, `HexenLila`, `WaldGold`.
-- [ ] **Schriftarten einbinden** (`Type.kt` + `res/font/`): `MedievalSharp`, `Almendra`, `Grenze Gotisch`.
-- [ ] **Theme.kt & System-UI**: Neues `ColorScheme`, `dynamicColor = false`, StatusBar auf `WaldgruenDunkel`.
-- [ ] **Assets vorbereiten**: `pergament_hintergrund.png` + `steinerne_attributskarte.png` nach `res/drawable/`.
+- [x] **Farbpalette erweitern** (`Color.kt`): `Pergament`, `Waldgruen`, `OchsenblutRot`, `Bronze`, `HexenLila`, `WaldGold`.
+- [x] **Schriftarten einbinden** (`Type.kt` + `res/font/`): `MedievalSharp`, `Almendra`, `Grenze Gotisch`.
+- [x] **Theme.kt & System-UI**: Neues `ColorScheme`, `dynamicColor = false`, StatusBar auf `WaldgruenDunkel`.
+- [x] **Assets vorbereiten**: `pergament_hintergrund.png` + `steinerne_attributskarte.png` nach `res/drawable/`.
 - [ ] **Zusätzliche Assets**: Capy-Icon (Holzschnitt) und Attribut-Icons (Faust, Schuh, Herz, Geist, Auge, Maske) generieren oder als Font-Icons einbinden.
-- [ ] **Basis-Composables**: `PergamentBackground` und `StandardCard` (Pergament-Optik).
+- [x] **Basis-Composables**: `PergamentBackground`, `PergamentCard`, `SteinCard` (in `PergamentComposables.kt`).
 
 ### Stufe 2: Navigation & App-Rahmen (`MainActivity.kt`)
-- [ ] **Bottom-Navigation**: Holz-/Stein-Optik, Sepia/Gold-Icons.
+- [x] **Bottom-Navigation**: WaldgruenDunkel-Hintergrund, WaldGold-Icons, Almendra-Schrift.
 
 ### Stufe 3: ProfilScreen
-- [ ] Hintergrund & Charakter-Karte (Wachssiegel-Optik).
+- [/] Hintergrund & Charakter-Karte (Wachssiegel-Optik).
 - [ ] **Attribut-Boxen**: Stein-Hintergrund, `Grenze Gotisch` Schrift für Werte.
 - [ ] **Merkmale/Traits**: Pergament-Rollen-Design.
 
