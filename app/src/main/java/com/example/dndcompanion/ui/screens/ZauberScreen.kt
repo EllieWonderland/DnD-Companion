@@ -465,6 +465,16 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 Text("Magische Rafinesse", color = BlauDunkel, fontSize = 12.sp)
                             }
                         }
+                        
+                        Spacer(modifier = Modifier.height(8.dp))
+                        
+                        Button(
+                            onClick = { viewModel.applyFalseLife() },
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                        ) {
+                            Text("Unholde Vitalität (12 Temp HP)", fontSize = 12.sp)
+                        }
                     }
                 }
             }

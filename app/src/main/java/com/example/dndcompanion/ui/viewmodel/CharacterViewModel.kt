@@ -792,6 +792,12 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         loadFaqs()
         loadSpells()
         listenToSharedLoot()
+        resetChat()
+    }
+
+    fun applyFalseLife() {
+        tempHp = 12
+        prefs.edit { putInt("tempHp", tempHp) }
     }
 
     // --- BÜCHER & TAKTIK ---

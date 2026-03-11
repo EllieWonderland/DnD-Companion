@@ -90,6 +90,7 @@
   - [ ] HP-Leiste: Glasampulle (Flüssigkeits-Optik) oder leuchtende, erlöschende Runen.
   - [ ] HP-Buttons: Schaltflächen als Bronze- oder Eisenplättchen-Optik.
   - [ ] Angriffs-Boxen: Gravierte Metallschilde oder Holztafeln für "Bestienschlag" etc.
+  - [ ] Flexible Boxengrößen: Die Boxen sollen sich an die Textlänge anpassen.
 
 ## Phase 6: Gruppen-Features & Ausblick
 - [x] **Geteilte Schatztruhe (Gruppen-Loot):** Ein Inventar, aus dem jeder Spieler in Echtzeit Gold und Items nehmen oder hineinlegen kann.
@@ -97,8 +98,9 @@
 - [ ] **Status-Ping & SOS (Gruppen-Ansicht):** Heiler-Ansicht für HP und Zustände der Gruppe.
 
 ## Phase 7: Bugfixes
-- [ ] **Chatbot-Identität:** Der Chatbot nennt den Charakter manchmal noch "Athania", auch wenn Delat aktiv ist.
-- [ ] **Temporäre HP Button:** Der Zauber/das Merkmal "Unholde Vitalität" (False Life) für Delat sollte einen direkt nutzbaren Button haben, um die 12 Temp HP (oder 1W8+4 nach 2024er Regeln) schnell zu erneuern.
+## Phase 7: Bugfixes
+- [x] **Chatbot-Identität:** Der Chatbot nennt den Charakter manchmal noch "Athania", auch wenn Delat aktiv ist.
+- [x] **Temporäre HP Button:** Der Zauber/das Merkmal "Unholde Vitalität" (False Life) für Delat sollte einen direkt nutzbaren Button haben, um die 12 Temp HP (oder 1W8+4 nach 2024er Regeln) schnell zu erneuern.
 
 
 
