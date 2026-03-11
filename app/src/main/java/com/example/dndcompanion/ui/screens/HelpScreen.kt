@@ -28,11 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.viewmodel.ChatMessage
 import com.example.dndcompanion.ui.viewmodel.FaqItem
-import com.example.dndcompanion.ui.theme.BlauDunkel
-import com.example.dndcompanion.ui.theme.BlauHell
-import com.example.dndcompanion.ui.theme.PinkDunkel
-import com.example.dndcompanion.ui.theme.PinkHell
-import com.example.dndcompanion.ui.theme.GelbSand
+import com.example.dndcompanion.ui.theme.*
 import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.material3.Material3RichText
 import androidx.compose.runtime.CompositionLocalProvider
@@ -43,27 +39,29 @@ fun HelpScreen(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Str
     var selectedTab by remember { mutableStateOf(0) }
     val tabs = listOf("Regel-Chat", "Mein FAQ")
 
-    Column(modifier = Modifier.fillMaxSize().background(GelbSand)) {
-        TabRow(
-            selectedTabIndex = selectedTab,
-            containerColor = GelbSand,
-            contentColor = BlauDunkel
-        ) {
-            tabs.forEachIndexed { index, title ->
-                Tab(
-                    selected = selectedTab == index,
-                    onClick = { selectedTab = index },
-                    text = { Text(title, fontWeight = FontWeight.Bold) },
-                    selectedContentColor = PinkDunkel,
-                    unselectedContentColor = BlauDunkel
-                )
+    PergamentBackground {
+        Column(modifier = Modifier.fillMaxSize()) {
+            TabRow(
+                selectedTabIndex = selectedTab,
+                containerColor = Color.Transparent,
+                contentColor = TintenSchwarz
+            ) {
+                tabs.forEachIndexed { index, title ->
+                    Tab(
+                        selected = selectedTab == index,
+                        onClick = { selectedTab = index },
+                        text = { Text(title, fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 18.sp) },
+                        selectedContentColor = OchsenblutRot,
+                        unselectedContentColor = TintenSchwarz
+                    )
+                }
             }
-        }
 
-        Box(modifier = Modifier.fillMaxSize()) {
-            when (selectedTab) {
-                0 -> ChatView(viewModel, onNavigateToRulebook)
-                1 -> FaqView(viewModel)
+            Box(modifier = Modifier.fillMaxSize()) {
+                when (selectedTab) {
+                    0 -> ChatView(viewModel, onNavigateToRulebook)
+                    1 -> FaqView(viewModel)
+                }
             }
         }
     }
@@ -95,21 +93,33 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
             Text(
                 text = "Modell: ${viewModel.currentUsedModel}",
                 fontSize = 12.sp,
-                color = BlauDunkel,
+                color = TintenSchwarz,
+                fontFamily = Almendra,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = "Gemini Slots: ${viewModel.geminiMax - viewModel.geminiUsesToday} / ${viewModel.geminiMax}",
                 fontSize = 12.sp,
-                color = if (viewModel.geminiUsesToday >= viewModel.geminiMax) Color.Red else PinkDunkel
+                color = if (viewModel.geminiUsesToday >= viewModel.geminiMax) Color.Red else OchsenblutRot,
+                fontFamily = Almendra
             )
         }
-        LinearProgressIndicator(
-            progress = { (viewModel.geminiMax - viewModel.geminiUsesToday).toFloat() / viewModel.geminiMax.toFloat() },
-            modifier = Modifier.fillMaxWidth().height(4.dp).padding(bottom = 12.dp),
-            color = PinkDunkel,
-            trackColor = BlauHell
-        )
+        
+        // Runen-Leiste anstatt LinearProgressBar
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            for (i in 0 until viewModel.geminiMax) {
+                val used = i < viewModel.geminiUsesToday
+                Text(
+                    text = if (used) "ᛣ" else "ᛟ", // Runic symbols for used/unused
+                    color = if (used) TintenBraun else WaldGold,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(horizontal = 4.dp)
+                )
+            }
+        }
         LazyColumn(
             state = listState,
             modifier = Modifier.weight(1f).fillMaxWidth(),
@@ -133,12 +143,12 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
         ) {
             Button(
                 onClick = { showResetDialog = true },
-                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel),
+                colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot),
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
-                Icon(Icons.Default.Delete, contentDescription = "Chat zurücksetzen", tint = Color.White)
+                Icon(Icons.Default.Delete, contentDescription = "Chat zurücksetzen", tint = PergamentHell)
                 Spacer(Modifier.width(4.dp))
-                Text("Chat zurücksetzen", color = Color.White)
+                Text("Chat zurücksetzen", color = PergamentHell, fontFamily = Almendra)
             }
         }
 
@@ -152,12 +162,15 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
                 onValueChange = { inputText = it },
                 modifier = Modifier.weight(1f),
                 maxLines = 4,
-                placeholder = { Text("z.B. Wie funktioniert Zeichen des Jägers?") },
+                placeholder = { Text("z.B. Wie funktioniert Zeichen des Jägers?", color = TintenBraun.copy(alpha = 0.6f)) },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PinkDunkel,
-                    focusedContainerColor = Color.White,
-                    unfocusedContainerColor = Color.White
-                )
+                    focusedBorderColor = WaldGold,
+                    focusedContainerColor = PergamentHell,
+                    unfocusedContainerColor = PergamentHell,
+                    focusedTextColor = TintenSchwarz,
+                    unfocusedTextColor = TintenSchwarz
+                ),
+                shape = RoundedCornerShape(12.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
             IconButton(
@@ -168,12 +181,14 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
                     }
                 },
                 enabled = inputText.isNotBlank(),
-                modifier = Modifier.background(
-                    if (inputText.isNotBlank()) BlauDunkel else BlauDunkel.copy(alpha = 0.4f),
-                    RoundedCornerShape(8.dp)
-                )
+                modifier = Modifier
+                    .size(56.dp)
+                    .background(
+                        if (inputText.isNotBlank()) WaldgruenDunkel else WaldgruenDunkel.copy(alpha = 0.4f),
+                        RoundedCornerShape(12.dp)
+                    )
             ) {
-                Icon(Icons.Default.Send, contentDescription = "Senden", tint = Color.White)
+                Icon(Icons.Default.Send, contentDescription = "Senden", tint = WaldGold)
             }
         }
     }
@@ -185,24 +200,32 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
 
         AlertDialog(
             onDismissRequest = { messageToFaq = null },
-            containerColor = GelbSand,
-            title = { Text("Ins FAQ aufnehmen", color = BlauDunkel) },
+            containerColor = PergamentHell,
+            title = { Text("Ins FAQ aufnehmen", color = Waldgruen, fontFamily = Almendra) },
             text = {
                 Column {
-                    Text("Passe die Frage und Antwort so an, dass sie kurz und prägnant für dein Regelbuch sind.", fontSize = 14.sp)
+                    Text("Passe die Frage und Antwort so an, dass sie kurz und prägnant für dein Regelbuch sind.", fontSize = 14.sp, color = TintenSchwarz)
                     Spacer(modifier = Modifier.height(8.dp))
                     OutlinedTextField(
                         value = faqQuestion,
                         onValueChange = { faqQuestion = it },
-                        label = { Text("Schlagwort / Frage") },
-                        singleLine = true
+                        label = { Text("Schlagwort / Frage", color = TintenBraun) },
+                        singleLine = true,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedTextColor = TintenSchwarz,
+                            unfocusedTextColor = TintenSchwarz
+                        )
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     OutlinedTextField(
                         value = faqAnswer,
                         onValueChange = { faqAnswer = it },
-                        label = { Text("Zusammenfassung (Antwort)") },
-                        modifier = Modifier.height(120.dp)
+                        label = { Text("Zusammenfassung (Antwort)", color = TintenBraun) },
+                        modifier = Modifier.height(120.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedTextColor = TintenSchwarz,
+                            unfocusedTextColor = TintenSchwarz
+                        )
                     )
                 }
             },
@@ -214,13 +237,13 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
                             messageToFaq = null
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                    colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot)
                 ) {
-                    Text("Speichern")
+                    Text("Speichern", fontFamily = Almendra)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { messageToFaq = null }) { Text("Abbrechen", color = BlauDunkel) }
+                TextButton(onClick = { messageToFaq = null }) { Text("Abbrechen", color = Waldgruen, fontFamily = Almendra) }
             }
         )
     }
@@ -229,23 +252,23 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
     if (showResetDialog) {
         AlertDialog(
             onDismissRequest = { showResetDialog = false },
-            containerColor = GelbSand,
-            title = { Text("Chat zurücksetzen?", color = BlauDunkel, fontWeight = FontWeight.Bold) },
-            text = { Text("Alle Nachrichten werden unwiderruflich gelöscht.", color = BlauDunkel) },
+            containerColor = PergamentHell,
+            title = { Text("Chat zurücksetzen?", color = OchsenblutRot, fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+            text = { Text("Alle Nachrichten werden unwiderruflich gelöscht.", color = TintenSchwarz) },
             confirmButton = {
                 Button(
                     onClick = {
                         viewModel.resetChat()
                         showResetDialog = false
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                    colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot)
                 ) {
-                    Text("Ja, löschen", color = Color.White)
+                    Text("Ja, löschen", color = PergamentHell, fontFamily = Almendra)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showResetDialog = false }) {
-                    Text("Abbrechen", color = BlauDunkel)
+                    Text("Abbrechen", color = Waldgruen, fontFamily = Almendra)
                 }
             }
         )
@@ -275,7 +298,7 @@ fun TypingIndicator() {
                 modifier = Modifier
                     .size(8.dp)
                     .alpha(alpha)
-                    .background(Color.White, CircleShape)
+                    .background(TintenSchwarz, CircleShape)
             )
         }
     }
@@ -293,7 +316,8 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
             if (isLoading) {
                 // NEU: Animierter Typing-Indikator statt statischer Text
                 Card(
-                    colors = CardDefaults.cardColors(containerColor = BlauHell),
+                    colors = CardDefaults.cardColors(containerColor = PergamentHell),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, OchsenblutRot),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.widthIn(max = 300.dp)
                 ) {
@@ -302,13 +326,14 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
             } else if (isUser || (message.localText == null && message.externalText == null)) {
                 // Standard-Anzeige für User oder Fehler-Rohtext
                 Card(
-                    colors = CardDefaults.cardColors(containerColor = if (isUser) BlauDunkel else BlauHell),
+                    colors = CardDefaults.cardColors(containerColor = if (isUser) TintenSchwarz else PergamentHell),
+                    border = if (!isUser) androidx.compose.foundation.BorderStroke(1.dp, OchsenblutRot) else null,
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.widthIn(max = 300.dp)
                 ) {
                     Text(
                         text = message.text,
-                        color = Color.White,
+                        color = if (isUser) PergamentHell else TintenSchwarz,
                         modifier = Modifier.padding(12.dp),
                         fontSize = 15.sp
                     )
@@ -320,24 +345,24 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                     // --- LOKALER TEIL (Handbuch) ---
                     if (!message.localText.isNullOrBlank()) {
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)) {
-                            Icon(Icons.Default.Info, contentDescription = null, modifier = Modifier.size(14.dp), tint = PinkDunkel)
+                            Icon(Icons.Default.Info, contentDescription = null, modifier = Modifier.size(14.dp), tint = OchsenblutRot)
                             Spacer(Modifier.width(4.dp))
                             Text(
                                 "LOKALES REGELWERK",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Black,
-                                color = PinkDunkel
+                                color = OchsenblutRot
                             )
                         }
                         Card(
-                            colors = CardDefaults.cardColors(containerColor = Color.White),
+                            colors = CardDefaults.cardColors(containerColor = PergamentHell),
                             shape = RoundedCornerShape(12.dp),
-                            border = androidx.compose.foundation.BorderStroke(1.5.dp, PinkDunkel),
+                            border = androidx.compose.foundation.BorderStroke(1.5.dp, OchsenblutRot),
                             modifier = Modifier.fillMaxWidth().padding(bottom = 6.dp)
                         ) {
                             Box(modifier = Modifier.padding(12.dp)) {
                                 // Rendert Markdown (macht Text fett, erstellt Listen etc.)
-                                CompositionLocalProvider(LocalContentColor provides BlauDunkel) {
+                                CompositionLocalProvider(LocalContentColor provides TintenSchwarz) {
                                     Material3RichText { Markdown(content = message.localText) }
                                 }
                             }
@@ -349,16 +374,17 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
                                     .padding(bottom = 12.dp, start = 4.dp)
-                                    .background(Color(0xFF2E7D32), RoundedCornerShape(16.dp)) // Dunkelgrün wie im Regelwerk
+                                    .background(WaldgruenDunkel, RoundedCornerShape(16.dp)) 
                                     .clickable { onNavigateToRulebook(message.chapterLink, message.chapterSearchTerm) }
-                                    .padding(horizontal = 10.dp, vertical = 4.dp)
+                                    .padding(horizontal = 10.dp, vertical = 6.dp)
                             ) {
                                 Text("📖", fontSize = 12.sp)
                                 Spacer(Modifier.width(4.dp))
                                 Text(
                                     text = "Quelle: ${message.chapterLink}",
-                                    color = Color.White,
-                                    fontSize = 12.sp,
+                                    color = WaldGold,
+                                    fontSize = 14.sp,
+                                    fontFamily = GrenzeGotischSmall,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -370,23 +396,23 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                     // --- EXTERNER TEIL (Gemini) ---
                     if (!message.externalText.isNullOrBlank()) {
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)) {
-                            Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(14.dp), tint = BlauDunkel)
+                            Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(14.dp), tint = WaldgruenDunkel)
                             Spacer(Modifier.width(4.dp))
                             Text(
                                 "GEMINI WISSEN (D&D 2024)",
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Black,
-                                color = BlauDunkel
+                                color = WaldgruenDunkel
                             )
                         }
                         Card(
-                            colors = CardDefaults.cardColors(containerColor = BlauHell),
+                            colors = CardDefaults.cardColors(containerColor = PergamentDunkel),
                             shape = RoundedCornerShape(12.dp),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Box(modifier = Modifier.padding(12.dp)) {
                                 // Rendert Markdown in Weiß auf dem blauen Hintergrund
-                                CompositionLocalProvider(LocalContentColor provides Color.White) {
+                                CompositionLocalProvider(LocalContentColor provides TintenSchwarz) {
                                     Material3RichText { Markdown(content = message.externalText) }
                                 }
                             }
@@ -402,9 +428,9 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                     contentPadding = PaddingValues(0.dp),
                     modifier = Modifier.align(Alignment.Start)
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(14.dp), tint = PinkDunkel)
+                    Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(14.dp), tint = OchsenblutRot)
                     Spacer(Modifier.width(4.dp))
-                    Text("Ins FAQ", color = PinkDunkel, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text("Ins FAQ", color = OchsenblutRot, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -418,15 +444,13 @@ fun FaqView(viewModel: CharacterViewModel) {
 
     if (viewModel.faqList.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text("Dein FAQ ist noch leer. Frag den Bot nach Regeln!", color = BlauDunkel)
+            Text("Dein FAQ ist noch leer. Frag den Bot nach Regeln!", color = TintenBraun, fontFamily = Almendra, fontSize = 18.sp)
         }
     } else {
         LazyColumn(modifier = Modifier.fillMaxSize().padding(16.dp)) {
             items(viewModel.faqList) { faq ->
-                Card(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    shape = RoundedCornerShape(12.dp)
+                PergamentCard(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
                         Row(
@@ -434,26 +458,25 @@ fun FaqView(viewModel: CharacterViewModel) {
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.Top
                         ) {
-                            Text(text = faq.question, fontWeight = FontWeight.Bold, color = PinkDunkel, fontSize = 18.sp, modifier = Modifier.weight(1f))
+                            Text(text = faq.question, fontWeight = FontWeight.Bold, fontFamily = Almendra, color = OchsenblutRot, fontSize = 20.sp, modifier = Modifier.weight(1f))
                             Row {
                                 IconButton(
                                     onClick = { editingFaq = faq },
-                                    modifier = Modifier.size(24.dp)
+                                    modifier = Modifier.size(48.dp)
                                 ) {
-                                    Icon(Icons.Default.Edit, contentDescription = "Bearbeiten", tint = BlauDunkel)
+                                    Icon(Icons.Default.Edit, contentDescription = "Bearbeiten", tint = Waldgruen)
                                 }
-                                Spacer(Modifier.width(8.dp))
                                 IconButton(
                                     onClick = { viewModel.removeFaq(faq) },
-                                    modifier = Modifier.size(24.dp)
+                                    modifier = Modifier.size(48.dp)
                                 ) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Löschen", tint = Color.Gray)
+                                    Icon(Icons.Default.Delete, contentDescription = "Löschen", tint = TintenBraun)
                                 }
                             }
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         // NEU: Markdown-Rendering statt Plaintext
-                        CompositionLocalProvider(LocalContentColor provides BlauDunkel) {
+                        CompositionLocalProvider(LocalContentColor provides TintenSchwarz) {
                             Material3RichText { Markdown(content = faq.answer) }
                         }
                     }
@@ -469,23 +492,31 @@ fun FaqView(viewModel: CharacterViewModel) {
 
         AlertDialog(
             onDismissRequest = { editingFaq = null },
-            containerColor = GelbSand,
-            title = { Text("FAQ bearbeiten", color = BlauDunkel, fontWeight = FontWeight.Bold) },
+            containerColor = PergamentHell,
+            title = { Text("FAQ bearbeiten", color = Waldgruen, fontFamily = Almendra, fontWeight = FontWeight.Bold) },
             text = {
                 Column {
                     OutlinedTextField(
                         value = editQuestion,
                         onValueChange = { editQuestion = it },
-                        label = { Text("Frage / Schlagwort") },
+                        label = { Text("Frage / Schlagwort", color = TintenBraun) },
                         singleLine = true,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedTextColor = TintenSchwarz,
+                            unfocusedTextColor = TintenSchwarz
+                        )
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     OutlinedTextField(
                         value = editAnswer,
                         onValueChange = { editAnswer = it },
-                        label = { Text("Antwort") },
-                        modifier = Modifier.fillMaxWidth().height(150.dp)
+                        label = { Text("Antwort", color = TintenBraun) },
+                        modifier = Modifier.fillMaxWidth().height(150.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedTextColor = TintenSchwarz,
+                            unfocusedTextColor = TintenSchwarz
+                        )
                     )
                 }
             },
@@ -497,14 +528,14 @@ fun FaqView(viewModel: CharacterViewModel) {
                             editingFaq = null
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                    colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot)
                 ) {
-                    Text("Speichern", color = Color.White)
+                    Text("Speichern", color = PergamentHell, fontFamily = Almendra)
                 }
             },
             dismissButton = {
                 TextButton(onClick = { editingFaq = null }) {
-                    Text("Abbrechen", color = BlauDunkel)
+                    Text("Abbrechen", color = Waldgruen, fontFamily = Almendra)
                 }
             }
         )

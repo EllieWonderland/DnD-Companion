@@ -17,6 +17,7 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
@@ -29,10 +30,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.dndcompanion.ui.theme.BlauDunkel
-import com.example.dndcompanion.ui.theme.BlauHell
-import com.example.dndcompanion.ui.theme.PinkDunkel
-import com.example.dndcompanion.ui.theme.GelbSand
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.viewmodel.BookEntry
 import java.text.SimpleDateFormat
@@ -44,6 +41,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.layout.aspectRatio
 import com.example.dndcompanion.ui.theme.PergamentBackground
 import com.example.dndcompanion.ui.theme.PergamentCard
+import com.example.dndcompanion.ui.theme.PergamentHell
 import com.example.dndcompanion.ui.theme.SteinCard
 import com.example.dndcompanion.ui.theme.TintenSchwarz
 import com.example.dndcompanion.ui.theme.Almendra
@@ -605,7 +603,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                                 isEquipped = alreadyInBook,
                                 onTogglePrep = {},
                                 onDelete = null,
-                                customColor = null, // Inherit PergamentCard inside SpellCard
+                                customColor = PergamentHell, // Inherit PergamentCard style
                                 extraContent = {
                                     val canEquip = !alreadyInBook && (!isDruidLevel1 || druidLevel1Count < 1)
                                     Button(
@@ -954,7 +952,7 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, onT
                                 .width(6.dp)
                                 .background(TintenSchwarz.copy(alpha = 0.2f), RoundedCornerShape(3.dp))
                         ) {
-                            val viewHeightPx = with(androidx.compose.ui.platform.LocalDensity.current) { maxHeight.toPx() }
+                            val viewHeightPx = with(androidx.compose.ui.platform.LocalDensity.current) { this@BoxWithConstraints.maxHeight.toPx() }
                             val thumbHeightPx = viewHeightPx * 0.1f
                             val maxScrollOffsetPx = viewHeightPx - thumbHeightPx
                             val yOffsetPx = (scrollFraction * maxScrollOffsetPx).toInt()

@@ -100,23 +100,26 @@
 - [x] **Buttons**: Bronze für Kurze Rast, Waldgruen für Lange Rast. Schule-Symbol und Pergament-Finish.
 
 ### Stufe 6: RucksackScreen & Dialoge
-- [ ] **Traglast**: Seil-/Ketten-Balken (Gefahrenfarben orange/rot).
-- [ ] **EquipmentPickerDialog**: Komplettes Redesing des Item-Katalogs (Listen, Filter, Suche).
-- [ ] **Geldbeutel**: Münz-Icons & Goldener Rahmen.
+- [x] **Traglast**: Seil-/Ketten-Balken (Gefahrenfarben orange/rot).
+- [x] **EquipmentPickerDialog**: Komplettes Redesing des Item-Katalogs (Listen, Filter, Suche).
+- [x] **Geldbeutel**: Münz-Icons & Goldener Rahmen.
 
 ### Stufe 7: BücherScreen (Bibliothek)
-- [ ] **Übersicht**: Buch-Asset-Illustrationen (`notizbuch.png`, etc.) statt Emojis.
-- [ ] **Detail-Ansichten**: `SpellbookDetailView`, `QuestlogDetailView` und Gruppen-Chat (Papyrus) redesignen.
+- [x] **Übersicht**: Buch-Asset-Illustrationen (`notizbuch.png`, etc.) statt Emojis.
+- [x] **Detail-Ansichten**: `SpellbookDetailView`, `QuestlogDetailView` und Gruppen-Chat (Papyrus) redesignen.
 
 ### Stufe 8: HelpScreen (Regel-Chat & FAQ)
-- [ ] Chat-Blasen: User (Tintenfass), Bot (versiegelte Briefe).
-- [ ] Gemini-Slots als Runen-Leiste.
+- [x] Chat-Blasen: User (Tintenfass), Bot (versiegelte Briefe).
+  - *Notiz für Commit:* `feat: redesign chat bubbles with parchment styling`
+- [x] Gemini-Slots als Runen-Leiste.
+  - *Notiz für Commit:* `feat: implement runic indicator for gemini slots`
 
 ### Stufe 9: Finale Politur & Skalierung
 - [ ] **Globale Dialoge**: EP, Rasten, Level-Up, `RestWarningDialog`, Spellbook-Edit.
 - [ ] **Dynamik & Konsistenz**: Flexible Boxengrößen überall, Pergament-Animationen, HP-Balken Smoothness.
-- [ ] **Ikonographie**: Attribut-Icons & Nav-Holzschnitte finalisieren.
-- [ ] **Accessability**: 
+- [x] **Ikonographie**: Attribut-Icons & Nav-Holzschnitte finalisieren.
+  - *Notiz für Commit:* `feat: integrate attribute icons into profile boxes`
+- [x] **Accessability**: 
   - Kontrast (APCA Standard):
     - Fließtext: Lc >= 75 (Goldstandard für Lesbarkeit).
     - Warnmeldungen: Lc >= 90 (maximale Aufmerksamkeit).

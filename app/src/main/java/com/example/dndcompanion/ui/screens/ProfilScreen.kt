@@ -2,8 +2,10 @@ package com.example.dndcompanion.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -16,10 +18,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.*
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.data.CharacterClass
+import com.example.dndcompanion.R
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -42,14 +48,14 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    androidx.compose.foundation.Image(
-                        painter = androidx.compose.ui.res.painterResource(id = com.example.dndcompanion.R.drawable.dndcompanion_logo),
+                    Image(
+                        painter = painterResource(id = R.drawable.dndcompanion_logo),
                         contentDescription = "App Logo",
                         modifier = Modifier
                             .size(36.dp)
-                            .androidx.compose.ui.draw.clip(androidx.compose.foundation.shape.CircleShape)
-                            .border(1.dp, WaldGold, androidx.compose.foundation.shape.CircleShape),
-                        contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                            .clip(CircleShape)
+                            .border(1.dp, WaldGold, CircleShape),
+                        contentScale = ContentScale.Crop
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
@@ -103,15 +109,15 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            val avatarId = if (viewModel.characterData.name == "Athania") com.example.dndcompanion.R.drawable.athania else com.example.dndcompanion.R.drawable.delat
-                            androidx.compose.foundation.Image(
-                                painter = androidx.compose.ui.res.painterResource(id = avatarId),
+                            val avatarId = if (viewModel.characterData.name == "Athania") R.drawable.athania else R.drawable.delat
+                            Image(
+                                painter = painterResource(id = avatarId),
                                 contentDescription = "Charakter Portrait",
                                 modifier = Modifier
                                     .size(64.dp)
-                                    .androidx.compose.ui.draw.clip(androidx.compose.foundation.shape.CircleShape)
-                                    .border(2.dp, accentColor, androidx.compose.foundation.shape.CircleShape),
-                                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                                    .clip(CircleShape)
+                                    .border(2.dp, accentColor, CircleShape),
+                                contentScale = ContentScale.Crop
                             )
                             Spacer(modifier = Modifier.width(12.dp))
                             Text(
@@ -173,15 +179,15 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             fun formatMod(mod: Int) = if (mod >= 0) "+$mod" else "$mod"
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                AttributeBox("STR", viewModel.strength.toString(), formatMod(viewModel.strMod), "RW: ${formatMod(strSave)} (Geübt)")
-                AttributeBox("DEX", viewModel.dexterity.toString(), formatMod(viewModel.dexMod), "RW: ${formatMod(dexSave)} (Geübt)")
-                AttributeBox("CON", viewModel.constitution.toString(), formatMod(viewModel.conMod), "RW: ${formatMod(viewModel.conMod)}")
+                AttributeBox("STR", viewModel.strength.toString(), formatMod(viewModel.strMod), "RW: ${formatMod(strSave)} (Geübt)", R.drawable.icon_str)
+                AttributeBox("DEX", viewModel.dexterity.toString(), formatMod(viewModel.dexMod), "RW: ${formatMod(dexSave)} (Geübt)", R.drawable.icon_dex)
+                AttributeBox("CON", viewModel.constitution.toString(), formatMod(viewModel.conMod), "RW: ${formatMod(viewModel.conMod)}", R.drawable.icon_con)
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                AttributeBox("INT", viewModel.intelligence.toString(), formatMod(viewModel.intMod), "RW: ${formatMod(viewModel.intMod)}")
-                AttributeBox("WIS", viewModel.wisdom.toString(), formatMod(viewModel.wisMod), "RW: ${formatMod(viewModel.wisMod)}")
-                AttributeBox("CHA", viewModel.charisma.toString(), formatMod(viewModel.chaMod), "RW: ${formatMod(viewModel.chaMod)}")
+                AttributeBox("INT", viewModel.intelligence.toString(), formatMod(viewModel.intMod), "RW: ${formatMod(viewModel.intMod)}", R.drawable.icon_int)
+                AttributeBox("WIS", viewModel.wisdom.toString(), formatMod(viewModel.wisMod), "RW: ${formatMod(viewModel.wisMod)}", R.drawable.icon_wis)
+                AttributeBox("CHA", viewModel.charisma.toString(), formatMod(viewModel.chaMod), "RW: ${formatMod(viewModel.chaMod)}", null)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -292,7 +298,7 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
 }
 
 @Composable
-fun AttributeBox(name: String, value: String, mod: String, rw: String) {
+fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: Int? = null) {
     Card(
         modifier = Modifier
             .width(105.dp)
@@ -305,6 +311,14 @@ fun AttributeBox(name: String, value: String, mod: String, rw: String) {
             modifier = Modifier.padding(6.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            if (iconRes != null) {
+                Image(
+                    painter = painterResource(id = iconRes),
+                    contentDescription = "$name Icon",
+                    modifier = Modifier.size(24.dp).padding(bottom = 2.dp),
+                    contentScale = ContentScale.Fit
+                )
+            }
             Text(name, style = MaterialTheme.typography.labelMedium, color = Waldgruen)
             Text(value, style = GrenzeGotischStyle, color = TintenSchwarz)
             Text(mod, style = GrenzeGotischSmall, color = OchsenblutRot)
