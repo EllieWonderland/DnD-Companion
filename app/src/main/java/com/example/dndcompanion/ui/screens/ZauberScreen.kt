@@ -475,6 +475,71 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         ) {
                             Text("Unholde Vitalität (12 Temp HP)", fontSize = 12.sp)
                         }
+
+                        // --- BESONDERE ZAUBER (TALENTE & ANRUFUNGEN) ---
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text("Besondere Zauber (Talente)", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        // Segnen
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Segnen", color = Color.White, fontSize = 14.sp)
+                                Text("Talent: Eingeweihter", color = Color.LightGray, fontSize = 11.sp)
+                            }
+                            Text("${if (viewModel.freeBlessUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
+                            Button(
+                                onClick = { viewModel.useFreeBless() },
+                                enabled = !viewModel.freeBlessUsed,
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                                modifier = Modifier.height(32.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                            ) { Text("Wirken", fontSize = 10.sp) }
+                        }
+
+                        // Nebelschritt
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Nebelschritt", color = Color.White, fontSize = 14.sp)
+                                Text("Talent: Feenberührt", color = Color.LightGray, fontSize = 11.sp)
+                            }
+                            Text("${if (viewModel.freeMistyStepUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
+                            Button(
+                                onClick = { viewModel.useFreeMistyStep() },
+                                enabled = !viewModel.freeMistyStepUsed,
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                                modifier = Modifier.height(32.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                            ) { Text("Wirken", fontSize = 10.sp) }
+                        }
+
+                        // Magierrüstung
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text("Magierrüstung", color = Color.White, fontSize = 14.sp)
+                                Text("Talent: Eingeweihter", color = Color.LightGray, fontSize = 11.sp)
+                            }
+                            Text("${if (viewModel.freeMageArmorUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
+                            Button(
+                                onClick = { viewModel.useFreeMageArmor() },
+                                enabled = !viewModel.freeMageArmorUsed,
+                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
+                                modifier = Modifier.height(32.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
+                            ) { Text("Wirken", fontSize = 10.sp) }
+                        }
                     }
                 }
             }

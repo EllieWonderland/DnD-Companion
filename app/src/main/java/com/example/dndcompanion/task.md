@@ -98,9 +98,12 @@
 - [ ] **Status-Ping & SOS (Gruppen-Ansicht):** Heiler-Ansicht für HP und Zustände der Gruppe.
 
 ## Phase 7: Bugfixes
-## Phase 7: Bugfixes
 - [x] **Chatbot-Identität:** Der Chatbot nennt den Charakter manchmal noch "Athania", auch wenn Delat aktiv ist.
 - [x] **Temporäre HP Button:** Der Zauber/das Merkmal "Unholde Vitalität" (False Life) für Delat sollte einen direkt nutzbaren Button haben, um die 12 Temp HP (oder 1W8+4 nach 2024er Regeln) schnell zu erneuern.
+- [x] **Warlock Pakt-Logik vs. G1 Slots:** Warlocks haben keine G1 Slots, aber Delat hat Zauber aus Talente (Segnen, Nebelschritt, Magierrüstung), die 1/LR ohne Slot gewirkt werden können. Diese fehlen im Tracking.
+- [x] **Unholde Vitalität (At-Will):** Sicherstellen, dass der Button für Unholde Vitalität unendlich oft nutzbar bleibt (nicht ausgrauen), da es eine schauerliche Anrufung ist.
+- [x] **Zauberbuch-Vollständigkeit (Delat):** Prüfen, ob alle Zauber aus stats_delat.md im Charakterblatt hinterlegt sind.
+- [x] **Dynamische FAQ-Schlagworte:** Gemini soll automatisch passende Titel/Tags für FAQ-Einträge generieren (statt statisch "Regelerklärung").
 
 
 

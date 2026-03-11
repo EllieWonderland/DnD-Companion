@@ -33,7 +33,8 @@ data class ChatMessage(
     val localText: String? = null,
     val externalText: String? = null,
     val chapterLink: String? = null,
-    val chapterSearchTerm: String? = null // NEU: Für zielgenaues Scrollen
+    val chapterSearchTerm: String? = null, // NEU: Für zielgenaues Scrollen
+    val faqTitle: String? = null // NEU: Dynamischer Titel für FAQ-Aufnahme
 )
 
 data class FaqItem(val question: String, val answer: String)
@@ -767,6 +768,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         freeFaerieFireUsed = prefs.getBoolean("freeFaerieFireUsed", false)
         freeDarknessUsed = prefs.getBoolean("freeDarknessUsed", false)
         freeDruidSpellUsed = prefs.getBoolean("freeDruidSpellUsed", false)
+        freeMageArmorUsed = prefs.getBoolean("freeMageArmorUsed", false)
+        freeBlessUsed = prefs.getBoolean("freeBlessUsed", false)
+        freeMistyStepUsed = prefs.getBoolean("freeMistyStepUsed", false)
         
         water = prefs.getFloat("water", 2.0f)
         rations = prefs.getInt("rations", 10)
@@ -1157,6 +1161,36 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    var freeMageArmorUsed by mutableStateOf(prefs.getBoolean("freeMageArmorUsed", false))
+        private set
+
+    fun useFreeMageArmor() {
+        if (!freeMageArmorUsed) {
+            freeMageArmorUsed = true
+            prefs.edit { putBoolean("freeMageArmorUsed", true) }
+        }
+    }
+
+    var freeBlessUsed by mutableStateOf(prefs.getBoolean("freeBlessUsed", false))
+        private set
+
+    fun useFreeBless() {
+        if (!freeBlessUsed) {
+            freeBlessUsed = true
+            prefs.edit { putBoolean("freeBlessUsed", true) }
+        }
+    }
+
+    var freeMistyStepUsed by mutableStateOf(prefs.getBoolean("freeMistyStepUsed", false))
+        private set
+
+    fun useFreeMistyStep() {
+        if (!freeMistyStepUsed) {
+            freeMistyStepUsed = true
+            prefs.edit { putBoolean("freeMistyStepUsed", true) }
+        }
+    }
+
     fun takeShortRest(hitDiceSpent: Int, rolledValue: Int) {
         if (hitDiceSpent <= hitDice && currentHp < maxHp) {
             hitDice -= hitDiceSpent
@@ -1211,19 +1245,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         val recoveredHitDice = (level / 2).coerceAtLeast(1)
         hitDice = (hitDice + recoveredHitDice).coerceAtMost(level)
 
-        spellSlotsLevel1 = 3
-        
-        // --- DYNAMISCHE SLOTS ABHÄNGIG VOM LEVEL ---
-        if (level >= 9) {
-            spellSlotsLevel2 = 2
-            spellSlotsLevel3 = 2
-        } else if (level >= 5) {
-            spellSlotsLevel2 = 2
-            spellSlotsLevel3 = 0
-        } else {
-            spellSlotsLevel2 = 0
-            spellSlotsLevel3 = 0
-        }
+        spellSlotsLevel1 = characterData.baseSpellSlotsLevel1
+        spellSlotsLevel2 = characterData.baseSpellSlotsLevel2
+        spellSlotsLevel3 = characterData.baseSpellSlotsLevel3
+        spellSlotsLevel4 = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.WARLOCK && level >= 7) 2 else 0
+        spellSlotsLevel5 = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.WARLOCK && level >= 9) 2 else 0
 
         huntersMarkFreeUses = 2
         freeCureWoundsUsed = false
@@ -1231,6 +1257,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         freeFaerieFireUsed = false
         freeDarknessUsed = false
         freeDruidSpellUsed = false
+        freeMageArmorUsed = false
+        freeBlessUsed = false
+        freeMistyStepUsed = false
         goodberries = 0
         geminiUsesToday = 0
         
@@ -1245,12 +1274,17 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putInt("spellSlotsLevel1", spellSlotsLevel1)
             putInt("spellSlotsLevel2", spellSlotsLevel2)
             putInt("spellSlotsLevel3", spellSlotsLevel3)
+            putInt("spellSlotsLevel4", spellSlotsLevel4)
+            putInt("spellSlotsLevel5", spellSlotsLevel5)
             putInt("huntersMarkFreeUses", huntersMarkFreeUses)
             putBoolean("freeCureWoundsUsed", freeCureWoundsUsed)
             putBoolean("freeHealingWordUsed", freeHealingWordUsed)
             putBoolean("freeFaerieFireUsed", freeFaerieFireUsed)
             putBoolean("freeDarknessUsed", freeDarknessUsed)
             putBoolean("freeDruidSpellUsed", freeDruidSpellUsed)
+            putBoolean("freeMageArmorUsed", freeMageArmorUsed)
+            putBoolean("freeBlessUsed", freeBlessUsed)
+            putBoolean("freeMistyStepUsed", freeMistyStepUsed)
             putInt("goodberries", goodberries)
             putInt("geminiUsesToday", geminiUsesToday)
         }
@@ -1307,7 +1341,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
           "lokale_antwort": "Deine Antwort NUR basierend auf den bereitgestellten Handbüchern/Stats. Wenn nichts gefunden, schreibe 'Keine spezifischen Informationen gefunden.'",
           "externe_antwort": "Deine Antwort basierend auf deinem allgemeinen Wissen über D&D 2024. Gehe auf die Klasse und das Volk des Charakters ein, falls relevant.",
           "kapitel_link": "NUR der exakte Name eines HANDBUCH-Kapitels aus den '--- Quelle: ... ---' Markierungen (z.B. '3. Klassen', '7. Kampf'). Erlaubte Werte: '1. Gameplay', '2. Völker', '3. Klassen', '4. Herkünfte', '5. Talente', '6. Ausrüstung', '7. Kampf', '8. Zauber', 'Zauberbuch Übersicht'. WICHTIG: Wenn die Antwort aus dem CHARAKTERBLATT kommt (Stats, Begleiter/Capys, Inventar, Zauberplätze, Notizbuch etc.) und NICHT aus einem Handbuch-Kapitel, setze den Wert auf null!",
-          "suchbegriff": "Ein kurzes Stichwort (1-2 Worte) aus dem Kapitel, das exakt zu deiner Antwort passt, um im UI genau zu dieser Regel zu scrollen (z.B. 'Zaubertricks' oder 'Kampfstile'). Nur setzen wenn kapitel_link gesetzt ist."
+          "suchbegriff": "Ein kurzes Stichwort (1-2 Worte) aus dem Kapitel, das exakt zu deiner Antwort passt, um im UI genau zu dieser Regel zu scrollen (z.B. 'Zaubertricks' oder 'Kampfstile'). Nur setzen wenn kapitel_link gesetzt ist.",
+          "faq_titel": "Ein knackiges, kurzes Schlagwort (max 3 Worte), das diese Antwort zusammenfasst (z.B. 'Initiative', 'Paktmagie', 'Rüstungsklasse'), falls der User die Info ins FAQ aufnehmen will. IMMER setzen!"
         }
     """.trimIndent()
 
@@ -1556,6 +1591,38 @@ private val model25Flash = GenerativeModel(
                 materialCost = "Ein Stück Schafswolle",
                 description = "Du erzeugst eine Illusion im Verstand einer Kreatur (INT RW). Nimmt 1W6 psychischen Schaden pro Zug und behandelt die Illusion als real. (Immer vorbereitet)",
                 isPrepared = true
+            ),
+            Spell(
+                name = "Magierrüstung",
+                level = 1,
+                castingTime = "1 Aktion",
+                range = "Berührung",
+                duration = "8 Stunden",
+                componentsV = true, componentsS = true, componentsM = true,
+                materialCost = "Ein Stück Leder",
+                description = "Du berührst eine Kreatur, die keine Rüstung trägt. Ihre RK wird zu 13 + DEX-Mod. (Talent: Magier-Initiat).",
+                isPrepared = true
+            ),
+            Spell(
+                name = "Segnen",
+                level = 1,
+                castingTime = "1 Aktion",
+                range = "9 m",
+                duration = "Konzentration, 1 Min.",
+                componentsV = true, componentsS = true, componentsM = true,
+                materialCost = "Ein Spritzer Weihwasser",
+                description = "Bis zu drei Kreaturen addieren 1W4 auf Angriffs- und Rettungswürfe. (Talent: Magier-Initiat).",
+                isPrepared = true
+            ),
+            Spell(
+                name = "Nebelschritt",
+                level = 2,
+                castingTime = "1 Bonusaktion",
+                range = "9 m",
+                duration = "Sofort",
+                componentsS = true,
+                description = "Du wirst kurzzeitig von silbernem Nebel umhüllt und teleportierst dich an einen Ort in Reichweite. (Talent: Feenberührt).",
+                isPrepared = true
             )
         )
     }
@@ -1656,7 +1723,8 @@ private val model25Flash = GenerativeModel(
         val primaryCastingInfo = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
             "Zauberplätze: G1: $spellSlotsLevel1, G2: $spellSlotsLevel2, G3: $spellSlotsLevel3"
         } else {
-            "Paktmagie: $spellSlotsLevel2/$spellSlotsLevel2 (Level 2 Slots)"
+            val maxSlots = characterData.baseSpellSlotsLevel2
+            "Paktmagie: $spellSlotsLevel2/$maxSlots (Level 2 Slots)"
         }
 
         val baseContext = """
@@ -1895,6 +1963,7 @@ private val model25Flash = GenerativeModel(
         var parsedExternal: String? = "Keine allgemeinen Informationen von Gemini."
         var parsedLink: String? = null
         var parsedSearchTerm: String? = null
+        var parsedFaqTitle: String? = "Regelerklärung"
 
         try {
             // Sicherer Regex, der alle Varianten von Markdown-JSON-Blöcken entfernt
@@ -1928,6 +1997,10 @@ private val model25Flash = GenerativeModel(
                 val s = json.getString("suchbegriff")
                 if (s.isNotBlank() && s != "null") parsedSearchTerm = s
             }
+            if (json.has("faq_titel") && !json.isNull("faq_titel")) {
+                val f = json.getString("faq_titel")
+                if (f.isNotBlank() && f != "null") parsedFaqTitle = f
+            }
 
         } catch (e: Exception) {
             parsedLocal = "Fehler beim Auswerten der Daten."
@@ -1939,7 +2012,8 @@ private val model25Flash = GenerativeModel(
             localText = parsedLocal,
             externalText = parsedExternal,
             chapterLink = parsedLink,
-            chapterSearchTerm = parsedSearchTerm
+            chapterSearchTerm = parsedSearchTerm,
+            faqTitle = parsedFaqTitle
         )
     }
 
