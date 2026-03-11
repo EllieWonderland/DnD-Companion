@@ -29,8 +29,11 @@ import com.example.dndcompanion.ui.screens.HelpScreen
 import com.example.dndcompanion.ui.screens.ProfilScreen
 import com.example.dndcompanion.ui.screens.BucherScreen
 import com.example.dndcompanion.ui.theme.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import kotlinx.coroutines.launch
 
 // Definition der Tabs für bessere Lesbarkeit
@@ -56,7 +59,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun DnDApp(viewModel: CharacterViewModel) {
-    // 0 = Athania, 1 = Capy, 2 = Hilfe, 3 = Bücher
+    // 0 = Athania, 1 = Urtier, 2 = Hilfe, 3 = Bücher
     var currentScreen by rememberSaveable { mutableStateOf(0) }
 
     BackHandler(enabled = currentScreen != 0) {
@@ -87,7 +90,7 @@ fun DnDApp(viewModel: CharacterViewModel) {
                         selected = currentScreen == 1,
                         onClick = { currentScreen = 1 },
                         icon = { Text("🐾") },
-                        label = { Text("Capy", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
+                        label = { Text("Urtier", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = WaldGold,
                             selectedTextColor = WaldGold,
@@ -163,8 +166,8 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
     Column(modifier = Modifier.fillMaxSize()) {
         TabRow(
             selectedTabIndex = pagerState.currentPage,
-            containerColor = GelbSand,
-            contentColor = BlauDunkel
+            containerColor = PergamentDunkel,
+            contentColor = TintenSchwarz
         ) {
             tabs.forEachIndexed { index, tab ->
                 Tab(
@@ -174,9 +177,9 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
                             pagerState.animateScrollToPage(index)
                         } 
                     },
-                    text = { Text(tab.title) },
-                    selectedContentColor = PinkDunkel,
-                    unselectedContentColor = BlauDunkel
+                    text = { Text(tab.title, fontFamily = Almendra) },
+                    selectedContentColor = OchsenblutRot,
+                    unselectedContentColor = TintenBraun
                 )
             }
         }
@@ -210,20 +213,36 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
 @Composable
 fun CapyScreen(viewModel: CharacterViewModel) {
     val beastColorLight = when(viewModel.activeBeastType) {
-        com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> Gruen
-        com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> PinkHell
-        com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> BlauHell
+        com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> WaldgruenDunkel
+        com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> HexenLila
+        com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> Bronze
     }
     val beastColorDark = when(viewModel.activeBeastType) {
-        com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> PinkDunkel
-        com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> BlauDunkel
-        com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> Color(0xFF388E3C)
+        com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> Waldgruen
+        com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> OchsenblutRot
+        com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> WaldGold
     }
 
+    PergamentBackground {
     Column(
-        modifier = Modifier.fillMaxSize().background(GelbSand).padding(8.dp).verticalScroll(rememberScrollState()),
+        modifier = Modifier.fillMaxSize().padding(8.dp).verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Header mit Icon
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.icon_capybara),
+                contentDescription = "Urtier Icon",
+                modifier = Modifier.size(40.dp),
+                contentScale = ContentScale.Fit
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("Urtier-Begleiter", style = MaterialTheme.typography.titleLarge, color = Waldgruen, fontFamily = Almendra)
+        }
+
         SegmentedBeastControl(
             activeType = viewModel.activeBeastType,
             onTypeSelected = { viewModel.toggleBeastType(it) }
@@ -237,15 +256,15 @@ fun CapyScreen(viewModel: CharacterViewModel) {
             shape = RoundedCornerShape(16.dp)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("HP: ${viewModel.capyCurrentHp} / ${viewModel.capyMaxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
+                Text("HP: ${viewModel.capyCurrentHp} / ${viewModel.capyMaxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White, fontFamily = Almendra)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 LinearProgressIndicator(
                     progress = { viewModel.capyCurrentHp.toFloat() / viewModel.capyMaxHp.toFloat() },
                     modifier = Modifier.fillMaxWidth().height(16.dp),
-                    color = if (viewModel.capyCurrentHp > 5) beastColorDark else Color.Red,
-                    trackColor = Color.White
+                    color = if (viewModel.capyCurrentHp > 5) beastColorDark else OchsenblutRot,
+                    trackColor = PergamentHell
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -254,38 +273,35 @@ fun CapyScreen(viewModel: CharacterViewModel) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Button(onClick = { viewModel.takeCapyDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = Color.Red.copy(alpha = 0.7f))) { Text("-5") }
-                    Button(onClick = { viewModel.takeCapyDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = Color.Red.copy(alpha = 0.7f))) { Text("-1") }
-                    Button(onClick = { viewModel.healCapy(1) }, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))) { Text("+1") }
-                    Button(onClick = { viewModel.healCapy(5) }, colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4CAF50))) { Text("+5") }
+                    Button(onClick = { viewModel.takeCapyDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("-5", fontFamily = Almendra) }
+                    Button(onClick = { viewModel.takeCapyDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("-1", fontFamily = Almendra) }
+                    Button(onClick = { viewModel.healCapy(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("+1", fontFamily = Almendra) }
+                    Button(onClick = { viewModel.healCapy(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("+5", fontFamily = Almendra) }
                 }
             }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = Color.White),
-            shape = RoundedCornerShape(12.dp)
-        ) {
+        PergamentCard(modifier = Modifier.fillMaxWidth()) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("Rüstungsklasse (RK)", fontWeight = FontWeight.Bold, color = BlauDunkel)
-                    Text("${viewModel.capyAc}", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = BlauDunkel)
+                    Text("Rüstungsklasse (RK)", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra)
+                    Text("${viewModel.capyAc}", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = TintenSchwarz)
                 }
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
 
-                Text("Tempo: ${viewModel.capySpeed}", fontSize = 16.sp)
-                Text("Besonderheit: ${viewModel.capySpecial}", fontSize = 16.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
+                Text("Tempo: ${viewModel.capySpeed}", fontSize = 16.sp, color = TintenSchwarz)
+                Text("Besonderheit: ${viewModel.capySpecial}", fontSize = 16.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, color = TintenBraun)
 
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
 
-                Text("Bestienschlag (Kosten: 1 Bonusaktion)", fontWeight = FontWeight.Bold, color = BlauDunkel, modifier = Modifier.padding(bottom = 4.dp), fontSize = 16.sp)
-                Text("Trefferbonus: ${viewModel.capyAttackBonus}", fontSize = 18.sp)
+                Text("Bestienschlag (Kosten: 1 Bonusaktion)", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra, modifier = Modifier.padding(bottom = 4.dp), fontSize = 16.sp)
+                Text("Trefferbonus: ${viewModel.capyAttackBonus}", fontSize = 18.sp, color = TintenSchwarz)
                 Text("Schaden: ${viewModel.capyDamage}", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = beastColorDark)
             }
         }
+    }
     }
 }
 
@@ -301,7 +317,7 @@ fun SegmentedBeastControl(activeType: com.example.dndcompanion.ui.viewmodel.Beas
             .fillMaxWidth()
             .height(48.dp)
             .clip(RoundedCornerShape(24.dp))
-            .background(BlauHell),
+            .background(WaldgruenDunkel),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         options.forEach { (type, label) ->
@@ -310,15 +326,16 @@ fun SegmentedBeastControl(activeType: com.example.dndcompanion.ui.viewmodel.Beas
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxHeight()
-                    .background(if (isSelected) BlauDunkel else Color.Transparent)
+                    .background(if (isSelected) Waldgruen else Color.Transparent)
                     .clickable { onTypeSelected(type) },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = label,
-                    color = Color.White,
+                    color = if (isSelected) PergamentHell else PergamentDunkel,
                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
+                    fontFamily = Almendra
                 )
             }
         }

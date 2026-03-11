@@ -429,7 +429,7 @@ fun WeaponButton(title: String, isSelected: Boolean, accentColor: Color, onClick
         ),
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
-            .width(110.dp)
+            .width(130.dp)
             .height(60.dp)
     ) {
         Text(text = title, fontFamily = Almendra, fontSize = 13.sp, textAlign = TextAlign.Center, lineHeight = 16.sp)

@@ -23,6 +23,10 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import com.example.dndcompanion.R
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.text.KeyboardOptions
@@ -159,7 +163,12 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Text("💰", fontSize = 24.sp)
+                                    Image(
+                                        painter = painterResource(id = R.drawable.icon_geld),
+                                        contentDescription = "Geldbeutel Icon",
+                                        modifier = Modifier.size(28.dp),
+                                        contentScale = ContentScale.Fit
+                                    )
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Text("Geldbeutel", style = Typography.titleLarge, color = TintenSchwarz)
                                 }

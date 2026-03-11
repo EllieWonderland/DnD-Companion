@@ -226,9 +226,11 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             PergamentCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     if (viewModel.characterData.name == "Athania") {
-                        Text("Aussehen: Magisches Tattoo (Blutige Hand eines Kindes)", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
+                        Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
+                        Text("Magisches Tattoo (Blutige Hand eines Kindes)", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Sprachen: Gemeinsprache, Gebärden-Gemeinsprache, Halblingisch, Zwergisch, Elfisch", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
+                        Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
+                        Text("Gemeinsprache, Gebärden-Gemeinsprache, Halblingisch, Zwergisch, Elfisch", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
 
                         Text("Ideal (Höheres Ziel):", style = MaterialTheme.typography.labelLarge, color = WaldGold)
@@ -238,9 +240,11 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                         Text("Makel (Nachtragend):", style = MaterialTheme.typography.labelLarge, color = WaldGold)
                         Text("Ich erinnere mich an jede einzelne Beleidigung, die mir galt, und hege eine stumme Abneigung gegen all jene, die mich schon einmal falsch behandelt haben.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                     } else {
-                        Text("Aussehen: Gepflegt, mysteriöses Buch immer in der Hand", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
+                        Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
+                        Text("Gepflegt, mysteriöses Buch immer in der Hand", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Sprachen: Gemeinsprache, Drakonisch, Abyssal", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
+                        Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
+                        Text("Gemeinsprache, Drakonisch, Abyssal", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
 
                         Text("Ideal (Macht):", style = MaterialTheme.typography.labelLarge, color = HexenLila)
@@ -305,7 +309,7 @@ fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: 
                 Image(
                     painter = painterResource(id = iconRes),
                     contentDescription = "$name Icon",
-                    modifier = Modifier.size(32.dp).padding(bottom = 2.dp),
+                    modifier = Modifier.size(48.dp).padding(bottom = 2.dp),
                     contentScale = ContentScale.Fit
                 )
             }
