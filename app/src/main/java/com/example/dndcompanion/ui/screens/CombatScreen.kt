@@ -1,6 +1,6 @@
 package com.example.dndcompanion.ui.screens
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,456 +21,397 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Cancel
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.ui.draw.shadow
 import com.example.dndcompanion.ui.viewmodel.ActiveWeapon
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
-import com.example.dndcompanion.ui.theme.BlauDunkel
-import com.example.dndcompanion.ui.theme.BlauHell
-import com.example.dndcompanion.ui.theme.PinkDunkel
-import com.example.dndcompanion.ui.theme.PinkHell
-import com.example.dndcompanion.ui.theme.GelbSand
+import com.example.dndcompanion.ui.theme.*
+import com.example.dndcompanion.data.CharacterClass
 
 @Composable
 fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit, onNavigateToProfile: () -> Unit = {}) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(GelbSand)
-            .padding(12.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Top-Leiste: Passive Stats
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Text("Initiative: +4", color = BlauDunkel, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-            Text("Tempo: 9", color = BlauDunkel, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-            Text("Pass. Wahrnehmung: 16", color = BlauDunkel, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-        }
+    val isRanger = viewModel.characterData.charClass == CharacterClass.RANGER
+    val accentColor = if (isRanger) WaldGold else HexenLila
 
-        // Lebenspunkte & Trefferwürfel
-        Card(
+    PergamentBackground {
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 12.dp),
-            colors = CardDefaults.cardColors(containerColor = BlauHell),
-            shape = RoundedCornerShape(16.dp)
+                .fillMaxSize()
+                .padding(12.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(modifier = Modifier.padding(12.dp)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.Bottom
-                ) {
-                    Column {
-                        Text("HP: ${viewModel.currentHp} / ${viewModel.maxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                        if (viewModel.tempHp > 0) {
-                            Text("+${viewModel.tempHp} Temp HP", fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = Color.White)
-                        }
-                    }
-                    Text("Trefferwürfel: ${viewModel.hitDice}/4", color = BlauDunkel, fontWeight = FontWeight.Bold)
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                LinearProgressIndicator(
-                    progress = { viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(12.dp),
-                    color = if (viewModel.currentHp > 10) PinkDunkel else Color.Red,
-                    trackColor = BlauDunkel
-                )
-
-                if (viewModel.currentHp == 0) {
-                    Spacer(modifier = Modifier.height(12.dp))
-                    DeathSavesRow(viewModel)
-                }
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                // Schnell-Buttons für Schaden und Heilung (Nutzen automatisch auch Temp HP)
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Button(onClick = { viewModel.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)) { Text("-5 HP", fontSize = 16.sp) }
-                    Button(onClick = { viewModel.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)) { Text("-1 HP", fontSize = 16.sp) }
-                    Button(onClick = { viewModel.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) { Text("+1 HP", fontSize = 16.sp) }
-                    Button(onClick = { viewModel.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) { Text("+5 HP", fontSize = 16.sp) }
-                }
-
-                Spacer(modifier = Modifier.height(8.dp))
-                HorizontalDivider(color = Color.White.copy(alpha = 0.3f))
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Temp HP Buttons
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("Temp HP:", color = BlauDunkel, fontWeight = FontWeight.Bold)
-                    Button(onClick = { viewModel.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel.copy(alpha = 0.5f))) { Text("-1", fontSize = 14.sp) }
-                    Button(onClick = { viewModel.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel.copy(alpha = 0.5f))) { Text("+1", fontSize = 14.sp) }
-                    Button(onClick = { viewModel.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) { Text("+12", fontSize = 14.sp) } // Für Unholde Vitalität
-                }
-            }
-        }
-
-        // Große Anzeige: RK und EP nebeneinander
-        var showEpDialog by remember { mutableStateOf(false) }
-        var epInput by remember { mutableStateOf("") }
-
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            // Rüstungsklasse
-            Card(
-                modifier = Modifier.weight(1f),
-                colors = CardDefaults.cardColors(containerColor = BlauDunkel),
-                shape = RoundedCornerShape(16.dp)
+            // Top-Leiste: Passive Stats
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Column(
-                    modifier = Modifier.padding(12.dp).fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "Rüstungsklasse", color = Color.White, fontSize = 14.sp)
-                    Text(
-                        text = viewModel.currentArmorClass.toString(),
-                        color = PinkHell,
-                        fontSize = 48.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+                Text("Initiative: +4", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                Text("Tempo: 9", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                Text("Pass. Wahrnehmung: 16", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
             }
 
-            // Erfahrungspunkte
-            Card(
-                modifier = Modifier.weight(1f),
-                colors = CardDefaults.cardColors(containerColor = BlauDunkel),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Column(
-                    modifier = Modifier.padding(12.dp).fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(text = "EP (Stufe ${viewModel.level})", color = Color.White, fontSize = 14.sp)
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = viewModel.currentEP.toString(),
-                            color = PinkHell,
-                            fontSize = 48.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                        IconButton(onClick = { showEpDialog = true }) {
-                            Text("+", color = PinkHell, fontSize = 28.sp, fontWeight = FontWeight.Bold)
-                        }
-                    }
-                }
-            }
-        }
-
-        // EP Dialog
-        if (showEpDialog) {
-            AlertDialog(
-                onDismissRequest = { showEpDialog = false },
-                containerColor = GelbSand,
-                title = { Text("EP hinzufügen", color = BlauDunkel, fontWeight = FontWeight.Bold) },
-                text = {
-                    OutlinedTextField(
-                        value = epInput,
-                        onValueChange = { if (it.isEmpty() || it.all { c -> c.isDigit() }) epInput = it },
-                        label = { Text("Erfahrungspunkte") },
-                        keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
-                        singleLine = true,
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = PinkDunkel,
-                            focusedLabelColor = PinkDunkel
-                        )
-                    )
-                },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            val amount = epInput.toIntOrNull()
-                            if (amount != null && amount > 0) {
-                                viewModel.addExperience(amount)
-                                epInput = ""
-                                showEpDialog = false
-                            }
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
-                    ) {
-                        Text("Hinzufügen")
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = { showEpDialog = false }) {
-                        Text("Abbrechen", color = BlauDunkel)
-                    }
-                }
-            )
-        }
-
-        // NEU: Level Up Benachrichtigung im Kampfscreen
-        if (viewModel.showLevelUpNotification) {
-            AlertDialog(
-                onDismissRequest = { viewModel.dismissLevelUpNotification() },
-                containerColor = GelbSand,
-                title = { Text("Level Up! Stufe ${viewModel.level} erreicht!", color = BlauDunkel, fontWeight = FontWeight.Bold, fontSize = 20.sp) },
-                text = { Text("Glückwunsch! Deine Erfahrungspunkte reichen für einen Stufenaufstieg. Möchtest du deinen Charakter jetzt verbessern?", color = BlauDunkel) },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            viewModel.dismissLevelUpNotification()
-                            onNavigateToProfile()
-                        },
-                        colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
-                    ) {
-                        Text("Jetzt anpassen")
-                    }
-                },
-                dismissButton = {
-                    TextButton(onClick = { viewModel.dismissLevelUpNotification() }) {
-                        Text("Später erledigen", color = BlauDunkel)
-                    }
-                }
-            )
-        }
-
-        Text("Waffe ausrüsten", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Waffen-Auswahl
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
-                WeaponButton(
-                    title = "Langbogen",
-                    isSelected = viewModel.currentWeapon == ActiveWeapon.LANGBOGEN,
-                    onClick = { viewModel.equipWeapon(ActiveWeapon.LANGBOGEN) }
-                )
-                WeaponButton(
-                    title = "Kurzschwert\n& Schild",
-                    isSelected = viewModel.currentWeapon == ActiveWeapon.KURZSCHWERT_SCHILD,
-                    onClick = { viewModel.equipWeapon(ActiveWeapon.KURZSCHWERT_SCHILD) }
-                )
-                WeaponButton(
-                    title = "Shillelagh\n& Schild",
-                    isSelected = viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD,
-                    onClick = { viewModel.equipWeapon(ActiveWeapon.SHILLELAGH_SCHILD) }
-                )
-            } else {
-                WeaponButton(
-                    title = "Kriegshammer\n(Pakt)",
-                    isSelected = viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT,
-                    onClick = { viewModel.equipWeapon(ActiveWeapon.KRIEGSHAMMER_PAKT) }
-                )
-                WeaponButton(
-                    title = "Speer\n(Pakt)",
-                    isSelected = viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT,
-                    onClick = { viewModel.equipWeapon(ActiveWeapon.SPEER_PAKT) }
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Anzeige der aktuellen Waffenwerte
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = BlauHell),
-            shape = RoundedCornerShape(12.dp)
-        ) {
-            Column(modifier = Modifier.padding(12.dp)) {
-                Text("Trefferbonus: ${viewModel.currentAttackBonus}", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
-                Spacer(modifier = Modifier.height(8.dp))
-                Text("Schaden: ${viewModel.currentDamage}", fontSize = 16.sp, color = Color.White)
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Dynamischer Hinweis je nach Waffentyp
-                val extraNote = when (viewModel.currentWeapon) {
-                    ActiveWeapon.LANGBOGEN -> "Verlangsamen: Ziel -3 Bewegung.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
-                    ActiveWeapon.KURZSCHWERT_SCHILD -> "Plagen: Nächster Angriff hat Vorteil.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
-                    ActiveWeapon.SHILLELAGH_SCHILD -> "Umstoßen (Mastery): Gegner muss bei Treffer Kon-Save (DC 12) bestehen oder liegt am Boden."
-                    ActiveWeapon.KRIEGSHAMMER_PAKT -> "Paktwaffe: Nutzt Charisma. Umstoßen (Mastery): Gegner muss bei Treffer Kon-Save bestehen oder liegt am Boden."
-                    ActiveWeapon.SPEER_PAKT -> "Paktwaffe: Nutzt Charisma. Sap (Mastery): Nächster Angriff des Gegners hat Nachteil."
-                }
-
-                Text(
-                    text = extraNote,
-                    fontSize = 14.sp,
-                    fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
-                    color = BlauDunkel
-                )
-            }
-        }
-
-        if (viewModel.currentWeapon == ActiveWeapon.LANGBOGEN) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = BlauHell),
-                shape = RoundedCornerShape(12.dp)
-            ) {
+            // Lebenspunkte & Trefferwürfel
+            PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
                 Column(modifier = Modifier.padding(12.dp)) {
-                    Text("Pfeilköcher", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
-                    Spacer(modifier = Modifier.height(8.dp))
-
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.Bottom
                     ) {
                         Column {
-                            Text("Verfügbar: ${viewModel.totalArrows}", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                            Text("Verschossen: ${viewModel.shotArrows}", fontSize = 16.sp, color = if (viewModel.shotArrows > 0) PinkDunkel else Color.White)
-                        }
-
-                        Button(
-                            onClick = { viewModel.shootArrow() },
-                            enabled = viewModel.totalArrows > 0,
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = PinkDunkel,
-                                disabledContainerColor = Color.Gray
+                            Text(
+                                "HP: ${viewModel.currentHp} / ${viewModel.maxHp}",
+                                style = GrenzeGotischStyle,
+                                color = if (viewModel.currentHp > 10) TintenSchwarz else OchsenblutRot
                             )
-                        ) {
-                            Text("Schießen")
+                            if (viewModel.tempHp > 0) {
+                                Text(
+                                    "+${viewModel.tempHp} Temp HP",
+                                    style = GrenzeGotischSmall,
+                                    color = TempHPBlau
+                                )
+                            }
                         }
+                        Text(
+                            "Trefferwürfel: ${viewModel.hitDice}/4",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = TintenBraun
+                        )
                     }
 
-                    if (viewModel.shotArrows > 0) {
-                        Spacer(modifier = Modifier.height(12.dp))
-                        HorizontalDivider(color = BlauDunkel)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text("Nach dem Kampf:", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    // HP Bar
+                    LinearProgressIndicator(
+                        progress = { viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(14.dp),
+                        color = if (viewModel.currentHp > 10) Waldgruen else OchsenblutRot,
+                        trackColor = PergamentDunkel
+                    )
+
+                    // Temp HP Bar (wenn vorhanden)
+                    if (viewModel.tempHp > 0) {
                         Spacer(modifier = Modifier.height(4.dp))
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Button(
-                                onClick = { viewModel.recoverArrows() },
-                                colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
-                                modifier = Modifier.weight(1f).padding(end = 4.dp)
-                            ) {
-                                Text("½ Einsammeln", fontSize = 14.sp)
-                            }
-                            Button(
-                                onClick = { viewModel.discardShotArrows() },
-                                colors = ButtonDefaults.buttonColors(containerColor = Color.Red.copy(alpha = 0.7f)),
-                                modifier = Modifier.weight(1f).padding(start = 4.dp)
-                            ) {
-                                Text("Alle verloren", fontSize = 14.sp)
-                            }
-                        }
+                        LinearProgressIndicator(
+                            progress = { viewModel.tempHp.toFloat() / 12f },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(8.dp),
+                            color = TempHPBlau,
+                            trackColor = PergamentDunkel.copy(alpha = 0.3f)
+                        )
+                    }
+
+                    if (viewModel.currentHp == 0) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        DeathSavesRow(viewModel)
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
-                    HorizontalDivider(color = BlauDunkel)
+
+                    // HP-Buttons
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Button(onClick = { viewModel.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("-5 HP", fontFamily = Almendra, fontSize = 14.sp) }
+                        Button(onClick = { viewModel.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("-1 HP", fontFamily = Almendra, fontSize = 14.sp) }
+                        Button(onClick = { viewModel.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("+1 HP", fontFamily = Almendra, fontSize = 14.sp) }
+                        Button(onClick = { viewModel.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("+5 HP", fontFamily = Almendra, fontSize = 14.sp) }
+                    }
+
                     Spacer(modifier = Modifier.height(8.dp))
-                    
+                    HorizontalDivider(color = PergamentDunkel)
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    // Temp HP Buttons
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Temp HP:", style = MaterialTheme.typography.labelLarge, color = TempHPBlau)
+                        Button(onClick = { viewModel.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.6f)), shape = RoundedCornerShape(6.dp)) { Text("-1", fontSize = 14.sp) }
+                        Button(onClick = { viewModel.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze.copy(alpha = 0.7f)), shape = RoundedCornerShape(6.dp)) { Text("+1", fontSize = 14.sp) }
+                        Button(onClick = { viewModel.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), shape = RoundedCornerShape(6.dp)) { Text("+12", fontSize = 14.sp) }
+                    }
+                }
+            }
+
+            // RK und EP nebeneinander
+            var showEpDialog by remember { mutableStateOf(false) }
+            var epInput by remember { mutableStateOf("") }
+
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                // Rüstungsklasse
+                SteinCard(modifier = Modifier.weight(1f)) {
+                    Column(
+                        modifier = Modifier.padding(12.dp).fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text("Rüstungsklasse", style = MaterialTheme.typography.labelMedium, color = Waldgruen)
+                        Text(
+                            viewModel.currentArmorClass.toString(),
+                            style = GrenzeGotischStyle.copy(fontSize = 48.sp),
+                            color = TintenSchwarz
+                        )
+                    }
+                }
+
+                // Erfahrungspunkte
+                SteinCard(modifier = Modifier.weight(1f)) {
+                    Column(
+                        modifier = Modifier.padding(12.dp).fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text("EP (Stufe ${viewModel.level})", style = MaterialTheme.typography.labelMedium, color = Waldgruen)
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                viewModel.currentEP.toString(),
+                                style = GrenzeGotischStyle.copy(fontSize = 48.sp),
+                                color = TintenSchwarz
+                            )
+                            IconButton(onClick = { showEpDialog = true }) {
+                                Text("+", color = accentColor, fontSize = 28.sp, fontWeight = FontWeight.Bold)
+                            }
+                        }
+                    }
+                }
+            }
+
+            // EP Dialog
+            if (showEpDialog) {
+                AlertDialog(
+                    onDismissRequest = { showEpDialog = false },
+                    containerColor = PergamentHell,
+                    shape = RoundedCornerShape(12.dp),
+                    title = { Text("EP hinzufügen", style = MaterialTheme.typography.titleSmall, color = Waldgruen) },
+                    text = {
+                        OutlinedTextField(
+                            value = epInput,
+                            onValueChange = { if (it.isEmpty() || it.all { c -> c.isDigit() }) epInput = it },
+                            label = { Text("Erfahrungspunkte", fontFamily = Almendra) },
+                            keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
+                            singleLine = true,
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = accentColor,
+                                focusedLabelColor = accentColor
+                            )
+                        )
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                val amount = epInput.toIntOrNull()
+                                if (amount != null && amount > 0) {
+                                    viewModel.addExperience(amount)
+                                    epInput = ""
+                                    showEpDialog = false
+                                }
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = accentColor),
+                            shape = RoundedCornerShape(8.dp)
+                        ) { Text("Hinzufügen", fontFamily = Almendra) }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showEpDialog = false }) {
+                            Text("Abbrechen", color = Waldgruen, fontFamily = Almendra)
+                        }
+                    }
+                )
+            }
+
+            // Level Up Benachrichtigung
+            if (viewModel.showLevelUpNotification) {
+                AlertDialog(
+                    onDismissRequest = { viewModel.dismissLevelUpNotification() },
+                    containerColor = PergamentHell,
+                    shape = RoundedCornerShape(12.dp),
+                    title = { Text("Level Up! Stufe ${viewModel.level} erreicht!", style = MaterialTheme.typography.titleSmall, color = accentColor) },
+                    text = { Text("Glückwunsch! Deine Erfahrungspunkte reichen für einen Stufenaufstieg. Möchtest du deinen Charakter jetzt verbessern?", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz) },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                viewModel.dismissLevelUpNotification()
+                                onNavigateToProfile()
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = accentColor),
+                            shape = RoundedCornerShape(8.dp)
+                        ) { Text("Jetzt anpassen", fontFamily = Almendra) }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { viewModel.dismissLevelUpNotification() }) {
+                            Text("Später erledigen", color = Waldgruen, fontFamily = Almendra)
+                        }
+                    }
+                )
+            }
+
+            Text("Waffe ausrüsten", style = MaterialTheme.typography.titleMedium, color = Waldgruen)
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Waffen-Auswahl
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                if (isRanger) {
+                    WeaponButton("Langbogen", viewModel.currentWeapon == ActiveWeapon.LANGBOGEN, WaldGold) { viewModel.equipWeapon(ActiveWeapon.LANGBOGEN) }
+                    WeaponButton("Kurzschwert\n& Schild", viewModel.currentWeapon == ActiveWeapon.KURZSCHWERT_SCHILD, WaldGold) { viewModel.equipWeapon(ActiveWeapon.KURZSCHWERT_SCHILD) }
+                    WeaponButton("Shillelagh\n& Schild", viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD, WaldGold) { viewModel.equipWeapon(ActiveWeapon.SHILLELAGH_SCHILD) }
+                } else {
+                    WeaponButton("Kriegshammer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.KRIEGSHAMMER_PAKT) }
+                    WeaponButton("Speer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.SPEER_PAKT) }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Anzeige der aktuellen Waffenwerte
+            PergamentCard(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(12.dp)) {
+                    Text("Trefferbonus: ${viewModel.currentAttackBonus}", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text("Schaden: ${viewModel.currentDamage}", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    val extraNote = when (viewModel.currentWeapon) {
+                        ActiveWeapon.LANGBOGEN -> "Verlangsamen: Ziel -3 Bewegung.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
+                        ActiveWeapon.KURZSCHWERT_SCHILD -> "Plagen: Nächster Angriff hat Vorteil.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
+                        ActiveWeapon.SHILLELAGH_SCHILD -> "Umstoßen (Mastery): Gegner muss bei Treffer Kon-Save (DC 12) bestehen oder liegt am Boden."
+                        ActiveWeapon.KRIEGSHAMMER_PAKT -> "Paktwaffe: Nutzt Charisma. Umstoßen (Mastery): Gegner muss bei Treffer Kon-Save bestehen oder liegt am Boden."
+                        ActiveWeapon.SPEER_PAKT -> "Paktwaffe: Nutzt Charisma. Sap (Mastery): Nächster Angriff des Gegners hat Nachteil."
+                    }
+
+                    Text(
+                        text = extraNote,
+                        style = MaterialTheme.typography.bodySmall,
+                        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                        color = TintenBraun
+                    )
+                }
+            }
+
+            if (viewModel.currentWeapon == ActiveWeapon.LANGBOGEN) {
+                Spacer(modifier = Modifier.height(16.dp))
+                PergamentCard(modifier = Modifier.fillMaxWidth()) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Text("Pfeilköcher", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Column {
+                                Text("Verfügbar: ${viewModel.totalArrows}", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
+                                Text("Verschossen: ${viewModel.shotArrows}", style = MaterialTheme.typography.bodyMedium, color = if (viewModel.shotArrows > 0) OchsenblutRot else TintenSchwarz)
+                            }
+                            Button(
+                                onClick = { viewModel.shootArrow() },
+                                enabled = viewModel.totalArrows > 0,
+                                colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot, disabledContainerColor = EisenGrau),
+                                shape = RoundedCornerShape(8.dp)
+                            ) { Text("Schießen", fontFamily = Almendra) }
+                        }
+
+                        if (viewModel.shotArrows > 0) {
+                            Spacer(modifier = Modifier.height(12.dp))
+                            HorizontalDivider(color = PergamentDunkel)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text("Nach dem Kampf:", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                Button(onClick = { viewModel.recoverArrows() }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), modifier = Modifier.weight(1f).padding(end = 4.dp), shape = RoundedCornerShape(8.dp)) { Text("½ Einsammeln", fontSize = 13.sp, fontFamily = Almendra) }
+                                Button(onClick = { viewModel.discardShotArrows() }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.7f)), modifier = Modifier.weight(1f).padding(start = 4.dp), shape = RoundedCornerShape(8.dp)) { Text("Alle verloren", fontSize = 13.sp, fontFamily = Almendra) }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(12.dp))
+                        HorizontalDivider(color = PergamentDunkel)
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            Text("Pfeile...", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                            Row {
+                                Button(onClick = { viewModel.changeTotalArrows(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(36.dp), shape = RoundedCornerShape(6.dp)) { Text("- Ablegen", fontSize = 12.sp, fontFamily = Almendra) }
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Button(onClick = { viewModel.changeTotalArrows(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(36.dp), shape = RoundedCornerShape(6.dp)) { Text("+ Aufnehmen", fontSize = 12.sp, fontFamily = Almendra) }
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Loot-Button
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = onNavigateToRucksack,
+                modifier = Modifier.fillMaxWidth().height(56.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Bronze),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text("💰 Loot eintragen", style = MaterialTheme.typography.titleSmall, color = Color.White)
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Standard-Taktik
+            var isTacticExpanded by remember { mutableStateOf(false) }
+            var isTacticEditing by remember { mutableStateOf(false) }
+            var editTacticText by remember { mutableStateOf(viewModel.standardTactic) }
+
+            PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
+                Column(
+                    modifier = Modifier
+                        .padding(12.dp)
+                        .fillMaxWidth()
+                        .clickable { if (!isTacticEditing) isTacticExpanded = !isTacticExpanded }
+                ) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Pfeile...", fontSize = 14.sp, color = BlauDunkel, fontWeight = FontWeight.Bold)
-                        Row {
-                            Button(
-                                onClick = { viewModel.changeTotalArrows(-1) },
-                                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel),
-                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
-                                modifier = Modifier.height(36.dp)
-                            ) { Text("- Ablegen", fontSize = 12.sp) }
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Button(
-                                onClick = { viewModel.changeTotalArrows(1) },
-                                colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
-                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp),
-                                modifier = Modifier.height(36.dp)
-                            ) { Text("+ Aufnehmen", fontSize = 12.sp) }
+                        Text("Standard-Taktik", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
+                        if (isTacticExpanded && !isTacticEditing) {
+                            IconButton(onClick = {
+                                editTacticText = viewModel.standardTactic
+                                isTacticEditing = true
+                            }, modifier = Modifier.size(24.dp)) {
+                                Icon(Icons.Default.Edit, contentDescription = "Bearbeiten", tint = accentColor)
+                            }
                         }
                     }
-                }
-            }
-        }
-
-        // NEU: Auffälliger Loot-Button zur direkten Navigation in den Rucksack
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = onNavigateToRucksack,
-            modifier = Modifier.fillMaxWidth().height(60.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel),
-            shape = RoundedCornerShape(12.dp)
-        ) {
-            Text("💰 Loot eintragen", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White)
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Standard-Taktik (Moved from ZauberScreen)
-        var isTacticExpanded by remember { mutableStateOf(false) }
-        var isTacticEditing by remember { mutableStateOf(false) }
-        var editTacticText by remember { mutableStateOf(viewModel.standardTactic) }
-
-        Card(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp).clickable { 
-                if (!isTacticEditing) isTacticExpanded = !isTacticExpanded 
-            },
-            colors = CardDefaults.cardColors(containerColor = BlauHell)
-        ) {
-            Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("Standard-Taktik", color = GelbSand, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                    if (isTacticExpanded && !isTacticEditing) {
-                        IconButton(onClick = { 
-                            editTacticText = viewModel.standardTactic
-                            isTacticEditing = true 
-                        }, modifier = Modifier.size(24.dp)) {
-                            Icon(Icons.Default.Edit, contentDescription = "Bearbeiten", tint = PinkDunkel)
-                        }
-                    }
-                }
-                if (isTacticExpanded) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                    if (isTacticEditing) {
-                        OutlinedTextField(
-                            value = editTacticText,
-                            onValueChange = { editTacticText = it },
-                            modifier = Modifier.fillMaxWidth().height(120.dp),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = PinkDunkel,
-                                unfocusedTextColor = Color.White,
-                                focusedTextColor = Color.White
-                            )
-                        )
+                    if (isTacticExpanded) {
                         Spacer(modifier = Modifier.height(8.dp))
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                            TextButton(onClick = { isTacticEditing = false }) { Text("Abbrechen", color = Color.White) }
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Button(
-                                onClick = {
-                                    viewModel.updateStandardTactic(editTacticText)
-                                    isTacticEditing = false
-                                },
-                                colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)
-                            ) { Text("Speichern") }
+                        if (isTacticEditing) {
+                            OutlinedTextField(
+                                value = editTacticText,
+                                onValueChange = { editTacticText = it },
+                                modifier = Modifier.fillMaxWidth().height(120.dp),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = accentColor,
+                                    unfocusedTextColor = TintenSchwarz,
+                                    focusedTextColor = TintenSchwarz
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                                TextButton(onClick = { isTacticEditing = false }) { Text("Abbrechen", color = TintenBraun, fontFamily = Almendra) }
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Button(onClick = { viewModel.updateStandardTactic(editTacticText); isTacticEditing = false }, colors = ButtonDefaults.buttonColors(containerColor = accentColor), shape = RoundedCornerShape(8.dp)) { Text("Speichern", fontFamily = Almendra) }
+                            }
+                        } else {
+                            Text(viewModel.standardTactic, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         }
-                    } else {
-                        Text(viewModel.standardTactic, color = Color.White, fontSize = 14.sp)
                     }
                 }
             }
@@ -479,19 +420,19 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
 }
 
 @Composable
-fun WeaponButton(title: String, isSelected: Boolean, onClick: () -> Unit) {
+fun WeaponButton(title: String, isSelected: Boolean, accentColor: Color, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = if (isSelected) PinkDunkel else BlauHell,
-            contentColor = if (isSelected) Color.White else BlauDunkel
+            containerColor = if (isSelected) accentColor else PergamentDunkel,
+            contentColor = if (isSelected) Color.White else TintenSchwarz
         ),
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .width(110.dp)
             .height(60.dp)
     ) {
-        Text(text = title, fontSize = 14.sp, textAlign = TextAlign.Center, lineHeight = 16.sp)
+        Text(text = title, fontFamily = Almendra, fontSize = 13.sp, textAlign = TextAlign.Center, lineHeight = 16.sp)
     }
 }
 
@@ -501,63 +442,50 @@ fun DeathSavesRow(viewModel: CharacterViewModel) {
     var showFailureDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(viewModel.deathSaveSuccesses) {
-        if (viewModel.deathSaveSuccesses >= 3) {
-            showSuccessDialog = true
-        }
+        if (viewModel.deathSaveSuccesses >= 3) showSuccessDialog = true
     }
 
     LaunchedEffect(viewModel.deathSaveFailures) {
-        if (viewModel.deathSaveFailures >= 3) {
-            showFailureDialog = true
-        }
+        if (viewModel.deathSaveFailures >= 3) showFailureDialog = true
     }
 
     if (showSuccessDialog) {
         AlertDialog(
             onDismissRequest = { showSuccessDialog = false },
-            title = { Text("Stabilisiert!", color = GelbSand, fontWeight = FontWeight.Bold) },
-            text = { Text("Du hast 3 erfolgreiche Rettungswürfe geschafft. Du bist stabilisiert (HP bleiben 0, aber du stirbst nicht).", color = BlauDunkel) },
-            confirmButton = {
-                Button(onClick = { showSuccessDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)) {
-                    Text("Puh!")
-                }
-            },
-            containerColor = BlauHell
+            title = { Text("Stabilisiert!", style = MaterialTheme.typography.titleSmall, color = TodRuneGruen) },
+            text = { Text("Du hast 3 erfolgreiche Rettungswürfe geschafft. Du bist stabilisiert.", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz) },
+            confirmButton = { Button(onClick = { showSuccessDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("Puh!", fontFamily = Almendra) } },
+            containerColor = PergamentHell,
+            shape = RoundedCornerShape(12.dp)
         )
     }
 
     if (showFailureDialog) {
         AlertDialog(
             onDismissRequest = { showFailureDialog = false },
-            title = { Text("Gefallen...", color = Color.Red, fontWeight = FontWeight.Bold) },
-            text = { Text("Du hast 3 fehlgeschlagene Rettungswürfe ereilt. Athania ist gestorben...", color = BlauDunkel) },
-            confirmButton = {
-                Button(onClick = { showFailureDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel)) {
-                    Text("RiP")
-                }
-            },
-            containerColor = Color.LightGray
+            title = { Text("Gefallen...", style = MaterialTheme.typography.titleSmall, color = TodRuneRot) },
+            text = { Text("Du hast 3 fehlgeschlagene Rettungswürfe ereilt. Der Charakter ist gestorben...", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz) },
+            confirmButton = { Button(onClick = { showFailureDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("RiP", fontFamily = Almendra) } },
+            containerColor = PergamentHell,
+            shape = RoundedCornerShape(12.dp)
         )
     }
 
     Column(modifier = Modifier.fillMaxWidth()) {
-        Text("Todesrettungswürfe", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+        Text("Todesrettungswürfe", style = MaterialTheme.typography.labelLarge, color = TintenSchwarz)
         Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
             // Erfolge
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Erfolge:", color = GelbSand, fontSize = 14.sp)
+                Text("Erfolge:", style = MaterialTheme.typography.labelMedium, color = TodRuneGruen)
                 Spacer(modifier = Modifier.width(4.dp))
                 repeat(3) { index ->
                     val checked = index < viewModel.deathSaveSuccesses
                     Icon(
                         imageVector = if (checked) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
                         contentDescription = "Erfolg",
-                        tint = if (checked) GelbSand else Color.Gray,
-                        modifier = Modifier.size(24.dp).clickable { 
+                        tint = if (checked) TodRuneGruen else EisenGrau,
+                        modifier = Modifier.size(24.dp).clickable {
                             if (checked) viewModel.updateDeathSaves(index, viewModel.deathSaveFailures)
                             else viewModel.updateDeathSaves(index + 1, viewModel.deathSaveFailures)
                         }
@@ -566,14 +494,14 @@ fun DeathSavesRow(viewModel: CharacterViewModel) {
             }
             // Fehlschläge
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Fehlschläge:", color = Color.Red, fontSize = 14.sp)
+                Text("Fehlschläge:", style = MaterialTheme.typography.labelMedium, color = TodRuneRot)
                 Spacer(modifier = Modifier.width(4.dp))
                 repeat(3) { index ->
                     val checked = index < viewModel.deathSaveFailures
                     Icon(
                         imageVector = if (checked) Icons.Default.Cancel else Icons.Default.RadioButtonUnchecked,
                         contentDescription = "Fehlschlag",
-                        tint = if (checked) Color.Red else Color.Gray,
+                        tint = if (checked) TodRuneRot else EisenGrau,
                         modifier = Modifier.size(24.dp).clickable {
                             if (checked) viewModel.updateDeathSaves(viewModel.deathSaveSuccesses, index)
                             else viewModel.updateDeathSaves(viewModel.deathSaveSuccesses, index + 1)
