@@ -143,3 +143,5 @@
 - [x] **Zauberbuch-Vollständigkeit (Delat):** Prüfen, ob alle Zauber aus stats_delat.md im Charakterblatt hinterlegt sind.
 - [x] **Dynamische FAQ-Schlagworte:** Gemini soll automatisch passende Titel/Tags für FAQ-Einträge generieren (statt statisch "Regelerklärung").
 - [ ] **Gute Beeren Sichtbarkeit:** "Gute Beeren" Schaltfläche im Rucksack soll für Charaktere ohne diesen Zauber (z.B. Delat) komplett ausgeblendet werden.
+- [x] **Rucksack:** Der Geldbeutel stimmt in der ausgeklappten und eingeklappten Version nicht überein , die Ausschöpfung der Traglast ist nicht erkennbar und bei Neuer Fund kann man die Kategorie nicht mehr auswählen (drop-down).
+

@@ -21,10 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.dndcompanion.ui.theme.BlauDunkel
-import com.example.dndcompanion.ui.theme.BlauHell
-import com.example.dndcompanion.ui.theme.GelbSand
-import com.example.dndcompanion.ui.theme.PinkDunkel
+import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.ui.viewmodel.EquipmentCatalogItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,7 +53,7 @@ fun EquipmentPickerDialog(
     ModalBottomSheet(
         onDismissRequest = onDismiss,
         sheetState = sheetState,
-        containerColor = GelbSand,
+        containerColor = Pergament,
         shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
         modifier = Modifier.fillMaxHeight(0.85f)
     ) {
@@ -65,33 +62,30 @@ fun EquipmentPickerDialog(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
                     "Ausrüstungskatalog",
-                    fontSize = 22.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = BlauDunkel
+                    style = Typography.headlineSmall,
+                    color = WaldgruenDunkel
                 )
-                IconButton(onClick = onDismiss) {
-                    Icon(Icons.Default.Close, contentDescription = "Schließen", tint = BlauDunkel)
+                IconButton(onClick = onDismiss, modifier = Modifier.size(48.dp)) {
+                    Icon(Icons.Default.Close, contentDescription = "Schließen", tint = WaldgruenDunkel)
                 }
             }
-
-            Spacer(modifier = Modifier.height(8.dp))
 
             // --- SUCHFELD ---
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
-                placeholder = { Text("Gegenstand suchen...") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = BlauDunkel) },
+                placeholder = { Text("Gegenstand suchen...", fontFamily = Almendra) },
+                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Waldgruen) },
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = { searchQuery = "" }) {
-                            Icon(Icons.Default.Close, contentDescription = "Löschen", tint = PinkDunkel)
+                        IconButton(onClick = { searchQuery = "" }, modifier = Modifier.size(48.dp)) {
+                            Icon(Icons.Default.Close, contentDescription = "Löschen", tint = OchsenblutRot)
                         }
                     }
                 },
@@ -100,14 +94,15 @@ fun EquipmentPickerDialog(
                     .padding(horizontal = 16.dp),
                 singleLine = true,
                 shape = RoundedCornerShape(12.dp),
+                textStyle = Typography.bodyLarge,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PinkDunkel,
-                    focusedLabelColor = PinkDunkel,
-                    cursorColor = PinkDunkel
+                    focusedBorderColor = WaldGold,
+                    unfocusedBorderColor = PergamentDunkel,
+                    cursorColor = WaldGold
                 )
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(12.dp))
 
             // --- KATEGORIE-CHIPS ---
             Row(
@@ -120,18 +115,19 @@ fun EquipmentPickerDialog(
                 FilterChip(
                     selected = selectedCategory == null,
                     onClick = { selectedCategory = null },
-                    label = { Text("Alle") },
+                    label = { Text("Alle", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
                     colors = FilterChipDefaults.filterChipColors(
-                        selectedContainerColor = BlauDunkel,
+                        selectedContainerColor = Waldgruen,
                         selectedLabelColor = Color.White
-                    )
+                    ),
+                    modifier = Modifier.heightIn(min = 40.dp)
                 )
                 categories.forEach { cat ->
                     val chipLabel = when {
-                        cat.startsWith("Waffen") -> "⚔️ ${cat.substringAfter("(").removeSuffix(")")}"
-                        cat == "Rüstung" -> "🛡️ Rüstung"
-                        cat == "Werkzeug" -> "🔧 Werkzeug"
-                        cat == "Ausrüstung" -> "🎒 Ausrüstung"
+                        cat.contains("Waffen", ignoreCase = true) -> "⚔️ ${cat.substringAfterLast("(").removeSuffix(")")}"
+                        cat.contains("Rüstung", ignoreCase = true) -> "🛡️ Rüstung"
+                        cat.contains("Werkzeug", ignoreCase = true) -> "🔧 Werkzeug"
+                        cat.contains("Ausrüstung", ignoreCase = true) -> "🎒 Ausrüstung"
                         else -> cat
                     }
                     FilterChip(
@@ -139,11 +135,12 @@ fun EquipmentPickerDialog(
                         onClick = {
                             selectedCategory = if (selectedCategory == cat) null else cat
                         },
-                        label = { Text(chipLabel, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                        label = { Text(chipLabel, maxLines = 1, overflow = TextOverflow.Ellipsis, fontFamily = Almendra) },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = BlauDunkel,
+                            selectedContainerColor = Waldgruen,
                             selectedLabelColor = Color.White
-                        )
+                        ),
+                        modifier = Modifier.heightIn(min = 40.dp)
                     )
                 }
             }
@@ -152,19 +149,19 @@ fun EquipmentPickerDialog(
 
             // --- ERGEBNIS-ZÄHLER ---
             Text(
-                "${filteredItems.size} Gegenstände",
-                fontSize = 14.sp,
-                color = BlauDunkel,
+                "${filteredItems.size} Gegenstände gefunden",
+                style = Typography.bodySmall,
+                color = TintenBraun,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             // --- ITEM-LISTE ---
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 4.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
+                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(filteredItems, key = { "${it.name}_${it.category}" }) { item ->
                     CatalogItemCard(item = item, onAdd = { onItemSelected(item) })
@@ -176,11 +173,7 @@ fun EquipmentPickerDialog(
 
 @Composable
 private fun CatalogItemCard(item: EquipmentCatalogItem, onAdd: () -> Unit) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = BlauHell),
-        shape = RoundedCornerShape(10.dp)
-    ) {
+    PergamentCard(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
                 .padding(12.dp)
@@ -191,9 +184,8 @@ private fun CatalogItemCard(item: EquipmentCatalogItem, onAdd: () -> Unit) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = item.name,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    color = Color.White,
+                    style = Typography.titleMedium,
+                    color = TintenSchwarz,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -204,27 +196,27 @@ private fun CatalogItemCard(item: EquipmentCatalogItem, onAdd: () -> Unit) {
                     if (item.weight > 0.0) {
                         Text(
                             text = "${item.weight} kg",
-                            fontSize = 13.sp,
-                            color = GelbSand
+                            style = GrenzeGotischSmall.copy(fontSize = 14.sp),
+                            color = Waldgruen
                         )
                     }
                     if (item.price.isNotBlank() && item.price != "-") {
                         Text(
                             text = item.price,
-                            fontSize = 13.sp,
-                            color = GelbSand.copy(alpha = 0.8f)
+                            style = GrenzeGotischSmall.copy(fontSize = 14.sp),
+                            color = BronzeDunkel
                         )
                     }
                 }
             }
-            IconButton(onClick = onAdd) {
+            IconButton(onClick = onAdd, modifier = Modifier.size(48.dp)) {
                 Icon(
                     Icons.Default.Add,
                     contentDescription = "Hinzufügen",
-                    tint = GelbSand,
+                    tint = Color.White,
                     modifier = Modifier
-                        .size(28.dp)
-                        .background(BlauDunkel, RoundedCornerShape(6.dp))
+                        .size(32.dp)
+                        .background(Waldgruen, RoundedCornerShape(8.dp))
                         .padding(4.dp)
                 )
             }
