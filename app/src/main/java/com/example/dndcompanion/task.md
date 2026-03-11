@@ -116,7 +116,20 @@
 - [ ] **Globale Dialoge**: EP, Rasten, Level-Up, `RestWarningDialog`, Spellbook-Edit.
 - [ ] **Dynamik & Konsistenz**: Flexible Boxengrößen überall, Pergament-Animationen, HP-Balken Smoothness.
 - [ ] **Ikonographie**: Attribut-Icons & Nav-Holzschnitte finalisieren.
-
+- [ ] **Accessability**: 
+  - Kontrast (APCA Standard):
+    - Fließtext: Lc >= 75 (Goldstandard für Lesbarkeit).
+    - Warnmeldungen: Lc >= 90 (maximale Aufmerksamkeit).
+    - Beschriftungen/Platzhalter: Lc >= 60.
+    - Dekorative Elemente/Linien/Disabled-States: Lc <= 45.
+  - Typografie (Größen in sp):
+    - Standard Body: 16 sp.
+    - Längere Texte & Chat-Inhalte: 18 sp.
+    - Interaktive Elemente (Buttons): Mindestens 14 sp, Schriftschnitt: Bold.
+    - Absolute Untergrenze: 12 sp (nur für sekundäre Meta-Daten).  
+  - Layout-Metriken:
+    - Zeilenabstand: Faktor 1,5 für alle Textblöcke (zur Reduktion kognitiver Last).
+    - Touch-Targets: Achte darauf, dass klickbare Elemente eine Mindestgröße von 48 x 48 dp haben.
 ## Phase 6: Gruppen-Features & Ausblick
 - [x] **Geteilte Schatztruhe (Gruppen-Loot):** Ein Inventar, aus dem jeder Spieler in Echtzeit Gold und Items nehmen oder hineinlegen kann.
 - [ ] **Echtzeit-Initiative-Tracker:** Ein eigener Kampf-Bildschirm, der die Zug-Reihenfolge live zeigt.
