@@ -41,11 +41,23 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    "Charakter Profil",
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Waldgruen
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    androidx.compose.foundation.Image(
+                        painter = androidx.compose.ui.res.painterResource(id = com.example.dndcompanion.R.drawable.dndcompanion_logo),
+                        contentDescription = "App Logo",
+                        modifier = Modifier
+                            .size(36.dp)
+                            .androidx.compose.ui.draw.clip(androidx.compose.foundation.shape.CircleShape)
+                            .border(1.dp, WaldGold, androidx.compose.foundation.shape.CircleShape),
+                        contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        "Charakter Profil",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Waldgruen
+                    )
+                }
 
                 var expanded by remember { mutableStateOf(false) }
                 val accentColor = if (viewModel.characterData.charClass == CharacterClass.RANGER) WaldGold else HexenLila
@@ -90,11 +102,24 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            viewModel.characterData.name,
-                            style = MaterialTheme.typography.titleMedium,
-                            color = Waldgruen
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            val avatarId = if (viewModel.characterData.name == "Athania") com.example.dndcompanion.R.drawable.athania else com.example.dndcompanion.R.drawable.delat
+                            androidx.compose.foundation.Image(
+                                painter = androidx.compose.ui.res.painterResource(id = avatarId),
+                                contentDescription = "Charakter Portrait",
+                                modifier = Modifier
+                                    .size(64.dp)
+                                    .androidx.compose.ui.draw.clip(androidx.compose.foundation.shape.CircleShape)
+                                    .border(2.dp, accentColor, androidx.compose.foundation.shape.CircleShape),
+                                contentScale = androidx.compose.ui.layout.ContentScale.Crop
+                            )
+                            Spacer(modifier = Modifier.width(12.dp))
+                            Text(
+                                viewModel.characterData.name,
+                                style = MaterialTheme.typography.titleMedium,
+                                color = Waldgruen
+                            )
+                        }
                         Column(horizontalAlignment = Alignment.End) {
                             Text(
                                 "HP: ${viewModel.currentHp} / ${viewModel.maxHp}",

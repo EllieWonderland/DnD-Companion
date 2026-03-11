@@ -39,6 +39,20 @@ import java.text.SimpleDateFormat
 import java.util.*
 import androidx.compose.ui.draw.scale
 
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.layout.aspectRatio
+import com.example.dndcompanion.ui.theme.PergamentBackground
+import com.example.dndcompanion.ui.theme.PergamentCard
+import com.example.dndcompanion.ui.theme.SteinCard
+import com.example.dndcompanion.ui.theme.TintenSchwarz
+import com.example.dndcompanion.ui.theme.Almendra
+import com.example.dndcompanion.ui.theme.GrenzeGotischSmall
+import com.example.dndcompanion.ui.theme.WaldGold
+import com.example.dndcompanion.ui.theme.WaldgruenDunkel
+import com.example.dndcompanion.ui.theme.OchsenblutRot
+import com.example.dndcompanion.R
+
 enum class BookType {
     GENERAL, GRUDGE, SPELLBOOK, RULEBOOK, GROUP_CHAT, QUESTLOG
 }
@@ -97,93 +111,112 @@ fun BucherScreen(viewModel: CharacterViewModel) {
 
 @Composable
 fun LibraryView(onBookSelected: (BookType) -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(GelbSand)
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Bibliothek", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = BlauDunkel)
-        Spacer(modifier = Modifier.height(24.dp))
+    PergamentBackground {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text("Bibliothek", fontSize = 32.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = TintenSchwarz)
+            Spacer(modifier = Modifier.height(24.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            BookCard(
-                title = "Notizbuch",
-                subtitle = "Allgemeines & Infos",
-                color = BlauHell,
-                onClick = { onBookSelected(BookType.GENERAL) }
-            )
-            BookCard(
-                title = "Buch des Grolls",
-                subtitle = "Vergeltung wartet",
-                color = PinkDunkel,
-                onClick = { onBookSelected(BookType.GRUDGE) }
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            BookCard(
-                title = "Zauberbuch",
-                subtitle = "Alle bekannten Zauber",
-                color = BlauDunkel,
-                onClick = { onBookSelected(BookType.SPELLBOOK) }
-            )
-            BookCard(
-                title = "Regelwerk",
-                subtitle = "Handbuch & D&D Regeln",
-                color = Color(0xFF2E7D32), // Dark green for Rulebook
-                onClick = { onBookSelected(BookType.RULEBOOK) }
-            )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            BookCard(
-                title = "Gruppen-Chat",
-                subtitle = "IC & OOC Nachrichten",
-                color = Color(0xFF7B1FA2), // Purple for Chat
-                onClick = { onBookSelected(BookType.GROUP_CHAT) }
-            )
-            BookCard(
-                title = "Questlog",
-                subtitle = "Aktive & fertige Aufträge",
-                color = Color(0xFFD84315), // Deep Orange for Quests
-                onClick = { onBookSelected(BookType.QUESTLOG) }
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                BookCard(
+                    title = "Notizbuch",
+                    subtitle = "Allgemeines & Infos",
+                    imageRes = R.drawable.notizbuch,
+                    onClick = { onBookSelected(BookType.GENERAL) }
+                )
+                BookCard(
+                    title = "Buch des Grolls",
+                    subtitle = "Vergeltung wartet",
+                    imageRes = R.drawable.buch_des_grolls,
+                    onClick = { onBookSelected(BookType.GRUDGE) }
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                BookCard(
+                    title = "Zauberbuch",
+                    subtitle = "Alle bekannten Zauber",
+                    imageRes = R.drawable.zauberbuch,
+                    onClick = { onBookSelected(BookType.SPELLBOOK) }
+                )
+                BookCard(
+                    title = "Regelwerk",
+                    subtitle = "Handbuch & D&D Regeln",
+                    imageRes = R.drawable.regelwerk,
+                    onClick = { onBookSelected(BookType.RULEBOOK) }
+                )
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                BookCard(
+                    title = "Gruppen-Chat",
+                    subtitle = "IC & OOC Nachrichten",
+                    imageRes = R.drawable.gruppenchat,
+                    onClick = { onBookSelected(BookType.GROUP_CHAT) }
+                )
+                BookCard(
+                    title = "Questlog",
+                    subtitle = "Aktive & fertige Aufträge",
+                    imageRes = R.drawable.questlog,
+                    onClick = { onBookSelected(BookType.QUESTLOG) }
+                )
+            }
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
 
 @Composable
-fun BookCard(title: String, subtitle: String, color: Color, onClick: () -> Unit) {
-    Card(
+fun BookCard(title: String, subtitle: String, imageRes: Int, onClick: () -> Unit) {
+    PergamentCard(
         modifier = Modifier
             .width(150.dp)
-            .height(200.dp)
-            .clickable { onClick() },
-        colors = CardDefaults.cardColors(containerColor = color),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            .clickable { onClick() }
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+            modifier = Modifier.fillMaxSize().padding(8.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("📖", fontSize = 48.sp)
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(title, fontSize = 18.sp, fontWeight = FontWeight.Bold, color = Color.White, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(subtitle, fontSize = 12.sp, color = GelbSand, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            Image(
+                painter = painterResource(id = imageRes),
+                contentDescription = title,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f) // Square image matching 512x512
+                    .padding(4.dp)
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = title, 
+                fontSize = 18.sp, 
+                fontFamily = Almendra, 
+                fontWeight = FontWeight.Bold, 
+                color = TintenSchwarz, 
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(
+                text = subtitle, 
+                style = GrenzeGotischSmall, 
+                color = TintenSchwarz.copy(alpha = 0.7f), 
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                modifier = Modifier.padding(horizontal = 4.dp)
+            )
         }
     }
 }
@@ -195,7 +228,7 @@ fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, onBack: ()
     val publicEntries = if (bookType == BookType.GENERAL) viewModel.publicGeneralBookEntries else viewModel.publicGrudgeBookEntries
     
     val title = if (bookType == BookType.GENERAL) "Notizbuch" else "Buch des Grolls"
-    val tintColor = if (bookType == BookType.GENERAL) BlauDunkel else PinkDunkel
+    val tintColor = if (bookType == BookType.GENERAL) WaldgruenDunkel else OchsenblutRot
 
     var showPublicTab by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
@@ -206,161 +239,169 @@ fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, onBack: ()
     val currentEntries = if (showPublicTab) publicEntries else privateEntries
     val filteredEntries = currentEntries.filter { it.text.contains(searchQuery, ignoreCase = true) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(GelbSand)
-    ) {
-        // Top Bar
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(tintColor)
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(title, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
-        }
-
-        TabRow(
-            selectedTabIndex = if (showPublicTab) 1 else 0,
-            containerColor = BlauHell,
-            contentColor = Color.White
-        ) {
-            Tab(
-                selected = !showPublicTab,
-                onClick = { showPublicTab = false },
-                text = { Text("Persönlich") },
-                selectedContentColor = GelbSand,
-                unselectedContentColor = Color.White
-            )
-            Tab(
-                selected = showPublicTab,
-                onClick = { showPublicTab = true },
-                text = { Text("Gruppe") },
-                selectedContentColor = GelbSand,
-                unselectedContentColor = Color.White
-            )
-        }
-
-        Column(modifier = Modifier.padding(16.dp)) {
-            // Search Bar
-            OutlinedTextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text(if (showPublicTab) "Gruppen-Einträge durchsuchen..." else "Eigene Einträge durchsuchen...") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                trailingIcon = {
-                    if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = { searchQuery = "" }) {
-                            Icon(Icons.Default.Clear, contentDescription = "Suchen löschen")
-                        }
-                    }
-                },
-                singleLine = true,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = tintColor,
-                    focusedLeadingIconColor = tintColor
-                )
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // New Entry / Edit Entry
-            if (editingEntryId == null) {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = BlauHell)
-                ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        OutlinedTextField(
-                            value = newEntryText,
-                            onValueChange = { newEntryText = it },
-                            modifier = Modifier.fillMaxWidth().height(100.dp),
-                            placeholder = { Text(if (showPublicTab) "Neue globale Notiz..." else "Neuer persönlicher Eintrag...", color = Color.LightGray) },
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = tintColor,
-                                unfocusedTextColor = Color.White,
-                                focusedTextColor = Color.White
-                            )
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Button(
-                            onClick = {
-                                if (bookType == BookType.GENERAL) {
-                                    viewModel.addGeneralBookEntry(newEntryText, showPublicTab)
-                                } else {
-                                    viewModel.addGrudgeBookEntry(newEntryText, showPublicTab)
-                                }
-                                newEntryText = ""
-                            },
-                            colors = ButtonDefaults.buttonColors(containerColor = tintColor),
-                            modifier = Modifier.align(Alignment.End)
-                        ) {
-                            Text("Speichern")
-                        }
-                    }
+    PergamentBackground {
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Top Bar
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(tintColor)
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = WaldGold)
                 }
-            } else {
-                Card(
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(title, fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold)
+            }
+
+            TabRow(
+                selectedTabIndex = if (showPublicTab) 1 else 0,
+                containerColor = tintColor,
+                contentColor = WaldGold,
+                indicator = { tabPositions ->
+                    TabRowDefaults.SecondaryIndicator(
+                        Modifier.tabIndicatorOffset(tabPositions[if (showPublicTab) 1 else 0]),
+                        color = WaldGold
+                    )
+                }
+            ) {
+                Tab(
+                    selected = !showPublicTab,
+                    onClick = { showPublicTab = false },
+                    text = { Text("Persönlich", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+                    selectedContentColor = WaldGold,
+                    unselectedContentColor = Color.White.copy(alpha = 0.7f),
+                    modifier = Modifier.height(48.dp)
+                )
+                Tab(
+                    selected = showPublicTab,
+                    onClick = { showPublicTab = true },
+                    text = { Text("Gruppe", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+                    selectedContentColor = WaldGold,
+                    unselectedContentColor = Color.White.copy(alpha = 0.7f),
+                    modifier = Modifier.height(48.dp)
+                )
+            }
+
+            Column(modifier = Modifier.padding(16.dp)) {
+                // Search Bar
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = PinkDunkel)
-                ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        Text("Eintrag bearbeiten", color = Color.White, fontWeight = FontWeight.Bold)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            value = editText,
-                            onValueChange = { editText = it },
-                            modifier = Modifier.fillMaxWidth().height(100.dp),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Color.White,
-                                unfocusedTextColor = Color.White,
-                                focusedTextColor = Color.White
-                            )
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                            TextButton(onClick = { editingEntryId = null }) {
-                                Text("Abbrechen", color = Color.White)
+                    placeholder = { Text(if (showPublicTab) "Gruppen-Einträge durchsuchen..." else "Eigene Einträge durchsuchen...", color = TintenSchwarz.copy(alpha = 0.6f)) },
+                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = tintColor) },
+                    trailingIcon = {
+                        if (searchQuery.isNotEmpty()) {
+                            IconButton(onClick = { searchQuery = "" }, modifier = Modifier.size(48.dp)) {
+                                Icon(Icons.Default.Clear, contentDescription = "Suchen löschen", tint = tintColor)
                             }
-                            Spacer(modifier = Modifier.width(8.dp))
+                        }
+                    },
+                    singleLine = true,
+                    textStyle = androidx.compose.ui.text.TextStyle(color = TintenSchwarz, fontSize = 16.sp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = tintColor,
+                        unfocusedBorderColor = tintColor.copy(alpha = 0.5f)
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // New Entry / Edit Entry
+                if (editingEntryId == null) {
+                    SteinCard(modifier = Modifier.fillMaxWidth()) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            OutlinedTextField(
+                                value = newEntryText,
+                                onValueChange = { newEntryText = it },
+                                modifier = Modifier.fillMaxWidth().height(100.dp),
+                                placeholder = { Text(if (showPublicTab) "Neue globale Notiz..." else "Neuer persönlicher Eintrag...", color = TintenSchwarz.copy(alpha = 0.6f)) },
+                                textStyle = androidx.compose.ui.text.TextStyle(color = TintenSchwarz, fontSize = 16.sp),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = tintColor,
+                                    unfocusedBorderColor = tintColor.copy(alpha = 0.5f)
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
                             Button(
                                 onClick = {
-                                    if (bookType == BookType.GENERAL) {
-                                        viewModel.updateGeneralBookEntry(editingEntryId!!, editText, showPublicTab)
-                                    } else {
-                                        viewModel.updateGrudgeBookEntry(editingEntryId!!, editText, showPublicTab)
+                                    if (newEntryText.isNotBlank()) {
+                                        if (bookType == BookType.GENERAL) {
+                                            viewModel.addGeneralBookEntry(newEntryText, showPublicTab)
+                                        } else {
+                                            viewModel.addGrudgeBookEntry(newEntryText, showPublicTab)
+                                        }
+                                        newEntryText = ""
                                     }
-                                    editingEntryId = null
                                 },
-                                colors = ButtonDefaults.buttonColors(containerColor = BlauDunkel)
+                                colors = ButtonDefaults.buttonColors(containerColor = tintColor),
+                                shape = RoundedCornerShape(8.dp),
+                                modifier = Modifier.align(Alignment.End).height(48.dp)
                             ) {
-                                Text("Aktualisieren")
+                                Text("Speichern", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                            }
+                        }
+                    }
+                } else {
+                    SteinCard(modifier = Modifier.fillMaxWidth()) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            Text("Eintrag bearbeiten", color = tintColor, fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            OutlinedTextField(
+                                value = editText,
+                                onValueChange = { editText = it },
+                                modifier = Modifier.fillMaxWidth().height(100.dp),
+                                textStyle = androidx.compose.ui.text.TextStyle(color = TintenSchwarz, fontSize = 16.sp),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = tintColor,
+                                    unfocusedBorderColor = tintColor.copy(alpha = 0.5f)
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                                TextButton(onClick = { editingEntryId = null }, modifier = Modifier.height(48.dp)) {
+                                    Text("Abbrechen", color = TintenSchwarz, fontWeight = FontWeight.Bold)
+                                }
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Button(
+                                    onClick = {
+                                        if (editText.isNotBlank()) {
+                                            if (bookType == BookType.GENERAL) {
+                                                viewModel.updateGeneralBookEntry(editingEntryId!!, editText, showPublicTab)
+                                            } else {
+                                                viewModel.updateGrudgeBookEntry(editingEntryId!!, editText, showPublicTab)
+                                            }
+                                            editingEntryId = null
+                                        }
+                                    },
+                                    colors = ButtonDefaults.buttonColors(containerColor = tintColor),
+                                    shape = RoundedCornerShape(8.dp),
+                                    modifier = Modifier.height(48.dp)
+                                ) {
+                                    Text("Aktualisieren", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            // Entries List
-            LazyColumn(modifier = Modifier.weight(1f)) {
-                items(filteredEntries) { entry ->
-                    BookEntryCard(
-                        entry = entry,
-                        bookType = bookType,
-                        onEdit = {
-                            editingEntryId = entry.id
-                            editText = entry.text
-                        }
-                    )
+                // Entries List
+                LazyColumn(modifier = Modifier.weight(1f)) {
+                    items(filteredEntries) { entry ->
+                        BookEntryCard(
+                            entry = entry,
+                            bookType = bookType,
+                            onEdit = {
+                                editingEntryId = entry.id
+                                editText = entry.text
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -374,24 +415,20 @@ fun BookEntryCard(entry: BookEntry, bookType: BookType, onEdit: () -> Unit) {
         sdf.format(Date(entry.timestamp))
     }
     
-    Card(
-        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-    ) {
+    PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
         Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(dateStr, fontSize = 12.sp, color = Color.Gray, fontWeight = FontWeight.Bold)
-                IconButton(onClick = onEdit, modifier = Modifier.size(24.dp)) {
-                    Icon(Icons.Default.Edit, contentDescription = "Bearbeiten", tint = Color.Gray)
+                Text(dateStr, style = GrenzeGotischSmall, color = TintenSchwarz.copy(alpha = 0.7f))
+                IconButton(onClick = onEdit, modifier = Modifier.size(48.dp)) {
+                    Icon(Icons.Default.Edit, contentDescription = "Bearbeiten", tint = TintenSchwarz.copy(alpha = 0.6f))
                 }
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(entry.text, fontSize = 14.sp, color = BlauDunkel)
+            Spacer(modifier = Modifier.height(4.dp))
+            Text(entry.text, fontSize = 16.sp, color = TintenSchwarz, lineHeight = 24.sp)
         }
     }
 }
@@ -412,182 +449,181 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
         listOf("Alle") + viewModel.globalSpellbook.map { it.school.trim() }.distinct().sorted()
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(GelbSand)
-    ) {
-        // Top Bar
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(BlauDunkel)
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
+    PergamentBackground {
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Top Bar
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(WaldgruenDunkel)
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = WaldGold)
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Zauberbuch", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold)
             }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Zauberbuch", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
-        }
 
-        Column(modifier = Modifier.padding(16.dp)) {
-            OutlinedTextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Zauber suchen...") },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
-                trailingIcon = {
-                    if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = { searchQuery = "" }) {
-                            Icon(Icons.Default.Clear, contentDescription = "Suchen löschen")
+            Column(modifier = Modifier.padding(16.dp)) {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = { Text("Zauber suchen...", color = TintenSchwarz.copy(alpha = 0.6f)) },
+                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = WaldgruenDunkel) },
+                    trailingIcon = {
+                        if (searchQuery.isNotEmpty()) {
+                            IconButton(onClick = { searchQuery = "" }, modifier = Modifier.size(48.dp)) {
+                                Icon(Icons.Default.Clear, contentDescription = "Suchen löschen", tint = WaldgruenDunkel)
+                            }
+                        }
+                    },
+                    singleLine = true,
+                    textStyle = androidx.compose.ui.text.TextStyle(color = TintenSchwarz, fontSize = 16.sp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = WaldgruenDunkel,
+                        unfocusedBorderColor = WaldgruenDunkel.copy(alpha = 0.5f)
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                val scrollRowState = rememberScrollState()
+                Row(
+                    modifier = Modifier.fillMaxWidth().horizontalScroll(scrollRowState).padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Stufe:", color = TintenSchwarz, fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                    val levels = listOf(-1) + (0..9).toList()
+                    levels.forEach { lvl ->
+                        val hasSpells = lvl == -1 || viewModel.globalSpellbook.any { spell ->
+                            spell.level == lvl &&
+                            (selectedClassFilter == "Alle" || spell.classes.map { it.trim() }.contains(selectedClassFilter)) &&
+                            (selectedSchoolFilter == "Alle" || spell.school.trim() == selectedSchoolFilter)
+                        }
+                        Button(
+                            onClick = { selectedLevel = lvl },
+                            enabled = hasSpells,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (selectedLevel == lvl) OchsenblutRot else WaldgruenDunkel,
+                                disabledContainerColor = TintenSchwarz.copy(alpha = 0.3f)
+                            ),
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                            modifier = Modifier.height(48.dp)
+                        ) {
+                            val label = if (lvl == -1) "Alle" else if (lvl == 0) "Tricks" else "Grad $lvl"
+                            Text(label, fontSize = 14.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = if (hasSpells) WaldGold else Color.White.copy(alpha = 0.5f))
                         }
                     }
-                },
-                singleLine = true,
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = PinkDunkel,
-                    focusedLeadingIconColor = PinkDunkel
-                )
-            )
+                }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            val scrollRowState = rememberScrollState()
-            Row(
-                modifier = Modifier.fillMaxWidth().horizontalScroll(scrollRowState).padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Stufe:", color = BlauDunkel, fontWeight = FontWeight.Bold)
-                val levels = listOf(-1) + (0..9).toList()
-                levels.forEach { lvl ->
-                    val hasSpells = lvl == -1 || viewModel.globalSpellbook.any { spell ->
-                        spell.level == lvl &&
-                        (selectedClassFilter == "Alle" || spell.classes.map { it.trim() }.contains(selectedClassFilter)) &&
-                        (selectedSchoolFilter == "Alle" || spell.school.trim() == selectedSchoolFilter)
-                    }
-                    Button(
-                        onClick = { selectedLevel = lvl },
-                        enabled = hasSpells,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (selectedLevel == lvl) PinkDunkel else BlauHell,
-                            disabledContainerColor = Color.LightGray
-                        ),
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-                        modifier = Modifier.height(32.dp)
-                    ) {
-                        val label = if (lvl == -1) "Alle" else if (lvl == 0) "Tricks" else "Grad $lvl"
-                        Text(label, fontSize = 12.sp, color = if (hasSpells) Color.White else Color.DarkGray)
+                val classScrollState = rememberScrollState()
+                Row(
+                    modifier = Modifier.fillMaxWidth().horizontalScroll(classScrollState).padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Klasse:", color = TintenSchwarz, fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                    classFilters.forEach { filterClass ->
+                        val hasSpells = filterClass == "Alle" || viewModel.globalSpellbook.any { spell ->
+                            spell.classes.map { it.trim() }.contains(filterClass) &&
+                            (selectedLevel == -1 || spell.level == selectedLevel) &&
+                            (selectedSchoolFilter == "Alle" || spell.school.trim() == selectedSchoolFilter)
+                        }
+                        Button(
+                            onClick = { selectedClassFilter = filterClass },
+                            enabled = hasSpells,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (selectedClassFilter == filterClass) OchsenblutRot else WaldgruenDunkel,
+                                disabledContainerColor = TintenSchwarz.copy(alpha = 0.3f)
+                            ),
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                            modifier = Modifier.height(48.dp)
+                        ) {
+                            Text(filterClass, fontSize = 14.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = if (hasSpells) WaldGold else Color.White.copy(alpha = 0.5f))
+                        }
                     }
                 }
-            }
 
-            val classScrollState = rememberScrollState()
-            Row(
-                modifier = Modifier.fillMaxWidth().horizontalScroll(classScrollState).padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Klasse:", color = BlauDunkel, fontWeight = FontWeight.Bold)
-                classFilters.forEach { filterClass ->
-                    val hasSpells = filterClass == "Alle" || viewModel.globalSpellbook.any { spell ->
-                        spell.classes.map { it.trim() }.contains(filterClass) &&
-                        (selectedLevel == -1 || spell.level == selectedLevel) &&
-                        (selectedSchoolFilter == "Alle" || spell.school.trim() == selectedSchoolFilter)
-                    }
-                    Button(
-                        onClick = { selectedClassFilter = filterClass },
-                        enabled = hasSpells,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (selectedClassFilter == filterClass) PinkDunkel else BlauHell,
-                            disabledContainerColor = Color.LightGray
-                        ),
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-                        modifier = Modifier.height(32.dp)
-                    ) {
-                        Text(filterClass, fontSize = 12.sp, color = if (hasSpells) Color.White else Color.DarkGray)
-                    }
-                }
-            }
+                Spacer(modifier = Modifier.height(8.dp))
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            val schoolScrollState = rememberScrollState()
-            Row(
-                modifier = Modifier.fillMaxWidth().horizontalScroll(schoolScrollState).padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Schule:", color = BlauDunkel, fontWeight = FontWeight.Bold)
-                schoolFilters.forEach { filterSchool ->
-                    val hasSpells = filterSchool == "Alle" || viewModel.globalSpellbook.any { spell ->
-                        spell.school.trim() == filterSchool &&
-                        (selectedLevel == -1 || spell.level == selectedLevel) &&
-                        (selectedClassFilter == "Alle" || spell.classes.map { it.trim() }.contains(selectedClassFilter))
-                    }
-                    Button(
-                        onClick = { selectedSchoolFilter = filterSchool },
-                        enabled = hasSpells,
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (selectedSchoolFilter == filterSchool) PinkDunkel else BlauHell,
-                            disabledContainerColor = Color.LightGray
-                        ),
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-                        modifier = Modifier.height(32.dp)
-                    ) {
-                        Text(filterSchool, fontSize = 12.sp, color = if (hasSpells) Color.White else Color.DarkGray)
+                val schoolScrollState = rememberScrollState()
+                Row(
+                    modifier = Modifier.fillMaxWidth().horizontalScroll(schoolScrollState).padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text("Schule:", color = TintenSchwarz, fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                    schoolFilters.forEach { filterSchool ->
+                        val hasSpells = filterSchool == "Alle" || viewModel.globalSpellbook.any { spell ->
+                            spell.school.trim() == filterSchool &&
+                            (selectedLevel == -1 || spell.level == selectedLevel) &&
+                            (selectedClassFilter == "Alle" || spell.classes.map { it.trim() }.contains(selectedClassFilter))
+                        }
+                        Button(
+                            onClick = { selectedSchoolFilter = filterSchool },
+                            enabled = hasSpells,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (selectedSchoolFilter == filterSchool) OchsenblutRot else WaldgruenDunkel,
+                                disabledContainerColor = TintenSchwarz.copy(alpha = 0.3f)
+                            ),
+                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+                            modifier = Modifier.height(48.dp)
+                        ) {
+                            Text(filterSchool, fontSize = 14.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = if (hasSpells) WaldGold else Color.White.copy(alpha = 0.5f))
+                        }
                     }
                 }
-            }
 
-            Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-            val filteredSpells = viewModel.globalSpellbook.filter { spell -> 
-                val matchesClass = if (selectedClassFilter == "Alle") true else spell.classes.map { it.trim() }.contains(selectedClassFilter)
-                val matchesSchool = if (selectedSchoolFilter == "Alle") true else spell.school.trim() == selectedSchoolFilter
-                
-                matchesClass && matchesSchool &&
-                (selectedLevel == -1 || spell.level == selectedLevel) &&
-                (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
-            }.sortedWith(compareBy({ it.level }, { it.name }))
+                val filteredSpells = viewModel.globalSpellbook.filter { spell -> 
+                    val matchesClass = if (selectedClassFilter == "Alle") true else spell.classes.map { it.trim() }.contains(selectedClassFilter)
+                    val matchesSchool = if (selectedSchoolFilter == "Alle") true else spell.school.trim() == selectedSchoolFilter
+                    
+                    matchesClass && matchesSchool &&
+                    (selectedLevel == -1 || spell.level == selectedLevel) &&
+                    (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
+                }.sortedWith(compareBy({ it.level }, { it.name }))
 
-            if (filteredSpells.isEmpty()) {
-                Text("Keine Zauber gefunden.", modifier = Modifier.padding(16.dp), color = BlauDunkel)
-            } else {
-                LazyColumn(modifier = Modifier.weight(1f)) {
-                    items(filteredSpells) { catalogSpell ->
-                        val alreadyInBook = viewModel.allSpells.any { it.name == catalogSpell.name }
-                        val isDruidSpell = catalogSpell.classes.contains("Druide") && !catalogSpell.classes.contains("Waldläufer")
-                        val isDruidLevel1 = isDruidSpell && catalogSpell.level == 1
-                        val druidLevel1Count = viewModel.allSpells.count { it.classes.contains("Druide") && !it.classes.contains("Waldläufer") && it.level == 1 }
-                        
-                        SpellCard(
-                            spell = catalogSpell,
-                            isEditMode = false,
-                            isEquipped = alreadyInBook,
-                            onTogglePrep = {},
-                            onDelete = null,
-                            customColor = BlauDunkel, // Unified background
-                            extraContent = {
-                                val canEquip = !alreadyInBook && (!isDruidLevel1 || druidLevel1Count < 1)
-                                Button(
-                                    onClick = {
-                                        if (canEquip) {
-                                            viewModel.addNewSpell(catalogSpell.copy(isPrepared = true, id = java.util.UUID.randomUUID().toString()))
-                                        }
-                                    },
-                                    enabled = canEquip || alreadyInBook, // Keep enabled if already in book to show "Bereits ausgerüstet"
-                                    colors = ButtonDefaults.buttonColors(containerColor = PinkDunkel, disabledContainerColor = Color.Gray),
-                                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(36.dp)
-                                ) {
-                                    val buttonText = if (alreadyInBook) "Bereits ausgerüstet" else if (!canEquip) "Max 1 Druidenzauber" else "+ Ausrüsten"
-                                    Text(buttonText, fontSize = 14.sp)
+                if (filteredSpells.isEmpty()) {
+                    Text("Keine Zauber gefunden.", modifier = Modifier.padding(16.dp), color = TintenSchwarz, fontWeight = FontWeight.Bold)
+                } else {
+                    LazyColumn(modifier = Modifier.weight(1f)) {
+                        items(filteredSpells) { catalogSpell ->
+                            val alreadyInBook = viewModel.allSpells.any { it.name == catalogSpell.name }
+                            val isDruidSpell = catalogSpell.classes.contains("Druide") && !catalogSpell.classes.contains("Waldläufer")
+                            val isDruidLevel1 = isDruidSpell && catalogSpell.level == 1
+                            val druidLevel1Count = viewModel.allSpells.count { it.classes.contains("Druide") && !it.classes.contains("Waldläufer") && it.level == 1 }
+                            
+                            SpellCard(
+                                spell = catalogSpell,
+                                isEditMode = false,
+                                isEquipped = alreadyInBook,
+                                onTogglePrep = {},
+                                onDelete = null,
+                                customColor = null, // Inherit PergamentCard inside SpellCard
+                                extraContent = {
+                                    val canEquip = !alreadyInBook && (!isDruidLevel1 || druidLevel1Count < 1)
+                                    Button(
+                                        onClick = {
+                                            if (canEquip) {
+                                                viewModel.addNewSpell(catalogSpell.copy(isPrepared = true, id = java.util.UUID.randomUUID().toString()))
+                                            }
+                                        },
+                                        enabled = canEquip || alreadyInBook, // Keep enabled if already in book to show "Bereits ausgerüstet"
+                                        colors = ButtonDefaults.buttonColors(containerColor = WaldgruenDunkel, disabledContainerColor = TintenSchwarz.copy(alpha = 0.4f)),
+                                        modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(48.dp)
+                                    ) {
+                                        val buttonText = if (alreadyInBook) "Bereits ausgerüstet" else if (!canEquip) "Max 1 Druidenzauber" else "+ Ausrüsten"
+                                        Text(buttonText, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold)
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        }
                     }
                 }
             }
@@ -685,114 +721,154 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, onT
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(GelbSand)
-    ) {
-        // Top Bar
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFF2E7D32)) // Dark green
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
+    PergamentBackground {
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Top Bar
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(WaldgruenDunkel)
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = WaldGold)
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Regelwerk", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold)
             }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Regelwerk", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
-        }
 
-        // Chapter Selection (Scrollable)
-        ScrollableTabRow(
-            selectedTabIndex = pagerState.currentPage,
-            containerColor = BlauHell,
-            contentColor = Color.White,
-            edgePadding = 8.dp
-        ) {
-            chapters.forEachIndexed { index, chapter ->
-                Tab(
-                    selected = pagerState.currentPage == index,
-                    onClick = {
-                        coroutineScope.launch { pagerState.animateScrollToPage(index) }
+            // Chapter Selection (Scrollable)
+            ScrollableTabRow(
+                selectedTabIndex = pagerState.currentPage,
+                containerColor = WaldgruenDunkel,
+                contentColor = WaldGold,
+                edgePadding = 8.dp,
+                indicator = { tabPositions ->
+                    TabRowDefaults.SecondaryIndicator(
+                        Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
+                        color = WaldGold
+                    )
+                }
+            ) {
+                chapters.forEachIndexed { index, chapter ->
+                    Tab(
+                        selected = pagerState.currentPage == index,
+                        onClick = {
+                            coroutineScope.launch { pagerState.animateScrollToPage(index) }
+                        },
+                        text = { Text(chapter.title, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+                        selectedContentColor = WaldGold,
+                        unselectedContentColor = Color.White.copy(alpha = 0.7f),
+                        modifier = Modifier.height(48.dp)
+                    )
+                }
+            }
+
+            // Search Bar
+            Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    modifier = Modifier.fillMaxWidth().height(56.dp),
+                    placeholder = { 
+                        Text(
+                            text = if (pagerState.currentPage == 0) "Im gesamten Regelwerk suchen..." else "Im Kapitel suchen...",
+                            maxLines = 1,
+                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
+                            color = TintenSchwarz.copy(alpha = 0.6f)
+                        ) 
                     },
-                    text = { Text(chapter.title, fontSize = 14.sp) },
-                    selectedContentColor = GelbSand,
-                    unselectedContentColor = Color.White
+                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(24.dp), tint = WaldgruenDunkel) },
+                    trailingIcon = {
+                        if (searchQuery.isNotEmpty()) {
+                            IconButton(onClick = { searchQuery = "" }, modifier = Modifier.size(48.dp)) {
+                                Icon(Icons.Default.Clear, contentDescription = "Suchen löschen", tint = WaldgruenDunkel)
+                            }
+                        }
+                    },
+                    singleLine = true,
+                    textStyle = androidx.compose.ui.text.TextStyle(fontSize = 16.sp, color = TintenSchwarz),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = WaldgruenDunkel,
+                        unfocusedBorderColor = WaldgruenDunkel.copy(alpha = 0.5f)
+                    )
                 )
             }
-        }
 
-        // Search Bar
-        Box(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-            OutlinedTextField(
-                value = searchQuery,
-                onValueChange = { searchQuery = it },
-                modifier = Modifier.fillMaxWidth(),
-                placeholder = { 
-                    Text(
-                        text = if (pagerState.currentPage == 0) "Im gesamten Regelwerk suchen..." else "Im Kapitel suchen...",
-                        maxLines = 1,
-                        overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
-                    ) 
-                },
-                leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(20.dp)) },
-                trailingIcon = {
-                    if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = { searchQuery = "" }, modifier = Modifier.size(20.dp)) {
-                            Icon(Icons.Default.Clear, contentDescription = "Suchen löschen")
-                        }
-                    }
-                },
-                singleLine = true,
-                textStyle = androidx.compose.ui.text.TextStyle(fontSize = 14.sp),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF2E7D32),
-                    unfocusedBorderColor = BlauDunkel,
-                    focusedLeadingIconColor = Color(0xFF2E7D32)
-                )
-            )
-        }
+            // Markdown Content with HorizontalPager
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+            ) {
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.fillMaxSize()
+                ) { page ->
+                    val listState = scrollStates[page]
 
-        // Markdown Content with HorizontalPager
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-                .background(GelbSand, RoundedCornerShape(8.dp))
-        ) {
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxSize()
-            ) { page ->
-                val listState = scrollStates[page]
-
-                if (page == 0) {
-                    // --- INDEX & SEARCH VIEW ---
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        LazyColumn(
-                            state = listState,
-                            modifier = Modifier.fillMaxSize().padding(16.dp)
-                        ) {
-                            if (searchQuery.isBlank()) {
-                                // Group by Chapter
-                                val grouped = globalIndex.groupBy { it.chapterName }
-                                grouped.forEach { (chapterName, entries) ->
-                                    item {
-                                        Text(chapterName, fontWeight = FontWeight.Bold, color = BlauDunkel, fontSize = 20.sp, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
+                    if (page == 0) {
+                        // --- INDEX & SEARCH VIEW ---
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            LazyColumn(
+                                state = listState,
+                                modifier = Modifier.fillMaxSize().padding(16.dp)
+                            ) {
+                                if (searchQuery.isBlank()) {
+                                    // Group by Chapter
+                                    val grouped = globalIndex.groupBy { it.chapterName }
+                                    grouped.forEach { (chapterName, entries) ->
+                                        item {
+                                            Text(chapterName, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = TintenSchwarz, fontSize = 22.sp, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
+                                        }
+                                        items(entries.size) { idx ->
+                                            val entry = entries[idx]
+                                            Text(
+                                                text = (if (entry.isH3) "  • " else "") + entry.title,
+                                                color = WaldgruenDunkel,
+                                                fontSize = if (entry.isH3) 16.sp else 18.sp,
+                                                fontWeight = FontWeight.Bold,
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .clickable {
+                                                        coroutineScope.launch {
+                                                            isJumpingFromIndex = true
+                                                            searchQuery = ""
+                                                            pendingScrollItem = entry.chapterIndex to entry.blockIndex
+                                                            pagerState.scrollToPage(entry.chapterIndex)
+                                                        }
+                                                    }
+                                                    .padding(vertical = 8.dp)
+                                            )
+                                        }
                                     }
-                                    items(entries.size) { idx ->
-                                        val entry = entries[idx]
-                                        Text(
-                                            text = (if (entry.isH3) "  • " else "") + entry.title,
-                                            color = PinkDunkel,
-                                            fontSize = if (entry.isH3) 14.sp else 16.sp,
-                                            fontWeight = if (entry.isH3) FontWeight.Normal else FontWeight.Bold,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .clickable {
+                                } else {
+                                    // Search Results
+                                    val searchResults = globalIndex.filter { it.title.contains(searchQuery, ignoreCase = true) }
+                                    
+                                    // Also search full text blocks
+                                    val contentResults = mutableListOf<IndexEntry>()
+                                    chapterBlocks.forEach { (chapterIdx, blocks) ->
+                                        blocks.forEachIndexed { blockIdx, blockText ->
+                                            if (blockText.contains(searchQuery, ignoreCase = true)) {
+                                                // Find the nearest heading above this block for title
+                                                val title = globalIndex.lastOrNull { it.chapterIndex == chapterIdx && it.blockIndex <= blockIdx }?.title ?: "Absatz in ${chapters[chapterIdx].title}"
+                                                contentResults.add(IndexEntry(chapterIdx, blockIdx, "$title (Texttreffer)", false, chapters[chapterIdx].title))
+                                            }
+                                        }
+                                    }
+                                    
+                                    val allResults = (searchResults + contentResults).distinctBy { "${it.chapterIndex}-${it.blockIndex}" }
+
+                                    if (allResults.isEmpty()) {
+                                        item { Text("Keine Ergebnisse für '$searchQuery'", modifier = Modifier.padding(16.dp), color = TintenSchwarz) }
+                                    } else {
+                                        item { Text("${allResults.size} Ergebnisse gefunden:", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = TintenSchwarz, modifier = Modifier.padding(bottom = 8.dp)) }
+                                        items(allResults.size) { idx ->
+                                            val entry = allResults[idx]
+                                            PergamentCard(
+                                                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).clickable {
                                                     coroutineScope.launch {
                                                         isJumpingFromIndex = true
                                                         searchQuery = ""
@@ -800,139 +876,104 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, onT
                                                         pagerState.scrollToPage(entry.chapterIndex)
                                                     }
                                                 }
-                                                .padding(vertical = 4.dp)
-                                        )
-                                    }
-                                }
-                            } else {
-                                // Search Results
-                                val searchResults = globalIndex.filter { it.title.contains(searchQuery, ignoreCase = true) }
-                                
-                                // Also search full text blocks
-                                val contentResults = mutableListOf<IndexEntry>()
-                                chapterBlocks.forEach { (chapterIdx, blocks) ->
-                                    blocks.forEachIndexed { blockIdx, blockText ->
-                                        if (blockText.contains(searchQuery, ignoreCase = true)) {
-                                            // Find the nearest heading above this block for title
-                                            val title = globalIndex.lastOrNull { it.chapterIndex == chapterIdx && it.blockIndex <= blockIdx }?.title ?: "Absatz in ${chapters[chapterIdx].title}"
-                                            contentResults.add(IndexEntry(chapterIdx, blockIdx, "$title (Texttreffer)", false, chapters[chapterIdx].title))
-                                        }
-                                    }
-                                }
-                                
-                                val allResults = (searchResults + contentResults).distinctBy { "${it.chapterIndex}-${it.blockIndex}" }
-
-                                if (allResults.isEmpty()) {
-                                    item { Text("Keine Ergebnisse für '$searchQuery'", modifier = Modifier.padding(16.dp)) }
-                                } else {
-                                    item { Text("${allResults.size} Ergebnisse gefunden:", fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp)) }
-                                    items(allResults.size) { idx ->
-                                        val entry = allResults[idx]
-                                        Card(
-                                            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).clickable {
-                                                coroutineScope.launch {
-                                                    isJumpingFromIndex = true
-                                                    searchQuery = ""
-                                                    pendingScrollItem = entry.chapterIndex to entry.blockIndex
-                                                    pagerState.scrollToPage(entry.chapterIndex)
+                                            ) {
+                                                Column(modifier = Modifier.padding(12.dp)) {
+                                                    Text(entry.chapterName, style = GrenzeGotischSmall, color = TintenSchwarz.copy(alpha = 0.7f))
+                                                    Text(entry.title, fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = WaldgruenDunkel)
                                                 }
-                                            },
-                                            colors = CardDefaults.cardColors(containerColor = BlauHell)
-                                        ) {
-                                            Column(modifier = Modifier.padding(12.dp)) {
-                                                Text(entry.chapterName, fontSize = 12.sp, color = BlauDunkel)
-                                                Text(entry.title, fontWeight = FontWeight.Bold, color = PinkDunkel)
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                    }
-                } else {
-                    // --- NORMAL CHAPTER VIEW ---
-                    val allBlocks = chapterBlocks[page] ?: listOf("Lade...")
-                    val blocks = if (searchQuery.isNotBlank()) {
-                        allBlocks.filter { it.contains(searchQuery, ignoreCase = true) }
                     } else {
-                        allBlocks
-                    }
-                    
-                    LaunchedEffect(pendingScrollItem) {
-                        val pending = pendingScrollItem
-                        if (pending != null && pending.first == page) {
-                            kotlinx.coroutines.delay(50) // Tiny layout buffer
-                            try {
-                                listState.scrollToItem(pending.second)
-                            } catch (e: Exception) {}
-                            pendingScrollItem = null
-                            isJumpingFromIndex = false
+                        // --- NORMAL CHAPTER VIEW ---
+                        val allBlocks = chapterBlocks[page] ?: listOf("Lade...")
+                        val blocks = if (searchQuery.isNotBlank()) {
+                            allBlocks.filter { it.contains(searchQuery, ignoreCase = true) }
+                        } else {
+                            allBlocks
                         }
-                    }
+                        
+                        LaunchedEffect(pendingScrollItem) {
+                            val pending = pendingScrollItem
+                            if (pending != null && pending.first == page) {
+                                kotlinx.coroutines.delay(50) // Tiny layout buffer
+                                try {
+                                    listState.scrollToItem(pending.second)
+                                } catch (e: Exception) {}
+                                pendingScrollItem = null
+                                isJumpingFromIndex = false
+                            }
+                        }
 
-                    if (blocks.isEmpty()) {
-                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text("Keine Ergebnisse für '$searchQuery'", color = PinkDunkel)
-                        }
-                    } else {
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            LazyColumn(
-                                state = listState,
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(16.dp)
-                            ) {
-                                items(blocks.size) { index ->
-                                    val originalText = blocks[index]
-                                    val highlightedText = if (searchQuery.isNotBlank() && originalText.contains(searchQuery, ignoreCase = true)) {
-                                        // Highlight the search query in bold
-                                        originalText.replace(Regex("(?i)(${Regex.escape(searchQuery)})"), "**$1**")
-                                    } else {
-                                        originalText
-                                    }
-                                    
-                                    Material3RichText(modifier = Modifier.padding(bottom = 8.dp)) {
-                                        Markdown(content = highlightedText)
+                        if (blocks.isEmpty()) {
+                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                Text("Keine Ergebnisse für '$searchQuery'", color = TintenSchwarz)
+                            }
+                        } else {
+                            Box(modifier = Modifier.fillMaxSize()) {
+                                LazyColumn(
+                                    state = listState,
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .padding(16.dp)
+                                ) {
+                                    items(blocks.size) { index ->
+                                        val originalText = blocks[index]
+                                        val highlightedText = if (searchQuery.isNotBlank() && originalText.contains(searchQuery, ignoreCase = true)) {
+                                            // Highlight the search query in bold
+                                            originalText.replace(Regex("(?i)(${Regex.escape(searchQuery)})"), "**$1**")
+                                        } else {
+                                            originalText
+                                        }
+                                        
+                                        // Wir belassen Material3RichText, aber die Theme-Farben (TintenSchwarz) gelten aus dem umgebenden Theme.
+                                        Material3RichText(modifier = Modifier.padding(bottom = 8.dp)) {
+                                            Markdown(content = highlightedText)
+                                        }
                                     }
                                 }
                             }
                         }
                     }
-                }
-                
-                // Simple Scrollbar for LazyColumn
-                val isScrollable = listState.layoutInfo.totalItemsCount > 0
-                if (isScrollable) {
-                    val firstVisible = listState.firstVisibleItemIndex
-                    val totalItems = listState.layoutInfo.totalItemsCount
-                    val scrollFraction = if (totalItems > 0) firstVisible.toFloat() / totalItems.toFloat() else 0f
                     
-                    BoxWithConstraints(
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd)
-                            .fillMaxHeight()
-                            .padding(vertical = 16.dp, horizontal = 4.dp)
-                            .width(4.dp)
-                            .background(Color.LightGray.copy(alpha = 0.5f), RoundedCornerShape(2.dp))
-                    ) {
-                        val viewHeightPx = with(androidx.compose.ui.platform.LocalDensity.current) { maxHeight.toPx() }
-                        val thumbHeightPx = viewHeightPx * 0.1f
-                        val maxScrollOffsetPx = viewHeightPx - thumbHeightPx
-                        val yOffsetPx = (scrollFraction * maxScrollOffsetPx).toInt()
+                    // Simple Scrollbar for LazyColumn
+                    val isScrollable = listState.layoutInfo.totalItemsCount > 0
+                    if (isScrollable) {
+                        val firstVisible = listState.firstVisibleItemIndex
+                        val totalItems = listState.layoutInfo.totalItemsCount
+                        val scrollFraction = if (totalItems > 0) firstVisible.toFloat() / totalItems.toFloat() else 0f
                         
-                        Box(
+                        BoxWithConstraints(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight(0.1f) // 10% size thumb
-                                .offset { androidx.compose.ui.unit.IntOffset(0, yOffsetPx) }
-                                .background(BlauDunkel, RoundedCornerShape(2.dp))
-                        )
+                                .align(Alignment.CenterEnd)
+                                .fillMaxHeight()
+                                .padding(vertical = 16.dp, horizontal = 4.dp)
+                                .width(6.dp)
+                                .background(TintenSchwarz.copy(alpha = 0.2f), RoundedCornerShape(3.dp))
+                        ) {
+                            val viewHeightPx = with(androidx.compose.ui.platform.LocalDensity.current) { maxHeight.toPx() }
+                            val thumbHeightPx = viewHeightPx * 0.1f
+                            val maxScrollOffsetPx = viewHeightPx - thumbHeightPx
+                            val yOffsetPx = (scrollFraction * maxScrollOffsetPx).toInt()
+                            
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .fillMaxHeight(0.1f) // 10% size thumb
+                                    .offset { androidx.compose.ui.unit.IntOffset(0, yOffsetPx) }
+                                    .background(WaldgruenDunkel, RoundedCornerShape(3.dp))
+                            )
+                        }
                     }
                 }
             }
         }
     }
 }
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
     var newMessageText by remember { mutableStateOf("") }
@@ -945,97 +986,93 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(GelbSand)
-    ) {
-        // Top Bar
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFF7B1FA2))
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
-            }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Gruppen-Chat", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
-        }
-
-        // Messages List
-        LazyColumn(
-            state = listState,
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp)
-        ) {
-            items(viewModel.groupChatMessages) { message ->
-                GroupChatMessageCard(message)
-            }
-        }
-
-        // Message Input
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp),
-            colors = CardDefaults.cardColors(containerColor = BlauHell),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-        ) {
-            Column(modifier = Modifier.padding(8.dp)) {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text("In-Character (IC)", color = Color.White, fontSize = 12.sp)
-                    Switch(
-                        checked = isOoc,
-                        onCheckedChange = { isOoc = it },
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = PinkDunkel,
-                            checkedTrackColor = PinkDunkel.copy(alpha = 0.5f),
-                            uncheckedThumbColor = BlauDunkel,
-                            uncheckedTrackColor = BlauDunkel.copy(alpha = 0.5f)
-                        ),
-                        modifier = Modifier.scale(0.8f).padding(horizontal = 8.dp)
-                    )
-                    Text("Out-Of-Character (OOC)", color = Color.White, fontSize = 12.sp)
+    PergamentBackground {
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Top Bar
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(TintenSchwarz)
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = WaldGold)
                 }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Gruppen-Chat", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold)
+            }
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    OutlinedTextField(
-                        value = newMessageText,
-                        onValueChange = { newMessageText = it },
-                        modifier = Modifier.weight(1f),
-                        placeholder = { Text(if (isOoc) "Schreibe etwas OOC..." else "Sprich als dein Charakter...", color = Color.LightGray) },
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = if (isOoc) Color.Gray else PinkDunkel,
-                            unfocusedTextColor = Color.White,
-                            focusedTextColor = Color.White
-                        ),
-                        maxLines = 3
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    IconButton(
-                        onClick = {
-                            if (newMessageText.isNotBlank()) {
-                                viewModel.sendGroupMessage(newMessageText, isOoc)
-                                newMessageText = ""
-                            }
-                        },
-                        modifier = Modifier
-                            .size(50.dp)
-                            .background(if (isOoc) Color.Gray else PinkDunkel, RoundedCornerShape(25.dp))
+            // Messages List
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            ) {
+                items(viewModel.groupChatMessages) { message ->
+                    GroupChatMessageCard(message)
+                }
+            }
+
+            // Message Input
+            SteinCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                Column(modifier = Modifier.padding(12.dp)) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("?", color = Color.White, fontSize = 20.sp)
+                        Text("In-Character (IC)", color = TintenSchwarz, fontSize = 14.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                        Switch(
+                            checked = isOoc,
+                            onCheckedChange = { isOoc = it },
+                            colors = SwitchDefaults.colors(
+                                checkedThumbColor = WaldgruenDunkel,
+                                checkedTrackColor = WaldgruenDunkel.copy(alpha = 0.5f),
+                                uncheckedThumbColor = OchsenblutRot,
+                                uncheckedTrackColor = OchsenblutRot.copy(alpha = 0.5f)
+                            ),
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        )
+                        Text("Out-Of-Character (OOC)", color = TintenSchwarz, fontSize = 14.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        OutlinedTextField(
+                            value = newMessageText,
+                            onValueChange = { newMessageText = it },
+                            modifier = Modifier.weight(1f),
+                            placeholder = { Text(if (isOoc) "Schreibe etwas OOC..." else "Sprich als dein Charakter...", color = TintenSchwarz.copy(alpha = 0.6f)) },
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = if (isOoc) WaldgruenDunkel else OchsenblutRot,
+                                unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f),
+                            ),
+                            textStyle = androidx.compose.ui.text.TextStyle(color = TintenSchwarz, fontSize = 16.sp),
+                            maxLines = 3
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        IconButton(
+                            onClick = {
+                                if (newMessageText.isNotBlank()) {
+                                    viewModel.sendGroupMessage(newMessageText, isOoc)
+                                    newMessageText = ""
+                                }
+                            },
+                            modifier = Modifier
+                                .size(48.dp)
+                                .background(if (isOoc) WaldgruenDunkel else OchsenblutRot, RoundedCornerShape(12.dp))
+                        ) {
+                            Text("➡️", color = WaldGold, fontSize = 20.sp)
+                        }
                     }
                 }
             }
@@ -1050,29 +1087,32 @@ fun GroupChatMessageCard(message: com.example.dndcompanion.ui.viewmodel.GroupCha
         sdf.format(java.util.Date(message.timestamp))
     }
     
-    val nameColor = if (message.isOoc) Color.Gray else if (message.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) BlauDunkel else PinkDunkel
+    val nameColor = if (message.isOoc) WaldgruenDunkel else OchsenblutRot
     
     Card(
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = if (message.isOoc) Color(0xFFF5F5F5) else Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        colors = CardDefaults.cardColors(containerColor = if (message.isOoc) Color(0xFFEFEBE0).copy(alpha=0.8f) else Color.White.copy(alpha=0.9f)),
+        shape = RoundedCornerShape(12.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = Modifier.padding(12.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(
                     text = if (message.isOoc) "[OOC] ${message.author}" else message.author,
                     fontWeight = FontWeight.Bold,
+                    fontFamily = Almendra,
                     color = nameColor,
-                    fontSize = 14.sp
+                    fontSize = 16.sp
                 )
-                Text(dateStr, fontSize = 10.sp, color = Color.Gray)
+                Text(dateStr, style = GrenzeGotischSmall, color = TintenSchwarz.copy(alpha = 0.7f))
             }
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = message.text, 
-                fontSize = 15.sp, 
-                color = BlauDunkel,
-                fontStyle = if (message.isOoc) androidx.compose.ui.text.font.FontStyle.Italic else androidx.compose.ui.text.font.FontStyle.Normal
+                fontSize = 16.sp, 
+                color = TintenSchwarz,
+                fontStyle = if (message.isOoc) androidx.compose.ui.text.font.FontStyle.Italic else androidx.compose.ui.text.font.FontStyle.Normal,
+                lineHeight = 24.sp
             )
         }
     }
@@ -1088,138 +1128,142 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
     val currentQuests = viewModel.globalQuests.filter { it.isCompleted == showCompleted }
         .sortedByDescending { it.timestamp }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(GelbSand)
-    ) {
-        // Top Bar
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFFD84315))
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
+    PergamentBackground {
+        Column(modifier = Modifier.fillMaxSize()) {
+            // Top Bar
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(OchsenblutRot)
+                    .padding(vertical = 8.dp, horizontal = 16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = WaldGold)
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Questlog", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold)
             }
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Questlog", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = Color.White)
-        }
 
-        TabRow(
-            selectedTabIndex = if (showCompleted) 1 else 0,
-            containerColor = BlauHell,
-            contentColor = Color.White
-        ) {
-            Tab(
-                selected = !showCompleted,
-                onClick = { showCompleted = false },
-                text = { Text("Aktive Quests") },
-                selectedContentColor = GelbSand,
-                unselectedContentColor = Color.White
-            )
-            Tab(
-                selected = showCompleted,
-                onClick = { showCompleted = true },
-                text = { Text("Abgeschlossen") },
-                selectedContentColor = GelbSand,
-                unselectedContentColor = Color.White
-            )
-        }
+            TabRow(
+                selectedTabIndex = if (showCompleted) 1 else 0,
+                containerColor = OchsenblutRot,
+                contentColor = WaldGold,
+                indicator = { tabPositions ->
+                    TabRowDefaults.SecondaryIndicator(
+                        Modifier.tabIndicatorOffset(tabPositions[if (showCompleted) 1 else 0]),
+                        color = WaldGold
+                    )
+                }
+            ) {
+                Tab(
+                    selected = !showCompleted,
+                    onClick = { showCompleted = false },
+                    text = { Text("Aktive Quests", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+                    selectedContentColor = WaldGold,
+                    unselectedContentColor = Color.White.copy(alpha = 0.7f),
+                    modifier = Modifier.height(48.dp)
+                )
+                Tab(
+                    selected = showCompleted,
+                    onClick = { showCompleted = true },
+                    text = { Text("Abgeschlossen", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+                    selectedContentColor = WaldGold,
+                    unselectedContentColor = Color.White.copy(alpha = 0.7f),
+                    modifier = Modifier.height(48.dp)
+                )
+            }
 
-        Column(modifier = Modifier.padding(16.dp).weight(1f)) {
-            // New Quest Input
-            if (!showCompleted) {
-                Card(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-                    colors = CardDefaults.cardColors(containerColor = BlauHell)
-                ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        OutlinedTextField(
-                            value = newQuestTitle,
-                            onValueChange = { newQuestTitle = it },
-                            modifier = Modifier.fillMaxWidth(),
-                            placeholder = { Text("Quest-Titel...", color = Color.LightGray) },
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Color(0xFFD84315),
-                                unfocusedTextColor = Color.White,
-                                focusedTextColor = Color.White
-                            ),
-                            singleLine = true
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            value = newQuestDesc,
-                            onValueChange = { newQuestDesc = it },
-                            modifier = Modifier.fillMaxWidth().height(80.dp),
-                            placeholder = { Text("Beschreibung (optional)...", color = Color.LightGray) },
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Color(0xFFD84315),
-                                unfocusedTextColor = Color.White,
-                                focusedTextColor = Color.White
+            Column(modifier = Modifier.padding(16.dp).weight(1f)) {
+                // New Quest Input
+                if (!showCompleted) {
+                    SteinCard(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            OutlinedTextField(
+                                value = newQuestTitle,
+                                onValueChange = { newQuestTitle = it },
+                                modifier = Modifier.fillMaxWidth(),
+                                placeholder = { Text("Quest-Titel...", color = TintenSchwarz.copy(alpha = 0.6f)) },
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = OchsenblutRot,
+                                    unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f)
+                                ),
+                                textStyle = androidx.compose.ui.text.TextStyle(color = TintenSchwarz, fontSize = 16.sp, fontWeight = FontWeight.Bold),
+                                singleLine = true
                             )
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Button(
-                            onClick = {
-                                if (newQuestTitle.isNotBlank()) {
-                                    viewModel.addQuest(newQuestTitle, newQuestDesc)
-                                    newQuestTitle = ""
-                                    newQuestDesc = ""
-                                }
-                            },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFD84315)),
-                            modifier = Modifier.align(Alignment.End)
-                        ) {
-                            Text("Quest hinzufügen")
+                            Spacer(modifier = Modifier.height(8.dp))
+                            OutlinedTextField(
+                                value = newQuestDesc,
+                                onValueChange = { newQuestDesc = it },
+                                modifier = Modifier.fillMaxWidth().height(80.dp),
+                                placeholder = { Text("Beschreibung (optional)...", color = TintenSchwarz.copy(alpha = 0.6f)) },
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = OchsenblutRot,
+                                    unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f)
+                                ),
+                                textStyle = androidx.compose.ui.text.TextStyle(color = TintenSchwarz, fontSize = 14.sp)
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Button(
+                                onClick = {
+                                    if (newQuestTitle.isNotBlank()) {
+                                        viewModel.addQuest(newQuestTitle, newQuestDesc)
+                                        newQuestTitle = ""
+                                        newQuestDesc = ""
+                                    }
+                                },
+                                colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot),
+                                shape = RoundedCornerShape(8.dp),
+                                modifier = Modifier.align(Alignment.End).height(48.dp)
+                            ) {
+                                Text("Quest hinzufügen", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = WaldGold)
+                            }
                         }
                     }
                 }
-            }
 
-            // Quest List
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(currentQuests) { quest ->
-                    Card(
-                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-                        colors = CardDefaults.cardColors(containerColor = if (quest.isCompleted) Color(0xFFE0E0E0) else Color.White),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
-                    ) {
-                        Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = quest.title, 
-                                    fontSize = 18.sp, 
-                                    fontWeight = FontWeight.Bold, 
-                                    color = if (quest.isCompleted) Color.Gray else BlauDunkel,
-                                    modifier = Modifier.weight(1f)
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Checkbox(
-                                    checked = quest.isCompleted,
-                                    onCheckedChange = { viewModel.toggleQuestCompletion(quest) },
-                                    colors = CheckboxDefaults.colors(checkedColor = Color(0xFFD84315))
-                                )
-                                IconButton(
-                                    onClick = { viewModel.deleteQuest(quest.id) },
-                                    modifier = Modifier.size(24.dp).padding(start = 4.dp)
+                // Quest List
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(currentQuests) { quest ->
+                        PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
+                            Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
                                 ) {
-                                    Icon(Icons.Default.Clear, contentDescription = "Löschen", tint = Color.Red)
+                                    Text(
+                                        text = quest.title, 
+                                        fontFamily = Almendra,
+                                        fontSize = 20.sp, 
+                                        fontWeight = FontWeight.Bold, 
+                                        color = if (quest.isCompleted) TintenSchwarz.copy(alpha = 0.5f) else OchsenblutRot,
+                                        modifier = Modifier.weight(1f),
+                                        textDecoration = if (quest.isCompleted) androidx.compose.ui.text.style.TextDecoration.LineThrough else androidx.compose.ui.text.style.TextDecoration.None
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Checkbox(
+                                        checked = quest.isCompleted,
+                                        onCheckedChange = { viewModel.toggleQuestCompletion(quest) },
+                                        colors = CheckboxDefaults.colors(checkedColor = WaldgruenDunkel, uncheckedColor = TintenSchwarz.copy(alpha = 0.5f)),
+                                        modifier = Modifier.size(48.dp).padding(8.dp)
+                                    )
+                                    IconButton(
+                                        onClick = { viewModel.deleteQuest(quest.id) },
+                                        modifier = Modifier.size(48.dp)
+                                    ) {
+                                        Icon(Icons.Default.Clear, contentDescription = "Löschen", tint = if (quest.isCompleted) TintenSchwarz.copy(alpha = 0.5f) else Color.Red)
+                                    }
                                 }
-                            }
-                            if (quest.description.isNotBlank()) {
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(
-                                    text = quest.description, 
-                                    fontSize = 14.sp, 
-                                    color = if (quest.isCompleted) Color.Gray else Color.DarkGray
-                                )
+                                if (quest.description.isNotBlank()) {
+                                    Spacer(modifier = Modifier.height(4.dp))
+                                    Text(
+                                        text = quest.description, 
+                                        fontSize = 16.sp, 
+                                        color = if (quest.isCompleted) TintenSchwarz.copy(alpha = 0.5f) else TintenSchwarz,
+                                        lineHeight = 24.sp
+                                    )
+                                }
                             }
                         }
                     }
