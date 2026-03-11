@@ -48,16 +48,6 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        painter = painterResource(id = R.drawable.dndcompanion_logo),
-                        contentDescription = "App Logo",
-                        modifier = Modifier
-                            .size(36.dp)
-                            .clip(CircleShape)
-                            .border(1.dp, WaldGold, CircleShape),
-                        contentScale = ContentScale.Crop
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         "Charakter Profil",
                         style = MaterialTheme.typography.titleLarge,
@@ -187,7 +177,7 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 AttributeBox("INT", viewModel.intelligence.toString(), formatMod(viewModel.intMod), "RW: ${formatMod(viewModel.intMod)}", R.drawable.icon_int)
                 AttributeBox("WIS", viewModel.wisdom.toString(), formatMod(viewModel.wisMod), "RW: ${formatMod(viewModel.wisMod)}", R.drawable.icon_wis)
-                AttributeBox("CHA", viewModel.charisma.toString(), formatMod(viewModel.chaMod), "RW: ${formatMod(viewModel.chaMod)}", null)
+                AttributeBox("CHA", viewModel.charisma.toString(), formatMod(viewModel.chaMod), "RW: ${formatMod(viewModel.chaMod)}", R.drawable.icon_cha)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -315,7 +305,7 @@ fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: 
                 Image(
                     painter = painterResource(id = iconRes),
                     contentDescription = "$name Icon",
-                    modifier = Modifier.size(24.dp).padding(bottom = 2.dp),
+                    modifier = Modifier.size(32.dp).padding(bottom = 2.dp),
                     contentScale = ContentScale.Fit
                 )
             }

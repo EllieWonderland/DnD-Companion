@@ -117,9 +117,9 @@
 ### Stufe 9: Finale Politur & Skalierung
 - [ ] **Globale Dialoge**: EP, Rasten, Level-Up, `RestWarningDialog`, Spellbook-Edit.
 - [ ] **Dynamik & Konsistenz**: Flexible Boxengrößen überall, Pergament-Animationen, HP-Balken Smoothness.
-- [x] **Ikonographie**: Attribut-Icons & Nav-Holzschnitte finalisieren.
+- [ ] **Ikonographie**: Attribut-Icons & Nav-Holzschnitte finalisieren.
   - *Notiz für Commit:* `feat: integrate attribute icons into profile boxes`
-- [x] **Accessability**: 
+- [ ] **Accessability**: 
   - Kontrast (APCA Standard):
     - Fließtext: Lc >= 75 (Goldstandard für Lesbarkeit).
     - Warnmeldungen: Lc >= 90 (maximale Aufmerksamkeit).

@@ -1,10 +1,12 @@
 package com.example.dndcompanion.ui.screens
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -13,6 +15,7 @@ import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import com.example.dndcompanion.R
 
 @Composable
 fun LevelUpDialog(viewModel: CharacterViewModel) {
@@ -38,6 +41,14 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
 
     // The attributes that are changed in the dialog
     val isAsiLevel = viewModel.level in listOf(4, 8, 12, 16, 19)
+
+    // Fanfare abspielen beim Öffnen des Dialogs
+    val context = LocalContext.current
+    DisposableEffect(Unit) {
+        val mediaPlayer = MediaPlayer.create(context, R.raw.fanfare)
+        mediaPlayer?.start()
+        onDispose { mediaPlayer?.release() }
+    }
 
     AlertDialog(
         onDismissRequest = { /* forced interaction */ },
