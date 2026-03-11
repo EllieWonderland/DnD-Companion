@@ -69,28 +69,52 @@
 - [x] **Stats korrekt ziehen:** Delat zieht die noch nicht seine eigenen Stats (Waffen, Rucksack, Zauber etc.), sondern die von Athania. Umstellen auf stats_delat.md
 
 ## Phase 5: Neues Layout (Pergament & Stein-Optik)
-- [ ] **Machbarkeits-Check & Assets** (Status: Teilweise möglich, Texturen/Fonts fehlen noch im Repo)
-  - [ ] Vorhandene Bilder nutzen: `athania.png`, `delat.png`, `zauberbuch.png`, `regelwerk.png`, `notizbuch.png`, `grollbuch.png`.
-  - [ ] Fehlende Texturen besorgen/erstellen: Pergament-Hintergrund, Steinmetz-Platten-Textur.
-  - [ ] Fehlende Schriftarten (Fonts) einbinden: Fantasy-Serife, Gotisch/Runen-Type.
-- [ ] **Fundament: Farbpalette und Texturen**
-  - [ ] Hintergrund: Helles Gelb durch verwitterte Pergamenttextur ersetzen.
-  - [ ] Farbakzente: Tiefes Waldgrün für Header, Ochsenblutrot/Dunkelbraun für Buttons/Akzente.
-  - [ ] Tiefe: Dezente Schatten für übereinanderliegende Pergamentstücke und Lederriemen.
-  - [ ] Profil-Karten: Attribute als Steinmetz-Platten oder Pergamentrollen mit Wachssiegeln gestalten.
-- [ ] **Typografie & Schriftarten**
-  - [ ] Fantasy-Schriftarten integrieren (Grenze Gotisch, Almendra und MedievalSharp von Google Fonts hinzufügen).
-  - [ ] Zahlenwerte: Klobigere, graviert aussehende Schrift für HP und Attribute.
-- [ ] **Ikonographie & Symbole**
-  - [ ] Navigations-Icons als Holzschnitte/Tintenzeichnungen gestalten.
-  - [ ] Capy-Icon: Detaillierterer Capybara-Kopf oder heraldische Pfote.
-  - [ ] Attributs-Icons: Faust (STR), geflügelter Schuh (DEX), Herz (CON), Geist (INT), Auge (WIS), Maske (CHA).
-- [ ] **Layout-Details & UI-Elemente**
-  - [ ] Verwitterte Ränder: Unregelmäßige, zerrissene Kanten für alle Karten und Tabellen.
-  - [ ] HP-Leiste: Glasampulle (Flüssigkeits-Optik) oder leuchtende, erlöschende Runen.
-  - [ ] HP-Buttons: Schaltflächen als Bronze- oder Eisenplättchen-Optik.
-  - [ ] Angriffs-Boxen: Gravierte Metallschilde oder Holztafeln für "Bestienschlag" etc.
-  - [ ] Flexible Boxengrößen: Die Boxen sollen sich an die Textlänge anpassen.
+
+### Stufe 1: Design-Fundament (Theme, Fonts, Farben, Assets)
+- [ ] **Farbpalette erweitern** (`Color.kt`): `Pergament`, `Waldgruen`, `OchsenblutRot`, `Bronze`, `HexenLila`, `WaldGold`.
+- [ ] **Schriftarten einbinden** (`Type.kt` + `res/font/`): `MedievalSharp`, `Almendra`, `Grenze Gotisch`.
+- [ ] **Theme.kt & System-UI**: Neues `ColorScheme`, `dynamicColor = false`, StatusBar auf `WaldgruenDunkel`.
+- [ ] **Assets vorbereiten**: `pergament_hintergrund.png` + `steinerne_attributskarte.png` nach `res/drawable/`.
+- [ ] **Zusätzliche Assets**: Capy-Icon (Holzschnitt) und Attribut-Icons (Faust, Schuh, Herz, Geist, Auge, Maske) generieren oder als Font-Icons einbinden.
+- [ ] **Basis-Composables**: `PergamentBackground` und `StandardCard` (Pergament-Optik).
+
+### Stufe 2: Navigation & App-Rahmen (`MainActivity.kt`)
+- [ ] **Bottom-Navigation**: Holz-/Stein-Optik, Sepia/Gold-Icons.
+
+### Stufe 3: ProfilScreen
+- [ ] Hintergrund & Charakter-Karte (Wachssiegel-Optik).
+- [ ] **Attribut-Boxen**: Stein-Hintergrund, `Grenze Gotisch` Schrift für Werte.
+- [ ] **Merkmale/Traits**: Pergament-Rollen-Design.
+
+### Stufe 4: CombatScreen
+- [ ] **HP-Anzeige**: Glasampullen/Runen, **Temp HP** als oberer Eisblau-Balken (zuerst abbauen).
+- [ ] **Buttons & Retter**: Bronze-HP-Buttons, Runen-Todesrettungswürfe.
+- [ ] **Waffen-Boxen**: Athania (Holztafeln), Delat (Metallschilde).
+- [ ] **Angriffs-Boxen**: Metallschild-Optik, charakterspezifische Akzente (`WaldGold` vs `HexenLila`).
+- [ ] **Urtier-Sektion (Athania)**: Eigener Pergament-Rahmen, Capy-Holzschnitt, Beast-Type Tabs.
+
+### Stufe 5: ZauberScreen
+- [ ] **Slots**: Kristall-Fläschchen (Ranger), Runen (Warlock). Skalierung mit Level (G2/G3).
+- [ ] **Tracker (Delat)**: Wachssiegel für Talent-Zauber (Segnen, Nebelschritt, Magierrüstung).
+- [ ] **SpellCards**: Spielkarten-Optik mit Schule-Symbol und Pergament-Finish.
+
+### Stufe 6: RucksackScreen & Dialoge
+- [ ] **Traglast**: Seil-/Ketten-Balken (Gefahrenfarben orange/rot).
+- [ ] **EquipmentPickerDialog**: Komplettes Redesing des Item-Katalogs (Listen, Filter, Suche).
+- [ ] **Geldbeutel**: Münz-Icons & Goldener Rahmen.
+
+### Stufe 7: BücherScreen (Bibliothek)
+- [ ] **Übersicht**: Buch-Asset-Illustrationen (`notizbuch.png`, etc.) statt Emojis.
+- [ ] **Detail-Ansichten**: `SpellbookDetailView`, `QuestlogDetailView` und Gruppen-Chat (Papyrus) redesignen.
+
+### Stufe 8: HelpScreen (Regel-Chat & FAQ)
+- [ ] Chat-Blasen: User (Tintenfass), Bot (versiegelte Briefe).
+- [ ] Gemini-Slots als Runen-Leiste.
+
+### Stufe 9: Finale Politur & Skalierung
+- [ ] **Globale Dialoge**: EP, Rasten, Level-Up, `RestWarningDialog`, Spellbook-Edit.
+- [ ] **Dynamik & Konsistenz**: Flexible Boxengrößen überall, Pergament-Animationen, HP-Balken Smoothness.
+- [ ] **Ikonographie**: Attribut-Icons & Nav-Holzschnitte finalisieren.
 
 ## Phase 6: Gruppen-Features & Ausblick
 - [x] **Geteilte Schatztruhe (Gruppen-Loot):** Ein Inventar, aus dem jeder Spieler in Echtzeit Gold und Items nehmen oder hineinlegen kann.
@@ -104,6 +128,4 @@
 - [x] **Unholde Vitalität (At-Will):** Sicherstellen, dass der Button für Unholde Vitalität unendlich oft nutzbar bleibt (nicht ausgrauen), da es eine schauerliche Anrufung ist.
 - [x] **Zauberbuch-Vollständigkeit (Delat):** Prüfen, ob alle Zauber aus stats_delat.md im Charakterblatt hinterlegt sind.
 - [x] **Dynamische FAQ-Schlagworte:** Gemini soll automatisch passende Titel/Tags für FAQ-Einträge generieren (statt statisch "Regelerklärung").
-
-
-
+- [ ] **Gute Beeren Sichtbarkeit:** "Gute Beeren" Schaltfläche im Rucksack soll für Charaktere ohne diesen Zauber (z.B. Delat) komplett ausgeblendet werden.
