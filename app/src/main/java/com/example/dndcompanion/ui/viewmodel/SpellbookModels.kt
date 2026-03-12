@@ -68,7 +68,8 @@ data class SpellDto(
             description = descBuilder.toString().trim(),
             classes = actualClasses,
             school = school.trim(),
-            isPrepared = false
+            isPrepared = false,
+            isRitual = castingTime.contains("Ritual", ignoreCase = true) || school.contains("Ritual", ignoreCase = true)
         )
     }
 }

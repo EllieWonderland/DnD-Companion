@@ -25,7 +25,15 @@ import com.example.dndcompanion.data.CharacterRepository
 import com.example.dndcompanion.data.CharacterClass
 
 // --- DATENKLASSEN & ENUMS ---
-data class InventoryItem(val name: String, val amount: Int, val weight: Double = 0.0, val category: String = "Sonstiges")
+data class InventoryItem(
+    val name: String, 
+    val amount: Int, 
+    val weight: Double = 0.0, 
+    val category: String = "Sonstiges",
+    var maxCharges: Int = 0,
+    var currentCharges: Int = 0,
+    val spellCharges: Map<String, Int>? = null // Map spellId -> cost
+)
 data class ChatMessage(
     val id: String = java.util.UUID.randomUUID().toString(),
     val text: String, 
@@ -38,7 +46,14 @@ data class ChatMessage(
 )
 
 data class FaqItem(val question: String, val answer: String)
-data class TraitItem(val name: String, val desc: String)
+data class TraitItem(
+    val name: String, 
+    val desc: String,
+    var maxUses: Int = 0,
+    var currentUses: Int = 0,
+    val grantedSpellId: String? = null,
+    val resetOnShortRest: Boolean = false
+)
 data class BookEntry(
     val id: String = java.util.UUID.randomUUID().toString(),
     val text: String = "",
@@ -94,7 +109,8 @@ data class Spell(
     val description: String,
     val classes: List<String> = emptyList(),
     val school: String = "Unbekannt",
-    var isPrepared: Boolean = false
+    var isPrepared: Boolean = false,
+    var isRitual: Boolean = false
 )
 
 enum class ActiveWeapon {
@@ -661,7 +677,38 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         addCustomLoot(item.name, item.weight, inventoryCategory)
     }
 
-    // --- FREIE MERKMALE (TRAITS) ---
+    // --- FREIE MERKMALE (TRAITS) ---    // --- FREE SPELLS LOGIC ---
+    fun canCastAsRitual(spell: Spell): Boolean {
+        if (!spell.isRitual) return false
+        
+        // Magier benötigen den Zauber nicht vorbereitet, solange er im globalen Buch (ihrem Zauberbuch) steht
+        return if (characterData.charClass == CharacterClass.WARLOCK && characterData.id == "Delat") {
+            // Delat ist Warlock, aber hat vielleicht Wizard-Rituale durch Talente/Invocations? 
+            // Laut PHB 2024: Wizards only for "unprepared ritual casting".
+            spell.isPrepared
+        } else if (characterData.charClass == CharacterClass.RANGER) {
+            spell.isPrepared
+        } else {
+            // Default: Muss vorbereitet sein (außer wir implementieren Wizard explizit)
+            spell.isPrepared
+        }
+    }
+
+    fun useTraitSpell(trait: TraitItem) {
+        if (trait.currentUses > 0) {
+            trait.currentUses--
+            saveTraits()
+        }
+    }
+
+    fun useItemCharge(item: InventoryItem, spellId: String) {
+        val cost = item.spellCharges?.get(spellId) ?: 0
+        if (item.currentCharges >= cost) {
+            item.currentCharges -= cost
+            saveLoot()
+        }
+    }
+
     val customTraits = mutableStateListOf<TraitItem>()
     private fun saveTraits() {
         val json = gson.toJson(customTraits)
@@ -676,6 +723,13 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 val items: List<TraitItem> = gson.fromJson(jsonString, type)
                 customTraits.clear()
                 customTraits.addAll(items)
+                
+                // Sicherstellen, dass neue Standard-Merkmale (Free Spells) auch bei bestehenden Saves erscheinen
+                characterData.defaultTraits.forEach { defaultTrait ->
+                    if (customTraits.none { it.name == defaultTrait.name }) {
+                        customTraits.add(defaultTrait)
+                    }
+                }
             } catch (e: Exception) {
                 // Ignore
             }
@@ -1426,6 +1480,7 @@ private val model25Flash = GenerativeModel(
         loadSpells()
         loadGlobalSpellbook()
         loadEquipment()
+        loadTraits()
     }
 
     private fun saveSpells() {
@@ -1614,6 +1669,17 @@ private val model25Flash = GenerativeModel(
                 componentsV = true, componentsS = true, componentsM = true,
                 materialCost = "Ein Stück Schafswolle",
                 description = "Du erzeugst eine illusion im Verstand einer Kreatur (INT RW). Nimmt 1W6 psychischen Schaden pro Zug und behandelt die Illusion als real. (Immer vorbereitet)",
+                isPrepared = true
+            ),
+            Spell(
+                name = "Falsches Leben",
+                level = 1,
+                castingTime = "1 Aktion",
+                range = "Selbst",
+                duration = "1 Stunde",
+                componentsV = true, componentsS = true, componentsM = true,
+                materialCost = "Ein kleines Stück gepökeltes Fleisch",
+                description = "Du verleihst dir selbst eine nekromantische Nachahmung von Leben. Du erhältst 2d4 + 4 temporäre Trefferpunkte (PHB 2024).",
                 isPrepared = true
             ),
             Spell(

@@ -99,74 +99,32 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 colors = CardDefaults.cardColors(containerColor = WaldgruenDunkel)
             ) {
                 Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
-                    Text("Kostenlose Zauber (Talente)", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    Text("Kostenlose Zauber (Talente & Gegenstände)", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    val isHuntersMarkPrepared = viewModel.allSpells.any { it.name == "Zeichen des Jägers" && it.isPrepared }
-                    if (isHuntersMarkPrepared) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Zeichen des Jägers", color = Color.White, fontSize = 14.sp)
-                                Text("Ohne Zauberplatz", color = Color.LightGray, fontSize = 11.sp)
-                            }
-                            Text("${viewModel.huntersMarkFreeUses} / 2", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
-                            Button(
-                                onClick = { viewModel.useHuntersMarkFree() },
-                                enabled = viewModel.huntersMarkFreeUses > 0,
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                                modifier = Modifier.height(32.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = accentColor,
-                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
-                                )
-                            ) { Text("Wirken", fontSize = 10.sp) }
-                        }
+                    val freeFeatures = viewModel.customTraits.filter { trait ->
+                        val spellId = trait.grantedSpellId
+                        if (spellId == null) return@filter false
+                        // Nur anzeigen, wenn der Zauber im Buch steht UND vorbereitet ist
+                        viewModel.allSpells.any { it.name.equals(spellId, ignoreCase = true) && it.isPrepared }
                     }
-
-                    val isCureWoundsPrepared = viewModel.allSpells.any { it.name == "Wunden heilen" && it.isPrepared }
-                    if (isCureWoundsPrepared) {
+                    freeFeatures.forEach { trait ->
                         Row(
                             modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Wunden heilen", color = Color.White, fontSize = 14.sp)
-                                Text("1x pro Lange Rast", color = Color.LightGray, fontSize = 11.sp)
+                                Text(trait.name, color = Color.White, fontSize = 14.sp)
+                                val subText = if (trait.maxUses >= 999) "Beliebig oft" else "${trait.desc.split("\n").firstOrNull() ?: ""}"
+                                Text(subText, color = Color.LightGray, fontSize = 11.sp, maxLines = 1)
                             }
-                            Text("${if (viewModel.freeCureWoundsUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
-                            Button(
-                                onClick = { viewModel.useFreeCureWounds() },
-                                enabled = !viewModel.freeCureWoundsUsed,
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                                modifier = Modifier.height(32.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = accentColor,
-                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
-                                )
-                            ) { Text("Wirken", fontSize = 10.sp) }
-                        }
-                    }
-
-                    val isHealingWordPrepared = viewModel.allSpells.any { it.name == "Heilendes Wort" && it.isPrepared }
-                    if (isHealingWordPrepared) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Heilendes Wort", color = Color.White, fontSize = 14.sp)
-                                Text("1x pro Lange Rast", color = Color.LightGray, fontSize = 11.sp)
+                            if (trait.maxUses < 999) {
+                                Text("${trait.currentUses} / ${trait.maxUses}", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
                             }
-                            Text("${if (viewModel.freeHealingWordUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
                             Button(
-                                onClick = { viewModel.useFreeHealingWord() },
-                                enabled = !viewModel.freeHealingWordUsed,
+                                onClick = { viewModel.useTraitSpell(trait) },
+                                enabled = trait.currentUses > 0,
                                 contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
                                 modifier = Modifier.height(48.dp),
                                 colors = ButtonDefaults.buttonColors(
@@ -177,79 +135,8 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         }
                     }
 
-                    val isFaerieFirePrepared = viewModel.allSpells.any { it.name == "Feenfeuer" && it.isPrepared }
-                    if (isFaerieFirePrepared) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Feenfeuer", color = Color.White, fontSize = 14.sp)
-                                Text("1x pro Lange Rast", color = Color.LightGray, fontSize = 11.sp)
-                            }
-                            Text("${if (viewModel.freeFaerieFireUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
-                            Button(
-                                onClick = { viewModel.useFreeFaerieFire() },
-                                enabled = !viewModel.freeFaerieFireUsed,
-                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-                                modifier = Modifier.height(48.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = accentColor,
-                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
-                                )
-                            ) { Text("Wirken", fontSize = 16.sp, fontFamily = Almendra) }
-                        }
-                    }
-
-                    val isDarknessPrepared = viewModel.allSpells.any { it.name == "Dunkelheit" && it.isPrepared }
-                    if (isDarknessPrepared) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Dunkelheit", color = Color.White, fontSize = 14.sp)
-                                Text("1x pro Lange Rast", color = Color.LightGray, fontSize = 11.sp)
-                            }
-                            Text("${if (viewModel.freeDarknessUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
-                            Button(
-                                onClick = { viewModel.useFreeDarkness() },
-                                enabled = !viewModel.freeDarknessUsed,
-                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-                                modifier = Modifier.height(48.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = accentColor,
-                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
-                                )
-                            ) { Text("Wirken", fontSize = 16.sp, fontFamily = Almendra) }
-                        }
-                    }
-
-                    val freeDruidSpell = viewModel.allSpells.firstOrNull { it.classes.contains("Druide") && !it.classes.contains("Waldläufer") && it.level == 1 && it.isPrepared }
-                    if (freeDruidSpell != null) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(freeDruidSpell.name, color = Color.White, fontSize = 14.sp)
-                                Text("Druide, 1x pro Lange Rast", color = Color.LightGray, fontSize = 11.sp)
-                            }
-                            Text("${if (viewModel.freeDruidSpellUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
-                            Button(
-                                onClick = { viewModel.useFreeDruidSpell() },
-                                enabled = !viewModel.freeDruidSpellUsed,
-                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-                                modifier = Modifier.height(48.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = accentColor,
-                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
-                                )
-                            ) { Text("Wirken", fontSize = 16.sp, fontFamily = Almendra) }
-                        }
+                    if (freeFeatures.isEmpty()) {
+                        Text("Keine aktiven kostenlosen Zauber verfügbar.", color = Color.LightGray, fontSize = 12.sp, style = androidx.compose.ui.text.TextStyle(fontStyle = androidx.compose.ui.text.font.FontStyle.Italic))
                     }
                 }
             }
@@ -273,7 +160,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                     ) {
                         Column {
                             Text("Zauberplätze Grad 1", color = Color.White, fontWeight = FontWeight.Bold)
-                            Text("Heilung, Nebel, Beeren...", color = Color.White, fontSize = 14.sp)
+                            Text("Vielseitige Waldläufer-Magie", color = Color.White, fontSize = 14.sp)
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text("${viewModel.spellSlotsLevel1} / 3", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
@@ -305,7 +192,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         ) {
                             Column {
                                 Text("Zauberplätze Grad 2", color = Color.White, fontWeight = FontWeight.Bold)
-                                Text("Pass Without Trace, Spike Growth...", color = Color.White, fontSize = 14.sp)
+                                Text("Fortgeschrittene Naturkräfte", color = Color.White, fontSize = 14.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text("${viewModel.spellSlotsLevel2} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
@@ -338,7 +225,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         ) {
                             Column {
                                 Text("Zauberplätze Grad 3", color = Color.White, fontWeight = FontWeight.Bold)
-                                Text("Conjure Animals, Revivify...", color = Color.White, fontSize = 14.sp)
+                                Text("Mächtige Waldläufer-Künste", color = Color.White, fontSize = 14.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text("${viewModel.spellSlotsLevel3} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
@@ -520,7 +407,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             if (cantrips.isNotEmpty()) {
                 Text("Zaubertricks (0)", color = Waldgruen, fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 4.dp))
                 cantrips.forEach { spell ->
-                    SpellCard(spell = spell)
+                    SpellCard(
+                        spell = spell,
+                        onCastAsRitual = if (viewModel.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null
+                    )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -528,7 +418,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             if (leveledSpells.isNotEmpty()) {
                 Text("Vorbereitete Zauber", color = Waldgruen, fontWeight = FontWeight.Bold, modifier = Modifier.padding(vertical = 4.dp))
                 leveledSpells.forEach { spell ->
-                    SpellCard(spell = spell)
+                    SpellCard(
+                        spell = spell,
+                        onCastAsRitual = if (viewModel.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null
+                    )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
             }
@@ -759,6 +652,7 @@ fun SpellCard(
     customColor: Color = com.example.dndcompanion.ui.theme.Waldgruen,
     onTogglePrep: () -> Unit = {},
     onDelete: (() -> Unit)? = null,
+    onCastAsRitual: (() -> Unit)? = null,
     extraContent: (@Composable () -> Unit)? = null
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -821,6 +715,17 @@ fun SpellCard(
                 Spacer(modifier = Modifier.height(6.dp))
                 Text(spell.description, color = TintenSchwarz, fontSize = 15.sp, lineHeight = 20.sp)
                 
+                if (spell.isRitual && onCastAsRitual != null) {
+                    Spacer(modifier = Modifier.height(12.dp))
+                    Button(
+                        onClick = onCastAsRitual,
+                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
+                        modifier = Modifier.fillMaxWidth().height(48.dp),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text("Als Ritual wirken (+10 Min)", fontSize = 16.sp, color = Color.White, fontFamily = Almendra)
+                    }
+                }
                 if (isEditMode && onDelete != null) {
                     Spacer(modifier = Modifier.height(12.dp))
                     Button(
@@ -926,7 +831,7 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
 
-                Box(modifier = Modifier.weight(1f)) {
+                Box(modifier = Modifier.weight(1f).padding(bottom = 8.dp)) {
                     val scrollState = rememberScrollState()
                     Column(modifier = Modifier.verticalScroll(scrollState).fillMaxWidth()) {
                         val cantrips = viewModel.allSpells.filter { it.level == 0 }
@@ -961,10 +866,11 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                 Button(
                     onClick = { showAddSpellDialog = true },
                     colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp).height(48.dp)
+                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(56.dp)
                 ) {
                     Text("+ Zauber aus Kompendium hinzufügen", color = Color.White, fontSize = 16.sp, fontFamily = Almendra)
                 }
+                Spacer(modifier = Modifier.height(32.dp))
             }
         }
     }

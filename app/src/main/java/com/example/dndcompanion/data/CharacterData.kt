@@ -85,7 +85,11 @@ object CharacterRepository {
                 defaultTraits = listOf(
                     TraitItem("Urbegleiter (Land, Himmel, Meer)", "Bonusaktion: Urtier befehligen\nAktion: Urtier Angriff\nZauberslot: Urtier beleben (volle HP)"),
                     TraitItem("Trance", "Du musst nicht schlafen. Lange Rast dauert 4 Std in Meditation."),
-                    TraitItem("Feenblut", "Vorteil bei Rettungswürfen gegen Bezauberung."),
+                    TraitItem("Feenblut / Drow-Magie", "Vorteil bei Rettungswürfen gegen Bezauberung. Du kennst Feenfeuer (1/LR ab St. 3) und Dunkelheit (1/LR ab St. 5).", maxUses = 1, currentUses = 1, grantedSpellId = "Feenfeuer"),
+                    TraitItem("Dunkelheit (Drow)", "Du kannst Dunkelheit 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Dunkelheit"),
+                    TraitItem("Bevorzugter Feind (Zeichen des Jägers)", "Du kannst Zeichen des Jägers 2/LR ohne Slot wirken.", maxUses = 2, currentUses = 2, grantedSpellId = "Zeichen des Jägers"),
+                    TraitItem("Druid Initiate (Gute Beere)", "Du kannst Gute Beere 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Gute Beere"),
+                    TraitItem("Magic Initiate (Wunden heilen)", "Du kannst Wunden heilen 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Wunden heilen"),
                     TraitItem("Messerstecher", "Bei Stichschaden 1x pro Zug 1 Angriffswürfel neu würfeln. Bei Krit 1 zus. Schadenswürfel.")
                 )
             )
@@ -131,16 +135,20 @@ object CharacterRepository {
                     InventoryItem("Trank der Tierfreundschaft", 1, 0.5, "Tränke")
                 ),
                 defaultTraits = listOf(
-                    TraitItem("Steingespür", "Bonusaktion. Erschütterungssinn für 10 min innerhalb von 18m, wenn beide auf Gestein."),
+                    TraitItem("Steingespür", "Bonusaktion. Erschütterungssinn für 10 min innerhalb von 18m, wenn beide auf Gestein.", maxUses = 2, currentUses = 2),
                     TraitItem("Zwergische Unverwüstlichkeit", "Giftresistenz, Vorteil bei Rettungswurf Vergiftet."),
                     TraitItem("Zwergische Zähigkeit", "+1 TP pro Stufe."),
                     TraitItem("Paktmagie", "2 Zaubertricks, 2 Zauberplätze (St. 2), 4 vorbereitete Zauber."),
-                    TraitItem("Schauerliche Anrufungen", "Pakt der Klinge - Paktwaffe, Unholde Vitalität, Qualvoller Strahl - Schauriger Strahl."),
-                    TraitItem("Magische Rafinesse", "1/LR 1min Ritus, Hälfte der Zauberplätze zurück."),
+                    TraitItem("Pakt der Klinge", "Paktwaffe beschwören (BA)."),
+                    TraitItem("Unholde Vitalität", "Du kannst Falsches Leben (Level 1) beliebig oft ohne Slot wirken.", maxUses = 999, currentUses = 999, grantedSpellId = "Falsches Leben"),
+                    TraitItem("Qualvoller Strahl", "Addiere CHA-Mod zu Schaurigem Strahl."),
+                    TraitItem("Magische Rafinesse", "1/LR 1min Ritus, Hälfte der Zauberplätze zurück.", maxUses = 1, currentUses = 1),
                     TraitItem("Erwachter Geist", "Telepathische Verbindung (BA, max 9m)."),
                     TraitItem("Psychische Zauber", "Schadensart in psychisch ändern. Keine V/G an Verzauberung/Illusion."),
                     TraitItem("Macht der Tiefe", "Verbündeten angreifen für Vorteil + Fluch."),
-                    TraitItem("Talente", "Eingeweihter der Magie (Magier), Feenberührt.")
+                    TraitItem("Eingeweihter der Magie (Magierrüstung)", "Du kannst Magierrüstung 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Magierrüstung"),
+                    TraitItem("Feenberührt (Segnen)", "Du kannst Segnen 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Segnen"),
+                    TraitItem("Feenberührt (Nebelschritt)", "Du kannst Nebelschritt 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Nebelschritt")
                 )
             )
             else -> throw IllegalArgumentException("Unknown character target: $id")

@@ -75,7 +75,6 @@
 - [x] **Schriftarten einbinden** (`Type.kt` + `res/font/`): `MedievalSharp`, `Almendra`, `Grenze Gotisch`.
 - [x] **Theme.kt & System-UI**: Neues `ColorScheme`, `dynamicColor = false`, StatusBar auf `WaldgruenDunkel`.
 - [x] **Assets vorbereiten**: `pergament_hintergrund.png` + `steinerne_attributskarte.png` nach `res/drawable/`.
-- [ ] **Zusätzliche Assets**: Capy-Icon (Holzschnitt) und Attribut-Icons (Faust, Schuh, Herz, Geist, Auge, Maske) generieren oder als Font-Icons einbinden.
 - [x] **Basis-Composables**: `PergamentBackground`, `PergamentCard`, `SteinCard` (in `PergamentComposables.kt`).
 
 ### Stufe 2: Navigation & App-Rahmen (`MainActivity.kt`)
@@ -149,7 +148,13 @@
 - [x] **Zauberbuch:** Die Schrift ist auf dem Hintergrund im Zauberbuch besser lesbar (Kontraste optimiert, auch in der Bibliothek).
   - Note for Commit: Fix readability issues in Spellbook (both in equip screen and library) by using high-contrast parchment theme and fixing button text colors. Add missing imports in BucherScreen.kt.
 - [x] **Pfeilköcher:** Anzeige für Nicht-Waldläufer (wie Delat) ausgeblendet.
-- [ ] **Free Spells:** Mechanik (Rituale, Features, Items) gemäß `freespells.md` umsetzen.
-  - [ ] `Spell` Klasse um `isRitual` erweitern & Ritual-Buttons in UI integrieren.
-  - [ ] Systematisches Feature-Tracking für kostenlose Zauber (z.B. Feenberührt).
-  - [ ] Ladungssystem für magische Gegenstände (Items-Tab).
+- [x] **Free Spells Mechanik implementieren (Rituale, Features, Items)**
+  - [x] Ritual-System: (Ritual) Tag im JSON parsen und als Button in ZauberCard anzeigen.
+  - [x] Feature-Tracking: TraitItem erweitert um currentUses/maxUses und grantedSpellId.
+  - [x] Item-Charges: InventoryItem erweitert um charges-System.
+  - [x] Validierung: Abgleich mit freespells.md und stats_delat.md.
+    - [x] Athania-Spezial: Zeichen des Jägers (2/LR), Gute Beeren, Wunden heilen ergänzt.
+    - [x] UI-Fix: Scroll-Probleme und Padding im Verwalter-Dialog behoben (Spacer + 40dp).
+    - [x] Logik-Fix: `loadTraits` ergänzt nun fehlende Standard-Merkmale bei bestehenden Saves.
+    - [x] Sichtbarkeit: Freie Zauber aus Merkmalen erscheinen nur, wenn sie im Zauberbuch vorbereitet sind.
+    *Notiz für Commit: Free Spells Mechanik vollständig implementiert, inklusive konditionaler Sichtbarkeit und automatischer Save-Aktualisierung.*
