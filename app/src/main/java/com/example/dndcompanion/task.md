@@ -145,7 +145,6 @@
 - [x] **Unholde Vitalität (At-Will):** Sicherstellen, dass der Button für Unholde Vitalität unendlich oft nutzbar bleibt (nicht ausgrauen), da es eine schauerliche Anrufung ist.
 - [x] **Zauberbuch-Vollständigkeit (Delat):** Prüfen, ob alle Zauber aus stats_delat.md im Charakterblatt hinterlegt sind.
 - [x] **Dynamische FAQ-Schlagworte:** Gemini soll automatisch passende Titel/Tags für FAQ-Einträge generieren (statt statisch "Regelerklärung").
-- [ ] **Gute Beeren Sichtbarkeit:** "Gute Beeren" Schaltfläche im Rucksack soll für Charaktere ohne diesen Zauber (z.B. Delat) komplett ausgeblendet werden.
 - [x] **Rucksack:** Der Geldbeutel stimmt in der ausgeklappten und eingeklappten Version nicht überein , die Ausschöpfung der Traglast ist nicht erkennbar und bei Neuer Fund kann man die Kategorie nicht mehr auswählen (drop-down).
 - [x] **Accessability Check:** Kontraste optimiert (Merkmale auf OchsenblutRot, Zauber-Typ auf PergamentHell). Schriftgrößen auf 16sp erhöht.
 - [x] **Konsistenzcheck:** Buttongrößen vereinheitlicht (Weapon 130dp, HP 60dp). Athania/Delat Talente-Layout angeglichen.
@@ -156,5 +155,7 @@
   - [x] Implementierungsplan zur Bereinigung und Vervollständigung umgesetzt.
   - [x] **Bug-Fix Build:** Behebung der Build-Fehler nach Delat-Integration.
 - [x] **Kostenlose Zauber:** Layout für Athania umgesetzt (kompakte Sektion). 1/LR Tracking visuell integriert.
-- [ ] **Zauberbuch:** Die Schrift ist auf dem Hintergrund im Zauberbuch immernoch nicht lesba (Stufe 9 beachten!)
+- [x] **Zauberbuch:** Die Schrift ist auf dem Hintergrund im Zauberbuch besser lesbar (Kontraste optimiert, auch in der Bibliothek).
+  - Note for Commit: Fix readability issues in Spellbook (both in equip screen and library) by using high-contrast parchment theme and fixing button text colors.
+- [x] **Pfeilköcher:** Anzeige für Nicht-Waldläufer (wie Delat) ausgeblendet.
 - [ ] **Free Spells:** Sieh dir die freespells.md an und setze die darin beschriebenen Inhalte um.

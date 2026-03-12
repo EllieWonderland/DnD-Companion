@@ -506,14 +506,15 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             onClick = { selectedLevel = lvl },
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (selectedLevel == lvl) OchsenblutRot else WaldgruenDunkel,
-                                disabledContainerColor = TintenSchwarz.copy(alpha = 0.3f)
+                                containerColor = if (selectedLevel == lvl) OchsenblutRot else PergamentDunkel,
+                                contentColor = if (selectedLevel == lvl) Color.White else if (hasSpells) TintenSchwarz else Color.DarkGray,
+                                disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                            modifier = Modifier.height(48.dp)
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                            modifier = Modifier.height(36.dp)
                         ) {
                             val label = if (lvl == -1) "Alle" else if (lvl == 0) "Tricks" else "Grad $lvl"
-                            Text(label, fontSize = 14.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = if (hasSpells) WaldGold else Color.White.copy(alpha = 0.5f))
+                            Text(label, fontSize = 13.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -535,13 +536,14 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             onClick = { selectedClassFilter = filterClass },
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (selectedClassFilter == filterClass) OchsenblutRot else WaldgruenDunkel,
-                                disabledContainerColor = TintenSchwarz.copy(alpha = 0.3f)
+                                containerColor = if (selectedClassFilter == filterClass) OchsenblutRot else PergamentDunkel,
+                                contentColor = if (selectedClassFilter == filterClass) Color.White else if (hasSpells) TintenSchwarz else Color.DarkGray,
+                                disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                            modifier = Modifier.height(48.dp)
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                            modifier = Modifier.height(36.dp)
                         ) {
-                            Text(filterClass, fontSize = 14.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = if (hasSpells) WaldGold else Color.White.copy(alpha = 0.5f))
+                            Text(filterClass, fontSize = 13.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -565,13 +567,14 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             onClick = { selectedSchoolFilter = filterSchool },
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (selectedSchoolFilter == filterSchool) OchsenblutRot else WaldgruenDunkel,
-                                disabledContainerColor = TintenSchwarz.copy(alpha = 0.3f)
+                                containerColor = if (selectedSchoolFilter == filterSchool) OchsenblutRot else PergamentDunkel,
+                                contentColor = if (selectedSchoolFilter == filterSchool) Color.White else if (hasSpells) TintenSchwarz else Color.DarkGray,
+                                disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
-                            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                            modifier = Modifier.height(48.dp)
+                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
+                            modifier = Modifier.height(36.dp)
                         ) {
-                            Text(filterSchool, fontSize = 14.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = if (hasSpells) WaldGold else Color.White.copy(alpha = 0.5f))
+                            Text(filterSchool, fontSize = 13.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -603,7 +606,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                                 isEquipped = alreadyInBook,
                                 onTogglePrep = {},
                                 onDelete = null,
-                                customColor = PergamentHell, // Inherit PergamentCard style
+                                customColor = if (catalogSpell.classes.contains("Waldläufer")) Waldgruen else if (catalogSpell.classes.contains("Hexenmeister")) HexenLila else WaldgruenDunkel,
                                 extraContent = {
                                     val canEquip = !alreadyInBook && (!isDruidLevel1 || druidLevel1Count < 1)
                                     Button(

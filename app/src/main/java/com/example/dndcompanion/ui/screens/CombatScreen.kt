@@ -214,7 +214,10 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                                     showEpDialog = false
                                 }
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = accentColor),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = accentColor,
+                                contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                            ),
                             shape = RoundedCornerShape(8.dp)
                         ) { Text("Hinzufügen", fontFamily = Almendra) }
                     },
@@ -240,7 +243,10 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                                 viewModel.dismissLevelUpNotification()
                                 onNavigateToProfile()
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = accentColor),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = accentColor,
+                                contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                            ),
                             shape = RoundedCornerShape(8.dp)
                         ) { Text("Jetzt anpassen", fontFamily = Almendra) }
                     },
@@ -298,7 +304,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                 }
             }
 
-            if (viewModel.currentWeapon == ActiveWeapon.LANGBOGEN) {
+            if (viewModel.currentWeapon == ActiveWeapon.LANGBOGEN && isRanger) {
                 Spacer(modifier = Modifier.height(16.dp))
                 PergamentCard(modifier = Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.padding(12.dp)) {
@@ -425,7 +431,7 @@ fun WeaponButton(title: String, isSelected: Boolean, accentColor: Color, onClick
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isSelected) accentColor else PergamentDunkel,
-            contentColor = if (isSelected) Color.White else TintenSchwarz
+            contentColor = if (isSelected) (if (accentColor == WaldGold) TintenSchwarz else Color.White) else TintenSchwarz
         ),
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier

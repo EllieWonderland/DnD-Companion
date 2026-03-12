@@ -117,7 +117,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 enabled = viewModel.huntersMarkFreeUses > 0,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = accentColor,
+                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                )
                             ) { Text("Wirken", fontSize = 10.sp) }
                         }
                     }
@@ -139,7 +142,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 enabled = !viewModel.freeCureWoundsUsed,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = accentColor,
+                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                )
                             ) { Text("Wirken", fontSize = 10.sp) }
                         }
                     }
@@ -161,7 +167,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 enabled = !viewModel.freeHealingWordUsed,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = accentColor,
+                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                )
                             ) { Text("Wirken", fontSize = 10.sp) }
                         }
                     }
@@ -183,7 +192,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 enabled = !viewModel.freeFaerieFireUsed,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = accentColor,
+                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                )
                             ) { Text("Wirken", fontSize = 10.sp) }
                         }
                     }
@@ -205,7 +217,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 enabled = !viewModel.freeDarknessUsed,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = accentColor,
+                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                )
                             ) { Text("Wirken", fontSize = 10.sp) }
                         }
                     }
@@ -262,6 +277,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 enabled = viewModel.spellSlotsLevel1 > 0,
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
+                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White,
                                     disabledContainerColor = EisenGrau
                                 )
                             ) {
@@ -293,6 +309,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                     enabled = viewModel.spellSlotsLevel2 > 0,
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
+                                        contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White,
                                         disabledContainerColor = Color.Gray
                                     )
                                 ) {
@@ -325,6 +342,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                     enabled = viewModel.spellSlotsLevel3 > 0,
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
+                                        contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White,
                                         disabledContainerColor = Color.Gray
                                     )
                                 ) {
@@ -360,6 +378,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                     enabled = currentSlotsLevel2 > 0,
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
+                                        contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White,
                                         disabledContainerColor = Color.Gray
                                     )
                                 ) {
@@ -417,7 +436,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 enabled = !viewModel.freeBlessUsed,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = accentColor,
+                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                )
                             ) { Text("Wirken", fontSize = 10.sp) }
                         }
 
@@ -437,7 +459,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 enabled = !viewModel.freeMistyStepUsed,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = accentColor,
+                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                )
                             ) { Text("Wirken", fontSize = 10.sp) }
                         }
 
@@ -457,7 +482,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 enabled = !viewModel.freeMageArmorUsed,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = accentColor,
+                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                )
                             ) { Text("Wirken", fontSize = 10.sp) }
                         }
                     }
@@ -723,7 +751,7 @@ fun SpellCard(
     spell: Spell,
     isEditMode: Boolean = false,
     isEquipped: Boolean = false,
-    customColor: Color = com.example.dndcompanion.ui.theme.WaldgruenDunkel,
+    customColor: Color = com.example.dndcompanion.ui.theme.Waldgruen,
     onTogglePrep: () -> Unit = {},
     onDelete: (() -> Unit)? = null,
     extraContent: (@Composable () -> Unit)? = null
@@ -733,25 +761,26 @@ fun SpellCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .clickable { if (!isEditMode) expanded = !expanded },
-        colors = CardDefaults.cardColors(containerColor = customColor)
+            .clickable { if (!isEditMode) expanded = !expanded }
+            .border(1.dp, customColor.copy(alpha = 0.5f), RoundedCornerShape(8.dp)),
+        colors = CardDefaults.cardColors(containerColor = PergamentDunkel)
     ) {
-        Column(modifier = Modifier.padding(8.dp)) {
+        Column(modifier = Modifier.padding(10.dp)) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(spell.name, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                    Text(spell.name, color = Waldgruen, fontWeight = FontWeight.Bold, fontSize = 18.sp, fontFamily = Almendra)
                     val type = if (spell.level == 0) "Zaubertrick" else "Stufe ${spell.level}"
-                    Text(type, color = com.example.dndcompanion.ui.theme.PergamentHell, fontSize = 15.sp)
+                    Text(type, color = TintenBraun, fontSize = 14.sp)
                 }
                 if (isEquipped) {
                     Icon(
-                        imageVector = androidx.compose.material.icons.Icons.Default.CheckCircle,
-                        contentDescription = "Ausrüstet",
-                        tint = com.example.dndcompanion.ui.theme.WaldGold,
+                        imageVector = Icons.Default.CheckCircle,
+                        contentDescription = "Vorbereitet",
+                        tint = Waldgruen,
                         modifier = Modifier.size(24.dp).padding(end = 8.dp)
                     )
                 }
@@ -760,17 +789,17 @@ fun SpellCard(
                         checked = spell.isPrepared,
                         onCheckedChange = { onTogglePrep() },
                         colors = SwitchDefaults.colors(
-                            checkedThumbColor = com.example.dndcompanion.ui.theme.WaldGold,
-                            checkedTrackColor = com.example.dndcompanion.ui.theme.Waldgruen,
-                            uncheckedThumbColor = Color.LightGray,
-                            uncheckedTrackColor = Color.DarkGray
+                            checkedThumbColor = WaldGold,
+                            checkedTrackColor = Waldgruen,
+                            uncheckedThumbColor = EisenGrau,
+                            uncheckedTrackColor = PergamentDunkel
                         )
                     )
                 }
             }
             if (expanded || isEditMode) {
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("Zeit: ${spell.castingTime} | Dauer: ${spell.duration} | Reichweite: ${spell.range}", color = Color.White, fontSize = 15.sp)
+                Text("Zeit: ${spell.castingTime} | Dauer: ${spell.duration} | Reichweite: ${spell.range}", color = TintenSchwarz, fontSize = 14.sp, fontWeight = FontWeight.Medium)
 
                 // Komponenten String bauen
                 val comps = mutableListOf<String>()
@@ -781,19 +810,21 @@ fun SpellCard(
                     comps.add(m)
                 }
                 if (comps.isNotEmpty()) {
-                    Text("Komponenten: ${comps.joinToString(", ")}", color = com.example.dndcompanion.ui.theme.Bronze, fontSize = 15.sp)
+                    Text("Komponenten: ${comps.joinToString(", ")}", color = OchsenblutRot, fontSize = 14.sp, fontWeight = FontWeight.Bold)
                 }
 
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(spell.description, color = Color.White, fontSize = 15.sp)
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(spell.description, color = TintenSchwarz, fontSize = 15.sp, lineHeight = 20.sp)
+                
                 if (isEditMode && onDelete != null) {
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
                     Button(
                         onClick = onDelete,
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Red.copy(alpha = 0.7f)),
-                        modifier = Modifier.fillMaxWidth().height(36.dp)
+                        colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.8f)),
+                        modifier = Modifier.fillMaxWidth().height(40.dp),
+                        shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("Aus dem Buch löschen", fontSize = 14.sp)
+                        Text("Aus dem Buch löschen", fontSize = 14.sp, color = Color.White)
                     }
                 }
                 if (extraContent != null) {
@@ -991,13 +1022,17 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (selectedLevel == lvl) OchsenblutRot else PergamentDunkel,
+                                contentColor = if (selectedLevel == lvl) Color.White else if (hasSpells) TintenSchwarz else Color.DarkGray,
                                 disabledContainerColor = Color.LightGray
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                             modifier = Modifier.height(32.dp)
                         ) {
                             val label = if (lvl == -1) "Alle" else if (lvl == 0) "Tricks" else "Grad $lvl"
-                            Text(label, fontSize = 12.sp, color = if (hasSpells) Color.White else Color.DarkGray)
+                            Text(
+                                text = label, 
+                                fontSize = 12.sp
+                            )
                         }
                     }
                 }
