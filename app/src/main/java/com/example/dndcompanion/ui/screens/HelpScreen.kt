@@ -384,7 +384,7 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                                     text = "Quelle: ${message.chapterLink}",
                                     color = WaldGold,
                                     fontSize = 14.sp,
-                                    style = GrenzeGotischSmall,
+                                    fontFamily = GrenzeGotisch,
                                     fontWeight = FontWeight.Bold
                                 )
                             }

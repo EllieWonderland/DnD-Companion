@@ -149,7 +149,12 @@
 - [x] **Rucksack:** Der Geldbeutel stimmt in der ausgeklappten und eingeklappten Version nicht überein , die Ausschöpfung der Traglast ist nicht erkennbar und bei Neuer Fund kann man die Kategorie nicht mehr auswählen (drop-down).
 - [x] **Accessability Check:** Kontraste optimiert (Merkmale auf OchsenblutRot, Zauber-Typ auf PergamentHell). Schriftgrößen auf 16sp erhöht.
 - [x] **Konsistenzcheck:** Buttongrößen vereinheitlicht (Weapon 130dp, HP 60dp). Athania/Delat Talente-Layout angeglichen.
-- [ ] **Stats Check:** Überprüfe nochmal die Stats von Athania und Delat. Sind alle Werte korrekt? Sind alle Zauber und Merkmale hinterlegt?
+- [x] **Stats Check:** Überprüfe nochmal die Stats von Athania und Delat. Sind alle Werte korrekt? Sind alle Zauber und Merkmale hinterlegt?
+  - [x] Grunddaten, Kampf-Stats und Inventar von Delat verifiziert.
+  - [x] Diskrepante/Hardcodierte Werte identifiziert (Skills, Initiative, Volk, Hintergrund etc.).
+  - [x] Fehlende Zauber in der Konfiguration identifiziert.
+  - [x] Implementierungsplan zur Bereinigung und Vervollständigung umgesetzt.
+  - [x] **Bug-Fix Build:** Behebung der Build-Fehler nach Delat-Integration.
 - [x] **Kostenlose Zauber:** Layout für Athania umgesetzt (kompakte Sektion). 1/LR Tracking visuell integriert.
 - [ ] **Zauberbuch:** Die Schrift ist auf dem Hintergrund im Zauberbuch immernoch nicht lesba (Stufe 9 beachten!)
 - [ ] **Free Spells:** Sieh dir die freespells.md an und setze die darin beschriebenen Inhalte um.

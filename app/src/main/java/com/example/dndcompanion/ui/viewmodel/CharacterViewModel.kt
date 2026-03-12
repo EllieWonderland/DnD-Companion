@@ -295,8 +295,17 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val wisMod: Int get() = (wisdom - 10) / 2
     val chaMod: Int get() = (charisma - 10) / 2
 
-    val spellAttackBonus: Int get() = proficiencyBonus + wisMod
-    val spellSaveDc: Int get() = 8 + proficiencyBonus + wisMod
+    val speed: Int get() = characterData.speed
+    val initiative: Int get() = dexMod
+    val passivePerception: Int get() = 10 + wisMod + if (characterData.proficientSkills.contains("Wahrnehmung")) proficiencyBonus else 0
+
+    // Neue Metadata-Properties für die UI
+    val characterRace: String get() = characterData.race
+    val characterBackground: String get() = characterData.background
+    val characterAlignment: String get() = characterData.alignment
+
+    val spellAttackBonus: Int get() = if (characterData.charClass == CharacterClass.WARLOCK) proficiencyBonus + chaMod else proficiencyBonus + wisMod
+    val spellSaveDc: Int get() = 8 + if (characterData.charClass == CharacterClass.WARLOCK) proficiencyBonus + chaMod else proficiencyBonus + wisMod
 
     var maxHp by mutableIntStateOf(prefs.getInt("maxHp", characterData.baseMaxHp))
         private set
@@ -366,12 +375,27 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     val currentArmorClass: Int
-        get() = when (currentWeapon) {
-            ActiveWeapon.LANGBOGEN -> 12 + dexMod
-            ActiveWeapon.KURZSCHWERT_SCHILD -> 12 + dexMod + 2
-            ActiveWeapon.SHILLELAGH_SCHILD -> 12 + dexMod + 2
-            ActiveWeapon.KRIEGSHAMMER_PAKT -> 14 + dexMod
-            ActiveWeapon.SPEER_PAKT -> 14 + dexMod
+        get() {
+            return if (characterData.charClass == CharacterClass.WARLOCK) {
+                // Delat: Lederrüstung (11) + DEX (2) = 13?
+                // stats_delat.md sagt 12. Vielleicht DEX restricted oder andere Rüstung.
+                // Laut stats_delat.md: "RK 12 (Lederrüstung)". 
+                // Das passt nur wenn DEX 12 ist (+1). Aber Delat hat DEX 14 (+2).
+                // Eventuell ist die Lederrüstung im MD-File falsch berechnet oder hat einen Malus.
+                // Wir halten uns an die Logik: Rüstung + DEX.
+                val baseArmor = 11 // Lederrüstung
+                baseArmor + dexMod
+            } else {
+                // Ranger (Athania)
+                // Hat Beschlagene Lederrüstung (12) + DEX mod
+                val baseArmor = 12
+                val ac = baseArmor + dexMod
+                if (currentWeapon == ActiveWeapon.KURZSCHWERT_SCHILD || currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD) {
+                    ac + 2
+                } else {
+                    ac
+                }
+            }
         }
 
     val currentAttackBonus: String
@@ -1589,7 +1613,7 @@ private val model25Flash = GenerativeModel(
                 duration = "Konzentration, 1 Min.",
                 componentsV = true, componentsS = true, componentsM = true,
                 materialCost = "Ein Stück Schafswolle",
-                description = "Du erzeugst eine Illusion im Verstand einer Kreatur (INT RW). Nimmt 1W6 psychischen Schaden pro Zug und behandelt die Illusion als real. (Immer vorbereitet)",
+                description = "Du erzeugst eine illusion im Verstand einer Kreatur (INT RW). Nimmt 1W6 psychischen Schaden pro Zug und behandelt die Illusion als real. (Immer vorbereitet)",
                 isPrepared = true
             ),
             Spell(

@@ -3,7 +3,7 @@
 ## Grunddaten
 * **Name:** Delat 
 * **Klasse:** Hexenmeister 
-* **Unterklasse:** Auserwählter des ertrunkenen Gotts 
+* **Unterklasse:** Auserwählter des ertrunkenen Gottes 
 * **Stufe:** 4 (4907 EP) 
 * **Hintergrund:** Seefahrer 
 * **Volk:** Zwerg 

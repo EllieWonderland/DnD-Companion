@@ -45,9 +45,9 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                 modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text("Initiative: +4", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
-                Text("Tempo: 9", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
-                Text("Pass. Wahrnehmung: 16", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                Text("Initiative: ${if(viewModel.initiative >= 0) "+" else ""}${viewModel.initiative}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                Text("Tempo: ${viewModel.speed}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                Text("Pass. Wahrnehmung: ${viewModel.passivePerception}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
             }
 
             // Lebenspunkte & Trefferwürfel
@@ -73,7 +73,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                             }
                         }
                         Text(
-                            "Trefferwürfel: ${viewModel.hitDice}/4",
+                            "Trefferwürfel: ${viewModel.hitDice}/${viewModel.characterData.baseHitDice}",
                             style = MaterialTheme.typography.labelLarge,
                             color = TintenBraun
                         )

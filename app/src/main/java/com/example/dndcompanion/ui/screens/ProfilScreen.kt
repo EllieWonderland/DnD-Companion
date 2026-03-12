@@ -141,11 +141,11 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    val volk = if (viewModel.characterData.name == "Athania") "Elf-Drow | Hintergrund: Wegfinder" else "Mensch | Hintergrund: Gelehrter"
+                    val volk = "${viewModel.characterRace} | Hintergrund: ${viewModel.characterBackground}"
                     Text("Volk: $volk", style = MaterialTheme.typography.bodySmall, color = TintenBraun)
 
-                    val gesinnung = if (viewModel.characterData.name == "Athania") "Chaotisch Gut" else "Rechtschaffen Neutral"
-                    Text("Gesinnung: $gesinnung | EP: ${viewModel.currentEP}", style = MaterialTheme.typography.bodySmall, color = TintenBraun)
+                    val gesinnung = "${viewModel.characterAlignment} | EP: ${viewModel.currentEP}"
+                    Text("Gesinnung: $gesinnung", style = MaterialTheme.typography.bodySmall, color = TintenBraun)
 
                     HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 4.dp))
                     Text(
@@ -189,29 +189,42 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             Spacer(modifier = Modifier.height(8.dp))
             PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
                 Column(modifier = Modifier.padding(12.dp)) {
+                    val skills = listOf(
+                        "Akrobatik" to viewModel.dexMod,
+                        "Arkane Kunde" to viewModel.intMod,
+                        "Athletik" to viewModel.strMod,
+                        "Auftreten" to viewModel.chaMod,
+                        "Einschüchtern" to viewModel.chaMod,
+                        "Fingerfertigkeit" to viewModel.dexMod,
+                        "Geschichte" to viewModel.intMod,
+                        "Heilkunde" to viewModel.wisMod,
+                        "Heimlichkeit" to viewModel.dexMod,
+                        "Mit Tieren umg." to viewModel.wisMod,
+                        "Motiv erkennen" to viewModel.wisMod,
+                        "Nachforschungen" to viewModel.intMod,
+                        "Naturkunde" to viewModel.intMod,
+                        "Religion" to viewModel.intMod,
+                        "Täuschen" to viewModel.chaMod,
+                        "Überleben" to viewModel.wisMod,
+                        "Überzeugen" to viewModel.chaMod,
+                        "Wahrnehmung" to viewModel.wisMod
+                    )
+
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                         Column(modifier = Modifier.weight(1f)) {
-                            SkillRow("Akrobatik (DEX)", "+3")
-                            SkillRow("Arkane Kunde (INT)", "+0")
-                            SkillRow("Athletik (STR)", "-1")
-                            SkillRow("Auftreten (CHA)", "-1")
-                            SkillRow("Einschüchtern (CHA)", "-1")
-                            SkillRow("Fingerfertigkeit (DEX)", "+3")
-                            SkillRow("Geschichte (INT)", "+0")
-                            SkillRow("Heilkunde (WIS)", "+2")
-                            SkillRow("Heimlichkeit (DEX)", "+5", true)
+                            skills.take(9).forEach { (name, mod) ->
+                                val isProficient = viewModel.characterData.proficientSkills.contains(name)
+                                val finalMod = mod + if (isProficient) viewModel.proficiencyBonus else 0
+                                SkillRow("$name (${if(name == "Athletik") "STR" else if(name in listOf("Akrobatik", "Fingerfertigkeit", "Heimlichkeit")) "DEX" else if(name in listOf("Arkane Kunde", "Geschichte", "Nachforschungen", "Naturkunde", "Religion")) "INT" else if(name in listOf("Auftreten", "Einschüchtern", "Täuschen", "Überzeugen")) "CHA" else "WIS"})", (if(finalMod >= 0) "+" else "") + finalMod, isProficient)
+                            }
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Column(modifier = Modifier.weight(1f)) {
-                            SkillRow("Mit Tieren umg. (WIS)", "+4")
-                            SkillRow("Motiv erkennen (WIS)", "+4", true)
-                            SkillRow("Nachforschungen (INT)", "+0")
-                            SkillRow("Naturkunde (INT)", "+2", true)
-                            SkillRow("Religion (INT)", "+0")
-                            SkillRow("Täuschen (CHA)", "-1")
-                            SkillRow("Überleben (WIS)", "+4", true)
-                            SkillRow("Überzeugen (CHA)", "-1")
-                            SkillRow("Wahrnehmung (WIS)", "+6", true)
+                            skills.drop(9).forEach { (name, mod) ->
+                                val isProficient = viewModel.characterData.proficientSkills.contains(name)
+                                val finalMod = mod + if (isProficient) viewModel.proficiencyBonus else 0
+                                SkillRow("$name (${if(name == "Athletik") "STR" else if(name in listOf("Akrobatik", "Fingerfertigkeit", "Heimlichkeit")) "DEX" else if(name in listOf("Arkane Kunde", "Geschichte", "Nachforschungen", "Naturkunde", "Religion")) "INT" else if(name in listOf("Auftreten", "Einschüchtern", "Täuschen", "Überzeugen")) "CHA" else "WIS"})", (if(finalMod >= 0) "+" else "") + finalMod, isProficient)
+                            }
                         }
                     }
                 }
