@@ -49,6 +49,7 @@ enum class AthaniaTab(val title: String) {
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_DnDCompanion)
         super.onCreate(savedInstanceState)
         setContent {
             DnDCompanionTheme {
@@ -63,6 +64,16 @@ class MainActivity : ComponentActivity() {
 fun DnDApp(viewModel: CharacterViewModel) {
     // 0 = Athania, 1 = Urtier, 2 = Hilfe, 3 = Bücher
     var currentScreen by rememberSaveable { mutableStateOf(0) }
+    var introOpacity by remember { mutableStateOf(1f) }
+    var introFinished by remember { mutableStateOf(false) }
+
+    // Intro Animation Logik für sanftes Ausfaden
+    LaunchedEffect(Unit) {
+        kotlinx.coroutines.delay(2000) // 2 Sekunden voll sichtbar
+        introOpacity = 0f              // Startet Fade-Out
+        kotlinx.coroutines.delay(1000) // Wartet auf Fade-Dauer (1s)
+        introFinished = true
+    }
 
     BackHandler(enabled = currentScreen != 0) {
         currentScreen = 0
@@ -174,6 +185,30 @@ fun DnDApp(viewModel: CharacterViewModel) {
                     currentScreen = 3
                 })
                 3 -> BucherScreen(viewModel)
+            }
+        }
+
+        // --- PREMIUM INTRO OVERLAY ---
+        if (!introFinished) {
+            val alpha by animateFloatAsState(
+                targetValue = introOpacity,
+                animationSpec = tween(durationMillis = 1000),
+                label = "SplashFade"
+            )
+            
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0xFF0F0A05)), // Dunkler Holzhintergrund
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.splash_premium_final),
+                    contentDescription = "Premium Intro",
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Fit, // Fit statt Crop, damit keine Ränder abgeschnitten werden
+                    alpha = alpha
+                )
             }
         }
     }

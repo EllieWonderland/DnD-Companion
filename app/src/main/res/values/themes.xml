@@ -2,4 +2,11 @@
 <resources>
 
     <style name="Theme.DnDCompanion" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.DnDCompanion.Splash" parent="android:Theme.Material.Light.NoActionBar" xmlns:tools="http://schemas.android.com/tools">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor">@color/waldgruen_dunkel</item>
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">@drawable/splash_premium_final</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/splash_background_dark</item>
+    </style>
 </resources>

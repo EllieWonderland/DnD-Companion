@@ -151,10 +151,16 @@
 - [x] **Free Spells Mechanik implementieren (Rituale, Features, Items)**
   - [x] Ritual-System: (Ritual) Tag im JSON parsen und als Button in ZauberCard anzeigen.
   - [x] Feature-Tracking: TraitItem erweitert um currentUses/maxUses und grantedSpellId.
-  - [x] Item-Charges: InventoryItem erweitert um charges-System.
+  - [x] Item-Charges: InventoryItem erweitert um charges-system.
   - [x] Validierung: Abgleich mit freespells.md und stats_delat.md.
     - [x] Athania-Spezial: Zeichen des Jägers (2/LR), Gute Beeren, Wunden heilen ergänzt.
     - [x] UI-Fix: Scroll-Probleme und Padding im Verwalter-Dialog behoben (Spacer + 40dp).
     - [x] Logik-Fix: `loadTraits` ergänzt nun fehlende Standard-Merkmale bei bestehenden Saves.
     - [x] Sichtbarkeit: Freie Zauber aus Merkmalen erscheinen nur, wenn sie im Zauberbuch vorbereitet sind.
     *Notiz für Commit: Free Spells Mechanik vollständig implementiert, inklusive konditionaler Sichtbarkeit und automatischer Save-Aktualisierung.*
+
+- [x] **Phase 7: UI Polish - Splash Screen**
+    - [x] Splash Screen Hintergrund anpassen (weg von Weiß hin zu Pergament/Thematisch).
+    - [x] Logo-Präsentation im Splash Screen optimieren.
+    - [x] Übergang vom Splash Screen zur App flüssiger gestalten (optional).
+    *Notiz für Commit: Splash Screen verschönert und an das App-Thema angepasst (Pergament & Stein).*
