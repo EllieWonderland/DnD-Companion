@@ -49,6 +49,9 @@ import com.example.dndcompanion.ui.theme.GrenzeGotischSmall
 import com.example.dndcompanion.ui.theme.WaldGold
 import com.example.dndcompanion.ui.theme.WaldgruenDunkel
 import com.example.dndcompanion.ui.theme.OchsenblutRot
+import com.example.dndcompanion.ui.theme.PergamentDunkel
+import com.example.dndcompanion.ui.theme.Waldgruen
+import com.example.dndcompanion.ui.theme.HexenLila
 import com.example.dndcompanion.R
 
 enum class BookType {
