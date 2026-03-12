@@ -514,10 +514,10 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-                            modifier = Modifier.height(36.dp)
+                            modifier = Modifier.height(48.dp)
                         ) {
                             val label = if (lvl == -1) "Alle" else if (lvl == 0) "Tricks" else "Grad $lvl"
-                            Text(label, fontSize = 13.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                            Text(label, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -544,9 +544,9 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-                            modifier = Modifier.height(36.dp)
+                            modifier = Modifier.height(48.dp)
                         ) {
-                            Text(filterClass, fontSize = 13.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                            Text(filterClass, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -575,9 +575,9 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-                            modifier = Modifier.height(36.dp)
+                            modifier = Modifier.height(48.dp)
                         ) {
-                            Text(filterSchool, fontSize = 13.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                            Text(filterSchool, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -1032,7 +1032,7 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("In-Character (IC)", color = TintenSchwarz, fontSize = 14.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                        Text("In-Character (IC)", color = TintenSchwarz, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
                         Switch(
                             checked = isOoc,
                             onCheckedChange = { isOoc = it },
@@ -1044,7 +1044,7 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             ),
                             modifier = Modifier.padding(horizontal = 8.dp)
                         )
-                        Text("Out-Of-Character (OOC)", color = TintenSchwarz, fontSize = 14.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                        Text("Out-Of-Character (OOC)", color = TintenSchwarz, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
                     }
 
                     Row(
@@ -1163,7 +1163,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                 Tab(
                     selected = !showCompleted,
                     onClick = { showCompleted = false },
-                    text = { Text("Aktive Quests", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+                    text = { Text("Aktive Quests", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp) },
                     selectedContentColor = WaldGold,
                     unselectedContentColor = Color.White.copy(alpha = 0.7f),
                     modifier = Modifier.height(48.dp)
@@ -1171,7 +1171,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                 Tab(
                     selected = showCompleted,
                     onClick = { showCompleted = true },
-                    text = { Text("Abgeschlossen", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+                    text = { Text("Abgeschlossen", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp) },
                     selectedContentColor = WaldGold,
                     unselectedContentColor = Color.White.copy(alpha = 0.7f),
                     modifier = Modifier.height(48.dp)

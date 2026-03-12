@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -81,9 +84,22 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
 
                     Spacer(modifier = Modifier.height(8.dp))
 
+                    // Animierte Progress-Werte
+                    val hpProgress by animateFloatAsState(
+                        targetValue = if (viewModel.maxHp > 0) viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() else 0f,
+                        animationSpec = tween(durationMillis = 500),
+                        label = "HP Animation"
+                    )
+                    
+                    val tempHpProgress by animateFloatAsState(
+                        targetValue = if (viewModel.tempHp > 0) (viewModel.tempHp.toFloat() / 12f).coerceAtMost(1f) else 0f,
+                        animationSpec = tween(durationMillis = 500),
+                        label = "Temp HP Animation"
+                    )
+
                     // HP Bar
                     LinearProgressIndicator(
-                        progress = { viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() },
+                        progress = { hpProgress },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(14.dp),
@@ -92,10 +108,10 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     )
 
                     // Temp HP Bar (wenn vorhanden)
-                    if (viewModel.tempHp > 0) {
+                    if (viewModel.tempHp > 0 || tempHpProgress > 0f) {
                         Spacer(modifier = Modifier.height(4.dp))
                         LinearProgressIndicator(
-                            progress = { viewModel.tempHp.toFloat() / 12f },
+                            progress = { tempHpProgress },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(8.dp),
@@ -116,10 +132,10 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Button(onClick = { viewModel.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(60.dp), contentPadding = PaddingValues(0.dp)) { Text("-5", fontFamily = Almendra, fontSize = 14.sp) }
-                        Button(onClick = { viewModel.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(60.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontFamily = Almendra, fontSize = 14.sp) }
-                        Button(onClick = { viewModel.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(60.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontFamily = Almendra, fontSize = 14.sp) }
-                        Button(onClick = { viewModel.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(60.dp), contentPadding = PaddingValues(0.dp)) { Text("+5", fontFamily = Almendra, fontSize = 14.sp) }
+                        Button(onClick = { viewModel.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-5", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { viewModel.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { viewModel.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { viewModel.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+5", fontFamily = Almendra, fontSize = 16.sp) }
                     }
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -190,19 +206,25 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     onDismissRequest = { showEpDialog = false },
                     containerColor = PergamentHell,
                     shape = RoundedCornerShape(12.dp),
-                    title = { Text("EP hinzufügen", style = MaterialTheme.typography.titleSmall, color = Waldgruen) },
+                    title = { Text("Erfahrungspunkte", style = MaterialTheme.typography.titleMedium, color = Waldgruen) },
                     text = {
-                        OutlinedTextField(
-                            value = epInput,
-                            onValueChange = { if (it.isEmpty() || it.all { c -> c.isDigit() }) epInput = it },
-                            label = { Text("Erfahrungspunkte", fontFamily = Almendra) },
-                            keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
-                            singleLine = true,
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = accentColor,
-                                focusedLabelColor = accentColor
+                        Column {
+                            Text("Wie viele EP hast du erhalten?", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz, modifier = Modifier.padding(bottom = 8.dp))
+                            OutlinedTextField(
+                                value = epInput,
+                                onValueChange = { if (it.isEmpty() || it.all { c -> c.isDigit() }) epInput = it },
+                                label = { Text("EP Betrag", fontFamily = Almendra) },
+                                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = accentColor,
+                                    focusedLabelColor = accentColor,
+                                    unfocusedTextColor = TintenSchwarz,
+                                    focusedTextColor = TintenSchwarz
+                                )
                             )
-                        )
+                        }
                     },
                     confirmButton = {
                         Button(
@@ -218,12 +240,13 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                                 containerColor = accentColor,
                                 contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
                             ),
+                            modifier = Modifier.height(48.dp),
                             shape = RoundedCornerShape(8.dp)
-                        ) { Text("Hinzufügen", fontFamily = Almendra) }
+                        ) { Text("Hinzufügen", fontFamily = Almendra, fontSize = 16.sp) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { showEpDialog = false }) {
-                            Text("Abbrechen", color = Waldgruen, fontFamily = Almendra)
+                        TextButton(onClick = { showEpDialog = false }, modifier = Modifier.height(48.dp)) {
+                            Text("Abbrechen", color = Waldgruen, fontFamily = Almendra, fontSize = 16.sp)
                         }
                     }
                 )
@@ -235,8 +258,8 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     onDismissRequest = { viewModel.dismissLevelUpNotification() },
                     containerColor = PergamentHell,
                     shape = RoundedCornerShape(12.dp),
-                    title = { Text("Level Up! Stufe ${viewModel.level} erreicht!", style = MaterialTheme.typography.titleSmall, color = accentColor) },
-                    text = { Text("Glückwunsch! Deine Erfahrungspunkte reichen für einen Stufenaufstieg. Möchtest du deinen Charakter jetzt verbessern?", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz) },
+                    title = { Text("Stufenaufstieg!", style = MaterialTheme.typography.titleMedium, color = accentColor) },
+                    text = { Text("Glückwunsch! Deine Erfahrung reicht für Stufe ${viewModel.level}. Möchtest du deinen Charakter jetzt verbessern?", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz) },
                     confirmButton = {
                         Button(
                             onClick = {
@@ -247,12 +270,13 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                                 containerColor = accentColor,
                                 contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
                             ),
+                            modifier = Modifier.height(48.dp),
                             shape = RoundedCornerShape(8.dp)
-                        ) { Text("Jetzt anpassen", fontFamily = Almendra) }
+                        ) { Text("Jetzt anpassen", fontFamily = Almendra, fontSize = 16.sp) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { viewModel.dismissLevelUpNotification() }) {
-                            Text("Später erledigen", color = Waldgruen, fontFamily = Almendra)
+                        TextButton(onClick = { viewModel.dismissLevelUpNotification() }, modifier = Modifier.height(48.dp)) {
+                            Text("Später", color = Waldgruen, fontFamily = Almendra, fontSize = 16.sp)
                         }
                     }
                 )
@@ -324,8 +348,9 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                                 onClick = { viewModel.shootArrow() },
                                 enabled = viewModel.totalArrows > 0,
                                 colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot, disabledContainerColor = EisenGrau),
+                                modifier = Modifier.height(48.dp),
                                 shape = RoundedCornerShape(8.dp)
-                            ) { Text("Schießen", fontFamily = Almendra) }
+                            ) { Text("Schießen", fontFamily = Almendra, fontSize = 16.sp) }
                         }
 
                         if (viewModel.shotArrows > 0) {
@@ -335,8 +360,8 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                             Text("Nach dem Kampf:", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                             Spacer(modifier = Modifier.height(4.dp))
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                Button(onClick = { viewModel.recoverArrows() }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), modifier = Modifier.weight(1f).padding(end = 4.dp), shape = RoundedCornerShape(8.dp)) { Text("½ Einsammeln", fontSize = 13.sp, fontFamily = Almendra) }
-                                Button(onClick = { viewModel.discardShotArrows() }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.7f)), modifier = Modifier.weight(1f).padding(start = 4.dp), shape = RoundedCornerShape(8.dp)) { Text("Alle verloren", fontSize = 13.sp, fontFamily = Almendra) }
+                                Button(onClick = { viewModel.recoverArrows() }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), modifier = Modifier.weight(1f).padding(end = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("½ Einsammeln", fontSize = 16.sp, fontFamily = Almendra) }
+                                Button(onClick = { viewModel.discardShotArrows() }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.7f)), modifier = Modifier.weight(1f).padding(start = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("Alle verloren", fontSize = 16.sp, fontFamily = Almendra) }
                             }
                         }
 
@@ -347,9 +372,9 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                             Text("Pfeile...", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                             Row {
-                                Button(onClick = { viewModel.changeTotalArrows(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(36.dp), shape = RoundedCornerShape(6.dp)) { Text("- Ablegen", fontSize = 12.sp, fontFamily = Almendra) }
+                                Button(onClick = { viewModel.changeTotalArrows(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("- Ablegen", fontSize = 16.sp, fontFamily = Almendra) }
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Button(onClick = { viewModel.changeTotalArrows(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(36.dp), shape = RoundedCornerShape(6.dp)) { Text("+ Aufnehmen", fontSize = 12.sp, fontFamily = Almendra) }
+                                Button(onClick = { viewModel.changeTotalArrows(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("+ Aufnehmen", fontSize = 16.sp, fontFamily = Almendra) }
                             }
                         }
                     }

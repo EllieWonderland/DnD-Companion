@@ -112,27 +112,18 @@
 - [x] Chat-Blasen: User (Tintenfass), Bot (versiegelte Briefe).
   - *Notiz für Commit:* `feat: redesign chat bubbles with parchment styling`
 - [x] Gemini-Slots als Runen-Leiste.
-  - *Notiz für Commit:* `feat: implement runic indicator for gemini slots`
+### Stufe 9: Finale Politur & Accessibility
+  - [x] **Typografie & Kontrast:** Umstellung auf 16sp Standard, 1,5 Zeilenabstand und APCA Lc >= 75 (Lc >= 90 für Warnungen).
+    - *Notiz für Commit:* `style: update global typography and accessibility to 16sp and 1.5 line height`
+  - [x] **Touch-Targets:** Alle klickbaren Elemente auf mindestens 48x48dp vergrößern.
+    - *Notiz für Commit:* `style: increase touch targets to 48dp across all screens for better accessibility`
+  - [x] **Dynamik:** HP-Balken mit `animateFloatAsState` für flüssige Übergänge versehen.
+    - *Notiz für Commit:* `feat: add smooth HP bar animations using animateFloatAsState`
+  - [x] **Ikonographie:** Bottom-Navigation Icons durch stilisierte Grafik-Assets ersetzen.
+    - *Notiz für Commit:* `ui: replace navigation emojis with stylized parchment-style icons`
+  - [x] **Dialoge:** EP-, Rasten- und Level-Up-Dialoge im Pergament-Design vereinheitlichen.
+    - *Notiz für Commit:* `ui: redesign EP and rest dialogs with consistent parchment theme& accessibility`
 
-### Stufe 9: Finale Politur & Skalierung
-- [ ] **Globale Dialoge**: EP, Rasten, Level-Up, `RestWarningDialog`, Spellbook-Edit.
-- [ ] **Dynamik & Konsistenz**: Flexible Boxengrößen überall, Pergament-Animationen, HP-Balken Smoothness.
-- [ ] **Ikonographie**: Attribut-Icons & Nav-Holzschnitte finalisieren.
-  - *Notiz für Commit:* `feat: integrate attribute icons into profile boxes`
-- [ ] **Accessability**: 
-  - Kontrast (APCA Standard):
-    - Fließtext: Lc >= 75 (Goldstandard für Lesbarkeit).
-    - Warnmeldungen: Lc >= 90 (maximale Aufmerksamkeit).
-    - Beschriftungen/Platzhalter: Lc >= 60.
-    - Dekorative Elemente/Linien/Disabled-States: Lc <= 45.
-  - Typografie (Größen in sp):
-    - Standard Body: 16 sp.
-    - Längere Texte & Chat-Inhalte: 18 sp.
-    - Interaktive Elemente (Buttons): Mindestens 14 sp, Schriftschnitt: Bold.
-    - Absolute Untergrenze: 12 sp (nur für sekundäre Meta-Daten).  
-  - Layout-Metriken:
-    - Zeilenabstand: Faktor 1,5 für alle Textblöcke (zur Reduktion kognitiver Last).
-    - Touch-Targets: Achte darauf, dass klickbare Elemente eine Mindestgröße von 48 x 48 dp haben.
 ## Phase 6: Gruppen-Features & Ausblick
 - [x] **Geteilte Schatztruhe (Gruppen-Loot):** Ein Inventar, aus dem jeder Spieler in Echtzeit Gold und Items nehmen oder hineinlegen kann.
 - [ ] **Echtzeit-Initiative-Tracker:** Ein eigener Kampf-Bildschirm, der die Zug-Reihenfolge live zeigt.
@@ -158,4 +149,7 @@
 - [x] **Zauberbuch:** Die Schrift ist auf dem Hintergrund im Zauberbuch besser lesbar (Kontraste optimiert, auch in der Bibliothek).
   - Note for Commit: Fix readability issues in Spellbook (both in equip screen and library) by using high-contrast parchment theme and fixing button text colors. Add missing imports in BucherScreen.kt.
 - [x] **Pfeilköcher:** Anzeige für Nicht-Waldläufer (wie Delat) ausgeblendet.
-- [ ] **Free Spells:** Sieh dir die freespells.md an und setze die darin beschriebenen Inhalte um.
+- [ ] **Free Spells:** Mechanik (Rituale, Features, Items) gemäß `freespells.md` umsetzen.
+  - [ ] `Spell` Klasse um `isRitual` erweitern & Ritual-Buttons in UI integrieren.
+  - [ ] Systematisches Feature-Tracking für kostenlose Zauber (z.B. Feenberührt).
+  - [ ] Ladungssystem für magische Gegenstände (Items-Tab).

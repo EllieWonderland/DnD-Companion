@@ -74,10 +74,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         onClick = { showShortRestDialog = true },
                         enabled = viewModel.hitDice > 0,
                         colors = ButtonDefaults.buttonColors(containerColor = Bronze),
-                        modifier = Modifier.fillMaxWidth().height(40.dp),
+                        modifier = Modifier.fillMaxWidth().height(48.dp),
                         contentPadding = PaddingValues(0.dp)
                     ) {
-                        Text("Kurze Rast", fontSize = 14.sp)
+                        Text("Kurze Rast", fontSize = 16.sp)
                     }
                     Button(
                         onClick = { 
@@ -85,10 +85,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             if (!viewModel.showRestWarningDialog) showLongRestDialog = true
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
-                        modifier = Modifier.fillMaxWidth().height(40.dp),
+                        modifier = Modifier.fillMaxWidth().height(48.dp),
                         contentPadding = PaddingValues(0.dp)
                     ) {
-                        Text("Lange Rast", fontSize = 14.sp)
+                        Text("Lange Rast", fontSize = 16.sp)
                     }
                 }
             }
@@ -167,13 +167,13 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             Button(
                                 onClick = { viewModel.useFreeHealingWord() },
                                 enabled = !viewModel.freeHealingWordUsed,
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                                modifier = Modifier.height(32.dp),
+                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                                modifier = Modifier.height(48.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
                                     contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
                                 )
-                            ) { Text("Wirken", fontSize = 10.sp) }
+                            ) { Text("Wirken", fontSize = 16.sp, fontFamily = Almendra) }
                         }
                     }
 
@@ -192,13 +192,13 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             Button(
                                 onClick = { viewModel.useFreeFaerieFire() },
                                 enabled = !viewModel.freeFaerieFireUsed,
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                                modifier = Modifier.height(32.dp),
+                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                                modifier = Modifier.height(48.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
                                     contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
                                 )
-                            ) { Text("Wirken", fontSize = 10.sp) }
+                            ) { Text("Wirken", fontSize = 16.sp, fontFamily = Almendra) }
                         }
                     }
 
@@ -217,13 +217,13 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             Button(
                                 onClick = { viewModel.useFreeDarkness() },
                                 enabled = !viewModel.freeDarknessUsed,
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                                modifier = Modifier.height(32.dp),
+                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                                modifier = Modifier.height(48.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
                                     contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
                                 )
-                            ) { Text("Wirken", fontSize = 10.sp) }
+                            ) { Text("Wirken", fontSize = 16.sp, fontFamily = Almendra) }
                         }
                     }
 
@@ -242,10 +242,13 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             Button(
                                 onClick = { viewModel.useFreeDruidSpell() },
                                 enabled = !viewModel.freeDruidSpellUsed,
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                                modifier = Modifier.height(32.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = accentColor)
-                            ) { Text("Wirken", fontSize = 10.sp) }
+                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                                modifier = Modifier.height(48.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = accentColor,
+                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                )
+                            ) { Text("Wirken", fontSize = 16.sp, fontFamily = Almendra) }
                         }
                     }
                 }
@@ -823,10 +826,10 @@ fun SpellCard(
                     Button(
                         onClick = onDelete,
                         colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.8f)),
-                        modifier = Modifier.fillMaxWidth().height(40.dp),
+                        modifier = Modifier.fillMaxWidth().height(48.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("Aus dem Buch löschen", fontSize = 14.sp, color = Color.White)
+                        Text("Aus dem Buch löschen", fontSize = 16.sp, color = Color.White, fontFamily = Almendra)
                     }
                 }
                 if (extraContent != null) {
@@ -958,9 +961,9 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                 Button(
                     onClick = { showAddSpellDialog = true },
                     colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
+                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp).height(48.dp)
                 ) {
-                    Text("+ Zauber aus Kompendium hinzufügen", color = Color.White)
+                    Text("+ Zauber aus Kompendium hinzufügen", color = Color.White, fontSize = 16.sp, fontFamily = Almendra)
                 }
             }
         }
@@ -1028,12 +1031,13 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                 disabledContainerColor = Color.LightGray
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-                            modifier = Modifier.height(32.dp)
+                            modifier = Modifier.height(48.dp)
                         ) {
                             val label = if (lvl == -1) "Alle" else if (lvl == 0) "Tricks" else "Grad $lvl"
                             Text(
                                 text = label, 
-                                fontSize = 12.sp
+                                fontSize = 16.sp,
+                                fontFamily = Almendra
                             )
                         }
                     }
@@ -1066,9 +1070,9 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                             },
                                             enabled = !alreadyInBook,
                                             colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot, disabledContainerColor = Color.Gray),
-                                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(36.dp)
+                                            modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(48.dp)
                                         ) {
-                                            Text(if (alreadyInBook) "Bereits im Buch" else "+ Hinzufügen", fontSize = 14.sp)
+                                            Text(if (alreadyInBook) "Bereits im Buch" else "+ Hinzufügen", fontSize = 16.sp, fontFamily = Almendra)
                                         }
                                     }
                                 )

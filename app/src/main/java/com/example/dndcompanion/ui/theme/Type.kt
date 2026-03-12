@@ -80,50 +80,50 @@ val Typography = Typography(
     bodyLarge = TextStyle(
         fontFamily = Almendra,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
+        fontSize = 18.sp,
+        lineHeight = 27.sp,
         letterSpacing = 0.5.sp,
         color = TintenSchwarz
     ),
     bodyMedium = TextStyle(
         fontFamily = Almendra,
         fontWeight = FontWeight.Normal,
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
         letterSpacing = 0.25.sp,
         color = TintenSchwarz
     ),
     bodySmall = TextStyle(
         fontFamily = Almendra,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp,
-        lineHeight = 16.sp,
+        fontSize = 14.sp,
+        lineHeight = 21.sp,
         letterSpacing = 0.4.sp,
-        color = TintenBraun
+        color = TintenSchwarz // Von TintenBraun auf Schwarz für besseren Kontrast
     ),
 
     // Labels – Almendra
     labelLarge = TextStyle(
         fontFamily = Almendra,
         fontWeight = FontWeight.Bold,
-        fontSize = 14.sp,
-        lineHeight = 20.sp,
+        fontSize = 16.sp,
+        lineHeight = 24.sp,
         letterSpacing = 0.1.sp,
         color = TintenSchwarz
     ),
     labelMedium = TextStyle(
         fontFamily = Almendra,
         fontWeight = FontWeight.Bold,
-        fontSize = 12.sp,
-        lineHeight = 16.sp,
+        fontSize = 14.sp,
+        lineHeight = 21.sp,
         letterSpacing = 0.5.sp,
         color = TintenSchwarz
     ),
     labelSmall = TextStyle(
         fontFamily = Almendra,
         fontWeight = FontWeight.Normal,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
+        fontSize = 12.sp,
+        lineHeight = 18.sp,
         letterSpacing = 0.5.sp,
         color = TintenBraun
     ),

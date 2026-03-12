@@ -8,6 +8,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -117,6 +119,13 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                             )
                         }
                         Column(horizontalAlignment = Alignment.End) {
+                            // Animierte Progress-Werte (für HP Text Anzeige oder zukünftige Balken im Profil)
+                            val hpProgress by animateFloatAsState(
+                                targetValue = if (viewModel.maxHp > 0) viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() else 0f,
+                                animationSpec = tween(durationMillis = 500),
+                                label = "HP Animation Profile"
+                            )
+
                             Text(
                                 "HP: ${viewModel.currentHp} / ${viewModel.maxHp}",
                                 style = GrenzeGotischSmall,

@@ -183,9 +183,9 @@ fun AttributeAdjustRow(name: String, baseVal: Int, bonus: Int, onChange: (Int) -
     ) {
         Text("$name: ${baseVal + bonus}", color = TintenSchwarz, fontWeight = FontWeight.Bold)
         Row {
-            Button(onClick = { onChange(-1) }, enabled = bonus > 0, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(32.dp)) { Text("-", color = PergamentHell) }
+            Button(onClick = { onChange(-1) }, enabled = bonus > 0, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(48.dp)) { Text("-", color = PergamentHell, fontSize = 20.sp) }
             Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = { onChange(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(32.dp)) { Text("+", color = PergamentHell) }
+            Button(onClick = { onChange(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(48.dp)) { Text("+", color = PergamentHell, fontSize = 20.sp) }
         }
     }
 }

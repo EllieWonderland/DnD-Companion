@@ -34,6 +34,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import kotlinx.coroutines.launch
 
 // Definition der Tabs für bessere Lesbarkeit
@@ -75,7 +77,15 @@ fun DnDApp(viewModel: CharacterViewModel) {
                 NavigationBarItem(
                     selected = currentScreen == 0,
                     onClick = { currentScreen = 0 },
-                    icon = { Text(if (viewModel.characterData.name == "Athania") "🧝‍♀️" else "🧙‍♂️") },
+                    icon = { 
+                        val avatarId = if (viewModel.characterData.name == "Athania") R.drawable.athania else R.drawable.delat
+                        Image(
+                            painter = painterResource(id = avatarId),
+                            contentDescription = viewModel.characterData.name,
+                            modifier = Modifier.size(28.dp).clip(androidx.compose.foundation.shape.CircleShape),
+                            contentScale = ContentScale.Crop
+                        )
+                    },
                     label = { Text(viewModel.characterData.name, fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = WaldGold,
@@ -89,7 +99,13 @@ fun DnDApp(viewModel: CharacterViewModel) {
                     NavigationBarItem(
                         selected = currentScreen == 1,
                         onClick = { currentScreen = 1 },
-                        icon = { Text("🐾") },
+                        icon = { 
+                            Image(
+                                painter = painterResource(id = R.drawable.icon_capybara),
+                                contentDescription = "Urtier",
+                                modifier = Modifier.size(28.dp)
+                            )
+                        },
                         label = { Text("Urtier", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = WaldGold,
@@ -103,7 +119,13 @@ fun DnDApp(viewModel: CharacterViewModel) {
                 NavigationBarItem(
                     selected = currentScreen == 2, // Hilfe
                     onClick = { currentScreen = 2 },
-                    icon = { Text("💬") },
+                    icon = { 
+                        Image(
+                            painter = painterResource(id = R.drawable.gruppenchat),
+                            contentDescription = "Hilfe",
+                            modifier = Modifier.size(28.dp)
+                        )
+                    },
                     label = { Text("Hilfe", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = WaldGold,
@@ -116,7 +138,13 @@ fun DnDApp(viewModel: CharacterViewModel) {
                 NavigationBarItem(
                     selected = currentScreen == 3, // Bücher
                     onClick = { currentScreen = 3 },
-                    icon = { Text("📖") },
+                    icon = { 
+                        Image(
+                            painter = painterResource(id = R.drawable.zauberbuch),
+                            contentDescription = "Bücher",
+                            modifier = Modifier.size(28.dp)
+                        )
+                    },
                     label = { Text("Bücher", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = WaldGold,
@@ -256,12 +284,18 @@ fun CapyScreen(viewModel: CharacterViewModel) {
             shape = RoundedCornerShape(16.dp)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
+                val capyHpProgress by animateFloatAsState(
+                    targetValue = if (viewModel.capyMaxHp > 0) viewModel.capyCurrentHp.toFloat() / viewModel.capyMaxHp.toFloat() else 0f,
+                    animationSpec = tween(durationMillis = 500),
+                    label = "Capy HP Animation"
+                )
+
                 Text("HP: ${viewModel.capyCurrentHp} / ${viewModel.capyMaxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White, fontFamily = Almendra)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 LinearProgressIndicator(
-                    progress = { viewModel.capyCurrentHp.toFloat() / viewModel.capyMaxHp.toFloat() },
+                    progress = { capyHpProgress },
                     modifier = Modifier.fillMaxWidth().height(16.dp),
                     color = if (viewModel.capyCurrentHp > 5) beastColorDark else OchsenblutRot,
                     trackColor = PergamentHell
