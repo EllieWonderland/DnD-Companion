@@ -130,7 +130,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                         onPlus = { viewModel.changeRations(1) }
                     )
 
-                    if (viewModel.allSpells.any { it.name == "Gute Beere" && it.isPrepared }) {
+                    if (viewModel.allSpells.any { it.name == "Gute Beere" && it.isPrepared } || viewModel.goodberries > 0) {
                         InventoryRow(
                             name = "Gute Beeren",
                             amount = viewModel.goodberries.toString(),

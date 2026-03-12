@@ -170,4 +170,5 @@
     - [x] Manuellen Beeren-Zauber-Button im Rucksack entfernt.
     - [x] "Beere essen" Button im Kampf-Tab (unter HP) hinzufügen.
     - [x] Sichtbarkeit des Buttons an Beeren-Bestand koppeln.
-    *Notiz für Commit: Refine Goodberry interaction and add eating logic to combat screen.*
+    - [x] **Universeller Support:** Sichtbarkeit im Rucksack für alle Charaktere (auch Delat) umgesetzt.
+    *Notiz für Commit: Refine Goodberry interaction and ensure universal support for all character profiles.*
