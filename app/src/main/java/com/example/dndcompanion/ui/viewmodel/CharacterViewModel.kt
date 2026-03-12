@@ -695,8 +695,22 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     fun useTraitSpell(trait: TraitItem) {
-        if (trait.currentUses > 0) {
-            trait.currentUses--
+        val index = customTraits.indexOf(trait)
+        if (index != -1 && trait.currentUses > 0) {
+            // Kopie erstellen und verringern, um UI-Update auszulösen
+            val updatedTrait = trait.copy(currentUses = trait.currentUses - 1)
+            customTraits[index] = updatedTrait
+            
+            // SPEZIAL-EFFEKTE basierend auf dem Zauber
+            when (updatedTrait.grantedSpellId) {
+                "Gute Beere" -> {
+                    goodberries += 10
+                    prefs.edit { putInt("goodberries", goodberries) }
+                }
+                "Falsches Leben" -> {
+                    applyFalseLife()
+                }
+            }
             saveTraits()
         }
     }
@@ -725,11 +739,24 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 customTraits.addAll(items)
                 
                 // Sicherstellen, dass neue Standard-Merkmale (Free Spells) auch bei bestehenden Saves erscheinen
+                // UND Namen aktualisiert werden (Migration)
+                var listChanged = false
                 characterData.defaultTraits.forEach { defaultTrait ->
-                    if (customTraits.none { it.name == defaultTrait.name }) {
+                    val existingIndex = customTraits.indexOfFirst { 
+                        it.grantedSpellId != null && it.grantedSpellId == defaultTrait.grantedSpellId 
+                    }
+                    if (existingIndex != -1) {
+                        // Falls der Name abweicht (Migration), Namen aktualisieren
+                        if (customTraits[existingIndex].name != defaultTrait.name) {
+                            customTraits[existingIndex] = customTraits[existingIndex].copy(name = defaultTrait.name)
+                            listChanged = true
+                        }
+                    } else if (customTraits.none { it.name == defaultTrait.name }) {
                         customTraits.add(defaultTrait)
+                        listChanged = true
                     }
                 }
+                if (listChanged) saveTraits()
             } catch (e: Exception) {
                 // Ignore
             }
@@ -1296,6 +1323,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 putInt("spellSlotsLevel5", spellSlotsLevel5)
             }
         }
+        
+        // Traits mit Reset bei Kurzer Rast zurücksetzen
+        var traitsChanged = false
+        customTraits.forEachIndexed { index, trait ->
+            if (trait.resetOnShortRest && trait.currentUses < trait.maxUses) {
+                customTraits[index] = trait.copy(currentUses = trait.maxUses)
+                traitsChanged = true
+            }
+        }
+        if (traitsChanged) saveTraits()
     }
 
     var showRestWarningDialog by mutableStateOf(false)
@@ -1340,6 +1377,14 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         freeMistyStepUsed = false
         goodberries = 0
         geminiUsesToday = 0
+        
+        // Alle Traits bei langer Rast zurücksetzen
+        customTraits.forEachIndexed { index, trait ->
+            if (trait.currentUses < trait.maxUses) {
+                customTraits[index] = trait.copy(currentUses = trait.maxUses)
+            }
+        }
+        saveTraits()
         
         if (consumeResources) {
             changeWater(-0.5f)
