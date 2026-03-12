@@ -153,6 +153,24 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         Button(onClick = { viewModel.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze.copy(alpha = 0.7f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.width(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontSize = 14.sp) }
                         Button(onClick = { viewModel.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), shape = RoundedCornerShape(6.dp), modifier = Modifier.width(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+12", fontSize = 14.sp) }
                     }
+
+                    if (viewModel.goodberries > 0) {
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Button(
+                            onClick = { viewModel.eatGoodberry() },
+                            modifier = Modifier.fillMaxWidth().height(48.dp),
+                            enabled = viewModel.currentHp < viewModel.maxHp,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Waldgruen,
+                                disabledContainerColor = EisenGrau
+                            ),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text("Beere essen (+1 HP)", fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("(${viewModel.goodberries} übrig)", fontSize = 12.sp)
+                        }
+                    }
                 }
             }
 

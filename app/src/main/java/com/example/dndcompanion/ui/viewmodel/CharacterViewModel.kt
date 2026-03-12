@@ -531,6 +531,17 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         prefs.edit { putInt("goodberries", goodberries) }
     }
 
+    fun eatGoodberry() {
+        if (goodberries > 0 && currentHp < maxHp) {
+            goodberries--
+            currentHp = (currentHp + 1).coerceAtMost(maxHp)
+            prefs.edit { 
+                putInt("goodberries", goodberries)
+                putInt("currentHp", currentHp)
+            }
+        }
+    }
+
     // --- MÜNZEN (COINS) ---
     var coinsKM by mutableIntStateOf(prefs.getInt("coinsKM", 0))
         private set

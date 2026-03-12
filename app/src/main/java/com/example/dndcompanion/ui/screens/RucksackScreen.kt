@@ -135,18 +135,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                             name = "Gute Beeren",
                             amount = viewModel.goodberries.toString(),
                             onMinus = { viewModel.changeGoodberries(-1) },
-                            onPlus = { viewModel.changeGoodberries(1) },
-                            extraAction = {
-                                Button(
-                                    onClick = { viewModel.castGoodberry() },
-                                    enabled = viewModel.spellSlotsLevel1 > 0,
-                                    colors = MetallButtonColors(),
-                                    modifier = Modifier.height(36.dp),
-                                    contentPadding = PaddingValues(horizontal = 8.dp)
-                                ) {
-                                    Text("Zaubern (+10)", fontSize = 12.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
-                                }
-                            }
+                            onPlus = { viewModel.changeGoodberries(1) }
                         )
                     }
 

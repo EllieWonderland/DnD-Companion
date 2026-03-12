@@ -164,3 +164,10 @@
     - [x] Logo-Präsentation im Splash Screen optimieren.
     - [x] Übergang vom Splash Screen zur App flüssiger gestalten (optional).
     *Notiz für Commit: Splash Screen verschönert und an das App-Thema angepasst (Pergament & Stein).*
+
+- [x] **Phase 8: Beeren-Mechanik & Combat UI**
+    - [x] `eatGoodberry()` Logik im CharacterViewModel implementieren.
+    - [x] Manuellen Beeren-Zauber-Button im Rucksack entfernt.
+    - [x] "Beere essen" Button im Kampf-Tab (unter HP) hinzufügen.
+    - [x] Sichtbarkeit des Buttons an Beeren-Bestand koppeln.
+    *Notiz für Commit: Refine Goodberry interaction and add eating logic to combat screen.*
