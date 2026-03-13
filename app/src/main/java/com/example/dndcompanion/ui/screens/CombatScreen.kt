@@ -313,8 +313,48 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     WeaponButton("Kurzschwert\n& Schild", viewModel.currentWeapon == ActiveWeapon.KURZSCHWERT_SCHILD, WaldGold) { viewModel.equipWeapon(ActiveWeapon.KURZSCHWERT_SCHILD) }
                     WeaponButton("Shillelagh\n& Schild", viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD, WaldGold) { viewModel.equipWeapon(ActiveWeapon.SHILLELAGH_SCHILD) }
                 } else {
-                    WeaponButton("Kriegshammer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.KRIEGSHAMMER_PAKT) }
-                    WeaponButton("Speer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.SPEER_PAKT) }
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                            WeaponButton("Kriegshammer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.KRIEGSHAMMER_PAKT) }
+                            WeaponButton("Speer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.SPEER_PAKT) }
+                        }
+                        
+                        val isVersatile = viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT || viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT
+                        if (isVersatile) {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Checkbox(
+                                    checked = viewModel.isUsingTwoHanded,
+                                    onCheckedChange = { viewModel.toggleTwoHanded(it) },
+                                    colors = CheckboxDefaults.colors(checkedColor = HexenLila)
+                                )
+                                Text("Zweihändig anlegen", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Magierrüstung Toggle (für Delat/Warlock)
+            if (!isRanger) {
+                Spacer(modifier = Modifier.height(12.dp))
+                PergamentCard(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier.padding(12.dp).fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = if(viewModel.isMageArmorActive) HexenLila else EisenGrau)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Magierrüstung aktiv", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
+                        }
+                        Switch(
+                            checked = viewModel.isMageArmorActive,
+                            onCheckedChange = { viewModel.toggleMageArmor(it) },
+                            colors = SwitchDefaults.colors(checkedThumbColor = HexenLila, checkedTrackColor = HexenLila.copy(alpha = 0.5f))
+                        )
+                    }
                 }
             }
 
@@ -330,11 +370,11 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     Spacer(modifier = Modifier.height(8.dp))
 
                     val extraNote = when (viewModel.currentWeapon) {
-                        ActiveWeapon.LANGBOGEN -> "Verlangsamen: Ziel -3 Bewegung.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
-                        ActiveWeapon.KURZSCHWERT_SCHILD -> "Plagen: Nächster Angriff hat Vorteil.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
-                        ActiveWeapon.SHILLELAGH_SCHILD -> "Umstoßen (Mastery): Gegner muss bei Treffer Kon-Save (DC 12) bestehen oder liegt am Boden."
-                        ActiveWeapon.KRIEGSHAMMER_PAKT -> "Paktwaffe: Nutzt Charisma. Umstoßen (Mastery): Gegner muss bei Treffer Kon-Save bestehen oder liegt am Boden."
-                        ActiveWeapon.SPEER_PAKT -> "Paktwaffe: Nutzt Charisma. Sap (Mastery): Nächster Angriff des Gegners hat Nachteil."
+                        ActiveWeapon.LANGBOGEN -> "Verlangsamen (Mastery): Tempo -3m.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
+                        ActiveWeapon.KURZSCHWERT_SCHILD -> "Ärgern (Mastery): Nächster Angriff hat Vorteil.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
+                        ActiveWeapon.SHILLELAGH_SCHILD -> "Umwerfen (Mastery): Gegner muss KON-RW (SG 12) bestehen oder liegt am Boden."
+                        ActiveWeapon.KRIEGSHAMMER_PAKT -> "Paktwaffe (CHA).\nStoß (Mastery): Ziel bis zu 3m wegstoßen (gerade Linie)."
+                        ActiveWeapon.SPEER_PAKT -> "Paktwaffe (CHA).\nSchwächen (Mastery): Nächster Angriff des Gegners hat Nachteil."
                     }
 
                     Text(

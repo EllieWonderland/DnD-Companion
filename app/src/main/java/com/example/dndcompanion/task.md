@@ -43,13 +43,13 @@
 - [x] **Bücher/Notizen in "Privat" und "Öffentlich" splitten:** Die Notizbücher (Books/Tagebücher) so umbauen, dass ein Eintrag ein Flag erhält oder es getrennte Listen für `Profil-spezifisch` und `Gruppen-Öffentlich` gibt. Öffentliche Notizen werden in Echtzeit über Firebase Firestore zwischen den Geräten synchronisiert.
   - *Commit:* `git commit -m "feat: split notebooks into private and public categories and sync via firestore"`
 
-## Bald (Phase 2: Fundament für Multi-Charakter)
+## Phase 2: Fundament für Multi-Charakter
 - [x] **CharacterViewModel abstrahieren:** Die harten Werte für "Athania" in eine flexiblere Datenklasse `CharacterData` auslagern. Das ViewModel sollte die aktuellen Daten basierend auf dem gewählten Charakter laden.
   - *Commit:* `git commit -m "refactor: abstract CharacterViewModel to use flexible CharacterData class"`
 - [x] **Ressourcen trennen:** Globale Daten (Handbuch, Zauberbuch-Definitionen, gemeinsame Notizen) werden von charakterspezifischen Instanz-Daten (Inventar, HP, Attributswerte, vorbereitete Zauber, FAQ) getrennt gespeichert. 
   - *Commit:* `git commit -m "refactor: separate global resources from character-specific instance data"`
 
-## Später (Phase 3: Hexenmeister Delat hinzufügen)
+## Phase 3: Hexenmeister Delat hinzufügen
 - [x] **Profil-Wechsler UI:** Einen Screen oder einen Button in der Navigation basteln, um in Echtzeit zwischen Athania (`Ranger`) und Delat (`Warlock`) zu wechseln.
   - *Commit:* `git commit -m "feat: implement profile switcher UI for multiple characters"`
 - [x] **Dynamisches Menü:** Je nach aktiver Klasse das Burger-Menü anpassen. Ein Ranger sieht seine `Bestie`, ein Warlock sieht `Paktmagie`-Management oder `Schauerliche Anrufungen`.
@@ -69,7 +69,6 @@
 - [x] **Stats korrekt ziehen:** Delat zieht die noch nicht seine eigenen Stats (Waffen, Rucksack, Zauber etc.), sondern die von Athania. Umstellen auf stats_delat.md
 
 ## Phase 5: Neues Layout (Pergament & Stein-Optik)
-
 ### Stufe 1: Design-Fundament (Theme, Fonts, Farben, Assets)
 - [x] **Farbpalette erweitern** (`Color.kt`): `Pergament`, `Waldgruen`, `OchsenblutRot`, `Bronze`, `HexenLila`, `WaldGold`.
 - [x] **Schriftarten einbinden** (`Type.kt` + `res/font/`): `MedievalSharp`, `Almendra`, `Grenze Gotisch`.
@@ -122,13 +121,23 @@
     - *Notiz für Commit:* `ui: replace navigation emojis with stylized parchment-style icons`
   - [x] **Dialoge:** EP-, Rasten- und Level-Up-Dialoge im Pergament-Design vereinheitlichen.
     - *Notiz für Commit:* `ui: redesign EP and rest dialogs with consistent parchment theme& accessibility`
+- [x] **Phase 7: UI Polish - Splash Screen**
+    - [x] Splash Screen Hintergrund anpassen (weg von Weiß hin zu Pergament/Thematisch).
+    - [x] Logo-Präsentation im Splash Screen optimieren.
+    - [x] Übergang vom Splash Screen zur App flüssiger gestalten (optional).
+    *Notiz für Commit: Splash Screen verschönert und an das App-Thema angepasst (Pergament & Stein).*
 
-## Phase 6: Gruppen-Features & Ausblick
-- [x] **Geteilte Schatztruhe (Gruppen-Loot):** Ein Inventar, aus dem jeder Spieler in Echtzeit Gold und Items nehmen oder hineinlegen kann.
-- [ ] **Echtzeit-Initiative-Tracker:** Ein eigener Kampf-Bildschirm, der die Zug-Reihenfolge live zeigt.
-- [ ] **Status-Ping & SOS (Gruppen-Ansicht):** Heiler-Ansicht für HP und Zustände der Gruppe.
+- [x] **Phase 6: Beeren-Mechanik & Combat UI**
+    - [x] `eatGoodberry()` Logik im CharacterViewModel implementieren.
+    - [x] Merge-Konflikte in `ProfilScreen.kt`, `ZauberScreen.kt` und `CharacterViewModel.kt` beheben.
+- [x] Syntaxfehler nach dem Pull korrigieren (geleeckte Codeblöcke und Merge-Markierungen).
+    - [x] Manuellen Beeren-Zauber-Button im Rucksack entfernt.
+    - [x] "Beere essen" Button im Kampf-Tab (unter HP) hinzufügen.
+    - [x] Sichtbarkeit des Buttons an Beeren-Bestand koppeln.
+    - [x] **Universeller Support:** Sichtbarkeit im Rucksack für alle Charaktere (auch Delat) umgesetzt.
+    *Notiz für Commit: Refine Goodberry interaction and ensure universal support for all character profiles.*
 
-## Phase 7: Bugfixes
+## Bugfixes
 - [x] **Chatbot-Identität:** Der Chatbot nennt den Charakter manchmal noch "Athania", auch wenn Delat aktiv ist.
 - [x] **Temporäre HP Button:** Der Zauber/das Merkmal "Unholde Vitalität" (False Life) für Delat sollte einen direkt nutzbaren Button haben, um die 12 Temp HP (oder 1W8+4 nach 2024er Regeln) schnell zu erneuern.
 - [x] **Warlock Pakt-Logik vs. G1 Slots:** Warlocks haben keine G1 Slots, aber Delat hat Zauber aus Talente (Segnen, Nebelschritt, Magierrüstung), die 1/LR ohne Slot gewirkt werden können. Diese fehlen im Tracking.
@@ -158,17 +167,3 @@
     - [x] Logik-Fix: `loadTraits` ergänzt nun fehlende Standard-Merkmale bei bestehenden Saves.
     - [x] Sichtbarkeit: Freie Zauber aus Merkmalen erscheinen nur, wenn sie im Zauberbuch vorbereitet sind.
     *Notiz für Commit: Free Spells Mechanik vollständig implementiert, inklusive konditionaler Sichtbarkeit und automatischer Save-Aktualisierung.*
-
-- [x] **Phase 7: UI Polish - Splash Screen**
-    - [x] Splash Screen Hintergrund anpassen (weg von Weiß hin zu Pergament/Thematisch).
-    - [x] Logo-Präsentation im Splash Screen optimieren.
-    - [x] Übergang vom Splash Screen zur App flüssiger gestalten (optional).
-    *Notiz für Commit: Splash Screen verschönert und an das App-Thema angepasst (Pergament & Stein).*
-
-- [x] **Phase 8: Beeren-Mechanik & Combat UI**
-    - [x] `eatGoodberry()` Logik im CharacterViewModel implementieren.
-    - [x] Manuellen Beeren-Zauber-Button im Rucksack entfernt.
-    - [x] "Beere essen" Button im Kampf-Tab (unter HP) hinzufügen.
-    - [x] Sichtbarkeit des Buttons an Beeren-Bestand koppeln.
-    - [x] **Universeller Support:** Sichtbarkeit im Rucksack für alle Charaktere (auch Delat) umgesetzt.
-    *Notiz für Commit: Refine Goodberry interaction and ensure universal support for all character profiles.*

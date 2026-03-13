@@ -370,7 +370,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             }
                             Text("${if (viewModel.freeMageArmorUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
                             Button(
-                                onClick = { viewModel.useFreeMageArmor() },
+                                onClick = { 
+                                    viewModel.useFreeMageArmor()
+                                    viewModel.toggleMageArmor(true) // Activate the AC effect
+                                },
                                 enabled = !viewModel.freeMageArmorUsed,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
@@ -434,14 +437,63 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             HorizontalDivider(color = Bronze, thickness = 2.dp)
             Spacer(modifier = Modifier.height(16.dp))
 
+            var showAddTraitDialog by remember { mutableStateOf(false) }
+            var newTraitName by remember { mutableStateOf("") }
+            var newTraitDesc by remember { mutableStateOf("") }
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("Merkmale", style = MaterialTheme.typography.titleMedium, color = Waldgruen)
+                IconButton(onClick = { showAddTraitDialog = true }) {
+                    Icon(Icons.Default.Add, contentDescription = "Merkmal hinzufügen", tint = accentColor)
+                }
             }
             Spacer(modifier = Modifier.height(8.dp))
+
+            if (showAddTraitDialog) {
+                Card(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                    colors = CardDefaults.cardColors(containerColor = PergamentHell),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, accentColor)
+                ) {
+                    Column(modifier = Modifier.padding(12.dp)) {
+                        Text("Neues Merkmal", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
+                        Spacer(modifier = Modifier.height(8.dp))
+                        OutlinedTextField(
+                            value = newTraitName,
+                            onValueChange = { newTraitName = it },
+                            label = { Text("Name (z.B. Eingeweihter der Magie)") },
+                            modifier = Modifier.fillMaxWidth(),
+                            singleLine = true
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        OutlinedTextField(
+                            value = newTraitDesc,
+                            onValueChange = { newTraitDesc = it },
+                            label = { Text("Beschreibung") },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                            TextButton(onClick = { showAddTraitDialog = false }) { Text("Abbrechen", color = TintenBraun) }
+                            Button(
+                                onClick = {
+                                    if (newTraitName.isNotBlank()) {
+                                        viewModel.addCustomTrait(newTraitName, newTraitDesc)
+                                        newTraitName = ""
+                                        newTraitDesc = ""
+                                        showAddTraitDialog = false
+                                    }
+                                },
+                                colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                            ) { Text("Hinzufügen") }
+                        }
+                    }
+                }
+            }
             
             // Editierbare benutzerdefinierte Merkmale (alle Merkmale)
             var editingTraitIndex by remember { mutableIntStateOf(-1) }
@@ -860,26 +912,36 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                 )
                             }
                         }
+                        
+                        // Spacer at the end of scrollable area to ensure visibility
+                        Spacer(modifier = Modifier.height(80.dp))
                     }
                 }
 
-                Button(
-                    onClick = { showAddSpellDialog = true },
-                    colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
-                    modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(56.dp)
+                // Move button to a fixed position at the bottom of the dialog
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = PergamentHell,
+                    shadowElevation = 8.dp
                 ) {
-                    Text("+ Zauber aus Kompendium hinzufügen", color = Color.White, fontSize = 16.sp, fontFamily = Almendra)
+                    Button(
+                        onClick = { showAddSpellDialog = true },
+                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
+                    ) {
+                        Text("+ Zauber aus Kompendium hinzufügen", color = Color.White, fontSize = 16.sp, fontFamily = Almendra)
+                    }
                 }
                 Spacer(modifier = Modifier.height(32.dp))
+
+                if (showAddSpellDialog) {
+                    SpellCatalogDialog(
+                        viewModel = viewModel,
+                        onDismiss = { showAddSpellDialog = false }
+                    )
+                }
             }
         }
-    }
-
-    if (showAddSpellDialog) {
-        SpellCatalogDialog(
-            viewModel = viewModel,
-            onDismiss = { showAddSpellDialog = false }
-        )
     }
 }
 

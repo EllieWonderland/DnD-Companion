@@ -176,6 +176,23 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     var showLevelUpNotification by mutableStateOf(false)
         private set
 
+    var isUsingTwoHanded by mutableStateOf(prefs.getBoolean("isUsingTwoHanded", false))
+        private set
+
+    fun toggleTwoHanded(active: Boolean) {
+        isUsingTwoHanded = active
+        prefs.edit { putBoolean("isUsingTwoHanded", isUsingTwoHanded) }
+    }
+
+    // Mage Armor active effect is separate from "daily use" to allow toggling
+    var isMageArmorActive by mutableStateOf(prefs.getBoolean("isMageArmorActive", false))
+        private set
+
+    fun toggleMageArmor(active: Boolean) {
+        isMageArmorActive = active
+        prefs.edit { putBoolean("isMageArmorActive", isMageArmorActive) }
+    }
+
     fun addExperience(amount: Int) {
         currentEP += amount
         prefs.edit { putInt("currentEP", currentEP) }
@@ -295,17 +312,19 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    val proficiencyBonus: Int
-        get() = when(level) {
-            in 1..4 -> 2
-            in 5..8 -> 3
-            in 9..12 -> 4
-            in 13..16 -> 5
-            else -> 6
-        }
+    val proficiencyBonus: Int get() = when(level) {
+        in 1..4 -> 2
+        in 5..8 -> 3
+        in 9..12 -> 4
+        in 13..16 -> 5
+        else -> 6
+    }
 
     val strMod: Int get() = (strength - 10) / 2
-    val dexMod: Int get() = (dexterity - 10) / 2
+    val dexMod: Int get() {
+        val baseMod = (dexterity - 10) / 2
+        return if (isMageArmorActive) baseMod + 1 else baseMod
+    }
     val conMod: Int get() = (constitution - 10) / 2
     val intMod: Int get() = (intelligence - 10) / 2
     val wisMod: Int get() = (wisdom - 10) / 2
@@ -319,6 +338,40 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val characterRace: String get() = characterData.race
     val characterBackground: String get() = characterData.background
     val characterAlignment: String get() = characterData.alignment
+
+    fun getSkillModifier(skillName: String): Int {
+        val baseMod = when (skillName) {
+            "Athletik" -> strMod
+            "Akrobatik", "Fingerfertigkeit", "Heimlichkeit" -> dexMod
+            "Arkane Kunde", "Geschichte", "Nachforschung", "Naturkunde", "Religionskunde" -> intMod
+            "Mit Tieren umgehen", "Motiv erkennen", "Heilkunde", "Wahrnehmung", "Überlebenskunst" -> wisMod
+            "Täuschen", "Einschüchtern", "Auftreten", "Überzeugen" -> chaMod
+            else -> 0
+        }
+        
+        var totalBonus = baseMod
+        
+        // Proficiencies
+        if (characterData.id == "Athania") {
+            if (skillName in listOf("Heimlichkeit", "Wahrnehmung", "Überlebenskunst", "Naturkunde", "Mit Tieren umgehen")) {
+                totalBonus += proficiencyBonus
+                // Expertise for Athania
+                if (skillName == "Heimlichkeit" || skillName == "Wahrnehmung") {
+                    totalBonus += proficiencyBonus
+                }
+            }
+        } else if (characterData.id == "Delat") {
+            if (skillName in listOf("Arkane Kunde", "Täuschen", "Einschüchtern", "Motiv erkennen")) {
+                totalBonus += proficiencyBonus
+            }
+            // Gloves of Arcana +2
+            if (skillName == "Arkane Kunde" && customLoot.any { it.name.contains("Handschuhe der arkanen Kunde", ignoreCase = true) }) {
+                totalBonus += 2
+            }
+        }
+        
+        return totalBonus
+    }
 
     val spellAttackBonus: Int get() = if (characterData.charClass == CharacterClass.WARLOCK) proficiencyBonus + chaMod else proficiencyBonus + wisMod
     val spellSaveDc: Int get() = 8 + if (characterData.charClass == CharacterClass.WARLOCK) proficiencyBonus + chaMod else proficiencyBonus + wisMod
@@ -392,26 +445,26 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     val currentArmorClass: Int
         get() {
-            return if (characterData.charClass == CharacterClass.WARLOCK) {
-                // Delat: Lederrüstung (11) + DEX (2) = 13?
-                // stats_delat.md sagt 12. Vielleicht DEX restricted oder andere Rüstung.
-                // Laut stats_delat.md: "RK 12 (Lederrüstung)". 
-                // Das passt nur wenn DEX 12 ist (+1). Aber Delat hat DEX 14 (+2).
-                // Eventuell ist die Lederrüstung im MD-File falsch berechnet oder hat einen Malus.
-                // Wir halten uns an die Logik: Rüstung + DEX.
-                val baseArmor = 11 // Lederrüstung
-                baseArmor + dexMod
-            } else {
-                // Ranger (Athania)
-                // Hat Beschlagene Lederrüstung (12) + DEX mod
-                val baseArmor = 12
-                val ac = baseArmor + dexMod
-                if (currentWeapon == ActiveWeapon.KURZSCHWERT_SCHILD || currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD) {
-                    ac + 2
-                } else {
-                    ac
-                }
+            var ac = when (currentWeapon) {
+                ActiveWeapon.LANGBOGEN -> 10 + dexMod // Base 10 + Dex (unarmored)
+                ActiveWeapon.KURZSCHWERT_SCHILD -> 10 + dexMod + 2 // Base 10 + Dex + Shield
+                ActiveWeapon.SHILLELAGH_SCHILD -> 10 + dexMod + 2
+                ActiveWeapon.KRIEGSHAMMER_PAKT -> 10 + dexMod // Warhammer (No shield)
+                ActiveWeapon.SPEER_PAKT -> 10 + dexMod // Spear (No shield)
             }
+            
+            // Apply armor from inventory
+            if (customLoot.any { it.name.contains("Lederrüstung", ignoreCase = true) }) {
+                ac += 1 // Leather is 11 + Dex, so +1 over base 10.
+            } else if (customLoot.any { it.name.contains("Beschlagene Lederrüstung", ignoreCase = true) }) {
+                ac += 2 // Studded is 12 + Dex, so +2 over base 10.
+            }
+
+            if (isMageArmorActive) {
+                ac += 1 // User requested +1 AC for Mage Armor
+            }
+            
+            return ac
         }
 
     val currentAttackBonus: String
@@ -428,8 +481,14 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             ActiveWeapon.LANGBOGEN -> "1W8 + $dexMod Stich (Gegner -3m Tempo)"
             ActiveWeapon.KURZSCHWERT_SCHILD -> "1W6 + $dexMod Stich (Vorteil auf nächsten Angriff)"
             ActiveWeapon.SHILLELAGH_SCHILD -> "1W8 + $wisMod Wucht (Umstoßen: ST-Save 12)"
-            ActiveWeapon.KRIEGSHAMMER_PAKT -> "1W8 + $chaMod Wucht (Optional: Nekrotisch/Psychisch/Gleißend)"
-            ActiveWeapon.SPEER_PAKT -> "1W6 + $chaMod Stich (Optional: Nekrotisch/Psychisch/Gleißend)"
+            ActiveWeapon.KRIEGSHAMMER_PAKT -> {
+                val die = if (isUsingTwoHanded) "1W10" else "1W8"
+                "$die + $chaMod Wucht (Vielseitig)"
+            }
+            ActiveWeapon.SPEER_PAKT -> {
+                val die = if (isUsingTwoHanded) "1W8" else "1W6"
+                "$die + $chaMod Stich (Vielseitig)"
+            }
         }
 
     var spellSlotsLevel1 by mutableIntStateOf(prefs.getInt("spellSlotsLevel1", characterData.baseSpellSlotsLevel1))

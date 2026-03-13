@@ -221,18 +221,16 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
 
                     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                         Column(modifier = Modifier.weight(1f)) {
-                            skills.take(9).forEach { (name, mod) ->
+                            skills.take(9).forEach { (name, _) ->
                                 val isProficient = viewModel.characterData.proficientSkills.contains(name)
-                                val finalMod = mod + if (isProficient) viewModel.proficiencyBonus else 0
-                                SkillRow("$name (${if(name == "Athletik") "STR" else if(name in listOf("Akrobatik", "Fingerfertigkeit", "Heimlichkeit")) "DEX" else if(name in listOf("Arkane Kunde", "Geschichte", "Nachforschungen", "Naturkunde", "Religion")) "INT" else if(name in listOf("Auftreten", "Einschüchtern", "Täuschen", "Überzeugen")) "CHA" else "WIS"})", (if(finalMod >= 0) "+" else "") + finalMod, isProficient)
+                                SkillRow("$name (${if(name == "Athletik") "STR" else if(name in listOf("Akrobatik", "Fingerfertigkeit", "Heimlichkeit")) "DEX" else if(name in listOf("Arkane Kunde", "Geschichte", "Nachforschungen", "Naturkunde", "Religionskunde", "Religion")) "INT" else if(name in listOf("Auftreten", "Einschüchtern", "Täuschen", "Überzeugen")) "CHA" else "WIS"})", viewModel.getSkillModifier(if(name == "Mit Tieren umg.") "Mit Tieren umgehen" else if(name == "Überleben") "Überlebenskunst" else if(name == "Nachforschungen") "Nachforschung" else if(name == "Religion") "Religionskunde" else name), isProficient)
                             }
                         }
                         Spacer(modifier = Modifier.width(16.dp))
                         Column(modifier = Modifier.weight(1f)) {
-                            skills.drop(9).forEach { (name, mod) ->
+                            skills.drop(9).forEach { (name, _) ->
                                 val isProficient = viewModel.characterData.proficientSkills.contains(name)
-                                val finalMod = mod + if (isProficient) viewModel.proficiencyBonus else 0
-                                SkillRow("$name (${if(name == "Athletik") "STR" else if(name in listOf("Akrobatik", "Fingerfertigkeit", "Heimlichkeit")) "DEX" else if(name in listOf("Arkane Kunde", "Geschichte", "Nachforschungen", "Naturkunde", "Religion")) "INT" else if(name in listOf("Auftreten", "Einschüchtern", "Täuschen", "Überzeugen")) "CHA" else "WIS"})", (if(finalMod >= 0) "+" else "") + finalMod, isProficient)
+                                SkillRow("$name (${if(name == "Athletik") "STR" else if(name in listOf("Akrobatik", "Fingerfertigkeit", "Heimlichkeit")) "DEX" else if(name in listOf("Arkane Kunde", "Geschichte", "Nachforschungen", "Naturkunde", "Religionskunde", "Religion")) "INT" else if(name in listOf("Auftreten", "Einschüchtern", "Täuschen", "Überzeugen")) "CHA" else "WIS"})", viewModel.getSkillModifier(if(name == "Mit Tieren umg.") "Mit Tieren umgehen" else if(name == "Überleben") "Überlebenskunst" else if(name == "Nachforschungen") "Nachforschung" else if(name == "Religion") "Religionskunde" else name), isProficient)
                             }
                         }
                     }
@@ -344,7 +342,7 @@ fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: 
 }
 
 @Composable
-fun SkillRow(name: String, mod: String, proficient: Boolean = false) {
+fun SkillRow(name: String, mod: Int, proficient: Boolean = false) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -352,7 +350,8 @@ fun SkillRow(name: String, mod: String, proficient: Boolean = false) {
     ) {
         val color = if (proficient) WaldGold else TintenSchwarz
         val weight = if (proficient) FontWeight.Bold else FontWeight.Normal
+        val modStr = if (mod >= 0) "+$mod" else "$mod"
         Text(name, color = color, style = MaterialTheme.typography.bodySmall, fontWeight = weight)
-        Text(mod, color = color, style = MaterialTheme.typography.bodySmall, fontWeight = weight)
+        Text(modStr, color = color, style = MaterialTheme.typography.bodySmall, fontWeight = weight)
     }
 }

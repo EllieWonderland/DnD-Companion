@@ -21,26 +21,40 @@ Dieses Kapitel liefert alle relevanten mechanischen Tabellen für die Ausrüstun
 ## 2. Waffen (Weapons)
 
 ### Waffen-Eigenschaften (Weapon Properties)
-* **Finesse:** Nutze wahlweise Stärke oder Geschicklichkeit für Angriffs- und Schadenswürfe.
-* **Leicht (Light):** Wenn du die Angriffsaktion nutzt, um mit einer leichten Waffe anzugreifen, kannst du als Bonusaktion einen Angriff mit einer anderen leichten Waffe ausführen. (Attributsmodifikator wird nicht zum Schaden der Bonusaktion addiert, es sei denn, er ist negativ).
-* **Ladeeigenschaft (Loading):** Du kannst nur eine Munition pro Aktion, Bonusaktion oder Reaktion abfeuern, unabhängig davon, wie viele Angriffe du normalerweise machen darfst.
-* **Munition (Ammunition):** Erfordert Projektile. Nach einem Kampf kann die Hälfte der verbrauchten Munition zurückgewonnen werden.
-* **Reichweite (Range / Reach):** Nahkampfwaffen mit *Reach* erhöhen deine Reichweite um 1,5 m / 1 Felder. Fernkampfwaffen oder Wurfwaffen geben in Klammern (Normale Reichweite / Maximale Reichweite) an.
-* **Schwer (Heavy):** Du hast Nachteil auf Angriffswürfe, wenn die Waffe eine Nahkampfwaffe ist und deine Stärke unter 13 liegt, oder wenn es eine Fernkampfwaffe ist und deine Geschicklichkeit unter 13 liegt.
+* **Finesse:** Man darf sich aussuchen, ob man für den Angriffs- und Schadenswurf den Stärke- oder den Geschicklichkeitsmodifikator verwendet. Für beide Würfe (Angriff und Schaden) muss dabei derselbe Modifikator gewählt werden.
+* **Leicht (Light):** Wenn man in seinem Zug die Angriffsaktion nutzt und mit einer leichten Waffe angreift, kann man im selben Zug eine zusätzliche Attacke als Bonusaktion mit einer anderen leichten Waffe ausführen. Man addiert den Attributsmodifikator bei dieser Bonusaktion nicht zum Schaden, es sei denn, er ist negativ.
+* **Ladeeigenschaft (Loading):** Unabhängig von der Anzahl an Angriffen, die man regulär besitzt, darf man mit dieser Waffe pro Aktion, Bonusaktion oder Reaktion nur eine einzige Munition abfeuern.
+* **Munition (Ammunition):** Man benötigt die passende Munition (z.B. Pfeile oder Bolzen), um mit der Fernkampfwaffe angreifen zu können. Nach einem Kampf kann man bis zu einer Minute investieren, um die Hälfte der verschossenen Munition (abgerundet) wieder einzusammeln.
+* **Reichweite (Range / Reach):** Nahkampfwaffen mit *Reach* erhöhen deine Reichweite in Nahkampfangriffen und Gelegenheitsangriffen um 1,5 m / 1 Feld. 
+* **Schwer (Heavy):** Bei Nahkampfwaffen mit dieser Eigenschaft hat man Nachteil auf den Angriffswurf, wenn der eigene Stärkewert nicht mindestens 13 beträgt. Bei Fernkampfwaffen ist ein Geschicklichkeitswert von mindestens 13 erforderlich, um den Nachteil zu vermeiden.
 * **Vielseitig (Versatile):** Kann einhändig oder zweihändig geführt werden (Schaden für den zweihändigen Griff steht in Klammern).
+    * Kampfstab (Quarterstaff): Einhändig nutzt du einen 1W6, zweihändig einen 1W8 als Trefferwürfel.
+    * Speer (Spear): Einhändig benötigst du einen 1W6, zweihändig einen 1W8.
+    * Streitaxt (Battleaxe): Einhändig wirfst du einen 1W8, zweihändig einen 1W10.
+    * Langschwert (Longsword): Einhändig verursachst du 1W8 Schaden, zweihändig 1W10.
+    * Dreizack (Trident): Einhändig verwendest du einen 1W8, zweihändig einen 1W10.
+    * Kriegshammer (Warhammer): Einhändig wird ein 1W8 gewürfelt, zweihändig ein 1W10.
+    * Kriegshacke (War Pick): Einhändig brauchst du einen 1W8, zweihändig einen 1W10.
 * **Wurfwaffe (Thrown):** Kann für einen Fernkampfangriff geworfen werden (nutzt dasselbe Attribut wie im Nahkampf).
-* **Zweihändig (Two-Handed):** Erfordert zwingend beide Hände zum Angreifen.
+    * Dolch (Dagger): 1W4 Stichschaden. Reichweite: 20/60.
+    * Dreizack (Trident): 1W8 Stichschaden. Reichweite: 20/60. (Verfügt zusätzlich über die Eigenschaft "Vielseitig" und macht im beidhändigen Nahkampf 1W10 Schaden).
+    * Handaxt (Handaxe): 1W6 Hiebschaden. Reichweite: 20/60.
+    * Leichter Hammer (Light Hammer): 1W4 Wuchtschaden. Reichweite: 20/60.
+    * Speer (Spear): 1W6 Stichschaden. Reichweite: 20/60. (Verfügt zusätzlich über die Eigenschaft "Vielseitig" und macht im beidhändigen Nahkampf 1W8 Schaden).
+    * Wurfpfeil (Dart): 1W4 Stichschaden. Reichweite: 20/60. (Dies ist eine reine Fernkampfwaffe).
+    * Wurfspeer (Javelin): 1W6 Stichschaden. Reichweite: 30/120.
+* **Zweihändig (Two-Handed):** Die Waffe erfordert zwingend beide Hände zum Angreifen.
 
 ### Waffen-Meisterschaften (Mastery Properties)
 Um diese nutzen zu können, benötigt der Charakter ein entsprechendes Merkmal (z. B. *Weapon Mastery*).
-* **Ärgern / Irritieren (Vex):** Triffst du und verursachst Schaden, hast du Vorteil auf deinen nächsten Angriffswurf gegen dieses Ziel (hält bis zum Ende deines nächsten Zuges).
-* **Kerbe (Nick):** Der zusätzliche Angriff der Eigenschaft *Leicht* (Light) kann als Teil der Angriffsaktion statt als Bonusaktion ausgeführt werden (nur 1x pro Zug).
-* **Schwächen (Sap):** Triffst du, hat das Ziel Nachteil auf seinen nächsten Angriffswurf (hält bis zum Beginn deines nächsten Zuges).
-* **Spalten (Cleave):** Triffst du, kannst du einen Extra-Nahkampfangriff gegen eine zweite Kreatur in 1,5 m / 1 Felder Entfernung machen. Der Attributsmodifikator wird dem Extraschaden nicht hinzugefügt (nur 1x pro Zug).
-* **Stoß (Push):** Triffst du eine Kreatur der Größe Groß oder kleiner, kannst du sie 3 m / 2 Felder von dir wegstoßen.
-* **Streifen (Graze):** Verfehlst du, fügst du Schaden in Höhe deines genutzten Attributsmodifikators zu (keine Modifikatoren-Erhöhung durch andere Effekte).
-* **Umwerfen (Topple):** Triffst du, muss das Ziel einen KON-Rettungswurf (SG = 8 + genutzter Angriffs-Modifikator + Übungsbonus) bestehen oder erleidet den Zustand *Liegend* (Prone).
-* **Verlangsamen (Slow):** Triffst du und machst Schaden, sinkt die Bewegungsrate des Ziels um 3 m / 2 Felder bis zum Beginn deines nächsten Zuges.
+* **Ärgern / Irritieren (Vex):** Fügt man dem Ziel Schaden zu, erhält man Vorteil auf den nächsten eigenen Angriffswurf gegen dieses Ziel vor Ende des nächsten Zuges.
+* **Kerbe (Nick):** Der zusätzliche Angriff, den man durch die "Light"-Eigenschaft erhält, kann als Teil der normalen Angriffsaktion durchgeführt werden statt als Bonusaktion.
+* **Schwächen (Sap):** Das getroffene Ziel hat bei seinem nächsten Angriffswurf vor Beginn des nächsten eigenen Zuges Nachteil.
+* **Spalten (Cleave):** Bei einem Treffer mit einer Nahkampfwaffe kann man einen weiteren Angriffswurf gegen eine zweite Kreatur machen, die sich innerhalb der eigenen Reichweite und innerhalb von 1,5 m / 1 Feld zur ersten Kreatur befindet. (nur 1x pro Zug).
+* **Stoß (Push):** Bei einem Treffer kann das Ziel um bis zu 3m / 2 Felder in gerader Linie weggestoßen werden, sofern es der Größenkategorie Groß oder kleiner entspricht.
+* **Streifen (Graze):** Verfehlt man mit seinem Angriff, fügt man dem Ziel dennoch Schaden in Höhe des verwendeten Attributsmodifikators zu.
+* **Umwerfen (Topple):** Triffst du, muss das Ziel einen KON-Rettungswurf bestehen oder erleidet den Zustand *Liegend* (Prone).
+* **Verlangsamen (Slow):** Fügt man dem Ziel Schaden zu, reduziert sich dessen Bewegungsrate bis zum Beginn des nächsten eigenen Zuges um 3m / 2 Felder.
 
 ### Waffen-Tabelle
 
