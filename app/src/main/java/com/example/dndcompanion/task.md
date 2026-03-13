@@ -3,7 +3,7 @@
 ## Aktuell (Phase 1: Athania Perfektionieren)
 - [x] **Fehler beheben:** Workflow `/error-fix` ausführen, Build reparieren.
   - *Commit:* `git commit -m "fix: resolve AGP 9.0 & Kotlin plugin incompatibility in gradle.properties"`
-- [/] **Übungsbonus in Profil-UI anzeigen:** Den berechneten `proficiencyBonus` sichtbar im ProfilScreen einbauen.
+- [x] **Übungsbonus in Profil-UI anzeigen:** Den berechneten `proficiencyBonus` sichtbar im ProfilScreen einbauen.
   - *Commit:* `git commit -m "feat: show proficiency bonus on profile screen"`
 - [x] **Zauberbuch integrieren:** Die neuen JSON-Dateien aus `Rules/Zauberbuch` (Stufe 0-9) per JSON-Parser in die App einlesen und ein durchsuchbares, filterbares Zauberbuch (`SpellbookScreen`) implementieren. So kann man vorbereitete Zauber direkt aus der kompletten Liste auswählen.
   - *Commit:* `git commit -m "feat: integrate full spellbook catalog from JSON assets and replace manual entry"`
@@ -166,4 +166,14 @@
     - [x] UI-Fix: Scroll-Probleme und Padding im Verwalter-Dialog behoben (Spacer + 40dp).
     - [x] Logik-Fix: `loadTraits` ergänzt nun fehlende Standard-Merkmale bei bestehenden Saves.
     - [x] Sichtbarkeit: Freie Zauber aus Merkmalen erscheinen nur, wenn sie im Zauberbuch vorbereitet sind.
-    *Notiz für Commit: Free Spells Mechanik vollständig implementiert, inklusive konditionaler Sichtbarkeit und automatischer Save-Aktualisierung.*
+
+- [x] **Waffen-Logik & Meisterschaften:**
+    - [x] "Zweihändig anlegen" für alle vielseitigen Waffen (Speer, Hammer, Shillelagh) ermöglichen.
+    - [x] AC-Abzug (-2), wenn eine "Schild-Waffe" zweihändig geführt wird.
+    - [x] Weapon Masteries Texte aktualisieren (Stoß, Schwächen, Umwerfen etc.).
+    - [x] Delats Basis-RK auf 12 korrigieren.
+    - [x] Masteries-Effekte im Combat-Tab detaillierter beschreiben.
+- [x] **UI-Optimierung:** 
+    - [x] Button zum Hinzufügen von Zaubern im Zauberbuch fixiert am unteren Rand (immer sichtbar).
+    - [x] Merkmale/Talente für Delat vervollständigt (Eingeweihter der Magie, Feenberührt) und Namen präzisiert.
+

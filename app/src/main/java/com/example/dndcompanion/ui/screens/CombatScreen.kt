@@ -313,25 +313,24 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     WeaponButton("Kurzschwert\n& Schild", viewModel.currentWeapon == ActiveWeapon.KURZSCHWERT_SCHILD, WaldGold) { viewModel.equipWeapon(ActiveWeapon.KURZSCHWERT_SCHILD) }
                     WeaponButton("Shillelagh\n& Schild", viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD, WaldGold) { viewModel.equipWeapon(ActiveWeapon.SHILLELAGH_SCHILD) }
                 } else {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            WeaponButton("Kriegshammer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.KRIEGSHAMMER_PAKT) }
-                            WeaponButton("Speer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.SPEER_PAKT) }
-                        }
-                        
-                        val isVersatile = viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT || viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT
-                        if (isVersatile) {
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Checkbox(
-                                    checked = viewModel.isUsingTwoHanded,
-                                    onCheckedChange = { viewModel.toggleTwoHanded(it) },
-                                    colors = CheckboxDefaults.colors(checkedColor = HexenLila)
-                                )
-                                Text("Zweihändig anlegen", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
-                            }
-                        }
-                    }
+                    WeaponButton("Kriegshammer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.KRIEGSHAMMER_PAKT) }
+                    WeaponButton("Speer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.SPEER_PAKT) }
+                }
+            }
+
+            val isVersatile = viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT || 
+                            viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT ||
+                            viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD
+            
+            if (isVersatile) {
+                Spacer(modifier = Modifier.height(8.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = viewModel.isUsingTwoHanded,
+                        onCheckedChange = { viewModel.toggleTwoHanded(it) },
+                        colors = CheckboxDefaults.colors(checkedColor = accentColor)
+                    )
+                    Text("Zweihändig anlegen (Entfernt Schild-Bonus)", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                 }
             }
 
@@ -372,9 +371,9 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     val extraNote = when (viewModel.currentWeapon) {
                         ActiveWeapon.LANGBOGEN -> "Verlangsamen (Mastery): Tempo -3m.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
                         ActiveWeapon.KURZSCHWERT_SCHILD -> "Ärgern (Mastery): Nächster Angriff hat Vorteil.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
-                        ActiveWeapon.SHILLELAGH_SCHILD -> "Umwerfen (Mastery): Gegner muss KON-RW (SG 12) bestehen oder liegt am Boden."
-                        ActiveWeapon.KRIEGSHAMMER_PAKT -> "Paktwaffe (CHA).\nStoß (Mastery): Ziel bis zu 3m wegstoßen (gerade Linie)."
-                        ActiveWeapon.SPEER_PAKT -> "Paktwaffe (CHA).\nSchwächen (Mastery): Nächster Angriff des Gegners hat Nachteil."
+                        ActiveWeapon.SHILLELAGH_SCHILD -> "Umwerfen (Mastery): Ziel muss KON-RW (SG 12) bestehen oder liegt am Boden."
+                        ActiveWeapon.KRIEGSHAMMER_PAKT -> "Stoß (Mastery): Ziel bis zu 3m wegstoßen (gerade Linie)."
+                        ActiveWeapon.SPEER_PAKT -> "Schwächen (Mastery): Nächster Angriff des Gegners hat Nachteil."
                     }
 
                     Text(

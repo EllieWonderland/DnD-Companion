@@ -146,9 +146,9 @@ object CharacterRepository {
                     TraitItem("Erwachter Geist", "Telepathische Verbindung (BA, max 9m)."),
                     TraitItem("Psychische Zauber", "Schadensart in psychisch ändern. Keine V/G an Verzauberung/Illusion."),
                     TraitItem("Macht der Tiefe", "Verbündeten angreifen für Vorteil + Fluch."),
-                    TraitItem("Magierrüstung", "Du kannst Magierrüstung 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Magierrüstung"),
-                    TraitItem("Segnen", "Du kannst Segnen 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Segnen"),
-                    TraitItem("Nebelschritt", "Du kannst Nebelschritt 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Nebelschritt")
+                    TraitItem("Eingeweihter der Magie (Magierrüstung)", "Du kannst Magierrüstung 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Magierrüstung"),
+                    TraitItem("Eingeweihter der Magie (Segnen)", "Du kannst Segnen 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Segnen"),
+                    TraitItem("Feenberührt (Nebelschritt)", "Du kannst Nebelschritt 1/LR ohne Slot wirken.", maxUses = 1, currentUses = 1, grantedSpellId = "Nebelschritt")
                 )
             )
             else -> throw IllegalArgumentException("Unknown character target: $id")

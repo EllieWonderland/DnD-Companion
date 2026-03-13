@@ -447,12 +447,18 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         get() {
             var ac = when (currentWeapon) {
                 ActiveWeapon.LANGBOGEN -> 10 + dexMod // Base 10 + Dex (unarmored)
-                ActiveWeapon.KURZSCHWERT_SCHILD -> 10 + dexMod + 2 // Base 10 + Dex + Shield
-                ActiveWeapon.SHILLELAGH_SCHILD -> 10 + dexMod + 2
-                ActiveWeapon.KRIEGSHAMMER_PAKT -> 10 + dexMod // Warhammer (No shield)
-                ActiveWeapon.SPEER_PAKT -> 10 + dexMod // Spear (No shield)
+                ActiveWeapon.KURZSCHWERT_SCHILD -> if (isUsingTwoHanded) 10 + dexMod else 10 + dexMod + 2
+                ActiveWeapon.SHILLELAGH_SCHILD -> if (isUsingTwoHanded) 10 + dexMod else 10 + dexMod + 2
+                ActiveWeapon.KRIEGSHAMMER_PAKT -> 10 + dexMod
+                ActiveWeapon.SPEER_PAKT -> 10 + dexMod
             }
             
+            // Special case for Delat (Warlock/Zwerg) requested AC 12 base
+            if (activeCharacterId == "Delat" && !isMageArmorActive) {
+                // If Delat has armor in inventory, it might increase this, but user requested 12.
+                // 10 + Dex(2) = 12. So base 10 + dexMod is correct.
+            }
+
             // Apply armor from inventory
             if (customLoot.any { it.name.contains("Lederrüstung", ignoreCase = true) }) {
                 ac += 1 // Leather is 11 + Dex, so +1 over base 10.
@@ -461,7 +467,15 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             }
 
             if (isMageArmorActive) {
-                ac += 1 // User requested +1 AC for Mage Armor
+                ac += 1 // Base 13 instead of 10, so +3 total? User said "RK +1 and Geschicklichkeit +2".
+                // Default AC is 10 + Dex. Mage Armor is 13 + Dex. 
+                // Wait, if Mage Armor is active, base becomes 13. 
+                // Current logic adds 1 to dexMod (for the +2 Dex) and then adds +1 here.
+                // 10 + (DexMod+1) + 1 = 12 + DexMod. Mage Armor should be 13 + DexMod.
+                // I will adjust to match the requested "RK +1" result if that's what user wants, 
+                // but usually Mage Armor is 13 + Dex. 
+                // User specifically said: "Magierrüstung anlegen macht RK +1 und Geschicklichkeit +2"
+                // If original RK was 12, now 13. Correct.
             }
             
             return ac
@@ -478,16 +492,19 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     val currentDamage: String
         get() = when (currentWeapon) {
-            ActiveWeapon.LANGBOGEN -> "1W8 + $dexMod Stich (Gegner -3m Tempo)"
-            ActiveWeapon.KURZSCHWERT_SCHILD -> "1W6 + $dexMod Stich (Vorteil auf nächsten Angriff)"
-            ActiveWeapon.SHILLELAGH_SCHILD -> "1W8 + $wisMod Wucht (Umstoßen: ST-Save 12)"
+            ActiveWeapon.LANGBOGEN -> "1W8 + $dexMod Stich (Verlangsamen: -3m Tempo)"
+            ActiveWeapon.KURZSCHWERT_SCHILD -> "1W6 + $dexMod Stich (Ärgern: Vorteil auf nächsten Angriff)"
+            ActiveWeapon.SHILLELAGH_SCHILD -> {
+                val die = if (isUsingTwoHanded) "1W10" else "1W8"
+                "$die + $wisMod Wucht (Umwerfen: KON-Save SG 12)"
+            }
             ActiveWeapon.KRIEGSHAMMER_PAKT -> {
                 val die = if (isUsingTwoHanded) "1W10" else "1W8"
-                "$die + $chaMod Wucht (Vielseitig)"
+                "$die + $chaMod Wucht (Stoß: bis zu 3m wegstoßen)"
             }
             ActiveWeapon.SPEER_PAKT -> {
                 val die = if (isUsingTwoHanded) "1W8" else "1W6"
-                "$die + $chaMod Stich (Vielseitig)"
+                "$die + $chaMod Stich (Schwächen: Gegner hat Nachteil auf nächsten Angriff)"
             }
         }
 
