@@ -112,6 +112,9 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         val spellId = trait.grantedSpellId
                         if (spellId == null) return@filter false
                         
+                        // Ignoriere die alten "Amulett"-Traits, da diese nun unten dynamisch geladen werden
+                        if (spellId.equals("Wunden heilen", ignoreCase = true) || spellId.equals("Heilendes Wort", ignoreCase = true)) return@filter false
+
                         viewModel.allSpells.any { spell -> 
                             spell.name.equals(spellId, ignoreCase = true)
                         }
