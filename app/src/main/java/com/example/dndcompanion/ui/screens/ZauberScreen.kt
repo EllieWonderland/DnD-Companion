@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+import androidx.compose.ui.text.style.TextAlign
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.ui.viewmodel.Spell
 import androidx.compose.foundation.clickable
@@ -55,29 +56,28 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             ) {
                 // Zauberwerte anzeigen
                 Card(
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(0.6f),
                     colors = CardDefaults.cardColors(containerColor = PergamentDunkel)
                 ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        Text("Z-Angriff: +${viewModel.spellAttackBonus}", color = TintenSchwarz, fontWeight = FontWeight.Bold)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text("Z-RW DC: ${viewModel.spellSaveDc}", color = TintenSchwarz, fontWeight = FontWeight.Bold)
+                    Row(modifier = Modifier.padding(8.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                        Text("Z-Angriff: +${viewModel.spellAttackBonus}", color = TintenSchwarz, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                        Text("Z-RW DC: ${viewModel.spellSaveDc}", color = TintenSchwarz, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                     }
                 }
-                
-                // Rasten-Buttons
-                Column(
-                    modifier = Modifier.width(IntrinsicSize.Max),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                                // Rasten-Buttons
+                Row(
+                    modifier = Modifier.weight(0.4f),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Button(
                         onClick = { showShortRestDialog = true },
                         enabled = viewModel.hitDice > 0,
                         colors = ButtonDefaults.buttonColors(containerColor = Bronze),
-                        modifier = Modifier.fillMaxWidth().height(48.dp),
-                        contentPadding = PaddingValues(0.dp)
+                        modifier = Modifier.weight(1f).height(56.dp),
+                        contentPadding = PaddingValues(0.dp),
+                        shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("Kurze Rast", fontSize = 16.sp)
+                        Text("Kurze\nRast", fontSize = 13.sp, lineHeight = 14.sp, textAlign = TextAlign.Center)
                     }
                     Button(
                         onClick = { 
@@ -85,10 +85,11 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             if (!viewModel.showRestWarningDialog) showLongRestDialog = true
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
-                        modifier = Modifier.fillMaxWidth().height(48.dp),
-                        contentPadding = PaddingValues(0.dp)
+                        modifier = Modifier.weight(1f).height(56.dp),
+                        contentPadding = PaddingValues(0.dp),
+                        shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("Lange Rast", fontSize = 16.sp)
+                        Text("Lange\nRast", fontSize = 13.sp, lineHeight = 14.sp, textAlign = TextAlign.Center)
                     }
                 }
             }

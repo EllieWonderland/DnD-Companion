@@ -214,7 +214,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     var showLevelUpNotification by mutableStateOf(false)
         private set
-            var snackbarMessage = mutableStateOf<String?>(null)
+    var snackbarMessage = mutableStateOf<String?>(null)
     
     var isUsingTwoHanded by mutableStateOf(prefs.getBoolean("isUsingTwoHanded", false))
         private set
@@ -233,6 +233,47 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         prefs.edit { putBoolean("isMageArmorActive", isMageArmorActive) }
     }
 
+    var isShieldEquipped by mutableStateOf(prefs.getBoolean("isShieldEquipped", false))
+        private set
+
+    fun toggleShield(active: Boolean) {
+        isShieldEquipped = active
+        prefs.edit { putBoolean("isShieldEquipped", isShieldEquipped) }
+    }
+
+    val hasShieldInInventory: Boolean
+        get() = customLoot.any { it.name.contains("Schild", ignoreCase = true) }
+
+    val availableWeapons: List<String>
+        get() {
+            val list = mutableListOf<String>()
+            customLoot.forEach { item ->
+                if (item.category == "Rüstung & Waffen" && !item.name.contains("Rüstung", ignoreCase = true) && !item.name.contains("Schild", ignoreCase = true)) {
+                    list.add(item.name)
+                }
+            }
+            // Standardwaffen hinzufügen, falls sie im Inventar sind (Migration/Fallback)
+            return list.distinct()
+        }
+
+    var equippedWeaponName by mutableStateOf(prefs.getString("equippedWeaponName", null) ?: "Keine Waffe")
+        private set
+
+    fun equipWeaponByName(name: String) {
+        equippedWeaponName = name
+        prefs.edit { putString("equippedWeaponName", name) }
+        
+        // Sync with enum for logic
+        val weaponStr = name.lowercase()
+        currentWeapon = when {
+            weaponStr.contains("bogen") -> ActiveWeapon.LANGBOGEN
+            weaponStr.contains("schwert") -> ActiveWeapon.KURZSCHWERT_SCHILD
+            weaponStr.contains("hammer") -> ActiveWeapon.KRIEGSHAMMER_PAKT
+            weaponStr.contains("speer") -> ActiveWeapon.SPEER_PAKT
+            weaponStr.contains("shillelagh") -> ActiveWeapon.SHILLELAGH_SCHILD
+            else -> ActiveWeapon.KURZSCHWERT_SCHILD // Default fallback
+        }
+    }
     fun addExperience(amount: Int) {
         currentEP += amount
         prefs.edit { putInt("currentEP", currentEP) }
@@ -476,6 +517,18 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         prefs.edit { putBoolean("heroicInspiration_${activeCharacterId}", active) }
     }
 
+    fun castGoodberry() {
+        if (spellSlotsLevel1 > 0) {
+            spellSlotsLevel1--
+            goodberries += 10
+            prefs.edit { 
+                putInt("spellSlotsLevel1", spellSlotsLevel1)
+                putInt("goodberries", goodberries)
+            }
+            snackbarMessage.value = "Gute Beeren gewirkt (+10 Beeren)"
+        }
+    }
+
     fun getWeaponName(index: Int): String {
         return prefs.getString("weaponName_$index", null) ?: when {
             characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER -> {
@@ -541,40 +594,38 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         currentWeapon = weapon
         prefs.edit { putString("currentWeapon", weapon.name) }
     }
-
     val currentArmorClass: Int
         get() {
-            var ac = when (currentWeapon) {
-                ActiveWeapon.LANGBOGEN -> 10 + dexMod // Base 10 + Dex (unarmored)
-                ActiveWeapon.KURZSCHWERT_SCHILD -> if (isUsingTwoHanded) 10 + dexMod else 10 + dexMod + 2
-                ActiveWeapon.SHILLELAGH_SCHILD -> if (isUsingTwoHanded) 10 + dexMod else 10 + dexMod + 2
-                ActiveWeapon.KRIEGSHAMMER_PAKT -> 10 + dexMod
-                ActiveWeapon.SPEER_PAKT -> 10 + dexMod
-            }
+            // Grund-RK
+            var baseAc = if (isMageArmorActive) 13 else 10
             
-            // Special case for Delat (Warlock/Zwerg) requested AC 12 base
-            if (activeCharacterId == "Delat" && !isMageArmorActive) {
-                // If Delat has armor in inventory, it might increase this, but user requested 12.
-                // 10 + Dex(2) = 12. So base 10 + dexMod is correct.
-            }
-
-            // Apply armor from inventory
-            if (customLoot.any { it.name.contains("Lederrüstung", ignoreCase = true) }) {
-                ac += 1 // Leather is 11 + Dex, so +1 over base 10.
+            // Rüstung aus Inventar (die höchste zählt)
+            var armorBonus = 0
+            if (customLoot.any { it.name.contains("Plattenpanzer", ignoreCase = true) }) {
+                baseAc = 18 // Heavy (no Dex)
+            } else if (customLoot.any { it.name.contains("Kettenpanzer", ignoreCase = true) }) {
+                baseAc = 16 // Heavy (no Dex)
+            } else if (customLoot.any { it.name.contains("Brustpanzer", ignoreCase = true) }) {
+                baseAc = 14 // Medium (max +2 Dex)
+                armorBonus = dexMod.coerceAtMost(2)
+            } else if (customLoot.any { it.name.contains("Schuppenpanzer", ignoreCase = true) }) {
+                baseAc = 14 // Medium (max +2 Dex)
+                armorBonus = dexMod.coerceAtMost(2)
             } else if (customLoot.any { it.name.contains("Beschlagene Lederrüstung", ignoreCase = true) }) {
-                ac += 2 // Studded is 12 + Dex, so +2 over base 10.
+                baseAc = 12 // Light (full Dex)
+                armorBonus = dexMod
+            } else if (customLoot.any { it.name.contains("Lederrüstung", ignoreCase = true) }) {
+                baseAc = 11 // Light (full Dex)
+                armorBonus = dexMod
+            } else {
+                armorBonus = dexMod
             }
 
-            if (isMageArmorActive) {
-                ac += 1 // Base 13 instead of 10, so +3 total? User said "RK +1 and Geschicklichkeit +2".
-                // Default AC is 10 + Dex. Mage Armor is 13 + Dex. 
-                // Wait, if Mage Armor is active, base becomes 13. 
-                // Current logic adds 1 to dexMod (for the +2 Dex) and then adds +1 here.
-                // 10 + (DexMod+1) + 1 = 12 + DexMod. Mage Armor should be 13 + DexMod.
-                // I will adjust to match the requested "RK +1" result if that's what user wants, 
-                // but usually Mage Armor is 13 + Dex. 
-                // User specifically said: "Magierrüstung anlegen macht RK +1 und Geschicklichkeit +2"
-                // If original RK was 12, now 13. Correct.
+            var ac = baseAc + armorBonus
+            
+            // Schild-Bonus
+            if (isShieldEquipped && !isUsingTwoHanded && hasShieldInInventory) {
+                ac += 2
             }
             
             return ac
@@ -620,6 +671,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     var huntersMarkFreeUses by mutableIntStateOf(prefs.getInt("huntersMarkFreeUses", 2))
         private set
+
 
     fun useSpellSlotLevel1() {
         if (spellSlotsLevel1 > 0) {
@@ -670,17 +722,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         if (huntersMarkFreeUses > 0) {
             huntersMarkFreeUses--
             prefs.edit { putInt("huntersMarkFreeUses", huntersMarkFreeUses) }
-        }
-    }
-
-    fun castGoodberry() {
-        if (spellSlotsLevel1 > 0) {
-            spellSlotsLevel1--
-            goodberries += 10
-            prefs.edit {
-                putInt("spellSlotsLevel1", spellSlotsLevel1)
-                putInt("goodberries", goodberries)
-            }
         }
     }
 
@@ -845,7 +886,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         val index = customLoot.indexOfFirst { it.name.equals(itemName, ignoreCase = true) }
         if (index != -1) {
             val existingItem = customLoot[index]
-            customLoot[index] = existingItem.copy(amount = existingItem.amount + 1)
+            // Falls das bestehende Item kein Gewicht hat, aber jetzt eines übergeben wird, übernehmen
+            val newWeight = if (existingItem.weight == 0.0 && weight > 0.0) weight else existingItem.weight
+            customLoot[index] = existingItem.copy(amount = existingItem.amount + 1, weight = newWeight)
         } else {
             customLoot.add(InventoryItem(itemName, 1, weight, category))
         }
@@ -1651,16 +1694,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         if (water < 0.5f || rations < 1) {
             showRestWarningDialog = true
         } else {
-            takeLongRest()
+            forceLongRest(consumeResources = true)
         }
     }
 
     fun forceLongRestWithoutResources() {
         showRestWarningDialog = false
-        takeLongRest(consumeResources = false)
+        forceLongRest(consumeResources = false)
     }
 
-    fun takeLongRest(consumeResources: Boolean = true) {
+    private fun forceLongRest(consumeResources: Boolean) {
         currentHp = maxHp
         val recoveredHitDice = (level / 2).coerceAtLeast(1)
         hitDice = (hitDice + recoveredHitDice).coerceAtMost(level)
@@ -1688,6 +1731,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             if (trait.currentUses < trait.maxUses) {
                 customTraits[index] = trait.copy(currentUses = trait.maxUses)
             }
+        }
+        
+        // Begleiter-Wiederbelebung bei langer Rast
+        if (companionIsDead) {
+            reviveCompanion()
         }
         saveTraits()
         

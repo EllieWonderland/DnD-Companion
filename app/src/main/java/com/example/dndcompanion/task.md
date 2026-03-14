@@ -225,11 +225,19 @@
     - [ ] UI zur Auswahl von Merkmalen/Talenten implementieren (gefiltert nach Klasse/Rasse).
 
 ### Stufe 12: Playtest Refinement
-- [ ] HP-Anzeige aufräumen: Doppelte Balken und Zähler entfernen <!-- id: 460_1 -->
-- [ ] Gute Beere Logik: Wirken verbraucht Slot, Essen ausgegraut bei 0 <!-- id: 460_2 -->
-- [ ] Dynamisches Waffensystem: Auswahl nur aus Inventar, automatische RK-Anpassung <!-- id: 460_3 -->
-- [ ] Schild-Logik: Checkbox für RK (+2), nur aktiv wenn Schild im Inventar <!-- id: 460_4 -->
-- [ ] Kampf-UI: "Standard-Taktik" über Loot-Buttons verschieben <!-- id: 460_5 -->
-- [ ] Zauber-UI: Werte-Karten verkleinern, Rast-Buttons vergrößern <!-- id: 460_6 -->
-- [ ] Begleiter-Refinement: Urtier-Wiederbelebung nach langer Rast <!-- id: 460_7 -->
-- [ ] Inventar-Bugcheck: Gewichte beim Katalog-Hinzufügen validieren <!-- id: 460_8 -->
+- [x] HP-Anzeige aufräumen: Doppelte Balken und Zähler entfernen <!-- id: 460_1 -->
+  *	Commit: `ui: cleanup HP display and separate temp HP`
+- [x] Gute Beere Logik: Wirken verbraucht Slot, Essen ausgegraut bei 0 <!-- id: 460_2 -->
+  *	Commit: `feat: implement Good Berry cast logic and UI states`
+- [x] Dynamisches Waffensystem: Auswahl nur aus Inventar, automatische RK-Anpassung <!-- id: 460_3 -->
+  *	Commit: `feat: implement inventory-based dynamic weapon system`
+- [x] Schild-Logik: Checkbox für RK (+2), nur aktiv wenn Schild im Inventar <!-- id: 460_4 -->
+  *	Commit: `feat: add shield logic and automatic AC adjustment`
+- [x] Kampf-UI: "Standard-Taktik" über Loot-Buttons verschieben <!-- id: 460_5 -->
+  *	Commit: `ui: move standard tactics above loot button`
+- [x] Zauber-UI: Werte-Karten verkleinern, Rast-Buttons vergrößern <!-- id: 460_6 -->
+  *	Commit: `ui: optimize spell tab layout and rest buttons`
+- [x] Begleiter-Refinement: Urtier-Wiederbelebung nach langer Rast <!-- id: 460_7 -->
+  *	Commit: `feat: automatic companion revival after long rest`
+- [x] Inventar-Bugcheck: Gewichte beim Katalog-Hinzufügen validieren <!-- id: 460_8 -->
+  *	Commit: `fix: ensure weights are correctly transferred from catalog`

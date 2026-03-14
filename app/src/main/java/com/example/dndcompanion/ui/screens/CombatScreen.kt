@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.material3.*
@@ -99,7 +100,8 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    // Animierte Progress-Wer                Column(modifier = Modifier.padding(16.dp)) {
+                    // Animierte Progress-Werte
+                    Column {
                     val hpProgress by animateFloatAsState(
                         targetValue = if (viewModel.maxHp > 0) viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() else 0f,
                         animationSpec = tween(durationMillis = 500),
@@ -115,29 +117,17 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     }
                     
                     Spacer(modifier = Modifier.height(8.dp))
-
                     LinearProgressIndicator(
                         progress = { hpProgress },
                         modifier = Modifier.fillMaxWidth().height(16.dp),
-                        color = if (viewModel.currentHp > (viewModel.maxHp / 4)) accentColor else OchsenblutRot,
+                        color = if (viewModel.currentHp > (viewModel.maxHp / 4)) Waldgruen else OchsenblutRot,
                         trackColor = PergamentHell
                     )
 
-                    
                     val tempHpProgress by animateFloatAsState(
                         targetValue = if (viewModel.tempHp > 0) (viewModel.tempHp.toFloat() / 12f).coerceAtMost(1f) else 0f,
                         animationSpec = tween(durationMillis = 500),
                         label = "Temp HP Animation"
-                    )
-
-                    // HP Bar
-                    LinearProgressIndicator(
-                        progress = { hpProgress },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(14.dp),
-                        color = if (viewModel.currentHp > 10) Waldgruen else OchsenblutRot,
-                        trackColor = PergamentDunkel
                     )
 
                     // Temp HP Bar (wenn vorhanden)
@@ -208,6 +198,8 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             }
 
             // RK und EP nebeneinander
+            }
+
             var showEpDialog by remember { mutableStateOf(false) }
             var epInput by remember { mutableStateOf("") }
 
@@ -337,52 +329,43 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             Spacer(modifier = Modifier.height(8.dp))
 
             var showWeaponEditDialog by remember { mutableStateOf<Int?>(null) }
-            
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                val weaponNames = if (isRanger) {
-                    listOf(
-                        viewModel.getWeaponName(0),
-                        viewModel.getWeaponName(1),
-                        viewModel.getWeaponName(2)
-                    )
-                } else {
-                    listOf(
-                        viewModel.getWeaponName(0),
-                        viewModel.getWeaponName(1)
-                    )
-                }
-
-                weaponNames.forEachIndexed { index, name ->
-                    val weapon = when(index) {
-                        0 -> if (isRanger) ActiveWeapon.LANGBOGEN else ActiveWeapon.KRIEGSHAMMER_PAKT
-                        1 -> if (isRanger) ActiveWeapon.KURZSCHWERT_SCHILD else ActiveWeapon.SPEER_PAKT
-                        else -> ActiveWeapon.SHILLELAGH_SCHILD
-                    }
-                    
-                    Box(modifier = Modifier.weight(1f)) {
+               if (viewModel.availableWeapons.isEmpty()) {
+                Text("Keine Waffen im Rucksack gefunden. Füge Waffen im Rucksack-Tab hinzu.", style = MaterialTheme.typography.bodySmall, color = TintenBraun, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, modifier = Modifier.padding(8.dp))
+            } else {
+                // Horizontale scrollbare Liste für Waffen
+                Row(
+                    modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    viewModel.availableWeapons.forEach { weaponName ->
                         WeaponButton(
-                            title = name,
-                            isSelected = viewModel.currentWeapon == weapon,
+                            title = weaponName,
+                            isSelected = viewModel.equippedWeaponName == weaponName,
                             accentColor = accentColor,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.width(130.dp)
                         ) {
-                            viewModel.equipWeapon(weapon)
-                        }
-                        
-                        // Edit Icon Button small on top right
-                        IconButton(
-                            onClick = { showWeaponEditDialog = index },
-                            modifier = Modifier.align(Alignment.TopEnd).size(24.dp).padding(4.dp)
-                        ) {
-                            Icon(Icons.Default.Edit, contentDescription = "Edit", tint = if (viewModel.currentWeapon == weapon) Color.White else accentColor, modifier = Modifier.size(12.dp))
+                            viewModel.equipWeaponByName(weaponName)
                         }
                     }
                 }
             }
 
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Schild-Logik Checkbox
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = viewModel.isShieldEquipped,
+                    onCheckedChange = { viewModel.toggleShield(it) },
+                    enabled = viewModel.hasShieldInInventory,
+                    colors = CheckboxDefaults.colors(checkedColor = accentColor)
+                )
+                Text(
+                    "Schild anlegen (+2 RK)", 
+                    style = MaterialTheme.typography.bodyMedium, 
+                    color = if (viewModel.hasShieldInInventory) TintenSchwarz else EisenGrau
+                )
+            }
             if (showWeaponEditDialog != null) {
                 val index = showWeaponEditDialog!!
                 val currentName = viewModel.getWeaponName(index).replace("\n", " ")
@@ -424,7 +407,8 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         onCheckedChange = { viewModel.toggleTwoHanded(it) },
                         colors = CheckboxDefaults.colors(checkedColor = accentColor)
                     )
-                    Text("Zweihändig anlegen (Entfernt Schild-Bonus)", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                    val hint = if (viewModel.isShieldEquipped) " (Deaktiviert Schild-Bonus)" else ""
+                    Text("Zweihändig führen$hint", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                 }
             }
 
@@ -528,26 +512,25 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                                 Button(onClick = { viewModel.changeTotalArrows(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("+ Aufnehmen", fontSize = 16.sp, fontFamily = Almendra) }
                             }
                         }
+                        // Loot-Button
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Button(
+                            onClick = onNavigateToRucksack,
+                            modifier = Modifier.fillMaxWidth().height(60.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Bronze),
+                            shape = RoundedCornerShape(12.dp)
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.icon_geld),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(32.dp)
+                                )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Text("Loot eintragen", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                            }
+                        }
                     }
-                }
-            }
-
-            // Loot-Button
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(
-                onClick = onNavigateToRucksack,
-                modifier = Modifier.fillMaxWidth().height(64.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Bronze),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        painter = painterResource(id = R.drawable.icon_geld),
-                        contentDescription = null,
-                        modifier = Modifier.size(32.dp)
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
-                    Text("Loot eintragen", style = MaterialTheme.typography.titleMedium, color = Color.White)
                 }
             }
 
