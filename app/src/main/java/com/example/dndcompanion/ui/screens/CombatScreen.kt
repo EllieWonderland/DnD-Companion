@@ -395,9 +395,14 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                 )
             }
 
-            val isVersatile = viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT || 
-                            viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT ||
-                            viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD
+            val equippedName = viewModel.equippedWeaponName ?: ""
+            val isVersatile = equippedName.contains("Kriegshammer", ignoreCase = true) ||
+                              equippedName.contains("Speer", ignoreCase = true) ||
+                              equippedName.contains("Shillelagh", ignoreCase = true) ||
+                              equippedName.contains("Kampfstab", ignoreCase = true) ||
+                              equippedName.contains("Langschwert", ignoreCase = true) ||
+                              equippedName.contains("Streitaxt", ignoreCase = true) ||
+                              equippedName.contains("Dreizack", ignoreCase = true)
             
             if (isVersatile) {
                 Spacer(modifier = Modifier.height(8.dp))
