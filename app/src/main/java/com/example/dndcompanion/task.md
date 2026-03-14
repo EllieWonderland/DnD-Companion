@@ -175,6 +175,7 @@
 - [ ] Metrik-Rundung: Alle Entfernungen auf 0,5m runden (keine Kommazahlen wie ,24)
   *Notiz: Entfernungsangaben auf 0,5m runden.*
 ## Bugfixes
+- [ ] **Freie Zauber Filter:** "Wunden heilen" (bzw. "Heilendes Wort") wird bei den kostenlosen Zaubern gelistet, obwohl es im Zauberbuch nicht ausgerüstet/vorbereitet ist. Die Verknüpfung Gegenstand <-> Zaubertab prüfen.
 - [x] **Chatbot-Identität:** Der Chatbot nennt den Charakter manchmal noch "Athania", auch wenn Delat aktiv ist.
 - [x] **Temporäre HP Button:** Der Zauber/das Merkmal "Unholde Vitalität" (False Life) für Delat sollte einen direkt nutzbaren Button haben, um die 12 Temp HP (oder 1W8+4 nach 2024er Regeln) schnell zu erneuern.
 - [x] **Warlock Pakt-Logik vs. G1 Slots:** Warlocks haben keine G1 Slots, aber Delat hat Zauber aus Talente (Segnen, Nebelschritt, Magierrüstung), die 1/LR ohne Slot gewirkt werden können. Diese fehlen im Tracking.
