@@ -182,15 +182,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     private var prefs = application.getSharedPreferences("AthaniaSaveGame", Context.MODE_PRIVATE)
     private val gson = Gson()
 
-    init {
-        loadGlobalSpellbook()
-        loadGlobalFeatures()
-        loadEquipment()
-        listenToQuests()
-        listenToSharedLoot()
-        listenToPublicNotes()
-    }
-
     // --- BASISWERTE ---
     // EP Table D&D 5e:
     private val epThresholds = listOf(
