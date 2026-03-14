@@ -51,33 +51,37 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             Spacer(modifier = Modifier.height(8.dp)) // Etwas weniger Abstand hier
 
             Row(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
+                modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min).padding(bottom = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 // Zauberwerte anzeigen
                 Card(
-                    modifier = Modifier.weight(0.6f),
+                    modifier = Modifier.weight(0.5f),
                     colors = CardDefaults.cardColors(containerColor = PergamentDunkel)
                 ) {
-                    Row(modifier = Modifier.padding(8.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                        Text("Z-Angriff: +${viewModel.spellAttackBonus}", color = TintenSchwarz, fontWeight = FontWeight.Bold, fontSize = 13.sp)
-                        Text("Z-RW DC: ${viewModel.spellSaveDc}", color = TintenSchwarz, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                    Column(
+                        modifier = Modifier.padding(12.dp).fillMaxHeight(),
+                        verticalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Text("Z-Angriff: +${viewModel.spellAttackBonus}", color = TintenSchwarz, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        Text("Z-Mod: +${viewModel.spellModifier}", color = TintenSchwarz, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        Text("Z-RW DC: ${viewModel.spellSaveDc}", color = TintenSchwarz, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                     }
                 }
-                                // Rasten-Buttons
+                // Rasten-Buttons
                 Row(
-                    modifier = Modifier.weight(0.4f),
+                    modifier = Modifier.weight(0.5f),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Button(
                         onClick = { showShortRestDialog = true },
                         enabled = viewModel.hitDice > 0,
                         colors = ButtonDefaults.buttonColors(containerColor = Bronze),
-                        modifier = Modifier.weight(1f).height(56.dp),
+                        modifier = Modifier.weight(1f).fillMaxHeight(),
                         contentPadding = PaddingValues(0.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("Kurze\nRast", fontSize = 13.sp, lineHeight = 14.sp, textAlign = TextAlign.Center)
+                        Text("Kurze\nRast", fontSize = 14.sp, lineHeight = 16.sp, textAlign = TextAlign.Center)
                     }
                     Button(
                         onClick = { 
@@ -85,11 +89,11 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             if (!viewModel.showRestWarningDialog) showLongRestDialog = true
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
-                        modifier = Modifier.weight(1f).height(56.dp),
+                        modifier = Modifier.weight(1f).fillMaxHeight(),
                         contentPadding = PaddingValues(0.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("Lange\nRast", fontSize = 13.sp, lineHeight = 14.sp, textAlign = TextAlign.Center)
+                        Text("Lange\nRast", fontSize = 14.sp, lineHeight = 16.sp, textAlign = TextAlign.Center)
                     }
                 }
             }
@@ -176,6 +180,24 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             ) {
                                 Text("Wirken")
                             }
+                        }
+                    }
+                    
+                    if (viewModel.allSpells.any { it.name.contains("gute beere", ignoreCase = true) && it.isPrepared }) {
+                        HorizontalDivider(color = PergamentHell)
+                        Button(
+                            onClick = { viewModel.castGoodberry() },
+                            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp),
+                            enabled = viewModel.spellSlotsLevel1 > 0,
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Waldgruen,
+                                disabledContainerColor = EisenGrau
+                            ),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Text("Gute Beere wirken", fontFamily = Almendra, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("(${viewModel.goodberries} im Inventar)", fontSize = 12.sp)
                         }
                     }
                 }

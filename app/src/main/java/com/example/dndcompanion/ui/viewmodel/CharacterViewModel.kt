@@ -488,6 +488,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     val spellAttackBonus: Int get() = if (characterData.charClass == CharacterClass.WARLOCK) proficiencyBonus + chaMod else proficiencyBonus + wisMod
     val spellSaveDc: Int get() = 8 + if (characterData.charClass == CharacterClass.WARLOCK) proficiencyBonus + chaMod else proficiencyBonus + wisMod
+    val spellModifier: Int get() = if (characterData.charClass == CharacterClass.WARLOCK) chaMod else wisMod
 
     var maxHp by mutableIntStateOf(prefs.getInt("maxHp", characterData.baseMaxHp))
         private set
