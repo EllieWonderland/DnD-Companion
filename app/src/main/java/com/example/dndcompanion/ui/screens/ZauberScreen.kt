@@ -110,8 +110,12 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                     val freeFeatures = viewModel.customTraits.filter { trait ->
                         val spellId = trait.grantedSpellId
                         if (spellId == null) return@filter false
-                        // Kostenlose Zauber werden durch das Talent permanent verfügbar
-                        viewModel.allSpells.any { it.name.equals(spellId, ignoreCase = true) }
+                        // Permanent anzeigen, AUSSER es ist ein Gegenstands-Zauber wie das Amulett ("Wunden heilen" / "Heilendes Wort")
+                        // Diese spezifischen Gegenstandszauber sollen nur angezeigt werden, wenn sie auch vorbereitet (ausgerüstet) sind.
+                        val isItemSpell = spellId == "Wunden heilen" || spellId == "Heilendes Wort"
+                        viewModel.allSpells.any { spell -> 
+                            spell.name.equals(spellId, ignoreCase = true) && (!isItemSpell || spell.isPrepared)
+                        }
                     }
                     freeFeatures.forEach { trait ->
                         Row(

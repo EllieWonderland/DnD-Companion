@@ -152,8 +152,6 @@
   *Notiz: Urtier-Stats vollständig aus JSON geladen und inklusive Attributen angezeigt.*
 - [x] Heroische Inspiration: Markierung im Kampftab hinzufügen
   *Notiz: Checkbox für heroische Inspiration hinzugefügt.*
-- [ ] Suche im Regelwerk: Sprungmarken korrigieren (genaue Positionierung)
-  *Notiz: Scroll-Logik im Regelwerk fixen.*
 - [x] Rucksack-Transfer: Gewichte korrigieren & optisches Feedback (Snackbar)
   *Notiz: Gewicht-Parsing verfeinert und Snackbar-Feedback beim Hinzufügen integriert.*
 - [x] Capy (Urtier): Tod und Wiederbelebung implementieren
@@ -241,3 +239,6 @@
   *	Commit: `feat: automatic companion revival after long rest`
 - [x] Inventar-Bugcheck: Gewichte beim Katalog-Hinzufügen validieren <!-- id: 460_8 -->
   *	Commit: `fix: ensure weights are correctly transferred from catalog`
+
+### Zukünftige Aufgaben
+- [ ] Suche im Regelwerk: Umformen der .md in JSON, um sie in Room zu nutzen
