@@ -28,9 +28,10 @@ import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.data.CharacterClass
 import com.example.dndcompanion.R
-
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Delete
 
 @Composable
 fun ProfilScreen(viewModel: CharacterViewModel) {
@@ -106,9 +107,9 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                                 painter = painterResource(id = avatarId),
                                 contentDescription = "Charakter Portrait",
                                 modifier = Modifier
-                                    .size(64.dp)
+                                    .size(150.dp)
                                     .clip(CircleShape)
-                                    .border(2.dp, accentColor, CircleShape),
+                                    .border(3.dp, accentColor, CircleShape),
                                 contentScale = ContentScale.Crop
                             )
                             Spacer(modifier = Modifier.width(12.dp))
@@ -276,7 +277,51 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                     }
                 }
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            HorizontalDivider(color = Bronze, thickness = 2.dp)
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Merkmale & Talente Section
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Merkmale & Talente", style = MaterialTheme.typography.titleMedium, color = Waldgruen)
+                IconButton(onClick = { viewModel.showFeatureSelection = true }) {
+                    Icon(Icons.Default.Add, contentDescription = "Merkmal hinzufügen", tint = Waldgruen)
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            if (viewModel.customTraits.isEmpty()) {
+                Text("Keine Merkmale gewählt.", color = TintenBraun, style = MaterialTheme.typography.bodySmall, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
+            } else {
+                viewModel.customTraits.forEachIndexed { index, trait ->
+                    PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                                Text(trait.name, fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra)
+                                IconButton(onClick = { viewModel.removeCustomTrait(index) }, modifier = Modifier.size(24.dp)) {
+                                    Icon(Icons.Default.Delete, contentDescription = "Löschen", tint = OchsenblutRot, modifier = Modifier.size(16.dp))
+                                }
+                            }
+                            Text(trait.desc, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
         }
+    }
+
+    if (viewModel.showFeatureSelection) {
+        FeatureSelectionScreen(
+            viewModel = viewModel,
+            onDismiss = { viewModel.showFeatureSelection = false }
+        )
     }
 
     if (viewModel.showLevelUpDialog) {
@@ -329,7 +374,7 @@ fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: 
                 Image(
                     painter = painterResource(id = iconRes),
                     contentDescription = "$name Icon",
-                    modifier = Modifier.size(80.dp).padding(bottom = 2.dp),
+                    modifier = Modifier.size(95.dp).padding(bottom = 2.dp),
                     contentScale = ContentScale.Fit
                 )
             }

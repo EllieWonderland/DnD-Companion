@@ -210,11 +210,24 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             
             // --- AUTOMATISIERUNGEN FÜR KLASSEN ---
             for (lvl in (oldLevel + 1)..newLevel) {
+                // Zauberplätze automatisch aktualisieren
+                spellSlotsLevel1 = getMaxSpellSlots(lvl, 1)
+                spellSlotsLevel2 = getMaxSpellSlots(lvl, 2)
+                spellSlotsLevel3 = getMaxSpellSlots(lvl, 3)
+                spellSlotsLevel4 = getMaxSpellSlots(lvl, 4)
+                spellSlotsLevel5 = getMaxSpellSlots(lvl, 5)
+                
+                prefs.edit { 
+                    putInt("spellSlotsLevel1", spellSlotsLevel1)
+                    putInt("spellSlotsLevel2", spellSlotsLevel2)
+                    putInt("spellSlotsLevel3", spellSlotsLevel3)
+                    putInt("spellSlotsLevel4", spellSlotsLevel4)
+                    putInt("spellSlotsLevel5", spellSlotsLevel5)
+                }
+
                 if (characterData.charClass == CharacterClass.RANGER) {
                     when (lvl) {
                         5 -> {
-                            spellSlotsLevel2 = 2
-                            prefs.edit { putInt("spellSlotsLevel2", spellSlotsLevel2) }
                             addCustomTrait("Zusätzlicher Angriff (Level 5)", "Du kannst zweimal angreifen, wenn du die Angriffsaktion ausführst.")
                         }
                         6 -> {
@@ -224,8 +237,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                             addCustomTrait("Außergewöhnliches Training (Level 7)", "Die Bestie kann Spurt, Rückzug, Ausweichen oder Hilfe als Bonusaktion nutzen. Ihre Angriffe können nun Wuchtschaden oder Energieschaden (Force) verursachen.")
                         }
                         9 -> {
-                            spellSlotsLevel3 = 2
-                            prefs.edit { putInt("spellSlotsLevel3", spellSlotsLevel3) }
                             addCustomTrait("Expertise 2 (Level 9)", "Wähle zwei weitere Fertigkeiten für Expertise aus dem Handbuch.")
                         }
                         10 -> {
@@ -235,27 +246,18 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 } else if (characterData.charClass == CharacterClass.WARLOCK) {
                     when (lvl) {
                         5 -> {
-                            spellSlotsLevel2 = 0 
-                            spellSlotsLevel3 = 2
-                            prefs.edit { putInt("spellSlotsLevel2", 0); putInt("spellSlotsLevel3", 2) }
                             addCustomTrait("Schauerliche Anrufung (Level 5)", "Du erlernst eine neue Anrufung. Empfehlung für Nahkämpfer: 'Dürstende Klinge' (Extra-Angriff) oder 'Schauerliches Niederstrecken'.")
                         }
                         6 -> {
                             addCustomTrait("Hellseherischer Kämpfer / Clairvoyant Combatant (Level 6)", "Du kannst eine mental verbundene Kreatur (Erwachter Geist) zu einem WIS-Rettungswurf zwingen. Fehlschlag: Sie hat Nachteil auf Angriffe gegen dich, du hast Vorteil auf Angriffe gegen sie. (1x pro Rast oder Zauberplatz).")
                         }
                         7 -> {
-                            spellSlotsLevel3 = 0
-                            spellSlotsLevel4 = 2 
-                            prefs.edit { putInt("spellSlotsLevel3", 0); putInt("spellSlotsLevel4", 2) }
                             addCustomTrait("Schauerliche Anrufung (Level 7)", "Du erlernst eine neue Anrufung (insgesamt 4).")
                         }
                         8 -> {
                             addCustomTrait("Attributswertverbesserung (Level 8)", "Wähle ein neues Talent oder erhöhe Attribute (z.B. Charisma auf 20).")
                         }
                         9 -> {
-                            spellSlotsLevel4 = 0
-                            spellSlotsLevel5 = 2
-                            prefs.edit { putInt("spellSlotsLevel4", 0); putInt("spellSlotsLevel5", 2) }
                             addCustomTrait("Schutzherrn kontaktieren (Level 9)", "Du hast 'Kontakt zu anderen Ebenen' vorbereitet. Du kannst ihn 1x pro Langer Rast kostenlos wirken und bestehst den Rettungswurf automatisch.")
                         }
                         10 -> {
@@ -310,6 +312,36 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putInt("wisdom", wisdom)
             putInt("charisma", charisma)
         }
+    }
+
+    private fun saveBaseStats() {
+        prefs.edit {
+            putInt("strength", strength)
+            putInt("dexterity", dexterity)
+            putInt("constitution", constitution)
+            putInt("intelligence", intelligence)
+            putInt("wisdom", wisdom)
+            putInt("charisma", charisma)
+            putInt("maxHp", maxHp)
+            putInt("level", level)
+        }
+    }
+
+    fun getMaxSpellSlots(lvl: Int, slotLvl: Int): Int {
+        return if (characterData.charClass == CharacterClass.RANGER) {
+            when (slotLvl) {
+                1 -> if (lvl >= 1) { if (lvl >= 5) 4 else if (lvl >= 3) 3 else 2 } else 0
+                2 -> if (lvl >= 5) { if (lvl >= 7) 3 else 2 } else 0
+                3 -> if (lvl >= 9) { if (lvl >= 11) 3 else 2 } else 0
+                4 -> if (lvl >= 13) { if (lvl >= 15) 3 else 2 } else 0
+                5 -> if (lvl >= 17) 2 else 0
+                else -> 0
+            }
+        } else if (characterData.charClass == CharacterClass.WARLOCK) {
+            val pactSlots = if (lvl >= 11) 3 else if (lvl >= 2) 2 else 1
+            val pactLevel = if (lvl >= 9) 5 else if (lvl >= 7) 4 else if (lvl >= 5) 3 else if (lvl >= 3) 2 else 1
+            if (slotLvl == pactLevel) pactSlots else 0
+        } else 0
     }
 
     val proficiencyBonus: Int get() = when(level) {
@@ -873,6 +905,33 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    // --- FEATURE SELECTION UI ---
+    var showFeatureSelection by mutableStateOf(false)
+    var lastSelectedFeature by mutableStateOf<Feature?>(null)
+
+    fun learnFeature(feature: Feature) {
+        if (customTraits.none { it.name == feature.name }) {
+            customTraits.add(TraitItem(
+                name = feature.name,
+                desc = feature.description,
+                maxUses = 0,
+                currentUses = 0
+            ))
+            lastSelectedFeature = feature
+            saveTraits()
+        }
+    }
+
+    fun dismissFeatureSelection() {
+        showFeatureSelection = false
+        lastSelectedFeature = null
+    }
+
+    fun unlearnFeature(featureName: String) {
+        customTraits.removeAll { it.name == featureName }
+        saveTraits()
+    }
+
     // --- WERTE ZURÜCKSETZEN ---
     fun resetToDefaults() {
         // Alle SharedPreferences löschen und Grundwerte gemäß characterData setzen
@@ -899,16 +958,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         freeDarknessUsed = false
         freeDruidSpellUsed = false
         water = 2.0f
-        rations = 10
-        goodberries = 0
+        rations = if (characterData.id == "Athania") 10 else 3
+        goodberries = if (characterData.id == "Athania") 10 else 1
         coinsKM = 0
-        coinsSM = 1
+        coinsSM = if (characterData.id == "Athania") 1 else 80
         coinsEM = 0
-        coinsGM = 18
+        coinsGM = if (characterData.id == "Athania") 18 else 19
         coinsPM = 0
-        totalArrows = 28
+        totalArrows = if (characterData.id == "Athania") 28 else 0
         shotArrows = 0
-        currentWeapon = ActiveWeapon.LANGBOGEN
+        currentWeapon = if (characterData.id == "Athania") ActiveWeapon.LANGBOGEN else ActiveWeapon.KRIEGSHAMMER_PAKT
         deathSaveSuccesses = 0
         deathSaveFailures = 0
         activeBeastType = BeastType.SKY
@@ -944,7 +1003,96 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         charisma = prefs.getInt("charisma", characterData.baseCharisma)
         maxHp = prefs.getInt("maxHp", characterData.baseMaxHp)
         currentHp = prefs.getInt("currentHp", maxHp)
-        tempHp = prefs.getInt("tempHp", if (characterId == "Delat") 12 else 0)
+        tempHp = prefs.getInt("${characterId}_tempHp", if (characterId == "Delat") 12 else 0)
+        
+        // --- ONE-TIME DATA SYNC / REPAIR v2 (Stand 13.03.2026 - Strict Separation) ---
+        val syncKeyV2 = "isSyncedWithStatsFiles_2026_03_13_v2"
+        val alreadySyncedV2 = prefs.getBoolean(syncKeyV2, false)
+
+        if (!alreadySyncedV2) {
+            val defaultLoot = characterData.defaultLoot
+            val defaultLootNames = defaultLoot.map { it.name }
+            val otherCharId = if (characterId == "Athania") "Delat" else "Athania"
+            val otherDefaults = CharacterRepository.getCharacter(otherCharId)
+            val otherLootNames = otherDefaults.defaultLoot.map { it.name }.filter { it !in defaultLootNames }
+            val otherTraitNames = otherDefaults.defaultTraits.map { it.name }
+
+            var lootChanged = false
+            // Add/Update default items
+            defaultLoot.forEach { default ->
+                val existing = customLoot.find { it.name == default.name }
+                if (existing == null) {
+                    customLoot.add(default)
+                    lootChanged = true
+                } else if (existing.weight != default.weight || existing.category != default.category) {
+                    val idx = customLoot.indexOf(existing)
+                    customLoot[idx] = default
+                    lootChanged = true
+                }
+            }
+            
+            // REMOVE items from the OTHER character or legacy names
+            val itemsToRemove = listOf("Köcher mit 20 Pfeilen", "Kleine Onyxstatue (Fokus)", "Flöte (alt)") + otherLootNames
+            val finalLoot = customLoot.filter { it.name !in itemsToRemove || it.name in defaultLootNames }
+            if (finalLoot.size != customLoot.size) {
+                customLoot.clear()
+                customLoot.addAll(finalLoot)
+                lootChanged = true
+            }
+            if (lootChanged) saveLoot()
+
+            var traitsChanged = false
+            val defaultTraits = characterData.defaultTraits
+            val defaultTraitNames = defaultTraits.map { it.name }
+            defaultTraits.forEach { default ->
+                val existing = customTraits.find { it.name == default.name }
+                if (existing == null) {
+                    customTraits.add(default)
+                    traitsChanged = true
+                } else if (existing.desc != default.desc || existing.maxUses != default.maxUses) {
+                    val idx = customTraits.indexOf(existing)
+                    customTraits[idx] = default
+                    traitsChanged = true
+                }
+            }
+            
+            // REMOVE traits from the OTHER character or legacy
+            val traitsToRemove = listOf("Feenfeuer", "Dunkelheit", "Wunden heilen", "Gute Beere", "Eingeweihter der Magie (Magierrüstung)", "Eingeweihter der Magie (Segnen)", "Feenberührt (Nebelschritt)", "Pakt der Klinge (alt)") + otherTraitNames
+            val finalTraits = customTraits.filter { it.name !in traitsToRemove || it.name in defaultTraitNames }
+            if (finalTraits.size != customTraits.size) {
+                customTraits.clear()
+                customTraits.addAll(finalTraits)
+                traitsChanged = true
+            }
+            if (traitsChanged) saveTraits()
+            
+            // Specialized Base Stats Correction (Force stats.md values)
+            strength = characterData.baseStrength
+            dexterity = characterData.baseDexterity
+            constitution = characterData.baseConstitution
+            intelligence = characterData.baseIntelligence
+            wisdom = characterData.baseWisdom
+            charisma = characterData.baseCharisma
+            maxHp = characterData.baseMaxHp
+            if (currentHp > maxHp) currentHp = maxHp
+
+            // Specialized Fixes
+            if (characterId == "Athania") {
+                if (totalArrows < 28) totalArrows = 28
+                if (coinsSM < 1) coinsSM = 1
+                if (coinsGM < 18) coinsGM = 18
+            }
+            if (characterId == "Delat") {
+                level = 4
+                if (coinsSM < 80) coinsSM = 80
+                if (coinsGM < 19) coinsGM = 19
+                if (tempHp < 12) tempHp = 12
+            }
+            
+            prefs.edit { putBoolean(syncKeyV2, true) }
+            saveBaseStats()
+        }
+        // --- END SYNC ---
         hitDice = prefs.getInt("hitDice", characterData.baseHitDice)
         
         deathSaveSuccesses = prefs.getInt("deathSaveSuccesses", 0)
@@ -1397,13 +1545,14 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         
         // Paktmagie-Regeneration für Hexenmeister
         if (characterData.charClass == CharacterClass.WARLOCK) {
-            if (level >= 11) spellSlotsLevel5 = 3
-            else if (level >= 9) spellSlotsLevel5 = 2
-            else if (level >= 7) spellSlotsLevel4 = 2
-            else if (level >= 5) spellSlotsLevel3 = 2
-            else spellSlotsLevel2 = 2
+            spellSlotsLevel1 = getMaxSpellSlots(level, 1)
+            spellSlotsLevel2 = getMaxSpellSlots(level, 2)
+            spellSlotsLevel3 = getMaxSpellSlots(level, 3)
+            spellSlotsLevel4 = getMaxSpellSlots(level, 4)
+            spellSlotsLevel5 = getMaxSpellSlots(level, 5)
             
             prefs.edit { 
+                putInt("spellSlotsLevel1", spellSlotsLevel1)
                 putInt("spellSlotsLevel2", spellSlotsLevel2)
                 putInt("spellSlotsLevel3", spellSlotsLevel3)
                 putInt("spellSlotsLevel4", spellSlotsLevel4)
@@ -1447,11 +1596,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         val recoveredHitDice = (level / 2).coerceAtLeast(1)
         hitDice = (hitDice + recoveredHitDice).coerceAtMost(level)
 
-        spellSlotsLevel1 = characterData.baseSpellSlotsLevel1
-        spellSlotsLevel2 = characterData.baseSpellSlotsLevel2
-        spellSlotsLevel3 = characterData.baseSpellSlotsLevel3
-        spellSlotsLevel4 = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.WARLOCK && level >= 7) 2 else 0
-        spellSlotsLevel5 = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.WARLOCK && level >= 9) 2 else 0
+        spellSlotsLevel1 = getMaxSpellSlots(level, 1)
+        spellSlotsLevel2 = getMaxSpellSlots(level, 2)
+        spellSlotsLevel3 = getMaxSpellSlots(level, 3)
+        spellSlotsLevel4 = getMaxSpellSlots(level, 4)
+        spellSlotsLevel5 = getMaxSpellSlots(level, 5)
 
         huntersMarkFreeUses = 2
         freeCureWoundsUsed = false
@@ -1605,12 +1754,14 @@ private val model25Flash = GenerativeModel(
     // --- SPELBOOK (ZAUBERBUCH) ---
     val allSpells = mutableStateListOf<Spell>()
     val globalSpellbook = mutableStateListOf<Spell>()
+    val globalFeatures = mutableStateListOf<Feature>()
 
     init {
         loadLoot()
         loadFaqs()
         loadSpells()
         loadGlobalSpellbook()
+        loadGlobalFeatures()
         loadEquipment()
         loadTraits()
     }
@@ -1640,6 +1791,45 @@ private val model25Flash = GenerativeModel(
             } catch (e: Exception) {
                 // ignore
             }
+        }
+    }
+
+    private fun loadGlobalFeatures() {
+        viewModelScope.launch {
+            try {
+                val context = getApplication<Application>()
+                val fileName = "Rules/merkmale.json"
+                val jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
+                val featureListDto: FeatureListDto = gson.fromJson(jsonString, FeatureListDto::class.java)
+                
+                globalFeatures.clear()
+                globalFeatures.addAll(featureListDto.features.map { it.toFeature() })
+            } catch (e: Exception) {
+                println("Error loading features: ${e.message}")
+            }
+        }
+    }
+
+    fun getAvailableFeatures(): List<Feature> {
+        val charClassEn = characterData.charClass.name // e.g. "RANGER"
+        val charClassDe = when(charClassEn) {
+            "RANGER" -> "Waldläufer"
+            "WARLOCK" -> "Hexenmeister"
+            else -> charClassEn
+        }
+        val charRace = characterData.race.lowercase()
+        // Simplify race (e.g. "Elf-Drow" or "Elf (Drow)" -> "elf")
+        val simpleRace = charRace.split("-", "(", " ").first()
+
+        return globalFeatures.filter { feature ->
+            val classMatch = feature.classReq.isEmpty() || feature.classReq.any { it.equals(charClassDe, ignoreCase = true) || it.equals(charClassEn, ignoreCase = true) }
+            val raceMatch = feature.raceReq.isEmpty() || feature.raceReq.any { req ->
+                val reqLow = req.lowercase()
+                charRace == reqLow || simpleRace == reqLow || charRace.startsWith(reqLow)
+            }
+            val levelMatch = level >= feature.levelReq
+            
+            classMatch && raceMatch && levelMatch
         }
     }
 
@@ -1735,16 +1925,43 @@ private val model25Flash = GenerativeModel(
                 }
                 allSpells.addAll(safeItems)
 
-                // Migration: Fehlende Standardzauber nachträglich einfügen
-                val defaultSpells = getDefaultSpells()
-                var addedNew = false
-                defaultSpells.forEach { defaultSpell ->
-                    if (allSpells.none { it.name == defaultSpell.name }) {
-                        allSpells.add(defaultSpell)
-                        addedNew = true
+                // --- ONE-TIME SPELL SYNC v2 (Stand 13.03.2026 - Strict Separation) ---
+                val syncKeyV2 = "isSyncedWithSpells_2026_03_13_v2"
+                val alreadySyncedV2 = prefs.getBoolean(syncKeyV2, false)
+
+                if (!alreadySyncedV2) {
+                    val defaultSpells = getDefaultSpells()
+                    val defaultNames = defaultSpells.map { it.name }
+                    val otherCharId = if (characterData.id == "Athania") "Delat" else "Athania"
+                    val otherSpells = if (otherCharId == "Delat") getDelatDefaultSpells() else getAthaniaDefaultSpells()
+                    val otherSpellNames = otherSpells.map { it.name }
+                    
+                    var changed = false
+                    defaultSpells.forEach { default ->
+                        val existing = allSpells.find { it.name == default.name }
+                        if (existing == null) {
+                            allSpells.add(default)
+                            changed = true
+                        } else if (existing.description != default.description || existing.level != default.level) {
+                            val idx = allSpells.indexOf(existing)
+                            allSpells[idx] = default
+                            changed = true
+                        }
                     }
+                    
+                    // REMOVE spells from the OTHER character or legacy
+                    val legacyNames = listOf("Heilendes Wort", "Gute Beere")
+                    val filtered = allSpells.filter { (it.name !in legacyNames && it.name !in otherSpellNames) || it.name in defaultNames }
+                    if (filtered.size != allSpells.size) {
+                        allSpells.clear()
+                        allSpells.addAll(filtered)
+                        changed = true
+                    }
+
+                    if (changed) saveSpells()
+                    prefs.edit { putBoolean(syncKeyV2, true) }
                 }
-                if (addedNew) saveSpells()
+                // --- END SYNC ---
 
             } catch (e: Exception) {
                 // Bei Fehlern nicht abstürzen
@@ -1762,90 +1979,27 @@ private val model25Flash = GenerativeModel(
 
     private fun getDelatDefaultSpells(): List<Spell> {
         return listOf(
-            Spell(
-                name = "Schauerlicher Strahl",
-                level = 0,
-                castingTime = "1 Aktion",
-                range = "36 m",
-                duration = "Sofort",
-                componentsV = true, componentsS = true, componentsM = false,
-                description = "Ein Strahl knisternder Energie schießt auf eine Kreatur zu. Bei einem Treffer fügt er 1d10 Kraftschaden zu.",
-                isPrepared = true
-            ),
-            Spell(
-                name = "Totenläuten",
-                level = 0,
-                castingTime = "1 Aktion",
-                range = "18 m",
-                duration = "Sofort",
-                componentsV = true, componentsS = true, componentsM = false,
-                description = "Du zeigst auf eine Kreatur. Sie muss einen WIS RW bestehen oder nimmt 1W8 Nekrotischen Schaden (1W12 falls keine vollen HP mehr).",
-                isPrepared = true
-            ),
-            Spell(
-                name = "Dissonantes Flüstern",
-                level = 1,
-                castingTime = "1 Aktion",
-                range = "18 m",
-                duration = "Sofort",
-                componentsV = true, componentsS = false, componentsM = false,
-                description = "Eine Kreatur muss einen WIS RW bestehen. Bei Fehlschlag 3W6 psychischer Schaden und die Kreatur muss ihre Reaktion nutzen, um wegzulaufen. (Immer vorbereitet).",
-                isPrepared = true
-            ),
-            Spell(
-                name = "Macht der Vorstellungskraft",
-                level = 2,
-                castingTime = "1 Aktion",
-                range = "18 m",
-                duration = "Konzentration, 1 Min.",
-                componentsV = true, componentsS = true, componentsM = true,
-                materialCost = "Ein Stück Schafswolle",
-                description = "Du erzeugst eine illusion im Verstand einer Kreatur (INT RW). Nimmt 1W6 psychischen Schaden pro Zug und behandelt die Illusion als real. (Immer vorbereitet)",
-                isPrepared = true
-            ),
-            Spell(
-                name = "Falsches Leben",
-                level = 1,
-                castingTime = "1 Aktion",
-                range = "Selbst",
-                duration = "1 Stunde",
-                componentsV = true, componentsS = true, componentsM = true,
-                materialCost = "Ein kleines Stück gepökeltes Fleisch",
-                description = "Du verleihst dir selbst eine nekromantische Nachahmung von Leben. Du erhältst 2d4 + 4 temporäre Trefferpunkte (PHB 2024).",
-                isPrepared = true
-            ),
-            Spell(
-                name = "Magierrüstung",
-                level = 1,
-                castingTime = "1 Aktion",
-                range = "Berührung",
-                duration = "8 Stunden",
-                componentsV = true, componentsS = true, componentsM = true,
-                materialCost = "Ein Stück Leder",
-                description = "Du berührst eine Kreatur, die keine Rüstung trägt. Ihre RK wird zu 13 + DEX-Mod. (Talent: Magier-Initiat).",
-                isPrepared = true
-            ),
-            Spell(
-                name = "Segnen",
-                level = 1,
-                castingTime = "1 Aktion",
-                range = "9 m",
-                duration = "Konzentration, 1 Min.",
-                componentsV = true, componentsS = true, componentsM = true,
-                materialCost = "Ein Spritzer Weihwasser",
-                description = "Bis zu drei Kreaturen addieren 1W4 auf Angriffs- und Rettungswürfe. (Talent: Magier-Initiat).",
-                isPrepared = true
-            ),
-            Spell(
-                name = "Nebelschritt",
-                level = 2,
-                castingTime = "1 Bonusaktion",
-                range = "9 m",
-                duration = "Sofort",
-                componentsS = true,
-                description = "Du wirst kurzzeitig von silbernem Nebel umhüllt und teleportierst dich an einen Ort in Reichweite. (Talent: Feenberührt).",
-                isPrepared = true
-            )
+            Spell(name = "Schauerlicher Strahl", level = 0, castingTime = "1 Aktion", range = "36 m", duration = "Sofort", componentsV = true, componentsS = true, description = "1d10 Kraftschaden.", isPrepared = true),
+            Spell(name = "Totenläuten", level = 0, castingTime = "1 Aktion", range = "18 m", duration = "Sofort", componentsV = true, componentsS = true, description = "1W8/1W12 Nekrotisch (WIS RW).", isPrepared = true),
+            Spell(name = "Einfache Illusion", level = 0, castingTime = "1 Aktion", range = "9 m", duration = "1 Min.", componentsV = true, componentsS = true, componentsM = true, description = "Erzeugt ein Bild oder Geräusch.", isPrepared = true),
+            Spell(name = "Donnerschlag", level = 0, castingTime = "1 Aktion", range = "Selbst", duration = "Sofort", componentsV = true, description = "1W6 Donnerschaden (KON RW).", isPrepared = true),
+            Spell(name = "Paktwaffe", level = 0, castingTime = "1 Bonusaktion", range = "Selbst", duration = "Bis zur Entlassung", description = "Beschwört eine Paktwaffe.", isPrepared = true),
+            Spell(name = "Magierhand", level = 0, castingTime = "1 Aktion", range = "9 m", duration = "1 Min.", componentsV = true, componentsS = true, description = "Eine schwebende Spektralhand.", isPrepared = true),
+            
+            Spell(name = "Verwünschen", level = 1, castingTime = "1 Bonusaktion", range = "27 m", duration = "1 Std.", componentsV = true, componentsS = true, componentsM = true, description = "Extra 1W6 Schaden bei Treffern.", isPrepared = true),
+            Spell(name = "Magie Entdecken", level = 1, castingTime = "1 Aktion (Ritual)", range = "Selbst", duration = "Konzentration, 10 Min.", componentsV = true, componentsS = true, description = "Spürt Magie in 9m.", isPrepared = true),
+            Spell(name = "Falsches Leben", level = 1, castingTime = "1 Aktion", range = "Selbst", duration = "1 Std.", componentsV = true, componentsS = true, componentsM = true, description = "2W4 + 4 temporäre HP.", isPrepared = true),
+            Spell(name = "Magierrüstung", level = 1, castingTime = "1 Aktion", range = "Berührung", duration = "8 Std.", componentsV = true, componentsS = true, componentsM = true, description = "RK wird 13 + GES.", isPrepared = true),
+            Spell(name = "Dissonantes Flüstern", level = 1, castingTime = "1 Aktion", range = "18 m", duration = "Sofort", componentsV = true, description = "3W6 Psychisch + Flucht (WIS RW).", isPrepared = true),
+            Spell(name = "Tashas fürchterlicher Lachanfall", level = 1, castingTime = "1 Aktion", range = "9 m", duration = "Konzentration, 1 Min.", componentsV = true, componentsS = true, componentsM = true, description = "Ziel bricht in Lachen aus (WEI RW).", isPrepared = true),
+            Spell(name = "Segnen", level = 1, castingTime = "1 Aktion", range = "9 m", duration = "Konzentration, 1 Min.", componentsV = true, componentsS = true, componentsM = true, description = "+1W4 auf Angriffs/Rettungswürfe.", isPrepared = true),
+
+            Spell(name = "Gedanken Wahrnehmen", level = 2, castingTime = "1 Aktion", range = "Selbst", duration = "Konzentration, 1 Min.", componentsV = true, componentsS = true, componentsM = true, description = "Liest Oberflächengedanken.", isPrepared = true),
+            Spell(name = "Macht der Vorstellungskraft", level = 2, castingTime = "1 Aktion", range = "18 m", duration = "Konzentration, 1 Min.", componentsV = true, componentsS = true, componentsM = true, description = "Erschafft eine mentale Illusion (INT RW).", isPrepared = true),
+            Spell(name = "Nebelschritt", level = 2, castingTime = "1 Bonusaktion", range = "9 m", duration = "Sofort", componentsV = false, componentsS = true, description = "Teleportation.", isPrepared = true),
+            Spell(name = "Unsichtbarkeit", level = 2, castingTime = "1 Aktion", range = "Berührung", duration = "Konzentration, 1 Std.", componentsV = true, componentsS = true, componentsM = true, description = "Ziel wird unsichtbar.", isPrepared = true),
+            Spell(name = "Einflüsterung", level = 2, castingTime = "1 Aktion", range = "9 m", duration = "Konzentration, 8 Std.", componentsV = true, componentsM = true, description = "Gibt einer Kreatur einen Befehl (WEI RW).", isPrepared = true),
+            Spell(name = "Spiegelbilder", level = 2, castingTime = "1 Aktion", range = "Selbst", duration = "1 Std.", componentsV = true, componentsS = true, description = "Erschafft 3 Abbilder.", isPrepared = true)
         )
     }
 
@@ -1870,58 +2024,19 @@ private val model25Flash = GenerativeModel(
 
     private fun getAthaniaDefaultSpells(): List<Spell> {
         return listOf(
-            Spell(
-                name = "Shillelagh",
-                level = 0,
-                castingTime = "1 Bonusaktion",
-                range = "Berührung",
-                duration = "1 Minute",
-                componentsV = true, componentsS = true, componentsM = true,
-                materialCost = "Ein Knüppel oder Kampfstab",
-                description = "Der Knüppel oder Kampfstab, den du hältst, ist von der Macht der Natur erfüllt. Für die Wirkungsdauer kannst du deinen Zauber-Attributsmodifikator anstelle deines Stärke-Modifikators für Angriffs- und Schadenswürfe mit dieser Waffe verwenden. Die Waffe verursacht nun d8 Schaden.",
-                isPrepared = true
-            ),
-            Spell(
-                name = "Zeichen des Jägers",
-                level = 1,
-                castingTime = "1 Bonusaktion",
-                range = "27 m",
-                duration = "Konzentration, bis zu 1 Std.",
-                componentsV = true, componentsS = false, componentsM = false,
-                description = "Du wählst eine Kreatur, die du in Reichweite sehen kannst, als deine Beute aus. Bis der Zauber endet, fügst du dem Ziel jedes Mal, wenn du es mit einem Waffenangriff triffst, zusätzlich 1d6 Kraftschaden zu. Vorteil auf Überleben (Fährtenlesen).",
-                isPrepared = true
-            ),
-            Spell(
-                name = "Gute Beere",
-                level = 1,
-                castingTime = "1 Aktion",
-                range = "Berührung",
-                duration = "Sofort",
-                componentsV = true, componentsS = true, componentsM = true,
-                materialCost = "Ein Zweig eines Mistelzweigs",
-                description = "In deiner Hand erscheinen bis zu zehn Beeren. Eine Kreatur kann eine Aktion ausführen, um eine Beere zu essen. Die Beere heilt 1 Trefferpunkt und spendet genug Nahrung für einen ganzen Tag (PHB 2024). Verliert nach 24 Std. ihre Wirkung.",
-                isPrepared = true
-            ),
-            Spell(
-                name = "Wunden heilen",
-                level = 1,
-                castingTime = "1 Aktion",
-                range = "Berührung",
-                duration = "Sofort",
-                componentsV = true, componentsS = true, componentsM = false,
-                description = "Eine Kreatur, die du berührst, erhält Trefferpunkte in Höhe von 2d8 + deinem Zauber-Attributsmodifikator (PHB 2024) zurück.",
-                isPrepared = true
-            ),
-            Spell(
-                name = "Heilendes Wort",
-                level = 1,
-                castingTime = "1 Bonusaktion",
-                range = "18 m",
-                duration = "Sofort",
-                componentsV = true, componentsS = false, componentsM = false,
-                description = "Eine Kreatur deiner Wahl in Reichweite erhält Trefferpunkte in Höhe von 2d4 + deinem Zauber-Attributsmodifikator zurück. (PHB 2024).",
-                isPrepared = true
-            )
+            Spell(name = "Tanzende Lichter", level = 0, castingTime = "1 Aktion", range = "36 m", duration = "Konzentration, 1 Min.", description = "Erschafft 4 Lichter.", isPrepared = true),
+            Spell(name = "Göttliche Führung", level = 0, castingTime = "1 Aktion", range = "Berührung", duration = "Konzentration, 1 Min.", description = "+1W4 auf Attributswurf.", isPrepared = true),
+            Spell(name = "Shillelagh", level = 0, castingTime = "1 Bonusaktion", range = "Berührung", duration = "1 Min.", description = "Waffe nutzt WEI für Angriff/Schaden (1W8).", isPrepared = true),
+            Spell(name = "Kalte Hand", level = 0, castingTime = "1 Aktion", range = "Berührung", duration = "Sofort", description = "Nekrotischer Angriff.", isPrepared = true),
+            
+            Spell(name = "Verstricken", level = 1, castingTime = "1 Aktion", range = "27 m", duration = "Konzentration, 1 Min.", description = "Pflanzen halten Gegner fest (ST RW).", isPrepared = true),
+            Spell(name = "Wunden heilen", level = 1, castingTime = "1 Aktion", range = "Berührung", duration = "Sofort", description = "2W8 + WEI Heilung.", isPrepared = true),
+            Spell(name = "Gute Beeren", level = 1, castingTime = "1 Aktion", range = "Berührung", duration = "Sofort", description = "10 Beeren, heilen 1 TP.", isPrepared = true),
+            Spell(name = "Mit Tieren sprechen", level = 1, castingTime = "1 Aktion (Ritual)", range = "Selbst", duration = "10 Min.", description = "Kommunikation mit Tieren.", isPrepared = true),
+            Spell(name = "Zeichen des Jägers", level = 1, castingTime = "1 Bonusaktion", range = "27 m", duration = "Konzentration, 1 Std.", description = "+1W6 Kraftschaden.", isPrepared = true),
+            Spell(name = "Nebelwolke", level = 1, castingTime = "1 Aktion", range = "36 m", duration = "Konzentration, 1 Std.", description = "Erschafft Nebel.", isPrepared = true),
+            Spell(name = "Feenfeuer", level = 1, castingTime = "1 Aktion", range = "18 m", duration = "Konzentration, 1 Min.", description = "Vorteil auf Angriffe gegen Ziele (GES RW).", isPrepared = true),
+            Spell(name = "Lange Schritte", level = 1, castingTime = "1 Aktion", range = "Berührung", duration = "1 Std.", description = "+3m Bewegungsrate.", isPrepared = true)
         )
     }
 

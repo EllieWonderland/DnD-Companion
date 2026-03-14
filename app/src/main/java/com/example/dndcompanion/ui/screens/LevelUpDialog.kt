@@ -37,6 +37,14 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
     var featDesc by remember { mutableStateOf("") }
     var selectedAttribute by remember { mutableStateOf("STR") }
 
+    // Sync with catalog selection
+    LaunchedEffect(viewModel.lastSelectedFeature) {
+        viewModel.lastSelectedFeature?.let {
+            featName = it.name
+            featDesc = it.description
+        }
+    }
+
     val totalBonusA = strBonus + dexBonus + conBonus + intBonus + wisBonus + chaBonus
 
     // The attributes that are changed in the dialog
@@ -108,6 +116,13 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
                             colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = OchsenblutRot, focusedLabelColor = OchsenblutRot, focusedTextColor = TintenSchwarz, unfocusedTextColor = TintenSchwarz),
                             modifier = Modifier.fillMaxWidth().height(100.dp)
                         )
+                        Button(
+                            onClick = { viewModel.showFeatureSelection = true },
+                            colors = MetallButtonColors(),
+                            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+                        ) {
+                            Text("Aus Katalog wählen", fontFamily = Almendra)
+                        }
                         Spacer(modifier = Modifier.height(8.dp))
                         Text("Wähle ein Attribut (+1):", color = TintenSchwarz, fontWeight = FontWeight.Bold)
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {

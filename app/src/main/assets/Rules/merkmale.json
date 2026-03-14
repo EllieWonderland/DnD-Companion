@@ -1,0 +1,431 @@
+{
+    "features": [
+        {
+            "id": "trait_elf_darkvision",
+            "name": "Dunkelsicht",
+            "name_en": "Darkvision",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Elf"
+            ],
+            "level_req": 1,
+            "description": "Dunkelsicht: 18 m / 12 Felder (18 m)."
+        },
+        {
+            "id": "trait_elf_fey_ancestry",
+            "name": "Feenblut",
+            "name_en": "Fey Ancestry",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Elf"
+            ],
+            "level_req": 1,
+            "description": "Du bist im Vorteil bei Rettungswürfen gegen den Zustand Bezaubert."
+        },
+        {
+            "id": "trait_elf_keen_senses",
+            "name": "Scharfe Sinne",
+            "name_en": "Keen Senses",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Elf"
+            ],
+            "level_req": 1,
+            "description": "Du bist geübt in Motiv erkennen, Wahrnehmung oder Überleben."
+        },
+        {
+            "id": "trait_elf_trance",
+            "name": "Trance",
+            "name_en": "Trance",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Elf"
+            ],
+            "level_req": 1,
+            "description": "Du musst nicht schlafen, und Magie kann dich nicht einschläfern. Du kannst eine Lange Rast in 4 Stunden abschließen, wenn du sie in einem trancemäßigen Meditationszustand verbringst."
+        },
+        {
+            "id": "trait_elf_lineage_drow",
+            "name": "Elfen-Abstammungslinie (Drow)",
+            "name_en": "Elven Lineage (Drow)",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Elf"
+            ],
+            "level_req": 1,
+            "description": "Stufe 1: Dunkelsicht steigt auf 36 m / 24 Felder. Du kennst Tanzende Lichter. Stufe 3: Du hast Feenfeuer immer vorbereitet und kannst es 1x/Lange Rast kostenlos wirken. Stufe 5: Du hast Dunkelheit immer vorbereitet und kannst es 1x/Lange Rast kostenlos wirken."
+        },
+        {
+            "id": "trait_dwarf_darkvision",
+            "name": "Dunkelsicht",
+            "name_en": "Darkvision",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Zwerg"
+            ],
+            "level_req": 1,
+            "description": "Dunkelsicht: 36 m / 24 Felder (36 m)."
+        },
+        {
+            "id": "trait_dwarf_resilience",
+            "name": "Zwergenhafte Widerstandsfähigkeit",
+            "name_en": "Dwarven Resilience",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Zwerg"
+            ],
+            "level_req": 1,
+            "description": "Du hast Resistenz gegen Giftschaden. Du bist im Vorteil bei Rettungswürfen gegen den Zustand Vergiftet."
+        },
+        {
+            "id": "trait_dwarf_toughness",
+            "name": "Zwergenhafte Zähigkeit",
+            "name_en": "Dwarven Toughness",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Zwerg"
+            ],
+            "level_req": 1,
+            "description": "Dein Trefferpunkte-Maximum steigt um 1. Es steigt jedes Mal um weitere 1, wenn du eine Stufe aufsteigst."
+        },
+        {
+            "id": "trait_dwarf_stonecunning",
+            "name": "Gespür für Stein",
+            "name_en": "Stonecunning",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Zwerg"
+            ],
+            "level_req": 1,
+            "description": "Als Bonusaktion erhältst du für 10 Minuten Erschütterungssinn (Tremorsense) von 18 m / 12 Felder. Du musst eine Steinoberfläche berühren oder dich darauf befinden (natürlich oder bearbeitet). Nutzungen = Übungsbonus pro Langer Rast."
+        },
+        {
+            "id": "class_ranger_spellcasting",
+            "name": "Zauberwirken",
+            "name_en": "Spellcasting",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 1,
+            "description": "Du erhältst Zauberplätze der Stufen 1 und höher. Nach einer Langen Rast erhältst du alle verbrauchten Zauberplätze zurück. Zauberattribut ist Weisheit."
+        },
+        {
+            "id": "class_ranger_favored_enemy",
+            "name": "Erzfeind",
+            "name_en": "Favored Enemy",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 1,
+            "description": "Der Zauber Zeichen des Jägers ist immer vorbereitet. Du kannst ihn zweimal pro Langer Rast wirken, ohne einen Zauberplatz zu verbrauchen."
+        },
+        {
+            "id": "class_ranger_weapon_mastery",
+            "name": "Waffenmeisterschaft",
+            "name_en": "Weapon Mastery",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 1,
+            "description": "Wähle zwei Arten von Waffen aus, für die du Übung hast, um deren Meisterschafts-Eigenschaften zu nutzen. Änderbar bei einer Langen Rast."
+        },
+        {
+            "id": "class_ranger_fighting_style",
+            "name": "Kampfstil",
+            "name_en": "Fighting Style",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 2,
+            "description": "Wähle einen Kampfstil als Talent (z.B. Bogenschießen, Duellieren, Kampf mit zwei Waffen)."
+        },
+        {
+            "id": "class_ranger_deft_explorer",
+            "name": "Geschickte Erkundung",
+            "name_en": "Deft Explorer",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 2,
+            "description": "Expertise: Wähle eine Waldläufer-Fertigkeit für doppelten Übungsbonus. Du erlernst zwei zusätzliche Sprachen."
+        },
+        {
+            "id": "class_ranger_asi",
+            "name": "Attributswertverbesserung",
+            "name_en": "Ability Score Improvement",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 4,
+            "description": "Du erhältst ein Talent deiner Wahl (erneut auf Stufe 8)."
+        },
+        {
+            "id": "class_ranger_extra_attack",
+            "name": "Extra-Angriff",
+            "name_en": "Extra Attack",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 5,
+            "description": "Du kannst zweimal statt einmal angreifen, wenn du in deinem Zug die Angriffsaktion wählst."
+        },
+        {
+            "id": "class_ranger_roving",
+            "name": "Vagabund",
+            "name_en": "Roving",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 6,
+            "description": "Bewegungsrate erhöht sich um 3 m / 2 Felder (ohne Schwere Rüstung). Du erhältst eine Kletter- und Schwimmbewegungsrate in Höhe deiner Bewegungsrate."
+        },
+        {
+            "id": "class_ranger_expertise",
+            "name": "Expertise",
+            "name_en": "Expertise",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 9,
+            "description": "Wähle zwei weitere deiner Waldläufer-Fertigkeiten aus, für die dein Übungsbonus verdoppelt wird."
+        },
+        {
+            "id": "class_ranger_tireless",
+            "name": "Unermüdlich",
+            "name_en": "Tireless",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 10,
+            "description": "Als Magische Aktion kannst du dir selbst 1W8 + WIS-Mod temporäre TP geben (Nutzungen = Übungsbonus/LR). Nach einer Kurzen Rast reduziert sich Erschöpfung um 1 Stufe."
+        },
+        {
+            "id": "subclass_beast_master_primal_companion",
+            "name": "Ursprünglicher Gefährte",
+            "name_en": "Primal Companion",
+            "type": "SUBCLASS_FEATURE",
+            "category": "Herr der Tiere",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 3,
+            "description": "Rufe ein magisches Tier herbei (Land, Meer oder Himmel). Du kannst als Bonusaktion oder durch das Ersetzen eines Angriffs befehlen, anzugreifen. Ohne Befehl weicht es aus."
+        },
+        {
+            "id": "subclass_beast_master_exceptional_training",
+            "name": "Außergewöhnliches Training",
+            "name_en": "Exceptional Training",
+            "type": "SUBCLASS_FEATURE",
+            "category": "Herr der Tiere",
+            "class_req": [
+                "Waldläufer"
+            ],
+            "level_req": 7,
+            "description": "Bonusaktion: Tier kann Spurt, Rückzug, Ausweichen oder Helfen nutzen. Angriffe des Tiers gelten als magisch."
+        },
+        {
+            "id": "class_warlock_pact_magic",
+            "name": "Paktmagie",
+            "name_en": "Pact Magic",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Hexenmeister"
+            ],
+            "level_req": 1,
+            "description": "Du regenerierst alle verbrauchten Paktmagie-Zauberplätze bei Abschluss einer Kurzen oder Langen Rast. Alle Plätze haben dieselbe, skalierende Stufe. Zauberattribut: Charisma."
+        },
+        {
+            "id": "class_warlock_eldritch_invocations",
+            "name": "Schauerliche Anrufungen",
+            "name_en": "Eldritch Invocations",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Hexenmeister"
+            ],
+            "level_req": 1,
+            "description": "Du erhältst verbotenes arkanes Wissen in Form von Anrufungen, die passive Boni oder kostenlos wirkbare Zauber gewähren."
+        },
+        {
+            "id": "class_warlock_magical_cunning",
+            "name": "Magische Raffinesse",
+            "name_en": "Magical Cunning",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Hexenmeister"
+            ],
+            "level_req": 2,
+            "description": "Nach einem 1-minütigen Ritus erhältst du verbrauchte Paktmagie-Zauberplätze in Höhe der Hälfte deines Maximums (aufgerundet) zurück. 1x pro Langer Rast."
+        },
+        {
+            "id": "class_warlock_asi",
+            "name": "Attributswertverbesserung",
+            "name_en": "Ability Score Improvement",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Hexenmeister"
+            ],
+            "level_req": 4,
+            "description": "Du erhältst ein Talent deiner Wahl (erneut auf Stufe 8)."
+        },
+        {
+            "id": "class_warlock_contact_patron",
+            "name": "Schutzherrn kontaktieren",
+            "name_en": "Contact Patron",
+            "type": "CLASS_FEATURE",
+            "class_req": [
+                "Hexenmeister"
+            ],
+            "level_req": 9,
+            "description": "Du hast Kontakt zu anderen Ebenen immer vorbereitet und kannst ihn 1x pro Langer Rast kostenlos wirken, um deinen Schutzherrn zu kontaktieren. Du bestehst den Rettungswurf automatisch."
+        },
+        {
+            "id": "trait_human_resourceful",
+            "name": "Findig",
+            "name_en": "Resourceful",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Mensch"
+            ],
+            "level_req": 1,
+            "description": "Du erhältst eine Heldenhafte Inspiration, wann immer du eine Lange Rast beendest."
+        },
+        {
+            "id": "trait_human_skillful",
+            "name": "Geschickt",
+            "name_en": "Skillful",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Mensch"
+            ],
+            "level_req": 1,
+            "description": "Du erhältst Übung in einer Fertigkeit deiner Wahl."
+        },
+        {
+            "id": "trait_human_versatile",
+            "name": "Vielseitig",
+            "name_en": "Versatile",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Mensch"
+            ],
+            "level_req": 1,
+            "description": "Du erhältst ein Ursprungstalent deiner Wahl."
+        },
+        {
+            "id": "feat_magic_initiate",
+            "name": "Magie-Initiat",
+            "name_en": "Magic Initiate",
+            "type": "FEAT",
+            "category": "Origin Feat",
+            "level_req": 1,
+            "description": "Wähle Klasse (Kleriker/Druide/Magier). Erlerne 2 Zaubertricks und 1 Stufe-1-Zauber. Kann Stufe-1-Zauber 1x/Tag gratis wirken. Zauberattribut ist INT, WEI oder CHA."
+        },
+        {
+            "id": "feat_fighting_style_archery",
+            "name": "Bogenschießen",
+            "name_en": "Fighting Style: Archery",
+            "type": "FEAT",
+            "category": "Fighting Style",
+            "level_req": 1,
+            "description": "+2 auf Angriffswürfe mit Fernkampfwaffen."
+        },
+        {
+            "id": "feat_piercer",
+            "name": "Durchbohrer",
+            "name_en": "Piercer",
+            "type": "FEAT",
+            "level_req": 4,
+            "description": "+1 STR oder GES. Stichschaden-Würfel 1x/Zug neu rollen. Kritischer Treffer fügt einen extra Schadenswürfel hinzu."
+        },
+        {
+            "id": "feat_fey_touched",
+            "name": "Feenberührt",
+            "name_en": "Fey-Touched",
+            "type": "FEAT",
+            "level_req": 4,
+            "description": "+1 INT, WEI oder CHA. Erlerne Nebeltritt und einen Stufe-1 Zauber (Erkenntnismagie/Verzauberung). 1x/Tag gratis."
+        },
+        {
+            "id": "invocation_pact_of_the_blade",
+            "name": "Pakt der Klinge",
+            "name_en": "Pact of the Blade",
+            "type": "CLASS_FEATURE",
+            "category": "Eldritch Invocation",
+            "class_req": [
+                "Hexenmeister"
+            ],
+            "level_req": 1,
+            "description": "Du kannst eine Paktwaffe erschaffen oder eine magische Waffe binden. Du kannst dein Charisma für Angriffs- und Schadenswürfe nutzen."
+        },
+        {
+            "id": "invocation_fiendish_vigor",
+            "name": "Unholde Vitalität",
+            "name_en": "Fiendish Vigor",
+            "type": "CLASS_FEATURE",
+            "category": "Eldritch Invocation",
+            "class_req": [
+                "Hexenmeister"
+            ],
+            "level_req": 2,
+            "description": "Du kannst Falsches Leben auf dich selbst als Zauber der 1. Stufe wirken, ohne einen Zauberplatz oder Materialkomponenten zu verbrauchen."
+        },
+        {
+            "id": "invocation_agonizing_blast",
+            "name": "Qualvoller Strahl",
+            "name_en": "Agonizing Blast",
+            "type": "CLASS_FEATURE",
+            "category": "Eldritch Invocation",
+            "class_req": [
+                "Hexenmeister"
+            ],
+            "level_req": 2,
+            "description": "Wenn du Schauriger Strahl wirkst, addiere deinen Charisma-Modifikator zum Schaden bei jedem Treffer."
+        },
+        {
+            "id": "subclass_warlock_awakened_mind",
+            "name": "Erwachter Geist",
+            "name_en": "Awakened Mind",
+            "type": "SUBCLASS_FEATURE",
+            "category": "Auserwählter / Großer Alter",
+            "class_req": [
+                "Hexenmeister"
+            ],
+            "level_req": 3,
+            "description": "Telepathische Verbindung zu einer Kreatur in 9m. Du kannst telepathisch kommunizieren."
+        },
+        {
+            "id": "subclass_warlock_psychic_spells",
+            "name": "Psychische Zauber",
+            "name_en": "Psychic Spells",
+            "type": "SUBCLASS_FEATURE",
+            "category": "Auserwählter",
+            "class_req": [
+                "Hexenmeister"
+            ],
+            "level_req": 3,
+            "description": "Du kannst die Schadensart von Hexenmeisterzaubern in psychisch ändern. Keine Verbal- oder Gestenkomponente bei Verzauberungs- oder Illusionszaubern."
+        },
+        {
+            "id": "subclass_warlock_depth_power",
+            "name": "Macht der Tiefe",
+            "name_en": "Power of the Depths",
+            "type": "SUBCLASS_FEATURE",
+            "category": "Auserwählter",
+            "class_req": [
+                "Hexenmeister"
+            ],
+            "level_req": 3,
+            "description": "Greife einen Verbündeten mit deinem schaurigen Strahl an. Danach kannst du mit deinem schaurigen Strahl mit Vorteil angreifen. Der Verbündete erhält 1 Runde Fluch."
+        }
+    ]
+}

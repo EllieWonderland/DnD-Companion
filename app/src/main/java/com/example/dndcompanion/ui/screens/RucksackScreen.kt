@@ -155,7 +155,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                                     Image(
                                         painter = painterResource(id = R.drawable.icon_geld),
                                         contentDescription = "Geldbeutel Icon",
-                                        modifier = Modifier.size(28.dp),
+                                        modifier = Modifier.size(38.dp),
                                         contentScale = ContentScale.Fit
                                     )
                                     Spacer(modifier = Modifier.width(8.dp))
@@ -401,11 +401,11 @@ fun InventoryRow(name: String, amount: String, weight: Double? = null, extraActi
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onMinus, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.Default.Remove, contentDescription = null, tint = OchsenblutRot)
+                    Icon(Icons.Default.Remove, contentDescription = null, tint = OchsenblutRot, modifier = Modifier.size(32.dp))
                 }
                 Text(text = amount, style = GrenzeGotischSmall, modifier = Modifier.padding(horizontal = 8.dp))
                 IconButton(onClick = onPlus, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.Default.Add, contentDescription = null, tint = Waldgruen)
+                    Icon(Icons.Default.Add, contentDescription = null, tint = Waldgruen, modifier = Modifier.size(32.dp))
                 }
             }
         }

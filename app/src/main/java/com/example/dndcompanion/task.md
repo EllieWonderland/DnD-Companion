@@ -122,11 +122,17 @@
   - [x] **Dialoge:** EP-, Rasten- und Level-Up-Dialoge im Pergament-Design vereinheitlichen.
     - *Notiz für Commit:* `ui: redesign EP and rest dialogs with consistent parchment theme& accessibility`
 - [x] **Phase 7: UI Polish - Splash Screen**
-    - [x] Splash Screen Hintergrund anpassen (weg von Weiß hin zu Pergament/Thematisch).
-    - [x] Logo-Präsentation im Splash Screen optimieren.
-    - [x] Übergang vom Splash Screen zur App flüssiger gestalten (optional).
+    - [x] Integration & Refinement <!-- id: 14 -->
+    - [x] Add entry point to Character Profile <!-- id: 15 -->
+    - [x] Connect feature selection to character sheet (visibility) <!-- id: 16 -->
+    - [/] Verify UI on different screen sizes <!-- id: 17 -->
     *Notiz für Commit: Splash Screen verschönert und an das App-Thema angepasst (Pergament & Stein).*
 
+- [ ] Cleanup & Debugging <!-- id: 18 -->
+    - [/] Investigate manual trait dialog trigger issues <!-- id: 19 -->
+    - [ ] Replace manual dialog in `ZauberScreen.kt` with catalog <!-- id: 20 -->
+    - [ ] Integrated catalog into `LevelUpDialog.kt` (feat selection) <!-- id: 21 -->
+    - [ ] Verify persistence of learned features <!-- id: 22 -->
 - [x] **Phase 6: Beeren-Mechanik & Combat UI**
     - [x] `eatGoodberry()` Logik im CharacterViewModel implementieren.
     - [x] Merge-Konflikte in `ProfilScreen.kt`, `ZauberScreen.kt` und `CharacterViewModel.kt` beheben.
@@ -166,7 +172,6 @@
     - [x] UI-Fix: Scroll-Probleme und Padding im Verwalter-Dialog behoben (Spacer + 40dp).
     - [x] Logik-Fix: `loadTraits` ergänzt nun fehlende Standard-Merkmale bei bestehenden Saves.
     - [x] Sichtbarkeit: Freie Zauber aus Merkmalen erscheinen nur, wenn sie im Zauberbuch vorbereitet sind.
-
 - [x] **Waffen-Logik & Meisterschaften:**
     - [x] "Zweihändig anlegen" für alle vielseitigen Waffen (Speer, Hammer, Shillelagh) ermöglichen.
     - [x] AC-Abzug (-2), wenn eine "Schild-Waffe" zweihändig geführt wird.
@@ -176,4 +181,12 @@
 - [x] **UI-Optimierung:** 
     - [x] Button zum Hinzufügen von Zaubern im Zauberbuch fixiert am unteren Rand (immer sichtbar).
     - [x] Merkmale/Talente für Delat vervollständigt (Eingeweihter der Magie, Feenberührt) und Namen präzisiert.
+- [x] **UI-Fixes:**
+    - [x] Buttongröße für "Kriegshammer (Pakt)" in `CombatScreen.kt` prüfen und flexibel gestalten.
+    - [ ] Generelle Prüfung der Button-Flexibilität in der Kampf-Ansicht.
+- [ ] **Feature-Katalog Integration:**
+    - [ ] JSON-Struktur für Merkmale/Talente definieren und `features.json` erstellen.
+    - [ ] Daten aus Markdown-Dateien in `features.json` extrahieren (Talente, Klassenmerkmale, Volksmerkmale).
+    - [ ] `CharacterViewModel` um Ladelogik für den Feature-Katalog erweitern.
+    - [ ] UI zur Auswahl von Merkmalen/Talenten implementieren (gefiltert nach Klasse/Rasse).
 

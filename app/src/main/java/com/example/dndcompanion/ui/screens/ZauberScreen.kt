@@ -447,53 +447,12 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("Merkmale", style = MaterialTheme.typography.titleMedium, color = Waldgruen)
-                IconButton(onClick = { showAddTraitDialog = true }) {
+                IconButton(onClick = { viewModel.showFeatureSelection = true }) {
                     Icon(Icons.Default.Add, contentDescription = "Merkmal hinzufügen", tint = accentColor)
                 }
             }
             Spacer(modifier = Modifier.height(8.dp))
 
-            if (showAddTraitDialog) {
-                Card(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
-                    colors = CardDefaults.cardColors(containerColor = PergamentHell),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, accentColor)
-                ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        Text("Neues Merkmal", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        OutlinedTextField(
-                            value = newTraitName,
-                            onValueChange = { newTraitName = it },
-                            label = { Text("Name (z.B. Eingeweihter der Magie)") },
-                            modifier = Modifier.fillMaxWidth(),
-                            singleLine = true
-                        )
-                        Spacer(modifier = Modifier.height(4.dp))
-                        OutlinedTextField(
-                            value = newTraitDesc,
-                            onValueChange = { newTraitDesc = it },
-                            label = { Text("Beschreibung") },
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                            TextButton(onClick = { showAddTraitDialog = false }) { Text("Abbrechen", color = TintenBraun) }
-                            Button(
-                                onClick = {
-                                    if (newTraitName.isNotBlank()) {
-                                        viewModel.addCustomTrait(newTraitName, newTraitDesc)
-                                        newTraitName = ""
-                                        newTraitDesc = ""
-                                        showAddTraitDialog = false
-                                    }
-                                },
-                                colors = ButtonDefaults.buttonColors(containerColor = accentColor)
-                            ) { Text("Hinzufügen") }
-                        }
-                    }
-                }
-            }
             
             // Editierbare benutzerdefinierte Merkmale (alle Merkmale)
             var editingTraitIndex by remember { mutableIntStateOf(-1) }
@@ -732,7 +691,7 @@ fun SpellCard(
                         imageVector = Icons.Default.CheckCircle,
                         contentDescription = "Vorbereitet",
                         tint = Waldgruen,
-                        modifier = Modifier.size(24.dp).padding(end = 8.dp)
+                        modifier = Modifier.size(32.dp).padding(end = 4.dp)
                     )
                 }
                 if (isEditMode) {

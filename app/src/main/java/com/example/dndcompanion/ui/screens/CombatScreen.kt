@@ -1,6 +1,7 @@
 package com.example.dndcompanion.ui.screens
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,6 +30,8 @@ import com.example.dndcompanion.ui.viewmodel.ActiveWeapon
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.data.CharacterClass
+import com.example.dndcompanion.R
+import androidx.compose.ui.res.painterResource
 
 @Composable
 fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit, onNavigateToProfile: () -> Unit = {}) {
@@ -303,18 +306,17 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             Text("Waffe ausrüsten", style = MaterialTheme.typography.titleMedium, color = Waldgruen)
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Waffen-Auswahl
             Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 if (isRanger) {
-                    WeaponButton("Langbogen", viewModel.currentWeapon == ActiveWeapon.LANGBOGEN, WaldGold) { viewModel.equipWeapon(ActiveWeapon.LANGBOGEN) }
-                    WeaponButton("Kurzschwert\n& Schild", viewModel.currentWeapon == ActiveWeapon.KURZSCHWERT_SCHILD, WaldGold) { viewModel.equipWeapon(ActiveWeapon.KURZSCHWERT_SCHILD) }
-                    WeaponButton("Shillelagh\n& Schild", viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD, WaldGold) { viewModel.equipWeapon(ActiveWeapon.SHILLELAGH_SCHILD) }
+                    WeaponButton("Langbogen", viewModel.currentWeapon == ActiveWeapon.LANGBOGEN, WaldGold, Modifier.weight(1f)) { viewModel.equipWeapon(ActiveWeapon.LANGBOGEN) }
+                    WeaponButton("Kurzschwert\n& Schild", viewModel.currentWeapon == ActiveWeapon.KURZSCHWERT_SCHILD, WaldGold, Modifier.weight(1f)) { viewModel.equipWeapon(ActiveWeapon.KURZSCHWERT_SCHILD) }
+                    WeaponButton("Shillelagh\n& Schild", viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD, WaldGold, Modifier.weight(1f)) { viewModel.equipWeapon(ActiveWeapon.SHILLELAGH_SCHILD) }
                 } else {
-                    WeaponButton("Kriegshammer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.KRIEGSHAMMER_PAKT) }
-                    WeaponButton("Speer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT, HexenLila) { viewModel.equipWeapon(ActiveWeapon.SPEER_PAKT) }
+                    WeaponButton("Kriegshammer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT, HexenLila, Modifier.weight(1f)) { viewModel.equipWeapon(ActiveWeapon.KRIEGSHAMMER_PAKT) }
+                    WeaponButton("Speer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT, HexenLila, Modifier.weight(1f)) { viewModel.equipWeapon(ActiveWeapon.SPEER_PAKT) }
                 }
             }
 
@@ -442,11 +444,19 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = onNavigateToRucksack,
-                modifier = Modifier.fillMaxWidth().height(56.dp),
+                modifier = Modifier.fillMaxWidth().height(64.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Bronze),
                 shape = RoundedCornerShape(12.dp)
             ) {
-                Text("💰 Loot eintragen", style = MaterialTheme.typography.titleSmall, color = Color.White)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(id = R.drawable.icon_geld),
+                        contentDescription = null,
+                        modifier = Modifier.size(32.dp)
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Text("Loot eintragen", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -508,7 +518,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
 }
 
 @Composable
-fun WeaponButton(title: String, isSelected: Boolean, accentColor: Color, onClick: () -> Unit) {
+fun WeaponButton(title: String, isSelected: Boolean, accentColor: Color, modifier: Modifier = Modifier, onClick: () -> Unit) {
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
@@ -516,11 +526,11 @@ fun WeaponButton(title: String, isSelected: Boolean, accentColor: Color, onClick
             contentColor = if (isSelected) (if (accentColor == WaldGold) TintenSchwarz else Color.White) else TintenSchwarz
         ),
         shape = RoundedCornerShape(8.dp),
-        modifier = Modifier
-            .width(130.dp)
-            .height(60.dp)
+        modifier = modifier
+            .height(64.dp), // Etwas höher für mehrzeiligen Text
+        contentPadding = PaddingValues(4.dp)
     ) {
-        Text(text = title, fontFamily = Almendra, fontSize = 13.sp, textAlign = TextAlign.Center, lineHeight = 16.sp)
+        Text(text = title, fontFamily = Almendra, fontSize = 12.sp, textAlign = TextAlign.Center, lineHeight = 14.sp)
     }
 }
 

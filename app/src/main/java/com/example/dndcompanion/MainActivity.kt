@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,6 +29,7 @@ import com.example.dndcompanion.ui.screens.ZauberScreen
 import com.example.dndcompanion.ui.screens.HelpScreen
 import com.example.dndcompanion.ui.screens.ProfilScreen
 import com.example.dndcompanion.ui.screens.BucherScreen
+import com.example.dndcompanion.ui.screens.FeatureSelectionScreen
 import com.example.dndcompanion.ui.theme.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.pager.HorizontalPager
@@ -93,7 +95,7 @@ fun DnDApp(viewModel: CharacterViewModel) {
                         Image(
                             painter = painterResource(id = avatarId),
                             contentDescription = viewModel.characterData.name,
-                            modifier = Modifier.size(28.dp).clip(androidx.compose.foundation.shape.CircleShape),
+                            modifier = Modifier.size(38.dp).clip(androidx.compose.foundation.shape.CircleShape),
                             contentScale = ContentScale.Crop
                         )
                     },
@@ -114,7 +116,8 @@ fun DnDApp(viewModel: CharacterViewModel) {
                             Image(
                                 painter = painterResource(id = R.drawable.icon_capybara),
                                 contentDescription = "Urtier",
-                                modifier = Modifier.size(28.dp)
+                                modifier = Modifier.size(38.dp),
+                                contentScale = ContentScale.Fit
                             )
                         },
                         label = { Text("Urtier", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
@@ -134,7 +137,7 @@ fun DnDApp(viewModel: CharacterViewModel) {
                         Image(
                             painter = painterResource(id = R.drawable.gruppenchat),
                             contentDescription = "Hilfe",
-                            modifier = Modifier.size(28.dp)
+                            modifier = Modifier.size(38.dp)
                         )
                     },
                     label = { Text("Hilfe", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
@@ -153,7 +156,7 @@ fun DnDApp(viewModel: CharacterViewModel) {
                         Image(
                             painter = painterResource(id = R.drawable.zauberbuch),
                             contentDescription = "Bücher",
-                            modifier = Modifier.size(28.dp)
+                            modifier = Modifier.size(38.dp)
                         )
                     },
                     label = { Text("Bücher", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
@@ -212,6 +215,10 @@ fun DnDApp(viewModel: CharacterViewModel) {
             }
         }
     }
+
+    if (viewModel.showFeatureSelection) {
+        FeatureSelectionScreen(viewModel = viewModel, onDismiss = { viewModel.showFeatureSelection = false })
+    }
 }
 
 @Composable
@@ -240,7 +247,22 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
                             pagerState.animateScrollToPage(index)
                         } 
                     },
-                    text = { Text(tab.title, fontFamily = Almendra) },
+                    icon = {
+                        val iconRes = when(tab) {
+                            AthaniaTab.Profil -> if (viewModel.characterData.name == "Athania") R.drawable.athania else R.drawable.delat
+                            AthaniaTab.Kampf -> R.drawable.icon_d20_premium
+                            AthaniaTab.Zauber -> R.drawable.zauberbuch
+                            AthaniaTab.Rucksack -> R.drawable.icon_geld
+                            else -> R.drawable.icon_d20_premium
+                        }
+                        Image(
+                            painter = painterResource(id = iconRes),
+                            contentDescription = null,
+                            modifier = Modifier.size(24.dp).clip(if(tab == AthaniaTab.Profil) androidx.compose.foundation.shape.CircleShape else RoundedCornerShape(0.dp)),
+                            contentScale = ContentScale.Crop
+                        )
+                    },
+                    text = { Text(tab.title, fontFamily = Almendra, fontSize = 10.sp) },
                     selectedContentColor = OchsenblutRot,
                     unselectedContentColor = TintenBraun
                 )
@@ -291,18 +313,20 @@ fun CapyScreen(viewModel: CharacterViewModel) {
         modifier = Modifier.fillMaxSize().padding(8.dp).verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header mit Icon
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+        Column(
+            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
                 painter = painterResource(id = R.drawable.icon_capybara),
-                contentDescription = "Urtier Icon",
-                modifier = Modifier.size(40.dp),
+                contentDescription = "Urtier Portrait",
+                modifier = Modifier
+                    .size(150.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .border(3.dp, WaldGold, RoundedCornerShape(20.dp)),
                 contentScale = ContentScale.Fit
             )
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Text("Urtier-Begleiter", style = MaterialTheme.typography.titleLarge, color = Waldgruen, fontFamily = Almendra)
         }
 
