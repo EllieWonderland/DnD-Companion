@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.ui.viewmodel.Spell
 import androidx.compose.foundation.clickable
@@ -110,41 +111,39 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                     val freeFeatures = viewModel.customTraits.filter { trait ->
                         val spellId = trait.grantedSpellId
                         if (spellId == null) return@filter false
-                        // Permanent anzeigen, AUSSER es ist ein Gegenstands-Zauber wie das Amulett ("Wunden heilen" / "Heilendes Wort")
-                        // Diese spezifischen Gegenstandszauber sollen nur angezeigt werden, wenn sie auch vorbereitet (ausgerüstet) sind.
-                        val isItemSpell = spellId == "Wunden heilen" || spellId == "Heilendes Wort"
+                        
                         viewModel.allSpells.any { spell -> 
-                            spell.name.equals(spellId, ignoreCase = true) && (!isItemSpell || spell.isPrepared)
+                            spell.name.equals(spellId, ignoreCase = true)
                         }
                     }
                     freeFeatures.forEach { trait ->
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text(trait.name, color = Color.White, fontSize = 14.sp)
-                                val subText = if (trait.maxUses >= 999) "Beliebig oft" else "${trait.desc.split("\n").firstOrNull() ?: ""}"
-                                Text(subText, color = Color.LightGray, fontSize = 11.sp, maxLines = 1)
-                            }
-                            if (trait.maxUses < 999) {
-                                Text("${trait.currentUses} / ${trait.maxUses}", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
-                            }
-                            Button(
-                                onClick = { viewModel.useTraitSpell(trait) },
-                                enabled = trait.currentUses > 0,
-                                contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
-                                modifier = Modifier.height(48.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = accentColor,
-                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
-                                )
-                            ) { Text("Wirken", fontSize = 16.sp, fontFamily = Almendra) }
-                        }
+                        ExpandableFreeSpellCard(
+                            title = trait.name,
+                            description = trait.desc,
+                            currentUses = trait.currentUses,
+                            maxUses = trait.maxUses,
+                            accentColor = accentColor,
+                            onCast = { viewModel.useTraitSpell(trait) }
+                        )
                     }
 
-                    if (freeFeatures.isEmpty()) {
+                    // --- GEGENSTANDS-ZAUBER (Fokus / Amulett) ---
+                    // "Wunden heilen" oder "Heilendes Wort" sofern vorbereitet
+                    val amuletSpell = viewModel.allSpells.find { spell ->
+                        (spell.name.equals("Wunden heilen", ignoreCase = true) || spell.name.equals("Heilendes Wort", ignoreCase = true)) && spell.isPrepared
+                    }
+                    if (amuletSpell != null) {
+                        ExpandableFreeSpellCard(
+                            title = amuletSpell.name,
+                            description = "Kostenlos wirkbar über deinen druidischen Fokus (1x pro Lange Rast).\n${amuletSpell.description}",
+                            currentUses = if (viewModel.freeAmuletSpellUsed) 0 else 1,
+                            maxUses = 1,
+                            accentColor = accentColor,
+                            onCast = { viewModel.useFreeAmuletSpell() }
+                        )
+                    }
+
+                    if (freeFeatures.isEmpty() && amuletSpell == null) {
                         Text("Keine aktiven kostenlosen Zauber verfügbar.", color = Color.LightGray, fontSize = 12.sp, style = androidx.compose.ui.text.TextStyle(fontStyle = androidx.compose.ui.text.font.FontStyle.Italic))
                     }
                 }
@@ -1034,6 +1033,67 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                         }
                     }
                 }
+            }
+        }
+    }
+}
+@Composable
+fun ExpandableFreeSpellCard(
+    title: String,
+    description: String,
+    currentUses: Int,
+    maxUses: Int,
+    accentColor: Color,
+    onCast: () -> Unit
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp)
+            .clickable { expanded = !expanded },
+        colors = CardDefaults.cardColors(containerColor = PergamentDunkel)
+    ) {
+        Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(title, color = TintenSchwarz, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    if (!expanded) {
+                        val subText = if (maxUses >= 999) "Beliebig oft" else ""
+                        Text(subText, color = TintenBraun, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    }
+                }
+                
+                if (maxUses < 999) {
+                    Text("$currentUses / $maxUses", color = TintenSchwarz, modifier = Modifier.padding(horizontal = 8.dp), fontWeight = FontWeight.Bold)
+                }
+                
+                Button(
+                    onClick = onCast,
+                    enabled = currentUses > 0,
+                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                    modifier = Modifier.height(48.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = accentColor,
+                        contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                    )
+                ) { Text("Wirken", fontSize = 16.sp, fontFamily = Almendra) }
+            }
+
+            if (expanded) {
+                Spacer(modifier = Modifier.height(8.dp))
+                HorizontalDivider(color = Bronze.copy(alpha = 0.5f))
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(description, color = TintenSchwarz, fontSize = 14.sp, lineHeight = 18.sp)
+                
+                val usesInfo = if (maxUses >= 999) "Ein Beliebig oft wirkbarer Zauber." else "Regeneriert alle Nutzungen ($maxUses) nach einer Langen Rast."
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(usesInfo, color = OchsenblutRot, fontSize = 12.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
             }
         }
     }

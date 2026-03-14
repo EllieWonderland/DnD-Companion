@@ -1,0 +1,689 @@
+1 [0]: package com.example.dndcompanion.ui.screens
+2 [0]: 
+3 [0]: import androidx.compose.foundation.border
+4 [0]: import androidx.compose.foundation.Image
+5 [0]: import androidx.compose.foundation.layout.*
+6 [0]: import androidx.compose.foundation.rememberScrollState
+7 [0]: import androidx.compose.foundation.shape.RoundedCornerShape
+8 [0]: import androidx.compose.foundation.verticalScroll
+9 [0]: import androidx.compose.foundation.horizontalScroll
+10 [0]: import androidx.compose.animation.core.animateFloatAsState
+11 [0]: import androidx.compose.animation.core.tween
+12 [0]: import androidx.compose.material3.*
+13 [0]: import androidx.compose.runtime.Composable
+14 [0]: import androidx.compose.runtime.*
+15 [0]: import androidx.compose.runtime.getValue
+16 [0]: import androidx.compose.ui.Alignment
+17 [0]: import androidx.compose.ui.Modifier
+18 [0]: import androidx.compose.ui.graphics.Color
+19 [0]: import androidx.compose.ui.text.font.FontWeight
+20 [0]: import androidx.compose.ui.text.style.TextAlign
+21 [0]: import androidx.compose.ui.unit.dp
+22 [0]: import androidx.compose.ui.unit.sp
+23 [0]: import androidx.compose.foundation.clickable
+24 [0]: import androidx.compose.material.icons.Icons
+25 [0]: import androidx.compose.material.icons.filled.CheckCircle
+26 [0]: import androidx.compose.material.icons.filled.RadioButtonUnchecked
+27 [0]: import androidx.compose.material.icons.filled.Cancel
+28 [0]: import androidx.compose.material.icons.filled.Edit
+29 [0]: import androidx.compose.ui.draw.shadow
+30 [0]: import com.example.dndcompanion.ui.viewmodel.ActiveWeapon
+31 [0]: import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+32 [0]: import com.example.dndcompanion.ui.theme.*
+33 [0]: import com.example.dndcompanion.data.CharacterClass
+34 [0]: import com.example.dndcompanion.R
+35 [0]: import androidx.compose.ui.res.painterResource
+36 [0]: 
+37 [0]: @Composable
+38 [1]: fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit, onNavigateToProfile: () -> Unit = {}) {
+39 [1]:     val isRanger = viewModel.characterData.charClass == CharacterClass.RANGER
+40 [1]:     val accentColor = if (isRanger) WaldGold else HexenLila
+41 [1]: 
+42 [2]:     PergamentBackground {
+43 [2]:         Column(
+44 [2]:             modifier = Modifier
+45 [2]:                 .fillMaxSize()
+46 [2]:                 .padding(12.dp)
+47 [2]:                 .verticalScroll(rememberScrollState()),
+48 [2]:             horizontalAlignment = Alignment.CenterHorizontally
+49 [3]:         ) {
+50 [3]:             // Top-Leiste: Passive Stats
+51 [3]:             Row(
+52 [3]:                 modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+53 [3]:                 horizontalArrangement = Arrangement.SpaceEvenly
+54 [4]:             ) {
+55 [4]:                 Text("Initiative: ${if(viewModel.initiative >= 0) "+" else ""}${viewModel.initiative}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+56 [4]:                 Text("Tempo: ${viewModel.speed}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+57 [4]:                 Text("Pass. Wahrnehmung: ${viewModel.passivePerception}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+58 [4]:                 
+59 [4]:                 // Heroische Inspiration
+60 [5]:                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { viewModel.toggleHeroicInspiration(!viewModel.heroicInspiration) }) {
+61 [5]:                     Icon(
+62 [5]:                         imageVector = if (viewModel.heroicInspiration) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+63 [5]:                         contentDescription = "Inspiration",
+64 [5]:                         tint = if (viewModel.heroicInspiration) WaldGold else EisenGrau,
+65 [5]:                         modifier = Modifier.size(20.dp)
+66 [5]:                     )
+67 [5]:                     Spacer(modifier = Modifier.width(4.dp))
+68 [5]:                     Text("Insp.", style = MaterialTheme.typography.labelLarge, color = if (viewModel.heroicInspiration) WaldGold else Waldgruen)
+69 [4]:                 }
+70 [3]:             }
+71 [3]: 
+72 [3]:             // Lebenspunkte & Trefferwürfel
+73 [4]:             PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
+74 [5]:                 Column(modifier = Modifier.padding(12.dp)) {
+75 [5]:                     Row(
+76 [5]:                         modifier = Modifier.fillMaxWidth(),
+77 [5]:                         horizontalArrangement = Arrangement.SpaceBetween,
+78 [5]:                         verticalAlignment = Alignment.Bottom
+79 [6]:                     ) {
+80 [7]:                         Column {
+81 [7]:                             Text(
+82 [7]:                                 "HP: ${viewModel.currentHp} / ${viewModel.maxHp}",
+83 [7]:                                 style = GrenzeGotischStyle,
+84 [7]:                                 color = if (viewModel.currentHp > 10) TintenSchwarz else OchsenblutRot
+85 [7]:                             )
+86 [8]:                             if (viewModel.tempHp > 0) {
+87 [8]:                                 Text(
+88 [8]:                                     "+${viewModel.tempHp} Temp HP",
+89 [8]:                                     style = GrenzeGotischSmall,
+90 [8]:                                     color = TempHPBlau
+91 [8]:                                 )
+92 [7]:                             }
+93 [6]:                         }
+94 [6]:                         Text(
+95 [6]:                             "Trefferwürfel: ${viewModel.hitDice} / ${viewModel.level}W${viewModel.characterData.baseHitDice}",
+96 [6]:                             style = MaterialTheme.typography.labelLarge,
+97 [6]:                             color = TintenBraun
+98 [6]:                         )
+99 [5]:                     }
+100 [5]: 
+101 [5]:                     Spacer(modifier = Modifier.height(8.dp))
+102 [5]: 
+103 [5]:                     // Animierte Progress-Werte
+104 [6]:                     Column {
+105 [6]:                     val hpProgress by animateFloatAsState(
+106 [6]:                         targetValue = if (viewModel.maxHp > 0) viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() else 0f,
+107 [6]:                         animationSpec = tween(durationMillis = 500),
+108 [6]:                         label = "HP Animation"
+109 [6]:                     )
+110 [6]: 
+111 [7]:                     Row(verticalAlignment = Alignment.Bottom) {
+112 [7]:                         Text("${viewModel.currentHp} / ${viewModel.maxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White, fontFamily = Almendra)
+113 [8]:                         if (viewModel.tempHp > 0) {
+114 [8]:                             Spacer(modifier = Modifier.width(8.dp))
+115 [8]:                             Text("+${viewModel.tempHp} Temp", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = TempHPBlau, fontFamily = Almendra)
+116 [7]:                         }
+117 [6]:                     }
+118 [6]:                     
+119 [6]:                     Spacer(modifier = Modifier.height(8.dp))
+120 [6]:                     LinearProgressIndicator(
+121 [6]:                         progress = { hpProgress },
+122 [6]:                         modifier = Modifier.fillMaxWidth().height(16.dp),
+123 [6]:                         color = if (viewModel.currentHp > (viewModel.maxHp / 4)) Waldgruen else OchsenblutRot,
+124 [6]:                         trackColor = PergamentHell
+125 [6]:                     )
+126 [6]: 
+127 [6]:                     val tempHpProgress by animateFloatAsState(
+128 [6]:                         targetValue = if (viewModel.tempHp > 0) (viewModel.tempHp.toFloat() / 12f).coerceAtMost(1f) else 0f,
+129 [6]:                         animationSpec = tween(durationMillis = 500),
+130 [6]:                         label = "Temp HP Animation"
+131 [6]:                     )
+132 [6]: 
+133 [6]:                     // Temp HP Bar (wenn vorhanden)
+134 [7]:                     if (viewModel.tempHp > 0 || tempHpProgress > 0f) {
+135 [7]:                         Spacer(modifier = Modifier.height(4.dp))
+136 [7]:                         LinearProgressIndicator(
+137 [7]:                             progress = { tempHpProgress },
+138 [7]:                             modifier = Modifier
+139 [7]:                                 .fillMaxWidth()
+140 [7]:                                 .height(8.dp),
+141 [7]:                             color = TempHPBlau,
+142 [7]:                             trackColor = PergamentDunkel.copy(alpha = 0.3f)
+143 [7]:                         )
+144 [6]:                     }
+145 [6]: 
+146 [7]:                     if (viewModel.currentHp == 0) {
+147 [7]:                         Spacer(modifier = Modifier.height(12.dp))
+148 [7]:                         DeathSavesRow(viewModel)
+149 [6]:                     }
+150 [6]: 
+151 [6]:                     Spacer(modifier = Modifier.height(12.dp))
+152 [6]: 
+153 [6]:                     // HP-Buttons
+154 [6]:                     Row(
+155 [6]:                         modifier = Modifier.fillMaxWidth(),
+156 [6]:                         horizontalArrangement = Arrangement.SpaceBetween
+157 [7]:                     ) {
+158 [7]:                         Button(onClick = { viewModel.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-5", fontFamily = Almendra, fontSize = 16.sp) }
+159 [7]:                         Button(onClick = { viewModel.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontFamily = Almendra, fontSize = 16.sp) }
+160 [7]:                         Button(onClick = { viewModel.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontFamily = Almendra, fontSize = 16.sp) }
+161 [7]:                         Button(onClick = { viewModel.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+5", fontFamily = Almendra, fontSize = 16.sp) }
+162 [6]:                     }
+163 [6]: 
+164 [6]:                     Spacer(modifier = Modifier.height(8.dp))
+165 [6]:                     HorizontalDivider(color = PergamentDunkel)
+166 [6]:                     Spacer(modifier = Modifier.height(8.dp))
+167 [6]: 
+168 [6]:                     // Temp HP Buttons
+169 [6]:                     Row(
+170 [6]:                         modifier = Modifier.fillMaxWidth(),
+171 [6]:                         horizontalArrangement = Arrangement.SpaceEvenly,
+172 [6]:                         verticalAlignment = Alignment.CenterVertically
+173 [7]:                     ) {
+174 [7]:                         Text("Temp HP:", style = MaterialTheme.typography.labelLarge, color = TempHPBlau)
+175 [7]:                         Button(onClick = { viewModel.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.6f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.width(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontSize = 14.sp) }
+176 [7]:                         Button(onClick = { viewModel.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze.copy(alpha = 0.7f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.width(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontSize = 14.sp) }
+177 [7]:                         Button(onClick = { viewModel.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), shape = RoundedCornerShape(6.dp), modifier = Modifier.width(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+12", fontSize = 14.sp) }
+178 [6]:                     }
+179 [6]: 
+180 [7]:                     if (viewModel.goodberries > 0 || isRanger) {
+181 [7]:                         Spacer(modifier = Modifier.height(12.dp))
+182 [7]:                         Button(
+183 [7]:                             onClick = { viewModel.eatGoodberry() },
+184 [7]:                             modifier = Modifier.fillMaxWidth().height(48.dp),
+185 [7]:                             enabled = viewModel.currentHp < viewModel.maxHp,
+186 [7]:                             colors = ButtonDefaults.buttonColors(
+187 [7]:                                 containerColor = Waldgruen,
+188 [7]:                                 disabledContainerColor = EisenGrau
+189 [7]:                             ),
+190 [7]:                             shape = RoundedCornerShape(8.dp)
+191 [8]:                         ) {
+192 [8]:                             Text("Beere essen (+1 HP)", fontFamily = Almendra, fontWeight = FontWeight.Bold)
+193 [8]:                             Spacer(modifier = Modifier.width(8.dp))
+194 [8]:                             Text("(${viewModel.goodberries} übrig)", fontSize = 12.sp)
+195 [7]:                         }
+196 [6]:                     }
+197 [5]:                 }
+198 [4]:             }
+199 [4]: 
+200 [4]:             // RK und EP nebeneinander
+201 [3]:             }
+202 [3]: 
+203 [3]:             var showEpDialog by remember { mutableStateOf(false) }
+204 [3]:             var epInput by remember { mutableStateOf("") }
+205 [3]: 
+206 [3]:             Row(
+207 [3]:                 modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+208 [3]:                 horizontalArrangement = Arrangement.spacedBy(12.dp)
+209 [4]:             ) {
+210 [4]:                 // Rüstungsklasse
+211 [5]:                 SteinCard(modifier = Modifier.weight(1f)) {
+212 [5]:                     Column(
+213 [5]:                         modifier = Modifier.padding(12.dp).fillMaxWidth(),
+214 [5]:                         horizontalAlignment = Alignment.CenterHorizontally
+215 [6]:                     ) {
+216 [6]:                         Text("Rüstungsklasse", style = MaterialTheme.typography.labelMedium, color = Waldgruen)
+217 [6]:                         Text(
+218 [6]:                             viewModel.currentArmorClass.toString(),
+219 [6]:                             style = GrenzeGotischStyle.copy(fontSize = 48.sp),
+220 [6]:                             color = TintenSchwarz
+221 [6]:                         )
+222 [5]:                     }
+223 [4]:                 }
+224 [4]: 
+225 [4]:                 // Erfahrungspunkte
+226 [5]:                 SteinCard(modifier = Modifier.weight(1f)) {
+227 [5]:                     Column(
+228 [5]:                         modifier = Modifier.padding(12.dp).fillMaxWidth(),
+229 [5]:                         horizontalAlignment = Alignment.CenterHorizontally
+230 [6]:                     ) {
+231 [6]:                         Text("EP (Stufe ${viewModel.level})", style = MaterialTheme.typography.labelMedium, color = Waldgruen)
+232 [7]:                         Row(verticalAlignment = Alignment.CenterVertically) {
+233 [7]:                             Text(
+234 [7]:                                 viewModel.currentEP.toString(),
+235 [7]:                                 style = GrenzeGotischStyle.copy(fontSize = 48.sp),
+236 [7]:                                 color = TintenSchwarz
+237 [7]:                             )
+238 [8]:                             IconButton(onClick = { showEpDialog = true }) {
+239 [8]:                                 Text("+", color = accentColor, fontSize = 28.sp, fontWeight = FontWeight.Bold)
+240 [7]:                             }
+241 [6]:                         }
+242 [5]:                     }
+243 [4]:                 }
+244 [3]:             }
+245 [3]: 
+246 [3]:             // EP Dialog
+247 [4]:             if (showEpDialog) {
+248 [4]:                 AlertDialog(
+249 [4]:                     onDismissRequest = { showEpDialog = false },
+250 [4]:                     containerColor = PergamentHell,
+251 [4]:                     shape = RoundedCornerShape(12.dp),
+252 [4]:                     title = { Text("Erfahrungspunkte", style = MaterialTheme.typography.titleMedium, color = Waldgruen) },
+253 [5]:                     text = {
+254 [6]:                         Column {
+255 [6]:                             Text("Wie viele EP hast du erhalten?", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz, modifier = Modifier.padding(bottom = 8.dp))
+256 [6]:                             OutlinedTextField(
+257 [6]:                                 value = epInput,
+258 [6]:                                 onValueChange = { if (it.isEmpty() || it.all { c -> c.isDigit() }) epInput = it },
+259 [6]:                                 label = { Text("EP Betrag", fontFamily = Almendra) },
+260 [6]:                                 keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
+261 [6]:                                 singleLine = true,
+262 [6]:                                 modifier = Modifier.fillMaxWidth(),
+263 [6]:                                 colors = OutlinedTextFieldDefaults.colors(
+264 [6]:                                     focusedBorderColor = accentColor,
+265 [6]:                                     focusedLabelColor = accentColor,
+266 [6]:                                     unfocusedTextColor = TintenSchwarz,
+267 [6]:                                     focusedTextColor = TintenSchwarz
+268 [6]:                                 )
+269 [6]:                             )
+270 [5]:                         }
+271 [4]:                     },
+272 [5]:                     confirmButton = {
+273 [5]:                         Button(
+274 [6]:                             onClick = {
+275 [6]:                                 val amount = epInput.toIntOrNull()
+276 [7]:                                 if (amount != null && amount > 0) {
+277 [7]:                                     viewModel.addExperience(amount)
+278 [7]:                                     epInput = ""
+279 [7]:                                     showEpDialog = false
+280 [6]:                                 }
+281 [5]:                             },
+282 [5]:                             colors = ButtonDefaults.buttonColors(
+283 [5]:                                 containerColor = accentColor,
+284 [5]:                                 contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+285 [5]:                             ),
+286 [5]:                             modifier = Modifier.height(48.dp),
+287 [5]:                             shape = RoundedCornerShape(8.dp)
+288 [5]:                         ) { Text("Hinzufügen", fontFamily = Almendra, fontSize = 16.sp) }
+289 [4]:                     },
+290 [5]:                     dismissButton = {
+291 [6]:                         TextButton(onClick = { showEpDialog = false }, modifier = Modifier.height(48.dp)) {
+292 [6]:                             Text("Abbrechen", color = Waldgruen, fontFamily = Almendra, fontSize = 16.sp)
+293 [5]:                         }
+294 [4]:                     }
+295 [4]:                 )
+296 [3]:             }
+297 [3]: 
+298 [3]:             // Level Up Benachrichtigung
+299 [4]:             if (viewModel.showLevelUpNotification) {
+300 [4]:                 AlertDialog(
+301 [4]:                     onDismissRequest = { viewModel.dismissLevelUpNotification() },
+302 [4]:                     containerColor = PergamentHell,
+303 [4]:                     shape = RoundedCornerShape(12.dp),
+304 [4]:                     title = { Text("Stufenaufstieg!", style = MaterialTheme.typography.titleMedium, color = accentColor) },
+305 [4]:                     text = { Text("Glückwunsch! Deine Erfahrung reicht für Stufe ${viewModel.level}. Möchtest du deinen Charakter jetzt verbessern?", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz) },
+306 [5]:                     confirmButton = {
+307 [5]:                         Button(
+308 [6]:                             onClick = {
+309 [6]:                                 viewModel.dismissLevelUpNotification()
+310 [6]:                                 onNavigateToProfile()
+311 [5]:                             },
+312 [5]:                             colors = ButtonDefaults.buttonColors(
+313 [5]:                                 containerColor = accentColor,
+314 [5]:                                 contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+315 [5]:                             ),
+316 [5]:                             modifier = Modifier.height(48.dp),
+317 [5]:                             shape = RoundedCornerShape(8.dp)
+318 [5]:                         ) { Text("Jetzt anpassen", fontFamily = Almendra, fontSize = 16.sp) }
+319 [4]:                     },
+320 [5]:                     dismissButton = {
+321 [6]:                         TextButton(onClick = { viewModel.dismissLevelUpNotification() }, modifier = Modifier.height(48.dp)) {
+322 [6]:                             Text("Später", color = Waldgruen, fontFamily = Almendra, fontSize = 16.sp)
+323 [5]:                         }
+324 [4]:                     }
+325 [4]:                 )
+326 [3]:             }
+327 [3]: 
+328 [3]:             Text("Waffe ausrüsten", style = MaterialTheme.typography.titleMedium, color = Waldgruen)
+329 [3]:             Spacer(modifier = Modifier.height(8.dp))
+330 [3]: 
+331 [3]:             var showWeaponEditDialog by remember { mutableStateOf<Int?>(null) }
+332 [4]:                if (viewModel.availableWeapons.isEmpty()) {
+333 [4]:                 Text("Keine Waffen im Rucksack gefunden. Füge Waffen im Rucksack-Tab hinzu.", style = MaterialTheme.typography.bodySmall, color = TintenBraun, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, modifier = Modifier.padding(8.dp))
+334 [4]:             } else {
+335 [4]:                 // Horizontale scrollbare Liste für Waffen
+336 [4]:                 Row(
+337 [4]:                     modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
+338 [4]:                     horizontalArrangement = Arrangement.spacedBy(8.dp)
+339 [5]:                 ) {
+340 [6]:                     viewModel.availableWeapons.forEach { weaponName ->
+341 [6]:                         WeaponButton(
+342 [6]:                             title = weaponName,
+343 [6]:                             isSelected = viewModel.equippedWeaponName == weaponName,
+344 [6]:                             accentColor = accentColor,
+345 [6]:                             modifier = Modifier.width(130.dp)
+346 [7]:                         ) {
+347 [7]:                             viewModel.equipWeaponByName(weaponName)
+348 [6]:                         }
+349 [5]:                     }
+350 [4]:                 }
+351 [3]:             }
+352 [3]: 
+353 [3]:             Spacer(modifier = Modifier.height(8.dp))
+354 [3]: 
+355 [3]:             // Schild-Logik Checkbox
+356 [4]:             Row(verticalAlignment = Alignment.CenterVertically) {
+357 [4]:                 Checkbox(
+358 [4]:                     checked = viewModel.isShieldEquipped,
+359 [4]:                     onCheckedChange = { viewModel.toggleShield(it) },
+360 [4]:                     enabled = viewModel.hasShieldInInventory,
+361 [4]:                     colors = CheckboxDefaults.colors(checkedColor = accentColor)
+362 [4]:                 )
+363 [4]:                 Text(
+364 [4]:                     "Schild anlegen (+2 RK)", 
+365 [4]:                     style = MaterialTheme.typography.bodyMedium, 
+366 [4]:                     color = if (viewModel.hasShieldInInventory) TintenSchwarz else EisenGrau
+367 [4]:                 )
+368 [3]:             }
+369 [4]:             if (showWeaponEditDialog != null) {
+370 [4]:                 val index = showWeaponEditDialog!!
+371 [4]:                 val currentName = viewModel.getWeaponName(index).replace("\n", " ")
+372 [4]:                 
+373 [4]:                 var newName by remember { mutableStateOf(currentName) }
+374 [4]: 
+375 [4]:                 AlertDialog(
+376 [4]:                     onDismissRequest = { showWeaponEditDialog = null },
+377 [4]:                     title = { Text("Waffe umbenennen", fontFamily = Almendra) },
+378 [5]:                     text = {
+379 [5]:                         OutlinedTextField(
+380 [5]:                             value = newName,
+381 [5]:                             onValueChange = { newName = it },
+382 [5]:                             label = { Text("Name") },
+383 [5]:                             singleLine = true
+384 [5]:                         )
+385 [4]:                     },
+386 [5]:                     confirmButton = {
+387 [6]:                         Button(onClick = {
+388 [6]:                             viewModel.saveWeaponName(index, newName.replace(" & ", "\n& "))
+389 [6]:                             showWeaponEditDialog = null
+390 [5]:                         }) { Text("Speichern", fontFamily = Almendra) }
+391 [4]:                     },
+392 [5]:                     dismissButton = {
+393 [5]:                         TextButton(onClick = { showWeaponEditDialog = null }) { Text("Abbrechen", fontFamily = Almendra) }
+394 [4]:                     }
+395 [4]:                 )
+396 [3]:             }
+397 [3]: 
+398 [3]:             val isVersatile = viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT || 
+399 [3]:                             viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT ||
+400 [3]:                             viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD
+401 [3]:             
+402 [4]:             if (isVersatile) {
+403 [4]:                 Spacer(modifier = Modifier.height(8.dp))
+404 [5]:                 Row(verticalAlignment = Alignment.CenterVertically) {
+405 [5]:                     Checkbox(
+406 [5]:                         checked = viewModel.isUsingTwoHanded,
+407 [5]:                         onCheckedChange = { viewModel.toggleTwoHanded(it) },
+408 [5]:                         colors = CheckboxDefaults.colors(checkedColor = accentColor)
+409 [5]:                     )
+410 [5]:                     val hint = if (viewModel.isShieldEquipped) " (Deaktiviert Schild-Bonus)" else ""
+411 [5]:                     Text("Zweihändig führen$hint", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+412 [4]:                 }
+413 [3]:             }
+414 [3]: 
+415 [3]:             // Magierrüstung Toggle (für Delat/Warlock)
+416 [4]:             if (!isRanger) {
+417 [4]:                 Spacer(modifier = Modifier.height(12.dp))
+418 [5]:                 PergamentCard(modifier = Modifier.fillMaxWidth()) {
+419 [5]:                     Row(
+420 [5]:                         modifier = Modifier.padding(12.dp).fillMaxWidth(),
+421 [5]:                         verticalAlignment = Alignment.CenterVertically,
+422 [5]:                         horizontalArrangement = Arrangement.SpaceBetween
+423 [6]:                     ) {
+424 [7]:                         Row(verticalAlignment = Alignment.CenterVertically) {
+425 [7]:                             Icon(Icons.Default.CheckCircle, contentDescription = null, tint = if(viewModel.isMageArmorActive) HexenLila else EisenGrau)
+426 [7]:                             Spacer(modifier = Modifier.width(8.dp))
+427 [7]:                             Text("Magierrüstung aktiv", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
+428 [6]:                         }
+429 [6]:                         Switch(
+430 [6]:                             checked = viewModel.isMageArmorActive,
+431 [6]:                             onCheckedChange = { viewModel.toggleMageArmor(it) },
+432 [6]:                             colors = SwitchDefaults.colors(checkedThumbColor = HexenLila, checkedTrackColor = HexenLila.copy(alpha = 0.5f))
+433 [6]:                         )
+434 [5]:                     }
+435 [4]:                 }
+436 [3]:             }
+437 [3]: 
+438 [3]:             Spacer(modifier = Modifier.height(16.dp))
+439 [3]: 
+440 [3]:             // Anzeige der aktuellen Waffenwerte
+441 [4]:             PergamentCard(modifier = Modifier.fillMaxWidth()) {
+442 [5]:                 Column(modifier = Modifier.padding(12.dp)) {
+443 [5]:                     Text("Trefferbonus: ${viewModel.currentAttackBonus}", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
+444 [5]:                     Spacer(modifier = Modifier.height(8.dp))
+445 [5]:                     Text("Schaden: ${viewModel.currentDamage}", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
+446 [5]: 
+447 [5]:                     Spacer(modifier = Modifier.height(8.dp))
+448 [5]: 
+449 [6]:                     val extraNote = when (viewModel.currentWeapon) {
+450 [6]:                         ActiveWeapon.LANGBOGEN -> "Verlangsamen (Mastery): Tempo -3m.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
+451 [6]:                         ActiveWeapon.KURZSCHWERT_SCHILD -> "Ärgern (Mastery): Nächster Angriff hat Vorteil.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
+452 [6]:                         ActiveWeapon.SHILLELAGH_SCHILD -> "Umwerfen (Mastery): Ziel muss KON-RW (SG 12) bestehen oder liegt am Boden."
+453 [6]:                         ActiveWeapon.KRIEGSHAMMER_PAKT -> "Stoß (Mastery): Ziel bis zu 3m wegstoßen (gerade Linie)."
+454 [6]:                         ActiveWeapon.SPEER_PAKT -> "Schwächen (Mastery): Nächster Angriff des Gegners hat Nachteil."
+455 [5]:                     }
+456 [5]: 
+457 [5]:                     Text(
+458 [5]:                         text = extraNote,
+459 [5]:                         style = MaterialTheme.typography.bodySmall,
+460 [5]:                         fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+461 [5]:                         color = TintenBraun
+462 [5]:                     )
+463 [4]:                 }
+464 [3]:             }
+465 [3]: 
+466 [4]:             if (viewModel.currentWeapon == ActiveWeapon.LANGBOGEN && isRanger) {
+467 [4]:                 Spacer(modifier = Modifier.height(16.dp))
+468 [5]:                 PergamentCard(modifier = Modifier.fillMaxWidth()) {
+469 [6]:                     Column(modifier = Modifier.padding(12.dp)) {
+470 [6]:                         Text("Pfeilköcher", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
+471 [6]:                         Spacer(modifier = Modifier.height(8.dp))
+472 [6]: 
+473 [6]:                         Row(
+474 [6]:                             modifier = Modifier.fillMaxWidth(),
+475 [6]:                             horizontalArrangement = Arrangement.SpaceBetween,
+476 [6]:                             verticalAlignment = Alignment.CenterVertically
+477 [7]:                         ) {
+478 [8]:                             Column {
+479 [8]:                                 Text("Verfügbar: ${viewModel.totalArrows}", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
+480 [8]:                                 Text("Verschossen: ${viewModel.shotArrows}", style = MaterialTheme.typography.bodyMedium, color = if (viewModel.shotArrows > 0) OchsenblutRot else TintenSchwarz)
+481 [7]:                             }
+482 [7]:                             Button(
+483 [7]:                                 onClick = { viewModel.shootArrow() },
+484 [7]:                                 enabled = viewModel.totalArrows > 0,
+485 [7]:                                 colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot, disabledContainerColor = EisenGrau),
+486 [7]:                                 modifier = Modifier.height(48.dp),
+487 [7]:                                 shape = RoundedCornerShape(8.dp)
+488 [7]:                             ) { Text("Schießen", fontFamily = Almendra, fontSize = 16.sp) }
+489 [6]:                         }
+490 [6]: 
+491 [7]:                         if (viewModel.shotArrows > 0) {
+492 [7]:                             Spacer(modifier = Modifier.height(12.dp))
+493 [7]:                             HorizontalDivider(color = PergamentDunkel)
+494 [7]:                             Spacer(modifier = Modifier.height(8.dp))
+495 [7]:                             Text("Nach dem Kampf:", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+496 [7]:                             Spacer(modifier = Modifier.height(4.dp))
+497 [8]:                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+498 [8]:                                 Button(onClick = { viewModel.recoverArrows() }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), modifier = Modifier.weight(1f).padding(end = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("½ Einsammeln", fontSize = 16.sp, fontFamily = Almendra) }
+499 [8]:                                 Button(onClick = { viewModel.discardShotArrows() }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.7f)), modifier = Modifier.weight(1f).padding(start = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("Alle verloren", fontSize = 16.sp, fontFamily = Almendra) }
+500 [7]:                             }
+501 [6]:                         }
+502 [6]: 
+503 [6]:                         Spacer(modifier = Modifier.height(12.dp))
+504 [6]:                         HorizontalDivider(color = PergamentDunkel)
+505 [6]:                         Spacer(modifier = Modifier.height(8.dp))
+506 [6]: 
+507 [7]:                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+508 [7]:                             Text("Pfeile...", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+509 [8]:                             Row {
+510 [8]:                                 Button(onClick = { viewModel.changeTotalArrows(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("- Ablegen", fontSize = 16.sp, fontFamily = Almendra) }
+511 [8]:                                 Spacer(modifier = Modifier.width(8.dp))
+512 [8]:                                 Button(onClick = { viewModel.changeTotalArrows(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("+ Aufnehmen", fontSize = 16.sp, fontFamily = Almendra) }
+513 [7]:                             }
+514 [6]:                         }
+515 [6]:                         // Loot-Button
+516 [6]:                         Spacer(modifier = Modifier.height(16.dp))
+517 [6]:                         Button(
+518 [6]:                             onClick = onNavigateToRucksack,
+519 [6]:                             modifier = Modifier.fillMaxWidth().height(60.dp),
+520 [6]:                             colors = ButtonDefaults.buttonColors(containerColor = Bronze),
+521 [6]:                             shape = RoundedCornerShape(12.dp)
+522 [7]:                         ) {
+523 [8]:                             Row(verticalAlignment = Alignment.CenterVertically) {
+524 [8]:                                 Image(
+525 [8]:                                     painter = painterResource(id = R.drawable.icon_geld),
+526 [8]:                                     contentDescription = null,
+527 [8]:                                     modifier = Modifier.size(32.dp)
+528 [8]:                                 )
+529 [8]:                                 Spacer(modifier = Modifier.width(12.dp))
+530 [8]:                                 Text("Loot eintragen", style = MaterialTheme.typography.titleMedium, color = Color.White)
+531 [7]:                             }
+532 [6]:                         }
+533 [5]:                     }
+534 [4]:                 }
+535 [3]:             }
+536 [3]: 
+537 [3]:             Spacer(modifier = Modifier.height(16.dp))
+538 [3]: 
+539 [3]:             // Standard-Taktik
+540 [3]:             var isTacticExpanded by remember { mutableStateOf(false) }
+541 [3]:             var isTacticEditing by remember { mutableStateOf(false) }
+542 [3]:             var editTacticText by remember { mutableStateOf(viewModel.standardTactic) }
+543 [3]: 
+544 [4]:             PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
+545 [4]:                 Column(
+546 [4]:                     modifier = Modifier
+547 [4]:                         .padding(12.dp)
+548 [4]:                         .fillMaxWidth()
+549 [4]:                         .clickable { if (!isTacticEditing) isTacticExpanded = !isTacticExpanded }
+550 [5]:                 ) {
+551 [5]:                     Row(
+552 [5]:                         modifier = Modifier.fillMaxWidth(),
+553 [5]:                         horizontalArrangement = Arrangement.SpaceBetween,
+554 [5]:                         verticalAlignment = Alignment.CenterVertically
+555 [6]:                     ) {
+556 [6]:                         Text("Standard-Taktik", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
+557 [7]:                         if (isTacticExpanded && !isTacticEditing) {
+558 [8]:                             IconButton(onClick = {
+559 [8]:                                 editTacticText = viewModel.standardTactic
+560 [8]:                                 isTacticEditing = true
+561 [8]:                             }, modifier = Modifier.size(24.dp)) {
+562 [8]:                                 Icon(Icons.Default.Edit, contentDescription = "Bearbeiten", tint = accentColor)
+563 [7]:                             }
+564 [6]:                         }
+565 [5]:                     }
+566 [6]:                     if (isTacticExpanded) {
+567 [6]:                         Spacer(modifier = Modifier.height(8.dp))
+568 [7]:                         if (isTacticEditing) {
+569 [7]:                             OutlinedTextField(
+570 [7]:                                 value = editTacticText,
+571 [7]:                                 onValueChange = { editTacticText = it },
+572 [7]:                                 modifier = Modifier.fillMaxWidth().height(120.dp),
+573 [7]:                                 colors = OutlinedTextFieldDefaults.colors(
+574 [7]:                                     focusedBorderColor = accentColor,
+575 [7]:                                     unfocusedTextColor = TintenSchwarz,
+576 [7]:                                     focusedTextColor = TintenSchwarz
+577 [7]:                                 )
+578 [7]:                             )
+579 [7]:                             Spacer(modifier = Modifier.height(8.dp))
+580 [8]:                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+581 [8]:                                 TextButton(onClick = { isTacticEditing = false }) { Text("Abbrechen", color = TintenBraun, fontFamily = Almendra) }
+582 [8]:                                 Spacer(modifier = Modifier.width(8.dp))
+583 [8]:                                 Button(onClick = { viewModel.updateStandardTactic(editTacticText); isTacticEditing = false }, colors = ButtonDefaults.buttonColors(containerColor = accentColor), shape = RoundedCornerShape(8.dp)) { Text("Speichern", fontFamily = Almendra) }
+584 [7]:                             }
+585 [7]:                         } else {
+586 [7]:                             Text(viewModel.standardTactic, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+587 [6]:                         }
+588 [5]:                     }
+589 [4]:                 }
+590 [3]:             }
+591 [2]:         }
+592 [1]:     }
+593 [0]: }
+594 [0]: 
+595 [0]: @Composable
+596 [1]: fun WeaponButton(title: String, isSelected: Boolean, accentColor: Color, modifier: Modifier = Modifier, onClick: () -> Unit) {
+597 [1]:     Button(
+598 [1]:         onClick = onClick,
+599 [1]:         colors = ButtonDefaults.buttonColors(
+600 [1]:             containerColor = if (isSelected) accentColor else PergamentDunkel,
+601 [1]:             contentColor = if (isSelected) (if (accentColor == WaldGold) TintenSchwarz else Color.White) else TintenSchwarz
+602 [1]:         ),
+603 [1]:         shape = RoundedCornerShape(8.dp),
+604 [1]:         modifier = modifier
+605 [1]:             .height(64.dp), // Etwas höher für mehrzeiligen Text
+606 [1]:         contentPadding = PaddingValues(4.dp)
+607 [2]:     ) {
+608 [2]:         Text(text = title, fontFamily = Almendra, fontSize = 12.sp, textAlign = TextAlign.Center, lineHeight = 14.sp)
+609 [1]:     }
+610 [0]: }
+611 [0]: 
+612 [0]: @Composable
+613 [1]: fun DeathSavesRow(viewModel: CharacterViewModel) {
+614 [1]:     var showSuccessDialog by remember { mutableStateOf(false) }
+615 [1]:     var showFailureDialog by remember { mutableStateOf(false) }
+616 [1]: 
+617 [2]:     LaunchedEffect(viewModel.deathSaveSuccesses) {
+618 [2]:         if (viewModel.deathSaveSuccesses >= 3) showSuccessDialog = true
+619 [1]:     }
+620 [1]: 
+621 [2]:     LaunchedEffect(viewModel.deathSaveFailures) {
+622 [2]:         if (viewModel.deathSaveFailures >= 3) showFailureDialog = true
+623 [1]:     }
+624 [1]: 
+625 [2]:     if (showSuccessDialog) {
+626 [2]:         AlertDialog(
+627 [2]:             onDismissRequest = { showSuccessDialog = false },
+628 [2]:             title = { Text("Stabilisiert!", style = MaterialTheme.typography.titleSmall, color = TodRuneGruen) },
+629 [2]:             text = { Text("Du hast 3 erfolgreiche Rettungswürfe geschafft. Du bist stabilisiert.", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz) },
+630 [2]:             confirmButton = { Button(onClick = { showSuccessDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("Puh!", fontFamily = Almendra) } },
+631 [2]:             containerColor = PergamentHell,
+632 [2]:             shape = RoundedCornerShape(12.dp)
+633 [2]:         )
+634 [1]:     }
+635 [1]: 
+636 [2]:     if (showFailureDialog) {
+637 [2]:         AlertDialog(
+638 [2]:             onDismissRequest = { showFailureDialog = false },
+639 [2]:             title = { Text("Gefallen...", style = MaterialTheme.typography.titleSmall, color = TodRuneRot) },
+640 [2]:             text = { Text("Du hast 3 fehlgeschlagene Rettungswürfe ereilt. Der Charakter ist gestorben...", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz) },
+641 [2]:             confirmButton = { Button(onClick = { showFailureDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("RiP", fontFamily = Almendra) } },
+642 [2]:             containerColor = PergamentHell,
+643 [2]:             shape = RoundedCornerShape(12.dp)
+644 [2]:         )
+645 [1]:     }
+646 [1]: 
+647 [2]:     Column(modifier = Modifier.fillMaxWidth()) {
+648 [2]:         Text("Todesrettungswürfe", style = MaterialTheme.typography.labelLarge, color = TintenSchwarz)
+649 [2]:         Spacer(modifier = Modifier.height(8.dp))
+650 [3]:         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+651 [3]:             // Erfolge
+652 [4]:             Row(verticalAlignment = Alignment.CenterVertically) {
+653 [4]:                 Text("Erfolge:", style = MaterialTheme.typography.labelMedium, color = TodRuneGruen)
+654 [4]:                 Spacer(modifier = Modifier.width(4.dp))
+655 [5]:                 repeat(3) { index ->
+656 [5]:                     val checked = index < viewModel.deathSaveSuccesses
+657 [5]:                     Icon(
+658 [5]:                         imageVector = if (checked) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+659 [5]:                         contentDescription = "Erfolg",
+660 [5]:                         tint = if (checked) TodRuneGruen else EisenGrau,
+661 [6]:                         modifier = Modifier.size(24.dp).clickable {
+662 [6]:                             if (checked) viewModel.updateDeathSaves(index, viewModel.deathSaveFailures)
+663 [6]:                             else viewModel.updateDeathSaves(index + 1, viewModel.deathSaveFailures)
+664 [5]:                         }
+665 [5]:                     )
+666 [4]:                 }
+667 [3]:             }
+668 [3]:             // Fehlschläge
+669 [4]:             Row(verticalAlignment = Alignment.CenterVertically) {
+670 [4]:                 Text("Fehlschläge:", style = MaterialTheme.typography.labelMedium, color = TodRuneRot)
+671 [4]:                 Spacer(modifier = Modifier.width(4.dp))
+672 [5]:                 repeat(3) { index ->
+673 [5]:                     val checked = index < viewModel.deathSaveFailures
+674 [5]:                     Icon(
+675 [5]:                         imageVector = if (checked) Icons.Default.Cancel else Icons.Default.RadioButtonUnchecked,
+676 [5]:                         contentDescription = "Fehlschlag",
+677 [5]:                         tint = if (checked) TodRuneRot else EisenGrau,
+678 [6]:                         modifier = Modifier.size(24.dp).clickable {
+679 [6]:                             if (checked) viewModel.updateDeathSaves(viewModel.deathSaveSuccesses, index)
+680 [6]:                             else viewModel.updateDeathSaves(viewModel.deathSaveSuccesses, index + 1)
+681 [5]:                         }
+682 [5]:                     )
+683 [4]:                 }
+684 [3]:             }
+685 [2]:         }
+686 [1]:     }
+687 [-1]: }}  
+ 
+688 [-1]: 

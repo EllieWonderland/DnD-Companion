@@ -1087,8 +1087,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         spellSlotsLevel2 = characterData.baseSpellSlotsLevel2
         spellSlotsLevel3 = characterData.baseSpellSlotsLevel3
         huntersMarkFreeUses = 2
-        freeCureWoundsUsed = false
-        freeHealingWordUsed = false
+        freeAmuletSpellUsed = false
         freeFaerieFireUsed = false
         freeDarknessUsed = false
         freeDruidSpellUsed = false
@@ -1224,8 +1223,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                     TraitItem("Dunkelheit", "1x pro Lange Rast kostenlos wirkbar.", grantedSpellId = "Dunkelheit", maxUses = 1, currentUses = 1),
                     TraitItem("Elfen-Abstammungslinie (Drow)", "Du kennst Tanzende Lichter, Feenfeuer und Dunkelheit."),
                     TraitItem("Eingeweihter der Magie (Segnen)", "Du kannst Segnen 1x pro Lange Rast kostenlos wirken.", grantedSpellId = "Segnen", maxUses = 1, currentUses = 1),
-                    TraitItem("Eingeweihter der Magie (Magierrüstung)", "Du kannst Magierrüstung 1x pro Lange Rast kostenlos wirken.", grantedSpellId = "Magierrüstung", maxUses = 1, currentUses = 1),
-                    TraitItem("Wunden heilen", "Über Heiligtum amulett 1x pro Lange Rast.", grantedSpellId = "Wunden heilen", maxUses = 1, currentUses = 1)
+                    TraitItem("Eingeweihter der Magie (Magierrüstung)", "Du kannst Magierrüstung 1x pro Lange Rast kostenlos wirken.", grantedSpellId = "Magierrüstung", maxUses = 1, currentUses = 1)
                 )
                 
                 var repaired = false
@@ -1258,8 +1256,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         spellSlotsLevel3 = prefs.getInt("spellSlotsLevel3", characterData.baseSpellSlotsLevel3)
         huntersMarkFreeUses = prefs.getInt("huntersMarkFreeUses", 2)
         
-        freeCureWoundsUsed = prefs.getBoolean("freeCureWoundsUsed", false)
-        freeHealingWordUsed = prefs.getBoolean("freeHealingWordUsed", false)
+        freeAmuletSpellUsed = prefs.getBoolean("freeAmuletSpellUsed", false)
         freeFaerieFireUsed = prefs.getBoolean("freeFaerieFireUsed", false)
         freeDarknessUsed = prefs.getBoolean("freeDarknessUsed", false)
         freeDruidSpellUsed = prefs.getBoolean("freeDruidSpellUsed", false)
@@ -1607,23 +1604,13 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    var freeCureWoundsUsed by mutableStateOf(prefs.getBoolean("freeCureWoundsUsed", false))
+    var freeAmuletSpellUsed by mutableStateOf(prefs.getBoolean("freeAmuletSpellUsed", false))
         private set
 
-    fun useFreeCureWounds() {
-        if (!freeCureWoundsUsed) {
-            freeCureWoundsUsed = true
-            prefs.edit { putBoolean("freeCureWoundsUsed", true) }
-        }
-    }
-
-    var freeHealingWordUsed by mutableStateOf(prefs.getBoolean("freeHealingWordUsed", false))
-        private set
-
-    fun useFreeHealingWord() {
-        if (!freeHealingWordUsed) {
-            freeHealingWordUsed = true
-            prefs.edit { putBoolean("freeHealingWordUsed", true) }
+    fun useFreeAmuletSpell() {
+        if (!freeAmuletSpellUsed) {
+            freeAmuletSpellUsed = true
+            prefs.edit { putBoolean("freeAmuletSpellUsed", true) }
         }
     }
 
@@ -1759,8 +1746,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         spellSlotsLevel5 = getMaxSpellSlots(level, 5)
 
         huntersMarkFreeUses = 2
-        freeCureWoundsUsed = false
-        freeHealingWordUsed = false
+        freeAmuletSpellUsed = false
         freeFaerieFireUsed = false
         freeDarknessUsed = false
         freeDruidSpellUsed = false
@@ -1797,8 +1783,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putInt("spellSlotsLevel4", spellSlotsLevel4)
             putInt("spellSlotsLevel5", spellSlotsLevel5)
             putInt("huntersMarkFreeUses", huntersMarkFreeUses)
-            putBoolean("freeCureWoundsUsed", freeCureWoundsUsed)
-            putBoolean("freeHealingWordUsed", freeHealingWordUsed)
+            putBoolean("freeAmuletSpellUsed", freeAmuletSpellUsed)
             putBoolean("freeFaerieFireUsed", freeFaerieFireUsed)
             putBoolean("freeDarknessUsed", freeDarknessUsed)
             putBoolean("freeDruidSpellUsed", freeDruidSpellUsed)

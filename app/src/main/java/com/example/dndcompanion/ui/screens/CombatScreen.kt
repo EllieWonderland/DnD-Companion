@@ -2,7 +2,18 @@ package com.example.dndcompanion.ui.screens
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -602,7 +613,7 @@ fun WeaponButton(title: String, isSelected: Boolean, accentColor: Color, modifie
         ),
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
-            .height(64.dp), // Etwas höher für mehrzeiligen Text
+            .defaultMinSize(minHeight = 64.dp),
         contentPadding = PaddingValues(4.dp)
     ) {
         Text(text = title, fontFamily = Almendra, fontSize = 12.sp, textAlign = TextAlign.Center, lineHeight = 14.sp)
