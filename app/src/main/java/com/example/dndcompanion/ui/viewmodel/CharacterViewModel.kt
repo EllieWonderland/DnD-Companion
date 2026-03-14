@@ -1169,8 +1169,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             }
             
             // REMOVE traits from the OTHER character or legacy
-            val traitsToRemove = listOf("Feenfeuer", "Dunkelheit", "Wunden heilen", "Gute Beere", "Eingeweihter der Magie (Magierrüstung)", "Eingeweihter der Magie (Segnen)", "Feenberührt (Nebelschritt)", "Pakt der Klinge (alt)") + otherTraitNames
-            val finalTraits = customTraits.filter { it.name !in traitsToRemove || it.name in defaultTraitNames }
+            // Wir entfernen alte Bezeichnungen, erlauben aber Feenfeuer, Dunkelheit, Wunden heilen ("good" spells) explizit
+            val legacyTraitsToRemove = listOf("Gute Beere", "Pakt der Klinge (alt)") + otherTraitNames
+            val finalTraits = customTraits.filter { it.name !in legacyTraitsToRemove || it.name in defaultTraitNames }
             if (finalTraits.size != customTraits.size) {
                 customTraits.clear()
                 customTraits.addAll(finalTraits)
@@ -1193,6 +1194,25 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 if (totalArrows < 28) totalArrows = 28
                 if (coinsSM < 1) coinsSM = 1
                 if (coinsGM < 18) coinsGM = 18
+                
+                // Repariere versehentlich durch den vorherigen Bug gelöschte Traits
+                val athaniaMissingTraits = listOf(
+                    TraitItem("Feenfeuer", "1x pro Lange Rast kostenlos wirkbar.", grantedSpellId = "Feenfeuer", maxUses = 1, currentUses = 1),
+                    TraitItem("Dunkelheit", "1x pro Lange Rast kostenlos wirkbar.", grantedSpellId = "Dunkelheit", maxUses = 1, currentUses = 1),
+                    TraitItem("Elfen-Abstammungslinie (Drow)", "Du kennst Tanzende Lichter, Feenfeuer und Dunkelheit."),
+                    TraitItem("Eingeweihter der Magie (Segnen)", "Du kannst Segnen 1x pro Lange Rast kostenlos wirken.", grantedSpellId = "Segnen", maxUses = 1, currentUses = 1),
+                    TraitItem("Eingeweihter der Magie (Magierrüstung)", "Du kannst Magierrüstung 1x pro Lange Rast kostenlos wirken.", grantedSpellId = "Magierrüstung", maxUses = 1, currentUses = 1),
+                    TraitItem("Wunden heilen", "Über Heiligtum amulett 1x pro Lange Rast.", grantedSpellId = "Wunden heilen", maxUses = 1, currentUses = 1)
+                )
+                
+                var repaired = false
+                athaniaMissingTraits.forEach { missing ->
+                    if (customTraits.none { it.name == missing.name }) {
+                        customTraits.add(missing)
+                        repaired = true
+                    }
+                }
+                if (repaired) saveTraits()
             }
             if (characterId == "Delat") {
                 level = 4
