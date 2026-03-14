@@ -182,6 +182,15 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     private var prefs = application.getSharedPreferences("AthaniaSaveGame", Context.MODE_PRIVATE)
     private val gson = Gson()
 
+    init {
+        loadGlobalSpellbook()
+        loadGlobalFeatures()
+        loadEquipment()
+        listenToQuests()
+        listenToSharedLoot()
+        listenToPublicNotes()
+    }
+
     // --- BASISWERTE ---
     // EP Table D&D 5e:
     private val epThresholds = listOf(
@@ -1023,11 +1032,34 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun learnFeature(feature: Feature) {
         if (customTraits.none { it.name == feature.name }) {
+            var uses = 0
+            var spellId: String? = null
+            
+            // Heuristik: Bestimme Zauber und Nutzungen anhand des Namens oder der Beschreibung
+            if (feature.name.contains("Erzfeind", ignoreCase = true)) {
+                spellId = "Zeichen des Jägers"
+                uses = 2
+            } else if (feature.name.contains("Drow", ignoreCase = true)) {
+                // Drow Magie fügen wir explizit separate Traits hinzu, weil es mehrere Zauber sind
+                customTraits.add(TraitItem("Feenfeuer", "1x pro Lange Rast kostenlos wirkbar.", grantedSpellId = "Feenfeuer", maxUses = 1, currentUses = 1))
+                customTraits.add(TraitItem("Dunkelheit", "1x pro Lange Rast kostenlos wirkbar.", grantedSpellId = "Dunkelheit", maxUses = 1, currentUses = 1))
+            } else if (feature.name.contains("Segnen", ignoreCase = true)) {
+                spellId = "Segnen"
+                uses = 1
+            } else if (feature.name.contains("Magierrüstung", ignoreCase = true)) {
+                spellId = "Magierrüstung"
+                uses = 1
+            } else if (feature.name.contains("Nebelschritt", ignoreCase = true)) {
+                spellId = "Nebelschritt"
+                uses = 1
+            }
+
             customTraits.add(TraitItem(
                 name = feature.name,
                 desc = feature.description,
-                maxUses = 0,
-                currentUses = 0
+                maxUses = uses,
+                currentUses = uses,
+                grantedSpellId = spellId
             ))
             lastSelectedFeature = feature
             saveTraits()
