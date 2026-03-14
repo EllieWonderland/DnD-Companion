@@ -54,6 +54,18 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                 Text("Initiative: ${if(viewModel.initiative >= 0) "+" else ""}${viewModel.initiative}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                 Text("Tempo: ${viewModel.speed}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                 Text("Pass. Wahrnehmung: ${viewModel.passivePerception}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                
+                // Heroische Inspiration
+                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { viewModel.toggleHeroicInspiration(!viewModel.heroicInspiration) }) {
+                    Icon(
+                        imageVector = if (viewModel.heroicInspiration) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+                        contentDescription = "Inspiration",
+                        tint = if (viewModel.heroicInspiration) WaldGold else EisenGrau,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text("Insp.", style = MaterialTheme.typography.labelLarge, color = if (viewModel.heroicInspiration) WaldGold else Waldgruen)
+                }
             }
 
             // Lebenspunkte & Trefferwürfel
@@ -79,7 +91,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                             }
                         }
                         Text(
-                            "Trefferwürfel: ${viewModel.hitDice}/${viewModel.characterData.baseHitDice}",
+                            "Trefferwürfel: ${viewModel.hitDice} / ${viewModel.level}W${viewModel.characterData.baseHitDice}",
                             style = MaterialTheme.typography.labelLarge,
                             color = TintenBraun
                         )
@@ -87,12 +99,30 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    // Animierte Progress-Werte
+                    // Animierte Progress-Wer                Column(modifier = Modifier.padding(16.dp)) {
                     val hpProgress by animateFloatAsState(
                         targetValue = if (viewModel.maxHp > 0) viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() else 0f,
                         animationSpec = tween(durationMillis = 500),
                         label = "HP Animation"
                     )
+
+                    Row(verticalAlignment = Alignment.Bottom) {
+                        Text("${viewModel.currentHp} / ${viewModel.maxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White, fontFamily = Almendra)
+                        if (viewModel.tempHp > 0) {
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("+${viewModel.tempHp} Temp", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = TempHPBlau, fontFamily = Almendra)
+                        }
+                    }
+                    
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    LinearProgressIndicator(
+                        progress = { hpProgress },
+                        modifier = Modifier.fillMaxWidth().height(16.dp),
+                        color = if (viewModel.currentHp > (viewModel.maxHp / 4)) accentColor else OchsenblutRot,
+                        trackColor = PergamentHell
+                    )
+
                     
                     val tempHpProgress by animateFloatAsState(
                         targetValue = if (viewModel.tempHp > 0) (viewModel.tempHp.toFloat() / 12f).coerceAtMost(1f) else 0f,
@@ -157,7 +187,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         Button(onClick = { viewModel.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), shape = RoundedCornerShape(6.dp), modifier = Modifier.width(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+12", fontSize = 14.sp) }
                     }
 
-                    if (viewModel.goodberries > 0) {
+                    if (viewModel.goodberries > 0 || isRanger) {
                         Spacer(modifier = Modifier.height(12.dp))
                         Button(
                             onClick = { viewModel.eatGoodberry() },
@@ -306,18 +336,80 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             Text("Waffe ausrüsten", style = MaterialTheme.typography.titleMedium, color = Waldgruen)
             Spacer(modifier = Modifier.height(8.dp))
 
+            var showWeaponEditDialog by remember { mutableStateOf<Int?>(null) }
+            
             Row(
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                if (isRanger) {
-                    WeaponButton("Langbogen", viewModel.currentWeapon == ActiveWeapon.LANGBOGEN, WaldGold, Modifier.weight(1f)) { viewModel.equipWeapon(ActiveWeapon.LANGBOGEN) }
-                    WeaponButton("Kurzschwert\n& Schild", viewModel.currentWeapon == ActiveWeapon.KURZSCHWERT_SCHILD, WaldGold, Modifier.weight(1f)) { viewModel.equipWeapon(ActiveWeapon.KURZSCHWERT_SCHILD) }
-                    WeaponButton("Shillelagh\n& Schild", viewModel.currentWeapon == ActiveWeapon.SHILLELAGH_SCHILD, WaldGold, Modifier.weight(1f)) { viewModel.equipWeapon(ActiveWeapon.SHILLELAGH_SCHILD) }
+                val weaponNames = if (isRanger) {
+                    listOf(
+                        viewModel.getWeaponName(0),
+                        viewModel.getWeaponName(1),
+                        viewModel.getWeaponName(2)
+                    )
                 } else {
-                    WeaponButton("Kriegshammer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT, HexenLila, Modifier.weight(1f)) { viewModel.equipWeapon(ActiveWeapon.KRIEGSHAMMER_PAKT) }
-                    WeaponButton("Speer\n(Pakt)", viewModel.currentWeapon == ActiveWeapon.SPEER_PAKT, HexenLila, Modifier.weight(1f)) { viewModel.equipWeapon(ActiveWeapon.SPEER_PAKT) }
+                    listOf(
+                        viewModel.getWeaponName(0),
+                        viewModel.getWeaponName(1)
+                    )
                 }
+
+                weaponNames.forEachIndexed { index, name ->
+                    val weapon = when(index) {
+                        0 -> if (isRanger) ActiveWeapon.LANGBOGEN else ActiveWeapon.KRIEGSHAMMER_PAKT
+                        1 -> if (isRanger) ActiveWeapon.KURZSCHWERT_SCHILD else ActiveWeapon.SPEER_PAKT
+                        else -> ActiveWeapon.SHILLELAGH_SCHILD
+                    }
+                    
+                    Box(modifier = Modifier.weight(1f)) {
+                        WeaponButton(
+                            title = name,
+                            isSelected = viewModel.currentWeapon == weapon,
+                            accentColor = accentColor,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            viewModel.equipWeapon(weapon)
+                        }
+                        
+                        // Edit Icon Button small on top right
+                        IconButton(
+                            onClick = { showWeaponEditDialog = index },
+                            modifier = Modifier.align(Alignment.TopEnd).size(24.dp).padding(4.dp)
+                        ) {
+                            Icon(Icons.Default.Edit, contentDescription = "Edit", tint = if (viewModel.currentWeapon == weapon) Color.White else accentColor, modifier = Modifier.size(12.dp))
+                        }
+                    }
+                }
+            }
+
+            if (showWeaponEditDialog != null) {
+                val index = showWeaponEditDialog!!
+                val currentName = viewModel.getWeaponName(index).replace("\n", " ")
+                
+                var newName by remember { mutableStateOf(currentName) }
+
+                AlertDialog(
+                    onDismissRequest = { showWeaponEditDialog = null },
+                    title = { Text("Waffe umbenennen", fontFamily = Almendra) },
+                    text = {
+                        OutlinedTextField(
+                            value = newName,
+                            onValueChange = { newName = it },
+                            label = { Text("Name") },
+                            singleLine = true
+                        )
+                    },
+                    confirmButton = {
+                        Button(onClick = {
+                            viewModel.saveWeaponName(index, newName.replace(" & ", "\n& "))
+                            showWeaponEditDialog = null
+                        }) { Text("Speichern", fontFamily = Almendra) }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showWeaponEditDialog = null }) { Text("Abbrechen", fontFamily = Almendra) }
+                    }
+                )
             }
 
             val isVersatile = viewModel.currentWeapon == ActiveWeapon.KRIEGSHAMMER_PAKT || 

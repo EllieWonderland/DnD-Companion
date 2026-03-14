@@ -1,0 +1,186 @@
+{
+    "urtiere": [
+        {
+            "name": "Urtier des Himmels",
+            "typ_und_gesinnung": "Kleines Tier, neutral",
+            "ruestungsklasse": "13 plus dein Weisheitsmodifikator",
+            "trefferpunkte": "4 plus das Vierfache deiner Waldläuferstufe (das Tier hat eine Anzahl von W6-Trefferwürfeln in Höhe deiner Waldläuferstufe)",
+            "bewegungsrate": {
+                "boden": "3 m",
+                "fliegen": "18 m"
+            },
+            "attribute": {
+                "STA": {
+                    "wert": 6,
+                    "modifikator": -2,
+                    "rettungswurf": -2
+                },
+                "GES": {
+                    "wert": 16,
+                    "modifikator": 3,
+                    "rettungswurf": 3
+                },
+                "KON": {
+                    "wert": 13,
+                    "modifikator": 1,
+                    "rettungswurf": 1
+                },
+                "INT": {
+                    "wert": 8,
+                    "modifikator": -1,
+                    "rettungswurf": -1
+                },
+                "WEI": {
+                    "wert": 14,
+                    "modifikator": 2,
+                    "rettungswurf": 2
+                },
+                "CHA": {
+                    "wert": 11,
+                    "modifikator": 0,
+                    "rettungswurf": 0
+                }
+            },
+            "sinne": "Dunkelsicht 18 m, Passive Wahrnehmung 12",
+            "sprachen": "Versteht die Sprachen, die du sprichst",
+            "herausforderungsgrad": "- (EP 0, ÜB entspricht deinem Übungsbonus)",
+            "merkmale": [
+                {
+                    "name": "Vorbeifliegen",
+                    "beschreibung": "Das Tier provoziert keine Gelegenheitsangriffe, wenn es die Reichweite eines Gegners verlässt."
+                },
+                {
+                    "name": "Urbindung",
+                    "beschreibung": "Füge allen Attributs- und Rettungswürfen des Tieres deinen Übungsbonus hinzu."
+                }
+            ],
+            "aktionen": [
+                {
+                    "name": "Bestienschlag",
+                    "typ": "Nahkampfangriffswurf",
+                    "beschreibung": "Bonus in Höhe deines Angriffszauber-Modifikators, Reichweite 1,5 Meter. Treffer: 1W4+3 plus dein Weisheitsmodifikator Hiebschaden."
+                }
+            ]
+        },
+        {
+            "name": "Urtier des Landes",
+            "typ_und_gesinnung": "Mittelgroßes Tier, neutral",
+            "ruestungsklasse": "13 plus dein Weisheitsmodifikator",
+            "trefferpunkte": "5 plus das Fünffache deiner Waldläuferstufe (das Tier hat eine Anzahl von W8-Trefferwürfeln in Höhe deiner Waldläuferstufe)",
+            "bewegungsrate": {
+                "boden": "12 m",
+                "klettern": "12 m"
+            },
+            "attribute": {
+                "STA": {
+                    "wert": 14,
+                    "modifikator": 2,
+                    "rettungswurf": 2
+                },
+                "GES": {
+                    "wert": 14,
+                    "modifikator": 2,
+                    "rettungswurf": 2
+                },
+                "KON": {
+                    "wert": 15,
+                    "modifikator": 2,
+                    "rettungswurf": 2
+                },
+                "INT": {
+                    "wert": 8,
+                    "modifikator": -1,
+                    "rettungswurf": -1
+                },
+                "WEI": {
+                    "wert": 14,
+                    "modifikator": 2,
+                    "rettungswurf": 2
+                },
+                "CHA": {
+                    "wert": 11,
+                    "modifikator": 0,
+                    "rettungswurf": 0
+                }
+            },
+            "sinne": "Dunkelsicht 18 m, Passive Wahrnehmung 12",
+            "sprachen": "Versteht die Sprachen, die du sprichst",
+            "herausforderungsgrad": "- (EP 0, ÜB entspricht deinem Übungsbonus)",
+            "merkmale": [
+                {
+                    "name": "Urbindung",
+                    "beschreibung": "Füge allen Attributs- und Rettungswürfen des Tieres deinen Übungsbonus hinzu."
+                }
+            ],
+            "aktionen": [
+                {
+                    "name": "Bestienschlag",
+                    "typ": "Nahkampfangriffswurf",
+                    "beschreibung": "Bonus in Höhe deines Angriffszauber-Modifikators, Reichweite 1,5 Meter. Treffer: Hieb-, Stich- oder Wuchtschaden (nach deiner Wahl, wenn du das Tier herbeirufst) in Höhe von 1W8+2 plus deines Weisheitsmodifikators. Wenn das Tier sich vor dem Treffer mindestens sechs Meter weit in gerader Linie auf das Ziel zubewegt hat, erleidet das Ziel zusätzlich 1W6 Schaden desselben Typs, und wenn es sich um eine Kreatur von höchstens großer Größe handelt, wird es umgestoßen."
+                }
+            ]
+        },
+        {
+            "name": "Urtier des Meeres",
+            "typ_und_gesinnung": "Mittelgroßes Tier, neutral",
+            "ruestungsklasse": "13 plus dein Weisheitsmodifikator",
+            "trefferpunkte": "5 plus das Fünffache deiner Waldläuferstufe (das Tier hat eine Anzahl von W8-Trefferwürfeln in Höhe deiner Waldläuferstufe)",
+            "bewegungsrate": {
+                "boden": "1,5 m",
+                "schwimmen": "18 m"
+            },
+            "attribute": {
+                "STA": {
+                    "wert": 14,
+                    "modifikator": 2,
+                    "rettungswurf": 2
+                },
+                "GES": {
+                    "wert": 14,
+                    "modifikator": 2,
+                    "rettungswurf": 2
+                },
+                "KON": {
+                    "wert": 15,
+                    "modifikator": 2,
+                    "rettungswurf": 2
+                },
+                "INT": {
+                    "wert": 8,
+                    "modifikator": -1,
+                    "rettungswurf": -1
+                },
+                "WEI": {
+                    "wert": 14,
+                    "modifikator": 2,
+                    "rettungswurf": 2
+                },
+                "CHA": {
+                    "wert": 11,
+                    "modifikator": 0,
+                    "rettungswurf": 0
+                }
+            },
+            "sinne": "Dunkelsicht 27 m, Passive Wahrnehmung 12",
+            "sprachen": "Versteht die Sprachen, die du sprichst",
+            "herausforderungsgrad": "- (EP 0, ÜB entspricht deinem Übungsbonus)",
+            "merkmale": [
+                {
+                    "name": "Amphibisch",
+                    "beschreibung": "Das Tier kann Luft und Wasser atmen."
+                },
+                {
+                    "name": "Urbindung",
+                    "beschreibung": "Füge allen Attributs- und Rettungswürfen des Tieres deinen Übungsbonus hinzu."
+                }
+            ],
+            "aktionen": [
+                {
+                    "name": "Bestienschlag",
+                    "typ": "Nahkampfangriffswurf",
+                    "beschreibung": "Bonus in Höhe deines Angriffszauber-Modifikators, Reichweite 1,5 Meter. Treffer: 1W6+2 plus dein Weisheitsmodifikator Stich- oder Wuchtschaden (nach deiner Wahl, wenn du das Tier herbeirufst), und das Ziel wird gepackt (Rettungswurf-SG entspricht deinem Zauberrettungswurf-SG)."
+                }
+            ]
+        }
+    ]
+}

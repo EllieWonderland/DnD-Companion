@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -108,19 +109,20 @@ fun DnDApp(viewModel: CharacterViewModel) {
                         indicatorColor = Waldgruen
                     )
                 )
-                if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
+                if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER || viewModel.activeCharacterId == "Delat") {
                     NavigationBarItem(
                         selected = currentScreen == 1,
                         onClick = { currentScreen = 1 },
                         icon = { 
+                            val iconRes = if (viewModel.activeCharacterId == "Delat") R.drawable.icon_d20_premium else R.drawable.icon_capybara
                             Image(
-                                painter = painterResource(id = R.drawable.icon_capybara),
-                                contentDescription = "Urtier",
+                                painter = painterResource(id = iconRes),
+                                contentDescription = "Begleiter",
                                 modifier = Modifier.size(38.dp),
                                 contentScale = ContentScale.Fit
                             )
                         },
-                        label = { Text("Urtier", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
+                        label = { Text("Begleiter", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                         colors = NavigationBarItemDefaults.colors(
                             selectedIconColor = WaldGold,
                             selectedTextColor = WaldGold,
@@ -175,10 +177,9 @@ fun DnDApp(viewModel: CharacterViewModel) {
             when (currentScreen) {
                 0 -> AthaniaScreen(viewModel)
                 1 -> {
-                    if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
-                        CapyScreen(viewModel)
+                    if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER || viewModel.activeCharacterId == "Delat") {
+                        CompanionScreen(viewModel)
                     } else {
-                        // Falls Warlock hier landet (sollte nicht passieren da das Icon weg ist, aber als Fallback Profil anzeigen)
                         ProfilScreen(viewModel)
                     }
                 }
@@ -296,17 +297,29 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
 }
 
 @Composable
-fun CapyScreen(viewModel: CharacterViewModel) {
-    val beastColorLight = when(viewModel.activeBeastType) {
-        com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> WaldgruenDunkel
-        com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> HexenLila
-        com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> Bronze
-    }
-    val beastColorDark = when(viewModel.activeBeastType) {
-        com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> Waldgruen
-        com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> OchsenblutRot
-        com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> WaldGold
-    }
+fun CompanionScreen(viewModel: CharacterViewModel) {
+    val companion = viewModel.companionData
+    val isRanger = viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER
+    val isDead = viewModel.companionIsDead
+    
+    val companionName = companion?.name ?: if(isRanger) "Urtier-Begleiter" else "Sphinx des Wunders"
+    val portraitRes = if(isRanger) R.drawable.icon_capybara else R.drawable.icon_d20_premium
+
+    val beastColorLight = if(isRanger) {
+        when(viewModel.activeBeastType) {
+            com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> WaldgruenDunkel
+            com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> HexenLila
+            com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> Bronze
+        }
+    } else HexenLila
+
+    val beastColorDark = if(isRanger) {
+        when(viewModel.activeBeastType) {
+            com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> Waldgruen
+            com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> OchsenblutRot
+            com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> WaldGold
+        }
+    } else WaldGold
 
     PergamentBackground {
     Column(
@@ -318,80 +331,133 @@ fun CapyScreen(viewModel: CharacterViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(id = R.drawable.icon_capybara),
-                contentDescription = "Urtier Portrait",
+                painter = painterResource(id = portraitRes),
+                contentDescription = "Begleiter Portrait",
                 modifier = Modifier
                     .size(150.dp)
                     .clip(RoundedCornerShape(20.dp))
                     .border(3.dp, WaldGold, RoundedCornerShape(20.dp)),
-                contentScale = ContentScale.Fit
+                contentScale = ContentScale.Fit,
+                alpha = if(isDead) 0.5f else 1f
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Text("Urtier-Begleiter", style = MaterialTheme.typography.titleLarge, color = Waldgruen, fontFamily = Almendra)
-        }
-
-        SegmentedBeastControl(
-            activeType = viewModel.activeBeastType,
-            onTypeSelected = { viewModel.toggleBeastType(it) }
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(containerColor = beastColorLight),
-            shape = RoundedCornerShape(16.dp)
-        ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                val capyHpProgress by animateFloatAsState(
-                    targetValue = if (viewModel.capyMaxHp > 0) viewModel.capyCurrentHp.toFloat() / viewModel.capyMaxHp.toFloat() else 0f,
-                    animationSpec = tween(durationMillis = 500),
-                    label = "Capy HP Animation"
-                )
-
-                Text("HP: ${viewModel.capyCurrentHp} / ${viewModel.capyMaxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White, fontFamily = Almendra)
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                LinearProgressIndicator(
-                    progress = { capyHpProgress },
-                    modifier = Modifier.fillMaxWidth().height(16.dp),
-                    color = if (viewModel.capyCurrentHp > 5) beastColorDark else OchsenblutRot,
-                    trackColor = PergamentHell
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Button(onClick = { viewModel.takeCapyDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("-5", fontFamily = Almendra) }
-                    Button(onClick = { viewModel.takeCapyDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("-1", fontFamily = Almendra) }
-                    Button(onClick = { viewModel.healCapy(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("+1", fontFamily = Almendra) }
-                    Button(onClick = { viewModel.healCapy(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("+5", fontFamily = Almendra) }
-                }
+            Text(companionName, style = MaterialTheme.typography.titleLarge, color = if(isDead) EisenGrau else Waldgruen, fontFamily = Almendra)
+            if (companion != null) {
+                Text(companion.typ_und_gesinnung, style = MaterialTheme.typography.labelMedium, color = TintenBraun)
             }
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        if (isRanger && !isDead) {
+            SegmentedBeastControl(
+                activeType = viewModel.activeBeastType,
+                onTypeSelected = { viewModel.toggleBeastType(it) }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+        }
 
-        PergamentCard(modifier = Modifier.fillMaxWidth()) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("Rüstungsklasse (RK)", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra)
-                    Text("${viewModel.capyAc}", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = TintenSchwarz)
+        if (isDead) {
+            Card(
+                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
+                colors = CardDefaults.cardColors(containerColor = OchsenblutRot.copy(alpha = 0.15f)),
+                border = BorderStroke(2.dp, OchsenblutRot),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(modifier = Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("BEGLEITER IST GEFALLEN", color = OchsenblutRot, fontWeight = FontWeight.Bold, fontSize = 20.sp, fontFamily = Almendra)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Button(
+                        onClick = { viewModel.reviveCompanion() },
+                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text(if(isRanger) "Urtier beleben (1 Zauberslot)" else "Vertrauten neu beschwören", fontFamily = Almendra)
+                    }
                 }
-                HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
+            }
+        } else {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = beastColorLight),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    val capyHpProgress by animateFloatAsState(
+                        targetValue = if (viewModel.capyMaxHp > 0) viewModel.capyCurrentHp.toFloat() / viewModel.capyMaxHp.toFloat() else 0f,
+                        animationSpec = tween(durationMillis = 500),
+                        label = "Companion HP Animation"
+                    )
 
-                Text("Tempo: ${viewModel.capySpeed}", fontSize = 16.sp, color = TintenSchwarz)
-                Text("Besonderheit: ${viewModel.capySpecial}", fontSize = 16.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, color = TintenBraun)
+                    Text("HP: ${viewModel.capyCurrentHp} / ${viewModel.capyMaxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White, fontFamily = Almendra)
 
-                HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                Text("Bestienschlag (Kosten: 1 Bonusaktion)", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra, modifier = Modifier.padding(bottom = 4.dp), fontSize = 16.sp)
-                Text("Trefferbonus: ${viewModel.capyAttackBonus}", fontSize = 18.sp, color = TintenSchwarz)
-                Text("Schaden: ${viewModel.capyDamage}", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = beastColorDark)
+                    LinearProgressIndicator(
+                        progress = { capyHpProgress },
+                        modifier = Modifier.fillMaxWidth().height(16.dp),
+                        color = if (viewModel.capyCurrentHp > (viewModel.capyMaxHp / 4)) beastColorDark else OchsenblutRot,
+                        trackColor = PergamentHell
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Button(onClick = { viewModel.takeCapyDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("-5", fontFamily = Almendra) }
+                        Button(onClick = { viewModel.takeCapyDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("-1", fontFamily = Almendra) }
+                        Button(onClick = { viewModel.healCapy(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("+1", fontFamily = Almendra) }
+                        Button(onClick = { viewModel.healCapy(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("+5", fontFamily = Almendra) }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            PergamentCard(modifier = Modifier.fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                        Text("Rüstungsklasse (RK)", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra)
+                        Text("${viewModel.capyAc}", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = TintenSchwarz)
+                    }
+                    HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
+
+                    Text("Tempo: ${viewModel.capySpeed}", fontSize = 16.sp, color = TintenSchwarz)
+                    
+                    if (companion != null) {
+                        Text("Sinne: ${companion.sinne}", fontSize = 14.sp, color = TintenBraun)
+                        Text("Sprachen: ${companion.sprachen}", fontSize = 14.sp, color = TintenBraun)
+                        HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
+                    }
+
+                    Text("Merkmale:", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra, fontSize = 16.sp)
+                    Text(viewModel.capySpecial, fontSize = 14.sp, color = TintenSchwarz)
+
+                    HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
+
+                    Text("Aktionen:", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra, modifier = Modifier.padding(bottom = 4.dp), fontSize = 16.sp)
+                    Text("Angriffsbonus: ${viewModel.capyAttackBonus}", fontSize = 18.sp, color = TintenSchwarz)
+                    Text("Schaden: ${viewModel.capyDamage}", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = beastColorDark)
+                    
+                    companion?.aktionen?.forEach { aktion ->
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text("${aktion.name}:", fontWeight = FontWeight.Bold, color = TintenSchwarz, fontSize = 14.sp)
+                        Text(aktion.beschreibung ?: "", fontSize = 14.sp, color = TintenBraun)
+                    }
+                    
+                    companion?.reaktionen?.let { reaktionen ->
+                        if (reaktionen.isNotEmpty()) {
+                            HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
+                            Text("Reaktionen:", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra, fontSize = 16.sp)
+                            reaktionen.forEach { reaktion ->
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text("${reaktion.name}:", fontWeight = FontWeight.Bold, color = TintenSchwarz, fontSize = 14.sp)
+                                if (reaktion.ausloeser != null) Text("Auslöser: ${reaktion.ausloeser}", fontSize = 13.sp, color = TintenBraun)
+                                if (reaktion.antwort != null) Text("Antwort: ${reaktion.antwort}", fontSize = 13.sp, color = TintenBraun)
+                            }
+                        }
+                    }
+                }
             }
         }
     }

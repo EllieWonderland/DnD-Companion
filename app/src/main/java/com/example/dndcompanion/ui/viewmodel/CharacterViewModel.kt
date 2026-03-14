@@ -133,6 +133,44 @@ enum class BeastType {
     SEA
 }
 
+data class CompanionDto(
+    val name: String,
+    val typ_und_gesinnung: String,
+    val ruestungsklasse: String,
+    val trefferpunkte: String,
+    val bewegungsrate: Map<String, String>,
+    val attribute: Map<String, AttributeDto>,
+    val sinne: String,
+    val sprachen: String,
+    val herausforderungsgrad: String,
+    val merkmale: List<CompanionTraitDto>,
+    val aktionen: List<CompanionActionDto>,
+    val reaktionen: List<CompanionActionDto>? = null
+)
+
+data class AttributeDto(
+    val wert: Int,
+    val modifikator: Int,
+    val rettungswurf: Int
+)
+
+data class CompanionTraitDto(
+    val name: String,
+    val beschreibung: String
+)
+
+data class CompanionActionDto(
+    val name: String,
+    val typ: String? = null,
+    val beschreibung: String? = null,
+    val ausloeser: String? = null,
+    val antwort: String? = null
+)
+
+data class UrtierFileDto(
+    val urtiere: List<CompanionDto>
+)
+
 class CharacterViewModel(application: Application) : AndroidViewModel(application) {
 
     var activeCharacterId by mutableStateOf("Athania")
@@ -151,7 +189,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000
     )
 
-    var currentEP by mutableIntStateOf(prefs.getInt("currentEP", characterData.baseEP))
+    var currentEP by mutableIntStateOf(prefs.getInt("currentEP_${characterData.id}", characterData.baseEP))
+    var heroicInspiration by mutableStateOf(prefs.getBoolean("heroicInspiration_${activeCharacterId}", false))
         private set
 
     var level by mutableIntStateOf(prefs.getInt("level", characterData.baseLevel))
@@ -175,7 +214,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     var showLevelUpNotification by mutableStateOf(false)
         private set
-
+            var snackbarMessage = mutableStateOf<String?>(null)
+    
     var isUsingTwoHanded by mutableStateOf(prefs.getBoolean("isUsingTwoHanded", false))
         private set
 
@@ -429,6 +469,33 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putInt("deathSaveSuccesses", deathSaveSuccesses)
             putInt("deathSaveFailures", deathSaveFailures)
         }
+    }
+
+    fun toggleHeroicInspiration(active: Boolean) {
+        heroicInspiration = active
+        prefs.edit { putBoolean("heroicInspiration_${activeCharacterId}", active) }
+    }
+
+    fun getWeaponName(index: Int): String {
+        return prefs.getString("weaponName_$index", null) ?: when {
+            characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER -> {
+                when(index) {
+                    0 -> "Langbogen"
+                    1 -> "Kurzschwert\n& Schild"
+                    else -> "Shillelagh\n& Schild"
+                }
+            }
+            else -> {
+                when(index) {
+                    0 -> "Kriegshammer\n(Pakt)"
+                    else -> "Speer\n(Pakt)"
+                }
+            }
+        }
+    }
+
+    fun saveWeaponName(index: Int, name: String) {
+        prefs.edit { putString("weaponName_$index", name) }
     }
 
     fun takeDamage(amount: Int) {
@@ -783,6 +850,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             customLoot.add(InventoryItem(itemName, 1, weight, category))
         }
         saveLoot()
+        snackbarMessage.value = "$itemName zum Rucksack hinzugefügt"
     }
 
     fun addFromCatalog(item: EquipmentCatalogItem) {
@@ -1135,6 +1203,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         loadBooks()
         loadFaqs()
         loadSpells()
+        loadCompanion()
         listenToSharedLoot()
         resetChat()
     }
@@ -1649,37 +1718,93 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    var companionData by mutableStateOf<CompanionDto?>(null)
+        private set
+
+    fun loadCompanion() {
+        viewModelScope.launch {
+            try {
+                val context = getApplication<Application>()
+                if (characterData.charClass == CharacterClass.RANGER) {
+                    val jsonString = context.assets.open("Rules/urtier.json").bufferedReader().use { it.readText() }
+                    val fileDto: UrtierFileDto = gson.fromJson(jsonString, UrtierFileDto::class.java)
+                    val targetName = when(activeBeastType) {
+                        BeastType.LAND -> "Urtier des Landes"
+                        BeastType.SKY -> "Urtier des Himmels"
+                        BeastType.SEA -> "Urtier des Meeres"
+                    }
+                    companionData = fileDto.urtiere.find { it.name == targetName }
+                } else if (activeCharacterId == "Delat") {
+                    val jsonString = context.assets.open("Rules/vertrauter.json").bufferedReader().use { it.readText() }
+                    companionData = gson.fromJson(jsonString, CompanionDto::class.java)
+                } else {
+                    companionData = null
+                }
+            } catch (e: Exception) {
+                println("Error loading companion: ${e.message}")
+                companionData = null
+            }
+        }
+    }
+
     var activeBeastType by mutableStateOf(BeastType.valueOf(prefs.getString("activeBeastType", BeastType.SKY.name) ?: BeastType.SKY.name))
         private set
 
-    val capyMaxHp: Int get() = if (activeBeastType == BeastType.SKY || activeBeastType == BeastType.SEA) 4 + (4 * level) else 5 + (5 * level)
-    var capyCurrentHp by mutableIntStateOf(prefs.getInt("capyCurrentHp", 20))
+    val capyMaxHp: Int get() {
+        val base = if (activeBeastType == BeastType.SKY || activeBeastType == BeastType.SEA) 4 else 5
+        val mult = if (activeBeastType == BeastType.SKY || activeBeastType == BeastType.SEA) 4 else 5
+        return if (characterData.charClass == CharacterClass.RANGER) base + (mult * level) else 24 // Sphinx has fixed 24
+    }
+    var capyCurrentHp by mutableIntStateOf(prefs.getInt("capyCurrentHp_${characterData.id}", 20))
         private set
+
+    var companionIsDead by mutableStateOf(prefs.getBoolean("companionIsDead_${characterData.id}", false))
 
     fun toggleBeastType(type: BeastType) {
         activeBeastType = type
+        loadCompanion()
         if (capyCurrentHp > capyMaxHp) capyCurrentHp = capyMaxHp
         prefs.edit {
             putString("activeBeastType", activeBeastType.name)
-            putInt("capyCurrentHp", capyCurrentHp)
+            putInt("capyCurrentHp_${characterData.id}", capyCurrentHp)
         }
     }
 
     fun takeCapyDamage(amount: Int) {
         capyCurrentHp = (capyCurrentHp - amount).coerceAtLeast(0)
-        prefs.edit { putInt("capyCurrentHp", capyCurrentHp) }
+        if (capyCurrentHp == 0) companionIsDead = true
+        prefs.edit { 
+            putInt("capyCurrentHp_${characterData.id}", capyCurrentHp)
+            putBoolean("companionIsDead_${characterData.id}", companionIsDead)
+        }
     }
 
     fun healCapy(amount: Int) {
         capyCurrentHp = (capyCurrentHp + amount).coerceAtMost(capyMaxHp)
-        prefs.edit { putInt("capyCurrentHp", capyCurrentHp) }
+        if (capyCurrentHp > 0) companionIsDead = false
+        prefs.edit { 
+            putInt("capyCurrentHp_${characterData.id}", capyCurrentHp)
+            putBoolean("companionIsDead_${characterData.id}", companionIsDead)
+        }
     }
 
-    val capyAc: Int get() = 13 + proficiencyBonus
-    val capyAttackBonus: String get() = "+$spellAttackBonus"
-    val capyDamage: String get() = if (activeBeastType == BeastType.SKY) "1W4 + $wisMod Hieb" else if(activeBeastType == BeastType.SEA) "1W6 + $wisMod Stich" else "1W8 + $wisMod Hieb"
-    val capySpeed: String get() = if (activeBeastType == BeastType.SKY) "Fliegen 18 m, Laufen 3 m" else if(activeBeastType == BeastType.SEA) "Schwimmen 18 m, Laufen 1.5 m" else "Laufen 12 m, Klettern 12 m"
-    val capySpecial: String get() = if (activeBeastType == BeastType.SKY) "Vorbeifliegen" else if(activeBeastType == BeastType.SEA) "Unter Wasser atmen, Amphibisch" else "Ansturm"
+    fun reviveCompanion() {
+        capyCurrentHp = capyMaxHp
+        companionIsDead = false
+        prefs.edit { 
+            putInt("capyCurrentHp_${characterData.id}", capyCurrentHp)
+            putBoolean("companionIsDead_${characterData.id}", companionIsDead)
+        }
+    }
+
+    val capyAc: Int get() = if (characterData.charClass == CharacterClass.RANGER) 13 + wisMod else 13
+    val capyAttackBonus: String get() = if (characterData.charClass == CharacterClass.RANGER) "+$spellAttackBonus" else "+5"
+    val capyDamage: String get() = if (characterData.charClass == CharacterClass.RANGER) {
+        if (activeBeastType == BeastType.SKY) "1W4 + 3 + $wisMod Hieb" else if(activeBeastType == BeastType.SEA) "1W6 + 2 + $wisMod Stich" else "1W8 + 2 + $wisMod Hieb"
+    } else "1W4+3 Hieb + 2W6 Gleißend"
+    
+    val capySpeed: String get() = companionData?.bewegungsrate?.entries?.joinToString(", ") { "${it.key}: ${it.value}" } ?: ""
+    val capySpecial: String get() = companionData?.merkmale?.joinToString("\n") { "${it.name}: ${it.beschreibung}" } ?: ""
 
     // --- HILFE: CHAT & FAQ ---
     val chatHistory = mutableStateListOf<ChatMessage>()
@@ -1881,17 +2006,17 @@ private val model25Flash = GenerativeModel(
                             
                             if (name.isNotEmpty() && !name.startsWith("**")) {
                                 // Gewicht extrahieren. Es ist typischerweise in der vorletzten Spalte (bei Waffen/Rüstungen/Ausrüstung)
-                                // Wir suchen in allen Spalten nach "Pfd." oder "Tonnen"
-                                // Wir suchen in allen Spalten nach "kg" oder "Tonnen"
+                                // Wir suchen in allen Spalten nach
                                 var weight = 0.0
                                 for (part in parts) {
-                                    if (part.contains("kg")) {
-                                        val weightStr = part.replace(" kg", "").replace(",", ".")
+                                    val cleanPart = part.lowercase().trim()
+                                    if (cleanPart.endsWith("kg")) {
+                                        val weightStr = cleanPart.replace("kg", "").trim().replace(",", ".")
                                         weight = weightStr.toDoubleOrNull() ?: 0.0
                                         break
-                                    } else if (part.contains("Tonnen") || part.contains("Tonne")) {
-                                        val weightStr = part.replace(" Tonnen", "").replace(" Tonne", "").replace(",", ".")
-                                        weight = (weightStr.toDoubleOrNull() ?: 0.0) * 2000.0 // 1 Tonne = 2000 Pfd
+                                    } else if (cleanPart.contains("tonne")) {
+                                        val weightStr = cleanPart.replace("tonnen", "").replace("tonne", "").trim().replace(",", ".")
+                                        weight = (weightStr.toDoubleOrNull() ?: 0.0) * 1000.0 // 1 Tonne = 1000 kg (in Metric context)
                                         break
                                     }
                                 }

@@ -143,6 +143,39 @@
     - [x] **Universeller Support:** Sichtbarkeit im Rucksack für alle Charaktere (auch Delat) umgesetzt.
     *Notiz für Commit: Refine Goodberry interaction and ensure universal support for all character profiles.*
 
+### Stufe 10: Verbesserungen nach erstem Spiel
+- [x] Option, Waffen bei "Waffen ausrüsten" zu ändern
+  *Notiz: Waffenauswahl-System flexibler gestaltet (Umbenennung möglich).*
+- [x] Gute Beeren essen Bug: Button fehlt oder Sichtbarkeit fehlerhaft (Tagesration klären)
+  *Notiz: Button ist nun für Ranger immer sichtbar (wenn Slot vorhanden) und Snackbar zeigt Aktion.*
+- [x] Urtier-Begleiter: Stats vervollständigen (siehe urtier.json)
+  *Notiz: Urtier-Stats vollständig aus JSON geladen und inklusive Attributen angezeigt.*
+- [x] Heroische Inspiration: Markierung im Kampftab hinzufügen
+  *Notiz: Checkbox für heroische Inspiration hinzugefügt.*
+- [ ] Suche im Regelwerk: Sprungmarken korrigieren (genaue Positionierung)
+  *Notiz: Scroll-Logik im Regelwerk fixen.*
+- [x] Rucksack-Transfer: Gewichte korrigieren & optisches Feedback (Snackbar)
+  *Notiz: Gewicht-Parsing verfeinert und Snackbar-Feedback beim Hinzufügen integriert.*
+- [x] Capy (Urtier): Tod und Wiederbelebung implementieren
+  *Notiz: Tod-Status und Wiederbelebungs-Mechanik (mit Slot-Check für Ranger) umgesetzt.*
+- [x] Trefferwürfel-Anzeige: Format auf `Aktuell / MaxW-Typ` ändern (z.B. 4 / 4W10)
+  *Notiz: Hit Dice Anzeigeformat auf dynamischen Würfeltyp korrigiert.*
+- [x] Lebenspunkte Delat: Temp HP nicht in Totalsatz einrechnen
+  *Notiz: HP und Temp-HP Anzeige strikt getrennt (Zähler und Balken).*
+- [x] Delat Level-Up Bug: Werte-Verbesserung dem richtigen Charakter zuordnen
+  *Notiz: Level-Up Bug bei Profil-Wechsel beheben (Athania wurde fälschlicherweise verbessert).*
+- [ ] Delat-Rettungswürfe: Korrektur auf Cha, Wis (geübt)
+  *Notiz: Korrektur der Rettungswürfe für Delat.*
+- [x] Vertrauter: "Sphinx der Wunder" für Delat hinzufügen (eigener Tab)
+  *Notiz: Begleiter-Tab dynamisch für Urtier und Sphinx umgesetzt.*
+- [ ] Charakter-Profil: Ideal und Makel anzeigen
+  *Notiz: Ideal und Makel im Profil-Screen ergänzen.*
+
+### Stufe 11: Optische Anpassungen
+- [ ] Zauber-Details: Komplette Beschreibung beim Ausklappen anzeigen
+  *Notiz: Spell-detail-Ansicht verbessern.*
+- [ ] Metrik-Rundung: Alle Entfernungen auf 0,5m runden (keine Kommazahlen wie ,24)
+  *Notiz: Entfernungsangaben auf 0,5m runden.*
 ## Bugfixes
 - [x] **Chatbot-Identität:** Der Chatbot nennt den Charakter manchmal noch "Athania", auch wenn Delat aktiv ist.
 - [x] **Temporäre HP Button:** Der Zauber/das Merkmal "Unholde Vitalität" (False Life) für Delat sollte einen direkt nutzbaren Button haben, um die 12 Temp HP (oder 1W8+4 nach 2024er Regeln) schnell zu erneuern.
@@ -159,6 +192,7 @@
   - [x] Fehlende Zauber in der Konfiguration identifiziert.
   - [x] Implementierungsplan zur Bereinigung und Vervollständigung umgesetzt.
   - [x] **Bug-Fix Build:** Behebung der Build-Fehler nach Delat-Integration.
+  *Notiz: Build-Fehler (Unresolved references, Syntax) behoben. "Riverside"-Leak in MainActivity entfernt, Heroische Inspiration wiederhergestellt und Snackbar-Layout korrigiert.*
 - [x] **Kostenlose Zauber:** Layout für Athania umgesetzt (kompakte Sektion). 1/LR Tracking visuell integriert.
 - [x] **Zauberbuch:** Die Schrift ist auf dem Hintergrund im Zauberbuch besser lesbar (Kontraste optimiert, auch in der Bibliothek).
   - Note for Commit: Fix readability issues in Spellbook (both in equip screen and library) by using high-contrast parchment theme and fixing button text colors. Add missing imports in BucherScreen.kt.
@@ -190,3 +224,12 @@
     - [ ] `CharacterViewModel` um Ladelogik für den Feature-Katalog erweitern.
     - [ ] UI zur Auswahl von Merkmalen/Talenten implementieren (gefiltert nach Klasse/Rasse).
 
+### Stufe 12: Playtest Refinement
+- [ ] HP-Anzeige aufräumen: Doppelte Balken und Zähler entfernen <!-- id: 460_1 -->
+- [ ] Gute Beere Logik: Wirken verbraucht Slot, Essen ausgegraut bei 0 <!-- id: 460_2 -->
+- [ ] Dynamisches Waffensystem: Auswahl nur aus Inventar, automatische RK-Anpassung <!-- id: 460_3 -->
+- [ ] Schild-Logik: Checkbox für RK (+2), nur aktiv wenn Schild im Inventar <!-- id: 460_4 -->
+- [ ] Kampf-UI: "Standard-Taktik" über Loot-Buttons verschieben <!-- id: 460_5 -->
+- [ ] Zauber-UI: Werte-Karten verkleinern, Rast-Buttons vergrößern <!-- id: 460_6 -->
+- [ ] Begleiter-Refinement: Urtier-Wiederbelebung nach langer Rast <!-- id: 460_7 -->
+- [ ] Inventar-Bugcheck: Gewichte beim Katalog-Hinzufügen validieren <!-- id: 460_8 -->

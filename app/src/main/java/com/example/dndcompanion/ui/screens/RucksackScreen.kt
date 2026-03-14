@@ -45,272 +45,287 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
     var isMoneyBagExpanded by remember { mutableStateOf(false) }
     var showEquipmentPicker by remember { mutableStateOf(false) }
     var showGroupLoot by remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
+    
+    LaunchedEffect(viewModel.snackbarMessage.value) {
+        viewModel.snackbarMessage.value?.let { message ->
+            snackbarHostState.showSnackbar(message)
+            viewModel.snackbarMessage.value = null
+        }
+    }
 
-    PergamentBackground {
-        Column(modifier = Modifier.fillMaxSize()) {
-            TabRow(
-                selectedTabIndex = if (showGroupLoot) 1 else 0,
-                containerColor = WaldgruenDunkel,
-                contentColor = WaldGold,
-                indicator = { tabPositions ->
-                    TabRowDefaults.SecondaryIndicator(
-                        Modifier.tabIndicatorOffset(tabPositions[if (showGroupLoot) 1 else 0]),
-                        color = WaldGold
-                    )
-                }
-            ) {
-                Tab(
-                    selected = !showGroupLoot,
-                    onClick = { showGroupLoot = false },
-                    text = { Text("Persönlich", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
-                    selectedContentColor = WaldGold,
-                    unselectedContentColor = Color.White.copy(alpha = 0.7f)
-                )
-                Tab(
-                    selected = showGroupLoot,
-                    onClick = { showGroupLoot = true },
-                    text = { Text("Gruppen-Loot", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
-                    selectedContentColor = WaldGold,
-                    unselectedContentColor = Color.White.copy(alpha = 0.7f)
-                )
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState())
-            ) {
-                if (!showGroupLoot) {
-                    // --- TRAGLAST (Kette/Seil Optik) ---
-                    Text(
-                        text = "Traglast",
-                        style = Typography.titleLarge,
-                        color = TintenSchwarz
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    
-                    val weightRatio = (viewModel.currentWeight / viewModel.maxWeight).toFloat().coerceIn(0f, 1f)
-                    val weightColor = when {
-                        weightRatio > 0.9f -> OchsenblutRot
-                        weightRatio > 0.7f -> BronzeDunkel
-                        else -> Waldgruen
-                    }
-
-                    Box(modifier = Modifier.fillMaxWidth()) {
-                        ChainProgressBar(progress = weightRatio, color = weightColor)
-                        Text(
-                            text = String.format(java.util.Locale.US, "%.1f / %.0f kg", viewModel.currentWeight, viewModel.maxWeight),
-                            modifier = Modifier.align(Alignment.CenterEnd).padding(top = 28.dp),
-                            style = GrenzeGotischSmall,
-                            color = weightColor
-                        )
-                    }
-                    
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    Text(
-                        text = "Ausrüstung",
-                        style = Typography.headlineSmall,
-                        color = TintenSchwarz
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    // Feste Items
-                    InventoryRow(
-                        name = "Wasserschlauch (Tage)",
-                        amount = viewModel.water.toString(),
-                        onMinus = { viewModel.changeWater(-0.5f) },
-                        onPlus = { viewModel.changeWater(0.5f) }
-                    )
-                    InventoryRow(
-                        name = "Tagesrationen",
-                        amount = viewModel.rations.toString(),
-                        onMinus = { viewModel.changeRations(-1) },
-                        onPlus = { viewModel.changeRations(1) }
-                    )
-
-                    if (viewModel.allSpells.any { it.name == "Gute Beere" && it.isPrepared } || viewModel.goodberries > 0) {
-                        InventoryRow(
-                            name = "Gute Beeren",
-                            amount = viewModel.goodberries.toString(),
-                            onMinus = { viewModel.changeGoodberries(-1) },
-                            onPlus = { viewModel.changeGoodberries(1) }
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    // --- GELDBEUTEL ---
-                    SteinCard(modifier = Modifier.fillMaxWidth()) {
-                        Column(modifier = Modifier.padding(12.dp)) {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable { isMoneyBagExpanded = !isMoneyBagExpanded },
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.icon_geld),
-                                        contentDescription = "Geldbeutel Icon",
-                                        modifier = Modifier.size(38.dp),
-                                        contentScale = ContentScale.Fit
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text("Geldbeutel", style = Typography.titleLarge, color = TintenSchwarz)
-                                }
-                                Icon(
-                                    imageVector = if (isMoneyBagExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                                    contentDescription = null,
-                                    tint = TintenSchwarz
-                                )
-                            }
-
-                            if (isMoneyBagExpanded) {
-                                Spacer(modifier = Modifier.height(12.dp))
-                                CoinRow("Kupfer (KM)", viewModel.coinsKM.toString(), Color(0xFFCD7F32), onMinus = { viewModel.changeCoinsKM(-it) }, onPlus = { viewModel.changeCoinsKM(it) })
-                                CoinRow("Silber (SM)", viewModel.coinsSM.toString(), Color(0xFFC0C0C0), onMinus = { viewModel.changeCoinsSM(-it) }, onPlus = { viewModel.changeCoinsSM(it) })
-                                CoinRow("Elektrum (EM)", viewModel.coinsEM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsEM(-it) }, onPlus = { viewModel.changeCoinsEM(it) })
-                                CoinRow("Gold (GM)", viewModel.coinsGM.toString(), Color(0xFFFFD700), onMinus = { viewModel.changeCoinsGM(-it) }, onPlus = { viewModel.changeCoinsGM(it) })
-                                CoinRow("Platin (PM)", viewModel.coinsPM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsPM(-it) }, onPlus = { viewModel.changeCoinsPM(it) })
-                            } else {
-                                Text(
-                                    text = "${viewModel.coinsKM}KM | ${viewModel.coinsSM}SM | ${viewModel.coinsEM}EM | ${viewModel.coinsGM}GM | ${viewModel.coinsPM}PM",
-                                    style = GrenzeGotischSmall,
-                                    color = TintenBraun,
-                                    modifier = Modifier.padding(top = 4.dp)
-                                )
-                            }
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        containerColor = Color.Transparent
+    ) { padding ->
+        PergamentBackground {
+            Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    TabRow(
+                        selectedTabIndex = if (showGroupLoot) 1 else 0,
+                        containerColor = WaldgruenDunkel,
+                        contentColor = WaldGold,
+                        indicator = { tabPositions ->
+                            TabRowDefaults.SecondaryIndicator(
+                                Modifier.tabIndicatorOffset(tabPositions[if (showGroupLoot) 1 else 0]),
+                                color = WaldGold
+                            )
                         }
+                    ) {
+                        Tab(
+                            selected = !showGroupLoot,
+                            onClick = { showGroupLoot = false },
+                            text = { Text("Persönlich", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+                            selectedContentColor = WaldGold,
+                            unselectedContentColor = Color.White.copy(alpha = 0.7f)
+                        )
+                        Tab(
+                            selected = showGroupLoot,
+                            onClick = { showGroupLoot = true },
+                            text = { Text("Gruppen-Loot", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+                            selectedContentColor = WaldGold,
+                            unselectedContentColor = Color.White.copy(alpha = 0.7f)
+                        )
                     }
 
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    // --- NEUES ITEM / KATALOG ---
-                    Text("Neuer Fund", style = Typography.headlineSmall, color = TintenSchwarz)
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    PergamentCard(modifier = Modifier.fillMaxWidth()) {
-                        Column(modifier = Modifier.padding(12.dp)) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                OutlinedTextField(
-                                    value = newItemName,
-                                    onValueChange = { newItemName = it },
-                                    label = { Text("Name", fontFamily = Almendra) },
-                                    modifier = Modifier.weight(1f),
-                                    textStyle = TextStyle(fontFamily = Almendra),
-                                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = WaldGold, focusedLabelColor = WaldGold)
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                OutlinedTextField(
-                                    value = newItemWeight,
-                                    onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) newItemWeight = it },
-                                    label = { Text("kg", fontFamily = Almendra) },
-                                    modifier = Modifier.width(70.dp),
-                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = WaldGold, focusedLabelColor = WaldGold)
-                                )
-                            }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp)
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        if (!showGroupLoot) {
+                            // --- TRAGLAST (Kette/Seil Optik) ---
+                            Text(
+                                text = "Traglast",
+                                style = Typography.titleLarge,
+                                color = TintenSchwarz
+                            )
                             Spacer(modifier = Modifier.height(8.dp))
                             
-                            // Kategorien-Dropdown
-                            val categories = listOf("Ausrüstung", "Rüstung & Waffen", "Tränke", "Magie", "Werkzeug", "Schätze", "Sonstiges")
-                            var categoryExpanded by remember { mutableStateOf(false) }
-                            
-                            ExposedDropdownMenuBox(
-                                expanded = categoryExpanded,
-                                onExpandedChange = { categoryExpanded = !categoryExpanded },
-                                modifier = Modifier.fillMaxWidth()
-                            ) {
-                                OutlinedTextField(
-                                    value = newItemCategory,
-                                    onValueChange = {},
-                                    readOnly = true,
-                                    label = { Text("Kategorie", fontFamily = Almendra) },
-                                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = categoryExpanded) },
-                                    modifier = Modifier.menuAnchor().fillMaxWidth(),
-                                    textStyle = TextStyle(fontFamily = Almendra),
-                                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = WaldGold, focusedLabelColor = WaldGold)
+                            val weightRatio = (viewModel.currentWeight / viewModel.maxWeight).toFloat().coerceIn(0f, 1f)
+                            val weightColor = when {
+                                weightRatio > 0.9f -> OchsenblutRot
+                                weightRatio > 0.7f -> BronzeDunkel
+                                else -> Waldgruen
+                            }
+
+                            Box(modifier = Modifier.fillMaxWidth()) {
+                                ChainProgressBar(progress = weightRatio, color = weightColor)
+                                Text(
+                                    text = String.format(java.util.Locale.US, "%.1f / %.0f kg", viewModel.currentWeight, viewModel.maxWeight),
+                                    modifier = Modifier.align(Alignment.CenterEnd).padding(top = 28.dp),
+                                    style = GrenzeGotischSmall,
+                                    color = weightColor
                                 )
-                                ExposedDropdownMenu(
-                                    expanded = categoryExpanded,
-                                    onDismissRequest = { categoryExpanded = false },
-                                    modifier = Modifier.background(Pergament)
-                                ) {
-                                    categories.forEach { cat ->
-                                        DropdownMenuItem(
-                                            text = { Text(cat, fontFamily = Almendra) },
-                                            onClick = {
-                                                newItemCategory = cat
-                                                categoryExpanded = false
-                                            }
+                            }
+                            
+                            Spacer(modifier = Modifier.height(24.dp))
+
+                            Text(
+                                text = "Ausrüstung",
+                                style = Typography.headlineSmall,
+                                color = TintenSchwarz
+                            )
+                            Spacer(modifier = Modifier.height(12.dp))
+
+                            // Feste Items
+                            InventoryRow(
+                                name = "Wasserschlauch (Tage)",
+                                amount = viewModel.water.toString(),
+                                onMinus = { viewModel.changeWater(-0.5f) },
+                                onPlus = { viewModel.changeWater(0.5f) }
+                            )
+                            InventoryRow(
+                                name = "Tagesrationen",
+                                amount = viewModel.rations.toString(),
+                                onMinus = { viewModel.changeRations(-1) },
+                                onPlus = { viewModel.changeRations(1) }
+                            )
+
+                            if (viewModel.allSpells.any { it.name == "Gute Beere" && it.isPrepared } || viewModel.goodberries > 0) {
+                                InventoryRow(
+                                    name = "Gute Beeren",
+                                    amount = viewModel.goodberries.toString(),
+                                    onMinus = { viewModel.changeGoodberries(-1) },
+                                    onPlus = { viewModel.changeGoodberries(1) }
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(24.dp))
+
+                            // --- GELDBEUTEL ---
+                            SteinCard(modifier = Modifier.fillMaxWidth()) {
+                                Column(modifier = Modifier.padding(12.dp)) {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .clickable { isMoneyBagExpanded = !isMoneyBagExpanded },
+                                        horizontalArrangement = Arrangement.SpaceBetween,
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Image(
+                                                painter = painterResource(id = R.drawable.icon_geld),
+                                                contentDescription = "Geldbeutel Icon",
+                                                modifier = Modifier.size(38.dp),
+                                                contentScale = ContentScale.Fit
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text("Geldbeutel", style = Typography.titleLarge, color = TintenSchwarz)
+                                        }
+                                        Icon(
+                                            imageVector = if (isMoneyBagExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
+                                            contentDescription = null,
+                                            tint = TintenSchwarz
+                                        )
+                                    }
+
+                                    if (isMoneyBagExpanded) {
+                                        Spacer(modifier = Modifier.height(12.dp))
+                                        CoinRow("Kupfer (KM)", viewModel.coinsKM.toString(), Color(0xFFCD7F32), onMinus = { viewModel.changeCoinsKM(-it) }, onPlus = { viewModel.changeCoinsKM(it) })
+                                        CoinRow("Silber (SM)", viewModel.coinsSM.toString(), Color(0xFFC0C0C0), onMinus = { viewModel.changeCoinsSM(-it) }, onPlus = { viewModel.changeCoinsSM(it) })
+                                        CoinRow("Elektrum (EM)", viewModel.coinsEM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsEM(-it) }, onPlus = { viewModel.changeCoinsEM(it) })
+                                        CoinRow("Gold (GM)", viewModel.coinsGM.toString(), Color(0xFFFFD700), onMinus = { viewModel.changeCoinsGM(-it) }, onPlus = { viewModel.changeCoinsGM(it) })
+                                        CoinRow("Platin (PM)", viewModel.coinsPM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsPM(-it) }, onPlus = { viewModel.changeCoinsPM(it) })
+                                    } else {
+                                        Text(
+                                            text = "${viewModel.coinsKM}KM | ${viewModel.coinsSM}SM | ${viewModel.coinsEM}EM | ${viewModel.coinsGM}GM | ${viewModel.coinsPM}PM",
+                                            style = GrenzeGotischSmall,
+                                            color = TintenBraun,
+                                            modifier = Modifier.padding(top = 4.dp)
                                         )
                                     }
                                 }
                             }
 
+                            Spacer(modifier = Modifier.height(24.dp))
+
+                            // --- NEUES ITEM / KATALOG ---
+                            Text("Neuer Fund", style = Typography.headlineSmall, color = TintenSchwarz)
                             Spacer(modifier = Modifier.height(8.dp))
 
-                            Button(
-                                onClick = {
-                                    if (newItemName.isNotBlank()) {
-                                        viewModel.addCustomLoot(newItemName.trim(), newItemWeight.toDoubleOrNull() ?: 0.0, newItemCategory)
-                                        newItemName = ""
-                                        newItemWeight = ""
+                            PergamentCard(modifier = Modifier.fillMaxWidth()) {
+                                Column(modifier = Modifier.padding(12.dp)) {
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        OutlinedTextField(
+                                            value = newItemName,
+                                            onValueChange = { newItemName = it },
+                                            label = { Text("Name", fontFamily = Almendra) },
+                                            modifier = Modifier.weight(1f),
+                                            textStyle = TextStyle(fontFamily = Almendra),
+                                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = WaldGold, focusedLabelColor = WaldGold)
+                                        )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        OutlinedTextField(
+                                            value = newItemWeight,
+                                            onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) newItemWeight = it },
+                                            label = { Text("kg", fontFamily = Almendra) },
+                                            modifier = Modifier.width(70.dp),
+                                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = WaldGold, focusedLabelColor = WaldGold)
+                                        )
                                     }
-                                },
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    
+                                    // Kategorien-Dropdown
+                                    val categories = listOf("Ausrüstung", "Rüstung & Waffen", "Tränke", "Magie", "Werkzeug", "Schätze", "Sonstiges")
+                                    var categoryExpanded by remember { mutableStateOf(false) }
+                                    
+                                    ExposedDropdownMenuBox(
+                                        expanded = categoryExpanded,
+                                        onExpandedChange = { categoryExpanded = !categoryExpanded },
+                                        modifier = Modifier.fillMaxWidth()
+                                    ) {
+                                        OutlinedTextField(
+                                            value = newItemCategory,
+                                            onValueChange = {},
+                                            readOnly = true,
+                                            label = { Text("Kategorie", fontFamily = Almendra) },
+                                            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = categoryExpanded) },
+                                            modifier = Modifier.menuAnchor().fillMaxWidth(),
+                                            textStyle = TextStyle(fontFamily = Almendra),
+                                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = WaldGold, focusedLabelColor = WaldGold)
+                                        )
+                                        ExposedDropdownMenu(
+                                            expanded = categoryExpanded,
+                                            onDismissRequest = { categoryExpanded = false },
+                                            modifier = Modifier.background(Pergament)
+                                        ) {
+                                            categories.forEach { cat ->
+                                                DropdownMenuItem(
+                                                    text = { Text(cat, fontFamily = Almendra) },
+                                                    onClick = {
+                                                        newItemCategory = cat
+                                                        categoryExpanded = false
+                                                    }
+                                                )
+                                            }
+                                        }
+                                    }
+
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    Button(
+                                        onClick = {
+                                            if (newItemName.isNotBlank()) {
+                                                viewModel.addCustomLoot(newItemName.trim(), newItemWeight.toDoubleOrNull() ?: 0.0, newItemCategory)
+                                                newItemName = ""
+                                                newItemWeight = ""
+                                            }
+                                        },
+                                        modifier = Modifier.fillMaxWidth(),
+                                        colors = MetallButtonColors(),
+                                        shape = RoundedCornerShape(8.dp)
+                                    ) {
+                                        Text("Hinzufügen", fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                                    }
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(12.dp))
+
+                            Button(
+                                onClick = { showEquipmentPicker = true },
                                 modifier = Modifier.fillMaxWidth(),
-                                colors = MetallButtonColors(),
+                                colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
                                 shape = RoundedCornerShape(8.dp)
                             ) {
-                                Text("Hinzufügen", fontFamily = Almendra, fontWeight = FontWeight.Bold)
+                                Icon(Icons.Default.MenuBook, contentDescription = null, modifier = Modifier.size(20.dp))
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text("Katalog öffnen", fontFamily = Almendra, fontWeight = FontWeight.Bold)
                             }
-                        }
-                    }
 
-                    Spacer(modifier = Modifier.height(12.dp))
+                            Spacer(modifier = Modifier.height(24.dp))
 
-                    Button(
-                        onClick = { showEquipmentPicker = true },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Icon(Icons.Default.MenuBook, contentDescription = null, modifier = Modifier.size(20.dp))
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text("Katalog öffnen", fontFamily = Almendra, fontWeight = FontWeight.Bold)
-                    }
-
-                    Spacer(modifier = Modifier.height(24.dp))
-
-                    // Liste flexibler Loot
-                    val groupedLoot = viewModel.customLoot.groupBy { it.category }
-                    groupedLoot.forEach { (cat, items) ->
-                        var isExpanded by remember { mutableStateOf(true) }
-                        Row(
-                            modifier = Modifier.fillMaxWidth().clickable { isExpanded = !isExpanded }.padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(cat, style = Typography.titleMedium, color = Waldgruen)
-                            Icon(if (isExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore, null, tint = Waldgruen)
-                        }
-                        if (isExpanded) {
-                            items.forEach { item ->
-                                InventoryRow(
-                                    name = item.name,
-                                    amount = item.amount.toString(),
-                                    weight = item.weight,
-                                    onMinus = { viewModel.removeCustomLoot(item.name) },
-                                    onPlus = { viewModel.addCustomLoot(item.name, item.weight, cat) }
-                                )
+                            // Liste flexibler Loot
+                            val groupedLoot = viewModel.customLoot.groupBy { it.category }
+                            groupedLoot.forEach { (cat, items) ->
+                                var isExpanded by remember { mutableStateOf(true) }
+                                Row(
+                                    modifier = Modifier.fillMaxWidth().clickable { isExpanded = !isExpanded }.padding(vertical = 4.dp),
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text(cat, style = Typography.titleMedium, color = Waldgruen)
+                                    Icon(if (isExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore, null, tint = Waldgruen)
+                                }
+                                if (isExpanded) {
+                                    items.forEach { item ->
+                                        InventoryRow(
+                                            name = item.name,
+                                            amount = item.amount.toString(),
+                                            weight = item.weight,
+                                            onMinus = { viewModel.removeCustomLoot(item.name) },
+                                            onPlus = { viewModel.addCustomLoot(item.name, item.weight, cat) }
+                                        )
+                                    }
+                                }
                             }
+                        } else {
+                            GroupLootView(viewModel)
                         }
                     }
-                } else {
-                    GroupLootView(viewModel)
                 }
             }
         }

@@ -1,0 +1,68 @@
+{
+    "name": "Sphinx des Wunders",
+    "typ_und_gesinnung": "Winziges celestisches Wesen, rechtschaffen gut",
+    "ruestungsklasse": "13",
+    "initiative": "+3 (13)",
+    "trefferpunkte": "24 (7W4+7)",
+    "bewegungsrate": {
+        "boden": "6 m",
+        "fliegen": "12 m"
+    },
+    "attribute": {
+        "STA": {
+            "wert": 6,
+            "modifikator": -2,
+            "rettungswurf": -2
+        },
+        "GES": {
+            "wert": 17,
+            "modifikator": 3,
+            "rettungswurf": 3
+        },
+        "KON": {
+            "wert": 13,
+            "modifikator": 1,
+            "rettungswurf": 1
+        },
+        "INT": {
+            "wert": 15,
+            "modifikator": 2,
+            "rettungswurf": 2
+        },
+        "WEI": {
+            "wert": 12,
+            "modifikator": 1,
+            "rettungswurf": 1
+        },
+        "CHA": {
+            "wert": 11,
+            "modifikator": 0,
+            "rettungswurf": 0
+        }
+    },
+    "fertigkeiten": "Arkane Kunde +4, Heimlichkeit +5, Religion +4",
+    "resistenzen": "Gleißend, Nekrotisch, Psychisch",
+    "sinne": "Dunkelsicht 18 m, Passive Wahrnehmung 11",
+    "sprachen": "Celestisch, Gemeinsprache",
+    "herausforderungsgrad": "1 (EP 200, ÜB +2)",
+    "merkmale": [
+        {
+            "name": "Magieresistenz",
+            "beschreibung": "Die Sphinx ist bei Rettungswürfen gegen Zauber und andere magische Effekte im Vorteil."
+        }
+    ],
+    "aktionen": [
+        {
+            "name": "Zerfetzen",
+            "typ": "Nahkampfangriffswurf",
+            "beschreibung": "+5, Reichweite 1,5 Meter. Treffer: 5 (1W4+3) Hiebschaden plus 7 (2W6) gleißender Schaden."
+        }
+    ],
+    "reaktionen": [
+        {
+            "name": "Ausbruch der Genialität (2-mal täglich)",
+            "ausloeser": "Die Sphinx oder eine andere Kreatur im Abstand von bis zu neun Metern führt einen Attributswurf oder einen Rettungswurf aus.",
+            "antwort": "Die Sphinx fügt dem Wurf 2 hinzu."
+        }
+    ]
+}
