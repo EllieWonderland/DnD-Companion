@@ -119,7 +119,7 @@
                 "Waldläufer"
             ],
             "level_req": 1,
-            "description": "Der Zauber Zeichen des Jägers ist immer vorbereitet. Du kannst ihn zweimal pro Langer Rast wirken, ohne einen Zauberplatz zu verbrauchen."
+            "description": "Zeichen des Jägers."
         },
         {
             "id": "class_ranger_weapon_mastery",
@@ -428,4 +428,4 @@
             "description": "Greife einen Verbündeten mit deinem schaurigen Strahl an. Danach kannst du mit deinem schaurigen Strahl mit Vorteil angreifen. Der Verbündete erhält 1 Runde Fluch."
         }
     ]
-}
+}

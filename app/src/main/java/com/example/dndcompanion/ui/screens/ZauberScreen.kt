@@ -110,8 +110,8 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                     val freeFeatures = viewModel.customTraits.filter { trait ->
                         val spellId = trait.grantedSpellId
                         if (spellId == null) return@filter false
-                        // Nur anzeigen, wenn der Zauber im Buch steht UND vorbereitet ist
-                        viewModel.allSpells.any { it.name.equals(spellId, ignoreCase = true) && it.isPrepared }
+                        // Kostenlose Zauber werden durch das Talent permanent verfügbar
+                        viewModel.allSpells.any { it.name.equals(spellId, ignoreCase = true) }
                     }
                     freeFeatures.forEach { trait ->
                         Row(

@@ -48,49 +48,44 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Top-Leiste: Passive Stats
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Text("Initiative: ${if(viewModel.initiative >= 0) "+" else ""}${viewModel.initiative}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
-                Text("Tempo: ${viewModel.speed}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
-                Text("Pass. Wahrnehmung: ${viewModel.passivePerception}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
-                
-                // Heroische Inspiration
-                Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.clickable { viewModel.toggleHeroicInspiration(!viewModel.heroicInspiration) }) {
-                    Icon(
-                        imageVector = if (viewModel.heroicInspiration) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
-                        contentDescription = "Inspiration",
-                        tint = if (viewModel.heroicInspiration) WaldGold else EisenGrau,
-                        modifier = Modifier.size(20.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text("Insp.", style = MaterialTheme.typography.labelLarge, color = if (viewModel.heroicInspiration) WaldGold else Waldgruen)
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Text("Init: ${if(viewModel.initiative >= 0) "+" else ""}${viewModel.initiative}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                    Text("Tempo: ${viewModel.speed}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                    Text("Wahrnehmung: ${viewModel.passivePerception}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                 }
-            }
+                
+                // Heroische Inspiration in eigener zentrierter Zeile
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically, 
+                        modifier = Modifier.clickable { viewModel.toggleHeroicInspiration(!viewModel.heroicInspiration) }.padding(4.dp)
+                    ) {
+                        Icon(
+                            imageVector = if (viewModel.heroicInspiration) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+                            contentDescription = "Inspiration",
+                            tint = if (viewModel.heroicInspiration) WaldGold else EisenGrau,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text("Heroische Inspiration", style = MaterialTheme.typography.labelLarge, color = if (viewModel.heroicInspiration) WaldGold else Waldgruen)
+                    }
+                }
 
             // Lebenspunkte & Trefferwürfel
             PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.Bottom
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Column {
-                            Text(
-                                "HP: ${viewModel.currentHp} / ${viewModel.maxHp}",
-                                style = GrenzeGotischStyle,
-                                color = if (viewModel.currentHp > 10) TintenSchwarz else OchsenblutRot
-                            )
-                            if (viewModel.tempHp > 0) {
-                                Text(
-                                    "+${viewModel.tempHp} Temp HP",
-                                    style = GrenzeGotischSmall,
-                                    color = TempHPBlau
-                                )
-                            }
-                        }
                         Text(
                             "Trefferwürfel: ${viewModel.hitDice} / ${viewModel.level}W${viewModel.characterData.baseHitDice}",
                             style = MaterialTheme.typography.labelLarge,
