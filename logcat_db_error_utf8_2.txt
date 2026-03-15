@@ -1,0 +1,12 @@
+﻿03-15 16:21:47.946 E/AndroidRuntime( 5061): Process: com.example.dndcompanion, PID: 5061
+03-15 16:21:47.946 E/AndroidRuntime( 5061): 	at com.example.dndcompanion.data.database.RulebookDao_Impl$20.call(RulebookDao_Impl.java:1492)
+03-15 16:21:47.946 E/AndroidRuntime( 5061): 	at com.example.dndcompanion.data.database.RulebookDao_Impl$20.call(RulebookDao_Impl.java:1488)
+03-15 16:21:55.066 E/AndroidRuntime( 5362): Process: com.example.dndcompanion, PID: 5362
+03-15 16:21:55.066 E/AndroidRuntime( 5362): 	at com.example.dndcompanion.data.database.RulebookDao_Impl$19.call(RulebookDao_Impl.java:1437)
+03-15 16:21:55.066 E/AndroidRuntime( 5362): 	at com.example.dndcompanion.data.database.RulebookDao_Impl$19.call(RulebookDao_Impl.java:1433)
+03-15 16:25:40.235 E/studio.deploy(21068): ERROR: Could not remove dir '/data/data/com.example.dndcompanion/code_cache/.ll/': No such file or directory
+03-15 16:25:41.781 E/le.dndcompanion( 6109): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->setNamedGroups([Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+03-15 16:25:41.782 E/le.dndcompanion( 6109): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->getNamedGroups()[Ljava/lang/String; (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+03-15 16:25:41.782 E/le.dndcompanion( 6109): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->setNamedGroups([Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+03-15 16:25:41.811 E/le.dndcompanion( 6109): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->setNamedGroups([Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+03-15 16:27:01.834 E/le.dndcompanion( 6109): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->setNamedGroups([Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied

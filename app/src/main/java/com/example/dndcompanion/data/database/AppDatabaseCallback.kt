@@ -22,6 +22,15 @@ class AppDatabaseCallback(
         }
     }
 
+    override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
+        super.onDestructiveMigration(db)
+        INSTANCE?.let { database ->
+            scope.launch(Dispatchers.IO) {
+                populateDatabase(database.rulebookDao(), context)
+            }
+        }
+    }
+
     private suspend fun populateDatabase(dao: RulebookDao, context: Context) {
         val gson = Gson()
 
