@@ -243,7 +243,8 @@
     - [x] `AppDatabaseCallback` anpassen, um `spellbook.json` zu parsen.
     - [x] `CharacterViewModel` refactorn (Entfernen von `globalSpellbook` zugunsten von Room Flows).
     - [x] UI-Anpassungen (ZauberScreen & BucherScreen) an das neue `StateFlow` binden.
-    *Notiz für Commit: refactor: migrate global spellbook from in-memory list to Room database and update UI flows*
+    - [x] Volle Beschreibungen für vorbereitete Zauber und kostenlose Talente im Zauber-Tab anzeigen.
+    *Notiz für Commit: feat: display full spell texts from Room DB for prepared spells and free traits in ZauberScreen*
 
 ### Stufe 12: Playtest Refinement
 - [x] HP-Anzeige aufräumen: Doppelte Balken und Zähler entfernen <!-- id: 460_1 -->

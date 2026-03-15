@@ -100,6 +100,8 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             }
 
             // --- KOSTENLOSE ZAUBER (TALENTE) ---
+            val globalSpellbook by viewModel.globalSpellbook.collectAsState()
+
             Card(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
                 colors = CardDefaults.cardColors(containerColor = WaldgruenDunkel)
@@ -120,9 +122,12 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         }
                     }
                     freeFeatures.forEach { trait ->
+                        val matchingSpell = globalSpellbook.find { it.name.equals(trait.grantedSpellId, ignoreCase = true) }
+                        val fullDescription = if (matchingSpell != null) "${trait.desc}\n\n${matchingSpell.description}" else trait.desc
+
                         ExpandableFreeSpellCard(
                             title = trait.name,
-                            description = trait.desc,
+                            description = fullDescription,
                             currentUses = trait.currentUses,
                             maxUses = trait.maxUses,
                             accentColor = accentColor,
@@ -136,9 +141,12 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         (spell.name.equals("Wunden heilen", ignoreCase = true) || spell.name.equals("Heilendes Wort", ignoreCase = true)) && spell.isPrepared
                     }
                     if (amuletSpell != null) {
+                        val matchingSpell = globalSpellbook.find { it.name.equals(amuletSpell.name, ignoreCase = true) }
+                        val fullDescription = "Kostenlos wirkbar über deinen druidischen Fokus (1x pro Lange Rast).\n\n${matchingSpell?.description ?: amuletSpell.description}"
+
                         ExpandableFreeSpellCard(
                             title = amuletSpell.name,
-                            description = "Kostenlos wirkbar über deinen druidischen Fokus (1x pro Lange Rast).\n${amuletSpell.description}",
+                            description = fullDescription,
                             currentUses = if (viewModel.freeAmuletSpellUsed) 0 else 1,
                             maxUses = 1,
                             accentColor = accentColor,
@@ -441,7 +449,8 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 cantrips.forEach { spell ->
                     SpellCard(
                         spell = spell,
-                        onCastAsRitual = if (viewModel.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null
+                        onCastAsRitual = if (viewModel.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null,
+                        globalSpellbook = globalSpellbook
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -452,7 +461,8 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 leveledSpells.forEach { spell ->
                     SpellCard(
                         spell = spell,
-                        onCastAsRitual = if (viewModel.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null
+                        onCastAsRitual = if (viewModel.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null,
+                        globalSpellbook = globalSpellbook
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
@@ -693,7 +703,8 @@ fun SpellCard(
     onTogglePrep: () -> Unit = {},
     onDelete: (() -> Unit)? = null,
     onCastAsRitual: (() -> Unit)? = null,
-    extraContent: (@Composable () -> Unit)? = null
+    extraContent: (@Composable () -> Unit)? = null,
+    globalSpellbook: List<com.example.dndcompanion.data.database.SpellEntity> = emptyList()
 ) {
     var expanded by remember { mutableStateOf(false) }
     Card(
@@ -753,7 +764,8 @@ fun SpellCard(
                 }
 
                 Spacer(modifier = Modifier.height(6.dp))
-                Text(spell.description, color = TintenSchwarz, fontSize = 15.sp, lineHeight = 20.sp)
+                val fullDescription = globalSpellbook.find { it.name.equals(spell.name, ignoreCase = true) }?.description ?: spell.description
+                Text(fullDescription, color = TintenSchwarz, fontSize = 15.sp, lineHeight = 20.sp)
                 
                 if (spell.isRitual && onCastAsRitual != null) {
                     Spacer(modifier = Modifier.height(12.dp))
@@ -873,6 +885,8 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
 
                 Box(modifier = Modifier.weight(1f).padding(bottom = 8.dp)) {
                     val scrollState = rememberScrollState()
+                    val globalSpellbook by viewModel.globalSpellbook.collectAsState()
+                    
                     Column(modifier = Modifier.verticalScroll(scrollState).fillMaxWidth()) {
                         val cantrips = viewModel.allSpells.filter { it.level == 0 }
                         val leveled = viewModel.allSpells.filter { it.level > 0 }.sortedBy { it.level }
@@ -884,7 +898,8 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                     spell = spell,
                                     isEditMode = true,
                                     onTogglePrep = { viewModel.toggleSpellPrepared(spell.id) },
-                                    onDelete = { viewModel.removeSpell(spell.id) }
+                                    onDelete = { viewModel.removeSpell(spell.id) },
+                                    globalSpellbook = globalSpellbook
                                 )
                             }
                         }
@@ -896,7 +911,8 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                     spell = spell,
                                     isEditMode = true,
                                     onTogglePrep = { viewModel.toggleSpellPrepared(spell.id) },
-                                    onDelete = { viewModel.removeSpell(spell.id) }
+                                    onDelete = { viewModel.removeSpell(spell.id) },
+                                    globalSpellbook = globalSpellbook
                                 )
                             }
                         }
@@ -1019,6 +1035,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                     isEditMode = true, // Wir schalten es ein, damit es immer ausgeklappt/bearbeitbar wirkt
                                     onTogglePrep = {},
                                     onDelete = null,
+                                    globalSpellbook = globalSpellbook,
                                     extraContent = {
                                         Button(
                                             onClick = {
