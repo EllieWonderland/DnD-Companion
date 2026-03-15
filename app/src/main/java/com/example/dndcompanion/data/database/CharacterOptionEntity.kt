@@ -43,6 +43,18 @@ data class Subclass(
     val features: List<ClassFeature>
 )
 
+@Entity(tableName = "features")
+data class FeatureEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val type: String, // FEAT, RACIAL_TRAIT, CLASS_FEATURE, SUBCLASS_FEATURE
+    val category: String?, // e.g. "Origin Feat", "Fighting Style"
+    val raceReq: List<String>?, // e.g. ["Elf"]
+    val classReq: List<String>?, // e.g. ["Waldläufer"]
+    val levelReq: Int,
+    val description: String
+)
+
 class CharacterOptionConverters {
     private val gson = Gson()
 

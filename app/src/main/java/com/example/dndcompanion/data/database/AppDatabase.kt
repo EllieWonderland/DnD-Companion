@@ -13,9 +13,10 @@ import androidx.room.TypeConverters
         ArmorEntity::class, 
         ToolEntity::class, 
         SpeciesEntity::class, 
-        ClassEntity::class
+        ClassEntity::class,
+        FeatureEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(StringListConverter::class, CharacterOptionConverters::class)

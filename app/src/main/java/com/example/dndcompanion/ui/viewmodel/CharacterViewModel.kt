@@ -32,6 +32,7 @@ import com.example.dndcompanion.data.database.ArmorEntity
 import com.example.dndcompanion.data.database.ToolEntity
 import com.example.dndcompanion.data.database.SpeciesEntity
 import com.example.dndcompanion.data.database.ClassEntity
+import com.example.dndcompanion.data.database.FeatureEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -216,6 +217,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     private val _searchedClasses = MutableStateFlow<List<ClassEntity>>(emptyList())
     val searchedClasses: StateFlow<List<ClassEntity>> = _searchedClasses.asStateFlow()
 
+    private val _searchedFeatures = MutableStateFlow<List<FeatureEntity>>(emptyList())
+    val searchedFeatures: StateFlow<List<FeatureEntity>> = _searchedFeatures.asStateFlow()
+
     init {
         // Load initial data (all content)
         searchRulebook("")
@@ -262,6 +266,13 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 rulebookDao.getAllClasses().collectLatest { _searchedClasses.value = it }
             } else {
                 rulebookDao.searchClasses(query).collectLatest { _searchedClasses.value = it }
+            }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            if (query.isBlank()) {
+                rulebookDao.getAllFeatures().collectLatest { _searchedFeatures.value = it }
+            } else {
+                rulebookDao.searchFeatures(query).collectLatest { _searchedFeatures.value = it }
             }
         }
     }
@@ -2457,6 +2468,11 @@ private val model25Flash = GenerativeModel(
                     db.searchClassesRaw(searchString).forEach { cls ->
                         val score = keywords.count { cls.name.lowercase().contains(it) || cls.classFeatures.joinToString { f -> f.name + f.description }.lowercase().contains(it) }
                         if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Klassen ---\nKlasse: ${cls.name}\nMerkmale: ${cls.classFeatures.take(5).joinToString { f -> "${f.name}: ${f.description}" }}"))
+                    }
+                    // Merkmale durchsuchen
+                    db.searchFeaturesRaw(searchString).forEach { feature ->
+                        val score = keywords.count { feature.name.lowercase().contains(it) || feature.description.lowercase().contains(it) }
+                        if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Merkmale/Talente ---\nName: ${feature.name}\nTyp: ${feature.type}\nBeschreibung: ${feature.description}"))
                     }
                 }
             }

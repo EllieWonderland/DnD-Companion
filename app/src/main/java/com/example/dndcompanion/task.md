@@ -230,10 +230,14 @@
     - [x] *Neu:* Chatbot-RAG Anbindung an Room-DB statt Markdown-Dateien
     *Notiz für Commit: feat: integrate Room database with Gemini RAG Chatbot and implement Global rulebook search tab*
 - [ ] **Feature-Katalog Integration:**
-    - [ ] JSON-Struktur für Merkmale/Talente definieren und `features.json` erstellen.
-    - [ ] Daten aus Markdown-Dateien in `features.json` extrahieren (Talente, Klassenmerkmale, Volksmerkmale).
-    - [ ] `CharacterViewModel` um Ladelogik für den Feature-Katalog erweitern.
-    - [ ] UI zur Auswahl von Merkmalen/Talenten implementieren (gefiltert nach Klasse/Rasse).
+    - [x] JSON-Struktur für Merkmale/Talente definieren und `features.json` erstellen (heißt jetzt `merkmale.json`).
+    - [x] Daten aus Markdown-Dateien in `merkmale.json` extrahieren (Talente, Klassenmerkmale, Volksmerkmale).
+    - [x] `FeatureEntity` in Room anlegen und `CharacterViewModel` um Ladelogik für `merkmale.json` erweitern.
+    - [ ] UI zur Auswahl von Merkmalen/Talenten implementieren (z.B. Filterung nach Klasse/Rasse beim Level-Up oder in einem `FeaturePickerDialog`).
+    *Notiz für Commit: feat: add FeatureEntity to Room database, parse merkmale.json in AppDatabaseCallback and integrate into BucherScreen Global search tab*
+
+### Sonstiges / Backlog
+- [ ] **Erweiterte Suche (Regelwerk):** Globale Suche verbessern (Suche im Fließtext, Suche nach Unterklassen, Fuzzy Search).
 
 ### Stufe 12: Playtest Refinement
 - [x] HP-Anzeige aufräumen: Doppelte Balken und Zähler entfernen <!-- id: 460_1 -->

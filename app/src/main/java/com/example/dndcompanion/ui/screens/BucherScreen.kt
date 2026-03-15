@@ -59,6 +59,7 @@ import com.example.dndcompanion.data.database.ArmorEntity
 import com.example.dndcompanion.data.database.ToolEntity
 import com.example.dndcompanion.data.database.SpeciesEntity
 import com.example.dndcompanion.data.database.ClassEntity
+import com.example.dndcompanion.data.database.FeatureEntity
 
 enum class BookType {
     GENERAL, GRUDGE, SPELLBOOK, RULEBOOK, GROUP_CHAT, QUESTLOG
@@ -652,6 +653,7 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
     val tabs = listOf(
         "Global", "Gameplay", "Klassen & Völker", "Ausrüstung", "Kampf & Zustände", "Zauber-Regeln", "Dienstleistungen"
     )
+
     val pagerState = rememberPagerState(pageCount = { tabs.size })
 
     // Observe DB Data
@@ -661,6 +663,7 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
     val tools by viewModel.searchedTools.collectAsState()
     val species by viewModel.searchedSpecies.collectAsState()
     val classes by viewModel.searchedClasses.collectAsState()
+    val features by viewModel.searchedFeatures.collectAsState()
 
     // Filter rules by main category
     val gameplayRules = rules.filter { it.category == "Gameplay" }
@@ -791,6 +794,11 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                                 if (classes.isNotEmpty()) {
                                     item { SectionHeader("Klassen") }
                                     items(classes) { cls -> ClassCard(cls) }
+                                    foundAnything = true
+                                }
+                                if (features.isNotEmpty()) {
+                                    item { SectionHeader("Merkmale & Talente") }
+                                    items(features) { feature -> FeatureCard(feature) }
                                     foundAnything = true
                                 }
                                 if (weapons.isNotEmpty() || armor.isNotEmpty() || tools.isNotEmpty()) {
@@ -1297,6 +1305,42 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun FeatureCard(feature: FeatureEntity) {
+    SteinCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            val titleColor = when (feature.type) {
+                "FEAT" -> WaldgruenDunkel
+                "RACIAL_TRAIT" -> OchsenblutRot
+                "CLASS_FEATURE" -> HexenLila
+                "SUBCLASS_FEATURE" -> TintenSchwarz
+                else -> WaldgruenDunkel
+            }
+            Text(feature.name, fontSize = 20.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = titleColor)
+            val subText = buildString {
+                append(feature.type)
+                if (!feature.category.isNullOrBlank()) append(" - ${feature.category}")
+                if (feature.levelReq > 1) append(" (Ab Stufe ${feature.levelReq})")
+            }.toString()
+            Text(subText, fontSize = 14.sp, fontFamily = Almendra, color = TintenSchwarz.copy(alpha = 0.8f))
+            
+            if (!feature.raceReq.isNullOrEmpty() || !feature.classReq.isNullOrEmpty()) {
+                Spacer(modifier = Modifier.height(4.dp))
+                val reqText = buildString {
+                    if (!feature.raceReq.isNullOrEmpty()) append("Volk: ${feature.raceReq.joinToString()} ")
+                    if (!feature.classReq.isNullOrEmpty()) append("Klasse: ${feature.classReq.joinToString()}")
+                }.toString()
+                Text("Voraussetzung: $reqText", fontSize = 14.sp, style = GrenzeGotischSmall, color = OchsenblutRot)
+            }
+            
+            Spacer(modifier = Modifier.height(8.dp))
+            Material3RichText(modifier = Modifier.fillMaxWidth()) {
+                Markdown(feature.description)
             }
         }
     }

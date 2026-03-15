@@ -54,7 +54,20 @@ class AppDatabaseCallback(
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        // 4. Load Features (Merkmale/Talente)
+        try {
+            val featuresJson = context.assets.open("Rules/merkmale.json").bufferedReader().use { it.readText() }
+            val featuresData = gson.fromJson(featuresJson, FeaturesData::class.java)
+            dao.insertFeatures(featuresData.features)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
+
+    private data class FeaturesData(
+        val features: List<FeatureEntity>
+    )
 
     private data class EquipmentData(
         val weapons: List<WeaponEntity>,
