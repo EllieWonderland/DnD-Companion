@@ -1,0 +1,174 @@
+﻿03-15 16:02:49.552 E/keystore2(  478): system/security/keystore2/src/error.rs:186 - system/security/keystore2/src/security_level.rs:334
+03-15 16:02:49.552 E/keystore2(  478):     1: Error::Km(r#KEY_USER_NOT_AUTHENTICATED) for AppUid(10155)
+03-15 16:11:54.291 E/AuthSessionCoordinator( 1615): Error unable to find auth operation : authEndedFor(userId=0 ,biometricStrength=15, sensorId=37748992, requestId=433, wasSuccessful=false)
+03-15 16:21:47.841 E/le.dndcompanion( 5061): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->setNamedGroups([Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+03-15 16:21:47.843 E/le.dndcompanion( 5061): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->getNamedGroups()[Ljava/lang/String; (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+03-15 16:21:47.843 E/le.dndcompanion( 5061): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->setNamedGroups([Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+03-15 16:21:47.868 E/le.dndcompanion( 5061): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->setNamedGroups([Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+--------- beginning of crash
+03-15 16:21:47.946 E/AndroidRuntime( 5061): FATAL EXCEPTION: DefaultDispatcher-worker-14
+03-15 16:21:47.946 E/AndroidRuntime( 5061): Process: com.example.dndcompanion, PID: 5061
+03-15 16:21:47.946 E/AndroidRuntime( 5061): java.lang.IllegalStateException: A migration from 1 to 2 was required but not found. Please provide the necessary Migration path via RoomDatabase.Builder.addMigration(Migration ...) or allow for destructive migrations via one of the RoomDatabase.Builder.fallbackToDestructiveMigration* methods.
+03-15 16:21:47.946 E/AndroidRuntime( 5061): 	at com.example.dndcompanion.data.database.RulebookDao_Impl$20.call(RulebookDao_Impl.java:1492)
+03-15 16:21:47.946 E/AndroidRuntime( 5061): 	at com.example.dndcompanion.data.database.RulebookDao_Impl$20.call(RulebookDao_Impl.java:1488)
+03-15 16:21:47.946 E/AndroidRuntime( 5061): 	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [StandaloneCoroutine{Cancelling}@7bc9068, Dispatchers.IO]
+03-15 16:21:53.470 E/studio.deploy(21068): ERROR: Could not remove dir '/data/data/com.example.dndcompanion/code_cache/.ll/': No such file or directory
+03-15 16:21:53.840 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.840 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.858 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.858 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.860 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.860 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.860 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.860 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.867 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.867 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.868 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.868 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.878 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.878 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.879 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.879 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.880 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.880 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.880 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.880 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.882 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.882 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.883 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.883 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.884 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.884 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.886 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.886 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.887 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.887 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:53.888 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:53.888 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:54.632 E/GoogleApiManager( 5362): java.lang.SecurityException: Unknown calling package name 'com.google.android.gms'.
+03-15 16:21:54.632 E/GoogleApiManager( 5362): 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3383)
+03-15 16:21:54.632 E/GoogleApiManager( 5362): 	at android.os.Parcel.createException(Parcel.java:3367)
+03-15 16:21:54.632 E/GoogleApiManager( 5362): 	at android.os.Parcel.readException(Parcel.java:3350)
+03-15 16:21:54.632 E/GoogleApiManager( 5362): 	at android.os.Parcel.readException(Parcel.java:3292)
+03-15 16:21:54.961 E/le.dndcompanion( 5362): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->setNamedGroups([Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+03-15 16:21:54.963 E/le.dndcompanion( 5362): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->getNamedGroups()[Ljava/lang/String; (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+03-15 16:21:54.963 E/le.dndcompanion( 5362): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->setNamedGroups([Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+03-15 16:21:54.986 E/le.dndcompanion( 5362): hiddenapi: Accessing hidden method Ljavax/net/ssl/SSLParameters;->setNamedGroups([Ljava/lang/String;)V (runtime_flags=0, domain=core-platform, api=blocked) from Lcom/google/android/gms/org/conscrypt/Platform; (domain=app, TargetSdkVersion=36) using reflection: denied
+03-15 16:21:55.066 E/AndroidRuntime( 5362): FATAL EXCEPTION: DefaultDispatcher-worker-12
+03-15 16:21:55.066 E/AndroidRuntime( 5362): Process: com.example.dndcompanion, PID: 5362
+03-15 16:21:55.066 E/AndroidRuntime( 5362): java.lang.IllegalStateException: A migration from 1 to 2 was required but not found. Please provide the necessary Migration path via RoomDatabase.Builder.addMigration(Migration ...) or allow for destructive migrations via one of the RoomDatabase.Builder.fallbackToDestructiveMigration* methods.
+03-15 16:21:55.066 E/AndroidRuntime( 5362): 	at com.example.dndcompanion.data.database.RulebookDao_Impl$19.call(RulebookDao_Impl.java:1437)
+03-15 16:21:55.066 E/AndroidRuntime( 5362): 	at com.example.dndcompanion.data.database.RulebookDao_Impl$19.call(RulebookDao_Impl.java:1433)
+03-15 16:21:55.066 E/AndroidRuntime( 5362): 	Suppressed: kotlinx.coroutines.internal.DiagnosticCoroutineContextException: [StandaloneCoroutine{Cancelling}@b32a975, Dispatchers.IO]
+03-15 16:21:57.233 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:57.233 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:21:57.233 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:21:57.233 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.860 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.860 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.860 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.860 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.868 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.868 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.868 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.868 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.869 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.869 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.869 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.869 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.883 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.883 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.883 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.883 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.884 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.884 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.884 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.884 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.884 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.884 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.884 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.884 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.887 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.887 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.887 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.887 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.892 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.892 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:13.892 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:13.892 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:17.235 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:17.235 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:17.236 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:17.236 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.872 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.872 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.875 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.875 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.876 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.876 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.877 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.877 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.885 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.885 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.886 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.886 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.898 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.898 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.901 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.901 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.902 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.902 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.903 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.903 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.907 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.907 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.908 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.908 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.908 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.908 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.909 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.909 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.913 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.913 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:33.913 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:33.913 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:37.247 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:37.247 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:37.249 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:37.249 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.880 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.880 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.885 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.885 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.889 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.889 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.890 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.890 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.894 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.894 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.897 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.897 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.904 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.904 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.905 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.905 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.908 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.908 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.912 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.912 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.916 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.916 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.918 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.918 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.919 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.919 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.920 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.920 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.921 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.921 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:53.922 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:53.922 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:57.254 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:57.254 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed
+03-15 16:22:57.255 E/serviceDiscovery( 1615): [MdnsMultinetworkSocketClient] ERROR Failed to send a mDNS packet.: Socket is closed
+03-15 16:22:57.255 E/serviceDiscovery( 1615): java.net.SocketException: Socket is closed

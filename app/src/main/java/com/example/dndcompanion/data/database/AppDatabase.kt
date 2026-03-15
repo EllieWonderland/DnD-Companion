@@ -35,6 +35,7 @@ abstract class AppDatabase : RoomDatabase() {
                     AppDatabase::class.java,
                     "dnd_companion_database"
                 )
+                .fallbackToDestructiveMigration()
                 .addCallback(AppDatabaseCallback(context, kotlinx.coroutines.GlobalScope))
                 .build()
                 AppDatabaseCallback.attachDatabase(instance)
