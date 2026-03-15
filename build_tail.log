@@ -1,0 +1,300 @@
+﻿The input changes require a full rebuild for incremental task ':app:compressDebugAssets'.
+
+> Task :app:validateSigningDebug
+Caching disabled for task ':app:validateSigningDebug' because:
+  Build cache is disabled
+  Caching has been disabled for the task
+Task ':app:validateSigningDebug' is not up-to-date because:
+  Output property 'dummyOutputDirectory' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\validate_signing_config\debug\validateSigningDebug has been removed.
+Resolve mutations for :app:writeDebugAppMetadata (Thread[#1356,Execution worker Thread 2,5,main]) started.
+:app:writeDebugAppMetadata (Thread[#1356,Execution worker Thread 2,5,main]) started.
+
+> Task :app:writeDebugAppMetadata
+Caching disabled for task ':app:writeDebugAppMetadata' because:
+  Build cache is disabled
+  Caching has been disabled for the task
+Task ':app:writeDebugAppMetadata' is not up-to-date because:
+  Output property 'outputFile' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\app_metadata\debug\writeDebugAppMetadata\app-metadata.properties has been removed.
+Resolve mutations for :app:writeDebugSigningConfigVersions (Thread[#1356,Execution worker Thread 2,5,main]) started.
+:app:writeDebugSigningConfigVersions (Thread[#1356,Execution worker Thread 2,5,main]) started.
+
+> Task :app:mergeDebugNativeLibs
+Caching disabled for task ':app:mergeDebugNativeLibs' because:
+  Build cache is disabled
+  Caching has been disabled for the task
+Task ':app:mergeDebugNativeLibs' is not up-to-date because:
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\merged_native_libs\debug\mergeDebugNativeLibs\out has been removed.
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\merged_native_libs\debug\mergeDebugNativeLibs\out\lib has been removed.
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\merged_native_libs\debug\mergeDebugNativeLibs\out\lib\arm64-v8a has been removed.
+  and more...
+
+> Task :app:writeDebugSigningConfigVersions
+Caching disabled for task ':app:writeDebugSigningConfigVersions' because:
+  Build cache is disabled
+  Caching has been disabled for the task
+Task ':app:writeDebugSigningConfigVersions' is not up-to-date because:
+  Output property 'outputFile' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\signing_config_versions\debug\writeDebugSigningConfigVersions\signing-config-versions.json has been removed.
+Resolve mutations for :app:stripDebugDebugSymbols (Thread[#1356,Execution worker Thread 2,5,main]) started.
+:app:stripDebugDebugSymbols (Thread[#1356,Execution worker Thread 2,5,main]) started.
+
+> Task :app:processDebugManifestForPackage
+Custom actions are attached to task ':app:processDebugManifestForPackage'.
+Caching disabled for task ':app:processDebugManifestForPackage' because:
+  Build cache is disabled
+Task ':app:processDebugManifestForPackage' is not up-to-date because:
+  Output property 'packageManifests' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\packaged_manifests\debug\processDebugManifestForPackage has been removed.
+  Output property 'packageManifests' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\packaged_manifests\debug\processDebugManifestForPackage\AndroidManifest.xml has been removed.
+  Output property 'packageManifests' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\packaged_manifests\debug\processDebugManifestForPackage\output-metadata.json has been removed.
+Resolve mutations for :app:processDebugResources (Thread[#1359,Execution worker Thread 5,5,main]) started.
+:app:processDebugResources (Thread[#1359,Execution worker Thread 5,5,main]) started.
+
+> Task :app:checkDebugDuplicateClasses
+Caching disabled for task ':app:checkDebugDuplicateClasses' because:
+  Build cache is disabled
+  Caching has been disabled for the task
+Task ':app:checkDebugDuplicateClasses' is not up-to-date because:
+  Output property 'dummyOutputDirectory' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\duplicate_classes_check\debug\checkDebugDuplicateClasses has been removed.
+
+> Task :app:stripDebugDebugSymbols
+Caching disabled for task ':app:stripDebugDebugSymbols' because:
+  Build cache is disabled
+  Caching has been disabled for the task
+Task ':app:stripDebugDebugSymbols' is not up-to-date because:
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\stripped_native_libs\debug\stripDebugDebugSymbols\out has been removed.
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\stripped_native_libs\debug\stripDebugDebugSymbols\out\lib has been removed.
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\stripped_native_libs\debug\stripDebugDebugSymbols\out\lib\arm64-v8a has been removed.
+  and more...
+The input changes require a full rebuild for incremental task ':app:stripDebugDebugSymbols'.
+C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+C/C++: android.ndkPath from module build.gradle is not set
+C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+C/C++: android.ndkPath from module build.gradle is not set
+C/C++: ndk.dir in local.properties is not set
+C/C++: ndk.dir in local.properties is not set
+C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+C/C++: sdkFolder is C:\Users\janaf\AppData\Local\Android\Sdk
+C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+C/C++: sdkFolder is C:\Users\janaf\AppData\Local\Android\Sdk
+C/C++: Folder C:\Users\janaf\AppData\Local\Android\Sdk\ndk\28.2.13676358 does not exist. Ignoring.
+C/C++: Folder C:\Users\janaf\AppData\Local\Android\Sdk\ndk\28.2.13676358 does not exist. Ignoring.
+C/C++: Folder C:\Users\janaf\AppData\Local\Android\Sdk\ndk-bundle does not exist. Ignoring.
+Unable to strip library 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\merged_native_libs\debug\mergeDebugNativeLibs\out\lib\x86_64\libandroidx.graphics.path.so' due to missing strip tool for ABI 'x86_64'. Packaging it as is.
+C/C++: Folder C:\Users\janaf\AppData\Local\Android\Sdk\ndk-bundle does not exist. Ignoring.
+Unable to strip library 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\merged_native_libs\debug\mergeDebugNativeLibs\out\lib\armeabi-v7a\libandroidx.graphics.path.so' due to missing strip tool for ABI 'armeabi-v7a'. Packaging it as is.
+C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+C/C++: android.ndkPath from module build.gradle is not set
+C/C++: ndk.dir in local.properties is not set
+C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+C/C++: sdkFolder is C:\Users\janaf\AppData\Local\Android\Sdk
+C/C++: android.ndkVersion from module build.gradle is [28.2.13676358]
+C/C++: android.ndkPath from module build.gradle is not set
+C/C++: Folder C:\Users\janaf\AppData\Local\Android\Sdk\ndk\28.2.13676358 does not exist. Ignoring.
+C/C++: ndk.dir in local.properties is not set
+C/C++: Not considering ANDROID_NDK_HOME because support was removed after deprecation period.
+C/C++: sdkFolder is C:\Users\janaf\AppData\Local\Android\Sdk
+C/C++: Folder C:\Users\janaf\AppData\Local\Android\Sdk\ndk-bundle does not exist. Ignoring.
+Unable to strip library 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\merged_native_libs\debug\mergeDebugNativeLibs\out\lib\arm64-v8a\libandroidx.graphics.path.so' due to missing strip tool for ABI 'arm64-v8a'. Packaging it as is.
+C/C++: Folder C:\Users\janaf\AppData\Local\Android\Sdk\ndk\28.2.13676358 does not exist. Ignoring.
+C/C++: Folder C:\Users\janaf\AppData\Local\Android\Sdk\ndk-bundle does not exist. Ignoring.
+Unable to strip library 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\merged_native_libs\debug\mergeDebugNativeLibs\out\lib\x86\libandroidx.graphics.path.so' due to missing strip tool for ABI 'x86'. Packaging it as is.
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so. Run with --info option to learn more.
+Resolve mutations for :app:mergeExtDexDebug (Thread[#1356,Execution worker Thread 2,5,main]) started.
+:app:mergeExtDexDebug (Thread[#1356,Execution worker Thread 2,5,main]) started.
+Resolve mutations for :app:mergeLibDexDebug (Thread[#1357,Execution worker Thread 3,5,main]) started.
+:app:mergeLibDexDebug (Thread[#1357,Execution worker Thread 3,5,main]) started.
+
+> Task :app:mergeLibDexDebug
+Caching disabled for task ':app:mergeLibDexDebug' because:
+  Build cache is disabled
+Task ':app:mergeLibDexDebug' is not up-to-date because:
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\dex\debug\mergeLibDexDebug has been removed.
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\dex\debug\mergeLibDexDebug\0 has been removed.
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\dex\debug\mergeLibDexDebug\1 has been removed.
+  and more...
+The input changes require a full rebuild for incremental task ':app:mergeLibDexDebug'.
+
+> Task :app:processDebugResources
+Registered task dependencies: app:debugCompileClasspath
+Skipping misunderstood TO dep string: androidx.compose.ui:ui-tooling
+Skipping misunderstood TO dep string: androidx.compose.ui:ui-test-manifest
+Skipping misunderstood TO dep string: androidx.compose.ui:ui
+Skipping misunderstood TO dep string: androidx.compose.ui:ui-graphics
+Skipping misunderstood TO dep string: androidx.compose.ui:ui-tooling-preview
+Skipping misunderstood TO dep string: androidx.compose.material3:material3
+Skipping misunderstood TO dep string: androidx.compose.material:material-icons-extended
+Skipping misunderstood TO dep string: com.google.firebase:firebase-firestore
+Starting dependency analysis
+Caching disabled for task ':app:processDebugResources' because:
+  Build cache is disabled
+Task ':app:processDebugResources' is not up-to-date because:
+  Output property 'RClassOutputJar' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\compile_and_runtime_r_class_jar\debug\processDebugResources\R.jar has been removed.
+  Output property 'linkedResourcesOutputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\linked_resources_binary_format\debug\processDebugResources has been removed.
+  Output property 'linkedResourcesOutputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\linked_resources_binary_format\debug\processDebugResources\linked-resources-binary-format-debug.ap_ has been removed.
+  and more...
+The input changes require a full rebuild for incremental task ':app:processDebugResources'.
+AAPT2 aapt2-9.1.0-14792394-windows Daemon #0: starting
+Aapt output file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\linked_resources_binary_format\debug\processDebugResources\linked-resources-binary-format-debug.ap_
+Resolve mutations for :app:kaptGenerateStubsDebugKotlin (Thread[#1359,Execution worker Thread 5,5,main]) started.
+:app:kaptGenerateStubsDebugKotlin (Thread[#1359,Execution worker Thread 5,5,main]) started.
+
+> Task :app:mergeExtDexDebug
+Caching disabled for task ':app:mergeExtDexDebug' because:
+  Build cache is disabled
+Task ':app:mergeExtDexDebug' is not up-to-date because:
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\dex\debug\mergeExtDexDebug has been removed.
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\dex\debug\mergeExtDexDebug\classes.dex has been removed.
+  Output property 'outputDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\dex\debug\mergeExtDexDebug\classes2.dex has been removed.
+  and more...
+The input changes require a full rebuild for incremental task ':app:mergeExtDexDebug'.
+Merging to 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\intermediates\dex\debug\mergeExtDexDebug' with D8 from all or a subset of dex files in C:\Users\janaf\.gradle\caches\9.3.1\transforms\1ac7db68279c7872d74e491074cdd436\workspace\transformed\room-common-2.6.1, C:\Users\janaf\.gradle\caches\9.3.1\transforms\2d5615274c3c12f7833235fa835b4e69\workspace\transformed\room-runtime-2.6.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\3b8f9d7671555164c0d2891280eeb6f8\workspace\transformed\room-ktx-2.6.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\b2b22bc00689f6d4eb82deff6167f172\workspace\transformed\richtext-ui-material3-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\7d8fdf42abc5deda93dfcca027208b4a\workspace\transformed\material3-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\9b1d657a37828bbc39ec870bd6e0a6ab\workspace\transformed\richtext-commonmark-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\3af9cd1903f5ceddf9e384f600b63629\workspace\transformed\richtext-ui-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\94a9b308001bb7e001171448d8d361a0\workspace\transformed\coil-compose-2.4.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\0fccf8edbf5ff07295535e0b9014d5f1\workspace\transformed\coil-compose-base-2.4.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\f2992d951909a7e53d26e7946ace8e97\workspace\transformed\material-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\fe8eac04702147f660c96bea42fc13cc\workspace\transformed\animation-core-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\359c934013a4a43f352d1d6f80ef8bab\workspace\transformed\material-ripple-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\edbf97ae699248c0df5c40363c83c36a\workspace\transformed\animation-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\1cdfd2a755f888a25243f7efde842299\workspace\transformed\foundation-layout-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\cf38446c350300266d6064302d0d592e\workspace\transformed\foundation-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\dba4e0a1cf522e9f67c630dcccb48298\workspace\transformed\ui-geometry-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\77188105f32b235584df67dddc771ac7\workspace\transformed\ui-graphics-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\10000a4c45e640f32709f7a4ecfdbf68\workspace\transformed\ui-unit-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\5ed96398dbbf0811e25f69beaf1e6c5b\workspace\transformed\ui-text-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\f413f600ffdabc79ef422a1b291619b5\workspace\transformed\ui-util-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\e66abc42efb4bf5e24300d8cca840e83\workspace\transformed\ui-tooling-data-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\4af3e8d178a5435c7ef54bd4d451cfbe\workspace\transformed\ui-tooling-preview-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\c66e6a61bf68d94316f31d86576686c5\workspace\transformed\ui-tooling-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\1ab648e1feb5b998c02527595637311e\workspace\transformed\firebase-firestore-24.11.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\f354613ae2f070dd95c1d755efc9b87f\workspace\transformed\firebase-appcheck-interop-17.0.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\d0b9d414c0ce6e163214cbba033270b1\workspace\transformed\firebase-database-collection-18.0.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\8e375332a126924a0b8062aea9e207cc\workspace\transformed\play-services-base-18.0.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\56de7ae787af71b2886f2ee7b12f3a76\workspace\transformed\firebase-auth-interop-19.0.2-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\0a285fb0796973ab7c9fca0a21904718\workspace\transformed\firebase-common-ktx-20.4.3-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\0eef166c4f68d15b88534a586f67c6a3\workspace\transformed\firebase-common-20.4.3-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\be8bc02dec29a594413a45c2bb48d5a7\workspace\transformed\generativeai-0.9.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\0fb1d019f742aca5ab3ea38deb1fffe1\workspace\transformed\common-0.8.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\912f382803afae3f32d58d7d72732c0e\workspace\transformed\savedstate-ktx-1.2.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\895c6f72abfaad9d06493e8b7982dbe2\workspace\transformed\savedstate-1.2.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\bc7c80fd22c80ff84d3f91bdd3f937cc\workspace\transformed\emoji2-1.3.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\04729ecc4b82540577b432c9f27e434f\workspace\transformed\loader-1.0.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\02940e6989139c4a64b8123acfcc1f9f\workspace\transformed\lifecycle-livedata-2.8.7-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\506c136b1f43d15987250023e602a3d2\workspace\transformed\lifecycle-process-2.8.7-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\9bd51dedabc77c13c8d1648ee3e21dc7\workspace\transformed\lifecycle-livedata-core-2.8.7-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\8790ab9d6d1bd3462baee389c6994650\workspace\transformed\coil-2.4.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\79002f6f4cfa3494dcf313034730e3dc\workspace\transformed\coil-base-2.4.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\15131bb06e333d5139986f40482289b6\workspace\transformed\autofill-1.0.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\7e81d0160157f98a5f27e3e826a9eec0\workspace\transformed\graphics-path-1.0.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\c51f849e47b22175bdb6a9f29cdd3f64\workspace\transformed\viewpager-1.0.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\eb5dd7fcfd66d7d605dab82fd99f2668\workspace\transformed\appcompat-resources-1.6.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\b6c57c2a5e5a9900ebca908bea999d8b\workspace\transformed\customview-poolingcontainer-1.0.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\93a6333eec013eadd03c26b48660ed1d\workspace\transformed\core-ktx-1.13.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\636c6e210bc2201f62f31db9c7bfecb2\workspace\transformed\customview-1.0.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\0e8cef673f9e48f16821fb3eb8226606\workspace\transformed\vectordrawable-animated-1.1.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\3e102f829fb426f62f93365bb6532a01\workspace\transformed\vectordrawable-1.1.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\9dc0b7c38813beabec084828488429ae\workspace\transformed\core-1.13.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\ebb28799184e0fbad900923ccf31d09e\workspace\transformed\lifecycle-runtime-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\d169ff6124cfe6414b05d45363668728\workspace\transformed\lifecycle-common-jvm-2.8.7, C:\Users\janaf\.gradle\caches\9.3.1\transforms\ff15a853e676baf2fbe1748b8377d613\workspace\transformed\lifecycle-viewmodel-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\270bbdcd6e3d17253186a04a3d9b988c\workspace\transformed\accompanist-drawablepainter-0.30.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\957db652c74abc04bb49c38442d20474\workspace\transformed\runtime-saveable-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\9a2d326ab4a3872a7804cc323a6fddc1\workspace\transformed\runtime-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\0263880ed2a584dceffda061cf7fdd3f\workspace\transformed\kotlinx-coroutines-android-1.7.3, C:\Users\janaf\.gradle\caches\9.3.1\transforms\5a06da119e98672a4ef3deaba7941610\workspace\transformed\kotlinx-coroutines-reactive-1.7.3, C:\Users\janaf\.gradle\caches\9.3.1\transforms\f953c81e5e18f647318bd66f13289086\workspace\transformed\ktor-client-okhttp-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\f4f00a4555cee7ca8d18c84d97cc4f74\workspace\transformed\ktor-client-content-negotiation-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\39760b45c7b2bf4fd66865928940b3bf\workspace\transformed\ktor-client-logging-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\1079719ee66bdcb18f940ec6e603da5d\workspace\transformed\ktor-client-core-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\300e9ac997072a28edacd5ad1d0e576d\workspace\transformed\ktor-serialization-kotlinx-json-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\d7739238ecdd4455eec6082e0d22b0e5\workspace\transformed\ktor-events-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\d15be011de0455555775afe88cc9d8b0\workspace\transformed\ktor-websocket-serialization-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\1bb01901fee0f154faed24c28d833bae\workspace\transformed\ktor-serialization-kotlinx-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\a363463f302f2d867d9923a3d666bd44\workspace\transformed\ktor-serialization-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\16858b3323a24e112a47117af2d0388f\workspace\transformed\ktor-websockets-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\7583649d215002c7f02406bf64ecdce3\workspace\transformed\ktor-http-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\4deeabb31600ac8766408a59a5f3e3c7\workspace\transformed\ktor-utils-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\f08d4387b403797eb145ebf19101b2b7\workspace\transformed\ktor-io-jvm-2.3.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\511ba29a74e08529f846f8ef809b2bb8\workspace\transformed\kotlinx-coroutines-slf4j-1.7.3, C:\Users\janaf\.gradle\caches\9.3.1\transforms\51a23c2daa311f5bf28c8834055d38e4\workspace\transformed\profileinstaller-1.3.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\c8a2f1447dc325747560920180b653b4\workspace\transformed\concurrent-futures-1.2.0-alpha03, C:\Users\janaf\.gradle\caches\9.3.1\transforms\691e478c1c3c236948341b728bed0cb0\workspace\transformed\concurrent-futures-ktx-1.2.0-alpha03, C:\Users\janaf\.gradle\caches\9.3.1\transforms\ae4093553dd0e0cf3b6724292a229208\workspace\transformed\kotlinx-coroutines-core-jvm-1.7.3, C:\Users\janaf\.gradle\caches\9.3.1\transforms\0d4965da174c990e6756c5a9f6c6c0e8\workspace\transformed\kotlinx-coroutines-play-services-1.7.3, C:\Users\janaf\.gradle\caches\9.3.1\transforms\b1ce5b8d7065415074c5b69727c94e1c\workspace\transformed\play-services-tasks-18.1.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\f4ddf6129a75229d496f65bf05af3e0c\workspace\transformed\play-services-basement-18.3.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\b60561f1ae6e148250024d6ab665ac23\workspace\transformed\fragment-1.1.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\44d0fced9a2d59fc9bdcf8827cb6189a\workspace\transformed\activity-1.8.2-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\791dfddbe4ed9963304622ee55349041\workspace\transformed\activity-ktx-1.8.2-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\b3408dc2c55b5b4f6214c08f03e80194\workspace\transformed\activity-compose-1.8.2-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\2f69348a52c647b79ea0ab769a7ba927\workspace\transformed\material-icons-extended-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\61f51b224954776a718279ba2fe83a5d\workspace\transformed\material-icons-core-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\18ab36e9dfa745453a3688e20cd47c2b\workspace\transformed\ui-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\bfb91465fded84c3955b71b69869eebb\workspace\transformed\lifecycle-runtime-compose-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\d72edeab022b210ef693575ed027d6e6\workspace\transformed\lifecycle-viewmodel-savedstate-2.8.7-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\9473acd2dff5faec1a02d103d1a22668\workspace\transformed\lifecycle-viewmodel-compose-release-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\260ca103c4d5d9f126df8ca6dad0b6db\workspace\transformed\sqlite-framework-2.4.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\ba832797231d6e8440ac8da6cdfe8306\workspace\transformed\sqlite-2.4.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\29a2c2d6edffd895974b2e112cdef7eb\workspace\transformed\okhttp-4.11.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\88718913eb04a3cfab2114c97bddc7ad\workspace\transformed\grpc-okhttp-1.57.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\c552d2a0dfdb911bb021107088a09402\workspace\transformed\okio-jvm-3.3.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\29308b5a3a59e289aac8ac040c4f2337\workspace\transformed\kotlinx-serialization-core-jvm-1.5.1, C:\Users\janaf\.gradle\caches\9.3.1\transforms\be637f80bb9ddafa8682ed8c5bfeafba\workspace\transformed\kotlinx-serialization-json-jvm-1.5.1, C:\Users\janaf\.gradle\caches\9.3.1\transforms\6c41b1755b75d3cdc44a3ff9d5e27cea\workspace\transformed\versionedparcelable-1.1.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\357b4d50db9979d1cc23fb5dc2bef90a\workspace\transformed\collection-jvm-1.4.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\51a6661a348cb49a67e25f38fcdd5c68\workspace\transformed\core-runtime-2.2.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\ab38f094851af30e6fbd2d05ff24bcda\workspace\transformed\core-common-2.2.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\696c85c6f7ac94d62d01c61af8df4582\workspace\transformed\firebase-components-17.1.5-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\2f4ba737fd5b2922b00a19704362a57f\workspace\transformed\startup-runtime-1.1.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\33e5cc8549731209440d15d7b3c23da8\workspace\transformed\tracing-1.0.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\e444236accb09700493e99a3702aa1c5\workspace\transformed\exifinterface-1.3.6-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\628dd85e88b8c3a1eeb79a1b493e0ef6\workspace\transformed\interpolator-1.0.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\0d74e22778140aa99396d260a1c21d9a\workspace\transformed\annotation-jvm-1.8.1, C:\Users\janaf\.gradle\caches\9.3.1\transforms\dda63299fb640d1e4970558eb6a6d446\workspace\transformed\annotation-experimental-1.4.1-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\0602c95aea2e335533ba93e64aecb31d\workspace\transformed\kotlin-stdlib-2.2.10, C:\Users\janaf\.gradle\caches\9.3.1\transforms\29d5e1fcab31b0f2da95993820111168\workspace\transformed\grpc-android-1.57.2-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\04354fc38d7093f2bfe6fc58ed3131d7\workspace\transformed\grpc-core-1.57.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\a62a69ef5743ad6480f3ac864dfc7b11\workspace\transformed\gson-2.10.1, C:\Users\janaf\.gradle\caches\9.3.1\transforms\fadb0439a8a22ebe6a565f395a1ca1bc\workspace\transformed\annotations-23.0.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\25e85fc91b6bb47fbddad609b71a675d\workspace\transformed\slf4j-nop-2.0.9, C:\Users\janaf\.gradle\caches\9.3.1\transforms\5b89b4b97a7daca05f0da172a28f7f72\workspace\transformed\reactive-streams-1.0.3, C:\Users\janaf\.gradle\caches\9.3.1\transforms\34cceeec679ee83525052360d55878a0\workspace\transformed\grpc-protobuf-lite-1.57.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\ccf36005f628e024719c8b38aec37269\workspace\transformed\grpc-stub-1.57.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\c0ad27aa0c9aeb5167b2d70c5f86cc74\workspace\transformed\grpc-api-1.57.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\ed2858b5c095abcb0cdd5accf0d5313d\workspace\transformed\guava-32.0.1-android, C:\Users\janaf\.gradle\caches\9.3.1\transforms\cad42f0c8d6f04fb456b935698deef98\workspace\transformed\firebase-annotations-16.2.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\bf4fb7343010940b12c5aab33b4f0e43\workspace\transformed\protolite-well-known-types-18.0.0-runtime, C:\Users\janaf\.gradle\caches\9.3.1\transforms\7dc9fee61034074b61dd1dd3f6cd63fe\workspace\transformed\slf4j-api-2.0.9, C:\Users\janaf\.gradle\caches\9.3.1\transforms\e82ef3ccc8433e92c1038df395767175\workspace\transformed\commonmark-ext-gfm-tables-0.21.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\0fb7a2a0bc85ad064a69153478183729\workspace\transformed\commonmark-ext-gfm-strikethrough-0.21.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\22c221f5108e9e4d89367be5dac8f8c3\workspace\transformed\commonmark-ext-autolink-0.21.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\280ab27eabfa7666ad61da602d3a088e\workspace\transformed\commonmark-0.21.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\47db0b7d2300fbc83ea1646297f9b58f\workspace\transformed\perfmark-api-0.26.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\378253b46d608c2caaaebba710e7d5e3\workspace\transformed\protobuf-javalite-3.22.3, C:\Users\janaf\.gradle\caches\9.3.1\transforms\a9f1cb86f466265df3ff737eae4a42f2\workspace\transformed\jsr305-3.0.2, C:\Users\janaf\.gradle\caches\9.3.1\transforms\1f1a9d864442f90c3c2fc572f0bd08f1\workspace\transformed\error_prone_annotations-2.18.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\2fbf552fe93b901a4fab38e535bf0c94\workspace\transformed\javax.inject-1, C:\Users\janaf\.gradle\caches\9.3.1\transforms\e61704ec8029e7db5790f8373e527178\workspace\transformed\autolink-0.10.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\efff9eec9c1fa2455e5eec49cc97b637\workspace\transformed\annotations-4.1.1.4, C:\Users\janaf\.gradle\caches\9.3.1\transforms\b04c29087f6163e5d923c0c3accf0df3\workspace\transformed\animal-sniffer-annotations-1.23, C:\Users\janaf\.gradle\caches\9.3.1\transforms\90eec3874472e373114a84262ec4917c\workspace\transformed\failureaccess-1.0.1, C:\Users\janaf\.gradle\caches\9.3.1\transforms\cc09568e7c7f3eb5200af8a250926c2e\workspace\transformed\checker-qual-3.33.0, C:\Users\janaf\.gradle\caches\9.3.1\transforms\946b87065690b135b7a53c1755729641\workspace\transformed\j2objc-annotations-2.8, and from all global synthetics files in 
+
+> Task :app:kaptGenerateStubsDebugKotlin
+Adding -Xuse-inline-scopes-numbers Kotlin compiler flag for task :app:compileDebugAndroidTestKotlin
+Registered task dependencies: app:kotlinCompilerClasspath
+Starting dependency analysis
+Registered task dependencies: app:kotlinCompilerPluginClasspathDebug
+Starting dependency analysis
+Caching disabled for task ':app:kaptGenerateStubsDebugKotlin' because:
+  Build cache is disabled
+Task ':app:kaptGenerateStubsDebugKotlin' is not up-to-date because:
+  Output property 'classpathSnapshotProperties.classpathSnapshotDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\kotlin\kaptGenerateStubsDebugKotlin\classpath-snapshot has been removed.
+  Output property 'classpathSnapshotProperties.classpathSnapshotDir' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\kotlin\kaptGenerateStubsDebugKotlin\classpath-snapshot\shrunk-classpath-snapshot.bin has been removed.
+  Output property 'destinationDirectory' file C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\tmp\kapt3\incrementalData\debug has been removed.
+  and more...
+The input changes require a full rebuild for incremental task ':app:kaptGenerateStubsDebugKotlin'.
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+Using Kotlin/JVM incremental compilation
+[KOTLIN] Kotlin compilation 'jdkHome' argument: null
+Options for KOTLIN DAEMON: IncrementalCompilationOptions(super=CompilationOptions(compilerMode=INCREMENTAL_COMPILER, targetPlatform=JVM, reportCategories=[0, 3], reportSeverity=2, requestedCompilationResults=[0], kotlinScriptExtensions=[]), sourceChanges=org.jetbrains.kotlin.buildtools.api.SourcesChanges$Unknown@6514a1d4, classpathChanges=NotAvailableForNonIncrementalRun, workingDir=C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\kotlin\kaptGenerateStubsDebugKotlin\cacheable, multiModuleICSettings=MultiModuleICSettings(buildHistoryFile=C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\kotlin\kaptGenerateStubsDebugKotlin\local-state\build-history.bin, useModuleDetection=true), icFeatures=IncrementalCompilationFeatures(usePreciseJavaTracking=true, withAbiSnapshot=false, preciseCompilationResultsBackup=true, keepIncrementalCompilationCachesInMemory=true, enableUnsafeIncrementalCompilationForMultiplatform=false, enableMonotonousIncrementalCompileSetExpansion=true), outputFiles=[C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\tmp\kapt3\incrementalData\debug, C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\tmp\kapt3\stubs\debug, C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\kotlin\kaptGenerateStubsDebugKotlin\cacheable, C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\build\kotlin\kaptGenerateStubsDebugKotlin\local-state])
+Finished executing kotlin compiler using DAEMON strategy
+Resolve mutations for :app:kaptDebugKotlin (Thread[#1359,Execution worker Thread 5,5,main]) started.
+:app:kaptDebugKotlin (Thread[#1359,Execution worker Thread 5,5,main]) started.
+
+> Task :app:kaptDebugKotlin FAILED
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\java', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\main\kotlin', not found
+file or directory 'C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\src\debug\kotlin', not found
+Caching disabled for task ':app:kaptDebugKotlin' because:
+  Build cache is disabled
+Task ':app:kaptDebugKotlin' is not up-to-date because:
+  Task has failed previously.
+The input changes require a full rebuild for incremental task ':app:kaptDebugKotlin'.
+Running kapt annotation processing using the Gradle Worker API
+Using workers NONE isolation mode to run kapt
+AAPT2 aapt2-9.1.0-14792394-windows Daemon #0: shutdown
+Build e11b23ae-e2df-4306-8108-c20f6dfa43a7 is closed
+.\gradlew.bat : 
+In Zeile:1 Zeichen:1
++ .\gradlew.bat clean assembleDebug --info > 
+build_info.log 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [ 
+   ], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:kaptDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotli
+n.gradle.internal.KaptWithoutKotlincTask$KaptExecutionWo
+rkAction
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --debug option to get more log output.
+> Run with --scan to get full insights from a Build 
+Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 15s
+33 actionable tasks: 33 executed
+Watched directory hierarchies: [C:\Users\janaf\AndroidStudioProjects\DnDCompanion]

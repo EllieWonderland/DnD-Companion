@@ -16,6 +16,7 @@ import com.google.ai.client.generativeai.GenerativeModel
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
 import com.google.ai.client.generativeai.type.generationConfig
 import org.json.JSONObject
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,6 +24,17 @@ import com.google.firebase.firestore.PropertyName
 import com.example.dndcompanion.data.CharacterData
 import com.example.dndcompanion.data.CharacterRepository
 import com.example.dndcompanion.data.CharacterClass
+import com.example.dndcompanion.data.database.AppDatabase
+import com.example.dndcompanion.data.database.RuleEntity
+import com.example.dndcompanion.data.database.WeaponEntity
+import com.example.dndcompanion.data.database.ArmorEntity
+import com.example.dndcompanion.data.database.ToolEntity
+import com.example.dndcompanion.data.database.SpeciesEntity
+import com.example.dndcompanion.data.database.ClassEntity
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
 
 // --- DATENKLASSEN & ENUMS ---
 data class InventoryItem(
@@ -181,6 +193,77 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     private var prefs = application.getSharedPreferences("AthaniaSaveGame", Context.MODE_PRIVATE)
     private val gson = Gson()
+
+    private val database = AppDatabase.getDatabase(application)
+    private val rulebookDao = database.rulebookDao()
+
+    private val _searchedRules = MutableStateFlow<List<RuleEntity>>(emptyList())
+    val searchedRules: StateFlow<List<RuleEntity>> = _searchedRules.asStateFlow()
+
+    private val _searchedWeapons = MutableStateFlow<List<WeaponEntity>>(emptyList())
+    val searchedWeapons: StateFlow<List<WeaponEntity>> = _searchedWeapons.asStateFlow()
+
+    private val _searchedArmor = MutableStateFlow<List<ArmorEntity>>(emptyList())
+    val searchedArmor: StateFlow<List<ArmorEntity>> = _searchedArmor.asStateFlow()
+
+    private val _searchedTools = MutableStateFlow<List<ToolEntity>>(emptyList())
+    val searchedTools: StateFlow<List<ToolEntity>> = _searchedTools.asStateFlow()
+
+    private val _searchedSpecies = MutableStateFlow<List<SpeciesEntity>>(emptyList())
+    val searchedSpecies: StateFlow<List<SpeciesEntity>> = _searchedSpecies.asStateFlow()
+
+    private val _searchedClasses = MutableStateFlow<List<ClassEntity>>(emptyList())
+    val searchedClasses: StateFlow<List<ClassEntity>> = _searchedClasses.asStateFlow()
+
+    init {
+        // Load initial data (all content)
+        searchRulebook("")
+    }
+
+    fun searchRulebook(query: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (query.isBlank()) {
+                rulebookDao.getAllRules().collectLatest { _searchedRules.value = it }
+            } else {
+                rulebookDao.searchRules(query).collectLatest { _searchedRules.value = it }
+            }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            if (query.isBlank()) {
+                rulebookDao.getAllWeapons().collectLatest { _searchedWeapons.value = it }
+            } else {
+                rulebookDao.searchWeapons(query).collectLatest { _searchedWeapons.value = it }
+            }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            if (query.isBlank()) {
+                rulebookDao.getAllArmor().collectLatest { _searchedArmor.value = it }
+            } else {
+                rulebookDao.searchArmor(query).collectLatest { _searchedArmor.value = it }
+            }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            if (query.isBlank()) {
+                rulebookDao.getAllTools().collectLatest { _searchedTools.value = it }
+            } else {
+                rulebookDao.searchTools(query).collectLatest { _searchedTools.value = it }
+            }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            if (query.isBlank()) {
+                rulebookDao.getAllSpecies().collectLatest { _searchedSpecies.value = it }
+            } else {
+                rulebookDao.searchSpecies(query).collectLatest { _searchedSpecies.value = it }
+            }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            if (query.isBlank()) {
+                rulebookDao.getAllClasses().collectLatest { _searchedClasses.value = it }
+            } else {
+                rulebookDao.searchClasses(query).collectLatest { _searchedClasses.value = it }
+            }
+        }
+    }
 
     // --- BASISWERTE ---
     // EP Table D&D 5e:

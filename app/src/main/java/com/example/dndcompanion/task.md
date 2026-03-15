@@ -223,9 +223,10 @@
 - [x] **Icon-Fix:**
     - [x] Icons in `res/drawable` prüfen und fehlende Icons hinzufügen bzw. alte austauschen.
       *Notiz für Commit: ui: replace redundant placeholder icons with specific assets (kampf, rucksack, vertrauter, hilfe) in navigation tabs*
-- [ ] **Regelwerk:**
-    - [ ] Regelwerk auf Verwendung der neuen JSON-Dateien umstellen
-    - [ ] Room anlegen und verwenden
+- [x] **Regelwerk:**
+    - [x] Regelwerk auf Verwendung der neuen JSON-Dateien umstellen
+    - [x] Room anlegen und verwenden
+    *Notiz für Commit: feat: setup Room database with KSP2 for rulebook JSON files and refactor RulebookDetailView to use dynamic categorical layout*
 - [ ] **Feature-Katalog Integration:**
     - [ ] JSON-Struktur für Merkmale/Talente definieren und `features.json` erstellen.
     - [ ] Daten aus Markdown-Dateien in `features.json` extrahieren (Talente, Klassenmerkmale, Volksmerkmale).

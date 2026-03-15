@@ -1,0 +1,733 @@
+[
+    {
+        "id": "play_roles",
+        "category": "Gameplay",
+        "title": "Spieler oder Spielleiter?",
+        "content": "Um D&D zu spielen, braucht ihr eine Person, die der Spielleiter (Dungeon Master) ist, und andere Spieler (drei bis sechs sind am besten), die Abenteurer spielen.\n\n**Ein Spieler sein:**\n* Charakter erstellen: Dein Alter Ego in der Fantasiewelt.\n* Sich zusammentun: Eine Abenteurergruppe bilden.\n* Auf ins Abenteuer: Orte erkunden und auf Ereignisse reagieren.\n\n**Der Spielleiter (DM) sein:**\n* Abenteuer erschaffen: Die Welt und Abenteuer vorbereiten.\n* Die Geschichte leiten: Die Welt beschreiben und die Ergebnisse der Spieler-Aktionen bestimmen.\n* Über die Regeln entscheiden: Sicherstellen, dass die Regeln dem Spaß der Gruppe dienen.",
+        "tags": [
+            "spieler",
+            "spielleiter",
+            "dm",
+            "dungeon master",
+            "rollen",
+            "grundlagen"
+        ]
+    },
+    {
+        "id": "play_rhythm",
+        "category": "Gameplay",
+        "title": "Spielrhythmus",
+        "content": "Die drei Hauptsäulen des D&D-Spiels sind soziale Interaktion, Erkundung und Kampf. Das Spiel entfaltet sich nach diesem Grundmuster:\n1. Der Spielleiter beschreibt eine Szene.\n2. Die Spieler beschreiben, was ihre Charaktere tun.\n3. Der DM erzählt die Ergebnisse der Aktionen der Abenteurer.",
+        "tags": [
+            "spielrhythmus",
+            "säulen",
+            "erkundung",
+            "kampf",
+            "interaktion",
+            "ablauf"
+        ]
+    },
+    {
+        "id": "play_exceptions",
+        "category": "Gameplay",
+        "title": "Ausnahmen heben allgemeine Regeln auf",
+        "content": "Allgemeine Regeln regeln jeden Teil des Spiels. Das Spiel enthält jedoch auch Elemente (Klassenmerkmale, Talente, Zauber, etc.), die einer allgemeinen Regel widersprechen. Wenn eine Ausnahme und eine allgemeine Regel nicht übereinstimmen, gewinnt die Ausnahme.",
+        "tags": [
+            "ausnahme",
+            "regeln",
+            "priorität",
+            "widerspruch"
+        ]
+    },
+    {
+        "id": "play_campaigns_rounding",
+        "category": "Gameplay",
+        "title": "Kampagnen, Abenteuer & Abrunden",
+        "content": "**Kampagnen & Abenteuer:** Ein Abenteuer ist eine in sich geschlossene Geschichte. Eine Kampagne ist eine Reihe von Abenteuern mit einer konsistenten Gruppe von Abenteurern, ähnlich wie eine TV-Serie.\n\n**Abrunden:** Wann immer du im Spiel eine Zahl dividierst oder multiplizierst, runde ab, wenn du einen Bruch erhältst, selbst wenn der Bruch ein Halb oder größer ist. Einige Regeln machen eine explizite Ausnahme.",
+        "tags": [
+            "kampagne",
+            "abenteuer",
+            "abrunden",
+            "mathematik",
+            "runden"
+        ]
+    },
+    {
+        "id": "play_dice",
+        "category": "Gameplay",
+        "title": "Würfel & Schreibweise",
+        "content": "Die in D&D verwendeten Würfel werden mit dem Buchstaben \"W\" (d) bezeichnet: W4, W6, W8, W10, W12 und W20. \"3W8 + 5\" bedeutet z. B.: Wirf drei achtseitige Würfel und addiere 5.\n\n* **Prozentwürfel (1W100):** Zwei zehnseitige Würfel. Einer ist die Zehner-, einer die Einerstelle (00 = 100).\n* **1W3:** Wirf 1W6 und teile durch 2 (aufgerundet).\n* **Wofür:** W20-Tests (Erfolg/Misserfolg), Schaden, Zufallstabellen, Prozentuale Chancen.",
+        "tags": [
+            "würfel",
+            "w20",
+            "w6",
+            "prozentwürfel",
+            "w3",
+            "notation",
+            "dice"
+        ]
+    },
+    {
+        "id": "play_attributes",
+        "category": "Gameplay",
+        "title": "Die sechs Attribute & Modifikatoren",
+        "content": "Alle Kreaturen haben sechs Attribute: Stärke (Physische Kraft), Geschicklichkeit (Beweglichkeit), Konstitution (Gesundheit), Intelligenz (Logik), Weisheit (Wahrnehmung) und Charisma (Charme).\n\n10-11 ist der menschliche Durchschnitt. 20 ist das normale Maximum für Abenteurer, 30 das absolute Maximum.\n\n**Modifikatoren:**\n1 = -5 | 2-3 = -4 | 4-5 = -3 | 6-7 = -2 | 8-9 = -1 | 10-11 = +0 | 12-13 = +1 | 14-15 = +2 | 16-17 = +3 | 18-19 = +4 | 20-21 = +5",
+        "tags": [
+            "attribute",
+            "modifikator",
+            "stärke",
+            "geschicklichkeit",
+            "konstitution",
+            "intelligenz",
+            "weisheit",
+            "charisma"
+        ]
+    },
+    {
+        "id": "play_d20_tests",
+        "category": "Gameplay",
+        "title": "W20-Tests (D20 Tests)",
+        "content": "W20-Tests entscheiden über Erfolg oder Misserfolg. Es gibt drei Arten: Attributsprüfungen, Rettungswürfe und Angriffswürfe. Sie folgen diesen Schritten:\n1. **Wirf 1W20:** Bei Vorteil/Nachteil wirf zwei Würfel.\n2. **Modifikatoren addieren:** Attributsmodifikator, Übungsbonus (falls geübt) und situationsbedingte Boni.\n3. **Mit Zielzahl vergleichen:** Erreicht oder überschreitet das Ergebnis die Zielzahl (SG/DC für Prüfungen/Saves, RK/AC für Angriffe), ist der Test erfolgreich.",
+        "tags": [
+            "w20",
+            "test",
+            "würfelwurf",
+            "d20",
+            "zielzahl",
+            "ablauf"
+        ]
+    },
+    {
+        "id": "play_ability_checks",
+        "category": "Gameplay",
+        "title": "Attributsprüfungen (Ability Checks)",
+        "content": "Repräsentiert den Versuch, eine Herausforderung durch Talent und Training zu meistern (z.B. Schloss knacken). Nutzt den passenden Attributsmodifikator. Wenn der DM eine Fertigkeit (Skill) oder Werkzeug-Übung für anwendbar hält, darf der Übungsbonus addiert werden.\n\n**Schwierigkeitsgrade (DC):**\nSehr einfach = 5 | Einfach = 10 | Mittel = 15 | Schwer = 20 | Sehr schwer = 25 | Fast unmöglich = 30",
+        "tags": [
+            "attributsprüfung",
+            "ability check",
+            "sg",
+            "dc",
+            "schwierigkeitsgrad"
+        ]
+    },
+    {
+        "id": "play_saving_throws",
+        "category": "Gameplay",
+        "title": "Rettungswürfe (Saving Throws)",
+        "content": "Der Versuch, einer Bedrohung (Zauber, Falle, Gift) auszuweichen oder zu widerstehen. Du entscheidest dich nicht dazu, du *musst* werfen. Nutzt den entsprechenden Attributsmodifikator. Wenn du (durch deine Klasse) in diesem Rettungswurf geübt bist, addierst du deinen Übungsbonus. Der Schwierigkeitsgrad (DC) wird durch den Effekt bestimmt.",
+        "tags": [
+            "rettungswurf",
+            "save",
+            "saving throw",
+            "gefahr",
+            "widerstehen"
+        ]
+    },
+    {
+        "id": "play_attack_rolls",
+        "category": "Gameplay",
+        "title": "Angriffswürfe (Attack Rolls)",
+        "content": "Bestimmt, ob ein Angriff trifft. Trifft, wenn das Ergebnis die Rüstungsklasse (AC) des Ziels erreicht oder übersteigt.\n* Nahkampf: Stärke\n* Fernkampf: Geschicklichkeit\n* Finesse: Stärke oder Geschicklichkeit\n* Zauberangriffe: Zauberattribut der Klasse\nÜbungsbonus wird addiert, wenn man mit der Waffe geübt ist. Eine natürliche 20 trifft immer (Kritischer Treffer), eine natürliche 1 verfehlt immer.",
+        "tags": [
+            "angriffswurf",
+            "attack roll",
+            "rüstungsklasse",
+            "ac",
+            "rk",
+            "treffer",
+            "kritischer treffer"
+        ]
+    },
+    {
+        "id": "play_adv_disadv",
+        "category": "Gameplay",
+        "title": "Vorteil & Nachteil (Advantage / Disadvantage)",
+        "content": "Spiegelt extreme positive oder negative Umstände wider.\n* **Wirf zwei W20:** Nutze den höheren Wurf bei Vorteil, den niedrigeren bei Nachteil.\n* **Kein Stapeln:** Mehrfacher Vorteil gibt trotzdem nur zwei Würfel. Haben Umstände sowohl Vorteil als auch Nachteil zur Folge, heben sie sich gegenseitig auf und du wirfst ganz normal 1W20.",
+        "tags": [
+            "vorteil",
+            "nachteil",
+            "advantage",
+            "disadvantage",
+            "stapeln",
+            "aufheben"
+        ]
+    },
+    {
+        "id": "play_proficiency",
+        "category": "Gameplay",
+        "title": "Übung (Proficiency) & Fertigkeiten",
+        "content": "Der Übungsbonus (Proficiency Bonus) basiert auf der Gesamtstufe des Charakters (Stufe 1-4: +2, 5-8: +3, 9-12: +4, 13-16: +5, 17-20: +6). Er wird addiert, wenn man in etwas geübt ist (Waffen, Rüstungen, Werkzeuge, Fertigkeiten, Rettungswürfe). Er kann pro Wurf nur einmal addiert werden.\n\n**Fertigkeiten (Skills):** Unterkategorien der Attribute (z.B. Akrobatik für Geschicklichkeit, Wahrnehmung für Weisheit). Manche Klassen besitzen *Expertise*, die den Übungsbonus für bestimmte Fertigkeiten verdoppelt.",
+        "tags": [
+            "übung",
+            "proficiency",
+            "übungsbonus",
+            "fertigkeiten",
+            "skills",
+            "expertise"
+        ]
+    },
+    {
+        "id": "play_actions",
+        "category": "Gameplay",
+        "title": "Aktionen (Actions)",
+        "content": "Im Kampf darfst du in jedem deiner Züge genau EINE Aktion ausführen. Häufige Aktionen:\n* **Angriff:** Mit Waffe/unbewaffnet zuschlagen.\n* **Magie:** Zauber wirken oder magisches Item nutzen.\n* **Spurt (Dash):** Extra Bewegung in Höhe der Bewegungsrate.\n* **Rückzug (Disengage):** Bewegung provoziert keine Gelegenheitsangriffe.\n* **Ausweichen (Dodge):** Angriffe gegen dich haben Nachteil, DEX-Saves haben Vorteil.\n* **Hilfe (Help):** Verbündetem Vorteil gewähren.\n* **Verstecken (Hide):** Heimlichkeits-Prüfung ablegen.\n* **Bereitmachen (Ready):** Aktion bis zu einem Auslöser verzögern (kostet später die Reaktion).",
+        "tags": [
+            "aktion",
+            "action",
+            "angriff",
+            "spurt",
+            "ausweichen",
+            "rückzug",
+            "verstecken"
+        ]
+    },
+    {
+        "id": "play_bonus_actions",
+        "category": "Gameplay",
+        "title": "Bonusaktionen (Bonus Actions)",
+        "content": "Eine schnelle, zusätzliche Aktion. Du kannst nur EINE Bonusaktion pro Zug ausführen, und auch nur dann, wenn ein Zauber, ein Klassenmerkmal oder eine Fähigkeit dies ausdrücklich erlaubt. Hast du keine solche Fähigkeit, hast du keine Bonusaktion.",
+        "tags": [
+            "bonusaktion",
+            "bonus action",
+            "zug"
+        ]
+    },
+    {
+        "id": "play_reactions",
+        "category": "Gameplay",
+        "title": "Reaktionen (Reactions)",
+        "content": "Eine sofortige Antwort auf einen bestimmten Auslöser (z.B. ein Gelegenheitsangriff oder der Zauber *Schild*). Du hast genau EINE Reaktion pro Runde. Sie regeneriert sich zu Beginn deines nächsten Zuges. Reaktionen unterbrechen den Zug der auslösenden Kreatur und danach wird normal fortgesetzt.",
+        "tags": [
+            "reaktion",
+            "reaction",
+            "gelegenheitsangriff",
+            "auslöser",
+            "unterbrechung"
+        ]
+    },
+    {
+        "id": "play_social",
+        "category": "Gameplay",
+        "title": "Soziale Interaktion (Social Interaction)",
+        "content": "Die Reaktion von NPCs hängt von ihrer Grundeinstellung ab. Dies bestimmt den DC für Beeinflussung (Charisma-Prüfungen):\n* **Freundlich (DC 10):** Tut, was erbeten wird, solange es keine signifikanten Risiken birgt.\n* **Gleichgültig (DC 15):** Tut, was erbeten wird, solange es weder riskant ist noch Anstrengung erfordert.\n* **Feindselig (DC 20):** Tut, was erbeten wird, solange es nicht riskant/anstrengend ist und keinen Verbündeten schadet.",
+        "tags": [
+            "sozial",
+            "interaktion",
+            "npc",
+            "einstellung",
+            "charisma",
+            "beeinflussen"
+        ]
+    },
+    {
+        "id": "play_exploration",
+        "category": "Gameplay",
+        "title": "Erkundung, Sicht & Verstecken",
+        "content": "Erkundung beinhaltet Reisen, Rätsel und Umgebung.\n* **Leichtes Dunkel (Dim Light):** Nachteil auf Wahrnehmung (Sicht).\n* **Starkes Dunkel (Darkness):** Zustand *Geblendet*.\n* **Dunkelsicht:** Sieht in schwachem Licht wie in hellem, in Dunkelheit wie in schwachem Licht.\n* **Verstecken:** Nur möglich, wenn Feinde dich nicht deutlich sehen. Bei Erfolg bist du *Unsichtbar* für diese Feinde.\n* **Interaktion:** Ein Objekt pro Zug kann kostenlos manipuliert werden. Alles Weitere erfordert die Aktion *Einen Gegenstand nutzen*.",
+        "tags": [
+            "erkundung",
+            "sicht",
+            "licht",
+            "dunkelsicht",
+            "verstecken",
+            "heimlichkeit",
+            "objekte"
+        ]
+    },
+    {
+        "id": "play_combat_order",
+        "category": "Gameplay",
+        "title": "Kampf: Reihenfolge & Bewegung",
+        "content": "Ein Kampf verläuft in Initiativereihenfolge (Geschicklichkeits-Prüfung). Überraschte Teilnehmer haben im ersten Zug der ersten Runde Nachteil auf Initiative.\n\n**Bewegung:** Kann aufgeteilt werden. Schwieriges Gelände kostet doppelte Bewegung (1 Fuß extra pro 1 Fuß). Durch Verbündete bewegen ist schwieriges Gelände. Durch Feinde nur möglich, wenn Größenunterschied mind. zwei Kategorien beträgt. Aufstehen aus dem Liegen kostet die halbe Bewegungsrate.",
+        "tags": [
+            "kampf",
+            "initiative",
+            "überraschung",
+            "bewegen",
+            "gelände",
+            "schwieriges gelände"
+        ]
+    },
+    {
+        "id": "play_combat_attacks_cover",
+        "category": "Gameplay",
+        "title": "Kampf: Angriffe & Deckung",
+        "content": "**Angriffe:**\n* Nahkampf: 1,5 m Reichweite (meist STR).\n* Fernkampf: Nachteil, wenn ein Feind im Nahkampf neben dir steht.\n* Gelegenheitsangriff: Reaktion, wenn ein Feind deine Reichweite VERLÄSST.\n* Zwei-Waffen-Kampf (Leichte Waffen): Extra-Angriff kostet keine Bonusaktion mehr (2024 Regel), aber Attributsmodifikator wird nicht auf den Schaden addiert.\n\n**Deckung:**\n* Halbe Deckung: +2 AC und DEX-Saves.\n* Dreiviertel-Deckung: +5 AC und DEX-Saves.\n* Vollständige Deckung: Kann nicht anvisiert werden.",
+        "tags": [
+            "kampf",
+            "angriff",
+            "fernkampf",
+            "nahkampf",
+            "deckung",
+            "cover",
+            "gelegenheitsangriff"
+        ]
+    },
+    {
+        "id": "play_damage_healing",
+        "category": "Gameplay",
+        "title": "Schaden, Heilung & Resistenzen",
+        "content": "Solange eine Kreatur mind. 1 TP hat, ist sie kampffähig.\n* **Kritischer Treffer:** Bei einer natürlichen 20 auf dem W20. Alle Schadenswürfel werden zweimal geworfen und addiert.\n* **Resistenz:** Erlittener Schaden wird halbiert.\n* **Anfälligkeit (Vulnerability):** Erlittener Schaden wird verdoppelt.\n* **Temporäre TP:** Stapeln sich nicht miteinander. Sind wie ein Schild.",
+        "tags": [
+            "schaden",
+            "heilung",
+            "tp",
+            "hp",
+            "kritischer treffer",
+            "resistenz",
+            "anfälligkeit",
+            "temporäre tp"
+        ]
+    },
+    {
+        "id": "play_zero_hp",
+        "category": "Gameplay",
+        "title": "Auf 0 Trefferpunkte fallen",
+        "content": "Spielercharaktere werden *Bewusstlos* und werfen Todesrettungswürfe (W20 ohne Modifikator).\n* 10 oder höher = Erfolg, darunter = Fehlschlag.\n* 3 Erfolge = Stabilisiert.\n* 3 Fehlschläge = Tod.\n* Gewürfelte 20 = Sofort 1 TP zurück (erwacht).\n* Gewürfelte 1 = Zwei Fehlschläge.\nNimmt man bei 0 TP Schaden, kassiert man einen Todes-Fehlschlag (zwei bei einem kritischen Treffer). Entspricht ein einzelner Schaden dem maximalen TP-Wert, stirbt man sofort.",
+        "tags": [
+            "0 tp",
+            "bewusstlos",
+            "todesrettungswurf",
+            "death save",
+            "sterben",
+            "tod"
+        ]
+    },
+    {
+        "id": "play_conditions_overview",
+        "category": "Gameplay",
+        "title": "Zustände (Conditions) - Übersicht",
+        "content": "Zustände verändern Fähigkeiten im Spiel:\n* **Betäubt/Gelähmt:** Kampfunfähig, STR/DEX-Fails, Angriffe gegen Ziel haben Vorteil.\n* **Bewusstlos:** Liegend, Nahkampfangriffe sind Auto-Crits.\n* **Blind:** Sieht nichts, Angriffe haben Nachteil.\n* **Erschöpft:** 6 Stufen. -1 auf d20-Tests pro Stufe.\n* **Gepackt:** Bewegungsrate ist 0.\n* **Liegend:** Angriffe haben Nachteil. Nahkampfangriffe gegen das Ziel haben Vorteil.\n* **Unsichtbar:** Eigene Angriffe haben Vorteil, Angriffe gegen dich haben Nachteil.\n* **Verängstigt:** Nachteil auf Angriffe/Checks, wenn Quelle sichtbar.",
+        "tags": [
+            "zustände",
+            "conditions",
+            "betäubt",
+            "bewusstlos",
+            "blind",
+            "erschöpfung",
+            "liegend",
+            "unsichtbar",
+            "verängstigt"
+        ]
+    },
+    {
+        "id": "spell_levels_slots",
+        "category": "Zauber",
+        "title": "Zauberstufen & Zauberplätze",
+        "content": "Jeder Zauber hat eine Stufe von 0 bis 9.\n* **Stufe 0:** Diese Zauber werden als Zaubertricks (Cantrips) bezeichnet. Sie verbrauchen keine Zauberplätze und können beliebig oft gewirkt werden.\n* **Stufen 1 bis 9:** Das Wirken verbraucht einen Zauberplatz.\n\n**Hochzaubern (Upcasting):** Wird ein Zauber mit einem Platz einer höheren Stufe gewirkt, nimmt er für diesen Moment diese höhere Stufe an.\n**Regeneration:** Verbrauchte Zauberplätze werden in der Regel nach einer Langen Rast wiederhergestellt.",
+        "tags": [
+            "zauberstufe",
+            "zauberplatz",
+            "spell slot",
+            "cantrip",
+            "zaubertrick",
+            "hochzaubern",
+            "upcasting",
+            "regeneration"
+        ]
+    },
+    {
+        "id": "spell_dc_attack",
+        "category": "Zauber",
+        "title": "Zauber-Rettungswurf-SG und Angriffsbonus",
+        "content": "Wenn ein Zauber einen Angriffswurf oder einen Rettungswurf erfordert, basieren diese auf dem Zauberattribut der Klasse.\n* **Zauber-Rettungswurf-SG:** 8 + Übungsbonus + Zauberattributs-Modifikator\n* **Zauber-Angriffsbonus:** Übungsbonus + Zauberattributs-Modifikator",
+        "tags": [
+            "rettungswurf",
+            "sg",
+            "dc",
+            "angriffsbonus",
+            "zauberattribut",
+            "modifikator"
+        ]
+    },
+    {
+        "id": "spell_casting_time",
+        "category": "Zauber",
+        "title": "Zauberzeit & Rituale",
+        "content": "**Zauberzeit:**\n* **Aktion:** Erfordert im Kampf die Magische Aktion.\n* **Bonusaktion:** Wenn du einen Zauber als Bonusaktion wirkst, darfst du in demselben Zug nur noch einen einzigen weiteren Zauber wirken, und dieser muss ein Zaubertrick mit einer Zauberzeit von 1 Aktion sein.\n* **Reaktion:** Wird im Bruchteil einer Sekunde als Antwort auf einen spezifischen Auslöser gewirkt.\n* **Längere Zeiten:** Erfordert im Kampf die Konzentration für die gesamte Dauer des Wirkens.\n\n**Rituale:**\nJeder Charakter, der einen Ritual-Zauber vorbereitet (oder in seinem Zauberbuch hat), kann ihn als Ritual wirken. Dies erhöht die normale Zauberzeit um 10 Minuten, verbraucht aber keinen Zauberplatz.",
+        "tags": [
+            "zauberzeit",
+            "aktion",
+            "bonusaktion",
+            "reaktion",
+            "ritual",
+            "casting time"
+        ]
+    },
+    {
+        "id": "spell_range_components",
+        "category": "Zauber",
+        "title": "Reichweite & Komponenten",
+        "content": "**Reichweite:**\nSelbst (Self), Berührung (Touch) oder Entfernung (z.B. 30, 60, 120 Fuß). Es wird eine direkte, ununterbrochene Linie (Line of Effect) zum Ziel benötigt.\n\n**Komponenten:**\n* **Verbal (V):** Lautes Sprechen mystischer Worte.\n* **Somatisch (S):** Freie Handbewegungen.\n* **Material (M):** Erfordert Gegenstände. Ein Fokus kann Komponenten ohne Goldkosten ersetzen. Die Hand für den Fokus darf dieselbe sein wie für die (S) Komponente. Hat der Zauber jedoch nur (S) und kein (M), MUSS die Hand komplett leer sein. Komponenten mit Kosten oder solche, die verbraucht werden, müssen zwingend vorhanden sein.",
+        "tags": [
+            "reichweite",
+            "range",
+            "komponenten",
+            "verbal",
+            "somatisch",
+            "material",
+            "fokus"
+        ]
+    },
+    {
+        "id": "spell_duration_concentration",
+        "category": "Zauber",
+        "title": "Wirkungsdauer & Konzentration",
+        "content": "Die Wirkungsdauer kann spontan (Instantaneous), eine festgelegte Zeit oder Konzentration sein.\n\n**Konzentration:**\nDu kannst immer nur EINEN Konzentrations-Zauber gleichzeitig aufrechterhalten. Konzentration bricht in folgenden Fällen:\n1. Du wirkst einen anderen Konzentrations-Zauber.\n2. Schaden erleiden: Du musst einen Konstitutions-Rettungswurf ablegen. Der SG ist 10 oder die Hälfte des erlittenen Schadens (was höher ist). Bei Fehlschlag endet der Zauber.\n3. Du bist Kampfunfähig (Incapacitated) oder stirbst.",
+        "tags": [
+            "wirkungsdauer",
+            "duration",
+            "konzentration",
+            "concentration",
+            "schaden"
+        ]
+    },
+    {
+        "id": "spell_areas_of_effect",
+        "category": "Zauber",
+        "title": "Wirkungsbereiche (Areas of Effect)",
+        "content": "Totale Deckung blockiert den Wirkungsbereich.\n* **Kegel (Cone):** Erstreckt sich in eine Richtung vom Zaubernden weg.\n* **Würfel (Cube):** Der Ursprungspunkt liegt auf einer beliebigen Seite des Würfels.\n* **Zylinder (Cylinder):** Der Ursprungspunkt ist das Zentrum des Kreises.\n* **Linie (Line):** Eine gerade Linie definierter Länge und Breite.\n* **Sphäre (Sphere):** Erstreckt sich vom Ursprungspunkt in alle Richtungen.\n* **Emanation:** Erstreckt sich in einem definierten Radius um eine Kreatur oder ein Objekt herum und bewegt sich mit diesem Ursprung mit. Der Bereich der Kreatur/des Objekts selbst ist nicht Teil der Emanation, es sei denn, der Zauber gibt dies explizit an.",
+        "tags": [
+            "wirkungsbereich",
+            "aoe",
+            "area of effect",
+            "kegel",
+            "würfel",
+            "zylinder",
+            "linie",
+            "sphäre",
+            "emanation"
+        ]
+    },
+    {
+        "id": "spell_2024_adjustments",
+        "category": "Zauber",
+        "title": "Wichtige Anpassungen in der App-Logik (2024 Edition)",
+        "content": "1. **Heilmagie & Untote/Konstrukte:** Heilzauber funktionieren in den 2024-Regeln problemlos bei Untoten und Konstrukten, es sei denn, der Zauber schließt sie explizit aus.\n2. **Gegenzauber:** Erfordert nun einen Konstitutions-Rettungswurf für das Ziel. Bei einem Erfolg wird der Zauber gewirkt, aber der Zauberplatz für den Gegenzauber wird nicht verbraucht.\n3. **Göttliches Niederstrecken:** Ist jetzt ein regulärer Paladin-Zauber der Stufe 1 (Bonusaktion, V, M) und unterliegt allen Regeln für Zauber.\n4. **Unsichtbarkeit:** Angriffe aus der Unsichtbarkeit haben immer Vorteil, Angriffe gegen Unsichtbare haben immer Nachteil. Das gilt selbst dann, wenn der Gegner Blindsicht oder Wahren Blick hat, da die Sichtbarkeits-Erkennung nur das Versteckt-Sein negiert, nicht die mechanischen Boni.",
+        "tags": [
+            "2024",
+            "anpassung",
+            "heilung",
+            "untote",
+            "konstrukte",
+            "gegenzauber",
+            "göttliches niederstrecken",
+            "unsichtbarkeit",
+            "paladin"
+        ]
+    },
+    {
+        "id": "combat_flow",
+        "category": "Kampf & Zustände",
+        "title": "Ablauf des Kampfes & Initiative",
+        "content": "Ein Kampf ist in Runden (ca. 6 Sekunden) und Züge unterteilt.\n\n**Initiative & Überraschung (2024-Regel):**\nEs gibt keine Überraschungs-Runden oder den Zustand 'Überrascht' mehr. Überraschte Feinde würfeln ihre Initiative (W20 + GES-Mod) stattdessen mit Nachteil.\n\n**Der eigene Zug:**\nDu hast Zugriff auf 1 Bewegung, 1 Aktion, 1 Bonusaktion (falls gewährt) und 1 kostenlose Objekt-Interaktion. Außerhalb deines Zuges hast du 1 Reaktion pro Runde.",
+        "tags": [
+            "kampf",
+            "initiative",
+            "überraschung",
+            "zug",
+            "runde",
+            "aktion",
+            "bewegung"
+        ]
+    },
+    {
+        "id": "combat_actions",
+        "category": "Kampf & Zustände",
+        "title": "Aktionen im Kampf",
+        "content": "Standard-Aktionen (2024-Regelwerk):\n* **Angreifen:** Nah- oder Fernkampfangriff (auch unbewaffnet oder zum Stoßen/Greifen).\n* **Ausweichen:** Angriffe gegen dich haben Nachteil, GES-Saves Vorteil.\n* **Beeinflussen:** Charisma nutzen, um NPCs im Kampf zu beeinflussen.\n* **Benutzen:** Mit einem Gegenstand interagieren (Trank, Schloss).\n* **Helfen:** Verbündetem Vorteil auf Attributswurf oder nächsten Angriff geben.\n* **Magie:** Einen Zauber wirken oder magisches Item nutzen.\n* **Rückzug:** Deine Bewegung provoziert keine Gelegenheitsangriffe.\n* **Spurt:** Extra Bewegung in Höhe der Bewegungsrate.\n* **Studieren:** Wissen abrufen (INT oder WEI).\n* **Suchen:** Aufmerksam suchen (Wahrnehmung/Nachforschen).\n* **Verstecken:** Heimlichkeits-Wurf (SG 15) ablegen, um Unsichtbar zu werden.\n* **Vorbereiten:** Eine Aktion an einen Auslöser knüpfen (kostet die Reaktion).",
+        "tags": [
+            "aktionen",
+            "angreifen",
+            "ausweichen",
+            "magie",
+            "helfen",
+            "spurt",
+            "rückzug",
+            "verstecken"
+        ]
+    },
+    {
+        "id": "combat_movement_cover",
+        "category": "Kampf & Zustände",
+        "title": "Bewegung & Deckung",
+        "content": "**Bewegung:**\n* **Gelegenheitsangriff:** Reaktion, wenn ein Feind deine Reichweite verlässt.\n* **Schwieriges Gelände:** Kostet 1 zusätzlichen Fuß pro bewegtem Fuß.\n* **Kriechen / Aufstehen:** Liegend bewegen kostet doppelt. Aufstehen kostet die halbe maximale Bewegungsrate.\n\n**Deckung:**\n* **Halbe Deckung:** +2 RK und GES-Saves (auch durch andere Kreaturen).\n* **Dreiviertel Deckung:** +5 RK und GES-Saves.\n* **Totale Deckung:** Komplett verdeckt, kann nicht direkt anvisiert werden.",
+        "tags": [
+            "bewegung",
+            "deckung",
+            "gelegenheitsangriff",
+            "gelände",
+            "kriechen",
+            "aufstehen"
+        ]
+    },
+    {
+        "id": "cond_stunned",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Betäubt (Stunned)",
+        "content": "Du bist Kampfunfähig. Du fällst automatisch bei jedem Stärke- und Geschicklichkeits-Rettungswurf durch. Angriffswürfe gegen dich haben Vorteil.",
+        "tags": [
+            "zustand",
+            "condition",
+            "betäubt",
+            "stunned",
+            "kampfunfähig"
+        ]
+    },
+    {
+        "id": "cond_unconscious",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Bewusstlos (Unconscious)",
+        "content": "Du bist Kampfunfähig, fällst sofort Liegend und lässt alles fallen. Du fällst bei STR- und GES-Rettungswürfen automatisch durch. Angriffe gegen dich haben Vorteil. Jeder Angriff, der dich aus 1,5 m Entfernung (oder näher) trifft, ist ein automatischer Kritischer Treffer.",
+        "tags": [
+            "zustand",
+            "condition",
+            "bewusstlos",
+            "unconscious",
+            "kritisch",
+            "liegend"
+        ]
+    },
+    {
+        "id": "cond_charmed",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Bezaubert (Charmed)",
+        "content": "Du kannst die Kreatur, die dich bezaubert hat, nicht angreifen oder mit schädlichen Fähigkeiten/Zaubern anvisieren. Der Bezaubernde hat Vorteil bei allen Charisma-Würfen gegen dich.",
+        "tags": [
+            "zustand",
+            "condition",
+            "bezaubert",
+            "charmed"
+        ]
+    },
+    {
+        "id": "cond_blinded",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Blind (Blinded)",
+        "content": "Du kannst nichts sehen und fällst bei jedem Attributswurf durch, der Sicht erfordert. Angriffswürfe gegen dich haben Vorteil. Deine Angriffswürfe haben Nachteil.",
+        "tags": [
+            "zustand",
+            "condition",
+            "blind",
+            "blinded",
+            "sicht"
+        ]
+    },
+    {
+        "id": "cond_bloodied",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Blutig (Bloodied)",
+        "content": "Neu in 2024: Du bist Blutig, wenn deine aktuellen Trefferpunkte gleich oder geringer als die Hälfte deiner maximalen Trefferpunkte sind. Der Zustand hat selbst keine Nachteile, löst aber viele Monster-Eigenschaften und Fähigkeiten aus.",
+        "tags": [
+            "zustand",
+            "condition",
+            "blutig",
+            "bloodied",
+            "tp",
+            "trefferpunkte"
+        ]
+    },
+    {
+        "id": "cond_exhaustion",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Erschöpfung (Exhaustion)",
+        "content": "Neu in 2024: Erschöpfung wird in Leveln (1 bis 6) gemessen. Für jedes Level erhältst du einen Abzug von -1 auf alle W20-Tests (Angriffe, Attributs-, Rettungswürfe) und auf deinen Zauber-Rettungswurf-SG. Deine Bewegungsrate verringert sich um (Level x 5) Fuß. Bei Level 6 stirbst du. Eine Lange Rast reduziert das Level um 1.",
+        "tags": [
+            "zustand",
+            "condition",
+            "erschöpfung",
+            "exhaustion",
+            "abzug"
+        ]
+    },
+    {
+        "id": "cond_grappled",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Festgesetzt / Gegriffen (Grappled)",
+        "content": "Neu in 2024: Deine Bewegungsrate sinkt auf 0. Du hast Nachteil auf Angriffe gegen jedes Ziel, außer der Kreatur, die dich festhält. Befreiung durch Aktion (STR/Athletik oder GES/Akrobatik). Der Zustand endet auch bei unwillkürlicher Bewegung aus der Reichweite des Greifers.",
+        "tags": [
+            "zustand",
+            "condition",
+            "festgesetzt",
+            "gegriffen",
+            "grappled"
+        ]
+    },
+    {
+        "id": "cond_restrained",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Gefesselt / Zurückgehalten (Restrained)",
+        "content": "Deine Bewegungsrate sinkt auf 0. Angriffswürfe gegen dich haben Vorteil. Deine Angriffswürfe haben Nachteil. Du hast Nachteil auf Geschicklichkeits-Rettungswürfe.",
+        "tags": [
+            "zustand",
+            "condition",
+            "gefesselt",
+            "zurückgehalten",
+            "restrained"
+        ]
+    },
+    {
+        "id": "cond_paralyzed",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Gelähmt (Paralyzed)",
+        "content": "Wie Betäubt (Kampfunfähig, STR/GES-Fails, Angriffe gegen dich haben Vorteil). Zusätzlich: Jeder Angriff, der dich aus 1,5 m Entfernung oder näher trifft, ist ein automatischer Kritischer Treffer.",
+        "tags": [
+            "zustand",
+            "condition",
+            "gelähmt",
+            "paralyzed",
+            "kritisch"
+        ]
+    },
+    {
+        "id": "cond_incapacitated",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Kampfunfähig (Incapacitated)",
+        "content": "Neu in 2024: Du kannst keine Aktionen, Bonusaktionen oder Reaktionen ausführen. Deine Konzentration auf Zauber bricht sofort ab. Du kannst nicht sprechen. Du würfelst Initiative mit Nachteil.",
+        "tags": [
+            "zustand",
+            "condition",
+            "kampfunfähig",
+            "incapacitated",
+            "konzentration"
+        ]
+    },
+    {
+        "id": "cond_prone",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Liegend (Prone)",
+        "content": "Neu in 2024: Du kannst nur noch kriechen, bis du aufstehst (kostet halbe Bewegung). Deine Angriffe haben Nachteil. Angriffe gegen dich haben Vorteil (wenn der Angreifer 1,5 m oder näher ist) und Nachteil (wenn der Angreifer weiter als 1,5 m entfernt ist, inkl. Fernkampf).",
+        "tags": [
+            "zustand",
+            "condition",
+            "liegend",
+            "prone",
+            "aufstehen"
+        ]
+    },
+    {
+        "id": "cond_deafened",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Taub (Deafened)",
+        "content": "Du kannst nichts hören. Du fällst bei jedem Attributswurf durch, der Gehör erfordert.",
+        "tags": [
+            "zustand",
+            "condition",
+            "taub",
+            "deafened",
+            "gehör"
+        ]
+    },
+    {
+        "id": "cond_invisible",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Unsichtbar (Invisible)",
+        "content": "Neu in 2024: Du hast Vorteil auf Angriffswürfe. Angriffe gegen dich haben Nachteil. Wichtig: Wenn eine Kreatur dich durch Fähigkeiten (wie Wahren Blick) sehen kann, profitierst du gegen diese Kreatur nicht von den Angriffs-/Abwehr-Boni!",
+        "tags": [
+            "zustand",
+            "condition",
+            "unsichtbar",
+            "invisible",
+            "vorteil"
+        ]
+    },
+    {
+        "id": "cond_frightened",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Verängstigt (Frightened)",
+        "content": "Du hast Nachteil auf Attributswürfe und Angriffswürfe, solange du die Quelle deiner Angst sehen kannst. Du kannst dich nicht freiwillig näher auf die Quelle der Angst zubewegen.",
+        "tags": [
+            "zustand",
+            "condition",
+            "verängstigt",
+            "frightened",
+            "angst"
+        ]
+    },
+    {
+        "id": "cond_poisoned",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Vergiftet (Poisoned)",
+        "content": "Du hast Nachteil auf Angriffswürfe und Attributswürfe.",
+        "tags": [
+            "zustand",
+            "condition",
+            "vergiftet",
+            "poisoned",
+            "gift"
+        ]
+    },
+    {
+        "id": "cond_petrified",
+        "category": "Kampf & Zustände",
+        "title": "Zustand: Versteinert (Petrified)",
+        "content": "Du (und deine getragenen Gegenstände) verwandelst dich in Stein. Du wiegst das 10-fache und alterst nicht. Du bist Kampfunfähig und fällst bei STR/GES-Saves durch. Du hast Resistenz gegen ALLEN Schaden und bist immun gegen Gift und Krankheiten.",
+        "tags": [
+            "zustand",
+            "condition",
+            "versteinert",
+            "petrified",
+            "stein"
+        ]
+    },
+    {
+        "id": "rule_services_lifestyle",
+        "category": "Ausrüstung & Dienstleistungen",
+        "title": "Lebenshaltungskosten (Lifestyle Expenses)",
+        "content": "Kosten pro Tag zur Aufrechterhaltung des Lebensstandards.\n* **Elend (Wretched):** Kostenlos (0 GM)\n* **Ärmlich (Squalid):** 1 SM\n* **Bescheiden (Poor):** 2 SM\n* **Mittelmäßig (Modest):** 1 GM\n* **Komfortabel (Comfortable):** 2 GM\n* **Wohlhabend (Wealthy):** 4 GM\n* **Aristokratisch (Aristocratic):** 10 GM",
+        "tags": [
+            "dienstleistung",
+            "lebenshaltung",
+            "kosten",
+            "tag",
+            "lebensstandard",
+            "lifestyle"
+        ]
+    },
+    {
+        "id": "rule_services_meals_lodging",
+        "category": "Ausrüstung & Dienstleistungen",
+        "title": "Mahlzeiten und Unterkunft pro Tag",
+        "content": "Preise für Mahlzeiten und Übernachtungen nach Qualität:\n* **Ärmlich:** Mahlzeit 1 KM, Übernachtung 7 KM\n* **Bescheiden:** Mahlzeit 2 KM, Übernachtung 1 SM\n* **Mittelmäßig:** Mahlzeit 5 SM, Übernachtung 5 SM\n* **Komfortabel:** Mahlzeit 8 SM, Übernachtung 8 SM\n* **Wohlhabend:** Mahlzeit 2 GM, Übernachtung 2 GM\n* **Aristokratisch:** Mahlzeit 4 GM, Übernachtung 4 GM\n\nEinzelne Items: 1 Becher Ale = 4 KM, 1 Laib Brot = 2 KM, 1 Stück Käse = 1 SM, 1 Flasche Wein (gewöhnlich) = 2 SM, 1 Flasche Wein (fein) = 10 GM.",
+        "tags": [
+            "mahlzeit",
+            "essen",
+            "trinken",
+            "unterkunft",
+            "übernachtung",
+            "wirtshaus",
+            "taverne"
+        ]
+    },
+    {
+        "id": "rule_services_hirelings_travel",
+        "category": "Ausrüstung & Dienstleistungen",
+        "title": "Mietlinge & Reisekosten",
+        "content": "**Mietlinge (Hirelings):**\n* Ausgebildeter Mietling (Skilled): Mindestens 2 GM pro Tag\n* Ungelernter Mietling (Untrained): 2 SM pro Tag\n* Bote (Messenger): 2 KM pro Meile\n\n**Reisekosten:**\n* Kutschenfahrt (zwischen Städten): 3 KM pro Meile\n* Kutschenfahrt (innerhalb der Stadt): 1 KM pro Meile\n* Straßen-/Stadttor-Zoll: 1 KM\n* Schiffspassage: 1 SM pro Meile",
+        "tags": [
+            "mietling",
+            "npc",
+            "begleiter",
+            "reise",
+            "kutsche",
+            "zoll",
+            "schiff",
+            "passage"
+        ]
+    },
+    {
+        "id": "rule_services_spellcasting",
+        "category": "Ausrüstung & Dienstleistungen",
+        "title": "Zauberwirken lassen (Spellcasting Services)",
+        "content": "Preise für NPCs, die bereit sind, Magie für die Helden zu wirken (Kosten für teure Materialkomponenten kommen noch hinzu):\n* **Zaubertrick (Cantrip):** 30 GM\n* **Stufe 1:** 50 GM\n* **Stufe 2:** 200 GM\n* **Stufe 3:** 300 GM\n* **Stufe 4 - 5:** 2.000 GM\n* **Stufe 6 - 8:** 20.000 GM\n* **Stufe 9:** 100.000 GM",
+        "tags": [
+            "zauber",
+            "magie",
+            "npc",
+            "kaufen",
+            "dienstleistung",
+            "heilung",
+            "wiederbelebung"
+        ]
+    }
+]

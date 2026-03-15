@@ -1,0 +1,1598 @@
+{
+    "species": [
+        {
+            "id": "spec_aasimar",
+            "name": "Aasimar",
+            "size": "Medium oder Small",
+            "speed": 9.0,
+            "traits": [
+                {
+                    "name": "Himmlische Resistenz (Celestial Resistance)",
+                    "description": "Du hast Resistenz gegen nekrotischen und gleißenden (Radiant) Schaden."
+                },
+                {
+                    "name": "Dunkelsicht (Darkvision)",
+                    "description": "18 m / 12 Felder."
+                },
+                {
+                    "name": "Heilende Hände (Healing Hands)",
+                    "description": "Als Magie-Aktion kannst du eine Kreatur berühren und eine Anzahl an W4 würfeln, die deinem Übungsbonus entspricht. Die Kreatur heilt Trefferpunkte in Höhe der gewürfelten Summe. 1x pro Langer Rast."
+                },
+                {
+                    "name": "Lichtbringer (Light Bearer)",
+                    "description": "Du kennst den Zaubertrick *Licht (Light)*. Dein Zauberattribut dafür ist Charisma."
+                },
+                {
+                    "name": "Himmlische Offenbarung (Celestial Revelation)",
+                    "description": "Ab Stufe 3 kannst du dich als Bonusaktion für 1 Minute transformieren (oder bis du es kostenlos beendest). 1x pro Langer Rast. Einmal in jedem deiner Züge kannst du einem Ziel bei einem Treffer mit einem Angriff oder Zauber zusätzlichen Schaden in Höhe deines Übungsbonus zufügen. Der Schadenstyp hängt von deiner Form ab. Wähle bei jeder Transformation eine Form:\n* *Himmlische Schwingen:* Du erhältst eine Flugbewegungsrate in Höhe deiner normalen Bewegungsrate. Zusatzschaden: Gleißend.\n* *Inneres Strahlen:* Du strahlst 3 m helles und weitere 3 m schwaches Licht aus. Am Ende jedes deiner Züge erleidet jede Kreatur innerhalb von 3 m gleißenden Schaden in Höhe deines Übungsbonus. Zusatzschaden: Gleißend.\n* *Nekrotisches Leichentuch:* Kreaturen (außer Verbündeten) innerhalb von 3 m müssen einen Charisma-Rettungswurf (DC 8 + CHA-Mod + Übungsbonus) bestehen oder sind bis zum Ende deines nächsten Zuges *Verängstigt*. Zusatzschaden: Nekrotisch."
+                }
+            ]
+        },
+        {
+            "id": "spec_dragonborn",
+            "name": "Drachenblütiger (Dragonborn)",
+            "size": "Medium",
+            "speed": 9.0,
+            "traits": [
+                {
+                    "name": "Drakonische Abstammung (Draconic Ancestry)",
+                    "description": "Wähle einen Drachen, der den Schaden deiner Odemwaffe und deine Resistenz bestimmt:\n* Schwarz: Säure\n* Blau: Blitz\n* Messing: Feuer\n* Bronze: Blitz\n* Kupfer: Säure\n* Gold: Feuer\n* Grün: Gift\n* Rot: Feuer\n* Silber: Kälte\n* Weiß: Kälte"
+                },
+                {
+                    "name": "Odemwaffe (Breath Weapon)",
+                    "description": "Wenn du die Angriffsaktion ausführst, kannst du einen Angriff durch deine Odemwaffe ersetzen. Wähle jedes Mal die Form: 15-Fuß-Kegel oder 30-Fuß-Linie (1,5 m breit). Jede Kreatur im Bereich muss einen GES-Rettungswurf (DC 8 + KON-Mod + Übungsbonus) bestehen. Fehlschlag: 1W10 Schaden deines Abstammungs-Typs (halber Schaden bei Erfolg). Steigt auf Stufe 5 (2W10), 11 (3W10) und 17 (4W10). Nutzungen = Übungsbonus pro Langer Rast."
+                },
+                {
+                    "name": "Schadensresistenz (Damage Resistance)",
+                    "description": "Du erhältst Resistenz gegen den Schadenstyp deiner Abstammung."
+                },
+                {
+                    "name": "Dunkelsicht (Darkvision)",
+                    "description": "18 m / 12 Felder."
+                },
+                {
+                    "name": "Drakonischer Flug (Draconic Flight)",
+                    "description": "Ab Stufe 5 kannst du als Bonusaktion Spektralflügel manifestieren, die 10 Minuten anhalten. Du erhältst eine Flugbewegungsrate in Höhe deiner normalen Bewegungsrate. 1x pro Langer Rast."
+                }
+            ]
+        },
+        {
+            "id": "spec_dwarf",
+            "name": "Zwerg (Dwarf)",
+            "size": "Medium",
+            "speed": 9.0,
+            "traits": [
+                {
+                    "name": "Dunkelsicht (Darkvision)",
+                    "description": "36 m / 24 Felder."
+                },
+                {
+                    "name": "Zwergenhafte Widerstandsfähigkeit (Dwarven Resilience)",
+                    "description": "Du hast Resistenz gegen Giftschaden. Du bist im Vorteil bei Rettungswürfen gegen den Zustand *Vergiftet*."
+                },
+                {
+                    "name": "Zwergenhafte Zähigkeit (Dwarven Toughness)",
+                    "description": "Dein Trefferpunkte-Maximum steigt um 1. Es steigt jedes Mal um weitere 1, wenn du eine Stufe aufsteigst."
+                },
+                {
+                    "name": "Gespür für Stein (Stonecunning)",
+                    "description": "Als Bonusaktion erhältst du für 10 Minuten Erschütterungssinn (Tremorsense) von 18 m. Du musst eine Steinoberfläche berühren oder dich darauf befinden (natürlich oder bearbeitet). Nutzungen = Übungsbonus pro Langer Rast."
+                }
+            ]
+        },
+        {
+            "id": "spec_elf",
+            "name": "Elf (Elf)",
+            "size": "Medium",
+            "speed": 9.0,
+            "traits": [
+                {
+                    "name": "Dunkelsicht (Darkvision)",
+                    "description": "18 m / 12 Felder."
+                },
+                {
+                    "name": "Feenblut (Fey Ancestry)",
+                    "description": "Du bist im Vorteil bei Rettungswürfen gegen den Zustand *Bezaubert*."
+                },
+                {
+                    "name": "Scharfe Sinne (Keen Senses)",
+                    "description": "Du bist geübt in *Motiv erkennen*, *Wahrnehmung* oder *Überleben*."
+                },
+                {
+                    "name": "Trance",
+                    "description": "Du musst nicht schlafen, und Magie kann dich nicht einschläfern. Du kannst eine Lange Rast in 4 Stunden abschließen, wenn du sie in einem trancemäßigen Meditationszustand verbringst (du bleibst bei Bewusstsein)."
+                },
+                {
+                    "name": "Elfen-Abstammungslinie (Elven Lineage)",
+                    "description": "Wähle eine Abstammung. INT, WEI oder CHA ist das Zauberattribut (wähle dies bei der Erstellung). Du hast die Zauber immer vorbereitet und kannst sie ab der entsprechenden Stufe 1x pro Langer Rast kostenlos (oder mit Slots) wirken:\n* **Drow:** Dunkelsicht steigt auf 36 m. Stufe 1: *Tanzende Lichter*. Stufe 3: *Feenfeuer*. Stufe 5: *Dunkelheit*.\n* **Hochelf:** Stufe 1: *Zaubertrick* (kann nach Langer Rast getauscht werden). Stufe 3: *Magie entdecken*. Stufe 5: *Nebelschritt*.\n* **Waldelf:** Bewegungsrate steigt auf 10,5 m. Stufe 1: *Druidenkunst*. Stufe 3: *Lange Schritte*. Stufe 5: *Spurloses Gehen*."
+                }
+            ]
+        },
+        {
+            "id": "spec_gnome",
+            "name": "Gnom (Gnome)",
+            "size": "Small",
+            "speed": 9.0,
+            "traits": [
+                {
+                    "name": "Dunkelsicht (Darkvision)",
+                    "description": "18 m / 12 Felder."
+                },
+                {
+                    "name": "Gnomische Gerissenheit (Gnomish Cunning)",
+                    "description": "Vorteil auf Intelligenz-, Weisheits- und Charisma-Rettungswürfe."
+                },
+                {
+                    "name": "Gnomische Abstammungslinie (Gnomish Lineage)",
+                    "description": "Wähle eine Abstammung (INT, WEI oder CHA ist dein Zauberattribut):\n* **Waldgnom:** Du kennst *Einfache Illusion*. Du hast *Mit Tieren sprechen* vorbereitet und kannst es kostenlos wirken (Nutzungen = Übungsbonus pro Langer Rast).\n* **Felsengnom:** Du kennst *Ausbessern* und *Zaubertrick*. Du kannst 10 Minuten lang *Zaubertrick* wirken, um ein winziges Uhrwerk-Gerät zu erschaffen. Führt bei Aktivierung (Bonusaktion) einen Effekt von *Zaubertrick* aus. Max. 3 Geräte, fallen nach 8 Stunden auseinander."
+                }
+            ]
+        },
+        {
+            "id": "spec_goliath",
+            "name": "Goliath",
+            "size": "Medium",
+            "speed": 10.5,
+            "traits": [
+                {
+                    "name": "Kräftiger Körperbau (Powerful Build)",
+                    "description": "Vorteil auf Rettungswürfe gegen den Zustand *Gepackt*. Du zählst bei der Traglast als eine Größenkategorie größer."
+                },
+                {
+                    "name": "Große Form (Large Form)",
+                    "description": "Ab Stufe 5 kannst du dich als Bonusaktion für 10 Minuten auf die Größe 'Groß' vergrößern. Vorteil auf Stärke-Prüfungen und Bewegungsrate +3 m. 1x pro Langer Rast."
+                },
+                {
+                    "name": "Riesen-Abstammung (Giant Ancestry)",
+                    "description": "Wähle einen Segen (Nutzungen = Übungsbonus pro Langer Rast):\n* **Wolkensprung:** Bonusaktion: 9 m teleportieren.\n* **Feuerbrand:** Bei Waffentreffer 1W10 extra Feuerschaden.\n* **Frostkälte:** Bei Waffentreffer 1W6 extra Kälteschaden und Bewegungsrate des Ziels -3 m.\n* **Hügelsturz:** Bei Waffentreffer (gegen 'Groß' oder kleiner) das Ziel *Liegend* werfen.\n* **Steinausdauer:** Wenn du Schaden nimmst (Reaktion): 1W12 + KON-Mod würfeln und Schaden reduzieren.\n* **Sturmdonner:** Wenn dir eine Kreatur in 18 m Schaden zufügt (Reaktion): 1W8 Donnerschaden zufügen."
+                }
+            ]
+        },
+        {
+            "id": "spec_halfling",
+            "name": "Halbling (Halfling)",
+            "size": "Small",
+            "speed": 9.0,
+            "traits": [
+                {
+                    "name": "Mutig (Brave)",
+                    "description": "Vorteil auf Rettungswürfe gegen den Zustand *Verängstigt*."
+                },
+                {
+                    "name": "Halbling-Gewandtheit (Halfling Nimbleness)",
+                    "description": "Du kannst dich durch den Bereich von Kreaturen bewegen, die mindestens eine Größenkategorie größer sind als du."
+                },
+                {
+                    "name": "Glück (Luck)",
+                    "description": "Wenn du bei einem W20-Test eine 1 würfelst, kannst du neu werfen und musst das neue Ergebnis verwenden."
+                },
+                {
+                    "name": "Von Natur aus heimlich (Naturally Stealthy)",
+                    "description": "Du kannst *Verstecken* ausführen, auch wenn du nur von einer Kreatur verdeckt wirst, die mindestens eine Größe größer ist."
+                }
+            ]
+        },
+        {
+            "id": "spec_human",
+            "name": "Mensch (Human)",
+            "size": "Medium oder Small",
+            "speed": 9.0,
+            "traits": [
+                {
+                    "name": "Findig (Resourceful)",
+                    "description": "Du erhältst eine Heldenhafte Inspiration (Heroic Inspiration), wann immer du eine Lange Rast beendest."
+                },
+                {
+                    "name": "Geschickt (Skillful)",
+                    "description": "Du erhältst Übung in einer Fertigkeit deiner Wahl."
+                },
+                {
+                    "name": "Vielseitig (Versatile)",
+                    "description": "Du erhältst ein Ursprungstalent (Origin Feat) deiner Wahl."
+                }
+            ]
+        },
+        {
+            "id": "spec_orc",
+            "name": "Ork (Orc)",
+            "size": "Medium",
+            "speed": 9.0,
+            "traits": [
+                {
+                    "name": "Dunkelsicht (Darkvision)",
+                    "description": "36 m / 24 Felder."
+                },
+                {
+                    "name": "Adrenalinrausch (Adrenaline Rush)",
+                    "description": "Du kannst *Spurt* als Bonusaktion ausführen und erhältst Temporäre TP in Höhe deines Übungsbonus. Nutzungen = Übungsbonus pro Kurzer oder Langer Rast."
+                },
+                {
+                    "name": "Unerbittliche Ausdauer (Relentless Endurance)",
+                    "description": "Wenn du auf 0 TP fällst (ohne sofort getötet zu werden), fällst du stattdessen auf 1 TP. 1x pro Langer Rast."
+                }
+            ]
+        },
+        {
+            "id": "spec_tiefling",
+            "name": "Tiefling (Tiefling)",
+            "size": "Medium oder Small",
+            "speed": 9.0,
+            "traits": [
+                {
+                    "name": "Dunkelsicht (Darkvision)",
+                    "description": "18 m / 12 Felder."
+                },
+                {
+                    "name": "Übernatürliche Präsenz (Otherworldly Presence)",
+                    "description": "Du kennst den Zaubertrick *Thaumaturgie*."
+                },
+                {
+                    "name": "Teuflisches Erbe (Fiendish Legacy)",
+                    "description": "Wähle ein Erbe (INT, WEI oder CHA ist das Zauberattribut). Die Zauber sind immer vorbereitet und können ab der Stufe 1x pro Langer Rast kostenlos (oder mit Slots) gewirkt werden:\n* **Abyssisch:** Resistenz gegen Giftschaden. Stufe 1: *Giftspritzer*. Stufe 3: *Krankheitsstrahl*. Stufe 5: *Person festhalten*.\n* **Chthonisch:** Resistenz gegen nekrotischen Schaden. Stufe 1: *Kälteberührung*. Stufe 3: *Falsches Leben*. Stufe 5: *Strahl der Schwächung*.\n* **Höllisch:** Resistenz gegen Feuerschaden. Stufe 1: *Feuerpfeil*. Stufe 3: *Höllischer Tadel*. Stufe 5: *Dunkelheit*."
+                }
+            ]
+        }
+    ],
+    "classes": [
+        {
+            "id": "class_monk",
+            "name": "Mönch (Monk)",
+            "primaryAbility": "Geschicklichkeit und Weisheit",
+            "hitDie": "W8",
+            "savingThrows": [
+                "Stärke",
+                "Geschicklichkeit"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 2: Akrobatik, Athletik, Geschichte, Heimlichkeit, Motiv erkennen oder Religion",
+                "weapons": [
+                    "Einfache Waffen",
+                    "Kriegswaffen mit der Eigenschaft Leicht"
+                ],
+                "armor": [
+                    "Keine"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Speer, 5 Wurfpfeile (Darts), Handwerker-Werkzeug oder Musikinstrument, Entdeckerausrüstung und 9 GM; oder (B) 50 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Kampfkunst (Martial Arts)",
+                    "description": "Dein unbewaffneter Schlag verursacht 1W6 Schaden (skaliert auf 1W8 auf Stufe 5, 1W10 auf Stufe 11, 1W12 auf Stufe 17). Du kannst GES statt STR nutzen. Wenn du die Angriffsaktion ausführst, kannst du als Bonusaktion unbewaffnet angreifen."
+                },
+                {
+                    "level": 1,
+                    "name": "Ungepanzerte Verteidigung",
+                    "description": "Ohne Rüstung und Schild ist deine RK = 10 + GES-Modifikator + WEI-Modifikator."
+                },
+                {
+                    "level": 2,
+                    "name": "Fokus des Mönchs (Monk's Focus)",
+                    "description": "Du hast Fokus-Punkte in Höhe deiner Mönchsstufe (Regeneration bei Kurzer/Langer Rast). Optionen:\n* Schlaghagel: 1 Fokus = 2 unbewaffnete Schläge als Bonusaktion.\n* Geduldige Verteidigung: Ausweichen als Bonusaktion (Kostenlos) ODER Ausweichen + Rückzug als Bonusaktion für 1 Fokus.\n* Schritt des Windes: Spurt + Rückzug als Bonusaktion (Kostenlos) ODER beides + doppelte Sprungweite als Bonusaktion für 1 Fokus."
+                },
+                {
+                    "level": 2,
+                    "name": "Ungerüstete Bewegung",
+                    "description": "+3 m / 2 Felder Bewegungsrate. (Skaliert weiter)."
+                },
+                {
+                    "level": 3,
+                    "name": "Angriffe abwehren (Deflect Attacks)",
+                    "description": "Als Reaktion auf Hieb-, Stich- oder Wuchtschaden (Nah- oder Fernkampf!) reduzierst du den Schaden um 1W10 + GES-Modifikator + Mönchsstufe. Sinkt der Schaden auf 0, kannst du 1 Fokus ausgeben, um den Angriff auf ein Ziel in 1,5 m / 1 Felder (oder 18 m / 12 Felder bei Fernkampf) umzuleiten."
+                },
+                {
+                    "level": 4,
+                    "name": "Langsamer Fall (Slow Fall)",
+                    "description": "Als Reaktion reduzierst du Fallschaden um (5 x Mönchsstufe)."
+                },
+                {
+                    "level": 5,
+                    "name": "Betäubender Schlag (Stunning Strike)",
+                    "description": "Wenn du mit einer Waffe oder unbewaffnet triffst, kannst du 1 Fokus ausgeben. Ziel macht KON-Rettungswurf (Fehlschlag: Betäubt bis Beginn deines nächsten Zuges. Erfolg: Ziel erleidet Energieschaden / Force Damage)."
+                },
+                {
+                    "level": 6,
+                    "name": "Ermächtigte Schläge (Empowered Strikes)",
+                    "description": "Deine unbewaffneten Schläge können optional Energieschaden (Force Damage) verursachen."
+                },
+                {
+                    "level": 7,
+                    "name": "Entrinnen (Evasion)",
+                    "description": "Nimm bei geschafftem GES-Rettungswurf gegen Bereichseffekte keinen Schaden, bei fehlgeschlagenem nur halben."
+                },
+                {
+                    "level": 10,
+                    "name": "Erhöhter Fokus (Heightened Focus)",
+                    "description": "Schlaghagel = 3 Schläge. Geduldige Verteidigung = Zusätzlich Temp. TP. Schritt des Windes = Du kannst eine willige Kreatur mitnehmen."
+                },
+                {
+                    "level": 10,
+                    "name": "Selbstwiederherstellung (Self-Restoration)",
+                    "description": "Am Ende deines Zuges kannst du (ohne Aktionskosten) den Zustand Bezaubert, Verängstigt oder Vergiftet beenden. Zusätzlich leidest du nicht an Nahrungs-/Wassermangel."
+                },
+                {
+                    "level": 13,
+                    "name": "Energie abwehren (Deflect Energy)",
+                    "description": "*Angriffe abwehren* funktioniert nun gegen jeden Schadenstyp (außer Psychisch)."
+                },
+                {
+                    "level": 14,
+                    "name": "Disziplinierter Überlebender (Disciplined Survivor)",
+                    "description": "Du erhältst Übung in allen Rettungswürfen."
+                },
+                {
+                    "level": 15,
+                    "name": "Perfekter Fokus (Perfect Focus)",
+                    "description": "Wenn du Initiative würfelst und weniger als 3 Fokus-Punkte hast, regenerierst du Fokus bis du genau 3 Punkte hast."
+                },
+                {
+                    "level": 20,
+                    "name": "Körper der Erleuchtung (Body of Enlightenment)",
+                    "description": "GES und WEI steigen um 4. Das Maximum für beide Werte ist nun 25."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_monk_mercy",
+                    "name": "Krieger der Barmherzigkeit (Warrior of Mercy)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Werkzeuge der Barmherzigkeit & Heilende/Schadende Hand",
+                            "description": "Übung in Einsicht, Medizin und Kräuterkunde. Du kannst unbewaffnete Angriffe (z.B. im Schlaghagel) durch Heilung oder extra nekrotischen Schaden tauschen (kostet 1 Fokus, nutzt Waffenschadens-Würfel + WEI-Mod)."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Berührung des Arztes (Physician's Touch)",
+                            "description": "*Hand der Heilung* entfernt zusätzlich Blind, Taub, Gelähmt, Vergiftet oder Betäubt. *Hand des Schadens* belegt den Feind automatisch mit dem Zustand *Vergiftet*."
+                        },
+                        {
+                            "level": 11,
+                            "name": "Hagel von Heilung und Schaden (Flurry of Healing and Harm)",
+                            "description": "Wenn du *Schlaghagel* ausführst, kannst du nun beide Extra-Angriffe kostenlos durch Heilung oder Schaden ersetzen."
+                        },
+                        {
+                            "level": 17,
+                            "name": "Hand der ultimativen Barmherzigkeit (Hand of Ultimate Mercy)",
+                            "description": "Du kannst 5 Fokus-Punkte ausgeben, um eine kürzlich verstorbene Kreatur mit vollen TP aufzuwecken und Zustände zu entfernen."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_monk_shadow",
+                    "name": "Krieger der Schatten (Warrior of Shadow)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Schattenkünste (Shadow Arts)",
+                            "description": "Dunkelsicht (18 m / 12 Felder). 1 Fokus ausgeben, um *Dunkelheit* zu wirken (erfordert keine Konzentration, du siehst normal hindurch)."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Schattenschritt (Shadow Step)",
+                            "description": "Als Bonusaktion teleportierst du dich bis zu 18 m von einem Bereich in dämmrigem Licht/Dunkelheit zu einem anderen unbesetzten, dämmrigen/dunklen Bereich. Vorteil auf nächsten Nahkampfangriff."
+                        },
+                        {
+                            "level": 11,
+                            "name": "Verbesserter Schattenschritt (Improved Shadow Step)",
+                            "description": "Du kannst den Schattenschritt nun machen, ohne dass du dich im Schatten befinden musst (der Zielort muss weiterhin Schatten sein)."
+                        },
+                        {
+                            "level": 17,
+                            "name": "Umhang der Schatten (Cloak of Shadows)",
+                            "description": "Als Bonusaktion (3 Fokus) wirst du für 1 Minute völlig unsichtbar (auch wenn du angreifst) und kannst durch Objekte gehen."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_monk_elements",
+                    "name": "Krieger der Elemente (Warrior of the Elements)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Elementare Abstimmung (Elemental Attunement)",
+                            "description": "Für 1 Fokus stimmst du deine Angriffe ab: Reichweite +3 m, Schadenstyp wird elementar. Triffst du, kannst du das Ziel 3 m ziehen oder stoßen."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Umwelt-Explosion (Environmental Burst)",
+                            "description": "Emanation (GES-Save für Gegner), verursacht Elementarschaden. Bei *Schritt des Windes* 1x kostenlos triggern."
+                        },
+                        {
+                            "level": 11,
+                            "name": "Elementarer Schritt (Elemental Step)",
+                            "description": "Wenn du *Schritt des Windes* verwendest, erhältst du bis zum Ende deines Zuges eine Flug- und Schwimmbewegungsrate."
+                        },
+                        {
+                            "level": 17,
+                            "name": "Zerstörerischer Meister (Destructive Mastery)",
+                            "description": "Die Abstimmung kostet keinen Fokus mehr. Du kannst Resistenz gegen zwei Elementar-Typen wählen."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_monk_open_hand",
+                    "name": "Krieger der Offenen Hand (Warrior of the Open Hand)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Technik der Offenen Hand (Open Hand Technique)",
+                            "description": "Effekte für *Schlaghagel*-Treffer: Ziel fällt Liegend, wird 4,5 m weggestoßen oder verliert Gelegenheitsangriffe."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Ganzheit des Körpers (Wholeness of Body)",
+                            "description": "Als Bonusaktion heilen (Mönch-Würfel + WEI-Mod)."
+                        },
+                        {
+                            "level": 11,
+                            "name": "Flinke Schritte (Fleet Step)",
+                            "description": "Wenn du *Schritt des Windes* nutzt, kannst du einen unbewaffneten Angriff in derselben Bonusaktion ausführen."
+                        },
+                        {
+                            "level": 17,
+                            "name": "Vibrierende Handfläsche (Quivering Palm)",
+                            "description": "Treffer + 4 Fokus: Tödliche Vibrationen im Ziel platzieren. Als Aktion auslösen für extremen Energieschaden (KON-Save)."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "class_paladin",
+            "name": "Paladin (Paladin)",
+            "primaryAbility": "Stärke und Charisma",
+            "hitDie": "W10",
+            "savingThrows": [
+                "Weisheit",
+                "Charisma"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 2: Athletik, Einschüchtern, Heilkunde, Motiv erkennen, Religion oder Überreden",
+                "weapons": [
+                    "Einfache Waffen",
+                    "Kriegswaffen"
+                ],
+                "armor": [
+                    "Leichte Rüstung",
+                    "Mittlere Rüstung",
+                    "Schwere Rüstung",
+                    "Schilde"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Kettenhemd, Schild, Langschwert, 6 Speere, Heiliges Symbol, Priesterpaket und 9 GM; oder (B) 150 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Handauflegen (Lay on Hands)",
+                    "description": "Pool = Paladinstufe x 5 TP. Du kannst als Bonusaktion eine Kreatur berühren und TP aus dem Pool heilen."
+                },
+                {
+                    "level": 1,
+                    "name": "Zauberwirken (Spellcasting)",
+                    "description": "Zauberattribut ist Charisma."
+                },
+                {
+                    "level": 1,
+                    "name": "Waffenmeisterschaft (Weapon Mastery)",
+                    "description": "Übung in 2 Waffenmeisterschaften."
+                },
+                {
+                    "level": 2,
+                    "name": "Göttliches Niederstrecken (Divine Smite)",
+                    "description": "Der Zauber *Divine Smite* ist immer vorbereitet. Wird nach erfolgreichem Treffer als Bonusaktion gewirkt."
+                },
+                {
+                    "level": 3,
+                    "name": "Göttliche Macht fokussieren (Channel Divinity)",
+                    "description": "2 Nutzungen pro Kurzer/Langer Rast. Basis: Feinde bannen (WEI-Save oder Verängstigt)."
+                },
+                {
+                    "level": 5,
+                    "name": "Treues Ross (Faithful Steed)",
+                    "description": "Du hast *Ross finden* immer vorbereitet und kannst es 1x pro Tag ohne Zauberplatz wirken."
+                },
+                {
+                    "level": 6,
+                    "name": "Aura des Schutzes (Aura of Protection)",
+                    "description": "Gewährt dir und Verbündeten in 3 m / 2 Felder einen Bonus auf alle Rettungswürfe in Höhe deines CHA-Modifikators."
+                },
+                {
+                    "level": 10,
+                    "name": "Aura des Mutes (Aura of Courage)",
+                    "description": "Du und Verbündete in 3 m / 2 Felder sind immun gegen *Verängstigt*."
+                },
+                {
+                    "level": 11,
+                    "name": "Strahlende Schläge (Radiant Strikes)",
+                    "description": "Deine Nahkampfwaffenangriffe verursachen zusätzlich 1W8 Gleißenden Schaden."
+                },
+                {
+                    "level": 14,
+                    "name": "Reinigung durch Berührung (Restoring Touch)",
+                    "description": "Wenn du *Handauflegen* anwendest, kannst du 5 TP opfern, um Blind, Bezaubert, Taub, Verängstigt, Vergiftet oder Betäubt zu entfernen."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_paladin_devotion",
+                    "name": "Eid der Hingabe (Oath of Devotion)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Heilige Waffe (Sacred Weapon)",
+                            "description": "Fokussiere Göttliche Macht (Bonusaktion): Waffe leuchtet. Für 1 Minute addierst du deinen CHA-Modifikator zu den Angriffswürfen der Waffe."
+                        },
+                        {
+                            "level": 7,
+                            "name": "Aura der Hingabe (Aura of Devotion)",
+                            "description": "Du und Verbündete in deiner Aura sind immun gegen *Bezaubert*."
+                        },
+                        {
+                            "level": 15,
+                            "name": "Reinheit des Geistes (Purity of Spirit)",
+                            "description": "Du stehst permanent unter dem Effekt von *Schutz vor Bösem und Gutem*."
+                        },
+                        {
+                            "level": 20,
+                            "name": "Heiliger Nimbus (Holy Nimbus)",
+                            "description": "Bonusaktion (1 Minute): Strahlendes Licht (Gleißender Schaden für Feinde), Vorteil auf Rettungswürfe gegen Zauber von Unterweltlern/Untoten."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_paladin_glory",
+                    "name": "Eid des Ruhms (Oath of Glory)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Unvergleichlicher Athlet & Inspirierendes Niederstrecken",
+                            "description": "Fokus: Vorteil auf Athletik/Akrobatik. Alternativ: Nach *Göttliches Niederstrecken* Temp. TP an Verbündete verteilen."
+                        },
+                        {
+                            "level": 7,
+                            "name": "Aura der Schnelligkeit (Aura of Alacrity)",
+                            "description": "Deine Laufgeschwindigkeit und die von Verbündeten in der Aura erhöht sich um 3 m / 2 Felder."
+                        },
+                        {
+                            "level": 15,
+                            "name": "Glorreiche Verteidigung (Glorious Defense)",
+                            "description": "Angriff als Reaktion mit RK-Bonus abwehren und evtl. direkt einen Gegenangriff ausführen."
+                        },
+                        {
+                            "level": 20,
+                            "name": "Lebende Legende (Living Legend)",
+                            "description": "Gesegneter Zustand: Verfehlte Waffentests treffen lassen und CHA-Tests wiederholen."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_paladin_ancients",
+                    "name": "Eid der Alten (Oath of the Ancients)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Zorn der Natur (Nature's Wrath)",
+                            "description": "Fokussiere Göttliche Macht: Ranken schießen aus dem Boden (STR-Save oder Festgesetzt)."
+                        },
+                        {
+                            "level": 7,
+                            "name": "Aura des Schutzes vor Magie (Aura of Warding)",
+                            "description": "Du und Verbündete in der Aura haben Resistenz gegen jeglichen Schaden, der von Zaubern stammt."
+                        },
+                        {
+                            "level": 15,
+                            "name": "Unsterblicher Wächter (Undying Sentinel)",
+                            "description": "Fällst du auf 0 TP ohne sofort zu sterben, bleibst du auf 1 TP (1x/Langer Rast)."
+                        },
+                        {
+                            "level": 20,
+                            "name": "Ältester Champion (Elder Champion)",
+                            "description": "Regeneration von TP und Paladin-Zauber (Aktion) dauern nur 1 Bonusaktion."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_paladin_vengeance",
+                    "name": "Eid der Vergeltung (Oath of Vengeance)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Schwur der Feindschaft (Vow of Enmity)",
+                            "description": "Fokus: Ziel markieren und für 1 Minute Vorteil auf alle Angriffswürfe dagegen erhalten."
+                        },
+                        {
+                            "level": 7,
+                            "name": "Unerbittlicher Rächer (Relentless Avenger)",
+                            "description": "Wenn du einen Gegner mit Gelegenheitsangriff triffst, kannst du dich sofort bis zur halben Bewegungsrate wegbewegen."
+                        },
+                        {
+                            "level": 15,
+                            "name": "Seele der Rache (Soul of Vengeance)",
+                            "description": "Wenn das Ziel deines Schwurs einen Angriff macht, kannst du per Reaktion einen Nahkampfangriff gegen das Ziel machen."
+                        },
+                        {
+                            "level": 20,
+                            "name": "Rächender Engel (Avenging Angel)",
+                            "description": "Schattenflügel (18 m Flug), verursacht Furcht-Effekt in 9 m Umkreis."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "class_rogue",
+            "name": "Schurke (Rogue)",
+            "primaryAbility": "Geschicklichkeit",
+            "hitDie": "W8",
+            "savingThrows": [
+                "Geschicklichkeit",
+                "Intelligenz"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 4: Akrobatik, Athletik, Auftreten, Einschüchtern, Fingerfertigkeit, Heimlichkeit, Motiv erkennen, Nachforschen, Täuschen, Überreden oder Wahrnehmung",
+                "weapons": [
+                    "Einfache Waffen",
+                    "Kriegswaffen mit der Eigenschaft Finesse oder Leicht"
+                ],
+                "armor": [
+                    "Leichte Rüstung"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Lederrüstung, 2 Dolche, Kurzschwert, Kurzbogen, 20 Pfeile, Köcher, Diebeswerkzeug, Einbrecherpaket und 8 GM; oder (B) 110 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Expertise",
+                    "description": "Verdopple deinen Übungsbonus für zwei deiner Fertigkeiten (Erneut auf Stufe 6)."
+                },
+                {
+                    "level": 1,
+                    "name": "Hinterhältiger Angriff (Sneak Attack)",
+                    "description": "1x pro Zug fügst du bei einem Treffer extra Schaden zu, wenn du Vorteil hast oder ein Verbündeter nah am Ziel steht."
+                },
+                {
+                    "level": 2,
+                    "name": "Listige Aktion (Cunning Action)",
+                    "description": "Du kannst Spurt, Rückzug oder Verstecken als Bonusaktion ausführen."
+                },
+                {
+                    "level": 3,
+                    "name": "Ruhiges Zielen (Steady Aim)",
+                    "description": "Als Bonusaktion gibst du dir Vorteil auf deinen nächsten Angriff (Bewegungsrate wird für diesen Zug 0)."
+                },
+                {
+                    "level": 5,
+                    "name": "Listiger Schlag (Cunning Strike)",
+                    "description": "Du kannst auf einen 1W6 deines Hinterhältigen Angriffs verzichten, um Zusatzeffekte (Vergiften, Stolpern, Rückzug) auszulösen."
+                },
+                {
+                    "level": 5,
+                    "name": "Entrinnen (Uncanny Dodge)",
+                    "description": "Als Reaktion halbierst du den Schaden eines Angriffs, den du sehen kannst."
+                },
+                {
+                    "level": 7,
+                    "name": "Verlässliches Talent (Reliable Talent)",
+                    "description": "Bei geübten Fertigkeits-Würfen behandelst du eine gewürfelte 9 oder niedriger automatisch als eine 10."
+                },
+                {
+                    "level": 7,
+                    "name": "Ausweichen (Evasion)",
+                    "description": "Bei GES-Rettungswürfen für halben Schaden nimmst du bei Erfolg keinen Schaden, bei Fehlschlag nur halben."
+                },
+                {
+                    "level": 11,
+                    "name": "Verbesserter Listiger Schlag (Improved Cunning Strike)",
+                    "description": "Du kannst auf ZWEI W6 verzichten, um zwei unterschiedliche Effekte gleichzeitig anzuwenden."
+                },
+                {
+                    "level": 14,
+                    "name": "Tückische Schläge (Devious Strikes)",
+                    "description": "Noch stärkere Effekte für den *Listigen Schlag* (Blenden, Betäuben, K.o. schlagen)."
+                },
+                {
+                    "level": 15,
+                    "name": "Schlüpfriger Geist (Slippery Mind)",
+                    "description": "Du erhältst Übung in Weisheits- und Charisma-Rettungswürfen."
+                },
+                {
+                    "level": 18,
+                    "name": "Unfassbar (Elusive)",
+                    "description": "Kein Angriffswurf gegen dich kann im Vorteil sein, solange du nicht Kampfunfähig bist."
+                },
+                {
+                    "level": 20,
+                    "name": "Schicksalsschlag (Stroke of Luck)",
+                    "description": "1x pro Kurzer/Langer Rast kannst du einen fehlgeschlagenen W20-Wurf nachträglich in eine 20 umwandeln."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_rogue_arcane_trickster",
+                    "name": "Arkaner Trickbetrüger (Arcane Trickster)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Zauberwirken & Magierhand-Taschenspielerei",
+                            "description": "Du erlernst Magier-Zauber (INT). Du lernst eine unsichtbare Magierhand, die Schlösser knacken und stehlen kann (Bonusaktion)."
+                        },
+                        {
+                            "level": 9,
+                            "name": "Magischer Hinterhalt (Magical Ambush)",
+                            "description": "Wenn du versteckt bist und zauberst, haben Gegner Nachteil auf Rettungswürfe gegen den Zauber."
+                        },
+                        {
+                            "level": 13,
+                            "name": "Vielseitiger Trickbetrüger (Versatile Trickster)",
+                            "description": "Magierhand kann Ziele ablenken, was dir Vorteil auf Angriffe gibt (löst Sneak Attack aus)."
+                        },
+                        {
+                            "level": 17,
+                            "name": "Zauberdieb (Spell Thief)",
+                            "description": "Als Reaktion Zauber stehlen, die auf dich gerichtet sind, sie selbst erlernen und den Gegner sie für 8 Stunden vergessen lassen."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_rogue_assassin",
+                    "name": "Meuchelmörder (Assassin)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Meucheln (Assassinate)",
+                            "description": "Vorteil auf Initiative. Vorteil gegen Kreaturen, die noch nicht dran waren. In Runde 1 zusätzlicher Schaden in Höhe deiner Schurken-Stufe."
+                        },
+                        {
+                            "level": 3,
+                            "name": "Meister der Infiltration (Infiltration Expertise)",
+                            "description": "Vorteil auf Täuschen (Identitäten annehmen, Fälschen)."
+                        },
+                        {
+                            "level": 9,
+                            "name": "Vergiftete Waffen (Envenom Weapons)",
+                            "description": "Listiger Schlag \"Vergiften\" ignoriert Gift-Resistenz und macht zusätzlich 2W6 nekrotischen Schaden bei Fehlschlag des Ziels."
+                        },
+                        {
+                            "level": 13,
+                            "name": "Todesstoß (Death Strike)",
+                            "description": "Runde 1: Getroffenes Ziel muss KON-Save ablegen, bei Fehlschlag wird der GESAMTE Schaden verdoppelt."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_rogue_soulknife",
+                    "name": "Seelenklinge (Soulknife)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Psionische Kraft & Klingen",
+                            "description": "Psi-Würfel-Pool. Erschafft Psionische Energieklingen (1W6 Psychischer Schaden), kann als Bonusaktion eine zweite werfen (1W4)."
+                        },
+                        {
+                            "level": 9,
+                            "name": "Seelenklingen (Soul Blades)",
+                            "description": "Zielsuchender Schlag (Fehlschlag mit Psi-Würfel aufwerten) & Psychische Teleportation (Klinge werfen und per Bonusaktion dorthin teleportieren)."
+                        },
+                        {
+                            "level": 13,
+                            "name": "Psychischer Schleier (Psychic Veil)",
+                            "description": "Für 1 Stunde unsichtbar werden (bricht bei Angriff)."
+                        },
+                        {
+                            "level": 17,
+                            "name": "Zerreißen des Verstandes (Rend Mind)",
+                            "description": "Treffer mit Psychischer Klinge kann Ziel für 1 Minute betäuben (WIS-Save)."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_rogue_thief",
+                    "name": "Dieb (Thief)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Schnelle Hände & Kletterkünstler",
+                            "description": "Gegenstand nutzen oder Fingerfertigkeit als Bonusaktion. Klettern geht so schnell wie Laufen."
+                        },
+                        {
+                            "level": 9,
+                            "name": "Ultimativer Schleicher (Supreme Sneak)",
+                            "description": "Automatisch Vorteil auf Heimlichkeit, solange du dich nur die halbe Bewegungsrate bewegst."
+                        },
+                        {
+                            "level": 13,
+                            "name": "Magische Gegenstände nutzen (Use Magic Device)",
+                            "description": "Ignoriert Voraussetzungen für Magische Items, kann 4 Gegenstände einstimmen und Spruchrollen nutzen."
+                        },
+                        {
+                            "level": 17,
+                            "name": "Reflexe des Diebes (Thief's Reflexes)",
+                            "description": "Im ersten Zug jedes Kampfes erhältst du zwei komplette Spielzüge."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "backgrounds": [
+                {
+                    "id": "bg_acolyte",
+                    "name": "Akolyth (Acolyte)",
+                    "abilityScores": [
+                        "INT",
+                        "WEI",
+                        "CHA"
+                    ],
+                    "originFeat": "Magie-Initiat (Kleriker)",
+                    "skills": [
+                        "Motiv erkennen",
+                        "Religion"
+                    ],
+                    "tool": "Kalligrafen-Zubehör",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_noble",
+                    "name": "Adliger (Noble)",
+                    "abilityScores": [
+                        "STR",
+                        "INT",
+                        "CHA"
+                    ],
+                    "originFeat": "Geübt (Skilled)",
+                    "skills": [
+                        "Geschichte",
+                        "Überreden"
+                    ],
+                    "tool": "Ein Spielset",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_farmer",
+                    "name": "Bauer (Farmer)",
+                    "abilityScores": [
+                        "STR",
+                        "KON",
+                        "WEI"
+                    ],
+                    "originFeat": "Zäh (Tough)",
+                    "skills": [
+                        "Mit Tieren umgehen",
+                        "Naturkunde"
+                    ],
+                    "tool": "Zimmerwerkzeug",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_hermit",
+                    "name": "Einsiedler (Hermit)",
+                    "abilityScores": [
+                        "KON",
+                        "WEI",
+                        "CHA"
+                    ],
+                    "originFeat": "Heiler (Healer)",
+                    "skills": [
+                        "Heilkunde",
+                        "Religion"
+                    ],
+                    "tool": "Kräuterkunde-Ausrüstung",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_guide",
+                    "name": "Führer (Guide)",
+                    "abilityScores": [
+                        "GES",
+                        "KON",
+                        "WEI"
+                    ],
+                    "originFeat": "Magie-Initiat (Druide)",
+                    "skills": [
+                        "Heimlichkeit",
+                        "Überleben"
+                    ],
+                    "tool": "Kartografen-Werkzeug",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_sage",
+                    "name": "Gelehrter (Sage)",
+                    "abilityScores": [
+                        "KON",
+                        "INT",
+                        "WEI"
+                    ],
+                    "originFeat": "Magie-Initiat (Magier)",
+                    "skills": [
+                        "Arkane Kunde",
+                        "Geschichte"
+                    ],
+                    "tool": "Kalligrafen-Zubehör",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_artisan",
+                    "name": "Handwerker (Artisan)",
+                    "abilityScores": [
+                        "STR",
+                        "GES",
+                        "INT"
+                    ],
+                    "originFeat": "Handwerker (Crafter)",
+                    "skills": [
+                        "Nachforschen",
+                        "Überreden"
+                    ],
+                    "tool": "Ein Handwerkszeug",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_merchant",
+                    "name": "Händler (Merchant)",
+                    "abilityScores": [
+                        "KON",
+                        "INT",
+                        "CHA"
+                    ],
+                    "originFeat": "Glückspilz (Lucky)",
+                    "skills": [
+                        "Mit Tieren umgehen",
+                        "Überreden"
+                    ],
+                    "tool": "Navigatoren-Werkzeug",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_criminal",
+                    "name": "Krimineller (Criminal)",
+                    "abilityScores": [
+                        "GES",
+                        "KON",
+                        "INT"
+                    ],
+                    "originFeat": "Wachsam (Alert)",
+                    "skills": [
+                        "Fingerfertigkeit",
+                        "Heimlichkeit"
+                    ],
+                    "tool": "Diebeswerkzeug",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_wayfarer",
+                    "name": "Reisender (Wayfarer)",
+                    "abilityScores": [
+                        "GES",
+                        "WEI",
+                        "CHA"
+                    ],
+                    "originFeat": "Glückspilz (Lucky)",
+                    "skills": [
+                        "Motiv erkennen",
+                        "Heimlichkeit"
+                    ],
+                    "tool": "Diebeswerkzeug",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_charlatan",
+                    "name": "Scharlatan (Charlatan)",
+                    "abilityScores": [
+                        "GES",
+                        "KON",
+                        "CHA"
+                    ],
+                    "originFeat": "Geübt (Skilled)",
+                    "skills": [
+                        "Täuschen",
+                        "Fingerfertigkeit"
+                    ],
+                    "tool": "Fälscher-Ausrüstung",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_scribe",
+                    "name": "Schreiber (Scribe)",
+                    "abilityScores": [
+                        "GES",
+                        "INT",
+                        "WEI"
+                    ],
+                    "originFeat": "Geübt (Skilled)",
+                    "skills": [
+                        "Nachforschen",
+                        "Wahrnehmung"
+                    ],
+                    "tool": "Kalligrafen-Zubehör",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_sailor",
+                    "name": "Seefahrer (Sailor)",
+                    "abilityScores": [
+                        "STR",
+                        "GES",
+                        "WEI"
+                    ],
+                    "originFeat": "Tavernenschläger",
+                    "skills": [
+                        "Akrobatik",
+                        "Wahrnehmung"
+                    ],
+                    "tool": "Navigatoren-Werkzeug",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_soldier",
+                    "name": "Soldat (Soldier)",
+                    "abilityScores": [
+                        "STR",
+                        "GES",
+                        "KON"
+                    ],
+                    "originFeat": "Wilder Angreifer",
+                    "skills": [
+                        "Athletik",
+                        "Einschüchtern"
+                    ],
+                    "tool": "Ein Spielset",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_entertainer",
+                    "name": "Unterhalter (Entertainer)",
+                    "abilityScores": [
+                        "GES",
+                        "KON",
+                        "CHA"
+                    ],
+                    "originFeat": "Musiker (Musician)",
+                    "skills": [
+                        "Akrobatik",
+                        "Auftreten"
+                    ],
+                    "tool": "Ein Musikinstrument",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                },
+                {
+                    "id": "bg_guard",
+                    "name": "Wache (Guard)",
+                    "abilityScores": [
+                        "STR",
+                        "INT",
+                        "WEI"
+                    ],
+                    "originFeat": "Wachsam (Alert)",
+                    "skills": [
+                        "Athletik",
+                        "Wahrnehmung"
+                    ],
+                    "tool": "Ein Spielset",
+                    "description": "Dein Hintergrund legt drei Attributswerte fest, die du erhöhen kannst (entweder ein Attribut um +2 und ein weiteres um +1, oder alle drei um +1). Zusätzlich erhält jeder Hintergrund Ausrüstung im Wert von 50 GM oder pauschal 50 GM, um eigene Startausrüstung zu kaufen."
+                }
+            ],
+            "feats": [
+                {
+                    "id": "feat_origin_skilled",
+                    "name": "Geübt (Skilled)",
+                    "category": "Herkunfts-Talent",
+                    "prerequisite": "Stufe 1+",
+                    "description": "Übung in drei beliebigen Fertigkeiten oder Werkzeugen."
+                },
+                {
+                    "id": "feat_origin_lucky",
+                    "name": "Glückspilz (Lucky)",
+                    "category": "Herkunfts-Talent",
+                    "prerequisite": "Stufe 1+",
+                    "description": "Glückspunkte in Höhe des Übungsbonus (erneuern bei Langer Rast). Punkt ausgeben für Vorteil auf eigenen W20-Wurf oder Nachteil auf Angriff gegen dich."
+                },
+                {
+                    "id": "feat_origin_crafter",
+                    "name": "Handwerker (Crafter)",
+                    "category": "Herkunfts-Talent",
+                    "prerequisite": "Stufe 1+",
+                    "description": "Übung in 3 Handwerkszeugen. Handwerkspreis/Zeit ist 20 % reduziert. 20 % Rabatt beim Kauf von nicht-magischer Ausrüstung."
+                },
+                {
+                    "id": "feat_origin_healer",
+                    "name": "Heiler (Healer)",
+                    "category": "Herkunfts-Talent",
+                    "prerequisite": "Stufe 1+",
+                    "description": "Kann Heiler-Kit nutzen, um (als Aktion) 1W6 + 4 + verbrauchte Trefferwürfel TP zu heilen. Bei Heilzaubern darfst du Einsen der Heilungs-Würfel neu würfeln."
+                },
+                {
+                    "id": "feat_origin_magic_initiate",
+                    "name": "Magie-Initiat (Magic Initiate)",
+                    "category": "Herkunfts-Talent",
+                    "prerequisite": "Stufe 1+",
+                    "description": "Wähle Klasse (Kleriker/Druide/Magier). Erlerne 2 Zaubertricks und 1 Stufe-1-Zauber. Kann Stufe-1-Zauber 1x/Tag gratis wirken. Zauberattribut ist INT, WEI oder CHA."
+                },
+                {
+                    "id": "feat_origin_musician",
+                    "name": "Musiker (Musician)",
+                    "category": "Herkunfts-Talent",
+                    "prerequisite": "Stufe 1+",
+                    "description": "Übung in 3 Instrumenten. Nach Kurzer/Langer Rast kannst du Verbündeten (Anzahl = Übungsbonus) Heldenhafte Inspiration geben."
+                },
+                {
+                    "id": "feat_origin_tavern_brawler",
+                    "name": "Tavernenschläger (Tavern Brawler)",
+                    "category": "Herkunfts-Talent",
+                    "prerequisite": "Stufe 1+",
+                    "description": "Waffenloser Schaden = 1W4 + STR. Einsen beim waffenlosen Schaden neu würfeln. 1x/Zug Ziel bei waffenlosem Treffer 1,5 m / 1 Felder stoßen."
+                },
+                {
+                    "id": "feat_origin_alert",
+                    "name": "Wachsam (Alert)",
+                    "category": "Herkunfts-Talent",
+                    "prerequisite": "Stufe 1+",
+                    "description": "Addiere Übungsbonus zur Initiative. Kannst Initiative-Platz zu Kampfbeginn mit Verbündetem tauschen."
+                },
+                {
+                    "id": "feat_origin_savage_attacker",
+                    "name": "Wilder Angreifer (Savage Attacker)",
+                    "category": "Herkunfts-Talent",
+                    "prerequisite": "Stufe 1+",
+                    "description": "Waffenschaden im Nahkampf 2x würfeln, das höhere Ergebnis nehmen (1x pro Zug)."
+                },
+                {
+                    "id": "feat_origin_tough",
+                    "name": "Zäh (Tough)",
+                    "category": "Herkunfts-Talent",
+                    "prerequisite": "Stufe 1+",
+                    "description": "Max-TP steigen um 2 pro Stufe."
+                },
+                {
+                    "id": "feat_style_interception",
+                    "name": "Abfangen (Interception)",
+                    "category": "Kampfstil-Talent",
+                    "prerequisite": "Kampfstil-Merkmal",
+                    "description": "Reaktion: Schaden gegen Verbündeten in 1,5 m / 1 Felder um 1W10 + Übungsbonus senken (Schild/Waffe nötig)."
+                },
+                {
+                    "id": "feat_style_blind_fighting",
+                    "name": "Blindes Kämpfen (Blind Fighting)",
+                    "category": "Kampfstil-Talent",
+                    "prerequisite": "Kampfstil-Merkmal",
+                    "description": "3 m / 2 Felder Blindsicht."
+                },
+                {
+                    "id": "feat_style_archery",
+                    "name": "Bogenschießen (Archery)",
+                    "category": "Kampfstil-Talent",
+                    "prerequisite": "Kampfstil-Merkmal",
+                    "description": "+2 auf Angriffswürfe mit Fernkampfwaffen."
+                },
+                {
+                    "id": "feat_style_protection",
+                    "name": "Beschützen (Protection)",
+                    "category": "Kampfstil-Talent",
+                    "prerequisite": "Kampfstil-Merkmal",
+                    "description": "Reaktion: Angriff auf Verbündeten in 1,5 m / 1 Felder erhält Nachteil (Schild nötig)."
+                },
+                {
+                    "id": "feat_style_dueling",
+                    "name": "Duellieren (Dueling)",
+                    "category": "Kampfstil-Talent",
+                    "prerequisite": "Kampfstil-Merkmal",
+                    "description": "+2 Schadensbonus bei einer Nahkampfwaffe und freier Nebenhand."
+                },
+                {
+                    "id": "feat_style_great_weapon_fighting",
+                    "name": "Kampf mit großen Waffen (Great Weapon Fighting)",
+                    "category": "Kampfstil-Talent",
+                    "prerequisite": "Kampfstil-Merkmal",
+                    "description": "1 oder 2 beim Schadenswurf einer Zweihand/Vielseitig-Waffe neu würfeln."
+                },
+                {
+                    "id": "feat_style_two_weapon_fighting",
+                    "name": "Kampf mit zwei Waffen (Two-Weapon Fighting)",
+                    "category": "Kampfstil-Talent",
+                    "prerequisite": "Kampfstil-Merkmal",
+                    "description": "Addiere Attributsmodifikator zum Schaden des Extra-Angriffs."
+                },
+                {
+                    "id": "feat_style_defense",
+                    "name": "Verteidigung (Defense)",
+                    "category": "Kampfstil-Talent",
+                    "prerequisite": "Kampfstil-Merkmal",
+                    "description": "+1 RK, während Rüstung getragen wird."
+                },
+                {
+                    "id": "feat_style_unarmed_fighting",
+                    "name": "Waffenloser Kampf (Unarmed Fighting)",
+                    "category": "Kampfstil-Talent",
+                    "prerequisite": "Kampfstil-Merkmal",
+                    "description": "Waffenlos macht 1W6+STR (bzw. 1W8 bei freien Händen). Fügt fixiertem (Grappled) Ziel zu Beginn deines Zuges 1W4 Wuchtschaden zu."
+                },
+                {
+                    "id": "feat_style_thrown_weapon_fighting",
+                    "name": "Wurfwaffen-Kampf (Thrown Weapon Fighting)",
+                    "category": "Kampfstil-Talent",
+                    "prerequisite": "Kampfstil-Merkmal",
+                    "description": "+2 Schadensbonus bei Wurfwaffen."
+                },
+                {
+                    "id": "feat_gen_crossbow_expert",
+                    "name": "Armbrustexperte (Crossbow Expert)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 GES. Ignoriert \"Laden\". Kein Nachteil im Nahkampf. Bonusaktions-Angriff mit Leichter Armbrust."
+                },
+                {
+                    "id": "feat_gen_athlete",
+                    "name": "Athlet (Athlete)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. Klettern kostet keine Extra-Bewegung. Aus Liegend (Prone) aufstehen kostet nur 1,5 m / 1 Felder. Weitsprung mit nur 1,5 m / 1 Felder Anlauf."
+                },
+                {
+                    "id": "feat_gen_observant",
+                    "name": "Aufmerksam (Observant)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 INT, WEI oder CHA. Schnelles Suchen (Bonusaktion). Übung (oder Expertise) in Nachforschen, Motiv erkennen oder Wahrnehmung."
+                },
+                {
+                    "id": "feat_gen_slasher",
+                    "name": "Aufschlitzer (Slasher)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. Hiebschaden reduziert Zielbewegung um 3 m / 2 Felder. Kritischer Treffer: Ziel hat Nachteil auf Angriffe bis nächster Zug."
+                },
+                {
+                    "id": "feat_gen_durable",
+                    "name": "Ausdauernd (Durable)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 KON. Vorteil auf Todesrettungswürfe. Als Bonusaktion einen Trefferwürfel ausgeben, um sich zu heilen."
+                },
+                {
+                    "id": "feat_gen_asi",
+                    "name": "Attributswertverbesserung (Ability Score Improvement)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+2 auf ein Attribut oder +1 auf zwei."
+                },
+                {
+                    "id": "feat_gen_mounted_combatant",
+                    "name": "Berittener Kämpfer (Mounted Combatant)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR, GES oder WEI. Vorteil auf Angriffe gegen kleinere, unberittene Kreaturen. Angriffe aufs Reittier können umgelenkt werden. Reittier hat Entrinnen (Evasion)."
+                },
+                {
+                    "id": "feat_gen_defensive_duelist",
+                    "name": "Defensiver Duellant (Defensive Duelist)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 GES. Reaktion: Übungsbonus auf RK gegen einen Nahkampfangriff (Finesse-Waffe nötig)."
+                },
+                {
+                    "id": "feat_gen_dual_wielder",
+                    "name": "Doppelwaffen-Kämpfer (Dual Wielder)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. +1 RK bei zwei Nahkampfwaffen. Eine der Waffen muss nicht \"Leicht\" sein."
+                },
+                {
+                    "id": "feat_gen_piercer",
+                    "name": "Durchbohrer (Piercer)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. Stichschaden-Würfel 1x/Zug neu rollen. Kritischer Treffer fügt einen extra Schadenswürfel hinzu."
+                },
+                {
+                    "id": "feat_gen_elemental_adept",
+                    "name": "Elementar-Adept (Elemental Adept)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 INT, WEI oder CHA. Ignoriert Resistenz für Säure, Kälte, Feuer, Blitz oder Donner (wähle 1). 1 wird zu 2 beim Schaden."
+                },
+                {
+                    "id": "feat_gen_fey_touched",
+                    "name": "Feenberührt (Fey-Touched)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 INT, WEI oder CHA. Erlerne *Nebeltritt* und einen Stufe-1 Zauber (Erkenntnismagie/Verzauberung). 1x/Tag gratis."
+                },
+                {
+                    "id": "feat_gen_skill_expert",
+                    "name": "Fertigkeitsexperte (Skill Expert)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 beliebig. Übung in 1 Fertigkeit. Expertise in 1 Fertigkeit."
+                },
+                {
+                    "id": "feat_gen_dungeon_delver",
+                    "name": "Gewölbeforscher (Dungeon Delver)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 INT, WEI oder CHA. Vorteil beim Suchen von Geheimtüren/Fallen. Resistenz gegen Fallenschaden, Vorteil auf Fallensaves."
+                },
+                {
+                    "id": "feat_gen_poisoner",
+                    "name": "Giftmischer (Poisoner)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 GES oder INT. Ignoriert Giftresistenz. Kann als Bonusaktion Waffen vergiften (1W8 Giftschaden + Vergiftet-Zustand)."
+                },
+                {
+                    "id": "feat_gen_inspiring_leader",
+                    "name": "Inspirierender Anführer (Inspiring Leader)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 WEI oder CHA. Nach Rast (Kurz/Lang): TP temporär gleich Stufe + Attributsmod. an Verbündete (bis zu 6)."
+                },
+                {
+                    "id": "feat_gen_chef",
+                    "name": "Koch (Chef)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 KON oder WEI. Extra Heilung (+1W8) bei Kurzer Rast. Essen herstellen, das temporäre TP (Übungsbonus) gewährt."
+                },
+                {
+                    "id": "feat_gen_war_caster",
+                    "name": "Kriegszauberer (War Caster)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 INT, WEI oder CHA. Vorteil auf Konzentrations-Saves. Somatische Komponenten mit Waffe/Schild möglich. Reaktion für Zauber statt Gelegenheitsangriff."
+                },
+                {
+                    "id": "feat_gen_lightly_armored",
+                    "name": "Leicht gepanzert (Lightly Armored)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. Übung in Leichter und Mittlerer Rüstung sowie Schilden."
+                },
+                {
+                    "id": "feat_gen_mage_slayer",
+                    "name": "Magietöter (Mage Slayer)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. 1x/Tag automatischen Erfolg auf fehlgeschlagenen geistigen Save. Gegner verliert Konzentration bei Treffer leichter (Nachteil auf Save)."
+                },
+                {
+                    "id": "feat_gen_great_weapon_master",
+                    "name": "Meister der großen Waffen (Great Weapon Master)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR. Bei kritischem Treffer/Kill Bonusaktions-Angriff. Schwere Waffen fügen Übungsbonus als Extraschaden zu."
+                },
+                {
+                    "id": "feat_gen_medium_armor_master",
+                    "name": "Meister der mittelschweren Rüstung (Medium Armor Master)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. Kein Heimlichkeits-Nachteil mehr in Mittlerer Rüstung. GES-Max für RK steigt auf +3."
+                },
+                {
+                    "id": "feat_gen_heavy_armor_master",
+                    "name": "Meister der schweren Rüstung (Heavy Armor Master)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder KON. Wucht-, Stich- und Hiebschaden von Waffen wird um deinen Übungsbonus reduziert."
+                },
+                {
+                    "id": "feat_gen_polearm_master",
+                    "name": "Meister der Stangenwaffen (Polearm Master)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. Bonusangriff mit Schaft (1W4). Gegner provozieren Gelegenheitsangriff, wenn sie Reichweite *betreten*."
+                },
+                {
+                    "id": "feat_gen_sharpshooter",
+                    "name": "Meisterschütze (Sharpshooter)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 GES. Ignoriert halbe/Dreiviertel-Deckung. Kein Distanz-Nachteil. Kein Nahkampf-Nachteil."
+                },
+                {
+                    "id": "feat_gen_moderately_armored",
+                    "name": "Mittelschwer gepanzert (Moderately Armored)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. (Voraussetzung: Leichte Rüstung). Übung in Mittlerer Rüstung und Schilden."
+                },
+                {
+                    "id": "feat_gen_grappler",
+                    "name": "Ringer (Grappler)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. Vorteil auf Angriffe gegen festgehaltene Ziele. Unbewaffneter Schlag kann gleichzeitig greifen (Grapple)."
+                },
+                {
+                    "id": "feat_gen_ritual_caster",
+                    "name": "Ritualzauberer (Ritual Caster)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 INT, WEI oder CHA. Erlerne 2 Stufe-1-Rituale. Alle Ritualzauber dauern nur die normale Wirkungszeit."
+                },
+                {
+                    "id": "feat_gen_keen_mind",
+                    "name": "Scharfer Verstand (Keen Mind)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 INT, WEI oder CHA. Kann als Bonusaktion \"Studieren\". Übung/Expertise in Arkane Kunde, Geschichte, Naturkunde oder Religion."
+                },
+                {
+                    "id": "feat_gen_shadow_touched",
+                    "name": "Schattenberührt (Shadow-Touched)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 INT, WEI oder CHA. Erlerne *Unsichtbarkeit* und einen Stufe-1 Zauber (Illusion/Nekromantie). 1x/Tag gratis."
+                },
+                {
+                    "id": "feat_gen_actor",
+                    "name": "Schauspieler (Actor)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 CHA. Vorteil auf Täuschen/Auftreten (beim Vorgeben jemand anders zu sein). Kann Stimmen/Geräusche perfekt imitieren."
+                },
+                {
+                    "id": "feat_gen_shield_master",
+                    "name": "Schildmeister (Shield Master)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR. Bonusaktion Schildstoß (Prone). Schild-Mod zu GES-Saves. Reaktion: halben Schaden auf null reduzieren bei erfolgreichem Save."
+                },
+                {
+                    "id": "feat_gen_skulker",
+                    "name": "Schleicher (Skulker)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 GES. Blindsicht 3 m / 2 Felder. Verstecken im Kampf per Bonusaktion. Verfehlen bricht Verstecken nicht."
+                },
+                {
+                    "id": "feat_gen_mobile",
+                    "name": "Schnell (Speedy / Mobile)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 GES oder KON. Bewegung +3 m / 2 Felder. Ignoriert schwieriges Gelände beim Spurten. Gelegenheitsangriffe provozierst du nicht von Gegnern, die du angegriffen hast."
+                },
+                {
+                    "id": "feat_gen_heavily_armored",
+                    "name": "Schwer gepanzert (Heavily Armored)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder KON. (Voraussetzung: Mittlere Rüstung). Übung in Schwerer Rüstung."
+                },
+                {
+                    "id": "feat_gen_charger",
+                    "name": "Stürmer (Charger)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. Wenn du dich 3 m / 2 Felder bewegst und angreifst: +1W8 Schaden oder Ziel 3 m / 2 Felder stoßen."
+                },
+                {
+                    "id": "feat_gen_telekinetic",
+                    "name": "Telekinetisch (Telekinetic)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 INT, WEI oder CHA. Erlerne unsichtbare Magierhand. Bonusaktion: Ziel 1,5 m / 1 Felder telekinetisch stoßen/ziehen."
+                },
+                {
+                    "id": "feat_gen_telepathic",
+                    "name": "Telepathisch (Telepathic)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 INT, WEI oder CHA. 18 m / 12 Felder Telepathie. Erlerne *Gedanken wahrnehmen* (1x gratis pro Tag)."
+                },
+                {
+                    "id": "feat_gen_sentinel",
+                    "name": "Wächter (Sentinel)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. Treffer bei Gelegenheitsangriff = Zielbewegung null. Ignoriert \"Rückzug\" (Disengage). Reaktion: Angriff auf Feind, der einen Verbündeten angreift."
+                },
+                {
+                    "id": "feat_gen_weapon_training",
+                    "name": "Waffentraining (Weapon Training)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder GES. Übung in 3 Kampfwaffen."
+                },
+                {
+                    "id": "feat_gen_spell_sniper",
+                    "name": "Zauberschütze (Spell Sniper)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 INT, WEI oder CHA. Ignoriert halbe/Dreiviertel-Deckung für Zauber. Zauberreichweite im Nahkampf ohne Nachteil. Zaubertrick-Reichweite wird um 18 m / 12 Felder erhöht."
+                },
+                {
+                    "id": "feat_gen_crusher",
+                    "name": "Zermalmer (Crusher)",
+                    "category": "Allgemeines Talent",
+                    "prerequisite": "Stufe 4+",
+                    "description": "+1 STR oder KON. Wuchtschaden verschiebt Ziel 1,5 m / 1 Felder. Kritischer Treffer gibt allen Vorteil gegen das Ziel."
+                },
+                {
+                    "id": "feat_epic_dimensional_travel",
+                    "name": "Segnung der Dimensionsreise (Boon of Dimensional Travel)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Direkt nach einer Angriffs- oder Magischen Aktion kannst du dich 9 m / 6 Felder teleportieren."
+                },
+                {
+                    "id": "feat_epic_energy_resistance",
+                    "name": "Segnung der Energie-Resistenz (Boon of Energy Resistance)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Resistenz gegen 2 Magieschadensarten (bei Rast umwählbar)."
+                },
+                {
+                    "id": "feat_epic_recovery",
+                    "name": "Segnung der Erholung (Boon of Recovery)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Bonusaktion: Heile halbe Max-TP (1x/Langer Rast). Automatisch Erfolg bei allen Todesrettungswürfen."
+                },
+                {
+                    "id": "feat_epic_skill",
+                    "name": "Segnung der Fertigkeit (Boon of Skill)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Übung in allen existierenden Fertigkeiten."
+                },
+                {
+                    "id": "feat_epic_speed",
+                    "name": "Segnung der Geschwindigkeit (Boon of Speed)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Laufgeschwindigkeit +9 m / 6 Felder. Bonusaktion für Entkommen/Rückzug (Disengage)."
+                },
+                {
+                    "id": "feat_epic_fortitude",
+                    "name": "Segnung der Zähigkeit (Boon of Fortitude)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Max-TP +40. Wenn du TP magisch regenerierst, + Übungsbonus obendrauf."
+                },
+                {
+                    "id": "feat_epic_combat_prowess",
+                    "name": "Segnung des Kampfgeschicks (Boon of Combat Prowess)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Einmal pro Zug: Fehlgeschlagenen Angriff in Treffer umwandeln."
+                },
+                {
+                    "id": "feat_epic_night_spirit",
+                    "name": "Segnung des Nachtgeistes (Boon of Night Spirit)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Während du in Dunkelheit/Halbschatten bist, bist du Unsichtbar (endet, wenn du angreifst oder zauberst)."
+                },
+                {
+                    "id": "feat_epic_fate",
+                    "name": "Segnung des Schicksals (Boon of Fate)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Nach einem W20-Wurf (auch andere): Addiere oder subtrahiere 2W4 (1x/Kurzer oder Langer Rast)."
+                },
+                {
+                    "id": "feat_epic_irresistible_offense",
+                    "name": "Segnung des Unwiderstehlichen Angriffs (Boon of Irresistible Offense)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Physischer Schaden ignoriert Resistenzen. Bei Roll 20: Attributswert (nicht Modifikator) als Extraschaden."
+                },
+                {
+                    "id": "feat_epic_truesight",
+                    "name": "Segnung des Wahren Blicks (Boon of Truesight)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Wahrer Blick (Truesight) 18 m / 12 Felder."
+                },
+                {
+                    "id": "feat_epic_spell_recall",
+                    "name": "Segnung des Zauberrückrufs (Boon of Spell Recall)",
+                    "category": "Epische Segnung",
+                    "prerequisite": "Stufe 19+",
+                    "description": "Zauberplatz 1-4 gewirkt: Bei Roll 4 auf 1W4 wird Platz nicht verbraucht."
+                }
+            ]
+        }
+    ]
+}

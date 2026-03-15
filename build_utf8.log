@@ -1,0 +1,150 @@
+﻿C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\bu
+ild\generated\ksp\debug\java\com\example\dndcompanion\da
+ta\database\RulebookDao_Impl.java:302: Fehler: Methode 
+├╝berschreibt oder implementiert keine Methode aus 
+einem Supertyp
+  @Override
+  ^
+13 Fehler
+
+> Task :app:compileDebugJavaWithJavac FAILED
+
+[Incubating] Problems report is available at: file:///C:/Users/janaf/AndroidStudioProjects/DnDCompanion/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task 
+':app:compileDebugJavaWithJavac'.
+> Compilation failed; see the compiler output below.
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:208: Fehler: 
+Namenskonflikt: 
+insertRules(List<RuleEntity>,Continuation<List<Long>>) 
+in RulebookDao_Impl und 
+insertRules(List<RuleEntity>,Continuation<? super 
+List<Long>>) in RulebookDao haben dieselbe Erasure, 
+aber keine setzt die andere au├ƒer Kraft
+    public Object insertRules(final List<RuleEntity> 
+rules,
+                  ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:227: Fehler: 
+Namenskonflikt: insertWeapons(List<WeaponEntity>,Continu
+ation<List<Long>>) in RulebookDao_Impl und 
+insertWeapons(List<WeaponEntity>,Continuation<? super 
+List<Long>>) in RulebookDao haben dieselbe Erasure, 
+aber keine setzt die andere au├ƒer Kraft
+    public Object insertWeapons(final 
+List<WeaponEntity> weapons,
+                  ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:246: Fehler: 
+Namenskonflikt: 
+insertArmor(List<ArmorEntity>,Continuation<List<Long>>) 
+in RulebookDao_Impl und 
+insertArmor(List<ArmorEntity>,Continuation<? super 
+List<Long>>) in RulebookDao haben dieselbe Erasure, 
+aber keine setzt die andere au├ƒer Kraft
+    public Object insertArmor(final List<ArmorEntity> 
+armor,
+                  ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:265: Fehler: 
+Namenskonflikt: 
+insertTools(List<ToolEntity>,Continuation<List<Long>>) 
+in RulebookDao_Impl und 
+insertTools(List<ToolEntity>,Continuation<? super 
+List<Long>>) in RulebookDao haben dieselbe Erasure, 
+aber keine setzt die andere au├ƒer Kraft
+    public Object insertTools(final List<ToolEntity> 
+tools,
+                  ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:284: Fehler: 
+Namenskonflikt: insertSpecies(List<SpeciesEntity>,Contin
+uation<List<Long>>) in RulebookDao_Impl und 
+insertSpecies(List<SpeciesEntity>,Continuation<? super 
+List<Long>>) in RulebookDao haben dieselbe Erasure, 
+aber keine setzt die andere au├ƒer Kraft
+    public Object insertSpecies(final 
+List<SpeciesEntity> species,
+                  ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:303: Fehler: 
+Namenskonflikt: insertClasses(List<ClassEntity>,Continua
+tion<List<Long>>) in RulebookDao_Impl und 
+insertClasses(List<ClassEntity>,Continuation<? super 
+List<Long>>) in RulebookDao haben dieselbe Erasure, 
+aber keine setzt die andere au├ƒer Kraft
+    public Object insertClasses(final List<ClassEntity> 
+classes,
+                  ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:32: Fehler: 
+RulebookDao_Impl ist nicht abstrakt und setzt die 
+abstrakte Methode 
+insertClasses(List<ClassEntity>,Continuation<? super 
+List<Long>>) in RulebookDao nicht au├ƒer Kraft
+  public final class RulebookDao_Impl implements 
+RulebookDao {
+               ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:207: Fehler: 
+Methode ├╝berschreibt oder implementiert keine Methode 
+aus einem Supertyp
+    @Override
+    ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:226: Fehler: 
+Methode ├╝berschreibt oder implementiert keine Methode 
+aus einem Supertyp
+    @Override
+    ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:245: Fehler: 
+Methode ├╝berschreibt oder implementiert keine Methode 
+aus einem Supertyp
+    @Override
+    ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:264: Fehler: 
+Methode ├╝berschreibt oder implementiert keine Methode 
+aus einem Supertyp
+    @Override
+    ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:283: Fehler: 
+Methode ├╝berschreibt oder implementiert keine Methode 
+aus einem Supertyp
+    @Override
+    ^
+  C:\Users\janaf\AndroidStudioProjects\DnDCompanion\app\
+build\generated\ksp\debug\java\com\example\dndcompanion\
+data\database\RulebookDao_Impl.java:302: Fehler: 
+Methode ├╝berschreibt oder implementiert keine Methode 
+aus einem Supertyp
+    @Override
+    ^
+  13 Fehler
+
+* Try:
+> Check your code and dependencies to fix the 
+compilation error(s)
+> Run with --scan to get full insights from a Build 
+Scan (powered by Develocity).
+
+BUILD FAILED in 16s
+33 actionable tasks: 3 executed, 30 up-to-date

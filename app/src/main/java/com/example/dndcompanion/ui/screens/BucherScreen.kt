@@ -53,6 +53,12 @@ import com.example.dndcompanion.ui.theme.PergamentDunkel
 import com.example.dndcompanion.ui.theme.Waldgruen
 import com.example.dndcompanion.ui.theme.HexenLila
 import com.example.dndcompanion.R
+import com.example.dndcompanion.data.database.RuleEntity
+import com.example.dndcompanion.data.database.WeaponEntity
+import com.example.dndcompanion.data.database.ArmorEntity
+import com.example.dndcompanion.data.database.ToolEntity
+import com.example.dndcompanion.data.database.SpeciesEntity
+import com.example.dndcompanion.data.database.ClassEntity
 
 enum class BookType {
     GENERAL, GRUDGE, SPELLBOOK, RULEBOOK, GROUP_CHAT, QUESTLOG
@@ -78,6 +84,7 @@ fun BucherScreen(viewModel: CharacterViewModel) {
             )
         } else if (activeBook == BookType.RULEBOOK) {
             RulebookDetailView(
+                viewModel = viewModel,
                 targetChapter = viewModel.targetRulebookChapter,
                 targetSearch = viewModel.targetRulebookSearch,
                 onTargetConsumed = { 
@@ -635,89 +642,38 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
     }
 }
 
-data class RulebookChapter(val title: String, val filename: String)
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, onTargetConsumed: () -> Unit, onBack: () -> Unit) {
-    val chapters = listOf(
-        RulebookChapter("Index", ""), // Fake chapter for Index/Search Tab
-        RulebookChapter("1. Gameplay", "Rules/Handbuch/Kapitel/kapitel1_gameplay.md"),
-        RulebookChapter("2. Völker", "Rules/Handbuch/Kapitel/kapitel2_races.md"),
-        RulebookChapter("3. Klassen", "Rules/Handbuch/Kapitel/kapitel3_classes.md"),
-        RulebookChapter("4. Herkünfte", "Rules/Handbuch/Kapitel/kapitel4_origins.md"),
-        RulebookChapter("5. Talente", "Rules/Handbuch/Kapitel/kapitel5_talente.md"),
-        RulebookChapter("6. Ausrüstung", "Rules/Handbuch/Kapitel/kapitel6_equipment.md"),
-        RulebookChapter("7. Kampf", "Rules/Handbuch/Kapitel/kapitel8_combat_conditions.md"),
-        RulebookChapter("8. Zauber", "Rules/Handbuch/Kapitel/kapitel7_spells.md"),
-        RulebookChapter("9. Spellbook", "Rules/Zauberbuch/Spellbook.md")
-    )
-
-    val pagerState = rememberPagerState(pageCount = { chapters.size })
+fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, viewModel: CharacterViewModel, onTargetConsumed: () -> Unit, onBack: () -> Unit) {
     val coroutineScope = rememberCoroutineScope()
     var searchQuery by remember { mutableStateOf("") }
-    var isJumpingFromIndex by remember { mutableStateOf(false) }
-    var pendingScrollItem by remember { mutableStateOf<Pair<Int, Int>?>(null) }
     
-    // Store content and blocks per chapter index
-    val chapterContents = remember { mutableStateMapOf<Int, String>() }
-    val chapterBlocks = remember { mutableStateMapOf<Int, List<String>>() }
-    val scrollStates = chapters.map { androidx.compose.foundation.lazy.rememberLazyListState() }
-    val context = androidx.compose.ui.platform.LocalContext.current
+    // Oberkategorien für die Tabs (Manuell definiert, da wir aus verschiedenen Tabellen mischen)
+    val tabs = listOf(
+        "Gameplay", "Klassen & Völker", "Ausrüstung", "Kampf & Zustände", "Zauber-Regeln", "Dienstleistungen"
+    )
+    val pagerState = rememberPagerState(pageCount = { tabs.size })
 
-    // Struct for global index
-    data class IndexEntry(val chapterIndex: Int, val blockIndex: Int, val title: String, val isH3: Boolean, val chapterName: String)
-    var globalIndex by remember { mutableStateOf<List<IndexEntry>>(emptyList()) }
+    // Observe DB Data
+    val rules by viewModel.searchedRules.collectAsState()
+    val weapons by viewModel.searchedWeapons.collectAsState()
+    val armor by viewModel.searchedArmor.collectAsState()
+    val tools by viewModel.searchedTools.collectAsState()
+    val species by viewModel.searchedSpecies.collectAsState()
+    val classes by viewModel.searchedClasses.collectAsState()
 
-    // Load everything upfront for global search/index
-    LaunchedEffect(Unit) {
-        val allIndex = mutableListOf<IndexEntry>()
-        val regex = Regex("(?=^## |^### )", RegexOption.MULTILINE)
-        
-        withContext(Dispatchers.IO) {
-            for (i in 1 until chapters.size) { // Skip Index chapter
-                try {
-                    val text = context.assets.open(chapters[i].filename).bufferedReader().use { it.readText() }
-                    chapterContents[i] = text
-                    val blocks = text.split(regex).filter { it.isNotBlank() }
-                    chapterBlocks[i] = blocks
-                    
-                    blocks.forEachIndexed { blockIndex, blockText ->
-                        val firstLine = blockText.trimStart().substringBefore('\n')
-                        if (firstLine.startsWith("## ") || firstLine.startsWith("### ")) {
-                            val isH3 = firstLine.startsWith("### ")
-                            val title = firstLine.removePrefix("### ").removePrefix("## ").trim()
-                            allIndex.add(IndexEntry(i, blockIndex, title, isH3, chapters[i].title))
-                        }
-                    }
-                } catch (e: Exception) {
-                    chapterContents[i] = "Fehler beim Laden von ${chapters[i].filename}"
-                    chapterBlocks[i] = listOf("Fehler")
-                }
-            }
-        }
-        globalIndex = allIndex
-    }
-    
-    LaunchedEffect(pagerState.currentPage) {
-        if (!isJumpingFromIndex) {
-            // Tab has changed manually (swipe or tab click), scroll to top
-            try {
-                scrollStates[pagerState.currentPage].scrollToItem(0)
-            } catch (e: Exception) {
-                // Ignore if list is not layouted yet
-            }
-        }
+    // Filter rules by main category
+    val gameplayRules = rules.filter { it.category == "Gameplay" }
+    val combatRules = rules.filter { it.category == "Kampf & Zustände" }
+    val spellRules = rules.filter { it.category == "Zauber" }
+    val serviceRules = rules.filter { it.category == "Ausrüstung & Dienstleistungen" }
+
+    LaunchedEffect(searchQuery) {
+        viewModel.searchRulebook(searchQuery)
     }
 
     LaunchedEffect(targetChapter) {
         if (targetChapter != null) {
-            val index = chapters.indexOfFirst { 
-                it.title.contains(targetChapter, ignoreCase = true) || targetChapter.contains(it.title, ignoreCase = true) 
-            }
-            if (index != -1) {
-                pagerState.scrollToPage(index)
-            }
             if (targetSearch != null) {
                 searchQuery = targetSearch
             }
@@ -755,13 +711,13 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, onT
                     )
                 }
             ) {
-                chapters.forEachIndexed { index, chapter ->
+                tabs.forEachIndexed { index, tabTitle ->
                     Tab(
                         selected = pagerState.currentPage == index,
                         onClick = {
                             coroutineScope.launch { pagerState.animateScrollToPage(index) }
                         },
-                        text = { Text(chapter.title, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+                        text = { Text(tabTitle, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold) },
                         selectedContentColor = WaldGold,
                         unselectedContentColor = Color.White.copy(alpha = 0.7f),
                         modifier = Modifier.height(48.dp)
@@ -776,17 +732,15 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, onT
                     onValueChange = { searchQuery = it },
                     modifier = Modifier.fillMaxWidth().height(56.dp),
                     placeholder = { 
-                        Text(
-                            text = if (pagerState.currentPage == 0) "Im gesamten Regelwerk suchen..." else "Im Kapitel suchen...",
-                            maxLines = 1,
-                            overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
-                            color = TintenSchwarz.copy(alpha = 0.6f)
-                        ) 
+                        Text("Im Regelwerk suchen...", color = TintenSchwarz.copy(alpha = 0.6f)) 
                     },
                     leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(24.dp), tint = WaldgruenDunkel) },
                     trailingIcon = {
                         if (searchQuery.isNotEmpty()) {
-                            IconButton(onClick = { searchQuery = "" }, modifier = Modifier.size(48.dp)) {
+                            IconButton(onClick = { 
+                                searchQuery = "" 
+                                viewModel.searchRulebook("")
+                            }, modifier = Modifier.size(48.dp)) {
                                 Icon(Icons.Default.Clear, contentDescription = "Suchen löschen", tint = WaldgruenDunkel)
                             }
                         }
@@ -800,177 +754,210 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, onT
                 )
             }
 
-            // Markdown Content with HorizontalPager
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
-            ) {
-                HorizontalPager(
-                    state = pagerState,
-                    modifier = Modifier.fillMaxSize()
-                ) { page ->
-                    val listState = scrollStates[page]
-
-                    if (page == 0) {
-                        // --- INDEX & SEARCH VIEW ---
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            LazyColumn(
-                                state = listState,
-                                modifier = Modifier.fillMaxSize().padding(16.dp)
-                            ) {
-                                if (searchQuery.isBlank()) {
-                                    // Group by Chapter
-                                    val grouped = globalIndex.groupBy { it.chapterName }
-                                    grouped.forEach { (chapterName, entries) ->
-                                        item {
-                                            Text(chapterName, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = TintenSchwarz, fontSize = 22.sp, modifier = Modifier.padding(top = 16.dp, bottom = 8.dp))
-                                        }
-                                        items(entries.size) { idx ->
-                                            val entry = entries[idx]
-                                            Text(
-                                                text = (if (entry.isH3) "  • " else "") + entry.title,
-                                                color = WaldgruenDunkel,
-                                                fontSize = if (entry.isH3) 16.sp else 18.sp,
-                                                fontWeight = FontWeight.Bold,
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .clickable {
-                                                        coroutineScope.launch {
-                                                            isJumpingFromIndex = true
-                                                            searchQuery = ""
-                                                            pendingScrollItem = entry.chapterIndex to entry.blockIndex
-                                                            pagerState.scrollToPage(entry.chapterIndex)
-                                                        }
-                                                    }
-                                                    .padding(vertical = 8.dp)
-                                            )
-                                        }
-                                    }
-                                } else {
-                                    // Search Results
-                                    val searchResults = globalIndex.filter { it.title.contains(searchQuery, ignoreCase = true) }
-                                    
-                                    // Also search full text blocks
-                                    val contentResults = mutableListOf<IndexEntry>()
-                                    chapterBlocks.forEach { (chapterIdx, blocks) ->
-                                        blocks.forEachIndexed { blockIdx, blockText ->
-                                            if (blockText.contains(searchQuery, ignoreCase = true)) {
-                                                // Find the nearest heading above this block for title
-                                                val title = globalIndex.lastOrNull { it.chapterIndex == chapterIdx && it.blockIndex <= blockIdx }?.title ?: "Absatz in ${chapters[chapterIdx].title}"
-                                                contentResults.add(IndexEntry(chapterIdx, blockIdx, "$title (Texttreffer)", false, chapters[chapterIdx].title))
-                                            }
-                                        }
-                                    }
-                                    
-                                    val allResults = (searchResults + contentResults).distinctBy { "${it.chapterIndex}-${it.blockIndex}" }
-
-                                    if (allResults.isEmpty()) {
-                                        item { Text("Keine Ergebnisse für '$searchQuery'", modifier = Modifier.padding(16.dp), color = TintenSchwarz) }
-                                    } else {
-                                        item { Text("${allResults.size} Ergebnisse gefunden:", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 20.sp, color = TintenSchwarz, modifier = Modifier.padding(bottom = 8.dp)) }
-                                        items(allResults.size) { idx ->
-                                            val entry = allResults[idx]
-                                            PergamentCard(
-                                                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).clickable {
-                                                    coroutineScope.launch {
-                                                        isJumpingFromIndex = true
-                                                        searchQuery = ""
-                                                        pendingScrollItem = entry.chapterIndex to entry.blockIndex
-                                                        pagerState.scrollToPage(entry.chapterIndex)
-                                                    }
-                                                }
-                                            ) {
-                                                Column(modifier = Modifier.padding(12.dp)) {
-                                                    Text(entry.chapterName, style = GrenzeGotischSmall, color = TintenSchwarz.copy(alpha = 0.7f))
-                                                    Text(entry.title, fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = WaldgruenDunkel)
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+            // Content Pager
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.weight(1f).fillMaxWidth()
+            ) { page ->
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp),
+                    contentPadding = PaddingValues(bottom = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    when (page) {
+                        0 -> { // Gameplay
+                            items(gameplayRules) { rule -> RuleCard(rule) }
+                            if (gameplayRules.isEmpty()) item { EmptySearchResult() }
                         }
-                    } else {
-                        // --- NORMAL CHAPTER VIEW ---
-                        val allBlocks = chapterBlocks[page] ?: listOf("Lade...")
-                        val blocks = if (searchQuery.isNotBlank()) {
-                            allBlocks.filter { it.contains(searchQuery, ignoreCase = true) }
-                        } else {
-                            allBlocks
+                        1 -> { // Klassen & Völker
+                            if (species.isNotEmpty()) {
+                                item { SectionHeader("Völker (Species)") }
+                                items(species) { spec -> SpeciesCard(spec) }
+                            }
+                            if (classes.isNotEmpty()) {
+                                item { SectionHeader("Klassen (Classes)") }
+                                items(classes) { cls -> ClassCard(cls) }
+                            }
+                            if (species.isEmpty() && classes.isEmpty()) item { EmptySearchResult() }
                         }
-                        
-                        LaunchedEffect(pendingScrollItem) {
-                            val pending = pendingScrollItem
-                            if (pending != null && pending.first == page) {
-                                kotlinx.coroutines.delay(50) // Tiny layout buffer
-                                try {
-                                    listState.scrollToItem(pending.second)
-                                } catch (e: Exception) {}
-                                pendingScrollItem = null
-                                isJumpingFromIndex = false
+                        2 -> { // Ausrüstung
+                            if (weapons.isNotEmpty()) {
+                                item { SectionHeader("Waffen") }
+                                items(weapons) { weapon -> WeaponCard(weapon) }
                             }
+                            if (armor.isNotEmpty()) {
+                                item { SectionHeader("Rüstungen & Schilde") }
+                                items(armor) { arm -> ArmorCard(arm) }
+                            }
+                            if (tools.isNotEmpty()) {
+                                item { SectionHeader("Werkzeuge") }
+                                items(tools) { tool -> ToolCard(tool) }
+                            }
+                            if (weapons.isEmpty() && armor.isEmpty() && tools.isEmpty()) item { EmptySearchResult() }
                         }
-
-                        if (blocks.isEmpty()) {
-                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                                Text("Keine Ergebnisse für '$searchQuery'", color = TintenSchwarz)
-                            }
-                        } else {
-                            Box(modifier = Modifier.fillMaxSize()) {
-                                LazyColumn(
-                                    state = listState,
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .padding(16.dp)
-                                ) {
-                                    items(blocks.size) { index ->
-                                        val originalText = blocks[index]
-                                        val highlightedText = if (searchQuery.isNotBlank() && originalText.contains(searchQuery, ignoreCase = true)) {
-                                            // Highlight the search query in bold
-                                            originalText.replace(Regex("(?i)(${Regex.escape(searchQuery)})"), "**$1**")
-                                        } else {
-                                            originalText
-                                        }
-                                        
-                                        // Wir belassen Material3RichText, aber die Theme-Farben (TintenSchwarz) gelten aus dem umgebenden Theme.
-                                        Material3RichText(modifier = Modifier.padding(bottom = 8.dp)) {
-                                            Markdown(content = highlightedText)
-                                        }
-                                    }
-                                }
-                            }
+                        3 -> { // Kampf & Zustände
+                            items(combatRules) { rule -> RuleCard(rule) }
+                            if (combatRules.isEmpty()) item { EmptySearchResult() }
+                        }
+                        4 -> { // Zauber-Regeln
+                            items(spellRules) { rule -> RuleCard(rule) }
+                            if (spellRules.isEmpty()) item { EmptySearchResult() }
+                        }
+                        5 -> { // Dienstleistungen
+                            items(serviceRules) { rule -> RuleCard(rule) }
+                            if (serviceRules.isEmpty()) item { EmptySearchResult() }
                         }
                     }
-                    
-                    // Simple Scrollbar for LazyColumn
-                    val isScrollable = listState.layoutInfo.totalItemsCount > 0
-                    if (isScrollable) {
-                        val firstVisible = listState.firstVisibleItemIndex
-                        val totalItems = listState.layoutInfo.totalItemsCount
-                        val scrollFraction = if (totalItems > 0) firstVisible.toFloat() / totalItems.toFloat() else 0f
-                        
-                        BoxWithConstraints(
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .fillMaxHeight()
-                                .padding(vertical = 16.dp, horizontal = 4.dp)
-                                .width(6.dp)
-                                .background(TintenSchwarz.copy(alpha = 0.2f), RoundedCornerShape(3.dp))
-                        ) {
-                            val viewHeightPx = with(androidx.compose.ui.platform.LocalDensity.current) { this@BoxWithConstraints.maxHeight.toPx() }
-                            val thumbHeightPx = viewHeightPx * 0.1f
-                            val maxScrollOffsetPx = viewHeightPx - thumbHeightPx
-                            val yOffsetPx = (scrollFraction * maxScrollOffsetPx).toInt()
-                            
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .fillMaxHeight(0.1f) // 10% size thumb
-                                    .offset { androidx.compose.ui.unit.IntOffset(0, yOffsetPx) }
-                                    .background(WaldgruenDunkel, RoundedCornerShape(3.dp))
-                            )
-                        }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun EmptySearchResult() {
+    Text(
+        text = "Keine passenden Einträge gefunden.",
+        modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+        color = TintenSchwarz.copy(alpha = 0.6f),
+        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+    )
+}
+
+@Composable
+fun SectionHeader(title: String) {
+    Text(
+        text = title,
+        fontFamily = Almendra,
+        fontWeight = FontWeight.Bold,
+        fontSize = 22.sp,
+        color = WaldgruenDunkel,
+        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+    )
+}
+
+@Composable
+fun RuleCard(rule: RuleEntity) {
+    SteinCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(rule.title, fontSize = 20.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = OchsenblutRot)
+            Spacer(modifier = Modifier.height(8.dp))
+            Material3RichText(modifier = Modifier.fillMaxWidth()) {
+                Markdown(rule.content)
+            }
+            if (rule.tags.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(12.dp))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                    rule.tags.take(3).forEach { tag ->
+                        Text("#$tag", fontSize = 12.sp, style = GrenzeGotischSmall, color = WaldgruenDunkel)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun WeaponCard(weapon: WeaponEntity) {
+    PergamentCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(weapon.name, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TintenSchwarz)
+                Text(weapon.price, fontWeight = FontWeight.Bold, color = WaldGold, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
+            }
+            Text(weapon.category, fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Schaden: ${weapon.damage}", color = OchsenblutRot, fontWeight = FontWeight.Medium)
+                Text("Gewicht: ${weapon.weightLb} lb", color = TintenSchwarz.copy(alpha = 0.8f))
+            }
+            Text("Meisterschaft: ${weapon.mastery}", color = TintenSchwarz.copy(alpha = 0.9f))
+            if (weapon.properties.isNotEmpty()) {
+                Text("Eigenschaften: ${weapon.properties.joinToString(", ")}", fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+            }
+        }
+    }
+}
+
+@Composable
+fun ArmorCard(armor: ArmorEntity) {
+    PergamentCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text(armor.name, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TintenSchwarz)
+                Text(armor.price, fontWeight = FontWeight.Bold, color = WaldGold, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
+            }
+            Text(armor.category, fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            val dexModText = if (armor.addDexModifier) {
+                if (armor.maxDexModifier != null) " + GES (max ${armor.maxDexModifier})" else " + GES"
+            } else ""
+            Text("RK: ${armor.baseAC}$dexModText", color = OchsenblutRot, fontWeight = FontWeight.Medium)
+            
+            val stealthText = if (armor.stealthDisadvantage) "Nachteil auf Heimlichkeit" else "Normale Heimlichkeit"
+            val strengthText = if (armor.strengthRequirement > 0) "STR min. ${armor.strengthRequirement}" else "Keine STR-Anforderung"
+            
+            Text("$stealthText | $strengthText | ${armor.weightLb} lb", fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+        }
+    }
+}
+
+@Composable
+fun ToolCard(tool: ToolEntity) {
+    PergamentCard(modifier = Modifier.fillMaxWidth()) {
+        Row(modifier = Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(tool.name, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = TintenSchwarz)
+                Text(tool.category, fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
+                if (tool.weightLb != null) {
+                    Text("Gewicht: ${tool.weightLb} lb", fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+                }
+            }
+            Text(tool.price, fontWeight = FontWeight.Bold, color = WaldGold, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
+        }
+    }
+}
+
+@Composable
+fun SpeciesCard(species: SpeciesEntity) {
+    SteinCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(species.name, fontSize = 20.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = OchsenblutRot)
+            Text("Größe: ${species.size} | Tempo: ${species.speed}m", fontSize = 14.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+            Spacer(modifier = Modifier.height(8.dp))
+            species.traits.forEach { trait ->
+                Text(trait.name, fontWeight = FontWeight.Bold, color = TintenSchwarz, modifier = Modifier.padding(top = 4.dp))
+                Text(trait.description, fontSize = 14.sp, color = TintenSchwarz.copy(alpha = 0.9f))
+            }
+        }
+    }
+}
+
+@Composable
+fun ClassCard(cls: ClassEntity) {
+    SteinCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(cls.name, fontSize = 22.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = HexenLila)
+            Text("Primär: ${cls.primaryAbility} | Trefferwürfel: ${cls.hitDie}", fontSize = 14.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+            Text("Rettungswürfe: ${cls.savingThrows.joinToString(", ")}", fontSize = 14.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+            Spacer(modifier = Modifier.height(12.dp))
+            
+            Text("Klassenmerkmale", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TintenSchwarz)
+            cls.classFeatures.forEach { feature ->
+                Text("Lv ${feature.level}: ${feature.name}", fontWeight = FontWeight.Bold, color = TintenSchwarz, modifier = Modifier.padding(top = 8.dp))
+                Text(feature.description, fontSize = 14.sp, color = TintenSchwarz.copy(alpha = 0.9f))
+            }
+            
+            if (cls.subclasses.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(12.dp))
+                Text("Unterklassen", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TintenSchwarz)
+                cls.subclasses.forEach { sub ->
+                    Text(sub.name, fontWeight = FontWeight.Bold, color = OchsenblutRot, modifier = Modifier.padding(top = 8.dp))
+                    sub.features.forEach { sf ->
+                        Text("Lv ${sf.level}: ${sf.name}", fontSize = 14.sp, fontWeight = FontWeight.Medium, color = TintenSchwarz)
+                        Text(sf.description, fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.8f))
                     }
                 }
             }
