@@ -156,7 +156,7 @@ fun DnDApp(viewModel: CharacterViewModel) {
                     onClick = { currentScreen = 3 },
                     icon = { 
                         Image(
-                            painter = painterResource(id = R.drawable.zauberbuch),
+                            painter = painterResource(id = R.drawable.bucher),
                             contentDescription = "Bücher",
                             modifier = Modifier.size(38.dp)
                         )
@@ -303,7 +303,7 @@ fun CompanionScreen(viewModel: CharacterViewModel) {
     val isDead = viewModel.companionIsDead
     
     val companionName = companion?.name ?: if(isRanger) "Urtier-Begleiter" else "Sphinx des Wunders"
-    val portraitRes = if(isRanger) R.drawable.icon_capybara else R.drawable.icon_d20_premium
+    val portraitRes = if(isRanger) R.drawable.icon_capybara else R.drawable.vertrauter
 
     val beastColorLight = if(isRanger) {
         when(viewModel.activeBeastType) {
