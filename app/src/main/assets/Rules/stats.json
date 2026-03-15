@@ -1,0 +1,699 @@
+[
+    {
+        "character": {
+            "name": "Delat",
+            "class": "Hexenmeister",
+            "level": 5,
+            "background": "Seefahrer",
+            "species": "Zwerg",
+            "subclass": "Großer Alter Schutzherr",
+            "alignment": "Chaotisch Gut",
+            "xp": 6500,
+            "stats": {
+                "STR": {
+                    "score": 8,
+                    "modifier": "-1"
+                },
+                "DEX": {
+                    "score": 14,
+                    "modifier": "+2"
+                },
+                "CON": {
+                    "score": 15,
+                    "modifier": "+2"
+                },
+                "INT": {
+                    "score": 10,
+                    "modifier": "0"
+                },
+                "WIS": {
+                    "score": 10,
+                    "modifier": "0"
+                },
+                "CHA": {
+                    "score": 18,
+                    "modifier": "+4"
+                }
+            },
+            "savingThrows": {
+                "STR": "-1",
+                "DEX": "+2",
+                "CON": "+2",
+                "INT": "+0",
+                "WIS": "+3",
+                "CHA": "+7"
+            },
+            "skills": {
+                "acrobatics": "+2",
+                "animalHandling": "+0",
+                "arcana": "+5",
+                "athletics": "-1",
+                "deception": "+7",
+                "history": "+0",
+                "insight": "+0",
+                "intimidation": "+7",
+                "investigation": "+0",
+                "medicine": "+0",
+                "nature": "+0",
+                "perception": "+0",
+                "performance": "+4",
+                "persuasion": "+4",
+                "religion": "+0",
+                "sleightOfHand": "+5",
+                "stealth": "+2",
+                "survival": "+0"
+            },
+            "passivePerception": 10,
+            "proficiencyBonus": "+3",
+            "armorClass": 13,
+            "initiative": "+2",
+            "speed": 9,
+            "size": "Mittel",
+            "hp": {
+                "max": 43,
+                "current": 55,
+                "temp": 12
+            },
+            "hitDice": {
+                "total": "5W8",
+                "spent": ""
+            },
+            "deathSaves": {
+                "successes": 0,
+                "failures": 0
+            },
+            "weapons": [
+                {
+                    "name": "Versilberter Speer",
+                    "bonus": "-1",
+                    "damage": "1W6 Stich",
+                    "damageVersatile": "1W8 Stich",
+                    "notes": "Silber"
+                }
+            ],
+            "featuresAndTraits": {
+                "classFeatures": [
+                    "Paktmagie: 3 Zaubertricks, 2 Stufe 3 Zauberplätze,6 vorbereitete Zauber Schauerliche Anrufungen: Pakt der Kette, Unholde Vitalität, Qualvoller Strahl (verstärkt Schauriger Strahl), Gabe des Kettenmeisters, Zurückdrängender Strahl, Magische Rafinesse (1/LR 1min Ritus, Hälfte der Zauberplätze zurück (aufgerundet)), Erwachter Geist: Telepathische Verbindung zwischen mir und einem anderen Geist: BA auf eine Kreatur in max. 9m: telepathische Kommunikation. Höchster Abstand: CM*1,6km. Selbe Sprache. Dauer: Hexerstufe in Minuten Psychische Zauber: Ich kann die Schadensart von Hexenmeisterzaubern in psychisch ändern.Keine Verbal oder Gestenkomponente bei Verzauberungs- oder Illusionszaubern",
+                    "Macht der Tiefe - Greife einen Verbündeten mit deinem schaurigen Strahl an. Danach kannst du mit deinem schaurigen Strahl mit Vorteil angreifen. Der Verbündete erhält 1 Runde Verderben (-1W4 auf Angriffs- und Rettungswurf)"
+                ],
+                "speciesTraits": "Dunkelsicht: 36m, Steingespür (Bonusaktion): (keine Art v. Sicht) Erschütterungssinn: Ich kenne für 10 min den Ort von Kreaturen u. bewegten Gegenständen innerhalb von 18m wenn wir auf Gestein stehen oder Gestein berührenHäufigkeit: Übungsbonus. Reset: Lange Rast Zwergische Unverwüstlichkeit: Giftresistenz, Vorteil bei Rettungswurf Vergiftet Zwergische Zähigkeit: +1 TP pro Stufe",
+                "feats": "Eingeweihter der Magie (Magier)  Feenberührt",
+                "weaponProficiencies": "Einfache Waffen",
+                "toolProficiencies": "Schusterwerkzeug",
+                "languages": "GemeinspracheElfischZwergisch",
+                "attunements": [
+                    "Handschuhe der arkanen Kunde"
+                ]
+            },
+            "equipment": "Flöte, Reisekleidung, Versilberter Speer, Fackel, Handschuhe der arkanen Kunde, Rucksack, Netz, Lederrüstung, Dolch Phiole, Glasflasche 2Stck.Trinkschlauch 1: (halb - voll), Trinkschlauch 2: (halb - voll) Gute Beeren: 4Trank der TierfreundschaftRationen, 3 Weinflasche, Weihwasser 24,25 kg von 60kg    Kleine magische TruheMagischer Würfel mit 1 auf jeder Seite",
+            "wealth": {
+                "CP": "",
+                "SP": "9",
+                "EP": "",
+                "GP": "72",
+                "PP": ""
+            },
+            "magic": {
+                "spellcastingAbility": "Charisma",
+                "spellSaveDC": 15,
+                "spellAttackBonus": "+7",
+                "spellcastingMod": "+4",
+                "spellSlots": {
+                    "level1": "",
+                    "level2": "",
+                    "level3": "2",
+                    "level4": "",
+                    "level5": "",
+                    "level6": "",
+                    "level7": "",
+                    "level8": "",
+                    "level9": ""
+                },
+                "spells": [
+                    {
+                        "name": "Schauriger Strahl",
+                        "level": "0",
+                        "castingTime": "A",
+                        "range": "36m",
+                        "components": "V, G",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Hexenmeister",
+                        "notes": "Damage+Cha"
+                    },
+                    {
+                        "name": "Kalte Hand",
+                        "level": "0",
+                        "castingTime": "A",
+                        "range": "Berührung",
+                        "components": "V, G",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Hexenmeister",
+                        "notes": "keine HP Regeneration"
+                    },
+                    {
+                        "name": "Einfache Illusion",
+                        "level": "0",
+                        "castingTime": "A",
+                        "range": "9m",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": true,
+                        "source": "Hexenmeister",
+                        "notes": "1min"
+                    },
+                    {
+                        "name": "Magierhand",
+                        "level": "0",
+                        "castingTime": "A",
+                        "range": "9m",
+                        "components": "V, G",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Magier",
+                        "notes": "1 min"
+                    },
+                    {
+                        "name": "Donnerschlag",
+                        "level": "0",
+                        "castingTime": "A",
+                        "range": "Selbst",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "",
+                        "notes": ""
+                    },
+                    {
+                        "name": "Falsches Leben",
+                        "level": "1",
+                        "castingTime": "A",
+                        "range": "Selbst",
+                        "components": "V, G",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Schauerliche Anrufung",
+                        "notes": "Max, ohne Slot"
+                    },
+                    {
+                        "name": "Verwünschen",
+                        "level": "1",
+                        "castingTime": "BA",
+                        "range": "27m",
+                        "components": "",
+                        "concentration": true,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Hexenmeister",
+                        "notes": "1Std"
+                    },
+                    {
+                        "name": "Vertrauten Finden",
+                        "level": "1",
+                        "castingTime": "1 Std",
+                        "range": "3m",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Schauerliche Anrufung",
+                        "notes": "ohne Slot"
+                    },
+                    {
+                        "name": "Tashas fürchterlicher Lachanfall",
+                        "level": "1",
+                        "castingTime": "A",
+                        "range": "9m",
+                        "components": "V, G",
+                        "concentration": true,
+                        "isRitual": false,
+                        "needsMaterial": true,
+                        "source": "Großer Alter",
+                        "notes": "1min"
+                    },
+                    {
+                        "name": "Dissonantes Flüstern",
+                        "level": "1",
+                        "castingTime": "A",
+                        "range": "18m",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Großer Alter",
+                        "notes": ""
+                    },
+                    {
+                        "name": "Schild",
+                        "level": "1",
+                        "castingTime": "Reaktion",
+                        "range": "Selbst",
+                        "components": "V, G",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Eingeweihter der Magie",
+                        "notes": "1/LR ohne Slot"
+                    },
+                    {
+                        "name": "Macht der Vorstellungskraft",
+                        "level": "2",
+                        "castingTime": "A",
+                        "range": "18m",
+                        "components": "V, G",
+                        "concentration": true,
+                        "isRitual": false,
+                        "needsMaterial": true,
+                        "source": "Großer Alter",
+                        "notes": "1min"
+                    },
+                    {
+                        "name": "Gedanken Wahrnehmen",
+                        "level": "2",
+                        "castingTime": "A",
+                        "range": "Selbst",
+                        "components": "V, G",
+                        "concentration": true,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Großer Alter",
+                        "notes": "1Min"
+                    },
+                    {
+                        "name": "Segnen",
+                        "level": "1",
+                        "castingTime": "A",
+                        "range": "9m",
+                        "components": "",
+                        "concentration": true,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Feenberührt",
+                        "notes": "1min, 1/LR ohne Slot"
+                    },
+                    {
+                        "name": "Einflüsterung",
+                        "level": "2",
+                        "castingTime": "A",
+                        "range": "9m",
+                        "components": "",
+                        "concentration": true,
+                        "isRitual": false,
+                        "needsMaterial": true,
+                        "source": "Hexenmeister",
+                        "notes": "8 Std"
+                    },
+                    {
+                        "name": "Unsichtbarkeit",
+                        "level": "2",
+                        "castingTime": "A",
+                        "range": "Berührung",
+                        "components": "",
+                        "concentration": true,
+                        "isRitual": false,
+                        "needsMaterial": true,
+                        "source": "Hexenmeister",
+                        "notes": "1 Std"
+                    },
+                    {
+                        "name": "Nebelschritt",
+                        "level": "2",
+                        "castingTime": "BA",
+                        "range": "Selbst",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Feenberührt",
+                        "notes": "9m, 1/LR ohne Slot"
+                    },
+                    {
+                        "name": "Gegenzauber",
+                        "level": "3",
+                        "castingTime": "Reaktion",
+                        "range": "18m",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Magier",
+                        "notes": ""
+                    },
+                    {
+                        "name": "Furcht",
+                        "level": "3",
+                        "castingTime": "A",
+                        "range": "9m Kegel",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "",
+                        "notes": ""
+                    },
+                    {
+                        "name": "Spiegelbilder",
+                        "level": "2",
+                        "castingTime": "A",
+                        "range": "Selbst",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "",
+                        "notes": ""
+                    },
+                    {
+                        "name": "Hellsehen",
+                        "level": "3",
+                        "castingTime": "10min",
+                        "range": "1,6km",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Großer Alter",
+                        "notes": ""
+                    },
+                    {
+                        "name": "Hunger von Hadar",
+                        "level": "3",
+                        "castingTime": "A",
+                        "range": "45m",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Großer Alter",
+                        "notes": ""
+                    }
+                ]
+            },
+            "personalityAndBackground": {
+                "backstory": "Ideal: Freiheit: Ketten sind dazu da um Sie zu brechen, ebenso wie die, die sie halten Makel: Ich würde alles behaupten, um zusätzlicher Arbeit aus dem weg zu gehen",
+                "appearance": ""
+            }
+        }
+    },
+    {
+        "character": {
+            "name": "Athania",
+            "class": "Waldläufer",
+            "level": 4,
+            "background": "Wegfinder",
+            "species": "Elf-Drow",
+            "subclass": "Herrin der Tiere",
+            "alignment": "Chaotisch Gut",
+            "xp": 4494,
+            "stats": {
+                "STR": {
+                    "score": 8,
+                    "modifier": "-1"
+                },
+                "DEX": {
+                    "score": 18,
+                    "modifier": "+4"
+                },
+                "CON": {
+                    "score": 16,
+                    "modifier": "+3"
+                },
+                "INT": {
+                    "score": 10,
+                    "modifier": "0"
+                },
+                "WIS": {
+                    "score": 14,
+                    "modifier": "+2"
+                },
+                "CHA": {
+                    "score": 8,
+                    "modifier": "-1"
+                }
+            },
+            "savingThrows": {
+                "STR": "+1",
+                "DEX": "+6",
+                "CON": "+3",
+                "INT": "+0",
+                "WIS": "+2",
+                "CHA": "-1"
+            },
+            "skills": {
+                "acrobatics": "+4",
+                "animalHandling": "+4",
+                "arcana": "+0",
+                "athletics": "-1",
+                "deception": "-1",
+                "history": "+0",
+                "insight": "+4",
+                "intimidation": "-1",
+                "investigation": "+0",
+                "medicine": "+2",
+                "nature": "+2",
+                "perception": "+6",
+                "performance": "-1",
+                "persuasion": "-1",
+                "religion": "+0",
+                "sleightOfHand": "+4",
+                "stealth": "+6",
+                "survival": "+4"
+            },
+            "passivePerception": 16,
+            "proficiencyBonus": "+2",
+            "armorClass": 16,
+            "initiative": "+4",
+            "speed": 9,
+            "size": "Mittel",
+            "hp": {
+                "max": 40,
+                "current": 40,
+                "temp": 0
+            },
+            "hitDice": {
+                "total": "4W10",
+                "spent": ""
+            },
+            "deathSaves": {
+                "successes": 0,
+                "failures": 0
+            },
+            "weapons": [
+                {
+                    "name": "Langbogen",
+                    "bonus": "+8",
+                    "damage": "1W8 Stich",
+                    "notes": "Verlangsamen: Ziel nach Treffer -3 Bewegung"
+                },
+                {
+                    "name": "Kampfstab (arkaner Fokus)",
+                    "bonus": "+4",
+                    "damage": "1W4 Wucht",
+                    "notes": "Umstoßen: Kon RW12"
+                },
+                {
+                    "name": "Kurzschwert",
+                    "bonus": "+6",
+                    "damage": "1W6 Stich",
+                    "notes": "Plagen"
+                }
+            ],
+            "featuresAndTraits": {
+                "classFeatures": [
+                    "Zauberwirken: 2 Zauberplätze",
+                    "Waffenmeisterung: Langbogen + Knüppel",
+                    "Erzfeind: Zeichen des Jägers ist stets vorbereitet und kann 2x pro lange Rast gewirkt werden",
+                    "Urbegleiter Land, Himmel, Meer - BA: Urtier A, A: Urtier Angriff. Für Zauberslot Urtier beleben (volle HP)"
+                ],
+                "speciesTraits": "Dunkelsicht: 36m. Feenblut: Vorteil gegen Bezaubern. Scharfe Sinne: +1 Fertigkeit. Trance: Du musst nicht schlafen und kannst nicht magisch zum Einschlafen gebracht werden. Lange Rast dauert 4 Std, wenn du in tranceartiger Meditation bist.",
+                "feats": "Eingeweihter der Magie (Druide), Bogenschießen, Messerstecher: Bei Stichschaden ein mal Pro Zug 1 Angriffswürfel neu würfeln. Bei Krit ein Zus. Schadenswürfel",
+                "weaponProficiencies": "Einfache Waffen, Kriegswaffen",
+                "toolProficiencies": "Lederwerkzeug",
+                "languages": "Gemeinsprache, Gebärden-Gemeinsprache, Halblingisch, Zwergisch, Elfisch",
+                "attunements": []
+            },
+            "equipment": "Beschlagene Lederrüstung, Peitsche 2x, Knüppel, Kurzschwert, Langbogen, Köcher, 26 Pfeile, Kampfstab, Reisekleidung, Schild, Rucksack, Blasrohr, Seil, Brosche, Zange, Kleine Onyxstatue \"Schwarzer Drache\" (Fokus), Kräuterkundeset, Juwelierwerkzeug, Schwarzer Onyxschädel, Wasserschlauch 1 (halb - voll), Wasserschlauch 2 (halb - voll), Gute Beeren: 4, Trank der Rindenhaut (+1RK für 1h), 2 Flaschen Gift, Heiltrank, Öl, Hämatit",
+            "wealth": {
+                "CP": "20",
+                "SP": "1",
+                "EP": "",
+                "GP": "44",
+                "PP": ""
+            },
+            "magic": {
+                "spellcastingAbility": "Weisheit",
+                "spellSaveDC": 12,
+                "spellAttackBonus": "+4",
+                "spellcastingMod": "+2",
+                "spellSlots": {
+                    "level1": "3",
+                    "level2": "",
+                    "level3": "",
+                    "level4": "",
+                    "level5": "",
+                    "level6": "",
+                    "level7": "",
+                    "level8": "",
+                    "level9": ""
+                },
+                "spells": [
+                    {
+                        "name": "Tanzende Lichter",
+                        "level": "0",
+                        "castingTime": "A",
+                        "range": "36m",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": true,
+                        "source": "Drow",
+                        "notes": ""
+                    },
+                    {
+                        "name": "Göttliche Führung",
+                        "level": "0",
+                        "castingTime": "A",
+                        "range": "18m",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Druide",
+                        "notes": ""
+                    },
+                    {
+                        "name": "Shillelagh",
+                        "level": "0",
+                        "castingTime": "BA",
+                        "range": "Selbst",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Druide",
+                        "notes": "1min"
+                    },
+                    {
+                        "name": "Heilendes Wort",
+                        "level": "1",
+                        "castingTime": "A",
+                        "range": "18m",
+                        "components": "V",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Druide",
+                        "notes": "2W4+4,1x/LR Ohne Slot"
+                    },
+                    {
+                        "name": "Verstricken",
+                        "level": "1",
+                        "castingTime": "A",
+                        "range": "27m",
+                        "components": "V,G",
+                        "concentration": true,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Waldläufer",
+                        "notes": "1 min"
+                    },
+                    {
+                        "name": "Kalte Hand",
+                        "level": "0",
+                        "castingTime": "A",
+                        "range": "Berührung",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Tattoo",
+                        "notes": "Vorteil gegen menschliche Kinder"
+                    },
+                    {
+                        "name": "Zeichen des Jägers",
+                        "level": "1",
+                        "castingTime": "BA",
+                        "range": "27m",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Waldläufer",
+                        "notes": "2x/LR ohne Slot"
+                    },
+                    {
+                        "name": "Mit Tieren sprechen",
+                        "level": "1",
+                        "castingTime": "Ritual",
+                        "range": "Selbst",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": true,
+                        "needsMaterial": false,
+                        "source": "Waldläufer",
+                        "notes": "10Min"
+                    },
+                    {
+                        "name": "Gute Beeren",
+                        "level": "1",
+                        "castingTime": "A",
+                        "range": "Selbst",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Waldläufer",
+                        "notes": "10Stck, Nahrung"
+                    },
+                    {
+                        "name": "Dornenhagel",
+                        "level": "1",
+                        "castingTime": "Reaktion",
+                        "range": "",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Waldläufer",
+                        "notes": ""
+                    },
+                    {
+                        "name": "Feenfeuer",
+                        "level": "1",
+                        "castingTime": "A",
+                        "range": "18m",
+                        "components": "",
+                        "concentration": false,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Waldläufer",
+                        "notes": "1x/LR Ohne Slot"
+                    },
+                    {
+                        "name": "Nebelwolke",
+                        "level": "1",
+                        "castingTime": "A",
+                        "range": "36m",
+                        "components": "V,G",
+                        "concentration": true,
+                        "isRitual": false,
+                        "needsMaterial": false,
+                        "source": "Waldläufer",
+                        "notes": "1Std."
+                    }
+                ]
+            },
+            "personalityAndBackground": {
+                "backstory": "Ideal: Höheres Ziel: Es ist die Verantwordung jeder Einzelnen, für das Wohl des Stammes zu sorgen. Makel: Nachtragend: Ich erinnere mich an jede einzelne Beleidigung, die mir galt, und hege eine stumme Abneigung gegen all jene, die mich schon einmal falsch behandelt haben.",
+                "appearance": "Magisches Tattoo (Blutige Hand eines Kindes)"
+            }
+        }
+    }
+]
