@@ -650,7 +650,7 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
     
     // Oberkategorien für die Tabs (Manuell definiert, da wir aus verschiedenen Tabellen mischen)
     val tabs = listOf(
-        "Gameplay", "Klassen & Völker", "Ausrüstung", "Kampf & Zustände", "Zauber-Regeln", "Dienstleistungen"
+        "Global", "Gameplay", "Klassen & Völker", "Ausrüstung", "Kampf & Zustände", "Zauber-Regeln", "Dienstleistungen"
     )
     val pagerState = rememberPagerState(pageCount = { tabs.size })
 
@@ -765,11 +765,49 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     when (page) {
-                        0 -> { // Gameplay
+                        0 -> { // Global (Combined Search Results)
+                            if (searchQuery.isBlank()) {
+                                item { 
+                                    Text(
+                                        text = "Nutze das Suchfeld, um im gesamten Regelwerk, in Klassen, Völkern und der Ausrüstung gleichzeitig zu suchen.",
+                                        modifier = Modifier.fillMaxWidth().padding(top = 32.dp),
+                                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                                        color = TintenSchwarz.copy(alpha = 0.6f),
+                                        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
+                                    ) 
+                                }
+                            } else {
+                                var foundAnything = false
+                                if (rules.isNotEmpty()) {
+                                    item { SectionHeader("Regeln") }
+                                    items(rules) { rule -> RuleCard(rule) }
+                                    foundAnything = true
+                                }
+                                if (species.isNotEmpty()) {
+                                    item { SectionHeader("Völker") }
+                                    items(species) { spec -> SpeciesCard(spec) }
+                                    foundAnything = true
+                                }
+                                if (classes.isNotEmpty()) {
+                                    item { SectionHeader("Klassen") }
+                                    items(classes) { cls -> ClassCard(cls) }
+                                    foundAnything = true
+                                }
+                                if (weapons.isNotEmpty() || armor.isNotEmpty() || tools.isNotEmpty()) {
+                                    item { SectionHeader("Ausrüstung") }
+                                    items(weapons) { weapon -> WeaponCard(weapon) }
+                                    items(armor) { arm -> ArmorCard(arm) }
+                                    items(tools) { tool -> ToolCard(tool) }
+                                    foundAnything = true
+                                }
+                                if (!foundAnything) item { EmptySearchResult() }
+                            }
+                        }
+                        1 -> { // Gameplay
                             items(gameplayRules) { rule -> RuleCard(rule) }
                             if (gameplayRules.isEmpty()) item { EmptySearchResult() }
                         }
-                        1 -> { // Klassen & Völker
+                        2 -> { // Klassen & Völker
                             if (species.isNotEmpty()) {
                                 item { SectionHeader("Völker (Species)") }
                                 items(species) { spec -> SpeciesCard(spec) }
@@ -780,7 +818,7 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                             }
                             if (species.isEmpty() && classes.isEmpty()) item { EmptySearchResult() }
                         }
-                        2 -> { // Ausrüstung
+                        3 -> { // Ausrüstung
                             if (weapons.isNotEmpty()) {
                                 item { SectionHeader("Waffen") }
                                 items(weapons) { weapon -> WeaponCard(weapon) }
@@ -795,15 +833,15 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                             }
                             if (weapons.isEmpty() && armor.isEmpty() && tools.isEmpty()) item { EmptySearchResult() }
                         }
-                        3 -> { // Kampf & Zustände
+                        4 -> { // Kampf & Zustände
                             items(combatRules) { rule -> RuleCard(rule) }
                             if (combatRules.isEmpty()) item { EmptySearchResult() }
                         }
-                        4 -> { // Zauber-Regeln
+                        5 -> { // Zauber-Regeln
                             items(spellRules) { rule -> RuleCard(rule) }
                             if (spellRules.isEmpty()) item { EmptySearchResult() }
                         }
-                        5 -> { // Dienstleistungen
+                        6 -> { // Dienstleistungen
                             items(serviceRules) { rule -> RuleCard(rule) }
                             if (serviceRules.isEmpty()) item { EmptySearchResult() }
                         }

@@ -47,6 +47,26 @@ interface RulebookDao {
     @Query("SELECT * FROM classes WHERE name LIKE '%' || :searchQuery || '%'")
     fun searchClasses(searchQuery: String): Flow<List<ClassEntity>>
 
+    // --- Search Queries (Raw for RAG/Global Search) ---
+
+    @Query("SELECT * FROM rules WHERE title LIKE '%' || :searchQuery || '%' OR content LIKE '%' || :searchQuery || '%' OR tags LIKE '%' || :searchQuery || '%'")
+    suspend fun searchRulesRaw(searchQuery: String): List<RuleEntity>
+
+    @Query("SELECT * FROM weapons WHERE name LIKE '%' || :searchQuery || '%' OR category LIKE '%' || :searchQuery || '%'")
+    suspend fun searchWeaponsRaw(searchQuery: String): List<WeaponEntity>
+
+    @Query("SELECT * FROM armor WHERE name LIKE '%' || :searchQuery || '%' OR category LIKE '%' || :searchQuery || '%'")
+    suspend fun searchArmorRaw(searchQuery: String): List<ArmorEntity>
+
+    @Query("SELECT * FROM tools WHERE name LIKE '%' || :searchQuery || '%' OR category LIKE '%' || :searchQuery || '%'")
+    suspend fun searchToolsRaw(searchQuery: String): List<ToolEntity>
+
+    @Query("SELECT * FROM species WHERE name LIKE '%' || :searchQuery || '%'")
+    suspend fun searchSpeciesRaw(searchQuery: String): List<SpeciesEntity>
+    
+    @Query("SELECT * FROM classes WHERE name LIKE '%' || :searchQuery || '%'")
+    suspend fun searchClassesRaw(searchQuery: String): List<ClassEntity>
+
     // --- Fetch All Queries ---
 
     @Query("SELECT * FROM rules ORDER BY category, title")

@@ -17,6 +17,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import com.google.ai.client.generativeai.type.generationConfig
 import org.json.JSONObject
 import com.google.firebase.firestore.FirebaseFirestore
@@ -2418,114 +2419,69 @@ private val model25Flash = GenerativeModel(
 
             if (keywords.isEmpty()) return "Keine spezifischen Handbuch-Einträge gefunden."
 
-            // 3. Durchsuche das Handbuch nach den besten Absätzen
-            val chapters = assets.list("Rules/Handbuch/Kapitel") ?: emptyArray()
-            val spells = assets.list("Rules/Zauberbuch") ?: emptyArray()
+            // 3. Durchsuche die Room-Datenbank
+            val db = AppDatabase.getDatabase(context).rulebookDao()
+            val bestParagraphs = mutableListOf<Pair<Int, String>>()
             
-            val chapterMapping = mapOf(
-                "kapitel1_gameplay.md" to "1. Gameplay",
-                "kapitel2_races.md" to "2. Völker",
-                "kapitel3_classes.md" to "3. Klassen",
-                "kapitel4_origins.md" to "4. Herkünfte",
-                "kapitel5_talente.md" to "5. Talente",
-                "kapitel6_equipment.md" to "6. Ausrüstung",
-                "kapitel8_combat_conditions.md" to "7. Kampf",
-                "kapitel7_spells.md" to "8. Zauber"
-            )
-            
-            // Speichert die Absätze zusammen mit ihrer "Relevanz-Punktzahl"
-            val bestParagraphs = mutableListOf<Pair<Int, String>>() 
-            
-            // Verarbeite Handbuch-Kapitel
-            for (fileName in chapters) {
-                if (!fileName.endsWith(".md")) continue
-                val text = assets.open("Rules/Handbuch/Kapitel/$fileName").bufferedReader().use { it.readText() }
-                
-                // Macht den Dateinamen als Überschrift passend zu den UI-Tabs
-                val prettyName = chapterMapping[fileName] ?: fileName.replace(".md", "").replace("_", " ").uppercase()
-                
-                // Zerlegt das Kapitel in Absätze (getrennt durch doppelte Zeilenumbrüche)
-                val paragraphs = text.split("\n\n", "\r\n\r\n")
-                
-                for (paragraph in paragraphs) {
-                    val pLower = paragraph.lowercase()
-                    // Zähle, wie oft die Suchwörter vorkommen
-                    var score = 0
-                    for (kw in keywords) {
-                        if (pLower.contains(kw)) {
-                            score += 1
-                        }
+            // Führe für jedes Keyword eine Suche aus und bewerte die Ergebnisse
+            withContext(Dispatchers.IO) {
+                for (kw in keywords) {
+                    val searchString = "%$kw%"
+                    
+                    // Regeln durchsuchen
+                    db.searchRulesRaw(searchString).forEach { rule ->
+                        val score = keywords.count { rule.title.lowercase().contains(it) || rule.content.lowercase().contains(it) }
+                        if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: ${rule.category} ---\nTitel: ${rule.title}\nInhalt: ${rule.content}"))
                     }
-                    if (score > 0) {
-                        // Füge den Absatz plus Quellenangabe hinzu
-                        bestParagraphs.add(Pair(score, "--- Quelle: $prettyName ---\n$paragraph"))
+                    // Waffen durchsuchen
+                    db.searchWeaponsRaw(searchString).forEach { weapon ->
+                        val score = keywords.count { weapon.name.lowercase().contains(it) || weapon.category.lowercase().contains(it) || weapon.properties.joinToString().lowercase().contains(it) }
+                        if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Waffen ---\nName: ${weapon.name}\nSchaden: ${weapon.damage}\nEigenschaften: ${weapon.properties.joinToString()}"))
                     }
-                }
-            }
-
-            // Verarbeite Zauberbuch (Sowohl Spellbook.md als auch JSONs)
-            for (fileName in spells) {
-                if (fileName.endsWith(".md")) {
-                    val text = assets.open("Rules/Zauberbuch/$fileName").bufferedReader().use { it.readText() }
-                    val paragraphs = text.split("\n\n", "\r\n\r\n")
-                    for (paragraph in paragraphs) {
-                        val pLower = paragraph.lowercase()
-                        var score = 0
-                        for (kw in keywords) {
-                            if (pLower.contains(kw)) score += 1
-                        }
-                        if (score > 0) {
-                            bestParagraphs.add(Pair(score, "--- Quelle: Zauberbuch Übersicht ---\n$paragraph"))
-                        }
+                    // Rüstung durchsuchen
+                    db.searchArmorRaw(searchString).forEach { armor ->
+                        val score = keywords.count { armor.name.lowercase().contains(it) || armor.category.lowercase().contains(it) }
+                        if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Rüstung ---\nName: ${armor.name}\nRK: ${armor.baseAC}"))
                     }
-                } else if (fileName.endsWith(".json")) {
-                    try {
-                        val text = assets.open("Rules/Zauberbuch/$fileName").bufferedReader().use { it.readText() }
-                        val jsonArray = org.json.JSONArray(text)
-                        for (i in 0 until jsonArray.length()) {
-                            val spell = jsonArray.getJSONObject(i)
-                            val name = spell.optString("name_de", "")
-                            val desc = spell.optString("description", "")
-                            val classes = spell.optJSONArray("classes")?.let { arr -> 
-                                (0 until arr.length()).map { arr.getString(it) }.joinToString()
-                            } ?: ""
-                            
-                            val spellText = "Zauber: $name\nKlassen: $classes\nBeschreibung: $desc"
-                            val pLower = spellText.lowercase()
-                            var score = 0
-                            for (kw in keywords) {
-                                if (pLower.contains(kw)) score += 1
-                            }
-                            if (score > 0) {
-                                bestParagraphs.add(Pair(score, "--- Quelle: Zauberbuch Detail ---\n$spellText"))
-                            }
-                        }
-                    } catch (e: Exception) {
-                        // ignoriere leere oder ungültige JSON
+                    // Werkzeuge durchsuchen
+                    db.searchToolsRaw(searchString).forEach { tool ->
+                        val score = keywords.count { tool.name.lowercase().contains(it) || tool.category.lowercase().contains(it) }
+                        if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Werkzeuge ---\nName: ${tool.name}\nKategorie: ${tool.category}\nPreis: ${tool.price}"))
+                    }
+                    // Völker durchsuchen
+                    db.searchSpeciesRaw(searchString).forEach { species ->
+                        val score = keywords.count { species.name.lowercase().contains(it) || species.traits.joinToString { t -> t.name + t.description }.lowercase().contains(it) }
+                        if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Völker ---\nVolk: ${species.name}\nEigenschaften: ${species.traits.joinToString { t -> "${t.name}: ${t.description}" }}"))
+                    }
+                    // Klassen durchsuchen
+                    db.searchClassesRaw(searchString).forEach { cls ->
+                        val score = keywords.count { cls.name.lowercase().contains(it) || cls.classFeatures.joinToString { f -> f.name + f.description }.lowercase().contains(it) }
+                        if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Klassen ---\nKlasse: ${cls.name}\nMerkmale: ${cls.classFeatures.take(5).joinToString { f -> "${f.name}: ${f.description}" }}"))
                     }
                 }
             }
             
-            // 4. Sortiere nach den meisten Treffern und nimm die besten 10 Absätze für mehr Kontext
-            bestParagraphs.sortByDescending { it.first }
-            bestParagraphs.take(10).forEach { 
-                sb.append(it.second).append("\n")
+            // 4. Sortiere nach den meisten Treffern und nimm die besten 10 Absätze für mehr Kontext (Duplikate entfernen durch Distinct)
+            bestParagraphs.distinctBy { it.second }.sortedByDescending { it.first }.take(15).forEach { 
+                sb.append(it.second).append("\n\n")
             }
             
-            // 5. Durchsuche zusätzlich das Zauberbuch
-            val searchSpell = globalSpellbook.find { spell -> 
-                keywords.any { kw -> spell.name.lowercase().contains(kw) }
+            // 5. Durchsuche zusätzlich das Zauberbuch (JSON Daten via globalSpellbook)
+            val searchSpells = globalSpellbook.filter { spell -> 
+                keywords.any { kw -> spell.name.lowercase().contains(kw) || spell.description.lowercase().contains(kw) }
             }
-            if (searchSpell != null) {
-                sb.append("\n--- Quelle: ZAUBERBUCH ---\n")
-                sb.append("Zauber: ${searchSpell.name} (Grad ${searchSpell.level})\nBeschreibung: ${searchSpell.description}\n")
+            if (searchSpells.isNotEmpty()) {
+                sb.append("--- Quelle: ZAUBERBUCH ---\n")
+                searchSpells.take(3).forEach { searchSpell ->
+                    sb.append("Zauber: ${searchSpell.name} (Grad ${searchSpell.level})\nKlassen: ${searchSpell.classes.joinToString()}\nBeschreibung: ${searchSpell.description}\n\n")
+                }
             }
             
             // Fallback, falls absolut gar kein Wort aus der Frage im Buch steht
             if (sb.isEmpty()) "Keine spezifischen Handbuch-Einträge gefunden für: ${keywords.joinToString(", ")}" else sb.toString()
             
         } catch (e: Exception) {
-            "Fehler beim Laden lokaler Regeln."
+            "Fehler beim Laden lokaler Regeln: ${e.message}"
         }
     }
 

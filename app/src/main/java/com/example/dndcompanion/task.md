@@ -226,7 +226,9 @@
 - [x] **Regelwerk:**
     - [x] Regelwerk auf Verwendung der neuen JSON-Dateien umstellen
     - [x] Room anlegen und verwenden
-    *Notiz für Commit: feat: setup Room database with KSP2 for rulebook JSON files and refactor RulebookDetailView to use dynamic categorical layout*
+    - [x] *Neu:* Globale Suche im Regelwerk (Reiter "Global", durchsucht alle Kategorien & Ausrüstung)
+    - [x] *Neu:* Chatbot-RAG Anbindung an Room-DB statt Markdown-Dateien
+    *Notiz für Commit: feat: integrate Room database with Gemini RAG Chatbot and implement Global rulebook search tab*
 - [ ] **Feature-Katalog Integration:**
     - [ ] JSON-Struktur für Merkmale/Talente definieren und `features.json` erstellen.
     - [ ] Daten aus Markdown-Dateien in `features.json` extrahieren (Talente, Klassenmerkmale, Volksmerkmale).
