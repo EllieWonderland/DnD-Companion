@@ -159,12 +159,12 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     // HP-Buttons
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Button(onClick = { viewModel.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-5", fontFamily = Almendra, fontSize = 16.sp) }
-                        Button(onClick = { viewModel.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontFamily = Almendra, fontSize = 16.sp) }
-                        Button(onClick = { viewModel.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontFamily = Almendra, fontSize = 16.sp) }
-                        Button(onClick = { viewModel.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.width(62.dp).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+5", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { viewModel.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-5", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { viewModel.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { viewModel.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { viewModel.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+5", fontFamily = Almendra, fontSize = 16.sp) }
                     }
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -174,13 +174,13 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     // Temp HP Buttons
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Temp HP:", style = MaterialTheme.typography.labelLarge, color = TempHPBlau)
-                        Button(onClick = { viewModel.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.6f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.width(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontSize = 14.sp) }
-                        Button(onClick = { viewModel.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze.copy(alpha = 0.7f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.width(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontSize = 14.sp) }
-                        Button(onClick = { viewModel.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), shape = RoundedCornerShape(6.dp), modifier = Modifier.width(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+12", fontSize = 14.sp) }
+                        Text("Temp HP:", style = MaterialTheme.typography.labelLarge, color = TempHPBlau, modifier = Modifier.weight(1.5f))
+                        Button(onClick = { viewModel.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.6f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontSize = 14.sp) }
+                        Button(onClick = { viewModel.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze.copy(alpha = 0.7f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontSize = 14.sp) }
+                        Button(onClick = { viewModel.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("+12", fontSize = 14.sp) }
                     }
 
                     if (viewModel.goodberries > 0 || isRanger) {
@@ -348,7 +348,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                             title = weaponName,
                             isSelected = viewModel.equippedWeaponName == weaponName,
                             accentColor = accentColor,
-                            modifier = Modifier.width(130.dp)
+                            modifier = Modifier.defaultMinSize(minWidth = 130.dp)
                         ) {
                             viewModel.equipWeaponByName(weaponName)
                         }

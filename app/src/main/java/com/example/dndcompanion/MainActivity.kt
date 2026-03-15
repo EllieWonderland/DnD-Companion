@@ -114,7 +114,7 @@ fun DnDApp(viewModel: CharacterViewModel) {
                         selected = currentScreen == 1,
                         onClick = { currentScreen = 1 },
                         icon = { 
-                            val iconRes = if (viewModel.activeCharacterId == "Delat") R.drawable.icon_d20_premium else R.drawable.icon_capybara
+                            val iconRes = if (viewModel.activeCharacterId == "Delat") R.drawable.vertrauter else R.drawable.icon_capybara
                             Image(
                                 painter = painterResource(id = iconRes),
                                 contentDescription = "Begleiter",
@@ -137,7 +137,7 @@ fun DnDApp(viewModel: CharacterViewModel) {
                     onClick = { currentScreen = 2 },
                     icon = { 
                         Image(
-                            painter = painterResource(id = R.drawable.gruppenchat),
+                            painter = painterResource(id = R.drawable.hilfe),
                             contentDescription = "Hilfe",
                             modifier = Modifier.size(38.dp)
                         )
@@ -251,10 +251,10 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
                     icon = {
                         val iconRes = when(tab) {
                             AthaniaTab.Profil -> if (viewModel.characterData.name == "Athania") R.drawable.athania else R.drawable.delat
-                            AthaniaTab.Kampf -> R.drawable.icon_d20_premium
+                            AthaniaTab.Kampf -> R.drawable.kampf
                             AthaniaTab.Zauber -> R.drawable.zauberbuch
-                            AthaniaTab.Rucksack -> R.drawable.icon_geld
-                            else -> R.drawable.icon_d20_premium
+                            AthaniaTab.Rucksack -> R.drawable.rucksack
+                            else -> R.drawable.kampf
                         }
                         Image(
                             painter = painterResource(id = iconRes),

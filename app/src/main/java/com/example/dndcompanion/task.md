@@ -129,7 +129,7 @@
     *Notiz für Commit: Splash Screen verschönert und an das App-Thema angepasst (Pergament & Stein).*
 
 - [ ] Cleanup & Debugging <!-- id: 18 -->
-    - [/] Investigate manual trait dialog trigger issues <!-- id: 19 -->
+    - [ ] Investigate manual trait dialog trigger issues <!-- id: 19 -->
     - [ ] Replace manual dialog in `ZauberScreen.kt` with catalog <!-- id: 20 -->
     - [ ] Integrated catalog into `LevelUpDialog.kt` (feat selection) <!-- id: 21 -->
     - [ ] Verify persistence of learned features <!-- id: 22 -->
@@ -218,7 +218,14 @@
     - [x] Merkmale/Talente für Delat vervollständigt (Eingeweihter der Magie, Feenberührt) und Namen präzisiert.
 - [x] **UI-Fixes:**
     - [x] Buttongröße für "Kriegshammer (Pakt)" in `CombatScreen.kt` prüfen und flexibel gestalten.
-    - [ ] Generelle Prüfung der Button-Flexibilität in der Kampf-Ansicht.
+    - [x] Generelle Prüfung der Button-Flexibilität in der Kampf-Ansicht.
+      *Notiz für Commit: ui: refactor combat buttons to use flexible layouts and weight modifiers to prevent text clipping*
+- [x] **Icon-Fix:**
+    - [x] Icons in `res/drawable` prüfen und fehlende Icons hinzufügen bzw. alte austauschen.
+      *Notiz für Commit: ui: replace redundant placeholder icons with specific assets (kampf, rucksack, vertrauter, hilfe) in navigation tabs*
+- [ ] **Regelwerk:**
+    - [ ] Regelwerk auf Verwendung der neuen JSON-Dateien umstellen
+    - [ ] Room anlegen und verwenden
 - [ ] **Feature-Katalog Integration:**
     - [ ] JSON-Struktur für Merkmale/Talente definieren und `features.json` erstellen.
     - [ ] Daten aus Markdown-Dateien in `features.json` extrahieren (Talente, Klassenmerkmale, Volksmerkmale).
@@ -244,4 +251,3 @@
   *	Commit: `fix: ensure weights are correctly transferred from catalog`
 
 ### Zukünftige Aufgaben
-- [ ] Suche im Regelwerk: Umformen der .md in JSON, um sie in Room zu nutzen
