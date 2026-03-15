@@ -33,6 +33,7 @@ import com.example.dndcompanion.data.database.ToolEntity
 import com.example.dndcompanion.data.database.SpeciesEntity
 import com.example.dndcompanion.data.database.ClassEntity
 import com.example.dndcompanion.data.database.FeatureEntity
+import com.example.dndcompanion.data.database.SpellEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -220,6 +221,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     private val _searchedFeatures = MutableStateFlow<List<FeatureEntity>>(emptyList())
     val searchedFeatures: StateFlow<List<FeatureEntity>> = _searchedFeatures.asStateFlow()
 
+    private val _searchedSpells = MutableStateFlow<List<SpellEntity>>(emptyList())
+    val searchedSpells: StateFlow<List<SpellEntity>> = _searchedSpells.asStateFlow()
+
     init {
         // Load initial data (all content)
         searchRulebook("")
@@ -273,6 +277,13 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 rulebookDao.getAllFeatures().collectLatest { _searchedFeatures.value = it }
             } else {
                 rulebookDao.searchFeatures(query).collectLatest { _searchedFeatures.value = it }
+            }
+        }
+        viewModelScope.launch(Dispatchers.IO) {
+            if (query.isBlank()) {
+                rulebookDao.getAllSpells().collectLatest { _searchedSpells.value = it }
+            } else {
+                rulebookDao.searchSpells(query).collectLatest { _searchedSpells.value = it }
             }
         }
     }
@@ -1114,9 +1125,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     // --- FEATURE SELECTION UI ---
     var showFeatureSelection by mutableStateOf(false)
-    var lastSelectedFeature by mutableStateOf<Feature?>(null)
+    var lastSelectedFeature by mutableStateOf<FeatureEntity?>(null)
 
-    fun learnFeature(feature: Feature) {
+    fun learnFeature(feature: FeatureEntity) {
         if (customTraits.none { it.name == feature.name }) {
             var uses = 0
             var spellId: String? = null
@@ -2050,17 +2061,25 @@ private val model25Flash = GenerativeModel(
 
     // --- SPELBOOK (ZAUBERBUCH) ---
     val allSpells = mutableStateListOf<Spell>()
-    val globalSpellbook = mutableStateListOf<Spell>()
     val globalFeatures = mutableStateListOf<Feature>()
+
+    // Room Search Flows
+    val globalSpellbook = MutableStateFlow<List<SpellEntity>>(emptyList())
 
     init {
         loadLoot()
         loadFaqs()
         loadSpells()
-        loadGlobalSpellbook()
         loadGlobalFeatures()
         loadEquipment()
         loadTraits()
+        
+        viewModelScope.launch {
+            val db = com.example.dndcompanion.data.database.AppDatabase.getDatabase(getApplication()).rulebookDao()
+            db.getAllSpells().collectLatest { spells ->
+                globalSpellbook.value = spells
+            }
+        }
     }
 
     private fun saveSpells() {
@@ -2068,28 +2087,7 @@ private val model25Flash = GenerativeModel(
         prefs.edit { putString("savedSpells", json) }
     }
 
-    private fun loadGlobalSpellbook() {
-        viewModelScope.launch {
-            try {
-                val context = getApplication<Application>()
-                val spellList = mutableListOf<Spell>()
-                val type = object : TypeToken<List<SpellDto>>() {}.type
 
-                val fileName = "Rules/Zauberbuch/spellbook.json"
-                try {
-                    val jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
-                    val dtos: List<SpellDto> = gson.fromJson(jsonString, type)
-                    spellList.addAll(dtos.map { it.toSpell() })
-                } catch (e: Exception) {
-                    println("Error loading spellbook: ${e.message}")
-                }
-                globalSpellbook.clear()
-                globalSpellbook.addAll(spellList)
-            } catch (e: Exception) {
-                // ignore
-            }
-        }
-    }
 
     private fun loadGlobalFeatures() {
         viewModelScope.launch {
@@ -2483,13 +2481,15 @@ private val model25Flash = GenerativeModel(
             }
             
             // 5. Durchsuche zusätzlich das Zauberbuch (JSON Daten via globalSpellbook)
-            val searchSpells = globalSpellbook.filter { spell -> 
-                keywords.any { kw -> spell.name.lowercase().contains(kw) || spell.description.lowercase().contains(kw) }
-            }
-            if (searchSpells.isNotEmpty()) {
-                sb.append("--- Quelle: ZAUBERBUCH ---\n")
-                searchSpells.take(3).forEach { searchSpell ->
-                    sb.append("Zauber: ${searchSpell.name} (Grad ${searchSpell.level})\nKlassen: ${searchSpell.classes.joinToString()}\nBeschreibung: ${searchSpell.description}\n\n")
+            withContext(Dispatchers.IO) {
+                for (kw in keywords) {
+                    db.searchSpellsRaw("%$kw%").forEach { spell ->
+                        val descriptionString = "Zauber: ${spell.name} (Grad ${spell.level})\nKlassen: ${spell.classes.joinToString()}\nBeschreibung: ${spell.description}"
+                        if (!sb.contains(spell.name)) {
+                            sb.append("--- Quelle: ZAUBERBUCH ---\n")
+                            sb.append(descriptionString).append("\n\n")
+                        }
+                    }
                 }
             }
             

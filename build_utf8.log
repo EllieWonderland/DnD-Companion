@@ -63,41 +63,19 @@ ksp-2.1.0-1.0.29 is too old for kotlin-2.2.10. Please upgrade ksp or downgrade k
 > Task :app:compileDebugKotlin FAILED
 .\gradlew.bat : e: file:///C:/Users/janaf/AndroidSt
 udioProjects/DnDCompanion/app/src/main/java/com/exa
-mple/dndcompanion/ui/screens/BucherScreen.kt:1338:1
-7 None of the following candidates is applicable:
+mple/dndcompanion/ui/screens/FeatureSelectionScreen
+.kt:131:64 Argument type mismatch: actual type is 
+'Feature', but 'FeatureEntity' was expected.
 In Zeile:1 Zeichen:1
 + .\gradlew.bat app:compileDebugKotlin 
 --console=plain > build.log 2>&1 ...
 + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ~~~~~~~~~~~~~~~~~~~~
     + CategoryInfo          : NotSpecified: (e: fi 
-   le:///C:/U... is applicable::String) [], Remot  
+   le:///C:/U...' was expected.:String) [], Remot  
   eException
     + FullyQualifiedErrorId : NativeCommandError
  
-fun Text(text: AnnotatedString, modifier: Modifier 
-= ..., color: Color = ..., fontSize: TextUnit = 
-..., fontStyle: FontStyle? = ..., fontWeight: 
-FontWeight? = ..., fontFamily: FontFamily? = ..., 
-letterSpacing: TextUnit = ..., textDecoration: 
-TextDecoration? = ..., textAlign: TextAlign? = 
-..., lineHeight: TextUnit = ..., overflow: 
-TextOverflow = ..., softWrap: Boolean = ..., 
-maxLines: Int = ..., minLines: Int = ..., 
-inlineContent: Map<String, InlineTextContent> = 
-..., onTextLayout: (TextLayoutResult) -> Unit = 
-..., style: TextStyle = ...): Unit
-fun Text(text: String, modifier: Modifier = ..., 
-color: Color = ..., fontSize: TextUnit = ..., 
-fontStyle: FontStyle? = ..., fontWeight: 
-FontWeight? = ..., fontFamily: FontFamily? = ..., 
-letterSpacing: TextUnit = ..., textDecoration: 
-TextDecoration? = ..., textAlign: TextAlign? = 
-..., lineHeight: TextUnit = ..., overflow: 
-TextOverflow = ..., softWrap: Boolean = ..., 
-maxLines: Int = ..., minLines: Int = ..., 
-onTextLayout: ((TextLayoutResult) -> Unit)? = ..., 
-style: TextStyle = ...): Unit
 
 FAILURE: Build failed with an exception.
 
@@ -118,5 +96,5 @@ log output.
 Build Scan (powered by Develocity).
 > Get more help at https://help.gradle.org.
 
-BUILD FAILED in 2s
+BUILD FAILED in 3s
 19 actionable tasks: 1 executed, 18 up-to-date

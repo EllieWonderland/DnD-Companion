@@ -233,11 +233,17 @@
     - [x] JSON-Struktur für Merkmale/Talente definieren und `features.json` erstellen (heißt jetzt `merkmale.json`).
     - [x] Daten aus Markdown-Dateien in `merkmale.json` extrahieren (Talente, Klassenmerkmale, Volksmerkmale).
     - [x] `FeatureEntity` in Room anlegen und `CharacterViewModel` um Ladelogik für `merkmale.json` erweitern.
-    - [ ] UI zur Auswahl von Merkmalen/Talenten implementieren (z.B. Filterung nach Klasse/Rasse beim Level-Up oder in einem `FeaturePickerDialog`).
-    *Notiz für Commit: feat: add FeatureEntity to Room database, parse merkmale.json in AppDatabaseCallback and integrate into BucherScreen Global search tab*
+    - [x] UI zur Auswahl von Merkmalen/Talenten implementieren (z.B. Filterung nach Klasse/Rasse beim Level-Up oder in einem `FeaturePickerDialog`).
+    *Notiz für Commit: feat: implement FeaturePickerDialog and integrate into LevelUpDialog and ProfileScreen*
 
 ### Sonstiges / Backlog
 - [ ] **Erweiterte Suche (Regelwerk):** Globale Suche verbessern (Suche im Fließtext, Suche nach Unterklassen, Fuzzy Search).
+- [x] **Zauberbuch in Room-Datenbank migrieren:**
+    - [x] `SpellEntity` und DAO Methoden anlegen.
+    - [x] `AppDatabaseCallback` anpassen, um `spellbook.json` zu parsen.
+    - [x] `CharacterViewModel` refactorn (Entfernen von `globalSpellbook` zugunsten von Room Flows).
+    - [x] UI-Anpassungen (ZauberScreen & BucherScreen) an das neue `StateFlow` binden.
+    *Notiz für Commit: refactor: migrate global spellbook from in-memory list to Room database and update UI flows*
 
 ### Stufe 12: Playtest Refinement
 - [x] HP-Anzeige aufräumen: Doppelte Balken und Zähler entfernen <!-- id: 460_1 -->

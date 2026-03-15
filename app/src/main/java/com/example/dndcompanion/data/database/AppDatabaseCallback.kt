@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.example.dndcompanion.ui.viewmodel.SpellDto
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -69,6 +71,34 @@ class AppDatabaseCallback(
             val featuresJson = context.assets.open("Rules/merkmale.json").bufferedReader().use { it.readText() }
             val featuresData = gson.fromJson(featuresJson, FeaturesData::class.java)
             dao.insertFeatures(featuresData.features)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // 5. Load Spells
+        try {
+            val spellsJson = context.assets.open("Rules/Zauberbuch/spellbook.json").bufferedReader().use { it.readText() }
+            val dtos: List<SpellDto> = gson.fromJson(spellsJson, object : TypeToken<List<SpellDto>>() {}.type)
+            val spellEntities = dtos.map { dto ->
+                val spell = dto.toSpell()
+                SpellEntity(
+                    id = spell.id,
+                    name = spell.name,
+                    level = spell.level,
+                    castingTime = spell.castingTime,
+                    range = spell.range,
+                    duration = spell.duration,
+                    componentsV = spell.componentsV,
+                    componentsS = spell.componentsS,
+                    componentsM = spell.componentsM,
+                    materialCost = spell.materialCost,
+                    description = spell.description,
+                    classes = spell.classes,
+                    school = spell.school,
+                    isRitual = spell.isRitual
+                )
+            }
+            dao.insertSpells(spellEntities)
         } catch (e: Exception) {
             e.printStackTrace()
         }

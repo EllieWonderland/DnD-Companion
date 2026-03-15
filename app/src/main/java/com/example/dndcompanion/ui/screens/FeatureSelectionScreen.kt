@@ -19,16 +19,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.example.dndcompanion.data.database.FeatureEntity
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
-import com.example.dndcompanion.ui.viewmodel.Feature
 
 @Composable
 fun FeatureSelectionScreen(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf("Alle") }
     
-    val allAvailable = viewModel.getAvailableFeatures()
+    val allAvailable by viewModel.searchedFeatures.collectAsState()
+    
+    // Ensure features are loaded
+    LaunchedEffect(Unit) {
+        if (allAvailable.isEmpty()) {
+            viewModel.searchRulebook("")
+        }
+    }
     val filteredFeatures = allAvailable.filter { feature ->
         val matchesSearch = feature.name.contains(searchQuery, ignoreCase = true) ||
                            feature.description.contains(searchQuery, ignoreCase = true)
@@ -141,7 +148,7 @@ fun FeatureSelectionScreen(viewModel: CharacterViewModel, onDismiss: () -> Unit)
 
 @Composable
 fun FeatureCard(
-    feature: Feature,
+    feature: FeatureEntity,
     isLearned: Boolean,
     onLearn: () -> Unit,
     onUnlearn: () -> Unit
@@ -162,8 +169,8 @@ fun FeatureCard(
                     )
                     
                     val reqs = mutableListOf<String>()
-                    if (feature.raceReq.isNotEmpty()) reqs.add(feature.raceReq.joinToString("/"))
-                    if (feature.classReq.isNotEmpty()) reqs.add(feature.classReq.joinToString("/"))
+                    if (!feature.raceReq.isNullOrEmpty()) reqs.add(feature.raceReq.joinToString("/"))
+                    if (!feature.classReq.isNullOrEmpty()) reqs.add(feature.classReq.joinToString("/"))
                     if (feature.levelReq > 1) reqs.add("Stufe ${feature.levelReq}")
                     
                     if (reqs.isNotEmpty()) {

@@ -938,6 +938,7 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
 fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedLevel by remember { mutableIntStateOf(-1) }
+    val globalSpellbook by viewModel.globalSpellbook.collectAsState()
     
     Dialog(
         onDismissRequest = onDismiss,
@@ -975,7 +976,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                     Text("Stufe:", color = TintenSchwarz, fontWeight = FontWeight.Bold)
                     val levels = listOf(-1) + (0..9).toList()
                     levels.forEach { lvl ->
-                        val hasSpells = lvl == -1 || viewModel.globalSpellbook.any { spell ->
+                        val hasSpells = lvl == -1 || globalSpellbook.any { spell ->
                             spell.level == lvl && (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
                         }
                         Button(
@@ -1000,7 +1001,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                 }
                 
                 Box(modifier = Modifier.weight(1f)) {
-                    val filteredSpells = viewModel.globalSpellbook.filter { spell -> 
+                    val filteredSpells = globalSpellbook.filter { spell -> 
                         (selectedLevel == -1 || spell.level == selectedLevel) &&
                         (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
                     }.sortedWith(compareBy({ it.level }, { it.name }))
@@ -1010,7 +1011,8 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                     } else {
                         val scrollState = rememberScrollState()
                         Column(modifier = Modifier.verticalScroll(scrollState).fillMaxWidth()) {
-                            filteredSpells.forEach { catalogSpell ->
+                            filteredSpells.forEach { catalogSpellEntity ->
+                                val catalogSpell = catalogSpellEntity.toSpell()
                                 val alreadyInBook = viewModel.allSpells.any { it.name == catalogSpell.name }
                                 SpellCard(
                                     spell = catalogSpell,

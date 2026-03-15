@@ -30,6 +30,9 @@ interface RulebookDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFeatures(features: List<FeatureEntity>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertSpells(spells: List<SpellEntity>)
+
     // --- Search Queries ---
 
     @Query("SELECT * FROM rules WHERE title LIKE '%' || :searchQuery || '%' OR content LIKE '%' || :searchQuery || '%' OR tags LIKE '%' || :searchQuery || '%'")
@@ -52,6 +55,9 @@ interface RulebookDao {
 
     @Query("SELECT * FROM features WHERE name LIKE '%' || :searchQuery || '%' OR description LIKE '%' || :searchQuery || '%'")
     fun searchFeatures(searchQuery: String): Flow<List<FeatureEntity>>
+
+    @Query("SELECT * FROM spells WHERE name LIKE '%' || :searchQuery || '%' OR description LIKE '%' || :searchQuery || '%'")
+    fun searchSpells(searchQuery: String): Flow<List<SpellEntity>>
 
     // --- Search Queries (Raw for RAG/Global Search) ---
 
@@ -76,6 +82,9 @@ interface RulebookDao {
     @Query("SELECT * FROM features WHERE name LIKE '%' || :searchQuery || '%' OR description LIKE '%' || :searchQuery || '%'")
     fun searchFeaturesRaw(searchQuery: String): List<FeatureEntity>
 
+    @Query("SELECT * FROM spells WHERE name LIKE '%' || :searchQuery || '%' OR description LIKE '%' || :searchQuery || '%'")
+    fun searchSpellsRaw(searchQuery: String): List<SpellEntity>
+
     // --- Fetch All Queries ---
 
     @Query("SELECT * FROM rules ORDER BY category, title")
@@ -98,4 +107,7 @@ interface RulebookDao {
 
     @Query("SELECT * FROM features ORDER BY type, name")
     fun getAllFeatures(): Flow<List<FeatureEntity>>
+
+    @Query("SELECT * FROM spells ORDER BY level, name")
+    fun getAllSpells(): Flow<List<SpellEntity>>
 }

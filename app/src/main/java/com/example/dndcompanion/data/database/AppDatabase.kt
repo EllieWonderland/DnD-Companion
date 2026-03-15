@@ -14,9 +14,10 @@ import androidx.room.TypeConverters
         ToolEntity::class, 
         SpeciesEntity::class, 
         ClassEntity::class,
-        FeatureEntity::class
+        FeatureEntity::class,
+        SpellEntity::class
     ],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(StringListConverter::class, CharacterOptionConverters::class)

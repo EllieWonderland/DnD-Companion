@@ -447,15 +447,16 @@ fun BookEntryCard(entry: BookEntry, bookType: BookType, onEdit: () -> Unit) {
 fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedLevel by remember { mutableIntStateOf(-1) }
+    val globalSpellbook by viewModel.globalSpellbook.collectAsState()
 
     var selectedClassFilter by remember { mutableStateOf("Alle") }
-    val classFilters = remember(viewModel.globalSpellbook) {
-        listOf("Alle") + viewModel.globalSpellbook.flatMap { it.classes }.map { it.trim() }.distinct().sorted()
+    val classFilters = remember(globalSpellbook) {
+        listOf("Alle") + globalSpellbook.flatMap { it.classes }.map { it.trim() }.distinct().sorted()
     }
 
     var selectedSchoolFilter by remember { mutableStateOf("Alle") }
-    val schoolFilters = remember(viewModel.globalSpellbook) {
-        listOf("Alle") + viewModel.globalSpellbook.map { it.school.trim() }.distinct().sorted()
+    val schoolFilters = remember(globalSpellbook) {
+        listOf("Alle") + globalSpellbook.map { it.school.trim() }.distinct().sorted()
     }
 
     PergamentBackground {
@@ -508,7 +509,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                     Text("Stufe:", color = TintenSchwarz, fontFamily = Almendra, fontWeight = FontWeight.Bold)
                     val levels = listOf(-1) + (0..9).toList()
                     levels.forEach { lvl ->
-                        val hasSpells = lvl == -1 || viewModel.globalSpellbook.any { spell ->
+                        val hasSpells = lvl == -1 || globalSpellbook.any { spell ->
                             spell.level == lvl &&
                             (selectedClassFilter == "Alle" || spell.classes.map { it.trim() }.contains(selectedClassFilter)) &&
                             (selectedSchoolFilter == "Alle" || spell.school.trim() == selectedSchoolFilter)
@@ -538,7 +539,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                 ) {
                     Text("Klasse:", color = TintenSchwarz, fontFamily = Almendra, fontWeight = FontWeight.Bold)
                     classFilters.forEach { filterClass ->
-                        val hasSpells = filterClass == "Alle" || viewModel.globalSpellbook.any { spell ->
+                        val hasSpells = filterClass == "Alle" || globalSpellbook.any { spell ->
                             spell.classes.map { it.trim() }.contains(filterClass) &&
                             (selectedLevel == -1 || spell.level == selectedLevel) &&
                             (selectedSchoolFilter == "Alle" || spell.school.trim() == selectedSchoolFilter)
@@ -569,7 +570,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                 ) {
                     Text("Schule:", color = TintenSchwarz, fontFamily = Almendra, fontWeight = FontWeight.Bold)
                     schoolFilters.forEach { filterSchool ->
-                        val hasSpells = filterSchool == "Alle" || viewModel.globalSpellbook.any { spell ->
+                        val hasSpells = filterSchool == "Alle" || globalSpellbook.any { spell ->
                             spell.school.trim() == filterSchool &&
                             (selectedLevel == -1 || spell.level == selectedLevel) &&
                             (selectedClassFilter == "Alle" || spell.classes.map { it.trim() }.contains(selectedClassFilter))
@@ -592,7 +593,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                val filteredSpells = viewModel.globalSpellbook.filter { spell -> 
+                val filteredSpells = globalSpellbook.filter { spell -> 
                     val matchesClass = if (selectedClassFilter == "Alle") true else spell.classes.map { it.trim() }.contains(selectedClassFilter)
                     val matchesSchool = if (selectedSchoolFilter == "Alle") true else spell.school.trim() == selectedSchoolFilter
                     
@@ -605,7 +606,8 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                     Text("Keine Zauber gefunden.", modifier = Modifier.padding(16.dp), color = TintenSchwarz, fontWeight = FontWeight.Bold)
                 } else {
                     LazyColumn(modifier = Modifier.weight(1f)) {
-                        items(filteredSpells) { catalogSpell ->
+                        items(filteredSpells) { catalogSpellEntity ->
+                            val catalogSpell = catalogSpellEntity.toSpell()
                             val alreadyInBook = viewModel.allSpells.any { it.name == catalogSpell.name }
                             val isDruidSpell = catalogSpell.classes.contains("Druide") && !catalogSpell.classes.contains("Waldläufer")
                             val isDruidLevel1 = isDruidSpell && catalogSpell.level == 1
@@ -664,6 +666,7 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
     val species by viewModel.searchedSpecies.collectAsState()
     val classes by viewModel.searchedClasses.collectAsState()
     val features by viewModel.searchedFeatures.collectAsState()
+    val spells by viewModel.searchedSpells.collectAsState()
 
     // Filter rules by main category
     val gameplayRules = rules.filter { it.category == "Gameplay" }
@@ -801,6 +804,13 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                                     items(features) { feature -> FeatureCard(feature) }
                                     foundAnything = true
                                 }
+                                if (spells.isNotEmpty()) {
+                                    item { SectionHeader("Zaubersprüche") }
+                                    items(spells) { spellEntity -> 
+                                        SpellCard(spell = spellEntity.toSpell(), isEditMode = false, isEquipped = false, customColor = HexenLila) 
+                                    }
+                                    foundAnything = true
+                                }
                                 if (weapons.isNotEmpty() || armor.isNotEmpty() || tools.isNotEmpty()) {
                                     item { SectionHeader("Ausrüstung") }
                                     items(weapons) { weapon -> WeaponCard(weapon) }
@@ -846,8 +856,14 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                             if (combatRules.isEmpty()) item { EmptySearchResult() }
                         }
                         5 -> { // Zauber-Regeln
+                            if (spells.isNotEmpty()) {
+                                item { SectionHeader("Zaubersprüche") }
+                                items(spells) { spellEntity -> 
+                                    SpellCard(spell = spellEntity.toSpell(), isEditMode = false, isEquipped = false, customColor = HexenLila) 
+                                }
+                            }
                             items(spellRules) { rule -> RuleCard(rule) }
-                            if (spellRules.isEmpty()) item { EmptySearchResult() }
+                            if (spellRules.isEmpty() && spells.isEmpty()) item { EmptySearchResult() }
                         }
                         6 -> { // Dienstleistungen
                             items(serviceRules) { rule -> RuleCard(rule) }

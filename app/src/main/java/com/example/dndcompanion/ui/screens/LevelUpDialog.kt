@@ -187,6 +187,13 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
             }
         }
     )
+
+    if (viewModel.showFeatureSelection) {
+        FeaturePickerDialog(
+            viewModel = viewModel,
+            onDismiss = { viewModel.dismissFeatureSelection() }
+        )
+    }
 }
 
 @Composable
