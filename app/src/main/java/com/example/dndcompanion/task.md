@@ -279,7 +279,7 @@
 #### Kritische Fixes
 - [x] **GlobalScope-Leak beheben:** `GlobalScope` in `AppDatabase.kt` durch einen dedizierten `applicationScope` (`CoroutineScope(SupervisorJob())`) ersetzen.
 - [x] **Firebase Error-Handling:** Firestore-Listener geben bei Fehlern kein Feedback. Snackbar/Log bei Fehler ergänzen (`CharacterViewModel.kt`).
-- [ ] **Todeswürfe Auto-Reset:** `resetDeathSaves()` Methode hinzufügen und bei langer Rast auslösen (`CharacterViewModel.kt`).
+- [x] **Todeswürfe Auto-Reset:** `updateDeathSaves(0, 0)` in `forceLongRest()` ergänzt — Todeswürfe werden jetzt bei langer Rast automatisch zurückgesetzt.
 
 #### Moderate Verbesserungen
 - [ ] **CharacterViewModel aufteilen:** 2.659 Zeilen God Object in kleinere ViewModels splitten: `CombatViewModel`, `SpellbookViewModel`, `InventoryViewModel`, `GroupSocialViewModel`.

@@ -1898,6 +1898,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
         
+        // Todeswürfe bei langer Rast zurücksetzen
+        updateDeathSaves(0, 0)
+
         // Begleiter-Wiederbelebung bei langer Rast
         if (companionIsDead) {
             reviveCompanion()
