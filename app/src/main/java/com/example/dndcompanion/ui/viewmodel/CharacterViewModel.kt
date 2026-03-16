@@ -2,6 +2,7 @@ package com.example.dndcompanion.ui.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -1429,7 +1430,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         db.collection("groupChat")
             .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.ASCENDING)
             .addSnapshotListener { snapshot, e ->
-                if (e != null) return@addSnapshotListener
+                if (e != null) {
+                    Log.e("Firebase", "Gruppen-Chat Listener Fehler", e)
+                    snackbarMessage.value = "Gruppen-Chat nicht erreichbar"
+                    return@addSnapshotListener
+                }
                 if (snapshot != null) {
                     groupChatMessages.clear()
                     for (doc in snapshot.documents) {
@@ -1468,7 +1473,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         db.collection("globalQuests")
             .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, e ->
-                if (e != null) return@addSnapshotListener
+                if (e != null) {
+                    Log.e("Firebase", "Questlog Listener Fehler", e)
+                    snackbarMessage.value = "Questlog nicht erreichbar"
+                    return@addSnapshotListener
+                }
                 if (snapshot != null) {
                     globalQuests.clear()
                     for (doc in snapshot.documents) {
@@ -1511,7 +1520,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     private fun listenToSharedLoot() {
         // Listen to Shared Coins
         db.collection("groupLootCoins").document("shared").addSnapshotListener { snapshot, e ->
-            if (e == null && snapshot != null && snapshot.exists()) {
+            if (e != null) {
+                Log.e("Firebase", "Gruppen-Münzen Listener Fehler", e)
+                return@addSnapshotListener
+            }
+            if (snapshot != null && snapshot.exists()) {
                 val coins = snapshot.toObject(SharedCoins::class.java)
                 if (coins != null) {
                     sharedCoins = coins
@@ -1520,7 +1533,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
         // Listen to Shared Items
         db.collection("groupLootItems").addSnapshotListener { snapshot, e ->
-            if (e == null && snapshot != null) {
+            if (e != null) {
+                Log.e("Firebase", "Gruppen-Beute Listener Fehler", e)
+                return@addSnapshotListener
+            }
+            if (snapshot != null) {
                 sharedLootItems.clear()
                 for (doc in snapshot.documents) {
                     val item = doc.toObject(GroupLootItem::class.java)
@@ -1569,6 +1586,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
+                    Log.e("Firebase", "Allgemeine Notizen Listener Fehler", e)
                     return@addSnapshotListener
                 }
                 if (snapshot != null) {
@@ -1587,6 +1605,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
+                    Log.e("Firebase", "Buch des Grolls Listener Fehler", e)
                     return@addSnapshotListener
                 }
                 if (snapshot != null) {

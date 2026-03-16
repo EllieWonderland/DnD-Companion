@@ -278,7 +278,7 @@
 
 #### Kritische Fixes
 - [x] **GlobalScope-Leak beheben:** `GlobalScope` in `AppDatabase.kt` durch einen dedizierten `applicationScope` (`CoroutineScope(SupervisorJob())`) ersetzen.
-- [ ] **Firebase Error-Handling:** Firestore-Listener geben bei Fehlern kein Feedback. Snackbar/Log bei Fehler ergänzen (`CharacterViewModel.kt`).
+- [x] **Firebase Error-Handling:** Firestore-Listener geben bei Fehlern kein Feedback. Snackbar/Log bei Fehler ergänzen (`CharacterViewModel.kt`).
 - [ ] **Todeswürfe Auto-Reset:** `resetDeathSaves()` Methode hinzufügen und bei langer Rast auslösen (`CharacterViewModel.kt`).
 
 #### Moderate Verbesserungen
