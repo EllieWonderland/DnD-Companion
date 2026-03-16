@@ -113,15 +113,10 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                             val avatarId = if (viewModel.characterData.name == "Athania") R.drawable.athania else R.drawable.delat
                             Box(contentAlignment = Alignment.Center, modifier = Modifier.size(160.dp)) {
                                 CircularProgressIndicator(
-                                    progress = { 1f },
-                                    modifier = Modifier.fillMaxSize(),
-                                    color = Waldgruen,
-                                    strokeWidth = 6.dp
-                                )
-                                CircularProgressIndicator(
                                     progress = { animatedEpProgress },
                                     modifier = Modifier.fillMaxSize(),
-                                    color = accentColor, // Uses WaldGold for Ranger, HexenLila for Warlock
+                                    color = accentColor,
+                                    trackColor = Waldgruen,
                                     strokeWidth = 6.dp,
                                     strokeCap = androidx.compose.ui.graphics.StrokeCap.Round
                                 )
