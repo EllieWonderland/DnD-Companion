@@ -78,12 +78,12 @@ data class BookEntry(
 )
 
 data class GroupChatMessage(
-    val id: String = java.util.UUID.randomUUID().toString(),
-    val text: String = "",
-    val timestamp: Long = System.currentTimeMillis(),
-    val author: String = "Athania",
-    val charClass: CharacterClass = CharacterClass.RANGER,
-    val isOoc: Boolean = false
+    @get:PropertyName("id") @set:PropertyName("id") var id: String = java.util.UUID.randomUUID().toString(),
+    @get:PropertyName("text") @set:PropertyName("text") var text: String = "",
+    @get:PropertyName("timestamp") @set:PropertyName("timestamp") var timestamp: Long = System.currentTimeMillis(),
+    @get:PropertyName("author") @set:PropertyName("author") var author: String = "Athania",
+    @get:PropertyName("charClass") @set:PropertyName("charClass") var charClass: CharacterClass = CharacterClass.RANGER,
+    @get:PropertyName("isOoc") @set:PropertyName("isOoc") var isOoc: Boolean = false
 )
 
 data class Quest(

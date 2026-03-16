@@ -1172,9 +1172,15 @@ fun GroupChatMessageCard(message: com.example.dndcompanion.ui.viewmodel.GroupCha
     
     val nameColor = if (message.isOoc) WaldgruenDunkel else OchsenblutRot
     
+    val authorBgColor = when (message.author.trim()) {
+        "Athania" -> Color(0xFFE8F5E9) // Helles Grün
+        "Delat" -> Color(0xFFF3E5F5) // Helles Lila
+        else -> Color(0xFFF5F5F5)
+    }
+    
     Card(
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = if (message.isOoc) Color(0xFFEFEBE0).copy(alpha=0.8f) else Color.White.copy(alpha=0.9f)),
+        colors = CardDefaults.cardColors(containerColor = authorBgColor.copy(alpha=0.95f)),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {

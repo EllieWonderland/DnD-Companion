@@ -269,7 +269,7 @@
 - [x] **Levelaufstieg:** Dynamische Anzeige, wieviele EP/HP noch für den Levelaufstieg benötigt werden
 - [x] **Urtier:** HP vom Urtier des Landes sinkt automatisch von 25 auf 20, wenn ich zum Urtier des Himmels und anschließend wieder zurück wechsle
 
-### Stufe 13: Finishing Touches
+### Stufe 13: Finishing Touches (Aufgaben für Gemini 3.1 Pro)
 - [ ] **Code Analyse:** Code auf mögliche Verbesserungen prüfen
 - [ ] **Refactoring:** Code und Dateien aufräumen
 - [ ] **Accessibility:** Accessibility Check durchführen

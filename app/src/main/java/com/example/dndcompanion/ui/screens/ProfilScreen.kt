@@ -96,22 +96,45 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             val accentColor = if (viewModel.characterData.charClass == CharacterClass.RANGER) WaldGold else HexenLila
             PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
                 Column(modifier = Modifier.padding(14.dp)) {
+                    val nextLevelEP = if (viewModel.level < viewModel.epThresholds.size) viewModel.epThresholds[viewModel.level] else viewModel.currentEP
+                    val epProgress = if (nextLevelEP > 0) viewModel.currentEP.toFloat() / nextLevelEP.toFloat() else 1f
+                    val animatedEpProgress by animateFloatAsState(
+                        targetValue = epProgress,
+                        animationSpec = tween(durationMillis = 800),
+                        label = "EP Animation Profile"
+                    )
+
                     Row(
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             val avatarId = if (viewModel.characterData.name == "Athania") R.drawable.athania else R.drawable.delat
-                            Image(
-                                painter = painterResource(id = avatarId),
-                                contentDescription = "Charakter Portrait",
-                                modifier = Modifier
-                                    .size(150.dp)
-                                    .clip(CircleShape)
-                                    .border(3.dp, accentColor, CircleShape),
-                                contentScale = ContentScale.Crop
-                            )
+                            Box(contentAlignment = Alignment.Center, modifier = Modifier.size(160.dp)) {
+                                CircularProgressIndicator(
+                                    progress = { 1f },
+                                    modifier = Modifier.fillMaxSize(),
+                                    color = TintenSchwarz.copy(alpha = 0.15f),
+                                    strokeWidth = 6.dp
+                                )
+                                CircularProgressIndicator(
+                                    progress = { animatedEpProgress },
+                                    modifier = Modifier.fillMaxSize(),
+                                    color = accentColor, // Uses WaldGold for Ranger, HexenLila for Warlock
+                                    strokeWidth = 6.dp,
+                                    strokeCap = androidx.compose.ui.graphics.StrokeCap.Round
+                                )
+                                Image(
+                                    painter = painterResource(id = avatarId),
+                                    contentDescription = "Charakter Portrait",
+                                    modifier = Modifier
+                                        .size(144.dp)
+                                        .clip(CircleShape)
+                                        .border(2.dp, TintenBraun.copy(alpha = 0.3f), CircleShape),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
                             Spacer(modifier = Modifier.width(12.dp))
                             Text(
                                 viewModel.characterData.name,
@@ -120,7 +143,6 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                             )
                         }
                         Column(horizontalAlignment = Alignment.End) {
-                            // Animierte Progress-Werte (für HP Text Anzeige oder zukünftige Balken im Profil)
                             val hpProgress by animateFloatAsState(
                                 targetValue = if (viewModel.maxHp > 0) viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() else 0f,
                                 animationSpec = tween(durationMillis = 500),
@@ -139,6 +161,21 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                                     color = TempHPBlau
                                 )
                             }
+                            
+                            Spacer(modifier = Modifier.height(16.dp))
+                            
+                            val remainingEP = (nextLevelEP - viewModel.currentEP).coerceAtLeast(0)
+                            Text(
+                                "EP: ${viewModel.currentEP} / $nextLevelEP",
+                                style = MaterialTheme.typography.labelMedium.copy(fontSize = 14.sp),
+                                color = TintenSchwarz,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Text(
+                                "Noch $remainingEP EP",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = TintenBraun
+                            )
                         }
                     }
 
@@ -156,45 +193,6 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
 
                     val gesinnung = "${viewModel.characterAlignment}"
                     Text("Gesinnung: $gesinnung", style = MaterialTheme.typography.bodySmall, color = TintenBraun)
-
-                    Spacer(modifier = Modifier.height(12.dp))
-                    
-                    // EP Circular Progress
-                    val nextLevelEP = if (viewModel.level < viewModel.epThresholds.size) viewModel.epThresholds[viewModel.level] else viewModel.currentEP
-                    val epProgress = if (nextLevelEP > 0) viewModel.currentEP.toFloat() / nextLevelEP.toFloat() else 1f
-                    
-                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
-                        Box(contentAlignment = Alignment.Center, modifier = Modifier.size(64.dp)) {
-                            CircularProgressIndicator(
-                                progress = { 1f },
-                                modifier = Modifier.fillMaxSize(),
-                                color = PergamentHell.copy(alpha = 0.5f),
-                                strokeWidth = 6.dp
-                            )
-                            val animatedEpProgress by animateFloatAsState(
-                                targetValue = epProgress,
-                                animationSpec = tween(durationMillis = 800),
-                                label = "EP Animation"
-                            )
-                            CircularProgressIndicator(
-                                progress = { animatedEpProgress },
-                                modifier = Modifier.fillMaxSize(),
-                                color = accentColor,
-                                strokeWidth = 6.dp,
-                                strokeCap = androidx.compose.ui.graphics.StrokeCap.Round
-                            )
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text("EP", style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp), color = TintenBraun)
-                                Text("${viewModel.currentEP}", style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp), color = TintenSchwarz, fontWeight = FontWeight.Bold)
-                            }
-                        }
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Column {
-                            val remainingEP = (nextLevelEP - viewModel.currentEP).coerceAtLeast(0)
-                            Text("Noch $remainingEP EP", style = MaterialTheme.typography.titleMedium, color = TintenSchwarz)
-                            Text("bis Stufe ${viewModel.level + 1}", style = MaterialTheme.typography.bodyMedium, color = TintenBraun)
-                        }
-                    }
 
                     Spacer(modifier = Modifier.height(8.dp))
                     HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 4.dp))

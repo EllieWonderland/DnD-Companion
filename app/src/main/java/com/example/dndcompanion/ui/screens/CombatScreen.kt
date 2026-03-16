@@ -92,20 +92,6 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             // Lebenspunkte & Trefferwürfel
             PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
                 Column(modifier = Modifier.padding(12.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            "Trefferwürfel: ${viewModel.hitDice} / ${viewModel.level}W${viewModel.characterData.baseHitDice}",
-                            style = MaterialTheme.typography.labelLarge,
-                            color = TintenBraun
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
                     // Animierte Progress-Werte
                     Column {
                     val hpProgress by animateFloatAsState(
@@ -114,7 +100,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         label = "HP Animation"
                     )
 
-                    Row(verticalAlignment = Alignment.Bottom) {
+                    Row(verticalAlignment = Alignment.Bottom, modifier = Modifier.fillMaxWidth()) {
                         Text("HP", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = TintenBraun, fontFamily = Almendra, modifier = Modifier.padding(bottom = 6.dp, end = 6.dp))
                         Text(
                             "${viewModel.currentHp} / ${viewModel.maxHp}", 
@@ -125,8 +111,18 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         )
                         if (viewModel.tempHp > 0) {
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("+${viewModel.tempHp} Temp", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = TempHPBlau, fontFamily = Almendra)
+                            Text("+${viewModel.tempHp}", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = TempHPBlau, fontFamily = Almendra)
                         }
+                        
+                        Spacer(modifier = Modifier.weight(1f))
+                        
+                        Text(
+                            "HD ${viewModel.hitDice}/${viewModel.level}W${viewModel.characterData.baseHitDice}",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = TintenBraun,
+                            fontFamily = Almendra,
+                            modifier = Modifier.padding(bottom = 4.dp)
+                        )
                     }
                     
                     Spacer(modifier = Modifier.height(8.dp))
