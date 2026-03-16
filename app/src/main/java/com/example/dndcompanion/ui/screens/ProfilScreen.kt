@@ -115,7 +115,7 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                                 CircularProgressIndicator(
                                     progress = { 1f },
                                     modifier = Modifier.fillMaxSize(),
-                                    color = Waldgruen.copy(alpha = 0.3f),
+                                    color = Waldgruen,
                                     strokeWidth = 6.dp
                                 )
                                 CircularProgressIndicator(
