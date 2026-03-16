@@ -270,6 +270,25 @@
 - [x] **Urtier:** HP vom Urtier des Landes sinkt automatisch von 25 auf 20, wenn ich zum Urtier des Himmels und anschließend wieder zurück wechsle
 
 ### Stufe 13: Finishing Touches (Aufgaben für Gemini 3.1 Pro)
-- [ ] **Code Analyse:** Code auf mögliche Verbesserungen prüfen
+- [x] **Code Analyse:** Code auf mögliche Verbesserungen prüfen
 - [ ] **Refactoring:** Code und Dateien aufräumen
 - [ ] **Accessibility:** Accessibility Check durchführen
+
+### Stufe 14: Code-Qualität & Refactoring (basierend auf Code-Analyse)
+
+#### Kritische Fixes
+- [x] **GlobalScope-Leak beheben:** `GlobalScope` in `AppDatabase.kt` durch einen dedizierten `applicationScope` (`CoroutineScope(SupervisorJob())`) ersetzen.
+- [ ] **Firebase Error-Handling:** Firestore-Listener geben bei Fehlern kein Feedback. Snackbar/Log bei Fehler ergänzen (`CharacterViewModel.kt`).
+- [ ] **Todeswürfe Auto-Reset:** `resetDeathSaves()` Methode hinzufügen und bei langer Rast auslösen (`CharacterViewModel.kt`).
+
+#### Moderate Verbesserungen
+- [ ] **CharacterViewModel aufteilen:** 2.659 Zeilen God Object in kleinere ViewModels splitten: `CombatViewModel`, `SpellbookViewModel`, `InventoryViewModel`, `GroupSocialViewModel`.
+- [ ] **SharedPreferences kapseln:** `PrefsManager`-Klasse erstellen, die alle `getSharedPreferences()`-Aufrufe zentral verwaltet.
+- [ ] **Feature-Logik entkoppeln:** String-Matching (`feature.name.contains("Erzfeind")`) durch Feature-Metadaten in der JSON-Struktur ersetzen.
+- [ ] **Waffen-Desync beheben:** `equippedWeaponName` und `InventoryItem.name` synchronisieren oder auf eine einzige Quelle reduzieren.
+
+#### Code-Qualität
+- [ ] **Lange Screens aufteilen:** `BucherScreen.kt` (1.399 Z.), `ZauberScreen.kt` (1.122 Z.) und `CombatScreen.kt` (701 Z.) in Sub-Composables auslagern.
+- [ ] **Doppelte DAO-Methoden konsolidieren:** 8× duplizierte `searchX()` / `searchXRaw()` Paare in `RulebookDao.kt` vereinfachen.
+- [ ] **Logging hinzufügen:** Stille Fehler in DB-Operationen und Firebase mit `android.util.Log` sichtbar machen.
+- [ ] **Unit Tests:** Kritische Logik testen (Slot-Berechnung Ranger vs. Warlock, Schadensformel, Gewichtskapazität).

@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 @Database(
     entities = [
@@ -29,6 +31,9 @@ abstract class AppDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
+        // Application-scoped coroutine scope: lives as long as the process, no leaks
+        private val applicationScope = CoroutineScope(SupervisorJob())
+
         fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -37,7 +42,7 @@ abstract class AppDatabase : RoomDatabase() {
                     "dnd_companion_database"
                 )
                 .fallbackToDestructiveMigration()
-                .addCallback(AppDatabaseCallback(context, kotlinx.coroutines.GlobalScope))
+                .addCallback(AppDatabaseCallback(context, applicationScope))
                 .build()
                 AppDatabaseCallback.attachDatabase(instance)
                 INSTANCE = instance
