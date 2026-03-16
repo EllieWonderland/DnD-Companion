@@ -264,11 +264,12 @@
   *	Commit: `feat: automatic companion revival after long rest`
 - [x] Inventar-Bugcheck: Gewichte beim Katalog-Hinzufügen validieren <!-- id: 460_8 -->
   *	Commit: `fix: ensure weights are correctly transferred from catalog`
-### Zukünftige Aufgaben
-- [ ] **HP Anzeige:** HP anzeige verbessern
-- [ ] **Gruppen-Chat:** Möglichkeit, Chat komplett zu archivieren und IC/OOC wieder trennen
-- [ ] **Levelaufstieg:** Dynamische Anzeige, wieviele EP/HP noch für den Levelaufstieg benötigt werden
-- [ ] **Urtier:** HP vom Urtier des Landes sinkt automatisch von 25 auf 20, wenn ich zum Urtier des Himmels und anschließend wieder zurück wechsle
+- [x] **HP Anzeige:** HP anzeige verbessern
+- [x] **Gruppen-Chat:** Möglichkeit, Chat komplett zu archivieren und IC/OOC wieder trennen
+- [x] **Levelaufstieg:** Dynamische Anzeige, wieviele EP/HP noch für den Levelaufstieg benötigt werden
+- [x] **Urtier:** HP vom Urtier des Landes sinkt automatisch von 25 auf 20, wenn ich zum Urtier des Himmels und anschließend wieder zurück wechsle
+
+### Stufe 13: Finishing Touches
 - [ ] **Code Analyse:** Code auf mögliche Verbesserungen prüfen
 - [ ] **Refactoring:** Code und Dateien aufräumen
 - [ ] **Accessibility:** Accessibility Check durchführen

@@ -154,9 +154,49 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                     val volk = "${viewModel.characterRace} | Hintergrund: ${viewModel.characterBackground}"
                     Text("Volk: $volk", style = MaterialTheme.typography.bodySmall, color = TintenBraun)
 
-                    val gesinnung = "${viewModel.characterAlignment} | EP: ${viewModel.currentEP}"
+                    val gesinnung = "${viewModel.characterAlignment}"
                     Text("Gesinnung: $gesinnung", style = MaterialTheme.typography.bodySmall, color = TintenBraun)
 
+                    Spacer(modifier = Modifier.height(12.dp))
+                    
+                    // EP Circular Progress
+                    val nextLevelEP = if (viewModel.level < viewModel.epThresholds.size) viewModel.epThresholds[viewModel.level] else viewModel.currentEP
+                    val epProgress = if (nextLevelEP > 0) viewModel.currentEP.toFloat() / nextLevelEP.toFloat() else 1f
+                    
+                    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                        Box(contentAlignment = Alignment.Center, modifier = Modifier.size(64.dp)) {
+                            CircularProgressIndicator(
+                                progress = { 1f },
+                                modifier = Modifier.fillMaxSize(),
+                                color = PergamentHell.copy(alpha = 0.5f),
+                                strokeWidth = 6.dp
+                            )
+                            val animatedEpProgress by animateFloatAsState(
+                                targetValue = epProgress,
+                                animationSpec = tween(durationMillis = 800),
+                                label = "EP Animation"
+                            )
+                            CircularProgressIndicator(
+                                progress = { animatedEpProgress },
+                                modifier = Modifier.fillMaxSize(),
+                                color = accentColor,
+                                strokeWidth = 6.dp,
+                                strokeCap = androidx.compose.ui.graphics.StrokeCap.Round
+                            )
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                Text("EP", style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp), color = TintenBraun)
+                                Text("${viewModel.currentEP}", style = MaterialTheme.typography.bodySmall.copy(fontSize = 12.sp), color = TintenSchwarz, fontWeight = FontWeight.Bold)
+                            }
+                        }
+                        Spacer(modifier = Modifier.width(16.dp))
+                        Column {
+                            val remainingEP = (nextLevelEP - viewModel.currentEP).coerceAtLeast(0)
+                            Text("Noch $remainingEP EP", style = MaterialTheme.typography.titleMedium, color = TintenSchwarz)
+                            Text("bis Stufe ${viewModel.level + 1}", style = MaterialTheme.typography.bodyMedium, color = TintenBraun)
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
                     HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 4.dp))
                     Text(
                         "Übungsbonus: +${viewModel.proficiencyBonus}",

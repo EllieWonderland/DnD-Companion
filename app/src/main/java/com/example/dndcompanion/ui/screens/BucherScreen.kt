@@ -12,6 +12,7 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Edit
@@ -1030,12 +1031,15 @@ fun ClassCard(cls: ClassEntity) {
 @Composable
 fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
     var newMessageText by remember { mutableStateOf("") }
-    var isOoc by remember { mutableStateOf(false) }
+    var selectedTabIndex by remember { mutableIntStateOf(0) } // 0 = IC, 1 = OOC
+    val isOoc = selectedTabIndex == 1
     val listState = androidx.compose.foundation.lazy.rememberLazyListState()
 
-    LaunchedEffect(viewModel.groupChatMessages.size) {
-        if (viewModel.groupChatMessages.isNotEmpty()) {
-            listState.animateScrollToItem(viewModel.groupChatMessages.size - 1)
+    val filteredMessages = viewModel.groupChatMessages.filter { it.isOoc == isOoc }
+
+    LaunchedEffect(filteredMessages.size) {
+        if (filteredMessages.isNotEmpty()) {
+            listState.animateScrollToItem(filteredMessages.size - 1)
         }
     }
 
@@ -1053,7 +1057,52 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                     Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = WaldGold)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Gruppen-Chat", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold)
+                Text("Gruppen-Chat", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold, modifier = Modifier.weight(1f))
+            
+                var showDeleteDialog by remember { mutableStateOf(false) }
+                if (showDeleteDialog) {
+                    AlertDialog(
+                        onDismissRequest = { showDeleteDialog = false },
+                        title = { Text("Chat löschen", fontFamily = Almendra, color = OchsenblutRot) },
+                        text = { Text("Möchtest du wirklich alle ${if (isOoc) "OOC" else "IC"} Nachrichten löschen? Dies kann nicht rückgängig gemacht werden.", color = TintenSchwarz) },
+                        confirmButton = {
+                            TextButton(onClick = {
+                                viewModel.deleteGroupChat(isOoc)
+                                showDeleteDialog = false
+                            }) {
+                                Text("Löschen", color = OchsenblutRot)
+                            }
+                        },
+                        dismissButton = {
+                            TextButton(onClick = { showDeleteDialog = false }) {
+                                Text("Abbrechen", color = TintenSchwarz)
+                            }
+                        },
+                        containerColor = PergamentHell
+                    )
+                }
+
+                IconButton(onClick = { showDeleteDialog = true }) {
+                    Icon(Icons.Default.Delete, contentDescription = "Chat löschen", tint = OchsenblutRot)
+                }
+            }
+
+            // Tabs for IC and OOC
+            TabRow(
+                selectedTabIndex = selectedTabIndex,
+                containerColor = PergamentDunkel,
+                contentColor = TintenSchwarz
+            ) {
+                Tab(
+                    selected = selectedTabIndex == 0,
+                    onClick = { selectedTabIndex = 0 },
+                    text = { Text("In-Character", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp) }
+                )
+                Tab(
+                    selected = selectedTabIndex == 1,
+                    onClick = { selectedTabIndex = 1 },
+                    text = { Text("Out-of-Character", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp) }
+                )
             }
 
             // Messages List
@@ -1064,7 +1113,7 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
-                items(viewModel.groupChatMessages) { message ->
+                items(filteredMessages) { message ->
                     GroupChatMessageCard(message)
                 }
             }
@@ -1076,25 +1125,6 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                     .padding(8.dp)
             ) {
                 Column(modifier = Modifier.padding(12.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text("In-Character (IC)", color = TintenSchwarz, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
-                        Switch(
-                            checked = isOoc,
-                            onCheckedChange = { isOoc = it },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = WaldgruenDunkel,
-                                checkedTrackColor = WaldgruenDunkel.copy(alpha = 0.5f),
-                                uncheckedThumbColor = OchsenblutRot,
-                                uncheckedTrackColor = OchsenblutRot.copy(alpha = 0.5f)
-                            ),
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        )
-                        Text("Out-Of-Character (OOC)", color = TintenSchwarz, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold)
-                    }
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),

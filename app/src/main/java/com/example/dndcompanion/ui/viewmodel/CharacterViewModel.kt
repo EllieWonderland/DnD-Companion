@@ -290,7 +290,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     // --- BASISWERTE ---
     // EP Table D&D 5e:
-    private val epThresholds = listOf(
+    val epThresholds = listOf(
         0, 300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000,
         85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000
     )
@@ -1454,6 +1454,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    fun deleteGroupChat(isOoc: Boolean) {
+        val messagesToDelete = groupChatMessages.filter { it.isOoc == isOoc }
+        val batch = db.batch()
+        messagesToDelete.forEach { msg ->
+            val docRef = db.collection("groupChat").document(msg.id)
+            batch.delete(docRef)
+        }
+        batch.commit()
+    }
+
     private fun listenToQuests() {
         db.collection("globalQuests")
             .orderBy("timestamp", com.google.firebase.firestore.Query.Direction.DESCENDING)
@@ -1938,18 +1948,31 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         val mult = if (activeBeastType == BeastType.SKY || activeBeastType == BeastType.SEA) 4 else 5
         return if (characterData.charClass == CharacterClass.RANGER) base + (mult * level) else 24 // Sphinx has fixed 24
     }
-    var capyCurrentHp by mutableIntStateOf(prefs.getInt("capyCurrentHp_${characterData.id}", 20))
+    var capyCurrentHp by mutableIntStateOf(prefs.getInt("capyCurrentHp_${characterData.id}_${prefs.getString("activeBeastType", BeastType.SKY.name) ?: BeastType.SKY.name}", prefs.getInt("capyCurrentHp_${characterData.id}", 20)))
         private set
 
-    var companionIsDead by mutableStateOf(prefs.getBoolean("companionIsDead_${characterData.id}", false))
+    var companionIsDead by mutableStateOf(prefs.getBoolean("companionIsDead_${characterData.id}_${prefs.getString("activeBeastType", BeastType.SKY.name) ?: BeastType.SKY.name}", prefs.getBoolean("companionIsDead_${characterData.id}", false)))
 
     fun toggleBeastType(type: BeastType) {
+        // Aktuellen Stand sichern
+        prefs.edit {
+            putInt("capyCurrentHp_${characterData.id}_${activeBeastType.name}", capyCurrentHp)
+            putBoolean("companionIsDead_${characterData.id}_${activeBeastType.name}", companionIsDead)
+        }
+        
         activeBeastType = type
         loadCompanion()
+        
+        // Neuen Stand laden
+        capyCurrentHp = prefs.getInt("capyCurrentHp_${characterData.id}_${activeBeastType.name}", capyMaxHp)
+        companionIsDead = prefs.getBoolean("companionIsDead_${characterData.id}_${activeBeastType.name}", false)
+        
         if (capyCurrentHp > capyMaxHp) capyCurrentHp = capyMaxHp
+        
         prefs.edit {
             putString("activeBeastType", activeBeastType.name)
-            putInt("capyCurrentHp_${characterData.id}", capyCurrentHp)
+            putInt("capyCurrentHp_${characterData.id}_${activeBeastType.name}", capyCurrentHp)
+            putBoolean("companionIsDead_${characterData.id}_${activeBeastType.name}", companionIsDead)
         }
     }
 
@@ -1957,8 +1980,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         capyCurrentHp = (capyCurrentHp - amount).coerceAtLeast(0)
         if (capyCurrentHp == 0) companionIsDead = true
         prefs.edit { 
-            putInt("capyCurrentHp_${characterData.id}", capyCurrentHp)
-            putBoolean("companionIsDead_${characterData.id}", companionIsDead)
+            putInt("capyCurrentHp_${characterData.id}_${activeBeastType.name}", capyCurrentHp)
+            putBoolean("companionIsDead_${characterData.id}_${activeBeastType.name}", companionIsDead)
         }
     }
 
@@ -1966,8 +1989,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         capyCurrentHp = (capyCurrentHp + amount).coerceAtMost(capyMaxHp)
         if (capyCurrentHp > 0) companionIsDead = false
         prefs.edit { 
-            putInt("capyCurrentHp_${characterData.id}", capyCurrentHp)
-            putBoolean("companionIsDead_${characterData.id}", companionIsDead)
+            putInt("capyCurrentHp_${characterData.id}_${activeBeastType.name}", capyCurrentHp)
+            putBoolean("companionIsDead_${characterData.id}_${activeBeastType.name}", companionIsDead)
         }
     }
 
@@ -1975,8 +1998,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         capyCurrentHp = capyMaxHp
         companionIsDead = false
         prefs.edit { 
-            putInt("capyCurrentHp_${characterData.id}", capyCurrentHp)
-            putBoolean("companionIsDead_${characterData.id}", companionIsDead)
+            putInt("capyCurrentHp_${characterData.id}_${activeBeastType.name}", capyCurrentHp)
+            putBoolean("companionIsDead_${characterData.id}_${activeBeastType.name}", companionIsDead)
         }
     }
 

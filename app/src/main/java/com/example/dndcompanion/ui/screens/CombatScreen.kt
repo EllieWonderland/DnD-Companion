@@ -115,7 +115,14 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     )
 
                     Row(verticalAlignment = Alignment.Bottom) {
-                        Text("${viewModel.currentHp} / ${viewModel.maxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White, fontFamily = Almendra)
+                        Text("HP", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = TintenBraun, fontFamily = Almendra, modifier = Modifier.padding(bottom = 6.dp, end = 6.dp))
+                        Text(
+                            "${viewModel.currentHp} / ${viewModel.maxHp}", 
+                            fontSize = 36.sp, 
+                            fontWeight = FontWeight.Bold, 
+                            color = if (viewModel.currentHp > (viewModel.maxHp / 4)) Waldgruen else OchsenblutRot, 
+                            fontFamily = Almendra
+                        )
                         if (viewModel.tempHp > 0) {
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("+${viewModel.tempHp} Temp", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = TempHPBlau, fontFamily = Almendra)
