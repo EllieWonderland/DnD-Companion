@@ -173,21 +173,33 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                 color = Waldgruen
             )
             Spacer(modifier = Modifier.height(8.dp))
-            val strSave = viewModel.strMod + viewModel.proficiencyBonus
-            val dexSave = viewModel.dexMod + viewModel.proficiencyBonus
+            val strProf = viewModel.characterData.proficientSkills.contains("Stärke-Rettungswurf")
+            val dexProf = viewModel.characterData.proficientSkills.contains("Geschicklichkeit-Rettungswurf")
+            val conProf = viewModel.characterData.proficientSkills.contains("Konstitution-Rettungswurf")
+            val intProf = viewModel.characterData.proficientSkills.contains("Intelligenz-Rettungswurf")
+            val wisProf = viewModel.characterData.proficientSkills.contains("Weisheit-Rettungswurf")
+            val chaProf = viewModel.characterData.proficientSkills.contains("Charisma-Rettungswurf")
+
+            val strSave = viewModel.strMod + if (strProf) viewModel.proficiencyBonus else 0
+            val dexSave = viewModel.dexMod + if (dexProf) viewModel.proficiencyBonus else 0
+            val conSave = viewModel.conMod + if (conProf) viewModel.proficiencyBonus else 0
+            val intSave = viewModel.intMod + if (intProf) viewModel.proficiencyBonus else 0
+            val wisSave = viewModel.wisMod + if (wisProf) viewModel.proficiencyBonus else 0
+            val chaSave = viewModel.chaMod + if (chaProf) viewModel.proficiencyBonus else 0
 
             fun formatMod(mod: Int) = if (mod >= 0) "+$mod" else "$mod"
+            fun formatRwResult(save: Int, isProf: Boolean) = "RW: ${formatMod(save)}" + if (isProf) " (Geübt)" else ""
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                AttributeBox("STR", viewModel.strength.toString(), formatMod(viewModel.strMod), "RW: ${formatMod(strSave)} (Geübt)", R.drawable.icon_str)
-                AttributeBox("DEX", viewModel.dexterity.toString(), formatMod(viewModel.dexMod), "RW: ${formatMod(dexSave)} (Geübt)", R.drawable.icon_dex)
-                AttributeBox("CON", viewModel.constitution.toString(), formatMod(viewModel.conMod), "RW: ${formatMod(viewModel.conMod)}", R.drawable.icon_con)
+                AttributeBox("STR", viewModel.strength.toString(), formatMod(viewModel.strMod), formatRwResult(strSave, strProf), R.drawable.icon_str)
+                AttributeBox("DEX", viewModel.dexterity.toString(), formatMod(viewModel.dexMod), formatRwResult(dexSave, dexProf), R.drawable.icon_dex)
+                AttributeBox("CON", viewModel.constitution.toString(), formatMod(viewModel.conMod), formatRwResult(conSave, conProf), R.drawable.icon_con)
             }
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                AttributeBox("INT", viewModel.intelligence.toString(), formatMod(viewModel.intMod), "RW: ${formatMod(viewModel.intMod)}", R.drawable.icon_int)
-                AttributeBox("WIS", viewModel.wisdom.toString(), formatMod(viewModel.wisMod), "RW: ${formatMod(viewModel.wisMod)}", R.drawable.icon_wis)
-                AttributeBox("CHA", viewModel.charisma.toString(), formatMod(viewModel.chaMod), "RW: ${formatMod(viewModel.chaMod)}", R.drawable.icon_cha)
+                AttributeBox("INT", viewModel.intelligence.toString(), formatMod(viewModel.intMod), formatRwResult(intSave, intProf), R.drawable.icon_int)
+                AttributeBox("WIS", viewModel.wisdom.toString(), formatMod(viewModel.wisMod), formatRwResult(wisSave, wisProf), R.drawable.icon_wis)
+                AttributeBox("CHA", viewModel.charisma.toString(), formatMod(viewModel.chaMod), formatRwResult(chaSave, chaProf), R.drawable.icon_cha)
             }
 
             Spacer(modifier = Modifier.height(16.dp))

@@ -128,11 +128,11 @@
     - [/] Verify UI on different screen sizes <!-- id: 17 -->
     *Notiz für Commit: Splash Screen verschönert und an das App-Thema angepasst (Pergament & Stein).*
 
-- [ ] Cleanup & Debugging <!-- id: 18 -->
-    - [ ] Investigate manual trait dialog trigger issues <!-- id: 19 -->
-    - [ ] Replace manual dialog in `ZauberScreen.kt` with catalog <!-- id: 20 -->
-    - [ ] Integrated catalog into `LevelUpDialog.kt` (feat selection) <!-- id: 21 -->
-    - [ ] Verify persistence of learned features <!-- id: 22 -->
+- [x] Cleanup & Debugging <!-- id: 18 -->
+    - [x] Investigate manual trait dialog trigger issues <!-- id: 19 -->
+    - [x] Replace manual dialog in `ZauberScreen.kt` with catalog <!-- id: 20 -->
+    - [x] Integrated catalog into `LevelUpDialog.kt` (feat selection) <!-- id: 21 -->
+    - [x] Verify persistence of learned features <!-- id: 22 -->
 - [x] **Phase 6: Beeren-Mechanik & Combat UI**
     - [x] `eatGoodberry()` Logik im CharacterViewModel implementieren.
     - [x] Merge-Konflikte in `ProfilScreen.kt`, `ZauberScreen.kt` und `CharacterViewModel.kt` beheben.
@@ -162,18 +162,18 @@
   *Notiz: HP und Temp-HP Anzeige strikt getrennt (Zähler und Balken).*
 - [x] Delat Level-Up Bug: Werte-Verbesserung dem richtigen Charakter zuordnen
   *Notiz: Level-Up Bug bei Profil-Wechsel beheben (Athania wurde fälschlicherweise verbessert).*
-- [ ] Delat-Rettungswürfe: Korrektur auf Cha, Wis (geübt)
+- [x] Delat-Rettungswürfe: Korrektur auf Cha, Wis (geübt)
   *Notiz: Korrektur der Rettungswürfe für Delat.*
 - [x] Vertrauter: "Sphinx der Wunder" für Delat hinzufügen (eigener Tab)
   *Notiz: Begleiter-Tab dynamisch für Urtier und Sphinx umgesetzt.*
-- [ ] Charakter-Profil: Ideal und Makel anzeigen
+- [x] Charakter-Profil: Ideal und Makel anzeigen
   *Notiz: Ideal und Makel im Profil-Screen ergänzen.*
 
 ### Stufe 11: Optische Anpassungen
 - [x] Zauber-Details: Komplette Beschreibung beim Ausklappen anzeigen
   *Notiz: Spell-detail-Ansicht verbessern.*
   *Commit:* `feat: make free spell traits completely expandable with full description in ZauberScreen`
-- [ ] Metrik-Rundung: Alle Entfernungen auf 0,5m runden (keine Kommazahlen wie ,24)
+- [x] Metrik-Rundung: Alle Entfernungen auf 0,5m runden (keine Kommazahlen wie ,24)
   *Notiz: Entfernungsangaben auf 0,5m runden.*
 ## Bugfixes
 - [x] **Freie Zauber Filter:** "Wunden heilen" (bzw. "Heilendes Wort") wird bei den kostenlosen Zaubern gelistet, obwohl es im Zauberbuch nicht ausgerüstet/vorbereitet ist. Die Verknüpfung Gegenstand <-> Zaubertab prüfen.
@@ -229,7 +229,7 @@
     - [x] *Neu:* Globale Suche im Regelwerk (Reiter "Global", durchsucht alle Kategorien & Ausrüstung)
     - [x] *Neu:* Chatbot-RAG Anbindung an Room-DB statt Markdown-Dateien
     *Notiz für Commit: feat: integrate Room database with Gemini RAG Chatbot and implement Global rulebook search tab*
-- [ ] **Feature-Katalog Integration:**
+- [x] **Feature-Katalog Integration:**
     - [x] JSON-Struktur für Merkmale/Talente definieren und `features.json` erstellen (heißt jetzt `merkmale.json`).
     - [x] Daten aus Markdown-Dateien in `merkmale.json` extrahieren (Talente, Klassenmerkmale, Volksmerkmale).
     - [x] `FeatureEntity` in Room anlegen und `CharacterViewModel` um Ladelogik für `merkmale.json` erweitern.
@@ -237,7 +237,8 @@
     *Notiz für Commit: feat: implement FeaturePickerDialog and integrate into LevelUpDialog and ProfileScreen*
 
 ### Sonstiges / Backlog
-- [ ] **Erweiterte Suche (Regelwerk):** Globale Suche verbessern (Suche im Fließtext, Suche nach Unterklassen, Fuzzy Search).
+- [x] **Erweiterte Suche (Regelwerk):** Globale Suche verbessern (Suche im Fließtext, Suche nach Unterklassen, Fuzzy Search).
+  *Notiz: SQLite LIKE-Suche erweitert, um JSON-Felder für Subklassen und Traits sowie Eigenschaften zu durchsuchen.**
 - [x] **Zauberbuch in Room-Datenbank migrieren:**
     - [x] `SpellEntity` und DAO Methoden anlegen.
     - [x] `AppDatabaseCallback` anpassen, um `spellbook.json` zu parsen.
@@ -263,5 +264,15 @@
   *	Commit: `feat: automatic companion revival after long rest`
 - [x] Inventar-Bugcheck: Gewichte beim Katalog-Hinzufügen validieren <!-- id: 460_8 -->
   *	Commit: `fix: ensure weights are correctly transferred from catalog`
-
+- [ ] HP anzeige verbessern
+- [ ] Gruppen-Chat: Möglichkeit, Chat komplett zu archivieren und IC und OOC wieder trennen
+- [ ] Dynamische Anzeige, wieviele HP noch für den Levelaufstieg benötigt werden
+- [ ] HP vom Urtier des Landes sinkt automatisch von 25 auf 20, wenn ich zum Urtier des Himmels und anschließend wieder zurück wechsel
 ### Zukünftige Aufgaben
+- [ ] **HP Anzeige:** HP anzeige verbessern
+- [ ] **Gruppen-Chat:** Möglichkeit, Chat komplett zu archivieren und IC/OOC wieder trennen
+- [ ] **Levelaufstieg:** Dynamische Anzeige, wieviele EP/HP noch für den Levelaufstieg benötigt werden
+- [ ] **Urtier:** HP vom Urtier des Landes sinkt automatisch von 25 auf 20, wenn ich zum Urtier des Himmels und anschließend wieder zurück wechsle
+- [ ] **Code Analyse:** Code auf mögliche Verbesserungen prüfen
+- [ ] **Refactoring:** Code und Dateien aufräumen
+- [ ] **Accessibility:** Accessibility Check durchführen

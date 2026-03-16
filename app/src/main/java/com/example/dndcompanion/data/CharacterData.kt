@@ -60,7 +60,7 @@ object CharacterRepository {
                 baseSpellSlotsLevel1 = 3,
                 baseSpellSlotsLevel2 = 0,
                 baseSpellSlotsLevel3 = 0,
-                proficientSkills = listOf("Heimlichkeit", "Motiv erkennen", "Naturkunde", "Überleben", "Wahrnehmung", "Mit Tieren umgehen"),
+                proficientSkills = listOf("Heimlichkeit", "Motiv erkennen", "Naturkunde", "Überleben", "Wahrnehmung", "Mit Tieren umgehen", "Stärke-Rettungswurf", "Geschicklichkeit-Rettungswurf"),
                 defaultLoot = listOf(
                     InventoryItem("Beschlagene Lederrüstung", 1, 6.5, "Rüstung & Waffen"),
                     InventoryItem("Peitsche", 2, 1.5, "Rüstung & Waffen"),
@@ -123,7 +123,7 @@ object CharacterRepository {
                 baseSpellSlotsLevel1 = 0,
                 baseSpellSlotsLevel2 = 0,
                 baseSpellSlotsLevel3 = 2,
-                proficientSkills = listOf("Arkane Kunde", "Einschüchtern", "Fingerfertigkeit", "Täuschen", "Weisheit-Rettungswurf"),
+                proficientSkills = listOf("Arkane Kunde", "Einschüchtern", "Fingerfertigkeit", "Täuschen", "Weisheit-Rettungswurf", "Charisma-Rettungswurf"),
                 defaultLoot = listOf(
                     InventoryItem("Flöte", 1, 0.5, "Ausrüstung"),
                     InventoryItem("Reisekleidung", 1, 2.0, "Ausrüstung"),

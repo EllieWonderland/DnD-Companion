@@ -21,7 +21,7 @@ data class SpellDto(
     fun toSpell(): Spell {
         val rangeStr = if (range != null) {
             if (range.distance > 0) {
-                val m = range.distance * 0.3
+                val m = kotlin.math.round(range.distance * 0.3 * 2.0) / 2.0
                 val mStr = if (m % 1.0 == 0.0) m.toInt().toString() else m.toString()
                 val f = (range.distance / 5.0).toInt()
                 "${range.type} $mStr m / $f Felder"
@@ -45,7 +45,7 @@ data class SpellDto(
             descBuilder.append("\n")
         }
         if (areaOfEffect != null) {
-            val sizeM = areaOfEffect.size * 0.3
+            val sizeM = kotlin.math.round(areaOfEffect.size * 0.3 * 2.0) / 2.0
             val sizeMStr = if (sizeM % 1.0 == 0.0) sizeM.toInt().toString() else sizeM.toString()
             val sizeF = areaOfEffect.size / 5
             descBuilder.append("Wirkungsbereich: ${areaOfEffect.type} ($sizeMStr m / $sizeF Felder)\n")
