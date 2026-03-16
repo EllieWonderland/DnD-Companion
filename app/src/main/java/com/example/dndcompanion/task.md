@@ -264,10 +264,6 @@
   *	Commit: `feat: automatic companion revival after long rest`
 - [x] Inventar-Bugcheck: Gewichte beim Katalog-Hinzufügen validieren <!-- id: 460_8 -->
   *	Commit: `fix: ensure weights are correctly transferred from catalog`
-- [ ] HP anzeige verbessern
-- [ ] Gruppen-Chat: Möglichkeit, Chat komplett zu archivieren und IC und OOC wieder trennen
-- [ ] Dynamische Anzeige, wieviele HP noch für den Levelaufstieg benötigt werden
-- [ ] HP vom Urtier des Landes sinkt automatisch von 25 auf 20, wenn ich zum Urtier des Himmels und anschließend wieder zurück wechsel
 ### Zukünftige Aufgaben
 - [ ] **HP Anzeige:** HP anzeige verbessern
 - [ ] **Gruppen-Chat:** Möglichkeit, Chat komplett zu archivieren und IC/OOC wieder trennen
