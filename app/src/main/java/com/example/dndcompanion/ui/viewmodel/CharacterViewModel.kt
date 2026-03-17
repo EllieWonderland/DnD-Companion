@@ -37,6 +37,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 
 data class UrtierFileDto(
     val urtiere: List<CompanionDto>
@@ -2111,37 +2112,37 @@ private val model25Flash = GenerativeModel(
                     val searchString = "%$kw%"
                     
                     // Regeln durchsuchen
-                    db.searchRulesRaw(searchString).forEach { rule ->
+                    db.searchRules(searchString).first().forEach { rule ->
                         val score = keywords.count { rule.title.lowercase().contains(it) || rule.content.lowercase().contains(it) }
                         if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: ${rule.category} ---\nTitel: ${rule.title}\nInhalt: ${rule.content}"))
                     }
                     // Waffen durchsuchen
-                    db.searchWeaponsRaw(searchString).forEach { weapon ->
+                    db.searchWeapons(searchString).first().forEach { weapon ->
                         val score = keywords.count { weapon.name.lowercase().contains(it) || weapon.category.lowercase().contains(it) || weapon.properties.joinToString().lowercase().contains(it) }
                         if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Waffen ---\nName: ${weapon.name}\nSchaden: ${weapon.damage}\nEigenschaften: ${weapon.properties.joinToString()}"))
                     }
                     // Rüstung durchsuchen
-                    db.searchArmorRaw(searchString).forEach { armor ->
+                    db.searchArmor(searchString).first().forEach { armor ->
                         val score = keywords.count { armor.name.lowercase().contains(it) || armor.category.lowercase().contains(it) }
                         if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Rüstung ---\nName: ${armor.name}\nRK: ${armor.baseAC}"))
                     }
                     // Werkzeuge durchsuchen
-                    db.searchToolsRaw(searchString).forEach { tool ->
+                    db.searchTools(searchString).first().forEach { tool ->
                         val score = keywords.count { tool.name.lowercase().contains(it) || tool.category.lowercase().contains(it) }
                         if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Werkzeuge ---\nName: ${tool.name}\nKategorie: ${tool.category}\nPreis: ${tool.price}"))
                     }
                     // Völker durchsuchen
-                    db.searchSpeciesRaw(searchString).forEach { species ->
+                    db.searchSpecies(searchString).first().forEach { species ->
                         val score = keywords.count { species.name.lowercase().contains(it) || species.traits.joinToString { t -> t.name + t.description }.lowercase().contains(it) }
                         if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Völker ---\nVolk: ${species.name}\nEigenschaften: ${species.traits.joinToString { t -> "${t.name}: ${t.description}" }}"))
                     }
                     // Klassen durchsuchen
-                    db.searchClassesRaw(searchString).forEach { cls ->
+                    db.searchClasses(searchString).first().forEach { cls ->
                         val score = keywords.count { cls.name.lowercase().contains(it) || cls.classFeatures.joinToString { f -> f.name + f.description }.lowercase().contains(it) }
                         if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Klassen ---\nKlasse: ${cls.name}\nMerkmale: ${cls.classFeatures.take(5).joinToString { f -> "${f.name}: ${f.description}" }}"))
                     }
                     // Merkmale durchsuchen
-                    db.searchFeaturesRaw(searchString).forEach { feature ->
+                    db.searchFeatures(searchString).first().forEach { feature ->
                         val score = keywords.count { feature.name.lowercase().contains(it) || feature.description.lowercase().contains(it) }
                         if (score > 0) bestParagraphs.add(Pair(score, "--- Quelle: Merkmale/Talente ---\nName: ${feature.name}\nTyp: ${feature.type}\nBeschreibung: ${feature.description}"))
                     }
@@ -2156,7 +2157,7 @@ private val model25Flash = GenerativeModel(
             // 5. Durchsuche zusätzlich das Zauberbuch (JSON Daten via globalSpellbook)
             withContext(Dispatchers.IO) {
                 for (kw in keywords) {
-                    db.searchSpellsRaw("%$kw%").forEach { spell ->
+                    db.searchSpells("%$kw%").first().forEach { spell ->
                         val descriptionString = "Zauber: ${spell.name} (Grad ${spell.level})\nKlassen: ${spell.classes.joinToString()}\nBeschreibung: ${spell.description}"
                         if (!sb.contains(spell.name)) {
                             sb.append("--- Quelle: ZAUBERBUCH ---\n")

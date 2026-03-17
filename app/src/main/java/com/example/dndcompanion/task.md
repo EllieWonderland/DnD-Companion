@@ -289,6 +289,6 @@
 
 #### Code-Qualität
 - [x] **Lange Screens aufteilen:** `BucherScreen.kt` (1.399 Z.), `ZauberScreen.kt` (1.122 Z.) und `CombatScreen.kt` (701 Z.) in Sub-Composables auslagern.
-- [ ] **Doppelte DAO-Methoden konsolidieren:** 8× duplizierte `searchX()` / `searchXRaw()` Paare in `RulebookDao.kt` vereinfachen.
+- [x] **Doppelte DAO-Methoden konsolidieren:** 8× duplizierte `searchX()` / `searchXRaw()` Paare in `RulebookDao.kt` vereinfachen.
 - [ ] **Logging hinzufügen:** Stille Fehler in DB-Operationen und Firebase mit `android.util.Log` sichtbar machen.
 - [ ] **Unit Tests:** Kritische Logik testen (Slot-Berechnung Ranger vs. Warlock, Schadensformel, Gewichtskapazität).

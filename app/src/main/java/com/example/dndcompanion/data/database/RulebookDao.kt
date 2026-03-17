@@ -59,32 +59,6 @@ interface RulebookDao {
     @Query("SELECT * FROM spells WHERE name LIKE '%' || :searchQuery || '%' OR description LIKE '%' || :searchQuery || '%'")
     fun searchSpells(searchQuery: String): Flow<List<SpellEntity>>
 
-    // --- Search Queries (Raw for RAG/Global Search) ---
-
-    @Query("SELECT * FROM rules WHERE title LIKE '%' || :searchQuery || '%' OR content LIKE '%' || :searchQuery || '%' OR tags LIKE '%' || :searchQuery || '%'")
-    fun searchRulesRaw(searchQuery: String): List<RuleEntity>
-
-    @Query("SELECT * FROM weapons WHERE name LIKE '%' || :searchQuery || '%' OR category LIKE '%' || :searchQuery || '%' OR properties LIKE '%' || :searchQuery || '%' OR mastery LIKE '%' || :searchQuery || '%'")
-    fun searchWeaponsRaw(searchQuery: String): List<WeaponEntity>
-
-    @Query("SELECT * FROM armor WHERE name LIKE '%' || :searchQuery || '%' OR category LIKE '%' || :searchQuery || '%'")
-    fun searchArmorRaw(searchQuery: String): List<ArmorEntity>
-
-    @Query("SELECT * FROM tools WHERE name LIKE '%' || :searchQuery || '%' OR category LIKE '%' || :searchQuery || '%'")
-    fun searchToolsRaw(searchQuery: String): List<ToolEntity>
-
-    @Query("SELECT * FROM species WHERE name LIKE '%' || :searchQuery || '%' OR traits LIKE '%' || :searchQuery || '%'")
-    fun searchSpeciesRaw(searchQuery: String): List<SpeciesEntity>
-    
-    @Query("SELECT * FROM classes WHERE name LIKE '%' || :searchQuery || '%' OR classFeatures LIKE '%' || :searchQuery || '%' OR subclasses LIKE '%' || :searchQuery || '%'")
-    fun searchClassesRaw(searchQuery: String): List<ClassEntity>
-
-    @Query("SELECT * FROM features WHERE name LIKE '%' || :searchQuery || '%' OR description LIKE '%' || :searchQuery || '%'")
-    fun searchFeaturesRaw(searchQuery: String): List<FeatureEntity>
-
-    @Query("SELECT * FROM spells WHERE name LIKE '%' || :searchQuery || '%' OR description LIKE '%' || :searchQuery || '%'")
-    fun searchSpellsRaw(searchQuery: String): List<SpellEntity>
-
     // --- Fetch All Queries ---
 
     @Query("SELECT * FROM rules ORDER BY category, title")
