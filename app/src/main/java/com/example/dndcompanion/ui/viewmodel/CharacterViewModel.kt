@@ -1002,34 +1002,27 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun learnFeature(feature: FeatureEntity) {
         if (customTraits.none { it.name == feature.name }) {
-            var uses = 0
-            var spellId: String? = null
-            
-            // Heuristik: Bestimme Zauber und Nutzungen anhand des Namens oder der Beschreibung
-            if (feature.name.contains("Erzfeind", ignoreCase = true)) {
-                spellId = "Zeichen des Jägers"
-                uses = 2
-            } else if (feature.name.contains("Drow", ignoreCase = true)) {
-                // Drow Magie fügen wir explizit separate Traits hinzu, weil es mehrere Zauber sind
-                customTraits.add(TraitItem("Feenfeuer", "1x pro Lange Rast kostenlos wirkbar.", grantedSpellId = "Feenfeuer", maxUses = 1, currentUses = 1))
-                customTraits.add(TraitItem("Dunkelheit", "1x pro Lange Rast kostenlos wirkbar.", grantedSpellId = "Dunkelheit", maxUses = 1, currentUses = 1))
-            } else if (feature.name.contains("Segnen", ignoreCase = true)) {
-                spellId = "Segnen"
-                uses = 1
-            } else if (feature.name.contains("Magierrüstung", ignoreCase = true)) {
-                spellId = "Magierrüstung"
-                uses = 1
-            } else if (feature.name.contains("Nebelschritt", ignoreCase = true)) {
-                spellId = "Nebelschritt"
-                uses = 1
+            // If this feature grants multiple spells (e.g. Drow lineage → Feenfeuer + Dunkelheit),
+            // add a separate TraitItem per spell instead of a single combined trait.
+            val multiSpells = feature.grantedSpellIds
+            if (!multiSpells.isNullOrEmpty()) {
+                multiSpells.forEach { spellId ->
+                    customTraits.add(TraitItem(
+                        name = spellId,
+                        desc = "1x pro Lange Rast kostenlos wirkbar.",
+                        grantedSpellId = spellId,
+                        maxUses = feature.grantedSpellUses.coerceAtLeast(1),
+                        currentUses = feature.grantedSpellUses.coerceAtLeast(1)
+                    ))
+                }
             }
 
             customTraits.add(TraitItem(
                 name = feature.name,
                 desc = feature.description,
-                maxUses = uses,
-                currentUses = uses,
-                grantedSpellId = spellId
+                maxUses = feature.grantedSpellUses,
+                currentUses = feature.grantedSpellUses,
+                grantedSpellId = if (multiSpells.isNullOrEmpty()) feature.grantedSpellId else null
             ))
             lastSelectedFeature = feature
             saveTraits()

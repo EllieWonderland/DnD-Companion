@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 
 @Entity(tableName = "species")
@@ -52,7 +53,11 @@ data class FeatureEntity(
     val raceReq: List<String>?, // e.g. ["Elf"]
     val classReq: List<String>?, // e.g. ["Waldläufer"]
     val levelReq: Int,
-    val description: String
+    val description: String,
+    // Spell-grant metadata — replaces heuristic string matching in learnFeature()
+    @SerializedName("granted_spell_id")   val grantedSpellId: String? = null,
+    @SerializedName("granted_spell_uses") val grantedSpellUses: Int = 0,
+    @SerializedName("granted_spell_ids")  val grantedSpellIds: List<String>? = null
 )
 
 class CharacterOptionConverters {

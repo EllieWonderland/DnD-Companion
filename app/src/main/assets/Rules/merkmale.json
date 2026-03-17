@@ -53,7 +53,9 @@
                 "Elf"
             ],
             "level_req": 1,
-            "description": "Stufe 1: Dunkelsicht steigt auf 36 m / 24 Felder. Du kennst Tanzende Lichter. Stufe 3: Du hast Feenfeuer immer vorbereitet und kannst es 1x/Lange Rast kostenlos wirken. Stufe 5: Du hast Dunkelheit immer vorbereitet und kannst es 1x/Lange Rast kostenlos wirken."
+            "description": "Stufe 1: Dunkelsicht steigt auf 36 m / 24 Felder. Du kennst Tanzende Lichter. Stufe 3: Du hast Feenfeuer immer vorbereitet und kannst es 1x/Lange Rast kostenlos wirken. Stufe 5: Du hast Dunkelheit immer vorbereitet und kannst es 1x/Lange Rast kostenlos wirken.",
+            "granted_spell_ids": ["Feenfeuer", "Dunkelheit"],
+            "granted_spell_uses": 1
         },
         {
             "id": "trait_dwarf_darkvision",
@@ -119,7 +121,9 @@
                 "Waldläufer"
             ],
             "level_req": 1,
-            "description": "Zeichen des Jägers."
+            "description": "Zeichen des Jägers.",
+            "granted_spell_id": "Zeichen des Jägers",
+            "granted_spell_uses": 2
         },
         {
             "id": "class_ranger_weapon_mastery",
@@ -353,7 +357,9 @@
             "name_en": "Fey-Touched",
             "type": "FEAT",
             "level_req": 4,
-            "description": "+1 INT, WEI oder CHA. Erlerne Nebeltritt und einen Stufe-1 Zauber (Erkenntnismagie/Verzauberung). 1x/Tag gratis."
+            "description": "+1 INT, WEI oder CHA. Erlerne Nebeltritt und einen Stufe-1 Zauber (Erkenntnismagie/Verzauberung). 1x/Tag gratis.",
+            "granted_spell_id": "Nebelschritt",
+            "granted_spell_uses": 1
         },
         {
             "id": "invocation_pact_of_the_blade",
