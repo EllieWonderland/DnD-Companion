@@ -1,6 +1,7 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.getValue
@@ -395,7 +396,7 @@ class CombatViewModel(
                     companionData = null
                 }
             } catch (e: Exception) {
-                println("Error loading companion: ${e.message}")
+                Log.e("CombatVM", "Error loading companion", e)
                 companionData = null
             }
         }

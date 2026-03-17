@@ -1,6 +1,7 @@
 package com.example.dndcompanion.data.database
 
 import android.content.Context
+import android.util.Log
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.google.gson.Gson
@@ -42,7 +43,7 @@ class AppDatabaseCallback(
             val rulesList = gson.fromJson(rulesJson, Array<RuleEntity>::class.java).toList()
             dao.insertRules(rulesList)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("AppDatabaseCallback", "Failed to load rules.json", e)
         }
 
         // 2. Load Equipment
@@ -53,7 +54,7 @@ class AppDatabaseCallback(
             dao.insertArmor(equipmentData.armor)
             dao.insertTools(equipmentData.tools)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("AppDatabaseCallback", "Failed to load equipment.json", e)
         }
 
         // 3. Load Character Options
@@ -63,7 +64,7 @@ class AppDatabaseCallback(
             dao.insertSpecies(charOptionsData.species)
             dao.insertClasses(charOptionsData.classes)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("AppDatabaseCallback", "Failed to load character_options.json", e)
         }
 
         // 4. Load Features (Merkmale/Talente)
@@ -72,7 +73,7 @@ class AppDatabaseCallback(
             val featuresData = gson.fromJson(featuresJson, FeaturesData::class.java)
             dao.insertFeatures(featuresData.features)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("AppDatabaseCallback", "Failed to load merkmale.json", e)
         }
 
         // 5. Load Spells
@@ -100,7 +101,7 @@ class AppDatabaseCallback(
             }
             dao.insertSpells(spellEntities)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.e("AppDatabaseCallback", "Failed to load spellbook.json", e)
         }
     }
 

@@ -1,6 +1,7 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -366,7 +367,7 @@ class SpellViewModel(
                 }
 
             } catch (e: Exception) {
-                // Ignore
+                Log.w("SpellVM", "Fehler beim Spell-Sync", e)
             }
         } else {
             allSpells.addAll(getDefaultSpells())

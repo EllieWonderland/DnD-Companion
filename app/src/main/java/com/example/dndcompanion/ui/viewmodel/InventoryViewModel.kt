@@ -1,6 +1,7 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -128,6 +129,7 @@ class InventoryViewModel(
                     customLoot.clear()
                     customLoot.addAll(items)
                 } catch (e: Exception) {
+                    Log.w("InventoryVM", "Failed to parse custom loot JSON", e)
                     customLoot.clear()
                 }
             } else {
@@ -333,7 +335,7 @@ class InventoryViewModel(
                     allEquipment.addAll(equipmentList)
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.e("InventoryVM", "Error loading equipment catalog", e)
             }
         }
     }

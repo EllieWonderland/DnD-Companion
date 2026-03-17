@@ -823,6 +823,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                     customLoot.clear()
                     customLoot.addAll(items)
                 } catch (e: Exception) {
+                    Log.w("CharacterVM", "Failed to parse custom loot JSON", e)
                     customLoot.clear()
                 }
             } else {
@@ -949,7 +950,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 }
                 if (listChanged) saveTraits()
             } catch (e: Exception) {
-                // Ignore
+                Log.w("CharacterVM", "Failed to load traits", e)
             }
         } else {
             // Initiale Merkmale beim allerersten Start laden
@@ -1324,7 +1325,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 }
             }
         } catch (e: Exception) {
-            // Ignore parse errors on load
+            Log.w("CharacterVM", "Failed to load book entries from prefs", e)
         }
     }
 
@@ -1601,7 +1602,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                     companionData = null
                 }
             } catch (e: Exception) {
-                println("Error loading companion: ${e.message}")
+                Log.e("CharacterVM", "Error loading companion", e)
                 companionData = null
             }
         }
@@ -1727,6 +1728,7 @@ private val model25Flash = GenerativeModel(
                     faqList.clear()
                     faqList.addAll(items)
                 } catch (e: Exception) {
+                    Log.w("CharacterVM", "Failed to parse FAQ JSON", e)
                     faqList.clear()
                 }
             } else {
@@ -1774,7 +1776,7 @@ private val model25Flash = GenerativeModel(
                 globalFeatures.clear()
                 globalFeatures.addAll(featureListDto.features.map { it.toFeature() })
             } catch (e: Exception) {
-                println("Error loading features: ${e.message}")
+                Log.e("CharacterVM", "Error loading features", e)
             }
         }
     }
@@ -1876,7 +1878,7 @@ private val model25Flash = GenerativeModel(
                     allEquipment.addAll(equipmentList)
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
+                Log.e("CharacterVM", "Error loading equipment catalog", e)
             }
         }
     }
@@ -1933,7 +1935,7 @@ private val model25Flash = GenerativeModel(
                 // --- END SYNC ---
 
             } catch (e: Exception) {
-                // Bei Fehlern nicht abstürzen
+                Log.w("CharacterVM", "Fehler beim Spell-Sync", e)
             }
         } else {
             // Wenn leer, Standard-Zauber laden

@@ -1,6 +1,7 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import android.content.Context
+import android.util.Log
 
 data class EquipmentCatalogItem(
     val name: String,
@@ -111,8 +112,8 @@ object EquipmentCatalogParser {
                         // Various table formats, skip vehicle tables for inventory purposes
                     }
                 }
-            } catch (_: Exception) {
-                // Skip malformed rows
+            } catch (e: Exception) {
+                Log.d("EquipmentCatalogParser", "Skipping malformed row", e)
             }
         }
         return items
