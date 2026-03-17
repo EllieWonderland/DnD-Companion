@@ -236,24 +236,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             return list.distinct()
         }
 
-    var equippedWeaponName by mutableStateOf(prefs.getString("equippedWeaponName", null) ?: "Keine Waffe")
-        private set
-
-    fun equipWeaponByName(name: String) {
-        equippedWeaponName = name
-        prefs.edit { putString("equippedWeaponName", name) }
-        
-        // Sync with enum for logic
-        val weaponStr = name.lowercase()
-        currentWeapon = when {
-            weaponStr.contains("bogen") -> ActiveWeapon.LANGBOGEN
-            weaponStr.contains("schwert") -> ActiveWeapon.KURZSCHWERT_SCHILD
-            weaponStr.contains("hammer") -> ActiveWeapon.KRIEGSHAMMER_PAKT
-            weaponStr.contains("speer") -> ActiveWeapon.SPEER_PAKT
-            weaponStr.contains("shillelagh") -> ActiveWeapon.SHILLELAGH_SCHILD
-            else -> ActiveWeapon.KURZSCHWERT_SCHILD // Default fallback
-        }
-    }
     fun addExperience(amount: Int) {
         currentEP += amount
         prefs.edit { putInt("currentEP", currentEP) }
@@ -564,14 +546,12 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         prefs.edit { putInt("tempHp", tempHp) }
     }
 
-    private val savedWeaponName = prefs.getString("currentWeapon", ActiveWeapon.LANGBOGEN.name) ?: ActiveWeapon.LANGBOGEN.name
-    var currentWeapon by mutableStateOf(ActiveWeapon.valueOf(savedWeaponName))
-        private set
-
-    fun equipWeapon(weapon: ActiveWeapon) {
-        currentWeapon = weapon
-        prefs.edit { putString("currentWeapon", weapon.name) }
-    }
+    // Single source of truth: CombatViewModel writes this, CharacterViewModel reads it on-demand (e.g. AI summary)
+    val currentWeapon: ActiveWeapon
+        get() {
+            val default = if (characterData.id == "Athania") ActiveWeapon.LANGBOGEN.name else ActiveWeapon.KRIEGSHAMMER_PAKT.name
+            return ActiveWeapon.valueOf(prefs.getString("currentWeapon", default) ?: default)
+        }
     val currentArmorClass: Int
         get() {
             // Grund-RK
@@ -1111,7 +1091,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         coinsPM = 0
         totalArrows = if (characterData.id == "Athania") 28 else 0
         shotArrows = 0
-        currentWeapon = if (characterData.id == "Athania") ActiveWeapon.LANGBOGEN else ActiveWeapon.KRIEGSHAMMER_PAKT
         deathSaveSuccesses = 0
         deathSaveFailures = 0
         activeBeastType = BeastType.SKY
@@ -1287,9 +1266,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         
         totalArrows = prefs.getInt("totalArrows", 20)
         shotArrows = prefs.getInt("shotArrows", 0)
-        
-        val savedWeaponName = prefs.getString("currentWeapon", ActiveWeapon.LANGBOGEN.name) ?: ActiveWeapon.LANGBOGEN.name
-        currentWeapon = ActiveWeapon.valueOf(savedWeaponName)
         
         standardTactic = prefs.getString("standardTactic", if (characterId == "Athania") "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen" else "") ?: ""
         

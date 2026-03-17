@@ -257,11 +257,6 @@ class CombatViewModel(
         prefs.edit { putBoolean("isShieldEquipped", isShieldEquipped) }
     }
 
-    fun equipWeapon(weapon: ActiveWeapon) {
-        currentWeapon = weapon
-        prefs.edit { putString("currentWeapon", weapon.name) }
-    }
-
     fun equipWeaponByName(name: String) {
         equippedWeaponName = name
         prefs.edit { putString("equippedWeaponName", name) }
