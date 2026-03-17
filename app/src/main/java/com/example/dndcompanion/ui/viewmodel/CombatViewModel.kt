@@ -1,7 +1,6 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import android.app.Application
-import android.content.Context
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.getValue
@@ -22,10 +21,7 @@ class CombatViewModel(
 
     private val gson = Gson()
 
-    private var prefs = application.getSharedPreferences(
-        "${characterVm.activeCharacterIdFlow.value}SaveGame",
-        Context.MODE_PRIVATE
-    )
+    private val prefs get() = characterVm.prefsManager.prefs
 
     // --- LEBENSPUNKTE ---
     var maxHp by mutableIntStateOf(prefs.getInt("maxHp", characterVm.characterData.baseMaxHp))
@@ -97,9 +93,6 @@ class CombatViewModel(
     }
 
     private fun reloadForCharacter(id: String) {
-        prefs = getApplication<Application>().getSharedPreferences(
-            "${id}SaveGame", Context.MODE_PRIVATE
-        )
         maxHp = prefs.getInt("maxHp", characterVm.characterData.baseMaxHp)
         currentHp = prefs.getInt("currentHp", maxHp)
         tempHp = prefs.getInt("${id}_tempHp", if (id == "Delat") 12 else 0)

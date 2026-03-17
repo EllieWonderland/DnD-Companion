@@ -1,7 +1,6 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import android.app.Application
-import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -24,6 +23,7 @@ import org.json.JSONObject
 import com.example.dndcompanion.data.CharacterData
 import com.example.dndcompanion.data.CharacterRepository
 import com.example.dndcompanion.data.CharacterClass
+import com.example.dndcompanion.data.PrefsManager
 import com.example.dndcompanion.data.database.AppDatabase
 import com.example.dndcompanion.data.database.RuleEntity
 import com.example.dndcompanion.data.database.WeaponEntity
@@ -53,7 +53,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     var characterData by mutableStateOf(CharacterRepository.getCharacter("Athania"))
         private set
 
-    private var prefs = application.getSharedPreferences("AthaniaSaveGame", Context.MODE_PRIVATE)
+    val prefsManager = PrefsManager(application)
+    private val prefs get() = prefsManager.prefs
     private val gson = Gson()
 
     private val database = AppDatabase.getDatabase(application)
@@ -1142,7 +1143,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         activeCharacterId = characterId
         _activeCharacterIdFlow.value = characterId
         characterData = CharacterRepository.getCharacter(characterId)
-        prefs = getApplication<Application>().getSharedPreferences("${characterId}SaveGame", Context.MODE_PRIVATE)
+        prefsManager.switchCharacter(characterId)
 
         currentEP = prefs.getInt("currentEP", characterData.baseEP)
         level = prefs.getInt("level", characterData.baseLevel)

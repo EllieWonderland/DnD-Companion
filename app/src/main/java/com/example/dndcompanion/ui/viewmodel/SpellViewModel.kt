@@ -1,7 +1,6 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import android.app.Application
-import android.content.Context
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -28,10 +27,7 @@ class SpellViewModel(
 
     private val gson = Gson()
 
-    private var prefs = application.getSharedPreferences(
-        "${characterVm.activeCharacterIdFlow.value}SaveGame",
-        Context.MODE_PRIVATE
-    )
+    private val prefs get() = characterVm.prefsManager.prefs
 
     // --- ZAUBERPLÄTZE ---
     var spellSlotsLevel1 by mutableIntStateOf(prefs.getInt("spellSlotsLevel1", characterVm.characterData.baseSpellSlotsLevel1))
@@ -85,9 +81,6 @@ class SpellViewModel(
     }
 
     private fun reloadForCharacter(id: String) {
-        prefs = getApplication<Application>().getSharedPreferences(
-            "${id}SaveGame", Context.MODE_PRIVATE
-        )
         spellSlotsLevel1 = prefs.getInt("spellSlotsLevel1", characterVm.characterData.baseSpellSlotsLevel1)
         spellSlotsLevel2 = prefs.getInt("spellSlotsLevel2", characterVm.characterData.baseSpellSlotsLevel2)
         spellSlotsLevel3 = prefs.getInt("spellSlotsLevel3", characterVm.characterData.baseSpellSlotsLevel3)

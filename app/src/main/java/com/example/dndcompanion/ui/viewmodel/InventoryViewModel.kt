@@ -1,7 +1,6 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import android.app.Application
-import android.content.Context
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -25,10 +24,7 @@ class InventoryViewModel(
 
     private val gson = Gson()
 
-    private var prefs = application.getSharedPreferences(
-        "${characterVm.activeCharacterIdFlow.value}SaveGame",
-        Context.MODE_PRIVATE
-    )
+    private val prefs get() = characterVm.prefsManager.prefs
 
     // --- INVENTAR ---
     val customLoot = mutableStateListOf<InventoryItem>()
@@ -103,9 +99,6 @@ class InventoryViewModel(
     }
 
     private fun reloadForCharacter(id: String) {
-        prefs = getApplication<Application>().getSharedPreferences(
-            "${id}SaveGame", Context.MODE_PRIVATE
-        )
         coinsKM = prefs.getInt("coinsKM", 0)
         coinsSM = prefs.getInt("coinsSM", 0)
         coinsEM = prefs.getInt("coinsEM", 0)
