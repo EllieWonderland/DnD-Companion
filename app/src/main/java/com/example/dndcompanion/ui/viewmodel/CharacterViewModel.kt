@@ -23,6 +23,7 @@ import org.json.JSONObject
 import com.example.dndcompanion.data.CharacterData
 import com.example.dndcompanion.data.CharacterRepository
 import com.example.dndcompanion.data.CharacterClass
+import com.example.dndcompanion.data.DndCalculations
 import com.example.dndcompanion.data.PrefsManager
 import com.example.dndcompanion.data.database.AppDatabase
 import com.example.dndcompanion.data.database.RuleEntity
@@ -371,36 +372,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun getMaxSpellSlots(lvl: Int, slotLvl: Int): Int {
-        return if (characterData.charClass == CharacterClass.RANGER) {
-            when (slotLvl) {
-                1 -> if (lvl >= 1) { if (lvl >= 5) 4 else if (lvl >= 3) 3 else 2 } else 0
-                2 -> if (lvl >= 5) { if (lvl >= 7) 3 else 2 } else 0
-                3 -> if (lvl >= 9) { if (lvl >= 11) 3 else 2 } else 0
-                4 -> if (lvl >= 13) { if (lvl >= 15) 3 else 2 } else 0
-                5 -> if (lvl >= 17) 2 else 0
-                else -> 0
-            }
-        } else if (characterData.charClass == CharacterClass.WARLOCK) {
-            val pactSlots = if (lvl >= 11) 3 else if (lvl >= 2) 2 else 1
-            val pactLevel = if (lvl >= 9) 5 else if (lvl >= 7) 4 else if (lvl >= 5) 3 else if (lvl >= 3) 2 else 1
-            if (slotLvl == pactLevel) pactSlots else 0
-        } else 0
-    }
+    fun getMaxSpellSlots(lvl: Int, slotLvl: Int): Int =
+        DndCalculations.spellSlotCount(characterData.charClass, lvl, slotLvl)
 
-    val proficiencyBonus: Int get() = when(level) {
-        in 1..4 -> 2
-        in 5..8 -> 3
-        in 9..12 -> 4
-        in 13..16 -> 5
-        else -> 6
-    }
+    val proficiencyBonus: Int get() = DndCalculations.proficiencyBonus(level)
 
-    val strMod: Int get() = (strength - 10) / 2
-    val dexMod: Int get() = (dexterity - 10) / 2
-    val conMod: Int get() = (constitution - 10) / 2
-    val intMod: Int get() = (intelligence - 10) / 2
-    val wisMod: Int get() = (wisdom - 10) / 2
+    val strMod: Int get() = DndCalculations.abilityMod(strength)
+    val dexMod: Int get() = DndCalculations.abilityMod(dexterity)
+    val conMod: Int get() = DndCalculations.abilityMod(constitution)
+    val intMod: Int get() = DndCalculations.abilityMod(intelligence)
+    val wisMod: Int get() = DndCalculations.abilityMod(wisdom)
     val chaMod: Int get() = (charisma - 10) / 2
 
     val speed: Int get() = characterData.speed
@@ -795,7 +776,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     // --- GEWICHTS-BERECHNUNG (in kg) ---
     val maxWeight: Double
-        get() = strength * 7.5  // D&D Traglast = STR × 15 Pfd. = STR × 7.5 kg
+        get() = DndCalculations.maxWeightKg(strength)  // D&D Traglast = STR × 15 Pfd. = STR × 7.5 kg
     val currentWeight: Double
         get() {
             var total = 0.0

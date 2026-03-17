@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.dndcompanion.data.DndCalculations
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
@@ -64,7 +65,7 @@ class InventoryViewModel(
     val allEquipment = mutableStateListOf<EquipmentDefinition>()
 
     // --- ABGELEITETE EIGENSCHAFTEN ---
-    val maxWeight: Double get() = characterVm.strength * 7.5
+    val maxWeight: Double get() = DndCalculations.maxWeightKg(characterVm.strength)
     val currentWeight: Double
         get() {
             var total = 0.0
