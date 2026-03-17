@@ -40,13 +40,21 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.ui.draw.shadow
 import com.example.dndcompanion.ui.viewmodel.ActiveWeapon
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+import com.example.dndcompanion.ui.viewmodel.CombatViewModel
+import com.example.dndcompanion.ui.viewmodel.InventoryViewModel
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.data.CharacterClass
 import com.example.dndcompanion.R
 import androidx.compose.ui.res.painterResource
 
 @Composable
-fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit, onNavigateToProfile: () -> Unit = {}) {
+fun CombatScreen(
+    viewModel: CharacterViewModel,
+    combatVm: CombatViewModel,
+    inventoryVm: InventoryViewModel,
+    onNavigateToRucksack: () -> Unit,
+    onNavigateToProfile: () -> Unit = {}
+) {
     val isRanger = viewModel.characterData.charClass == CharacterClass.RANGER
     val accentColor = if (isRanger) WaldGold else HexenLila
 
@@ -63,11 +71,11 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Text("Init: ${if(viewModel.initiative >= 0) "+" else ""}${viewModel.initiative}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                    Text("Init: ${if(combatVm.initiative >= 0) "+" else ""}${combatVm.initiative}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                     Text("Tempo: ${viewModel.speed}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                     Text("Wahrnehmung: ${viewModel.passivePerception}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                 }
-                
+
                 // Heroische Inspiration in eigener zentrierter Zeile
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
@@ -75,17 +83,17 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically, 
-                        modifier = Modifier.clickable { viewModel.toggleHeroicInspiration(!viewModel.heroicInspiration) }.padding(4.dp)
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.clickable { combatVm.toggleHeroicInspiration(!combatVm.heroicInspiration) }.padding(4.dp)
                     ) {
                         Icon(
-                            imageVector = if (viewModel.heroicInspiration) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+                            imageVector = if (combatVm.heroicInspiration) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
                             contentDescription = "Inspiration",
-                            tint = if (viewModel.heroicInspiration) WaldGold else EisenGrau,
+                            tint = if (combatVm.heroicInspiration) WaldGold else EisenGrau,
                             modifier = Modifier.size(20.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Heroische Inspiration", style = MaterialTheme.typography.labelLarge, color = if (viewModel.heroicInspiration) WaldGold else Waldgruen)
+                        Text("Heroische Inspiration", style = MaterialTheme.typography.labelLarge, color = if (combatVm.heroicInspiration) WaldGold else Waldgruen)
                     }
                 }
 
@@ -95,7 +103,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     // Animierte Progress-Werte
                     Column {
                     val hpProgress by animateFloatAsState(
-                        targetValue = if (viewModel.maxHp > 0) viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() else 0f,
+                        targetValue = if (combatVm.maxHp > 0) combatVm.currentHp.toFloat() / combatVm.maxHp.toFloat() else 0f,
                         animationSpec = tween(durationMillis = 500),
                         label = "HP Animation"
                     )
@@ -103,44 +111,44 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     Row(verticalAlignment = Alignment.Bottom, modifier = Modifier.fillMaxWidth()) {
                         Text("HP", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = TintenBraun, fontFamily = Almendra, modifier = Modifier.padding(bottom = 6.dp, end = 6.dp))
                         Text(
-                            "${viewModel.currentHp} / ${viewModel.maxHp}", 
-                            fontSize = 36.sp, 
-                            fontWeight = FontWeight.Bold, 
-                            color = if (viewModel.currentHp > (viewModel.maxHp / 4)) Waldgruen else OchsenblutRot, 
+                            "${combatVm.currentHp} / ${combatVm.maxHp}",
+                            fontSize = 36.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = if (combatVm.currentHp > (combatVm.maxHp / 4)) Waldgruen else OchsenblutRot,
                             fontFamily = Almendra
                         )
-                        if (viewModel.tempHp > 0) {
+                        if (combatVm.tempHp > 0) {
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("+${viewModel.tempHp}", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = TempHPBlau, fontFamily = Almendra)
+                            Text("+${combatVm.tempHp}", fontSize = 24.sp, fontWeight = FontWeight.Bold, color = TempHPBlau, fontFamily = Almendra)
                         }
-                        
+
                         Spacer(modifier = Modifier.weight(1f))
-                        
+
                         Text(
-                            "HD ${viewModel.hitDice}/${viewModel.level}W${viewModel.characterData.baseHitDice}",
+                            "HD ${combatVm.hitDice}/${viewModel.level}W${viewModel.characterData.baseHitDice}",
                             style = MaterialTheme.typography.titleMedium,
                             color = TintenBraun,
                             fontFamily = Almendra,
                             modifier = Modifier.padding(bottom = 4.dp)
                         )
                     }
-                    
+
                     Spacer(modifier = Modifier.height(8.dp))
                     LinearProgressIndicator(
                         progress = { hpProgress },
                         modifier = Modifier.fillMaxWidth().height(16.dp),
-                        color = if (viewModel.currentHp > (viewModel.maxHp / 4)) Waldgruen else OchsenblutRot,
+                        color = if (combatVm.currentHp > (combatVm.maxHp / 4)) Waldgruen else OchsenblutRot,
                         trackColor = PergamentHell
                     )
 
                     val tempHpProgress by animateFloatAsState(
-                        targetValue = if (viewModel.tempHp > 0) (viewModel.tempHp.toFloat() / 12f).coerceAtMost(1f) else 0f,
+                        targetValue = if (combatVm.tempHp > 0) (combatVm.tempHp.toFloat() / 12f).coerceAtMost(1f) else 0f,
                         animationSpec = tween(durationMillis = 500),
                         label = "Temp HP Animation"
                     )
 
                     // Temp HP Bar (wenn vorhanden)
-                    if (viewModel.tempHp > 0 || tempHpProgress > 0f) {
+                    if (combatVm.tempHp > 0 || tempHpProgress > 0f) {
                         Spacer(modifier = Modifier.height(4.dp))
                         LinearProgressIndicator(
                             progress = { tempHpProgress },
@@ -152,9 +160,9 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         )
                     }
 
-                    if (viewModel.currentHp == 0) {
+                    if (combatVm.currentHp == 0) {
                         Spacer(modifier = Modifier.height(12.dp))
-                        DeathSavesRow(viewModel)
+                        DeathSavesRow(combatVm)
                     }
 
                     Spacer(modifier = Modifier.height(12.dp))
@@ -164,10 +172,10 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Button(onClick = { viewModel.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-5", fontFamily = Almendra, fontSize = 16.sp) }
-                        Button(onClick = { viewModel.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontFamily = Almendra, fontSize = 16.sp) }
-                        Button(onClick = { viewModel.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontFamily = Almendra, fontSize = 16.sp) }
-                        Button(onClick = { viewModel.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+5", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { combatVm.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-5", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { combatVm.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { combatVm.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { combatVm.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+5", fontFamily = Almendra, fontSize = 16.sp) }
                     }
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -181,17 +189,17 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text("Temp HP:", style = MaterialTheme.typography.labelLarge, color = TempHPBlau, modifier = Modifier.weight(1.5f))
-                        Button(onClick = { viewModel.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.6f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontSize = 14.sp) }
-                        Button(onClick = { viewModel.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze.copy(alpha = 0.7f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontSize = 14.sp) }
-                        Button(onClick = { viewModel.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("+12", fontSize = 14.sp) }
+                        Button(onClick = { combatVm.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.6f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontSize = 14.sp) }
+                        Button(onClick = { combatVm.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze.copy(alpha = 0.7f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontSize = 14.sp) }
+                        Button(onClick = { combatVm.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("+12", fontSize = 14.sp) }
                     }
 
-                    if (viewModel.goodberries > 0 || isRanger) {
+                    if (inventoryVm.goodberries > 0 || isRanger) {
                         Spacer(modifier = Modifier.height(12.dp))
                         Button(
-                            onClick = { viewModel.eatGoodberry() },
+                            onClick = { inventoryVm.eatGoodberry() },
                             modifier = Modifier.fillMaxWidth().height(48.dp),
-                            enabled = viewModel.currentHp < viewModel.maxHp,
+                            enabled = combatVm.currentHp < combatVm.maxHp,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Waldgruen,
                                 disabledContainerColor = EisenGrau
@@ -200,7 +208,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         ) {
                             Text("Beere essen (+1 HP)", fontFamily = Almendra, fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("(${viewModel.goodberries} übrig)", fontSize = 12.sp)
+                            Text("(${inventoryVm.goodberries} übrig)", fontSize = 12.sp)
                         }
                     }
                 }
@@ -224,7 +232,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     ) {
                         Text("Rüstungsklasse", style = MaterialTheme.typography.labelMedium, color = Waldgruen)
                         Text(
-                            viewModel.currentArmorClass.toString(),
+                            combatVm.currentArmorClass.toString(),
                             style = GrenzeGotischStyle.copy(fontSize = 48.sp),
                             color = TintenSchwarz
                         )
@@ -338,7 +346,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             Spacer(modifier = Modifier.height(8.dp))
 
             var showWeaponEditDialog by remember { mutableStateOf<Int?>(null) }
-               if (viewModel.availableWeapons.isEmpty()) {
+               if (inventoryVm.availableWeapons.isEmpty()) {
                 Text("Keine Waffen im Rucksack gefunden. Füge Waffen im Rucksack-Tab hinzu.", style = MaterialTheme.typography.bodySmall, color = TintenBraun, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, modifier = Modifier.padding(8.dp))
             } else {
                 // Horizontale scrollbare Liste für Waffen
@@ -346,14 +354,14 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    viewModel.availableWeapons.forEach { weaponName ->
+                    inventoryVm.availableWeapons.forEach { weaponName ->
                         WeaponButton(
                             title = weaponName,
-                            isSelected = viewModel.equippedWeaponName == weaponName,
+                            isSelected = combatVm.equippedWeaponName == weaponName,
                             accentColor = accentColor,
                             modifier = Modifier.defaultMinSize(minWidth = 130.dp)
                         ) {
-                            viewModel.equipWeaponByName(weaponName)
+                            combatVm.equipWeaponByName(weaponName)
                         }
                     }
                 }
@@ -364,21 +372,21 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             // Schild-Logik Checkbox
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
-                    checked = viewModel.isShieldEquipped,
-                    onCheckedChange = { viewModel.toggleShield(it) },
-                    enabled = viewModel.hasShieldInInventory,
+                    checked = combatVm.isShieldEquipped,
+                    onCheckedChange = { combatVm.toggleShield(it) },
+                    enabled = inventoryVm.hasShieldInInventory,
                     colors = CheckboxDefaults.colors(checkedColor = accentColor)
                 )
                 Text(
-                    "Schild anlegen (+2 RK)", 
-                    style = MaterialTheme.typography.bodyMedium, 
-                    color = if (viewModel.hasShieldInInventory) TintenSchwarz else EisenGrau
+                    "Schild anlegen (+2 RK)",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = if (inventoryVm.hasShieldInInventory) TintenSchwarz else EisenGrau
                 )
             }
             if (showWeaponEditDialog != null) {
                 val index = showWeaponEditDialog!!
-                val currentName = viewModel.getWeaponName(index).replace("\n", " ")
-                
+                val currentName = combatVm.getWeaponName(index).replace("\n", " ")
+
                 var newName by remember { mutableStateOf(currentName) }
 
                 AlertDialog(
@@ -394,7 +402,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                     },
                     confirmButton = {
                         Button(onClick = {
-                            viewModel.saveWeaponName(index, newName.replace(" & ", "\n& "))
+                            combatVm.saveWeaponName(index, newName.replace(" & ", "\n& "))
                             showWeaponEditDialog = null
                         }) { Text("Speichern", fontFamily = Almendra) }
                     },
@@ -404,7 +412,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                 )
             }
 
-            val equippedName = viewModel.equippedWeaponName ?: ""
+            val equippedName = combatVm.equippedWeaponName ?: ""
             val isVersatile = equippedName.contains("Kriegshammer", ignoreCase = true) ||
                               equippedName.contains("Speer", ignoreCase = true) ||
                               equippedName.contains("Shillelagh", ignoreCase = true) ||
@@ -412,16 +420,16 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                               equippedName.contains("Langschwert", ignoreCase = true) ||
                               equippedName.contains("Streitaxt", ignoreCase = true) ||
                               equippedName.contains("Dreizack", ignoreCase = true)
-            
+
             if (isVersatile) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Checkbox(
-                        checked = viewModel.isUsingTwoHanded,
-                        onCheckedChange = { viewModel.toggleTwoHanded(it) },
+                        checked = combatVm.isUsingTwoHanded,
+                        onCheckedChange = { combatVm.toggleTwoHanded(it) },
                         colors = CheckboxDefaults.colors(checkedColor = accentColor)
                     )
-                    val hint = if (viewModel.isShieldEquipped) " (Deaktiviert Schild-Bonus)" else ""
+                    val hint = if (combatVm.isShieldEquipped) " (Deaktiviert Schild-Bonus)" else ""
                     Text("Zweihändig führen$hint", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                 }
             }
@@ -436,13 +444,13 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = if(viewModel.isMageArmorActive) HexenLila else EisenGrau)
+                            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = if(combatVm.isMageArmorActive) HexenLila else EisenGrau)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Magierrüstung aktiv", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
                         }
                         Switch(
-                            checked = viewModel.isMageArmorActive,
-                            onCheckedChange = { viewModel.toggleMageArmor(it) },
+                            checked = combatVm.isMageArmorActive,
+                            onCheckedChange = { combatVm.toggleMageArmor(it) },
                             colors = SwitchDefaults.colors(checkedThumbColor = HexenLila, checkedTrackColor = HexenLila.copy(alpha = 0.5f))
                         )
                     }
@@ -454,13 +462,13 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
             // Anzeige der aktuellen Waffenwerte
             PergamentCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(12.dp)) {
-                    Text("Trefferbonus: ${viewModel.currentAttackBonus}", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
+                    Text("Trefferbonus: ${combatVm.currentAttackBonus}", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text("Schaden: ${viewModel.currentDamage}", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
+                    Text("Schaden: ${combatVm.currentDamage}", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    val extraNote = when (viewModel.currentWeapon) {
+                    val extraNote = when (combatVm.currentWeapon) {
                         ActiveWeapon.LANGBOGEN -> "Verlangsamen (Mastery): Tempo -3m.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
                         ActiveWeapon.KURZSCHWERT_SCHILD -> "Ärgern (Mastery): Nächster Angriff hat Vorteil.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
                         ActiveWeapon.SHILLELAGH_SCHILD -> "Umwerfen (Mastery): Ziel muss KON-RW (SG 12) bestehen oder liegt am Boden."
@@ -477,7 +485,7 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                 }
             }
 
-            if (viewModel.currentWeapon == ActiveWeapon.LANGBOGEN && isRanger) {
+            if (combatVm.currentWeapon == ActiveWeapon.LANGBOGEN && isRanger) {
                 Spacer(modifier = Modifier.height(16.dp))
                 PergamentCard(modifier = Modifier.fillMaxWidth()) {
                     Column(modifier = Modifier.padding(12.dp)) {
@@ -490,27 +498,27 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Column {
-                                Text("Verfügbar: ${viewModel.totalArrows}", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
-                                Text("Verschossen: ${viewModel.shotArrows}", style = MaterialTheme.typography.bodyMedium, color = if (viewModel.shotArrows > 0) OchsenblutRot else TintenSchwarz)
+                                Text("Verfügbar: ${inventoryVm.totalArrows}", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
+                                Text("Verschossen: ${inventoryVm.shotArrows}", style = MaterialTheme.typography.bodyMedium, color = if (inventoryVm.shotArrows > 0) OchsenblutRot else TintenSchwarz)
                             }
                             Button(
-                                onClick = { viewModel.shootArrow() },
-                                enabled = viewModel.totalArrows > 0,
+                                onClick = { inventoryVm.shootArrow() },
+                                enabled = inventoryVm.totalArrows > 0,
                                 colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot, disabledContainerColor = EisenGrau),
                                 modifier = Modifier.height(48.dp),
                                 shape = RoundedCornerShape(8.dp)
                             ) { Text("Schießen", fontFamily = Almendra, fontSize = 16.sp) }
                         }
 
-                        if (viewModel.shotArrows > 0) {
+                        if (inventoryVm.shotArrows > 0) {
                             Spacer(modifier = Modifier.height(12.dp))
                             HorizontalDivider(color = PergamentDunkel)
                             Spacer(modifier = Modifier.height(8.dp))
                             Text("Nach dem Kampf:", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                             Spacer(modifier = Modifier.height(4.dp))
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                Button(onClick = { viewModel.recoverArrows() }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), modifier = Modifier.weight(1f).padding(end = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("½ Einsammeln", fontSize = 16.sp, fontFamily = Almendra) }
-                                Button(onClick = { viewModel.discardShotArrows() }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.7f)), modifier = Modifier.weight(1f).padding(start = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("Alle verloren", fontSize = 16.sp, fontFamily = Almendra) }
+                                Button(onClick = { inventoryVm.recoverArrows() }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), modifier = Modifier.weight(1f).padding(end = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("½ Einsammeln", fontSize = 16.sp, fontFamily = Almendra) }
+                                Button(onClick = { inventoryVm.discardShotArrows() }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.7f)), modifier = Modifier.weight(1f).padding(start = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("Alle verloren", fontSize = 16.sp, fontFamily = Almendra) }
                             }
                         }
 
@@ -521,9 +529,9 @@ fun CombatScreen(viewModel: CharacterViewModel, onNavigateToRucksack: () -> Unit
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                             Text("Pfeile...", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                             Row {
-                                Button(onClick = { viewModel.changeTotalArrows(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("- Ablegen", fontSize = 16.sp, fontFamily = Almendra) }
+                                Button(onClick = { inventoryVm.changeTotalArrows(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("- Ablegen", fontSize = 16.sp, fontFamily = Almendra) }
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Button(onClick = { viewModel.changeTotalArrows(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("+ Aufnehmen", fontSize = 16.sp, fontFamily = Almendra) }
+                                Button(onClick = { inventoryVm.changeTotalArrows(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("+ Aufnehmen", fontSize = 16.sp, fontFamily = Almendra) }
                             }
                         }
                         // Loot-Button
@@ -624,16 +632,16 @@ fun WeaponButton(title: String, isSelected: Boolean, accentColor: Color, modifie
 }
 
 @Composable
-fun DeathSavesRow(viewModel: CharacterViewModel) {
+fun DeathSavesRow(combatVm: CombatViewModel) {
     var showSuccessDialog by remember { mutableStateOf(false) }
     var showFailureDialog by remember { mutableStateOf(false) }
 
-    LaunchedEffect(viewModel.deathSaveSuccesses) {
-        if (viewModel.deathSaveSuccesses >= 3) showSuccessDialog = true
+    LaunchedEffect(combatVm.deathSaveSuccesses) {
+        if (combatVm.deathSaveSuccesses >= 3) showSuccessDialog = true
     }
 
-    LaunchedEffect(viewModel.deathSaveFailures) {
-        if (viewModel.deathSaveFailures >= 3) showFailureDialog = true
+    LaunchedEffect(combatVm.deathSaveFailures) {
+        if (combatVm.deathSaveFailures >= 3) showFailureDialog = true
     }
 
     if (showSuccessDialog) {
@@ -667,14 +675,14 @@ fun DeathSavesRow(viewModel: CharacterViewModel) {
                 Text("Erfolge:", style = MaterialTheme.typography.labelMedium, color = TodRuneGruen)
                 Spacer(modifier = Modifier.width(4.dp))
                 repeat(3) { index ->
-                    val checked = index < viewModel.deathSaveSuccesses
+                    val checked = index < combatVm.deathSaveSuccesses
                     Icon(
                         imageVector = if (checked) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
                         contentDescription = "Erfolg",
                         tint = if (checked) TodRuneGruen else EisenGrau,
                         modifier = Modifier.size(24.dp).clickable {
-                            if (checked) viewModel.updateDeathSaves(index, viewModel.deathSaveFailures)
-                            else viewModel.updateDeathSaves(index + 1, viewModel.deathSaveFailures)
+                            if (checked) combatVm.updateDeathSaves(index, combatVm.deathSaveFailures)
+                            else combatVm.updateDeathSaves(index + 1, combatVm.deathSaveFailures)
                         }
                     )
                 }
@@ -684,14 +692,14 @@ fun DeathSavesRow(viewModel: CharacterViewModel) {
                 Text("Fehlschläge:", style = MaterialTheme.typography.labelMedium, color = TodRuneRot)
                 Spacer(modifier = Modifier.width(4.dp))
                 repeat(3) { index ->
-                    val checked = index < viewModel.deathSaveFailures
+                    val checked = index < combatVm.deathSaveFailures
                     Icon(
                         imageVector = if (checked) Icons.Default.Cancel else Icons.Default.RadioButtonUnchecked,
                         contentDescription = "Fehlschlag",
                         tint = if (checked) TodRuneRot else EisenGrau,
                         modifier = Modifier.size(24.dp).clickable {
-                            if (checked) viewModel.updateDeathSaves(viewModel.deathSaveSuccesses, index)
-                            else viewModel.updateDeathSaves(viewModel.deathSaveSuccesses, index + 1)
+                            if (checked) combatVm.updateDeathSaves(combatVm.deathSaveSuccesses, index)
+                            else combatVm.updateDeathSaves(combatVm.deathSaveSuccesses, index + 1)
                         }
                     )
                 }

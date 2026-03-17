@@ -34,11 +34,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.*
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+import com.example.dndcompanion.ui.viewmodel.GroupViewModel
+import com.example.dndcompanion.ui.viewmodel.InventoryViewModel
 import com.example.dndcompanion.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RucksackScreen(viewModel: CharacterViewModel) {
+fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewModel, groupVm: GroupViewModel) {
     var newItemName by remember { mutableStateOf("") }
     var newItemWeight by remember { mutableStateOf("") }
     var newItemCategory by remember { mutableStateOf("Sonstiges") }
@@ -323,7 +325,7 @@ fun RucksackScreen(viewModel: CharacterViewModel) {
                                 }
                             }
                         } else {
-                            GroupLootView(viewModel)
+                            GroupLootView(viewModel, groupVm)
                         }
                     }
                 }
@@ -451,7 +453,7 @@ fun CoinRow(name: String, amount: String, coinColor: Color, onMinus: (Int) -> Un
 }
 
 @Composable
-fun GroupLootView(viewModel: CharacterViewModel) {
+fun GroupLootView(viewModel: CharacterViewModel, groupVm: GroupViewModel) {
     var newItemName by remember { mutableStateOf("") }
     var isMoneyBagExpanded by remember { mutableStateOf(false) }
 
@@ -467,9 +469,9 @@ fun GroupLootView(viewModel: CharacterViewModel) {
             }
             if (isMoneyBagExpanded) {
                 Spacer(modifier = Modifier.height(12.dp))
-                CoinRow("KM", viewModel.sharedCoins.km.toString(), Color(0xFFCD7F32), onMinus = { viewModel.updateSharedCoins((viewModel.sharedCoins.km - it).coerceAtLeast(0), viewModel.sharedCoins.sm, viewModel.sharedCoins.em, viewModel.sharedCoins.gm, viewModel.sharedCoins.pm) }, onPlus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km + it, viewModel.sharedCoins.sm, viewModel.sharedCoins.em, viewModel.sharedCoins.gm, viewModel.sharedCoins.pm) })
-                CoinRow("SM", viewModel.sharedCoins.sm.toString(), Color(0xFFC0C0C0), onMinus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, (viewModel.sharedCoins.sm - it).coerceAtLeast(0), viewModel.sharedCoins.em, viewModel.sharedCoins.gm, viewModel.sharedCoins.pm) }, onPlus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, viewModel.sharedCoins.sm + it, viewModel.sharedCoins.em, viewModel.sharedCoins.gm, viewModel.sharedCoins.pm) })
-                CoinRow("GM", viewModel.sharedCoins.gm.toString(), Color(0xFFFFD700), onMinus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, viewModel.sharedCoins.sm, viewModel.sharedCoins.em, (viewModel.sharedCoins.gm - it).coerceAtLeast(0), viewModel.sharedCoins.pm) }, onPlus = { viewModel.updateSharedCoins(viewModel.sharedCoins.km, viewModel.sharedCoins.sm, viewModel.sharedCoins.em, viewModel.sharedCoins.gm + it, viewModel.sharedCoins.pm) })
+                CoinRow("KM", groupVm.sharedCoins.km.toString(), Color(0xFFCD7F32), onMinus = { groupVm.updateSharedCoins((groupVm.sharedCoins.km - it).coerceAtLeast(0), groupVm.sharedCoins.sm, groupVm.sharedCoins.em, groupVm.sharedCoins.gm, groupVm.sharedCoins.pm) }, onPlus = { groupVm.updateSharedCoins(groupVm.sharedCoins.km + it, groupVm.sharedCoins.sm, groupVm.sharedCoins.em, groupVm.sharedCoins.gm, groupVm.sharedCoins.pm) })
+                CoinRow("SM", groupVm.sharedCoins.sm.toString(), Color(0xFFC0C0C0), onMinus = { groupVm.updateSharedCoins(groupVm.sharedCoins.km, (groupVm.sharedCoins.sm - it).coerceAtLeast(0), groupVm.sharedCoins.em, groupVm.sharedCoins.gm, groupVm.sharedCoins.pm) }, onPlus = { groupVm.updateSharedCoins(groupVm.sharedCoins.km, groupVm.sharedCoins.sm + it, groupVm.sharedCoins.em, groupVm.sharedCoins.gm, groupVm.sharedCoins.pm) })
+                CoinRow("GM", groupVm.sharedCoins.gm.toString(), Color(0xFFFFD700), onMinus = { groupVm.updateSharedCoins(groupVm.sharedCoins.km, groupVm.sharedCoins.sm, groupVm.sharedCoins.em, (groupVm.sharedCoins.gm - it).coerceAtLeast(0), groupVm.sharedCoins.pm) }, onPlus = { groupVm.updateSharedCoins(groupVm.sharedCoins.km, groupVm.sharedCoins.sm, groupVm.sharedCoins.em, groupVm.sharedCoins.gm + it, groupVm.sharedCoins.pm) })
             }
         }
     }
@@ -488,7 +490,7 @@ fun GroupLootView(viewModel: CharacterViewModel) {
                 colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = WaldGold)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = { if (newItemName.isNotBlank()) { viewModel.addSharedLootItem(newItemName.trim(), 1, 0.0, "Sonstiges"); newItemName = "" } }, colors = MetallButtonColors()) {
+            Button(onClick = { if (newItemName.isNotBlank()) { groupVm.addSharedLootItem(newItemName.trim(), 1, 0.0, "Sonstiges"); newItemName = "" } }, colors = MetallButtonColors()) {
                 Text("Hinzufügen")
             }
         }
@@ -496,15 +498,15 @@ fun GroupLootView(viewModel: CharacterViewModel) {
 
     Spacer(modifier = Modifier.height(16.dp))
 
-    viewModel.sharedLootItems.groupBy { it.category }.forEach { (cat, items) ->
+    groupVm.sharedLootItems.groupBy { it.category }.forEach { (cat, items) ->
         Text(cat, style = Typography.titleMedium, color = Waldgruen, modifier = Modifier.padding(vertical = 4.dp))
         items.forEach { item ->
             InventoryRow(
                 name = item.name,
                 amount = item.amount.toString(),
                 weight = item.weight,
-                onMinus = { viewModel.updateSharedLootItem(item.id, item.amount - 1) },
-                onPlus = { viewModel.updateSharedLootItem(item.id, item.amount + 1) }
+                onMinus = { groupVm.updateSharedLootItem(item.id, item.amount - 1) },
+                onPlus = { groupVm.updateSharedLootItem(item.id, item.amount + 1) }
             )
         }
     }

@@ -26,6 +26,14 @@ import androidx.compose.ui.draw.clip
 import com.example.dndcompanion.ui.screens.CombatScreen
 import com.example.dndcompanion.ui.screens.RucksackScreen
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+import com.example.dndcompanion.ui.viewmodel.GroupViewModel
+import com.example.dndcompanion.ui.viewmodel.GroupViewModelFactory
+import com.example.dndcompanion.ui.viewmodel.InventoryViewModel
+import com.example.dndcompanion.ui.viewmodel.InventoryViewModelFactory
+import com.example.dndcompanion.ui.viewmodel.SpellViewModel
+import com.example.dndcompanion.ui.viewmodel.SpellViewModelFactory
+import com.example.dndcompanion.ui.viewmodel.CombatViewModel
+import com.example.dndcompanion.ui.viewmodel.CombatViewModelFactory
 import com.example.dndcompanion.ui.screens.ZauberScreen
 import com.example.dndcompanion.ui.screens.HelpScreen
 import com.example.dndcompanion.ui.screens.ProfilScreen
@@ -57,14 +65,37 @@ class MainActivity : ComponentActivity() {
         setContent {
             DnDCompanionTheme {
                 val viewModel: CharacterViewModel = viewModel()
-                DnDApp(viewModel)
+                val groupViewModel: GroupViewModel = viewModel(
+                    factory = GroupViewModelFactory(application, viewModel)
+                )
+                val inventoryViewModel: InventoryViewModel = viewModel(
+                    factory = InventoryViewModelFactory(application, viewModel)
+                )
+                val spellViewModel: SpellViewModel = viewModel(
+                    factory = SpellViewModelFactory(application, viewModel)
+                )
+                val combatViewModel: CombatViewModel = viewModel(
+                    factory = CombatViewModelFactory(application, viewModel, spellViewModel, inventoryViewModel)
+                )
+                // Wire up cross-references
+                inventoryViewModel.combatVm = combatViewModel
+                spellViewModel.inventoryVm = inventoryViewModel
+                viewModel.connectSiblings(combatViewModel, spellViewModel, inventoryViewModel)
+
+                DnDApp(viewModel, groupViewModel, combatViewModel, spellViewModel, inventoryViewModel)
             }
         }
     }
 }
 
 @Composable
-fun DnDApp(viewModel: CharacterViewModel) {
+fun DnDApp(
+    viewModel: CharacterViewModel,
+    groupViewModel: GroupViewModel,
+    combatViewModel: CombatViewModel,
+    spellViewModel: SpellViewModel,
+    inventoryViewModel: InventoryViewModel
+) {
     // 0 = Athania, 1 = Urtier, 2 = Hilfe, 3 = Bücher
     var currentScreen by rememberSaveable { mutableStateOf(0) }
     var introOpacity by remember { mutableStateOf(1f) }
@@ -175,7 +206,7 @@ fun DnDApp(viewModel: CharacterViewModel) {
     ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
             when (currentScreen) {
-                0 -> AthaniaScreen(viewModel)
+                0 -> AthaniaScreen(viewModel, groupViewModel, combatViewModel, spellViewModel, inventoryViewModel)
                 1 -> {
                     if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER || viewModel.activeCharacterId == "Delat") {
                         CompanionScreen(viewModel)
@@ -188,7 +219,7 @@ fun DnDApp(viewModel: CharacterViewModel) {
                     viewModel.targetRulebookSearch = search
                     currentScreen = 3
                 })
-                3 -> BucherScreen(viewModel)
+                3 -> BucherScreen(viewModel, groupViewModel)
             }
         }
 
@@ -223,7 +254,13 @@ fun DnDApp(viewModel: CharacterViewModel) {
 }
 
 @Composable
-fun AthaniaScreen(viewModel: CharacterViewModel) {
+fun AthaniaScreen(
+    viewModel: CharacterViewModel,
+    groupViewModel: GroupViewModel,
+    combatViewModel: CombatViewModel,
+    spellViewModel: SpellViewModel,
+    inventoryViewModel: InventoryViewModel
+) {
     val tabs = AthaniaTab.entries.filter { it != AthaniaTab.Hilfe }
     val pagerState = rememberPagerState(initialPage = tabs.indexOf(AthaniaTab.Kampf), pageCount = { tabs.size })
     val coroutineScope = rememberCoroutineScope()
@@ -276,8 +313,11 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
         ) { page ->
             when (tabs[page]) {
                 AthaniaTab.Profil -> ProfilScreen(viewModel)
-                AthaniaTab.Kampf -> CombatScreen(viewModel, 
-                    onNavigateToRucksack = { 
+                AthaniaTab.Kampf -> CombatScreen(
+                    viewModel = viewModel,
+                    combatVm = combatViewModel,
+                    inventoryVm = inventoryViewModel,
+                    onNavigateToRucksack = {
                         coroutineScope.launch {
                             pagerState.animateScrollToPage(tabs.indexOf(AthaniaTab.Rucksack))
                         }
@@ -288,8 +328,8 @@ fun AthaniaScreen(viewModel: CharacterViewModel) {
                         }
                     }
                 )
-                AthaniaTab.Zauber -> ZauberScreen(viewModel)
-                AthaniaTab.Rucksack -> RucksackScreen(viewModel)
+                AthaniaTab.Zauber -> ZauberScreen(viewModel, spellViewModel, combatViewModel)
+                AthaniaTab.Rucksack -> RucksackScreen(viewModel, inventoryViewModel, groupViewModel)
                 else -> ProfilScreen(viewModel)
             }
         }

@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+import com.example.dndcompanion.ui.viewmodel.GroupViewModel
 import com.example.dndcompanion.ui.viewmodel.BookEntry
 import java.text.SimpleDateFormat
 import java.util.*
@@ -67,7 +68,7 @@ enum class BookType {
 }
 
 @Composable
-fun BucherScreen(viewModel: CharacterViewModel) {
+fun BucherScreen(viewModel: CharacterViewModel, groupVm: GroupViewModel) {
     var activeBook by remember { mutableStateOf<BookType?>(null) }
 
     LaunchedEffect(viewModel.targetRulebookChapter) {
@@ -102,17 +103,20 @@ fun BucherScreen(viewModel: CharacterViewModel) {
         } else if (activeBook == BookType.GROUP_CHAT) {
             GroupChatDetailView(
                 viewModel = viewModel,
+                groupVm = groupVm,
                 onBack = { activeBook = null }
             )
         } else if (activeBook == BookType.QUESTLOG) {
             QuestlogDetailView(
                 viewModel = viewModel,
+                groupVm = groupVm,
                 onBack = { activeBook = null }
             )
         } else {
             BookDetailView(
                 bookType = activeBook!!,
                 viewModel = viewModel,
+                groupVm = groupVm,
                 onBack = { activeBook = null }
             )
         }
@@ -233,9 +237,9 @@ fun BookCard(title: String, subtitle: String, imageRes: Int, onClick: () -> Unit
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, onBack: () -> Unit) {
+fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, groupVm: GroupViewModel, onBack: () -> Unit) {
     val privateEntries = if (bookType == BookType.GENERAL) viewModel.generalBookEntries else viewModel.grudgeBookEntries
-    val publicEntries = if (bookType == BookType.GENERAL) viewModel.publicGeneralBookEntries else viewModel.publicGrudgeBookEntries
+    val publicEntries = if (bookType == BookType.GENERAL) groupVm.publicGeneralBookEntries else groupVm.publicGrudgeBookEntries
     
     val title = if (bookType == BookType.GENERAL) "Notizbuch" else "Buch des Grolls"
     val tintColor = if (bookType == BookType.GENERAL) WaldgruenDunkel else OchsenblutRot
@@ -339,10 +343,19 @@ fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, onBack: ()
                             Button(
                                 onClick = {
                                     if (newEntryText.isNotBlank()) {
-                                        if (bookType == BookType.GENERAL) {
-                                            viewModel.addGeneralBookEntry(newEntryText, showPublicTab)
+                                        if (showPublicTab) {
+                                            val tempEntry = com.example.dndcompanion.ui.viewmodel.BookEntry(text = newEntryText.trim(), isPublic = true)
+                                            if (bookType == BookType.GENERAL) {
+                                                groupVm.addPublicGeneralBookEntry(tempEntry.id, newEntryText)
+                                            } else {
+                                                groupVm.addPublicGrudgeBookEntry(tempEntry.id, newEntryText)
+                                            }
                                         } else {
-                                            viewModel.addGrudgeBookEntry(newEntryText, showPublicTab)
+                                            if (bookType == BookType.GENERAL) {
+                                                viewModel.addGeneralBookEntry(newEntryText, false)
+                                            } else {
+                                                viewModel.addGrudgeBookEntry(newEntryText, false)
+                                            }
                                         }
                                         newEntryText = ""
                                     }
@@ -379,10 +392,18 @@ fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, onBack: ()
                                 Button(
                                     onClick = {
                                         if (editText.isNotBlank()) {
-                                            if (bookType == BookType.GENERAL) {
-                                                viewModel.updateGeneralBookEntry(editingEntryId!!, editText, showPublicTab)
+                                            if (showPublicTab) {
+                                                if (bookType == BookType.GENERAL) {
+                                                    groupVm.updatePublicGeneralBookEntry(editingEntryId!!, editText)
+                                                } else {
+                                                    groupVm.updatePublicGrudgeBookEntry(editingEntryId!!, editText)
+                                                }
                                             } else {
-                                                viewModel.updateGrudgeBookEntry(editingEntryId!!, editText, showPublicTab)
+                                                if (bookType == BookType.GENERAL) {
+                                                    viewModel.updateGeneralBookEntry(editingEntryId!!, editText, false)
+                                                } else {
+                                                    viewModel.updateGrudgeBookEntry(editingEntryId!!, editText, false)
+                                                }
                                             }
                                             editingEntryId = null
                                         }
@@ -1029,13 +1050,13 @@ fun ClassCard(cls: ClassEntity) {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
+fun GroupChatDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, onBack: () -> Unit) {
     var newMessageText by remember { mutableStateOf("") }
     var selectedTabIndex by remember { mutableIntStateOf(0) } // 0 = IC, 1 = OOC
     val isOoc = selectedTabIndex == 1
     val listState = androidx.compose.foundation.lazy.rememberLazyListState()
 
-    val filteredMessages = viewModel.groupChatMessages.filter { it.isOoc == isOoc }
+    val filteredMessages = groupVm.groupChatMessages.filter { it.isOoc == isOoc }
 
     LaunchedEffect(filteredMessages.size) {
         if (filteredMessages.isNotEmpty()) {
@@ -1067,7 +1088,7 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                         text = { Text("Möchtest du wirklich alle ${if (isOoc) "OOC" else "IC"} Nachrichten löschen? Dies kann nicht rückgängig gemacht werden.", color = TintenSchwarz) },
                         confirmButton = {
                             TextButton(onClick = {
-                                viewModel.deleteGroupChat(isOoc)
+                                groupVm.deleteGroupChat(isOoc)
                                 showDeleteDialog = false
                             }) {
                                 Text("Löschen", color = OchsenblutRot)
@@ -1146,7 +1167,7 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                         IconButton(
                             onClick = {
                                 if (newMessageText.isNotBlank()) {
-                                    viewModel.sendGroupMessage(newMessageText, isOoc)
+                                    groupVm.sendGroupMessage(newMessageText, isOoc)
                                     newMessageText = ""
                                 }
                             },
@@ -1209,12 +1230,12 @@ fun GroupChatMessageCard(message: com.example.dndcompanion.ui.viewmodel.GroupCha
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuestlogDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
+fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, onBack: () -> Unit) {
     var newQuestTitle by remember { mutableStateOf("") }
     var newQuestDesc by remember { mutableStateOf("") }
     var showCompleted by remember { mutableStateOf(false) }
-    
-    val currentQuests = viewModel.globalQuests.filter { it.isCompleted == showCompleted }
+
+    val currentQuests = groupVm.globalQuests.filter { it.isCompleted == showCompleted }
         .sortedByDescending { it.timestamp }
 
     PergamentBackground {
@@ -1296,7 +1317,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             Button(
                                 onClick = {
                                     if (newQuestTitle.isNotBlank()) {
-                                        viewModel.addQuest(newQuestTitle, newQuestDesc)
+                                        groupVm.addQuest(newQuestTitle, newQuestDesc)
                                         newQuestTitle = ""
                                         newQuestDesc = ""
                                     }
@@ -1333,12 +1354,12 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                                     Spacer(modifier = Modifier.width(8.dp))
                                     Checkbox(
                                         checked = quest.isCompleted,
-                                        onCheckedChange = { viewModel.toggleQuestCompletion(quest) },
+                                        onCheckedChange = { groupVm.toggleQuestCompletion(quest) },
                                         colors = CheckboxDefaults.colors(checkedColor = WaldgruenDunkel, uncheckedColor = TintenSchwarz.copy(alpha = 0.5f)),
                                         modifier = Modifier.size(48.dp).padding(8.dp)
                                     )
                                     IconButton(
-                                        onClick = { viewModel.deleteQuest(quest.id) },
+                                        onClick = { groupVm.deleteQuest(quest.id) },
                                         modifier = Modifier.size(48.dp)
                                     ) {
                                         Icon(Icons.Default.Clear, contentDescription = "Löschen", tint = if (quest.isCompleted) TintenSchwarz.copy(alpha = 0.5f) else Color.Red)

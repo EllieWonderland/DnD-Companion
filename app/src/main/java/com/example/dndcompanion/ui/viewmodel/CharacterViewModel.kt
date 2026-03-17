@@ -192,6 +192,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     var activeCharacterId by mutableStateOf("Athania")
         private set
 
+    private val _activeCharacterIdFlow = MutableStateFlow("Athania")
+    val activeCharacterIdFlow: StateFlow<String> = _activeCharacterIdFlow.asStateFlow()
+
     var characterData by mutableStateOf(CharacterRepository.getCharacter("Athania"))
         private set
 
@@ -541,10 +544,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     val strMod: Int get() = (strength - 10) / 2
-    val dexMod: Int get() {
-        val baseMod = (dexterity - 10) / 2
-        return if (isMageArmorActive) baseMod + 1 else baseMod
-    }
+    val dexMod: Int get() = (dexterity - 10) / 2
     val conMod: Int get() = (constitution - 10) / 2
     val intMod: Int get() = (intelligence - 10) / 2
     val wisMod: Int get() = (wisdom - 10) / 2
@@ -1038,15 +1038,17 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             // Kopie erstellen und verringern, um UI-Update auszulösen
             val updatedTrait = trait.copy(currentUses = trait.currentUses - 1)
             customTraits[index] = updatedTrait
-            
+
             // SPEZIAL-EFFEKTE basierend auf dem Zauber
             when (updatedTrait.grantedSpellId) {
                 "Gute Beere" -> {
-                    goodberries += 10
-                    prefs.edit { putInt("goodberries", goodberries) }
+                    inventoryVm?.changeGoodberries(10) ?: run {
+                        goodberries += 10
+                        prefs.edit { putInt("goodberries", goodberries) }
+                    }
                 }
                 "Falsches Leben" -> {
-                    applyFalseLife()
+                    combatVm?.applyFalseLife() ?: applyFalseLife()
                 }
             }
             saveTraits()
@@ -1174,6 +1176,44 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         saveTraits()
     }
 
+    // --- TRAIT RESET HELPERS (called by CombatViewModel) ---
+    fun resetTraitsForShortRest() {
+        var changed = false
+        customTraits.forEachIndexed { index, trait ->
+            if (trait.resetOnShortRest && trait.currentUses < trait.maxUses) {
+                customTraits[index] = trait.copy(currentUses = trait.maxUses)
+                changed = true
+            }
+        }
+        if (changed) saveTraits()
+    }
+
+    fun resetTraitsForLongRest() {
+        var changed = false
+        customTraits.forEachIndexed { index, trait ->
+            if (trait.currentUses < trait.maxUses) {
+                customTraits[index] = trait.copy(currentUses = trait.maxUses)
+                changed = true
+            }
+        }
+        if (changed) saveTraits()
+    }
+
+    // --- SIBLING VM VERBINDUNGEN ---
+    private var combatVm: CombatViewModel? = null
+    private var spellVm: SpellViewModel? = null
+    private var inventoryVm: InventoryViewModel? = null
+
+    fun connectSiblings(
+        combatVm: CombatViewModel,
+        spellVm: SpellViewModel,
+        inventoryVm: InventoryViewModel
+    ) {
+        this.combatVm = combatVm
+        this.spellVm = spellVm
+        this.inventoryVm = inventoryVm
+    }
+
     // --- WERTE ZURÜCKSETZEN ---
     fun resetToDefaults() {
         // Alle SharedPreferences löschen und Grundwerte gemäß characterData setzen
@@ -1231,6 +1271,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     fun loadProfile(characterId: String) {
         if (activeCharacterId == characterId) return
         activeCharacterId = characterId
+        _activeCharacterIdFlow.value = characterId
         characterData = CharacterRepository.getCharacter(characterId)
         prefs = getApplication<Application>().getSharedPreferences("${characterId}SaveGame", Context.MODE_PRIVATE)
 
