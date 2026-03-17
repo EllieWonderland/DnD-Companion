@@ -187,19 +187,17 @@ fun FeatureCard(
                     Button(
                         onClick = onUnlearn,
                         colors = ButtonDefaults.buttonColors(containerColor = EisenGrau),
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-                        modifier = Modifier.height(32.dp)
+                        modifier = Modifier.height(48.dp)
                     ) {
-                        Text("Vergessen", fontSize = 12.sp, fontFamily = Almendra)
+                        Text("Vergessen", fontSize = 14.sp, fontFamily = Almendra)
                     }
                 } else {
                     Button(
                         onClick = onLearn,
                         colors = MetallButtonColors(),
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
-                        modifier = Modifier.height(32.dp)
+                        modifier = Modifier.height(48.dp)
                     ) {
-                        Text("Wählen", fontSize = 12.sp, fontFamily = Almendra)
+                        Text("Wählen", fontSize = 14.sp, fontFamily = Almendra)
                     }
                 }
             }
@@ -210,7 +208,7 @@ fun FeatureCard(
                 feature.description,
                 style = MaterialTheme.typography.bodySmall,
                 color = TintenSchwarz,
-                lineHeight = 16.sp
+                lineHeight = 20.sp
             )
         }
     }

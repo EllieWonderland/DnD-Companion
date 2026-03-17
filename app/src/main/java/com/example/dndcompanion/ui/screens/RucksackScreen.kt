@@ -443,11 +443,11 @@ fun CoinRow(name: String, amount: String, coinColor: Color, onMinus: (Int) -> Un
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            TextButton(onClick = { onMinus(10) }, modifier = Modifier.size(width = 44.dp, height = 48.dp)) { Text("-10", fontSize = 12.sp, color = OchsenblutRot) }
-            IconButton(onClick = { onMinus(1) }, modifier = Modifier.size(48.dp)) { Icon(Icons.Default.Remove, null, tint = OchsenblutRot, modifier = Modifier.size(20.dp)) }
+            TextButton(onClick = { onMinus(10) }, modifier = Modifier.size(width = 48.dp, height = 48.dp)) { Text("-10", fontSize = 13.sp, color = OchsenblutRot) }
+            IconButton(onClick = { onMinus(1) }, modifier = Modifier.size(48.dp)) { Icon(Icons.Default.Remove, contentDescription = "-1 $name", tint = OchsenblutRot, modifier = Modifier.size(20.dp)) }
             Text(text = amount, style = GrenzeGotischSmall, modifier = Modifier.widthIn(min = 30.dp), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
-            IconButton(onClick = { onPlus(1) }, modifier = Modifier.size(48.dp)) { Icon(Icons.Default.Add, null, tint = Waldgruen, modifier = Modifier.size(20.dp)) }
-            TextButton(onClick = { onPlus(10) }, modifier = Modifier.size(width = 44.dp, height = 48.dp)) { Text("+10", fontSize = 12.sp, color = Waldgruen) }
+            IconButton(onClick = { onPlus(1) }, modifier = Modifier.size(48.dp)) { Icon(Icons.Default.Add, contentDescription = "+1 $name", tint = Waldgruen, modifier = Modifier.size(20.dp)) }
+            TextButton(onClick = { onPlus(10) }, modifier = Modifier.size(width = 48.dp, height = 48.dp)) { Text("+10", fontSize = 13.sp, color = Waldgruen) }
         }
     }
 }
@@ -465,7 +465,7 @@ fun GroupLootView(viewModel: CharacterViewModel, groupVm: GroupViewModel) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text("Gruppenkasse", style = Typography.titleLarge)
-                Icon(if (isMoneyBagExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore, null)
+                Icon(if (isMoneyBagExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore, contentDescription = if (isMoneyBagExpanded) "Einklappen" else "Ausklappen")
             }
             if (isMoneyBagExpanded) {
                 Spacer(modifier = Modifier.height(12.dp))

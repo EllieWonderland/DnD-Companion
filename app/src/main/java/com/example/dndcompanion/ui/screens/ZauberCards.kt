@@ -209,7 +209,7 @@ fun ExpandableFreeSpellCard(
                     Text(title, color = TintenSchwarz, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                     if (!expanded) {
                         val subText = if (maxUses >= 999) "Beliebig oft" else ""
-                        Text(subText, color = TintenBraun, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(subText, color = TintenBraun, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
 
@@ -237,7 +237,7 @@ fun ExpandableFreeSpellCard(
 
                 val usesInfo = if (maxUses >= 999) "Ein Beliebig oft wirkbarer Zauber." else "Regeneriert alle Nutzungen ($maxUses) nach einer Langen Rast."
                 Spacer(modifier = Modifier.height(6.dp))
-                Text(usesInfo, color = OchsenblutRot, fontSize = 12.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
+                Text(usesInfo, color = OchsenblutRot, fontSize = 13.sp, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
             }
         }
     }

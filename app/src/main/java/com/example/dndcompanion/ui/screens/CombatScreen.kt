@@ -189,9 +189,9 @@ fun CombatScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text("Temp HP:", style = MaterialTheme.typography.labelLarge, color = TempHPBlau, modifier = Modifier.weight(1.5f))
-                        Button(onClick = { combatVm.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.6f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontSize = 14.sp) }
-                        Button(onClick = { combatVm.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze.copy(alpha = 0.7f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontSize = 14.sp) }
-                        Button(onClick = { combatVm.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(40.dp), contentPadding = PaddingValues(0.dp)) { Text("+12", fontSize = 14.sp) }
+                        Button(onClick = { combatVm.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.6f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontSize = 14.sp) }
+                        Button(onClick = { combatVm.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze.copy(alpha = 0.7f)), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontSize = 14.sp) }
+                        Button(onClick = { combatVm.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+12", fontSize = 14.sp) }
                     }
 
                     if (inventoryVm.goodberries > 0 || isRanger) {
@@ -208,7 +208,7 @@ fun CombatScreen(
                         ) {
                             Text("Beere essen (+1 HP)", fontFamily = Almendra, fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("(${inventoryVm.goodberries} übrig)", fontSize = 12.sp)
+                            Text("(${inventoryVm.goodberries} übrig)", fontSize = 13.sp)
                         }
                     }
                 }

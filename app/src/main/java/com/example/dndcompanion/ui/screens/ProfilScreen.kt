@@ -348,8 +348,8 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                         Column(modifier = Modifier.padding(12.dp)) {
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                                 Text(trait.name, fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra)
-                                IconButton(onClick = { viewModel.removeCustomTrait(index) }, modifier = Modifier.size(24.dp)) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Löschen", tint = OchsenblutRot, modifier = Modifier.size(16.dp))
+                                IconButton(onClick = { viewModel.removeCustomTrait(index) }, modifier = Modifier.size(40.dp)) {
+                                    Icon(Icons.Default.Delete, contentDescription = "Löschen", tint = OchsenblutRot, modifier = Modifier.size(20.dp))
                                 }
                             }
                             Text(trait.desc, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
@@ -426,7 +426,7 @@ fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: 
             Text(name, style = MaterialTheme.typography.labelMedium, color = Waldgruen)
             Text(value, style = GrenzeGotischStyle, color = TintenSchwarz)
             Text(mod, style = GrenzeGotischSmall, color = OchsenblutRot)
-            Text(rw, style = MaterialTheme.typography.labelSmall.copy(fontSize = 10.sp), color = TintenBraun, textAlign = TextAlign.Center)
+            Text(rw, style = MaterialTheme.typography.labelSmall.copy(fontSize = 12.sp), color = TintenBraun, textAlign = TextAlign.Center)
         }
     }
 }

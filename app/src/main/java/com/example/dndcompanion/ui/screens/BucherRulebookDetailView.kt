@@ -304,7 +304,7 @@ fun RuleCard(rule: RuleEntity) {
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                     rule.tags.take(3).forEach { tag ->
-                        Text("#$tag", fontSize = 12.sp, style = GrenzeGotischSmall, color = WaldgruenDunkel)
+                        Text("#$tag", fontSize = 13.sp, style = GrenzeGotischSmall, color = WaldgruenDunkel)
                     }
                 }
             }
@@ -320,7 +320,7 @@ fun WeaponCard(weapon: WeaponEntity) {
                 Text(weapon.name, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TintenSchwarz)
                 Text(weapon.price, fontWeight = FontWeight.Bold, color = WaldGold, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
             }
-            Text(weapon.category, fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
+            Text(weapon.category, fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text("Schaden: ${weapon.damage}", color = OchsenblutRot, fontWeight = FontWeight.Medium)
@@ -328,7 +328,7 @@ fun WeaponCard(weapon: WeaponEntity) {
             }
             Text("Meisterschaft: ${weapon.mastery}", color = TintenSchwarz.copy(alpha = 0.9f))
             if (weapon.properties.isNotEmpty()) {
-                Text("Eigenschaften: ${weapon.properties.joinToString(", ")}", fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+                Text("Eigenschaften: ${weapon.properties.joinToString(", ")}", fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.8f))
             }
         }
     }
@@ -342,7 +342,7 @@ fun ArmorCard(armor: ArmorEntity) {
                 Text(armor.name, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TintenSchwarz)
                 Text(armor.price, fontWeight = FontWeight.Bold, color = WaldGold, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
             }
-            Text(armor.category, fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
+            Text(armor.category, fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
             Spacer(modifier = Modifier.height(8.dp))
 
             val dexModText = if (armor.addDexModifier) {
@@ -353,7 +353,7 @@ fun ArmorCard(armor: ArmorEntity) {
             val stealthText = if (armor.stealthDisadvantage) "Nachteil auf Heimlichkeit" else "Normale Heimlichkeit"
             val strengthText = if (armor.strengthRequirement > 0) "STR min. ${armor.strengthRequirement}" else "Keine STR-Anforderung"
 
-            Text("$stealthText | $strengthText | ${armor.weightLb} lb", fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+            Text("$stealthText | $strengthText | ${armor.weightLb} lb", fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.8f))
         }
     }
 }
@@ -364,9 +364,9 @@ fun ToolCard(tool: ToolEntity) {
         Row(modifier = Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(tool.name, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = TintenSchwarz)
-                Text(tool.category, fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
+                Text(tool.category, fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
                 if (tool.weightLb != null) {
-                    Text("Gewicht: ${tool.weightLb} lb", fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+                    Text("Gewicht: ${tool.weightLb} lb", fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.8f))
                 }
             }
             Text(tool.price, fontWeight = FontWeight.Bold, color = WaldGold, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
@@ -411,7 +411,7 @@ fun ClassCard(cls: ClassEntity) {
                     Text(sub.name, fontWeight = FontWeight.Bold, color = OchsenblutRot, modifier = Modifier.padding(top = 8.dp))
                     sub.features.forEach { sf ->
                         Text("Lv ${sf.level}: ${sf.name}", fontSize = 14.sp, fontWeight = FontWeight.Medium, color = TintenSchwarz)
-                        Text(sf.description, fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+                        Text(sf.description, fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.8f))
                     }
                 }
             }

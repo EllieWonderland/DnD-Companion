@@ -2,6 +2,7 @@ package com.example.dndcompanion.ui.screens
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -40,7 +41,7 @@ fun WeaponButton(title: String, isSelected: Boolean, accentColor: Color, modifie
             .defaultMinSize(minHeight = 64.dp),
         contentPadding = PaddingValues(4.dp)
     ) {
-        Text(text = title, fontFamily = Almendra, fontSize = 12.sp, textAlign = TextAlign.Center, lineHeight = 14.sp)
+        Text(text = title, fontFamily = Almendra, fontSize = 13.sp, textAlign = TextAlign.Center, lineHeight = 18.sp)
     }
 }
 
@@ -89,15 +90,20 @@ fun DeathSavesRow(combatVm: CombatViewModel) {
                 Spacer(modifier = Modifier.width(4.dp))
                 repeat(3) { index ->
                     val checked = index < combatVm.deathSaveSuccesses
-                    Icon(
-                        imageVector = if (checked) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
-                        contentDescription = "Erfolg",
-                        tint = if (checked) TodRuneGruen else EisenGrau,
-                        modifier = Modifier.size(24.dp).clickable {
+                    Box(
+                        modifier = Modifier.size(40.dp).clickable {
                             if (checked) combatVm.updateDeathSaves(index, combatVm.deathSaveFailures)
                             else combatVm.updateDeathSaves(index + 1, combatVm.deathSaveFailures)
-                        }
-                    )
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = if (checked) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+                            contentDescription = if (checked) "Erfolg gesetzt" else "Erfolg leer",
+                            tint = if (checked) TodRuneGruen else EisenGrau,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
                 }
             }
             // Fehlschläge
@@ -106,15 +112,20 @@ fun DeathSavesRow(combatVm: CombatViewModel) {
                 Spacer(modifier = Modifier.width(4.dp))
                 repeat(3) { index ->
                     val checked = index < combatVm.deathSaveFailures
-                    Icon(
-                        imageVector = if (checked) Icons.Default.Cancel else Icons.Default.RadioButtonUnchecked,
-                        contentDescription = "Fehlschlag",
-                        tint = if (checked) TodRuneRot else EisenGrau,
-                        modifier = Modifier.size(24.dp).clickable {
+                    Box(
+                        modifier = Modifier.size(40.dp).clickable {
                             if (checked) combatVm.updateDeathSaves(combatVm.deathSaveSuccesses, index)
                             else combatVm.updateDeathSaves(combatVm.deathSaveSuccesses, index + 1)
-                        }
-                    )
+                        },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = if (checked) Icons.Default.Cancel else Icons.Default.RadioButtonUnchecked,
+                            contentDescription = if (checked) "Fehlschlag gesetzt" else "Fehlschlag leer",
+                            tint = if (checked) TodRuneRot else EisenGrau,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
                 }
             }
         }

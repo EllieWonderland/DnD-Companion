@@ -364,19 +364,18 @@ fun ZauberScreen(
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
                                 Text("Segnen", color = Color.White, fontSize = 14.sp)
-                                Text("Talent: Eingeweihter", color = Color.LightGray, fontSize = 11.sp)
+                                Text("Talent: Eingeweihter", color = Color.White.copy(alpha = 0.75f), fontSize = 13.sp)
                             }
                             Text("${if (spellVm.freeBlessUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
                             Button(
                                 onClick = { spellVm.useFreeBless() },
                                 enabled = !spellVm.freeBlessUsed,
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                                modifier = Modifier.height(32.dp),
+                                modifier = Modifier.height(48.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
                                     contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
                                 )
-                            ) { Text("Wirken", fontSize = 10.sp) }
+                            ) { Text("Wirken", fontSize = 14.sp) }
                         }
 
                         // Nebelschritt
@@ -387,19 +386,18 @@ fun ZauberScreen(
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
                                 Text("Nebelschritt", color = Color.White, fontSize = 14.sp)
-                                Text("Talent: Feenberührt", color = Color.LightGray, fontSize = 11.sp)
+                                Text("Talent: Feenberührt", color = Color.White.copy(alpha = 0.75f), fontSize = 13.sp)
                             }
                             Text("${if (spellVm.freeMistyStepUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
                             Button(
                                 onClick = { spellVm.useFreeMistyStep() },
                                 enabled = !spellVm.freeMistyStepUsed,
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                                modifier = Modifier.height(32.dp),
+                                modifier = Modifier.height(48.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
                                     contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
                                 )
-                            ) { Text("Wirken", fontSize = 10.sp) }
+                            ) { Text("Wirken", fontSize = 14.sp) }
                         }
 
                         // Magierrüstung
@@ -410,7 +408,7 @@ fun ZauberScreen(
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
                                 Text("Magierrüstung", color = Color.White, fontSize = 14.sp)
-                                Text("Talent: Eingeweihter", color = Color.LightGray, fontSize = 11.sp)
+                                Text("Talent: Eingeweihter", color = Color.White.copy(alpha = 0.75f), fontSize = 13.sp)
                             }
                             Text("${if (spellVm.freeMageArmorUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
                             Button(
@@ -419,13 +417,12 @@ fun ZauberScreen(
                                     combatVm.toggleMageArmor(true) // Activate the AC effect
                                 },
                                 enabled = !spellVm.freeMageArmorUsed,
-                                contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
-                                modifier = Modifier.height(32.dp),
+                                modifier = Modifier.height(48.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
                                     contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
                                 )
-                            ) { Text("Wirken", fontSize = 10.sp) }
+                            ) { Text("Wirken", fontSize = 14.sp) }
                         }
                     }
                 }

@@ -272,7 +272,7 @@
 ### Stufe 13: Finishing Touches (Aufgaben für Gemini 3.1 Pro)
 - [x] **Code Analyse:** Code auf mögliche Verbesserungen prüfen
 - [ ] **Refactoring:** Code und Dateien aufräumen
-- [ ] **Accessibility:** Accessibility Check durchführen
+- [x] **Accessibility:** Accessibility Check durchführen
 
 ### Stufe 14: Code-Qualität & Refactoring (basierend auf Code-Analyse)
 

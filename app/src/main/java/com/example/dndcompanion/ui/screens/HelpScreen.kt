@@ -92,14 +92,14 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
         ) {
             Text(
                 text = "Modell: ${viewModel.currentUsedModel}",
-                fontSize = 12.sp,
+                fontSize = 13.sp,
                 color = TintenSchwarz,
                 fontFamily = Almendra,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = "Gemini Slots: ${viewModel.geminiMax - viewModel.geminiUsesToday} / ${viewModel.geminiMax}",
-                fontSize = 12.sp,
+                fontSize = 13.sp,
                 color = if (viewModel.geminiUsesToday >= viewModel.geminiMax) Color.Red else OchsenblutRot,
                 fontFamily = Almendra
             )
@@ -345,11 +345,11 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                     // --- LOKALER TEIL (Handbuch) ---
                     if (!message.localText.isNullOrBlank()) {
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)) {
-                            Icon(Icons.Default.Info, contentDescription = null, modifier = Modifier.size(14.dp), tint = OchsenblutRot)
+                            Icon(Icons.Default.Info, contentDescription = "Lokale Quelle", modifier = Modifier.size(16.dp), tint = OchsenblutRot)
                             Spacer(Modifier.width(4.dp))
                             Text(
                                 "LOKALES REGELWERK",
-                                fontSize = 11.sp,
+                                fontSize = 12.sp,
                                 fontWeight = FontWeight.Black,
                                 color = OchsenblutRot
                             )
@@ -396,11 +396,11 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                     // --- EXTERNER TEIL (Gemini) ---
                     if (!message.externalText.isNullOrBlank()) {
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)) {
-                            Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(14.dp), tint = WaldgruenDunkel)
+                            Icon(Icons.Default.Search, contentDescription = "Gemini Quelle", modifier = Modifier.size(16.dp), tint = WaldgruenDunkel)
                             Spacer(Modifier.width(4.dp))
                             Text(
                                 "GEMINI WISSEN (D&D 2024)",
-                                fontSize = 11.sp,
+                                fontSize = 12.sp,
                                 fontWeight = FontWeight.Black,
                                 color = WaldgruenDunkel
                             )

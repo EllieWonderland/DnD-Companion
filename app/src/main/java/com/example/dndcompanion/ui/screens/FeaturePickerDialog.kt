@@ -132,7 +132,7 @@ fun FeatureListItem(feature: FeatureEntity, onClick: () -> Unit) {
                 if (!feature.category.isNullOrBlank()) append(" - ${feature.category}")
                 if (feature.levelReq > 1) append(" (Ab Stufe ${feature.levelReq})")
             }.toString()
-            Text(subText, fontSize = 12.sp, style = GrenzeGotischSmall, color = TintenSchwarz.copy(alpha = 0.8f))
+            Text(subText, fontSize = 13.sp, style = GrenzeGotischSmall, color = TintenSchwarz.copy(alpha = 0.8f))
             
             Spacer(modifier = Modifier.height(4.dp))
             Material3RichText(modifier = Modifier.fillMaxWidth()) {
