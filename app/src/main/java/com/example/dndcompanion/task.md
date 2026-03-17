@@ -283,12 +283,12 @@
 
 #### Moderate Verbesserungen
 - [x] **CharacterViewModel aufteilen:** 2.659 Zeilen God Object in 5 fokussierte ViewModels gesplittet: `CombatViewModel`, `SpellViewModel`, `InventoryViewModel`, `GroupViewModel` + schlankes `CharacterViewModel`. Alle neuen VMs reagieren via `activeCharacterIdFlow` auf Charakterwechsel.
-- [ ] **SharedPreferences kapseln:** `PrefsManager`-Klasse erstellen, die alle `getSharedPreferences()`-Aufrufe zentral verwaltet.
-- [ ] **Feature-Logik entkoppeln:** String-Matching (`feature.name.contains("Erzfeind")`) durch Feature-Metadaten in der JSON-Struktur ersetzen.
-- [ ] **Waffen-Desync beheben:** `equippedWeaponName` und `InventoryItem.name` synchronisieren oder auf eine einzige Quelle reduzieren.
+- [x] **SharedPreferences kapseln:** `PrefsManager`-Klasse erstellen, die alle `getSharedPreferences()`-Aufrufe zentral verwaltet.
+- [x] **Feature-Logik entkoppeln:** String-Matching (`feature.name.contains("Erzfeind")`) durch Feature-Metadaten in der JSON-Struktur ersetzen.
+- [x] **Waffen-Desync beheben:** `equippedWeaponName` und `InventoryItem.name` synchronisieren oder auf eine einzige Quelle reduzieren.
 
 #### Code-Qualität
-- [ ] **Lange Screens aufteilen:** `BucherScreen.kt` (1.399 Z.), `ZauberScreen.kt` (1.122 Z.) und `CombatScreen.kt` (701 Z.) in Sub-Composables auslagern.
+- [x] **Lange Screens aufteilen:** `BucherScreen.kt` (1.399 Z.), `ZauberScreen.kt` (1.122 Z.) und `CombatScreen.kt` (701 Z.) in Sub-Composables auslagern.
 - [ ] **Doppelte DAO-Methoden konsolidieren:** 8× duplizierte `searchX()` / `searchXRaw()` Paare in `RulebookDao.kt` vereinfachen.
 - [ ] **Logging hinzufügen:** Stille Fehler in DB-Operationen und Firebase mit `android.util.Log` sichtbar machen.
 - [ ] **Unit Tests:** Kritische Logik testen (Slot-Berechnung Ranger vs. Warlock, Schadensformel, Gewichtskapazität).
