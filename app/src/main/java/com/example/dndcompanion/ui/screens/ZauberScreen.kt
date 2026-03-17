@@ -17,6 +17,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+import com.example.dndcompanion.ui.viewmodel.SpellViewModel
+import com.example.dndcompanion.ui.viewmodel.CombatViewModel
+import com.example.dndcompanion.ui.viewmodel.InventoryViewModel
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import com.example.dndcompanion.ui.theme.*
@@ -30,7 +33,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 
 @Composable
-fun ZauberScreen(viewModel: CharacterViewModel) {
+fun ZauberScreen(
+    viewModel: CharacterViewModel,
+    spellVm: SpellViewModel,
+    combatVm: CombatViewModel
+) {
     // Diese Variablen steuern, ob das Popup sichtbar ist und was eingetippt wurde
     var showShortRestDialog by remember { mutableStateOf(false) }
     var showLongRestDialog by remember { mutableStateOf(false) }
@@ -76,7 +83,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 ) {
                     Button(
                         onClick = { showShortRestDialog = true },
-                        enabled = viewModel.hitDice > 0,
+                        enabled = combatVm.hitDice > 0,
                         colors = ButtonDefaults.buttonColors(containerColor = Bronze),
                         modifier = Modifier.weight(1f).fillMaxHeight(),
                         contentPadding = PaddingValues(0.dp),
@@ -85,9 +92,9 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         Text("Kurze\nRast", fontSize = 14.sp, lineHeight = 16.sp, textAlign = TextAlign.Center)
                     }
                     Button(
-                        onClick = { 
-                            viewModel.attemptLongRest() 
-                            if (!viewModel.showRestWarningDialog) showLongRestDialog = true
+                        onClick = {
+                            combatVm.attemptLongRest()
+                            if (!combatVm.showRestWarningDialog) showLongRestDialog = true
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
                         modifier = Modifier.weight(1f).fillMaxHeight(),
@@ -100,7 +107,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             }
 
             // --- KOSTENLOSE ZAUBER (TALENTE) ---
-            val globalSpellbook by viewModel.globalSpellbook.collectAsState()
+            val globalSpellbook by spellVm.globalSpellbook.collectAsState()
 
             Card(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
@@ -113,11 +120,11 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                     val freeFeatures = viewModel.customTraits.filter { trait ->
                         val spellId = trait.grantedSpellId
                         if (spellId == null) return@filter false
-                        
+
                         // Ignoriere die alten "Amulett"-Traits, da diese nun unten dynamisch geladen werden
                         if (spellId.equals("Wunden heilen", ignoreCase = true) || spellId.equals("Heilendes Wort", ignoreCase = true)) return@filter false
 
-                        viewModel.allSpells.any { spell -> 
+                        spellVm.allSpells.any { spell ->
                             spell.name.equals(spellId, ignoreCase = true)
                         }
                     }
@@ -137,7 +144,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
 
                     // --- GEGENSTANDS-ZAUBER (Fokus / Amulett) ---
                     // "Wunden heilen" oder "Heilendes Wort" sofern vorbereitet
-                    val amuletSpell = viewModel.allSpells.find { spell ->
+                    val amuletSpell = spellVm.allSpells.find { spell ->
                         (spell.name.equals("Wunden heilen", ignoreCase = true) || spell.name.equals("Heilendes Wort", ignoreCase = true)) && spell.isPrepared
                     }
                     if (amuletSpell != null) {
@@ -147,10 +154,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         ExpandableFreeSpellCard(
                             title = amuletSpell.name,
                             description = fullDescription,
-                            currentUses = if (viewModel.freeAmuletSpellUsed) 0 else 1,
+                            currentUses = if (spellVm.freeAmuletSpellUsed) 0 else 1,
                             maxUses = 1,
                             accentColor = accentColor,
-                            onCast = { viewModel.useFreeAmuletSpell() }
+                            onCast = { spellVm.useFreeAmuletSpell() }
                         )
                     }
 
@@ -182,10 +189,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             Text("Vielseitige Waldläufer-Magie", color = Color.White, fontSize = 14.sp)
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("${viewModel.spellSlotsLevel1} / 3", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                            Text("${spellVm.spellSlotsLevel1} / 3", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                             Button(
-                                onClick = { viewModel.useSpellSlotLevel1() },
-                                enabled = viewModel.spellSlotsLevel1 > 0,
+                                onClick = { spellVm.useSpellSlotLevel1() },
+                                enabled = spellVm.spellSlotsLevel1 > 0,
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
                                     contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White,
@@ -197,12 +204,12 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         }
                     }
                     
-                    if (viewModel.allSpells.any { it.name.contains("gute beere", ignoreCase = true) && it.isPrepared }) {
+                    if (spellVm.allSpells.any { it.name.contains("gute beere", ignoreCase = true) && it.isPrepared }) {
                         HorizontalDivider(color = PergamentHell)
                         Button(
-                            onClick = { viewModel.castGoodberry() },
+                            onClick = { combatVm.castGoodberry() },
                             modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp),
-                            enabled = viewModel.spellSlotsLevel1 > 0,
+                            enabled = spellVm.spellSlotsLevel1 > 0,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Waldgruen,
                                 disabledContainerColor = EisenGrau
@@ -211,7 +218,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         ) {
                             Text("Gute Beere wirken", fontFamily = Almendra, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("(${viewModel.goodberries} im Inventar)", fontSize = 12.sp)
+                            Text("(${combatVm.inventoryVm?.goodberries ?: 0} im Inventar)", fontSize = 12.sp)
                         }
                     }
                 }
@@ -232,10 +239,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 Text("Fortgeschrittene Naturkräfte", color = Color.White, fontSize = 14.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("${viewModel.spellSlotsLevel2} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                                Text("${spellVm.spellSlotsLevel2} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                                 Button(
-                                    onClick = { viewModel.useSpellSlotLevel2() },
-                                    enabled = viewModel.spellSlotsLevel2 > 0,
+                                    onClick = { spellVm.useSpellSlotLevel2() },
+                                    enabled = spellVm.spellSlotsLevel2 > 0,
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
                                         contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White,
@@ -265,10 +272,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 Text("Mächtige Waldläufer-Künste", color = Color.White, fontSize = 14.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("${viewModel.spellSlotsLevel3} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                                Text("${spellVm.spellSlotsLevel3} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                                 Button(
-                                    onClick = { viewModel.useSpellSlotLevel3() },
-                                    enabled = viewModel.spellSlotsLevel3 > 0,
+                                    onClick = { spellVm.useSpellSlotLevel3() },
+                                    enabled = spellVm.spellSlotsLevel3 > 0,
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
                                         contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White,
@@ -284,7 +291,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             } else if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.WARLOCK) {
                 // --- WARLOCK PAKTMAGIE ---
                 val maxSlotsLevel2 = viewModel.characterData.baseSpellSlotsLevel2
-                val currentSlotsLevel2 = viewModel.spellSlotsLevel2
+                val currentSlotsLevel2 = spellVm.spellSlotsLevel2
 
                 Card(
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
@@ -303,7 +310,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text("$currentSlotsLevel2 / $maxSlotsLevel2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                                 Button(
-                                    onClick = { viewModel.useSpellSlotLevel2() },
+                                    onClick = { spellVm.useSpellSlotLevel2() },
                                     enabled = currentSlotsLevel2 > 0,
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
@@ -320,24 +327,24 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                         
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                             Button(
-                                onClick = { viewModel.resetWarlockSlots() },
+                                onClick = { spellVm.resetWarlockSlots() },
                                 colors = ButtonDefaults.buttonColors(containerColor = Waldgruen)
                             ) {
                                 Text("Kurze Rast Reg.", fontSize = 12.sp)
                             }
-                            
+
                             Button(
-                                onClick = { viewModel.applyMagicalCunning() },
+                                onClick = { spellVm.applyMagicalCunning() },
                                 colors = ButtonDefaults.buttonColors(containerColor = HexenLila)
                             ) {
                                 Text("Magische Rafinesse", color = PergamentHell, fontSize = 12.sp)
                             }
                         }
-                        
+
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         Button(
-                            onClick = { viewModel.applyFalseLife() },
+                            onClick = { combatVm.applyFalseLife() },
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(containerColor = accentColor)
                         ) {
@@ -359,10 +366,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 Text("Segnen", color = Color.White, fontSize = 14.sp)
                                 Text("Talent: Eingeweihter", color = Color.LightGray, fontSize = 11.sp)
                             }
-                            Text("${if (viewModel.freeBlessUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
+                            Text("${if (spellVm.freeBlessUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
                             Button(
-                                onClick = { viewModel.useFreeBless() },
-                                enabled = !viewModel.freeBlessUsed,
+                                onClick = { spellVm.useFreeBless() },
+                                enabled = !spellVm.freeBlessUsed,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
                                 colors = ButtonDefaults.buttonColors(
@@ -382,10 +389,10 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 Text("Nebelschritt", color = Color.White, fontSize = 14.sp)
                                 Text("Talent: Feenberührt", color = Color.LightGray, fontSize = 11.sp)
                             }
-                            Text("${if (viewModel.freeMistyStepUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
+                            Text("${if (spellVm.freeMistyStepUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
                             Button(
-                                onClick = { viewModel.useFreeMistyStep() },
-                                enabled = !viewModel.freeMistyStepUsed,
+                                onClick = { spellVm.useFreeMistyStep() },
+                                enabled = !spellVm.freeMistyStepUsed,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
                                 colors = ButtonDefaults.buttonColors(
@@ -405,13 +412,13 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 Text("Magierrüstung", color = Color.White, fontSize = 14.sp)
                                 Text("Talent: Eingeweihter", color = Color.LightGray, fontSize = 11.sp)
                             }
-                            Text("${if (viewModel.freeMageArmorUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
+                            Text("${if (spellVm.freeMageArmorUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
                             Button(
-                                onClick = { 
-                                    viewModel.useFreeMageArmor()
-                                    viewModel.toggleMageArmor(true) // Activate the AC effect
+                                onClick = {
+                                    spellVm.useFreeMageArmor()
+                                    combatVm.toggleMageArmor(true) // Activate the AC effect
                                 },
-                                enabled = !viewModel.freeMageArmorUsed,
+                                enabled = !spellVm.freeMageArmorUsed,
                                 contentPadding = PaddingValues(horizontal = 8.dp, vertical = 4.dp),
                                 modifier = Modifier.height(32.dp),
                                 colors = ButtonDefaults.buttonColors(
@@ -440,7 +447,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
             }
             Spacer(modifier = Modifier.height(8.dp))
 
-            val preparedSpells = viewModel.allSpells.filter { it.isPrepared }
+            val preparedSpells = spellVm.allSpells.filter { it.isPrepared }
             val cantrips = preparedSpells.filter { it.level == 0 }
             val leveledSpells = preparedSpells.filter { it.level > 0 }.sortedBy { it.level }
 
@@ -449,7 +456,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 cantrips.forEach { spell ->
                     SpellCard(
                         spell = spell,
-                        onCastAsRitual = if (viewModel.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null,
+                        onCastAsRitual = if (spellVm.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null,
                         globalSpellbook = globalSpellbook
                     )
                 }
@@ -461,7 +468,7 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                 leveledSpells.forEach { spell ->
                     SpellCard(
                         spell = spell,
-                        onCastAsRitual = if (viewModel.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null,
+                        onCastAsRitual = if (spellVm.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null,
                         globalSpellbook = globalSpellbook
                     )
                 }
@@ -589,8 +596,8 @@ fun ZauberScreen(viewModel: CharacterViewModel) {
                                 IconButton(onClick = { if (hitDiceToSpend > 0) hitDiceToSpend-- }) {
                                     Icon(androidx.compose.material.icons.Icons.Default.Remove, contentDescription = "Weniger", tint = TintenSchwarz)
                                 }
-                                Text("$hitDiceToSpend / ${viewModel.hitDice}", color = TintenSchwarz, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                                IconButton(onClick = { if (hitDiceToSpend < viewModel.hitDice) hitDiceToSpend++ }) {
+                                Text("$hitDiceToSpend / ${combatVm.hitDice}", color = TintenSchwarz, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                                IconButton(onClick = { if (hitDiceToSpend < combatVm.hitDice) hitDiceToSpend++ }) {
                                     Icon(androidx.compose.material.icons.Icons.Default.Add, contentDescription = "Mehr", tint = TintenSchwarz)
                                 }
                             }
