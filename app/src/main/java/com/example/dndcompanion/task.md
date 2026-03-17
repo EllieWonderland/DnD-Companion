@@ -282,7 +282,7 @@
 - [x] **Todeswürfe Auto-Reset:** `updateDeathSaves(0, 0)` in `forceLongRest()` ergänzt — Todeswürfe werden jetzt bei langer Rast automatisch zurückgesetzt.
 
 #### Moderate Verbesserungen
-- [ ] **CharacterViewModel aufteilen:** 2.659 Zeilen God Object in kleinere ViewModels splitten: `CombatViewModel`, `SpellbookViewModel`, `InventoryViewModel`, `GroupSocialViewModel`.
+- [x] **CharacterViewModel aufteilen:** 2.659 Zeilen God Object in 5 fokussierte ViewModels gesplittet: `CombatViewModel`, `SpellViewModel`, `InventoryViewModel`, `GroupViewModel` + schlankes `CharacterViewModel`. Alle neuen VMs reagieren via `activeCharacterIdFlow` auf Charakterwechsel.
 - [ ] **SharedPreferences kapseln:** `PrefsManager`-Klasse erstellen, die alle `getSharedPreferences()`-Aufrufe zentral verwaltet.
 - [ ] **Feature-Logik entkoppeln:** String-Matching (`feature.name.contains("Erzfeind")`) durch Feature-Metadaten in der JSON-Struktur ersetzen.
 - [ ] **Waffen-Desync beheben:** `equippedWeaponName` und `InventoryItem.name` synchronisieren oder auf eine einzige Quelle reduzieren.
