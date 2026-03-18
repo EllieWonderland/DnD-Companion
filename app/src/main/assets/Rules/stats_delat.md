@@ -22,7 +22,7 @@
 
 ## Kampf-Statistiken
 * **Rüstungsklasse (RK):** 12 
-* **Trefferpunkte (HP):** 35 / 47 (Max) 
+* **Trefferpunkte (HP):** 35 (Max) + 12 Temporäre HP (Unholde Vitalität)
 * **Trefferwürfel:** 4W8 
 * **Initiative:** +2 
 * **Bewegungsrate:** 9 
@@ -68,7 +68,6 @@
 * **Magische Rafinesse:** 1/LR 1min Ritus, Hälfte der Zauberplätze zurück (abgerundet bzw. aufgerundet laut Bogen). 
 * **Erwachter Geist:** Telepathische Verbindung zwischen mir und einem anderen Geist: BA auf eine Kreatur in max. 9m: telepathische Kommunikation. Höchster Abstand: CM*1,6km. Selbe Sprache. Dauer: Hexerstufe in Minuten. 
 * **Psychische Zauber:** Ich kann die Schadensart von Hexenmeisterzaubern in psychisch ändern. Keine Verbal- oder Gestenkomponente bei Verzauberungs- oder Illusionszaubern. 
-* **Macht der Tiefe:** Greife einen Verbündeten mit deinem schaurigen Strahl an. Danach kannst du mit deinem schaurigen Strahl mit Vorteil angreifen. Der Verbündete erhält 1 Runde Fluch. 
 
 ### Talente
 * **Eingeweihter der Magie:** (Magier) 
@@ -86,7 +85,6 @@
   * Totenläuten - A, 18m, VG 
   * Einfache Illusion - A, 9m, 1min 
   * Donnerschlag - A, Selbst 
-  * Paktwaffe - BA, Selbst 
   * Magierhand - A, 9m, VG; 1 min 
 * **Zauber (Level 1):**
   * Verwünschen - BA, 27m, 1Std 
@@ -128,7 +126,7 @@
 
 ## Sonstiges
 * **Sprachen:** Gemeinsprache, Elfisch, Zwergisch 
-* **Geübt im Umgang mit:** * Rüstung: Leichte, Mittlere 
+* **Geübt im Umgang mit:** * Rüstung: Leichte
   * **Waffen:** Einfache Waffen, Paktwaffe 
   * **Werkzeuge:** Schusterwerkzeug 
 * **Hintergrundgeschichte & Persönlichkeit:**

@@ -2,7 +2,7 @@
 
 Dieses Kapitel liefert alle relevanten mechanischen Tabellen für die Ausrüstung eines Charakters, einschließlich Waffen, Rüstungen, Werkzeugen, Abenteuerausrüstung und Dienstleistungen. 
 
-*Hinweis für Berechnungen: Alle Gewichtsangaben sind in Pfund (Pfd. / lb.). Preise sind in Kupfermünzen (KM / CP), Silbermünzen (SM / SP), Elektrummünzen (EM / EP), Goldmünzen (GM / GP) und Platinmünzen (PM / PP) angegeben.*
+*Hinweis für Berechnungen: Alle Gewichtsangaben sind in Kilogramm (kg). Preise sind in Kupfermünzen (KM / CP), Silbermünzen (SM / SP), Elektrummünzen (EM / EP), Goldmünzen (GM / GP) und Platinmünzen (PM / PP) angegeben.*
 
 ## 1. Münzen (Coins)
 

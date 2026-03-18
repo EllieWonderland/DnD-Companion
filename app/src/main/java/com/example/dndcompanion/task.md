@@ -321,22 +321,22 @@
 
 ### C. Inkonsistenzen: Athania (stats.md)
 
-- [ ] **Kampfstab-Schaden falsch:** `stats.md` zeigt `1W4 Wucht` für den Kampfstab. Laut Kapitel 6 macht ein Kampfstab `1W6 Wucht` (einhändig) / `1W8 Wucht` (zweihändig). Muss korrigiert werden.
-- [ ] **"D/W (Lange Schritte)" unbekannte Notation:** Unklar und potentiell falsch. Als Drow-Elf erhält Athania: Tanzende Lichter (St.1), Feenfeuer (St.3), Dunkelheit (St.5) — NICHT "Lange Schritte" (das ist die Waldelf-Abstammung). Eintrag sollte bereinigt oder erklärt werden.
-- [ ] **Drow-Volksmerkmale unvollständig in stats.md:** Der Volksmerkmale-Abschnitt listet nur Dunkelsicht, Feenblut, Scharfe Sinne, Trance — aber nicht die Drow-spezifischen Zauber (Tanzende Lichter als Zaubertrick, Feenfeuer 1/LR). Diese sind zwar im Zauberbuch gelistet, sollten aber auch explizit bei den Volksmerkmalen stehen.
-- [ ] **"Kalte Hand (T)":** Das Suffix "(T)" ist unklar. Falls es für "Tiefling" steht, ist das falsch — Athania ist Elf-Drow, kein Tiefling. Herkunft dieses Zaubertricks muss geklärt werden.
+- [x] **Kampfstab-Schaden falsch:** `stats.md` zeigt `1W4 Wucht` für den Kampfstab. Laut Kapitel 6 macht ein Kampfstab `1W6 Wucht` (einhändig) / `1W8 Wucht` (zweihändig). Muss korrigiert werden.
+- [x] **"D/W (Lange Schritte)" unbekannte Notation:** Eintrag ist Lange Schritte (Longstrider), ein Level-1 Druide/Waldläufer-Zauber. Notation zu "Lange Schritte (D/W) - Aktion, Berührung, 1 Std. — Bewegungsrate +3m" klargestellt.
+- [x] **Drow-Volksmerkmale unvollständig in stats.md:** Drow-Magie Merkmal mit Tanzende Lichter, Feenfeuer (St.3 1x/LR), Dunkelheit (St.5 1x/LR) in Volksmerkmale-Abschnitt ergänzt.
+- [x] **"Kalte Hand (T)":** Das Suffix "(T)" stand für die Schulabkürzung, unklar notiert. Beschreibung zu "Nekromantie" und korrekter Regeltext (kein HP-Regenerieren, Vorteil gg. Untote) aktualisiert.
 
 ### D. Inkonsistenzen: Delat (stats_delat.md)
 
-- [ ] **Rüstungsübung "Mittlere" falsch:** `stats_delat.md` listet unter Rüstungsübung "Leichte, Mittlere". Hexenmeister haben in D&D 2024 **nur Leichte Rüstung**. Mittlere Rüstung ist eine Fehleingabe und muss entfernt werden. Dies beeinflusst die RK-Berechnung und Ausrüstungsauswahl.
-- [ ] **"Paktwaffe" als Zaubertrick falsch:** `Paktwaffe` steht in Delats Zaubertrick-Liste (Level 0). Paktwaffe ist kein Zaubertrick, sondern eine Funktion der Schauerlichen Anrufung "Pakt der Klinge". Sollte aus der Zauberbuch-Liste entfernt und stattdessen nur unter Merkmale/Anrufungen geführt werden.
-- [ ] **"Macht der Tiefe" auf Stufe 4 falsch:** "Macht der Tiefe" ist ein Stufe-10-Merkmal des Patrons der Großen Alten. Delat ist erst auf Stufe 4 und kann dieses Merkmal regelkonform nicht besitzen. Es muss aus den Merkmalen entfernt werden.
-- [ ] **HP-Maximum 47 falsch:** Berechnung für Stufe-4-Hexenmeister mit KON 15 (+2) und Zwergenzähigkeit: 8 (W8 max Stufe 1) + 3×5 (W8-Schnitt) + 4×2 (KON) + 4×1 (Zwergenzähigkeit) = **35 Max-HP**. Eingetragen sind 35/47. Die 47 entspricht 35 + 12 (Temp HP aus "Unholde Vitalität") — Temp HP dürfen NICHT zum Max-HP addiert werden. **App-Bug: Temp HP werden fälschlicherweise in Max-HP eingerechnet.**
+- [x] **Rüstungsübung "Mittlere" falsch:** `stats_delat.md` listet unter Rüstungsübung "Leichte, Mittlere". Hexenmeister haben in D&D 2024 **nur Leichte Rüstung**. Mittlere Rüstung ist eine Fehleingabe und muss entfernt werden. Dies beeinflusst die RK-Berechnung und Ausrüstungsauswahl.
+- [x] **"Paktwaffe" als Zaubertrick falsch:** `Paktwaffe` steht in Delats Zaubertrick-Liste (Level 0). Paktwaffe ist kein Zaubertrick, sondern eine Funktion der Schauerlichen Anrufung "Pakt der Klinge". Sollte aus der Zauberbuch-Liste entfernt und stattdessen nur unter Merkmale/Anrufungen geführt werden.
+- [x] **"Macht der Tiefe" auf Stufe 4 falsch:** "Macht der Tiefe" ist ein Stufe-10-Merkmal des Patrons der Großen Alten. Delat ist erst auf Stufe 4 und kann dieses Merkmal regelkonform nicht besitzen. Es muss aus den Merkmalen entfernt werden.
+- [x] **HP-Maximum 47 falsch:** Berechnung für Stufe-4-Hexenmeister mit KON 15 (+2) und Zwergenzähigkeit: 8 (W8 max Stufe 1) + 3×5 (W8-Schnitt) + 4×2 (KON) + 4×1 (Zwergenzähigkeit) = **35 Max-HP**. Eingetragen sind 35/47. Die 47 entspricht 35 + 12 (Temp HP aus "Unholde Vitalität") — Temp HP dürfen NICHT zum Max-HP addiert werden. **App-Bug: Temp HP werden fälschlicherweise in Max-HP eingerechnet.**
 
 ### E. Regelabweichungen (2024 Edition)
 
-- [ ] **Kapitel 8 "Unsichtbar"-Zustand-Widerspruch in rules.json und kapitel8_combat_conditions.md:** Kapitel 7 (und kapitel8.md Zeile 115) sagt: Wenn eine Kreatur dich durch Wahren Blick/Blindsicht sehen kann, profitierst du **nicht** von Vorteil/Nachteil. Kapitel 1 (rules.json) und kapitel1.md sagen hingegen das Gegenteil (allgemeiner Wortlaut). Diese Inkonsistenz zwischen kapitel1 und kapitel8 existiert in den Quelldokumenten — muss für den RAG-Chatbot eindeutig klargestellt werden (Kapitel 8 hat Vorrang als speziellere Regel).
-- [ ] **Kapitel 6 Hinweis Maßeinheiten veraltet:** kapitel6_equipment.md Zeile 5 sagt noch "Alle Gewichtsangaben sind in Pfund (Pfd. / lb.)". Die App nutzt aber kg. Die .md-Datei sollte aktualisiert werden, damit der RAG-Chatbot keine veralteten Maßeinheiten nennt.
+- [x] **Kapitel 8 "Unsichtbar"-Zustand-Widerspruch in rules.json und kapitel8_combat_conditions.md:** Kapitel 7 (und kapitel8.md Zeile 115) sagt: Wenn eine Kreatur dich durch Wahren Blick/Blindsicht sehen kann, profitierst du **nicht** von Vorteil/Nachteil. Kapitel 1 (rules.json) und kapitel1.md sagen hingegen das Gegenteil (allgemeiner Wortlaut). Diese Inkonsistenz zwischen kapitel1 und kapitel8 existiert in den Quelldokumenten — muss für den RAG-Chatbot eindeutig klargestellt werden (Kapitel 8 hat Vorrang als speziellere Regel).
+- [x] **Kapitel 6 Hinweis Maßeinheiten veraltet:** kapitel6_equipment.md Zeile 5 sagt noch "Alle Gewichtsangaben sind in Pfund (Pfd. / lb.)". Die App nutzt aber kg. Die .md-Datei sollte aktualisiert werden, damit der RAG-Chatbot keine veralteten Maßeinheiten nennt.
 
 ---
 

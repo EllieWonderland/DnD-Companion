@@ -415,7 +415,7 @@ Zustände verändern deine Fähigkeiten im Spiel, oft zum Schlechten. Die häufi
 * **Erschöpft (Exhaustion):** Hat 6 Stufen. Jede Stufe verringert d20-Tests um 1 und die Bewegungsrate um 1,5 m / 1 Felder. Bei Stufe 6 stirbt man. Lange/Kurze Rasten bauen Erschöpfung ab.
 * **Gepackt (Grappled):** Bewegungsrate ist 0.
 * **Liegend (Prone):** Darf nur kriechen. Angriffe haben Nachteil. Nahkampfangriffe gegen das Ziel haben Vorteil, Fernkampfangriffe haben Nachteil.
-* **Unsichtbar (Invisible):** Angriffe gegen das Ziel haben Nachteil, eigene Angriffe haben Vorteil.
+* **Unsichtbar (Invisible):** Angriffe gegen das Ziel haben Nachteil, eigene Angriffe haben Vorteil. *Ausnahme (Kapitel 8 hat Vorrang):* Wenn eine Kreatur das unsichtbare Ziel durch spezielle Fähigkeiten (Wahren Blick, Blindsicht, Erdsicht) wahrnehmen kann, entfallen Vorteil und Nachteil gegen diese Kreatur.
 * **Verängstigt (Frightened):** Nachteil auf Attributs- und Angriffswürfe, solange die Quelle der Angst gesehen wird. Ziel kann sich nicht freiwillig näher an die Quelle heranbewegen.
 * **Vergiftet (Poisoned):** Nachteil auf Angriffswürfe und Attributsprüfungen.
 * **Versteinert (Petrified):** Ziel verwandelt sich in feste Substanz, ist kampfunfähig, hat Resistenz gegen alle Schadensarten und wiegt das Zehnfache.

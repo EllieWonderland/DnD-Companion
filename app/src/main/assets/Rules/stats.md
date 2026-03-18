@@ -32,7 +32,7 @@
 | Waffe | Bonus / SG | Schaden & Art | Notizen |
 | :--- | :--- | :--- | :--- |
 | **Langbogen** | +8 | 1W8 Stich | Verlangsamen: Ziel nach Treffer -3 Bewegung |
-| **Kampfstab (Fokus)** | +4 | 1W4 Wucht | Umstoßen: Kon RW12 |
+| **Kampfstab (Fokus)** | +4 | 1W6 Wucht (1W8 zweihändig) | Umstoßen: Kon RW12 |
 | **Kurzschwert** | +6 | 1W6 Stich | Plagen |
 
 ## Fertigkeiten
@@ -59,8 +59,9 @@
 ### Volksmerkmale (Elf-Drow)
 * **Dunkelsicht:** 36m
 * **Feenblut:** Vorteil gegen Bezaubern
-* **Scharfe Sinne:** +1 Fertigkeit
+* **Scharfe Sinne:** Übung in Wahrnehmung
 * **Trance:** Du musst nicht schlafen und kannst nicht magisch zum Einschlafen gebracht werden. Lange Rast dauert 4 Std, wenn du in tranceartiger Meditation bist.
+* **Drow-Magie:** Tanzende Lichter als Zaubertrick (stets). Ab Stufe 3: Feenfeuer 1x/LR ohne Slot. Ab Stufe 5: Dunkelheit 1x/LR ohne Slot. Zauberattribut: Charisma.
 
 ### Klassenmerkmale (Waldläufer - Herrin der Tiere)
 * **Waffenmeisterung:** Langbogen + Knüppel
@@ -86,7 +87,7 @@
   * Tanzende Lichter (R)
   * Göttliche Führung (D)
   * Shillelagh (D) - BA, Selbst, 1min
-  * Kalte Hand (T) - Aktion, Berührung, Vorteil gg. menschl. Kinder
+  * Kalte Hand (Nekromantie) - Aktion, Berührung, Vorteil gg. Untote; Ziel kann bis Ende deines nächsten Zuges keine HP regenerieren
 * **Zauber (Level 1):**
   * Verstricken - Aktion, 27m, VG, 1 min
   * Wunden heilen (D) - Aktion, Berührung, 2W8+4
@@ -95,7 +96,7 @@
   * Zeichen des Jägers (K) - BA, 27m, 2x/LR ohne Slot
   * Nebelwolke - Aktion, 36m, VG, 1 Std.
   * Feenfeuer (R) - Aktion, 18m, 1x/LR Ohne Slot
-  * D/W (Lange Schritte)
+  * Lange Schritte (D/W) - Aktion, Berührung, 1 Std. — Bewegungsrate +3m
 
 ## Ausrüstung & Inventar
 **Münzen:** 1 SM, 18 GM
