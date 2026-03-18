@@ -1,5 +1,6 @@
 package com.example.dndcompanion.ui.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -70,6 +71,10 @@ enum class BookType {
 @Composable
 fun BucherScreen(viewModel: CharacterViewModel, groupVm: GroupViewModel) {
     var activeBook by remember { mutableStateOf<BookType?>(null) }
+
+    BackHandler(enabled = activeBook != null) {
+        activeBook = null
+    }
 
     LaunchedEffect(viewModel.targetRulebookChapter) {
         if (viewModel.targetRulebookChapter != null) {

@@ -104,9 +104,10 @@ class CombatViewModel(
         isUsingTwoHanded = prefs.getBoolean("isUsingTwoHanded", false)
         isMageArmorActive = prefs.getBoolean("isMageArmorActive", false)
         isShieldEquipped = prefs.getBoolean("isShieldEquipped", false)
-        val wn = prefs.getString("currentWeapon", ActiveWeapon.LANGBOGEN.name) ?: ActiveWeapon.LANGBOGEN.name
+        val defaultWeapon = if (characterVm.characterData.charClass == CharacterClass.RANGER) ActiveWeapon.LANGBOGEN.name else ActiveWeapon.SPEER_PAKT.name
+        val wn = prefs.getString("currentWeapon_${id}", defaultWeapon) ?: defaultWeapon
         currentWeapon = ActiveWeapon.valueOf(wn)
-        equippedWeaponName = prefs.getString("equippedWeaponName", null) ?: "Keine Waffe"
+        equippedWeaponName = prefs.getString("equippedWeaponName_${id}", null) ?: "Keine Waffe"
         activeBeastType = BeastType.valueOf(prefs.getString("activeBeastType", BeastType.SKY.name) ?: BeastType.SKY.name)
         capyCurrentHp = prefs.getInt("capyCurrentHp_${id}_${activeBeastType.name}", capyMaxHp)
         companionIsDead = prefs.getBoolean("companionIsDead_${id}_${activeBeastType.name}", false)
@@ -260,15 +261,18 @@ class CombatViewModel(
 
     fun equipWeaponByName(name: String) {
         equippedWeaponName = name
-        prefs.edit { putString("equippedWeaponName", name) }
         val weaponStr = name.lowercase()
         currentWeapon = when {
             weaponStr.contains("bogen") -> ActiveWeapon.LANGBOGEN
             weaponStr.contains("schwert") -> ActiveWeapon.KURZSCHWERT_SCHILD
             weaponStr.contains("hammer") -> ActiveWeapon.KRIEGSHAMMER_PAKT
             weaponStr.contains("speer") -> ActiveWeapon.SPEER_PAKT
-            weaponStr.contains("shillelagh") -> ActiveWeapon.SHILLELAGH_SCHILD
-            else -> ActiveWeapon.KURZSCHWERT_SCHILD
+            weaponStr.contains("shillelagh") || weaponStr.contains("kampfstab") -> ActiveWeapon.SHILLELAGH_SCHILD
+            else -> if (characterVm.characterData.charClass == CharacterClass.RANGER) ActiveWeapon.KURZSCHWERT_SCHILD else ActiveWeapon.SPEER_PAKT
+        }
+        prefs.edit {
+            putString("equippedWeaponName_${characterVm.activeCharacterId}", name)
+            putString("currentWeapon_${characterVm.activeCharacterId}", currentWeapon.name)
         }
     }
 

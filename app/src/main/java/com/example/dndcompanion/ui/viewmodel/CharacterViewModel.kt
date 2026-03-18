@@ -97,6 +97,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val globalFeatures = mutableStateListOf<Feature>()
     val globalSpellbook = MutableStateFlow<List<SpellEntity>>(emptyList())
     val allEquipment = mutableStateListOf<EquipmentDefinition>()
+    // companionData and activeBeastType also accessed/set by loadCompanion() via Main.immediate coroutine
+    var companionData by mutableStateOf<CompanionDto?>(null)
+        private set
+    var activeBeastType by mutableStateOf(BeastType.valueOf(prefs.getString("activeBeastType", BeastType.SKY.name) ?: BeastType.SKY.name))
+        private set
 
     init {
         // Load initial data (all content)
@@ -1569,9 +1574,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    var companionData by mutableStateOf<CompanionDto?>(null)
-        private set
-
     fun loadCompanion() {
         viewModelScope.launch {
             try {
@@ -1597,9 +1599,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }
-
-    var activeBeastType by mutableStateOf(BeastType.valueOf(prefs.getString("activeBeastType", BeastType.SKY.name) ?: BeastType.SKY.name))
-        private set
 
     val capyMaxHp: Int get() {
         val base = if (activeBeastType == BeastType.SKY || activeBeastType == BeastType.SEA) 4 else 5

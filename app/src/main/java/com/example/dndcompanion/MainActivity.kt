@@ -99,6 +99,15 @@ fun DnDApp(
 ) {
     // 0 = Athania, 1 = Urtier, 2 = Hilfe, 3 = Bücher
     var currentScreen by rememberSaveable { mutableStateOf(0) }
+    var previousScreen by rememberSaveable { mutableStateOf(0) }
+    val lastScreen = remember { mutableStateOf(currentScreen) }
+    SideEffect {
+        if (lastScreen.value != currentScreen) {
+            previousScreen = lastScreen.value
+            lastScreen.value = currentScreen
+        }
+    }
+
     var introOpacity by remember { mutableStateOf(1f) }
     var introFinished by remember { mutableStateOf(false) }
 
@@ -111,7 +120,7 @@ fun DnDApp(
     }
 
     BackHandler(enabled = currentScreen != 0) {
-        currentScreen = 0
+        currentScreen = previousScreen
     }
 
     Scaffold(

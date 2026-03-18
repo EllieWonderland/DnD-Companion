@@ -1,7 +1,9 @@
 package com.example.dndcompanion.ui.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.Image
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +19,6 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.material3.*
@@ -49,6 +50,7 @@ import com.example.dndcompanion.data.CharacterClass
 import com.example.dndcompanion.R
 import androidx.compose.ui.res.painterResource
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CombatScreen(
     viewModel: CharacterViewModel,
@@ -346,22 +348,44 @@ fun CombatScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             var showWeaponEditDialog by remember { mutableStateOf<Int?>(null) }
-               if (inventoryVm.availableWeapons.isEmpty()) {
+            if (inventoryVm.availableWeapons.isEmpty()) {
                 Text("Keine Waffen im Rucksack gefunden. Füge Waffen im Rucksack-Tab hinzu.", style = MaterialTheme.typography.bodySmall, color = TintenBraun, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, modifier = Modifier.padding(8.dp))
             } else {
-                // Horizontale scrollbare Liste für Waffen
-                Row(
-                    modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                var weaponDropdownExpanded by remember { mutableStateOf(false) }
+                ExposedDropdownMenuBox(
+                    expanded = weaponDropdownExpanded,
+                    onExpandedChange = { weaponDropdownExpanded = it },
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    inventoryVm.availableWeapons.forEach { weaponName ->
-                        WeaponButton(
-                            title = weaponName,
-                            isSelected = combatVm.equippedWeaponName == weaponName,
-                            accentColor = accentColor,
-                            modifier = Modifier.defaultMinSize(minWidth = 130.dp)
-                        ) {
-                            combatVm.equipWeaponByName(weaponName)
+                    OutlinedTextField(
+                        value = combatVm.equippedWeaponName ?: "Keine Waffe ausgerüstet",
+                        onValueChange = {},
+                        readOnly = true,
+                        label = { Text("Ausgerüstete Waffe", fontFamily = Almendra) },
+                        trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = weaponDropdownExpanded) },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = accentColor,
+                            unfocusedBorderColor = TintenBraun,
+                            focusedTextColor = TintenSchwarz,
+                            unfocusedTextColor = TintenSchwarz,
+                            focusedLabelColor = accentColor,
+                            unfocusedLabelColor = TintenBraun
+                        ),
+                        modifier = Modifier.fillMaxWidth().menuAnchor()
+                    )
+                    ExposedDropdownMenu(
+                        expanded = weaponDropdownExpanded,
+                        onDismissRequest = { weaponDropdownExpanded = false },
+                        modifier = Modifier.background(PergamentHell)
+                    ) {
+                        inventoryVm.availableWeapons.forEach { weaponName ->
+                            DropdownMenuItem(
+                                text = { Text(weaponName, fontFamily = Almendra, color = TintenSchwarz) },
+                                onClick = {
+                                    combatVm.equipWeaponByName(weaponName)
+                                    weaponDropdownExpanded = false
+                                }
+                            )
                         }
                     }
                 }

@@ -83,7 +83,15 @@ class InventoryViewModel(
         get() {
             val list = mutableListOf<String>()
             customLoot.forEach { item ->
-                if (item.category == "Rüstung & Waffen" && !item.name.contains("Rüstung", ignoreCase = true) && !item.name.contains("Schild", ignoreCase = true)) {
+                if (item.category == "Rüstung & Waffen" &&
+                    !item.name.contains("Rüstung", ignoreCase = true) &&
+                    !item.name.contains("Schild", ignoreCase = true) &&
+                    !item.name.contains("Pfeil", ignoreCase = true) &&
+                    !item.name.contains("Köcher", ignoreCase = true) &&
+                    !item.name.contains("Munition", ignoreCase = true) &&
+                    !item.name.contains("Bolzen", ignoreCase = true) &&
+                    !item.name.contains("Peitsche", ignoreCase = true)
+                ) {
                     list.add(item.name)
                 }
             }
