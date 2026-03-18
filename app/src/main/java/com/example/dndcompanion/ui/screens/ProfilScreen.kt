@@ -330,49 +330,7 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider(color = Bronze, thickness = 2.dp)
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Merkmale & Talente Section
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text("Merkmale & Talente", style = MaterialTheme.typography.titleMedium, color = Waldgruen)
-                IconButton(onClick = { viewModel.showFeatureSelection = true }) {
-                    Icon(Icons.Default.Add, contentDescription = "Merkmal hinzufügen", tint = Waldgruen)
-                }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            
-            if (viewModel.customTraits.isEmpty()) {
-                Text("Keine Merkmale gewählt.", color = TintenBraun, style = MaterialTheme.typography.bodySmall, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
-            } else {
-                viewModel.customTraits.forEachIndexed { index, trait ->
-                    PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
-                        Column(modifier = Modifier.padding(12.dp)) {
-                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                Text(trait.name, fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra)
-                                IconButton(onClick = { viewModel.removeCustomTrait(index) }, modifier = Modifier.size(40.dp)) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Löschen", tint = OchsenblutRot, modifier = Modifier.size(20.dp))
-                                }
-                            }
-                            Text(trait.desc, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
-                        }
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
         }
-    }
-
-    if (viewModel.showFeatureSelection) {
-        FeatureSelectionScreen(
-            viewModel = viewModel,
-            onDismiss = { viewModel.showFeatureSelection = false }
-        )
     }
 
     if (viewModel.showLevelUpDialog) {
@@ -407,6 +365,8 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
     }
 }
 
+private val AttributeIconSize = 150.dp
+
 @Composable
 fun AttributeBox(
     name: String,
@@ -428,16 +388,14 @@ fun AttributeBox(
         Row(
             modifier = Modifier
                 .padding(8.dp)
-                .fillMaxWidth()
-                .height(IntrinsicSize.Min)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.Top
         ) {
             if (iconRes != null) {
                 Image(
                     painter = painterResource(id = iconRes),
                     contentDescription = "$name Icon",
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .aspectRatio(1f, matchHeightConstraintsFirst = true),
+                    modifier = Modifier.size(AttributeIconSize),
                     contentScale = ContentScale.Fit
                 )
                 Spacer(modifier = Modifier.width(10.dp))

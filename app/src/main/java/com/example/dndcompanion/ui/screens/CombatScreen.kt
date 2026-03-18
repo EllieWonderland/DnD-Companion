@@ -33,9 +33,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Cancel
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.ui.draw.shadow
 import com.example.dndcompanion.ui.viewmodel.ActiveWeapon
@@ -66,37 +68,6 @@ fun CombatScreen(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Top-Leiste: Passive Stats
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Text("Init: ${if(combatVm.initiative >= 0) "+" else ""}${combatVm.initiative}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
-                    Text("Tempo: ${viewModel.speed}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
-                    Text("Wahrnehmung: ${viewModel.passivePerception}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
-                }
-
-                // Heroische Inspiration in eigener zentrierter Zeile
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.clickable { combatVm.toggleHeroicInspiration(!combatVm.heroicInspiration) }.padding(4.dp)
-                    ) {
-                        Icon(
-                            imageVector = if (combatVm.heroicInspiration) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
-                            contentDescription = "Inspiration",
-                            tint = if (combatVm.heroicInspiration) WaldGold else EisenGrau,
-                            modifier = Modifier.size(20.dp)
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text("Heroische Inspiration", style = MaterialTheme.typography.labelLarge, color = if (combatVm.heroicInspiration) WaldGold else Waldgruen)
-                    }
-                }
-
             // Lebenspunkte & Trefferwürfel
             PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
                 Column(modifier = Modifier.padding(12.dp)) {
@@ -257,6 +228,35 @@ fun CombatScreen(
                             }
                         }
                     }
+                }
+            }
+
+            // Passive Stats + Heroische Inspiration
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 4.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                Text("Init: ${if(combatVm.initiative >= 0) "+" else ""}${combatVm.initiative}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                Text("Tempo: ${viewModel.speed}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+                Text("Wahrnehmung: ${viewModel.passivePerception}", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.clickable { combatVm.toggleHeroicInspiration(!combatVm.heroicInspiration) }.padding(4.dp)
+                ) {
+                    Icon(
+                        imageVector = if (combatVm.heroicInspiration) Icons.Default.CheckCircle else Icons.Default.RadioButtonUnchecked,
+                        contentDescription = "Inspiration",
+                        tint = if (combatVm.heroicInspiration) WaldGold else EisenGrau,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text("Heroische Inspiration", style = MaterialTheme.typography.labelLarge, color = if (combatVm.heroicInspiration) WaldGold else Waldgruen)
                 }
             }
 
@@ -534,25 +534,26 @@ fun CombatScreen(
                                 Button(onClick = { inventoryVm.changeTotalArrows(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("+ Aufnehmen", fontSize = 16.sp, fontFamily = Almendra) }
                             }
                         }
-                        // Loot-Button
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Button(
-                            onClick = onNavigateToRucksack,
-                            modifier = Modifier.fillMaxWidth().height(60.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = Bronze),
-                            shape = RoundedCornerShape(12.dp)
-                        ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.icon_geld),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(32.dp)
-                                )
-                                Spacer(modifier = Modifier.width(12.dp))
-                                Text("Loot eintragen", style = MaterialTheme.typography.titleMedium, color = Color.White)
-                            }
-                        }
                     }
+                }
+            }
+
+            // Loot-Button (immer sichtbar, unabhängig von ausgerüsteter Waffe)
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = onNavigateToRucksack,
+                modifier = Modifier.fillMaxWidth().height(60.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Bronze),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = painterResource(id = R.drawable.icon_geld),
+                        contentDescription = null,
+                        modifier = Modifier.size(32.dp)
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Text("Loot eintragen", style = MaterialTheme.typography.titleMedium, color = Color.White)
                 }
             }
 
@@ -610,6 +611,98 @@ fun CombatScreen(
                     }
                 }
             }
+
+            // Merkmale & Talente
+            HorizontalDivider(color = Bronze, thickness = 2.dp, modifier = Modifier.padding(vertical = 8.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Merkmale & Talente", style = MaterialTheme.typography.titleMedium, color = Waldgruen)
+                IconButton(onClick = { viewModel.showFeatureSelection = true }) {
+                    Icon(Icons.Default.Add, contentDescription = "Merkmal hinzufügen", tint = accentColor)
+                }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+
+            var editingTraitIndex by remember { mutableIntStateOf(-1) }
+            var editTraitName by remember { mutableStateOf("") }
+            var editTraitDesc by remember { mutableStateOf("") }
+
+            viewModel.customTraits.forEachIndexed { index, trait ->
+                if (editingTraitIndex == index) {
+                    Card(
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                        colors = CardDefaults.cardColors(containerColor = PergamentDunkel)
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            OutlinedTextField(
+                                value = editTraitName,
+                                onValueChange = { editTraitName = it },
+                                label = { Text("Name") },
+                                modifier = Modifier.fillMaxWidth(),
+                                singleLine = true,
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = accentColor,
+                                    focusedLabelColor = accentColor,
+                                    unfocusedTextColor = TintenSchwarz,
+                                    focusedTextColor = TintenSchwarz
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            OutlinedTextField(
+                                value = editTraitDesc,
+                                onValueChange = { editTraitDesc = it },
+                                label = { Text("Beschreibung") },
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedBorderColor = accentColor,
+                                    focusedLabelColor = accentColor,
+                                    unfocusedTextColor = TintenSchwarz,
+                                    focusedTextColor = TintenSchwarz
+                                )
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                                TextButton(onClick = { editingTraitIndex = -1 }) {
+                                    Text("Abbrechen", color = TintenBraun, fontFamily = Almendra)
+                                }
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Button(
+                                    onClick = {
+                                        viewModel.updateCustomTrait(index, editTraitName, editTraitDesc)
+                                        editingTraitIndex = -1
+                                    },
+                                    colors = ButtonDefaults.buttonColors(containerColor = accentColor),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) { Text("Speichern", fontFamily = Almendra) }
+                            }
+                        }
+                    }
+                } else {
+                    EditableTraitCard(
+                        title = trait.name,
+                        desc = trait.desc,
+                        onEdit = {
+                            editTraitName = trait.name
+                            editTraitDesc = trait.desc
+                            editingTraitIndex = index
+                        },
+                        onDelete = { viewModel.removeCustomTrait(index) }
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
         }
+    }
+
+    if (viewModel.showFeatureSelection) {
+        FeatureSelectionScreen(
+            viewModel = viewModel,
+            onDismiss = { viewModel.showFeatureSelection = false }
+        )
     }
 }

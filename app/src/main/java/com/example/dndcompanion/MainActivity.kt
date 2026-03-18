@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -265,9 +266,20 @@ fun AthaniaScreen(
     val pagerState = rememberPagerState(initialPage = tabs.indexOf(AthaniaTab.Kampf), pageCount = { tabs.size })
     val coroutineScope = rememberCoroutineScope()
 
+    var previousPage by remember { mutableIntStateOf(tabs.indexOf(AthaniaTab.Kampf)) }
+    LaunchedEffect(Unit) {
+        var lastSettledPage = pagerState.settledPage
+        snapshotFlow { pagerState.settledPage }.collect { settledPage ->
+            if (settledPage != lastSettledPage) {
+                previousPage = lastSettledPage
+                lastSettledPage = settledPage
+            }
+        }
+    }
+
     BackHandler(enabled = pagerState.currentPage != tabs.indexOf(AthaniaTab.Kampf)) {
         coroutineScope.launch {
-            pagerState.animateScrollToPage(tabs.indexOf(AthaniaTab.Kampf))
+            pagerState.animateScrollToPage(previousPage)
         }
     }
 

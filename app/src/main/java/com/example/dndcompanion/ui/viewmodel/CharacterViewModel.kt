@@ -108,6 +108,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         loadEquipment()
         loadTraits()
         loadBooks()
+        loadCompanion()
 
         viewModelScope.launch {
             val db = com.example.dndcompanion.data.database.AppDatabase.getDatabase(getApplication()).rulebookDao()
@@ -1666,7 +1667,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         if (activeBeastType == BeastType.SKY) "1W4 + 3 + $wisMod Hieb" else if(activeBeastType == BeastType.SEA) "1W6 + 2 + $wisMod Stich" else "1W8 + 2 + $wisMod Hieb"
     } else "1W4+3 Hieb + 2W6 Gleißend"
     
-    val capySpeed: String get() = companionData?.bewegungsrate?.entries?.joinToString(", ") { "${it.key}: ${it.value}" } ?: ""
+    val capySpeed: String get() = companionData?.bewegungsrate?.entries?.joinToString(", ") { "${it.key.replaceFirstChar { c -> c.uppercase() }}: ${it.value}" } ?: ""
     val capySpecial: String get() = companionData?.merkmale?.joinToString("\n") { "${it.name}: ${it.beschreibung}" } ?: ""
 
     // --- HILFE: CHAT & FAQ ---
