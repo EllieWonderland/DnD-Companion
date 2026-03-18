@@ -17,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.*
@@ -232,14 +231,14 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                 else -> display
             })
 
-            AttributeSkillsRow(
-                attrName = "STR", value = viewModel.strength.toString(),
+            AttributeBox(
+                name = "STR", value = viewModel.strength.toString(),
                 mod = formatMod(viewModel.strMod), rw = formatRwResult(strSave, strProf),
                 iconRes = R.drawable.icon_str,
                 skills = listOf(Triple("Athletik", skillMod("Athletik"), prof("Athletik")))
             )
-            AttributeSkillsRow(
-                attrName = "DEX", value = viewModel.dexterity.toString(),
+            AttributeBox(
+                name = "DEX", value = viewModel.dexterity.toString(),
                 mod = formatMod(viewModel.dexMod), rw = formatRwResult(dexSave, dexProf),
                 iconRes = R.drawable.icon_dex,
                 skills = listOf(
@@ -248,14 +247,13 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                     Triple("Heimlichkeit", skillMod("Heimlichkeit"), prof("Heimlichkeit"))
                 )
             )
-            AttributeSkillsRow(
-                attrName = "CON", value = viewModel.constitution.toString(),
+            AttributeBox(
+                name = "CON", value = viewModel.constitution.toString(),
                 mod = formatMod(viewModel.conMod), rw = formatRwResult(conSave, conProf),
-                iconRes = R.drawable.icon_con,
-                skills = emptyList()
+                iconRes = R.drawable.icon_con
             )
-            AttributeSkillsRow(
-                attrName = "INT", value = viewModel.intelligence.toString(),
+            AttributeBox(
+                name = "INT", value = viewModel.intelligence.toString(),
                 mod = formatMod(viewModel.intMod), rw = formatRwResult(intSave, intProf),
                 iconRes = R.drawable.icon_int,
                 skills = listOf(
@@ -266,8 +264,8 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                     Triple("Religion", skillMod("Religion"), prof("Religion"))
                 )
             )
-            AttributeSkillsRow(
-                attrName = "WIS", value = viewModel.wisdom.toString(),
+            AttributeBox(
+                name = "WIS", value = viewModel.wisdom.toString(),
                 mod = formatMod(viewModel.wisMod), rw = formatRwResult(wisSave, wisProf),
                 iconRes = R.drawable.icon_wis,
                 skills = listOf(
@@ -278,8 +276,8 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                     Triple("Wahrnehmung", skillMod("Wahrnehmung"), prof("Wahrnehmung"))
                 )
             )
-            AttributeSkillsRow(
-                attrName = "CHA", value = viewModel.charisma.toString(),
+            AttributeBox(
+                name = "CHA", value = viewModel.charisma.toString(),
                 mod = formatMod(viewModel.chaMod), rw = formatRwResult(chaSave, chaProf),
                 iconRes = R.drawable.icon_cha,
                 skills = listOf(
@@ -409,60 +407,51 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
 }
 
 @Composable
-fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: Int? = null, iconSize: Dp = 95.dp) {
+fun AttributeBox(
+    name: String,
+    value: String,
+    mod: String,
+    rw: String,
+    iconRes: Int? = null,
+    skills: List<Triple<String, Int, Boolean>> = emptyList()
+) {
     Card(
         modifier = Modifier
-            .width(105.dp)
+            .fillMaxWidth()
+            .padding(bottom = 8.dp)
             .shadow(4.dp, RoundedCornerShape(8.dp))
             .border(1.5.dp, EisenGrau, RoundedCornerShape(8.dp)),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFBEB5A0))
     ) {
-        Column(
-            modifier = Modifier.padding(6.dp).fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            if (iconRes != null) {
-                Image(
-                    painter = painterResource(id = iconRes),
-                    contentDescription = "$name Icon",
-                    modifier = Modifier.size(iconSize).padding(bottom = 2.dp),
-                    contentScale = ContentScale.Fit
-                )
-            }
-            Text(name, style = MaterialTheme.typography.labelMedium, color = Waldgruen)
-            Text(value, style = GrenzeGotischStyle, color = TintenSchwarz)
-            Text(mod, style = GrenzeGotischSmall, color = OchsenblutRot)
-            Text(rw, style = MaterialTheme.typography.labelSmall.copy(fontSize = 12.sp), color = TintenBraun, textAlign = TextAlign.Center)
-        }
-    }
-}
-
-@Composable
-fun AttributeSkillsRow(
-    attrName: String,
-    value: String,
-    mod: String,
-    rw: String,
-    iconRes: Int,
-    skills: List<Triple<String, Int, Boolean>>
-) {
-    Row(
-        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-        verticalAlignment = Alignment.Top
-    ) {
-        AttributeBox(attrName, value, mod, rw, iconRes, iconSize = 60.dp)
-        Spacer(modifier = Modifier.width(8.dp))
-        if (skills.isNotEmpty()) {
-            PergamentCard(modifier = Modifier.weight(1f)) {
-                Column(modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp)) {
-                    skills.forEach { (skillName, skillMod, isProficient) ->
-                        SkillRow(skillName, skillMod, isProficient)
+        Column(modifier = Modifier.padding(8.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                if (iconRes != null) {
+                    Image(
+                        painter = painterResource(id = iconRes),
+                        contentDescription = "$name Icon",
+                        modifier = Modifier.size(64.dp),
+                        contentScale = ContentScale.Fit
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                }
+                Column {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(name, style = MaterialTheme.typography.labelLarge, color = Waldgruen, fontWeight = FontWeight.Bold)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(value, style = GrenzeGotischStyle, color = TintenSchwarz)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(mod, style = GrenzeGotischSmall, color = OchsenblutRot)
                     }
+                    Text(rw, style = MaterialTheme.typography.labelSmall.copy(fontSize = 12.sp), color = TintenBraun)
                 }
             }
-        } else {
-            Spacer(modifier = Modifier.weight(1f))
+            if (skills.isNotEmpty()) {
+                HorizontalDivider(color = TintenBraun.copy(alpha = 0.3f), thickness = 1.dp, modifier = Modifier.padding(vertical = 4.dp))
+                skills.forEach { (skillName, skillMod, isProficient) ->
+                    SkillRow(skillName, skillMod, isProficient)
+                }
+            }
         }
     }
 }
