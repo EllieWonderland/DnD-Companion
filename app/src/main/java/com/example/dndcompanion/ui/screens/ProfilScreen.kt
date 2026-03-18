@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -424,32 +425,37 @@ fun AttributeBox(
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFFBEB5A0))
     ) {
-        Column(modifier = Modifier.padding(8.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                if (iconRes != null) {
-                    Image(
-                        painter = painterResource(id = iconRes),
-                        contentDescription = "$name Icon",
-                        modifier = Modifier.size(64.dp),
-                        contentScale = ContentScale.Fit
-                    )
-                    Spacer(modifier = Modifier.width(10.dp))
-                }
-                Column {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(name, style = MaterialTheme.typography.labelLarge, color = Waldgruen, fontWeight = FontWeight.Bold)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(value, style = GrenzeGotischStyle, color = TintenSchwarz)
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(mod, style = GrenzeGotischSmall, color = OchsenblutRot)
-                    }
-                    Text(rw, style = MaterialTheme.typography.labelSmall.copy(fontSize = 12.sp), color = TintenBraun)
-                }
+        Row(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .height(IntrinsicSize.Min)
+        ) {
+            if (iconRes != null) {
+                Image(
+                    painter = painterResource(id = iconRes),
+                    contentDescription = "$name Icon",
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .aspectRatio(1f, matchHeightConstraintsFirst = true),
+                    contentScale = ContentScale.Fit
+                )
+                Spacer(modifier = Modifier.width(10.dp))
             }
-            if (skills.isNotEmpty()) {
-                HorizontalDivider(color = TintenBraun.copy(alpha = 0.3f), thickness = 1.dp, modifier = Modifier.padding(vertical = 4.dp))
-                skills.forEach { (skillName, skillMod, isProficient) ->
-                    SkillRow(skillName, skillMod, isProficient)
+            Column(modifier = Modifier.weight(1f)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(name, style = MaterialTheme.typography.labelLarge, color = Waldgruen, fontWeight = FontWeight.Bold)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(value, style = GrenzeGotischStyle, color = TintenSchwarz)
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(mod, style = GrenzeGotischSmall, color = OchsenblutRot)
+                }
+                Text(rw, style = MaterialTheme.typography.labelSmall.copy(fontSize = 12.sp), color = TintenBraun)
+                if (skills.isNotEmpty()) {
+                    HorizontalDivider(color = TintenBraun.copy(alpha = 0.3f), thickness = 1.dp, modifier = Modifier.padding(vertical = 4.dp))
+                    skills.forEach { (skillName, skillMod, isProficient) ->
+                        SkillRow(skillName, skillMod, isProficient)
+                    }
                 }
             }
         }
