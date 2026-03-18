@@ -86,6 +86,18 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     private val _searchedSpells = MutableStateFlow<List<SpellEntity>>(emptyList())
     val searchedSpells: StateFlow<List<SpellEntity>> = _searchedSpells.asStateFlow()
 
+    // These must be declared before init{} to avoid NullPointerException during initialization
+    val customLoot = mutableStateListOf<InventoryItem>()
+    val customTraits = mutableStateListOf<TraitItem>()
+    val generalBookEntries = mutableStateListOf<BookEntry>()
+    val grudgeBookEntries = mutableStateListOf<BookEntry>()
+    val chatHistory = mutableStateListOf<ChatMessage>()
+    val faqList = mutableStateListOf<FaqItem>()
+    val allSpells = mutableStateListOf<Spell>()
+    val globalFeatures = mutableStateListOf<Feature>()
+    val globalSpellbook = MutableStateFlow<List<SpellEntity>>(emptyList())
+    val allEquipment = mutableStateListOf<EquipmentDefinition>()
+
     init {
         // Load initial data (all content)
         searchRulebook("")
@@ -787,7 +799,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             return total
         }
 
-    val customLoot = mutableStateListOf<InventoryItem>()
     private fun saveLoot() {
         val json = gson.toJson(customLoot)
         prefs.edit { putString("customLoot", json) }
@@ -896,7 +907,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    val customTraits = mutableStateListOf<TraitItem>()
     private fun saveTraits() {
         val json = gson.toJson(customTraits)
         prefs.edit { putString("customTraits", json) }
@@ -1268,8 +1278,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     // --- BÜCHER & TAKTIK ---
-    val generalBookEntries = mutableStateListOf<BookEntry>()
-    val grudgeBookEntries = mutableStateListOf<BookEntry>()
 
     private fun saveGeneralBookEntries() {
         prefs.edit { putString("generalBookEntries", gson.toJson(generalBookEntries)) }
@@ -1662,8 +1670,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val capySpecial: String get() = companionData?.merkmale?.joinToString("\n") { "${it.name}: ${it.beschreibung}" } ?: ""
 
     // --- HILFE: CHAT & FAQ ---
-    val chatHistory = mutableStateListOf<ChatMessage>()
-    val faqList = mutableStateListOf<FaqItem>()
 
     var currentUsedModel by mutableStateOf("Bereit")
         private set
@@ -1733,11 +1739,8 @@ private val model25Flash = GenerativeModel(
     }
 
     // --- SPELBOOK (ZAUBERBUCH) ---
-    val allSpells = mutableStateListOf<Spell>()
-    val globalFeatures = mutableStateListOf<Feature>()
 
     // Room Search Flows
-    val globalSpellbook = MutableStateFlow<List<SpellEntity>>(emptyList())
 
     private fun saveSpells() {
         val json = gson.toJson(allSpells)
@@ -1784,8 +1787,6 @@ private val model25Flash = GenerativeModel(
             classMatch && raceMatch && levelMatch
         }
     }
-
-    val allEquipment = mutableStateListOf<EquipmentDefinition>()
 
     private fun loadEquipment() {
         viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
