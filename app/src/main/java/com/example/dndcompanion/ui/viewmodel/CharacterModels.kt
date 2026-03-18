@@ -1,6 +1,7 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import com.google.firebase.firestore.PropertyName
+import com.google.gson.annotations.SerializedName
 import com.example.dndcompanion.data.CharacterClass
 
 // --- DATENKLASSEN & ENUMS ---
@@ -126,11 +127,11 @@ data class CompanionDto(
     val aktionen: List<CompanionActionDto>,
     val reaktionen: List<CompanionActionDto>? = null,
     // Structured formula fields for dynamic HP/AC calculation
-    val hp_basis: Int = 0,
-    val hp_stufen_mult: Int = 0,
-    val hp_formel: String = "",
-    val rk_basis: Int = 0,
-    val rk_formel: String = ""
+    @SerializedName("hp_basis") val hpBasis: Int = 0,
+    @SerializedName("hp_stufen_mult") val hpStufenMult: Int = 0,
+    @SerializedName("hp_formel") val hpFormel: String = "",
+    @SerializedName("rk_basis") val rkBasis: Int = 0,
+    @SerializedName("rk_formel") val rkFormel: String = ""
 )
 
 data class AttributeDto(

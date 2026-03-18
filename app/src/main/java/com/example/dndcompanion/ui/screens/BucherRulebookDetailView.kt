@@ -33,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.dndcompanion.data.DndCalculations
 import com.example.dndcompanion.data.database.ArmorEntity
 import com.example.dndcompanion.data.database.ClassEntity
 import com.example.dndcompanion.data.database.FeatureEntity
@@ -324,7 +325,7 @@ fun WeaponCard(weapon: WeaponEntity) {
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text("Schaden: ${weapon.damage}", color = OchsenblutRot, fontWeight = FontWeight.Medium)
-                Text("Gewicht: ${"%.2f".format(weapon.weightLb * 0.4536)} kg", color = TintenSchwarz.copy(alpha = 0.8f))
+                Text("Gewicht: ${DndCalculations.lbToKg(weapon.weightLb)} kg", color = TintenSchwarz.copy(alpha = 0.8f))
             }
             Text("Meisterschaft: ${weapon.mastery}", color = TintenSchwarz.copy(alpha = 0.9f))
             if (weapon.properties.isNotEmpty()) {
@@ -353,7 +354,7 @@ fun ArmorCard(armor: ArmorEntity) {
             val stealthText = if (armor.stealthDisadvantage) "Nachteil auf Heimlichkeit" else "Normale Heimlichkeit"
             val strengthText = if (armor.strengthRequirement > 0) "STR min. ${armor.strengthRequirement}" else "Keine STR-Anforderung"
 
-            Text("$stealthText | $strengthText | ${"%.2f".format(armor.weightLb * 0.4536)} kg", fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+            Text("$stealthText | $strengthText | ${DndCalculations.lbToKg(armor.weightLb)} kg", fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.8f))
         }
     }
 }
@@ -366,7 +367,7 @@ fun ToolCard(tool: ToolEntity) {
                 Text(tool.name, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = TintenSchwarz)
                 Text(tool.category, fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
                 if (tool.weightLb != null) {
-                    Text("Gewicht: ${"%.2f".format(tool.weightLb * 0.4536)} kg", fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+                    Text("Gewicht: ${DndCalculations.lbToKg(tool.weightLb)} kg", fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.8f))
                 }
             }
             Text(tool.price, fontWeight = FontWeight.Bold, color = WaldGold, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))

@@ -180,11 +180,13 @@ class CombatViewModel(
     val hasShieldInInventory: Boolean get() = inventoryVm.hasShieldInInventory
     val availableWeapons: List<String> get() = inventoryVm.availableWeapons
 
+    private val isRanger: Boolean get() = characterVm.characterData.charClass == CharacterClass.RANGER
+
     val capyMaxHp: Int get() {
-        if (characterVm.characterData.charClass == CharacterClass.RANGER) {
+        if (isRanger) {
             val dto = companionData
-            if (dto != null && dto.hp_basis > 0) {
-                return dto.hp_basis + dto.hp_stufen_mult * characterVm.level
+            if (dto != null && dto.hpBasis > 0) {
+                return dto.hpBasis + dto.hpStufenMult * characterVm.level
             }
             // Fallback: Land=5+5×level, Sky/Sea=4+4×level
             val base = if (activeBeastType == BeastType.LAND) 5 else 4
@@ -195,15 +197,15 @@ class CombatViewModel(
     }
 
     val capyAc: Int get() {
-        if (characterVm.characterData.charClass == CharacterClass.RANGER) {
+        if (isRanger) {
             val dto = companionData
-            val base = if (dto != null && dto.rk_basis > 0) dto.rk_basis else 13
+            val base = if (dto != null && dto.rkBasis > 0) dto.rkBasis else 13
             return base + characterVm.wisMod
         }
         return 13
     }
-    val capyAttackBonus: String get() = if (characterVm.characterData.charClass == CharacterClass.RANGER) "+${characterVm.spellAttackBonus}" else "+5"
-    val capyDamage: String get() = if (characterVm.characterData.charClass == CharacterClass.RANGER) {
+    val capyAttackBonus: String get() = if (isRanger) "+${characterVm.spellAttackBonus}" else "+5"
+    val capyDamage: String get() = if (isRanger) {
         if (activeBeastType == BeastType.SKY) "1W4 + 3 + ${characterVm.wisMod} Hieb" else if (activeBeastType == BeastType.SEA) "1W6 + 2 + ${characterVm.wisMod} Stich" else "1W8 + 2 + ${characterVm.wisMod} Hieb"
     } else "1W4+3 Hieb + 2W6 Gleißend"
     val capySpeed: String get() = companionData?.bewegungsrate?.entries?.joinToString(", ") { "${it.key}: ${it.value}" } ?: ""
@@ -430,10 +432,11 @@ class CombatViewModel(
         activeBeastType = type
         loadCompanion()
 
-        capyCurrentHp = prefs.getInt("capyCurrentHp_${characterVm.characterData.id}_${activeBeastType.name}", capyMaxHp)
+        val maxHp = capyMaxHp
+        capyCurrentHp = prefs.getInt("capyCurrentHp_${characterVm.characterData.id}_${activeBeastType.name}", maxHp)
         companionIsDead = prefs.getBoolean("companionIsDead_${characterVm.characterData.id}_${activeBeastType.name}", false)
 
-        if (capyCurrentHp > capyMaxHp) capyCurrentHp = capyMaxHp
+        if (capyCurrentHp > maxHp) capyCurrentHp = maxHp
 
         prefs.edit {
             putString("activeBeastType", activeBeastType.name)

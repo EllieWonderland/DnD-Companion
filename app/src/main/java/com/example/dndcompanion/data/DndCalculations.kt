@@ -29,5 +29,7 @@ object DndCalculations {
 
     fun maxWeightKg(strength: Int): Double = strength * 7.5
 
+    fun lbToKg(lbs: Double): String = "%.2f".format(lbs * 0.4536)
+
     fun abilityMod(score: Int): Int = (score - 10).floorDiv(2)
 }
