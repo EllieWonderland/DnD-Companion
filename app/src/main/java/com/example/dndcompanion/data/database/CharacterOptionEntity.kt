@@ -28,7 +28,7 @@ data class ClassEntity(
     val primaryAbility: String,
     val hitDie: String,
     val savingThrows: List<String>,
-    val classFeatures: List<ClassFeature>,
+    @SerializedName("features") val classFeatures: List<ClassFeature>,
     val subclasses: List<Subclass>
 )
 
