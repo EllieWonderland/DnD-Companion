@@ -453,7 +453,7 @@ fun ZauberScreen(
                 cantrips.forEach { spell ->
                     SpellCard(
                         spell = spell,
-                        onCastAsRitual = if (spellVm.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null,
+                        onCastAsRitual = if (spellVm.canCastAsRitual(spell)) { { spellVm.castAsRitual(spell) } } else null,
                         globalSpellbook = globalSpellbook
                     )
                 }
@@ -465,7 +465,7 @@ fun ZauberScreen(
                 leveledSpells.forEach { spell ->
                     SpellCard(
                         spell = spell,
-                        onCastAsRitual = if (spellVm.canCastAsRitual(spell)) { { /* Visual feedback only for now */ } } else null,
+                        onCastAsRitual = if (spellVm.canCastAsRitual(spell)) { { spellVm.castAsRitual(spell) } } else null,
                         globalSpellbook = globalSpellbook
                     )
                 }

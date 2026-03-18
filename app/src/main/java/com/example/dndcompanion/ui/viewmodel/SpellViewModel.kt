@@ -248,13 +248,11 @@ class SpellViewModel(
 
     fun canCastAsRitual(spell: Spell): Boolean {
         if (!spell.isRitual) return false
-        return if (characterVm.characterData.charClass == CharacterClass.WARLOCK) {
-            spell.isPrepared
-        } else if (characterVm.characterData.charClass == CharacterClass.RANGER) {
-            spell.isPrepared
-        } else {
-            spell.isPrepared
-        }
+        return spell.isPrepared
+    }
+
+    fun castAsRitual(spell: Spell) {
+        characterVm.snackbarMessage.value = "${spell.name} als Ritual gewirkt (+10 Min) — kein Zauberplatz verbraucht."
     }
 
     fun castGoodberry() {
