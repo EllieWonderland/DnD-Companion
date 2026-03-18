@@ -826,559 +826,652 @@
             "id": "gear_alchemist_fire",
             "name": "Alchemistenfeuer (Alchemist's Fire)",
             "weightLb": 1.0,
-            "price": "50 GM"
+            "price": "50 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_arcane_focus_crystal",
             "name": "Arkaner Fokus: Kristall (Crystal)",
             "weightLb": 1.0,
-            "price": "10 GM"
+            "price": "10 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_arcane_focus_orb",
             "name": "Arkaner Fokus: Kugel (Orb)",
             "weightLb": 3.0,
-            "price": "20 GM"
+            "price": "20 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_arcane_focus_rod",
             "name": "Arkaner Fokus: Rute (Rod)",
             "weightLb": 2.0,
-            "price": "10 GM"
+            "price": "10 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_arcane_focus_staff",
             "name": "Arkaner Fokus: Stab (Staff)",
             "weightLb": 4.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_arcane_focus_wand",
             "name": "Arkaner Fokus: Zauberstab (Wand)",
             "weightLb": 1.0,
-            "price": "10 GM"
+            "price": "10 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_crowbar",
             "name": "Brecheisen (Crowbar)",
             "weightLb": 5.0,
-            "price": "2 GM"
+            "price": "2 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_book",
             "name": "Buch (Book)",
             "weightLb": 5.0,
-            "price": "25 GM"
+            "price": "25 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_blanket",
             "name": "Decke (Blanket)",
             "weightLb": 3.0,
-            "price": "5 SM"
+            "price": "5 SM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_diplomat_pack",
             "name": "Diplomaten-Ausrüstung (Diplomat's Pack)",
             "weightLb": 39.0,
-            "price": "39 GM"
+            "price": "39 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_druidic_focus_yew",
             "name": "Druidischer Fokus: Eiben-Zauberstab",
             "weightLb": 1.0,
-            "price": "10 GM"
+            "price": "10 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_druidic_focus_staff",
             "name": "Druidischer Fokus: Holzstab",
             "weightLb": 4.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_druidic_focus_mistletoe",
             "name": "Druidischer Fokus: Mistelzweig",
             "weightLb": 0.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_bucket",
             "name": "Eimer (Bucket)",
             "weightLb": 2.0,
-            "price": "5 KM"
+            "price": "5 KM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_burglar_pack",
             "name": "Einbrecher-Ausrüstung (Burglar's Pack)",
             "weightLb": 42.0,
-            "price": "16 GM"
+            "price": "16 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_iron_pot",
             "name": "Eisentopf (Pot, Iron)",
             "weightLb": 10.0,
-            "price": "2 GM"
+            "price": "2 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_explorer_pack",
             "name": "Entdecker-Ausrüstung (Explorer's Pack)",
             "weightLb": 55.0,
-            "price": "10 GM"
+            "price": "10 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_torch",
             "name": "Fackel (Torch)",
             "weightLb": 1.0,
-            "price": "1 KM"
+            "price": "1 KM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_barrel",
             "name": "Fass (Barrel)",
             "weightLb": 70.0,
-            "price": "2 GM"
+            "price": "2 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_flask",
             "name": "Flachmann (Flask)",
             "weightLb": 1.0,
-            "price": "2 KM"
+            "price": "2 KM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_block_tackle",
             "name": "Flaschenzug (Block and Tackle)",
             "weightLb": 5.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_vial",
             "name": "Fläschchen (Vial)",
             "weightLb": 0.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_antitoxin",
             "name": "Gegengift (Antitoxin)",
             "weightLb": 0.0,
-            "price": "50 GM"
+            "price": "50 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_scholar_pack",
             "name": "Gelehrten-Ausrüstung (Scholar's Pack)",
             "weightLb": 22.0,
-            "price": "40 GM"
+            "price": "40 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_dungeoneer_pack",
             "name": "Gewölbeforscher-Ausrüstung (Dungeoneer's Pack)",
             "weightLb": 55.0,
-            "price": "12 GM"
+            "price": "12 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_poison_basic",
             "name": "Gift, Basis (Poison, Basic)",
             "weightLb": 0.0,
-            "price": "100 GM"
+            "price": "100 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_bottle_glass",
             "name": "Glasflasche (Bottle, Glass)",
             "weightLb": 2.0,
-            "price": "2 GM"
+            "price": "2 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_bell",
             "name": "Glocke (Bell)",
             "weightLb": 0.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_manacles",
             "name": "Handschellen (Manacles)",
             "weightLb": 6.0,
-            "price": "2 GM"
+            "price": "2 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_healer_kit",
             "name": "Heiler-Satz (Healer's Kit)",
             "weightLb": 3.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_holy_symbol_amulet",
             "name": "Heiliges Symbol: Amulett (Amulet)",
             "weightLb": 1.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_holy_symbol_emblem",
             "name": "Heiliges Symbol: Emblem (Emblem)",
             "weightLb": 0.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_holy_symbol_reliquary",
             "name": "Heiliges Symbol: Reliquie (Reliquary)",
             "weightLb": 2.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_potion_healing",
             "name": "Heiltrank (Potion of Healing)",
             "weightLb": 0.5,
-            "price": "50 GM"
+            "price": "50 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_hunting_trap",
             "name": "Jagdfalle (Hunting Trap)",
             "weightLb": 25.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_case_map_scroll",
             "name": "Karten-/Schriftrollenbehälter (Case, Map/Scroll)",
             "weightLb": 1.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_map",
             "name": "Karte (Map)",
             "weightLb": 0.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_candle",
             "name": "Kerze (Candle)",
             "weightLb": 0.0,
-            "price": "1 KM"
+            "price": "1 KM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_chain",
             "name": "Kette, 3 m / 2 Felder (Chain)",
             "weightLb": 10.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_clothes_fine",
             "name": "Kleidung, fein (Clothes, Fine)",
             "weightLb": 6.0,
-            "price": "15 GM"
+            "price": "15 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_clothes_traveler",
             "name": "Kleidung, Reise (Clothes, Traveler's)",
             "weightLb": 4.0,
-            "price": "2 GM"
+            "price": "2 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_climber_kit",
             "name": "Kletterausrüstung (Climber's Kit)",
             "weightLb": 12.0,
-            "price": "25 GM"
+            "price": "25 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_quiver",
             "name": "Köcher (Quiver)",
             "weightLb": 1.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_basket",
             "name": "Korb (Basket)",
             "weightLb": 2.0,
-            "price": "4 SM"
+            "price": "4 SM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_costume",
             "name": "Kostüm (Costume)",
             "weightLb": 4.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_caltrops",
             "name": "Krähenfüße (Caltrops)",
             "weightLb": 2.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_jug",
             "name": "Krug (Jug)",
             "weightLb": 4.0,
-            "price": "2 KM"
+            "price": "2 KM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_lamp",
             "name": "Lampe (Lamp)",
             "weightLb": 1.0,
-            "price": "5 SM"
+            "price": "5 SM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_lantern_bullseye",
             "name": "Lanterne, Blend- (Lantern, Bullseye)",
             "weightLb": 2.0,
-            "price": "10 GM"
+            "price": "10 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_lantern_hooded",
             "name": "Lanterne, Kapuzen- (Lantern, Hooded)",
             "weightLb": 2.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_ladder",
             "name": "Leiter, 3 m / 2 Felder (Ladder)",
             "weightLb": 25.0,
-            "price": "1 SM"
+            "price": "1 SM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_magnifying_glass",
             "name": "Lupe (Magnifying Glass)",
             "weightLb": 0.0,
-            "price": "100 GM"
+            "price": "100 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_component_pouch",
             "name": "Materialkomponentenbeutel (Component Pouch)",
             "weightLb": 2.0,
-            "price": "25 GM"
+            "price": "25 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_ball_bearings",
             "name": "Metallkügelchen (Ball Bearings)",
             "weightLb": 2.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_ammo_bolts",
             "name": "Munition: Bolzen (Bolts, 20)",
             "weightLb": 1.5,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_ammo_bolt_case",
             "name": "Munition: Bolzenköcher (Crossbow Bolt Case)",
             "weightLb": 1.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_ammo_bullets",
             "name": "Munition: Feuerwaffen-Kugeln (Bullets, 10)",
             "weightLb": 2.0,
-            "price": "3 GM"
+            "price": "3 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_ammo_needles",
             "name": "Munition: Nadeln (Needles, 50)",
             "weightLb": 1.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_ammo_arrows",
             "name": "Munition: Pfeile (Arrows, 20)",
             "weightLb": 1.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_ammo_sling_bullets",
             "name": "Munition: Schleuderkugeln (Sling Bullets, 20)",
             "weightLb": 1.5,
-            "price": "4 KM"
+            "price": "4 KM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_net",
             "name": "Netz (Net)",
             "weightLb": 3.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_oil",
             "name": "Öl (Oil, 1 Flasche)",
             "weightLb": 1.0,
-            "price": "1 SM"
+            "price": "1 SM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_paper",
             "name": "Papier (Paper, 1 Blatt)",
             "weightLb": 0.0,
-            "price": "2 SM"
+            "price": "2 SM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_perfume",
             "name": "Parfüm (Perfume)",
             "weightLb": 0.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_parchment",
             "name": "Pergament (Parchment, 1 Blatt)",
             "weightLb": 0.0,
-            "price": "1 SM"
+            "price": "1 SM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_priest_pack",
             "name": "Priester-Ausrüstung (Priest's Pack)",
             "weightLb": 29.0,
-            "price": "33 GM"
+            "price": "33 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_ram_portable",
             "name": "Rammbock (Ram, Portable)",
             "weightLb": 35.0,
-            "price": "4 GM"
+            "price": "4 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_rations",
             "name": "Rationen (Rations, 1 Tag)",
             "weightLb": 2.0,
-            "price": "5 SM"
+            "price": "5 SM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_robe",
             "name": "Robe (Robe)",
             "weightLb": 4.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_backpack",
             "name": "Rucksack (Backpack)",
             "weightLb": 5.0,
-            "price": "2 GM"
+            "price": "2 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_sack",
             "name": "Sack (Sack)",
             "weightLb": 0.5,
-            "price": "1 KM"
+            "price": "1 KM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_acid",
             "name": "Säure (Acid)",
             "weightLb": 1.0,
-            "price": "25 GM"
+            "price": "25 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_shovel",
             "name": "Schaufel (Shovel)",
             "weightLb": 5.0,
-            "price": "2 GM"
+            "price": "2 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_bedroll",
             "name": "Schlafsack (Bedroll)",
             "weightLb": 7.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_lock",
             "name": "Schloss (Lock)",
             "weightLb": 1.0,
-            "price": "10 GM"
+            "price": "10 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_string",
             "name": "Schnur, 3 m / 2 Felder (String)",
             "weightLb": 0.0,
-            "price": "1 SM"
+            "price": "1 SM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_ink_pen",
             "name": "Schreibfeder (Ink Pen)",
             "weightLb": 0.0,
-            "price": "2 KM"
+            "price": "2 KM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_rope",
             "name": "Seil, 15 m / 10 Felder (Rope)",
             "weightLb": 5.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_signal_whistle",
             "name": "Signalpfeife (Signal Whistle)",
             "weightLb": 0.0,
-            "price": "5 KM"
+            "price": "5 KM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_mirror",
             "name": "Spiegel, Stahl (Mirror)",
             "weightLb": 0.5,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_spikes_iron",
             "name": "Spikes, Eisen (Spikes, Iron, 10 Stück)",
             "weightLb": 5.0,
-            "price": "1 GM"
+            "price": "1 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_pole",
             "name": "Stange, 3 m / 2 Felder (Pole)",
             "weightLb": 7.0,
-            "price": "5 KM"
+            "price": "5 KM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_ink",
             "name": "Tinte (Ink)",
             "weightLb": 0.0,
-            "price": "10 GM"
+            "price": "10 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_pouch",
             "name": "Tasche / Beutel (Pouch)",
             "weightLb": 1.0,
-            "price": "5 SM"
+            "price": "5 SM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_chest",
             "name": "Truhe (Chest)",
             "weightLb": 25.0,
-            "price": "5 GM"
+            "price": "5 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_spyglass",
             "name": "Teleskop / Fernrohr (Spyglass)",
             "weightLb": 1.0,
-            "price": "1.000 GM"
+            "price": "1.000 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_entertainer_pack",
             "name": "Unterhalter-Ausrüstung (Entertainer's Pack)",
             "weightLb": 58.5,
-            "price": "40 GM"
+            "price": "40 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_holy_water",
             "name": "Weihwasser (Holy Water)",
             "weightLb": 1.0,
-            "price": "25 GM"
+            "price": "25 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_waterskin",
             "name": "Trinkschlauch (Waterskin, voll)",
             "weightLb": 5.0,
-            "price": "2 SM"
+            "price": "2 SM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_scroll_cantrip",
             "name": "Zauberspruchrolle: Zaubertrick (Cantrip)",
             "weightLb": 0.0,
-            "price": "30 GM"
+            "price": "30 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_scroll_level1",
             "name": "Zauberspruchrolle: Stufe 1",
             "weightLb": 0.0,
-            "price": "50 GM"
+            "price": "50 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_tent",
             "name": "Zelt (Tent)",
             "weightLb": 20.0,
-            "price": "2 GM"
+            "price": "2 GM",
+            "category": "Ausrüstung"
         },
         {
             "id": "gear_tinderbox",
             "name": "Zunderkästchen (Tinderbox)",
             "weightLb": 1.0,
-            "price": "5 SM"
+            "price": "5 SM",
+            "category": "Ausrüstung"
         }
     ],
     "mounts_and_vehicles": [
