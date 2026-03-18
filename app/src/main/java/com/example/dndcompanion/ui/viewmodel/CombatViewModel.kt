@@ -31,7 +31,7 @@ class CombatViewModel(
         private set
     var tempHp by mutableIntStateOf(prefs.getInt("tempHp", 0))
         private set
-    var hitDice by mutableIntStateOf(prefs.getInt("hitDice", characterVm.characterData.baseHitDice))
+    var hitDice by mutableIntStateOf(prefs.getInt("hitDice", characterVm.level))
         private set
 
     // --- TODESRETTUNGSWÜRFE ---
@@ -97,7 +97,7 @@ class CombatViewModel(
         maxHp = prefs.getInt("maxHp", characterVm.characterData.baseMaxHp)
         currentHp = prefs.getInt("currentHp", maxHp)
         tempHp = prefs.getInt("${id}_tempHp", if (id == "Delat") 12 else 0)
-        hitDice = prefs.getInt("hitDice", characterVm.characterData.baseHitDice)
+        hitDice = prefs.getInt("hitDice", characterVm.level).coerceAtMost(characterVm.level)
         deathSaveSuccesses = prefs.getInt("deathSaveSuccesses", 0)
         deathSaveFailures = prefs.getInt("deathSaveFailures", 0)
         heroicInspiration = prefs.getBoolean("heroicInspiration_${id}", false)
