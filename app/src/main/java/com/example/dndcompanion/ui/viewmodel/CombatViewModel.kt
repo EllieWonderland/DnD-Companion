@@ -181,12 +181,27 @@ class CombatViewModel(
     val availableWeapons: List<String> get() = inventoryVm.availableWeapons
 
     val capyMaxHp: Int get() {
-        val base = if (activeBeastType == BeastType.SKY || activeBeastType == BeastType.SEA) 4 else 5
-        val mult = if (activeBeastType == BeastType.SKY || activeBeastType == BeastType.SEA) 4 else 5
-        return if (characterVm.characterData.charClass == CharacterClass.RANGER) base + (mult * characterVm.level) else 24
+        if (characterVm.characterData.charClass == CharacterClass.RANGER) {
+            val dto = companionData
+            if (dto != null && dto.hp_basis > 0) {
+                return dto.hp_basis + dto.hp_stufen_mult * characterVm.level
+            }
+            // Fallback: Land=5+5×level, Sky/Sea=4+4×level
+            val base = if (activeBeastType == BeastType.LAND) 5 else 4
+            val mult = if (activeBeastType == BeastType.LAND) 5 else 4
+            return base + (mult * characterVm.level)
+        }
+        return 24
     }
 
-    val capyAc: Int get() = if (characterVm.characterData.charClass == CharacterClass.RANGER) 13 + characterVm.wisMod else 13
+    val capyAc: Int get() {
+        if (characterVm.characterData.charClass == CharacterClass.RANGER) {
+            val dto = companionData
+            val base = if (dto != null && dto.rk_basis > 0) dto.rk_basis else 13
+            return base + characterVm.wisMod
+        }
+        return 13
+    }
     val capyAttackBonus: String get() = if (characterVm.characterData.charClass == CharacterClass.RANGER) "+${characterVm.spellAttackBonus}" else "+5"
     val capyDamage: String get() = if (characterVm.characterData.charClass == CharacterClass.RANGER) {
         if (activeBeastType == BeastType.SKY) "1W4 + 3 + ${characterVm.wisMod} Hieb" else if (activeBeastType == BeastType.SEA) "1W6 + 2 + ${characterVm.wisMod} Stich" else "1W8 + 2 + ${characterVm.wisMod} Hieb"

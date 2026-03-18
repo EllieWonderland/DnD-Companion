@@ -4,7 +4,12 @@
             "name": "Urtier des Himmels",
             "typ_und_gesinnung": "Kleines Tier, neutral",
             "ruestungsklasse": "13 plus dein Weisheitsmodifikator",
+            "rk_basis": 13,
+            "rk_formel": "13 + WIS-Mod",
             "trefferpunkte": "4 plus das Vierfache deiner Waldläuferstufe (das Tier hat eine Anzahl von W6-Trefferwürfeln in Höhe deiner Waldläuferstufe)",
+            "hp_basis": 4,
+            "hp_stufen_mult": 4,
+            "hp_formel": "4 + 4×Waldläuferstufe (Wurf: Stufe×W6)",
             "bewegungsrate": {
                 "boden": "3 m",
                 "fliegen": "18 m"
@@ -66,7 +71,12 @@
             "name": "Urtier des Landes",
             "typ_und_gesinnung": "Mittelgroßes Tier, neutral",
             "ruestungsklasse": "13 plus dein Weisheitsmodifikator",
+            "rk_basis": 13,
+            "rk_formel": "13 + WIS-Mod",
             "trefferpunkte": "5 plus das Fünffache deiner Waldläuferstufe (das Tier hat eine Anzahl von W8-Trefferwürfeln in Höhe deiner Waldläuferstufe)",
+            "hp_basis": 5,
+            "hp_stufen_mult": 5,
+            "hp_formel": "5 + 5×Waldläuferstufe (Wurf: Stufe×W8)",
             "bewegungsrate": {
                 "boden": "12 m",
                 "klettern": "12 m"
@@ -124,7 +134,12 @@
             "name": "Urtier des Meeres",
             "typ_und_gesinnung": "Mittelgroßes Tier, neutral",
             "ruestungsklasse": "13 plus dein Weisheitsmodifikator",
+            "rk_basis": 13,
+            "rk_formel": "13 + WIS-Mod",
             "trefferpunkte": "5 plus das Fünffache deiner Waldläuferstufe (das Tier hat eine Anzahl von W8-Trefferwürfeln in Höhe deiner Waldläuferstufe)",
+            "hp_basis": 5,
+            "hp_stufen_mult": 5,
+            "hp_formel": "5 + 5×Waldläuferstufe (Wurf: Stufe×W8)",
             "bewegungsrate": {
                 "boden": "1,5 m",
                 "schwimmen": "18 m"

@@ -124,7 +124,13 @@ data class CompanionDto(
     val herausforderungsgrad: String,
     val merkmale: List<CompanionTraitDto>,
     val aktionen: List<CompanionActionDto>,
-    val reaktionen: List<CompanionActionDto>? = null
+    val reaktionen: List<CompanionActionDto>? = null,
+    // Structured formula fields for dynamic HP/AC calculation
+    val hp_basis: Int = 0,
+    val hp_stufen_mult: Int = 0,
+    val hp_formel: String = "",
+    val rk_basis: Int = 0,
+    val rk_formel: String = ""
 )
 
 data class AttributeDto(

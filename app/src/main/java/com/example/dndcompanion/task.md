@@ -347,8 +347,8 @@ Geprüfte Dateien: `Zauberbuch/Spellbook.md`, `Zauberbuch/spellbook.json`, `free
 ### F. spellbook.json — Strukturprobleme & Vollständigkeit
 
 - [x] **Trailing Whitespace in `classes`-Feld:** 13 Zauber haben einen Leerzeichen-Fehler am Ende des Klassennamens (z. B. `"Hexenmeister "`, `"Kleriker "`, `"Magier "`, `"Zauberer "`). **App-Bug: String-Vergleich `class == "Hexenmeister"` schlägt fehl → Delats Zauber werden nicht korrekt gefiltert.** Per Python-Skript bereinigt (5 Einträge getroffen).
-- [ ] **5 Zauber ohne `description`-Feld:** Die Beschwörungs-Zauber `Celestisches Wesen herbeirufen`, `Drachen herbeirufen`, `Elementar herbeirufen`, `Feenwesen herbeirufen` und `Gegenstände beleben` haben nur ein `summon_stat_block`-Feld aber keine Beschreibung. Der RAG-Chatbot kann diese Zauber nicht erklären.
-- [ ] **18 Zauber mit abweichenden deutschen Namen (Spellbook.md ↔ spellbook.json):** Spellbook.md und spellbook.json verwenden verschiedene Übersetzungen für dieselben Zauber. Der RAG-Chatbot und die Suchfunktion könnten Zauber nicht zuordnen:
+- [x] **5 Zauber ohne `description`-Feld:** Die Beschwörungs-Zauber `Celestisches Wesen herbeirufen`, `Drachen herbeirufen`, `Elementar herbeirufen`, `Feenwesen herbeirufen` und `Gegenstände beleben` haben nur ein `summon_stat_block`-Feld aber keine Beschreibung. Der RAG-Chatbot kann diese Zauber nicht erklären.
+- [x] **18 Zauber mit abweichenden deutschen Namen (Spellbook.md ↔ spellbook.json):** Spellbook.md und spellbook.json verwenden verschiedene Übersetzungen für dieselben Zauber. Der RAG-Chatbot und die Suchfunktion könnten Zauber nicht zuordnen:
   | Spellbook.md | spellbook.json | Englisch |
   | :--- | :--- | :--- |
   | Klirren | Zerbersten | Shatter |
@@ -369,7 +369,7 @@ Geprüfte Dateien: `Zauberbuch/Spellbook.md`, `Zauberbuch/spellbook.json`, `free
   | Flamme erzeugen | Flammen erzeugen | Produce Flame |
   | Greifende Ranke | Schlingranke | Grasping Vine |
   | Salve beschwören | Pfeilsalve beschwören | Conjure Volley |
-- [ ] **4 Zauber aus Spellbook.md fehlen komplett in spellbook.json:** Weder unter ihrem noch unter einem alternativen Namen auffindbar: `Donnerschritt` (Thunder Step, Stufe 3), `Aberration beschwören` (Summon Aberration, Stufe 4), `Geistige Trübung` (Befuddlement, Stufe 8), `Schwächere Genesung` (Lesser Restoration, Stufe 2). Für Delat und Athania aktuell nicht kritisch, da sie diese Zauber nicht haben — aber für Vollständigkeit der App-Datenbank relevant.
+- [x] **4 Zauber aus Spellbook.md fehlen komplett in spellbook.json:** Weder unter ihrem noch unter einem alternativen Namen auffindbar: `Donnerschritt` (Thunder Step, Stufe 3), `Aberration beschwören` (Summon Aberration, Stufe 4), `Geistige Trübung` (Befuddlement, Stufe 8), `Schwächere Genesung` (Lesser Restoration, Stufe 2). Für Delat und Athania aktuell nicht kritisch, da sie diese Zauber nicht haben — aber für Vollständigkeit der App-Datenbank relevant.
 
 ### G. stats.json — Inkonsistenzen Delat & Athania
 
@@ -383,7 +383,7 @@ Geprüfte Dateien: `Zauberbuch/Spellbook.md`, `Zauberbuch/spellbook.json`, `free
 ### H. urtier.json — Strukturproblem
 
 - [x] **Attribut-Keys Deutsch vs. Englisch (Inkonsistenz mit stats.json):** `STA→STR, GES→DEX, KON→CON, WEI→WIS` in urtier.json vereinheitlicht.
-- [ ] **HP und RK als Freitext (nicht berechnet):** Z. B. `"trefferpunkte": "5 plus das Fünffache deiner Waldläuferstufe"` und `"ruestungsklasse": "13 plus dein Weisheitsmodifikator"`. Die App muss diese Formeln zur Laufzeit parsen/berechnen. Besser wäre ein berechneter Wert + eine `formula`-Eigenschaft für den Hinweistext.
+- [x] **HP und RK als Freitext (nicht berechnet):** Z. B. `"trefferpunkte": "5 plus das Fünffache deiner Waldläuferstufe"` und `"ruestungsklasse": "13 plus dein Weisheitsmodifikator"`. Die App muss diese Formeln zur Laufzeit parsen/berechnen. Besser wäre ein berechneter Wert + eine `formula`-Eigenschaft für den Hinweistext.
 
 ### I. vertrauter.json — Strukturproblem
 

@@ -77,7 +77,8 @@
         "Celestisch",
         "versteht die Sprachen, die du kennst"
       ]
-    }
+    },
+    "description": "Du rufst einen celestischen Geist herbei. Er erscheint in einem freien Bereich in Reichweite, den du sehen kannst, und verwendet den Wertekasten eines Celestischen Geists. Wenn du den Zauber wirkst, wähle zwischen den Formen Rächer oder Verteidiger. Die Kreatur sieht aus wie ein celestisches Wesen des ausgewählten Typs, wodurch einige Details im Wertekasten bestimmt werden. Die Kreatur verschwindet, wenn ihre Trefferpunkte auf 0 sinken oder der Zauber endet. Die Kreatur ist mit dir und deinen Verbündeten verbündet. Im Kampf nutzt sie deinen Initiativewert und ist direkt nach dir am Zug. Sie gehorcht deinen mündlichen Befehlen (keine Aktion deinerseits erforderlich). Befiehlst du ihr nichts, so führt sie die Ausweichaktion aus und nutzt ihre Bewegung, um Gefahren zu vermeiden. Verwenden von Zauberplätzen höheren Grades: Verwende den Zauberplatzgrad als Zaubergrad im Wertekasten."
   },
   {
     "spell_id": "drachen_herbeirufen",
@@ -159,7 +160,8 @@
         "Drakonisch",
         "versteht die Sprachen, die du kennst"
       ]
-    }
+    },
+    "description": "Du rufst einen Drakonischen Geist herbei. Er erscheint in einem freien Bereich in Reichweite, den du sehen kannst, und verwendet den Wertekasten eines Drakonischen Geists. Wenn du den Zauber wirkst, wähle eine der folgenden Schadensarten: Blitz, Feuer, Gift, Kälte oder Säure. Die Kreatur sieht aus wie ein Drache, der mit der ausgewählten Schadensart assoziiert wird, wodurch einige Details im Wertekasten bestimmt werden. Die Kreatur verschwindet, wenn ihre Trefferpunkte auf 0 sinken oder der Zauber endet. Die Kreatur ist mit dir und deinen Verbündeten verbündet. Im Kampf nutzt sie deinen Initiativewert und ist direkt nach dir am Zug. Sie gehorcht deinen mündlichen Befehlen (keine Aktion deinerseits erforderlich). Befiehlst du ihr nichts, so führt sie die Ausweichaktion aus und nutzt ihre Bewegung, um Gefahren zu vermeiden. Verwenden von Zauberplätzen höheren Grades: Verwende den Zauberplatzgrad als Zaubergrad im Wertekasten."
   },
   {
     "spell_id": "elementar_herbeirufen",
@@ -256,7 +258,8 @@
         "Urtümlich",
         "versteht die Sprachen, die du kennst"
       ]
-    }
+    },
+    "description": "Du rufst einen Elementargeist herbei. Er erscheint in einem freien Bereich in Reichweite, den du sehen kannst, und verwendet den Wertekasten eines Elementargeists. Wenn du den Zauber wirkst, wähle zwischen den Formen Erde, Feuer, Luft oder Wasser. Die Kreatur sieht aus wie ein Elementar des ausgewählten Typs, wodurch einige Details im Wertekasten bestimmt werden. Die Kreatur verschwindet, wenn ihre Trefferpunkte auf 0 sinken oder der Zauber endet. Die Kreatur ist mit dir und deinen Verbündeten verbündet. Im Kampf nutzt sie deinen Initiativewert und ist direkt nach dir am Zug. Sie gehorcht deinen mündlichen Befehlen (keine Aktion deinerseits erforderlich). Befiehlst du ihr nichts, so führt sie die Ausweichaktion aus und nutzt ihre Bewegung, um Gefahren zu vermeiden. Verwenden von Zauberplätzen höheren Grades: Verwende den Zauberplatzgrad als Zaubergrad im Wertekasten."
   },
   {
     "spell_id": "feenwesen_herbeirufen",
@@ -332,7 +335,8 @@
         "Sylvanisch",
         "versteht die Sprachen, die du kennst"
       ]
-    }
+    },
+    "description": "Du rufst einen Feengeist herbei. Er erscheint in einem freien Bereich in Reichweite, den du sehen kannst, und verwendet den Wertekasten eines Feengeists. Wenn du den Zauber wirkst, wähle eine der folgenden Stimmungen: heiter, trickreich oder wütend. Die Kreatur sieht aus wie ein kleines Feenwesen in der ausgewählten Stimmung, wodurch einige Details im Wertekasten bestimmt werden. Die Kreatur verschwindet, wenn ihre Trefferpunkte auf 0 sinken oder der Zauber endet. Die Kreatur ist mit dir und deinen Verbündeten verbündet. Im Kampf nutzt sie deinen Initiativewert und ist direkt nach dir am Zug. Sie gehorcht deinen mündlichen Befehlen (keine Aktion deinerseits erforderlich). Befiehlst du ihr nichts, so führt sie die Ausweichaktion aus und nutzt ihre Bewegung, um Gefahren zu vermeiden. Verwenden von Zauberplätzen höheren Grades: Verwende den Zauberplatzgrad als Zaubergrad im Wertekasten."
   },
   {
     "spell_id": "gegenstaende_beleben",
@@ -416,7 +420,40 @@
       "languages": [
         "Versteht die Sprachen, die du sprichst"
       ]
-    }
+    },
+    "description": "Du belebst bis zu zehn nichtmagische Gegenstände, die du sehen kannst, in Reichweite. Mittelgroße Gegenstände gelten dabei als einer, große als zwei und riesige als vier. Jeder Gegenstand erhält eine Bewegungsrate von 9 Metern sowie einen Angriff. Als Bonusaktion kannst du deinen Verbündeten bis zu 9 Meter bewegen und ihnen befehlen, anzugreifen. Sie treffen auf das Ziel des Zaubers und richten Schaden an, der von ihrer Größe abhängt. Die belebten Gegenstände sind mit dir und deinen Verbündeten verbündet. Im Kampf nutzen sie deinen Initiativewert und sind direkt nach dir am Zug. Verwenden von Zauberplätzen höheren Grades: Du kannst für jeden Zaubergrad ab dem 6. zwei weitere Gegenstände beleben."
+  },
+  {
+    "spell_id": "aberration_beschworen",
+    "name_de": "Aberration beschwören",
+    "name_en": "Summon Aberration",
+    "level": 4,
+    "school": "Beschwörungszauber",
+    "casting_time": "Aktion",
+    "range": {
+      "type": "Entfernung",
+      "distance": 27
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "ein Tentakel oder ein Auge einer Aberration in einer vergoldeten Phiole im Wert von mindestens 400 GM",
+      "m_cost": 400,
+      "m_consumed": false
+    },
+    "duration": {
+      "type": "Zeitspanne",
+      "duration_value": 1,
+      "duration_unit": "Stunde",
+      "concentration": true
+    },
+    "classes": [
+      "Hexenmeister",
+      "Magier",
+      "Zauberer"
+    ],
+    "summon_stat_block": null,
+    "description": "Du rufst einen Aberrationsgeist herbei. Er erscheint in einem freien Bereich in Reichweite, den du sehen kannst, und verwendet den Wertekasten eines Aberrationsgeists. Wenn du den Zauber wirkst, wähle zwischen den Formen Beholderkin, Slaad oder Star Spawn. Die Kreatur sieht aus wie eine Aberration des ausgewählten Typs, wodurch einige Details im Wertekasten bestimmt werden. Die Kreatur verschwindet, wenn ihre Trefferpunkte auf 0 sinken oder der Zauber endet. Die Kreatur ist mit dir und deinen Verbündeten verbündet. Im Kampf nutzt sie deinen Initiativewert und ist direkt nach dir am Zug. Sie gehorcht deinen mündlichen Befehlen (keine Aktion deinerseits erforderlich). Befiehlst du ihr nichts, so führt sie die Ausweichaktion aus und nutzt ihre Bewegung, um Gefahren zu vermeiden. Verwenden von Zauberplätzen höheren Grades: Verwende den Zauberplatzgrad als Zaubergrad im Wertekasten."
   },
   {
     "spell_id": "ablenkung",
@@ -1810,6 +1847,35 @@
     "description": "Jede Kreatur in einer Ausströmung von 1,5 Metern, die von dir ausgeht, muss einen Konstitutionsrettungswurf bestehen, oder sie erleidet 1W6 Schallschaden. Der Donnerhall des Zaubers ist bis zu 30 Meter weit zu hören. Zaubertrick-Aufwertung: Der Schaden wird um jeweils 1W6 erhöht, wenn du die 5. (2W6), die 11. (3W6) und die 17. (4W6) Stufe erreichst."
   },
   {
+    "spell_id": "donnerschritt",
+    "name_de": "Donnerschritt",
+    "name_en": "Thunder Step",
+    "level": 3,
+    "school": "Beschwörungszauber",
+    "casting_time": "Aktion",
+    "range": {
+      "type": "Selbst",
+      "distance": 0
+    },
+    "components": {
+      "v": true,
+      "s": false,
+      "m": "",
+      "m_cost": 0,
+      "m_consumed": false
+    },
+    "duration": {
+      "type": "Unmittelbar",
+      "concentration": false
+    },
+    "classes": [
+      "Hexenmeister",
+      "Zauberer"
+    ],
+    "summon_stat_block": null,
+    "description": "Du teleportierst dich an einen freien Ort, den du sehen kannst und der bis zu 27 Meter entfernt ist. Sofort nach dem Teleportieren ertönt ein donnernder Knall an dem Ort, den du verlassen hast. Jede Kreatur, die sich innerhalb von drei Metern dieses Orts befindet, muss einen Konstitutionsrettungswurf bestehen, sonst erleidet sie 3W10 Schallschaden (Hälfte bei Erfolg). Der Donnerhall ist bis zu 90 Meter weit zu hören. Du kannst eine bereitwillige Kreatur, die sich innerhalb von drei Metern von dir befindet, mitnehmen und sie mit dir teleportieren. Verwenden von Zauberplätzen höheren Grades: Für jeden Zauberplatzgrad über dem 3. wird der Schaden um 1W10 erhöht."
+  },
+  {
     "spell_id": "donnerwoge",
     "name_de": "Donnerwoge",
     "name_en": "Thunderwave",
@@ -2453,7 +2519,7 @@
   },
   {
     "spell_id": "energiekaefig",
-    "name_de": "Energiekäfig",
+    "name_de": "Kraftkäfig",
     "name_en": "Forcecage",
     "level": 7,
     "school": "Hervorrufungszauber",
@@ -2878,7 +2944,7 @@
   },
   {
     "spell_id": "feenwesen_beschwoeren",
-    "name_de": "Feenwesen beschwören",
+    "name_de": "Fee beschwören",
     "name_en": "Conjure Fey",
     "level": 6,
     "school": "Beschwörungszauber",
@@ -3151,7 +3217,7 @@
   },
   {
     "spell_id": "flammen_erzeugen",
-    "name_de": "Flammen erzeugen",
+    "name_de": "Flamme erzeugen",
     "name_en": "Produce Flame",
     "level": 0,
     "school": "Beschwörungszauber",
@@ -3901,6 +3967,37 @@
     ],
     "summon_stat_block": null,
     "description": "In einem freien Bereich deiner Wahl in Reichweite, den du sehen kannst, erscheint eine große, quasi reale, pferdeartige Kreatur. Du bestimmst das Aussehen der Kreatur. Sie ist stets mit einem Sattel und Zaumzeug ausgerüstet. Durch diesen Zauber erschaffene Ausrüstung löst sich in Rauch auf, wenn sie weiter als drei Meter vom Ross entfernt wird. Für die Wirkungsdauer kann eine Kreatur deiner Wahl (auch du selbst) auf dem Ross reiten. Die Kreatur verwendet den Wertekasten eines Reitpferds (siehe Anhang B), verfügt jedoch über eine Bewegungsrate von 30 Metern und kann in einer Stunde 20,8 Kilometer zurücklegen. Wenn der Zauber endet, verblasst das Ross allmählich, und der Reiter hat eine Minute zum Absteigen Zeit. Wenn das Ross Schaden erleidet, endet der Zauber vorzeitig. "
+  },
+  {
+    "spell_id": "geistige_trubung",
+    "name_de": "Geistige Trübung",
+    "name_en": "Befuddlement",
+    "level": 8,
+    "school": "Verzauberungszauber",
+    "casting_time": "Aktion",
+    "range": {
+      "type": "Entfernung",
+      "distance": 27
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "",
+      "m_cost": 0,
+      "m_consumed": false
+    },
+    "duration": {
+      "type": "Unmittelbar",
+      "concentration": false
+    },
+    "classes": [
+      "Druide",
+      "Hexenmeister",
+      "Magier",
+      "Zauberer"
+    ],
+    "summon_stat_block": null,
+    "description": "Du überwältigst den Verstand einer Kreatur in Reichweite, die du sehen kannst, mit einem vernichtenden Tsunami an mentalen Empfindungen. Das Ziel führt einen Intelligenzrettungswurf aus. Bei einem Fehlschlag erleidet es 10W12 psychischen Schaden und kann keine Zauber wirken, Zauberpositionen oder andere Ressourcen nutzen oder Gegenstände identifizieren, bis der Zustand durch Magie wie Magie bannen, durch den Gezaubertem Zustand heilen oder durch eine lange Rast geheilt wird. Bei einem erfolgreichen Rettungswurf erleidet das Ziel nur die Hälfte des Schadens und erleidet keine anderen Auswirkungen."
   },
   {
     "spell_id": "gestalt_veraendern",
@@ -5851,7 +5948,7 @@
   },
   {
     "spell_id": "magierruestung",
-    "name_de": "Magierrüstung",
+    "name_de": "Magierüstung",
     "name_en": "Mage Armor",
     "level": 1,
     "school": "Bannzauber",
@@ -6993,7 +7090,7 @@
   },
   {
     "spell_id": "pfeilsalve_beschwoeren",
-    "name_de": "Pfeilsalve beschwören",
+    "name_de": "Salve beschwören",
     "name_en": "Conjure Volley",
     "level": 5,
     "school": "Beschwörungszauber",
@@ -7205,7 +7302,7 @@
   },
   {
     "spell_id": "redegewandtheit",
-    "name_de": "Redegewandtheit",
+    "name_de": "Wortgewandtheit",
     "name_en": "Glibness",
     "level": 8,
     "school": "Verzauberungszauber",
@@ -7567,7 +7664,7 @@
   },
   {
     "spell_id": "scheingelaende",
-    "name_de": "Scheingelände",
+    "name_de": "Halluzinatorisches Gelände",
     "name_en": "Hallucinatory Terrain",
     "level": 4,
     "school": "Illusionszauber",
@@ -7694,7 +7791,7 @@
   },
   {
     "spell_id": "schlingranke",
-    "name_de": "Schlingranke",
+    "name_de": "Greifende Ranke",
     "name_en": "Grasping Vine",
     "level": 4,
     "school": "Beschwörungszauber",
@@ -8162,8 +8259,40 @@
     "description": "Du berührst eine Kreatur und beendest einen Zustand bei ihr: Blind, Gelähmt, Taub oder Vergiftet. "
   },
   {
+    "spell_id": "schwaechere_genesung",
+    "name_de": "Schwächere Genesung",
+    "name_en": "Lesser Restoration",
+    "level": 2,
+    "school": "Bannzauber",
+    "casting_time": "Bonusaktion",
+    "range": {
+      "type": "Berührung",
+      "distance": 0
+    },
+    "components": {
+      "v": true,
+      "s": true,
+      "m": "",
+      "m_cost": 0,
+      "m_consumed": false
+    },
+    "duration": {
+      "type": "Unmittelbar",
+      "concentration": false
+    },
+    "classes": [
+      "Druide",
+      "Kleriker",
+      "Paladin",
+      "Waldläufer",
+      "Zauberer"
+    ],
+    "summon_stat_block": null,
+    "description": "Du berührst eine Kreatur und beendest entweder eine Krankheit bei ihr oder einen der folgenden Zustände: Blind, Gelähmt, Taub oder Vergiftet."
+  },
+  {
     "spell_id": "schwaechestrahl",
-    "name_de": "Schwächestrahl",
+    "name_de": "Schwächungsstrahl",
     "name_en": "Ray of Enfeeblement",
     "level": 2,
     "school": "Nekromantiezauber",
@@ -8907,7 +9036,7 @@
   },
   {
     "spell_id": "stille",
-    "name_de": "Stille",
+    "name_de": "Magische Stille",
     "name_en": "Silence",
     "level": 2,
     "school": "Illusionszauber",
@@ -9467,7 +9596,7 @@
   },
   {
     "spell_id": "tier_herbeirufen",
-    "name_de": "Tier herbeirufen",
+    "name_de": "Bestie beschwören",
     "name_en": "Summon Beast",
     "level": 2,
     "school": "Beschwörungszauber",
@@ -10087,7 +10216,7 @@
   },
   {
     "spell_id": "unheimliches_schicksal",
-    "name_de": "Unheimliches Schicksal",
+    "name_de": "Grauen",
     "name_en": "Weird",
     "level": 9,
     "school": "Illusionszauber",
@@ -10118,7 +10247,7 @@
   },
   {
     "spell_id": "unhold_herbeirufen",
-    "name_de": "Unhold herbeirufen",
+    "name_de": "Unterweltler beschwören",
     "name_en": "Summon Fiend",
     "level": 6,
     "school": "Beschwörungszauber",
@@ -11385,7 +11514,7 @@
   },
   {
     "spell_id": "wesen_des_waldes_beschwoeren",
-    "name_de": "Wesen des Waldes beschwören",
+    "name_de": "Waldwesen beschwören",
     "name_en": "Conjure Woodland Beings",
     "level": 4,
     "school": "Beschwörungszauber",
@@ -11663,7 +11792,7 @@
   },
   {
     "spell_id": "wort_der_macht_betaeubung",
-    "name_de": "Wort der Macht Betäubung",
+    "name_de": "Machtwort Betäuben",
     "name_en": "Power Word Stun",
     "level": 8,
     "school": "Verzauberungszauber",
@@ -11752,7 +11881,7 @@
   },
   {
     "spell_id": "wort_der_macht_tod",
-    "name_de": "Wort der Macht: Tod",
+    "name_de": "Machtwort Tod",
     "name_en": "Power Word Kill",
     "level": 9,
     "school": "Verzauberungszauber",
@@ -12018,7 +12147,7 @@
   },
   {
     "spell_id": "zerbersten",
-    "name_de": "Zerbersten",
+    "name_de": "Klirren",
     "name_en": "Shatter",
     "level": 2,
     "school": "Hervorrufungszauber",
@@ -12076,7 +12205,7 @@
   },
   {
     "spell_id": "zielsicherer_schlag",
-    "name_de": "Zielsicherer Schlag",
+    "name_de": "Treffsicherer Schlag",
     "name_en": "True Strike",
     "level": 0,
     "school": "Erkenntniszauber",
