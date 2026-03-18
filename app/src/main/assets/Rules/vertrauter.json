@@ -9,17 +9,17 @@
         "fliegen": "12 m"
     },
     "attribute": {
-        "STA": {
+        "STR": {
             "wert": 6,
             "modifikator": -2,
             "rettungswurf": -2
         },
-        "GES": {
+        "DEX": {
             "wert": 17,
             "modifikator": 3,
             "rettungswurf": 3
         },
-        "KON": {
+        "CON": {
             "wert": 13,
             "modifikator": 1,
             "rettungswurf": 1
@@ -29,7 +29,7 @@
             "modifikator": 2,
             "rettungswurf": 2
         },
-        "WEI": {
+        "WIS": {
             "wert": 12,
             "modifikator": 1,
             "rettungswurf": 1
@@ -40,8 +40,8 @@
             "rettungswurf": 0
         }
     },
-    "fertigkeiten": "Arkane Kunde +4, Heimlichkeit +5, Religion +4",
-    "resistenzen": "Gleißend, Nekrotisch, Psychisch",
+    "fertigkeiten": ["Arkane Kunde +4", "Heimlichkeit +5", "Religion +4"],
+    "resistenzen": ["Gleißend", "Nekrotisch", "Psychisch"],
     "sinne": "Dunkelsicht 18 m, Passive Wahrnehmung 11",
     "sprachen": "Celestisch, Gemeinsprache",
     "herausforderungsgrad": "1 (EP 200, ÜB +2)",

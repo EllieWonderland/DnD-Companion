@@ -10,17 +10,17 @@
                 "fliegen": "18 m"
             },
             "attribute": {
-                "STA": {
+                "STR": {
                     "wert": 6,
                     "modifikator": -2,
                     "rettungswurf": -2
                 },
-                "GES": {
+                "DEX": {
                     "wert": 16,
                     "modifikator": 3,
                     "rettungswurf": 3
                 },
-                "KON": {
+                "CON": {
                     "wert": 13,
                     "modifikator": 1,
                     "rettungswurf": 1
@@ -30,7 +30,7 @@
                     "modifikator": -1,
                     "rettungswurf": -1
                 },
-                "WEI": {
+                "WIS": {
                     "wert": 14,
                     "modifikator": 2,
                     "rettungswurf": 2
@@ -72,17 +72,17 @@
                 "klettern": "12 m"
             },
             "attribute": {
-                "STA": {
+                "STR": {
                     "wert": 14,
                     "modifikator": 2,
                     "rettungswurf": 2
                 },
-                "GES": {
+                "DEX": {
                     "wert": 14,
                     "modifikator": 2,
                     "rettungswurf": 2
                 },
-                "KON": {
+                "CON": {
                     "wert": 15,
                     "modifikator": 2,
                     "rettungswurf": 2
@@ -92,7 +92,7 @@
                     "modifikator": -1,
                     "rettungswurf": -1
                 },
-                "WEI": {
+                "WIS": {
                     "wert": 14,
                     "modifikator": 2,
                     "rettungswurf": 2
@@ -130,17 +130,17 @@
                 "schwimmen": "18 m"
             },
             "attribute": {
-                "STA": {
+                "STR": {
                     "wert": 14,
                     "modifikator": 2,
                     "rettungswurf": 2
                 },
-                "GES": {
+                "DEX": {
                     "wert": 14,
                     "modifikator": 2,
                     "rettungswurf": 2
                 },
-                "KON": {
+                "CON": {
                     "wert": 15,
                     "modifikator": 2,
                     "rettungswurf": 2
@@ -150,7 +150,7 @@
                     "modifikator": -1,
                     "rettungswurf": -1
                 },
-                "WEI": {
+                "WIS": {
                     "wert": 14,
                     "modifikator": 2,
                     "rettungswurf": 2

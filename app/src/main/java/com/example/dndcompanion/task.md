@@ -346,7 +346,7 @@ Geprüfte Dateien: `Zauberbuch/Spellbook.md`, `Zauberbuch/spellbook.json`, `free
 
 ### F. spellbook.json — Strukturprobleme & Vollständigkeit
 
-- [ ] **Trailing Whitespace in `classes`-Feld:** 13 Zauber haben einen Leerzeichen-Fehler am Ende des Klassennamens (z. B. `"Hexenmeister "`, `"Kleriker "`, `"Magier "`, `"Zauberer "`). **App-Bug: String-Vergleich `class == "Hexenmeister"` schlägt fehl → Delats Zauber werden nicht korrekt gefiltert.** Muss per Trim bereinigt werden.
+- [x] **Trailing Whitespace in `classes`-Feld:** 13 Zauber haben einen Leerzeichen-Fehler am Ende des Klassennamens (z. B. `"Hexenmeister "`, `"Kleriker "`, `"Magier "`, `"Zauberer "`). **App-Bug: String-Vergleich `class == "Hexenmeister"` schlägt fehl → Delats Zauber werden nicht korrekt gefiltert.** Per Python-Skript bereinigt (5 Einträge getroffen).
 - [ ] **5 Zauber ohne `description`-Feld:** Die Beschwörungs-Zauber `Celestisches Wesen herbeirufen`, `Drachen herbeirufen`, `Elementar herbeirufen`, `Feenwesen herbeirufen` und `Gegenstände beleben` haben nur ein `summon_stat_block`-Feld aber keine Beschreibung. Der RAG-Chatbot kann diese Zauber nicht erklären.
 - [ ] **18 Zauber mit abweichenden deutschen Namen (Spellbook.md ↔ spellbook.json):** Spellbook.md und spellbook.json verwenden verschiedene Übersetzungen für dieselben Zauber. Der RAG-Chatbot und die Suchfunktion könnten Zauber nicht zuordnen:
   | Spellbook.md | spellbook.json | Englisch |
@@ -373,22 +373,22 @@ Geprüfte Dateien: `Zauberbuch/Spellbook.md`, `Zauberbuch/spellbook.json`, `free
 
 ### G. stats.json — Inkonsistenzen Delat & Athania
 
-- [ ] **Delat: Current HP (55) überschreitet Max HP (43):** `current: 55` bei `max: 43` und `temp: 12` bedeutet, dass Temp HP in die Current HP eingerechnet wurden. Korrekt wäre: `max: 43, current: 43, temp: 12`. **App-Bug: HP-Balken und Berechnungen sind falsch, da current > max.**
-- [ ] **Delat: Macht der Tiefe noch in classFeatures:** Stufe-10-Feature des Patrons der Großen Alten — Delat ist Level 5 und kann es nicht besitzen. Muss entfernt werden (betrifft stats.json und stats_delat.md).
-- [ ] **Delat: Sprachen ohne Trennzeichen:** `"languages": "GemeinspracheElfischZwergisch"` — fehlendes Komma/Leerzeichen. Korrekt: `"Gemeinsprache, Elfisch, Zwergisch"`.
-- [ ] **Delat: Furcht + Spiegelbilder ohne `source`-Feld:** Beide Zauber haben `"source": ""`. Furcht ist ein bereitgehaltener Hexenmeister-Zauber (source: "Hexenmeister"), Spiegelbilder ebenfalls (source: "Hexenmeister"). Für den RAG-Chatbot und Zauberbuch-Filter wichtig.
-- [ ] **Athania: Kampfstab-Schaden "1W4"** — identisches Problem wie in stats.md (Abschnitt C), auch in stats.json nicht korrigiert. Muss `"1W6 Wucht"` sein.
-- [ ] **Athania: Dornenhagel `castingTime: "Reaktion"` falsch:** Dornenhagel (Hail of Thorns) ist laut PHB 2024 eine **Bonusaktion** (BA), die vor dem Angriff ausgeführt wird — keine Reaktion. Muss auf `"BA"` korrigiert werden.
+- [x] **Delat: Current HP (55) überschreitet Max HP (43):** `current: 55` bei `max: 43` und `temp: 12` bedeutet, dass Temp HP in die Current HP eingerechnet wurden. Korrigiert: `current: 43`.
+- [x] **Delat: Macht der Tiefe noch in classFeatures:** Stufe-10-Feature des Patrons der Großen Alten entfernt aus stats.json.
+- [x] **Delat: Sprachen ohne Trennzeichen:** `"GemeinspracheElfischZwergisch"` → `"Gemeinsprache, Elfisch, Zwergisch"`.
+- [x] **Delat: Furcht + Spiegelbilder ohne `source`-Feld:** `source: ""` → `source: "Hexenmeister"` für beide.
+- [x] **Athania: Kampfstab-Schaden "1W4"** → `"1W6 Wucht"` in stats.json korrigiert.
+- [x] **Athania: Dornenhagel `castingTime: "Reaktion"` falsch:** → `"BA"` korrigiert.
 
 ### H. urtier.json — Strukturproblem
 
-- [ ] **Attribut-Keys Deutsch vs. Englisch (Inkonsistenz mit stats.json):** `urtier.json` verwendet `STA, GES, KON, INT, WEI, CHA` (deutsche Abkürzungen), während `stats.json` `STR, DEX, CON, INT, WIS, CHA` (englische Abkürzungen) verwendet. Der App-Code muss beide Schemata unterstützen oder eines vereinheitlicht werden.
+- [x] **Attribut-Keys Deutsch vs. Englisch (Inkonsistenz mit stats.json):** `STA→STR, GES→DEX, KON→CON, WEI→WIS` in urtier.json vereinheitlicht.
 - [ ] **HP und RK als Freitext (nicht berechnet):** Z. B. `"trefferpunkte": "5 plus das Fünffache deiner Waldläuferstufe"` und `"ruestungsklasse": "13 plus dein Weisheitsmodifikator"`. Die App muss diese Formeln zur Laufzeit parsen/berechnen. Besser wäre ein berechneter Wert + eine `formula`-Eigenschaft für den Hinweistext.
 
 ### I. vertrauter.json — Strukturproblem
 
-- [ ] **Attribut-Keys Deutsch (STA, GES, KON, WEI):** Gleiche Inkonsistenz wie `urtier.json`. Muss für Einheitlichkeit auf `STR, DEX, CON, WIS` umgestellt werden.
-- [ ] **`resistenzen` und `fertigkeiten` als String statt Array:** `"resistenzen": "Gleißend, Nekrotisch, Psychisch"` und `"fertigkeiten": "Arkane Kunde +4, Heimlichkeit +5, Religion +4"` sind nicht maschinenlesbar geparst. Für die App-Anzeige (z. B. Badge-Liste) wäre ein Array wie `["Gleißend", "Nekrotisch", "Psychisch"]` besser geeignet.
+- [x] **Attribut-Keys Deutsch (STA, GES, KON, WEI):** `STA→STR, GES→DEX, KON→CON, WEI→WIS` in vertrauter.json vereinheitlicht.
+- [x] **`resistenzen` und `fertigkeiten` als String statt Array:** Beide Felder zu Arrays konvertiert.
 
 ### J. freespells.md — Kein Handlungsbedarf (Dokumentation)
 
