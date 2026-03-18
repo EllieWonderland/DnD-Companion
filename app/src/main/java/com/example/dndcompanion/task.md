@@ -337,3 +337,59 @@
 
 - [ ] **Kapitel 8 "Unsichtbar"-Zustand-Widerspruch in rules.json und kapitel8_combat_conditions.md:** Kapitel 7 (und kapitel8.md Zeile 115) sagt: Wenn eine Kreatur dich durch Wahren Blick/Blindsicht sehen kann, profitierst du **nicht** von Vorteil/Nachteil. Kapitel 1 (rules.json) und kapitel1.md sagen hingegen das Gegenteil (allgemeiner Wortlaut). Diese Inkonsistenz zwischen kapitel1 und kapitel8 existiert in den Quelldokumenten — muss für den RAG-Chatbot eindeutig klargestellt werden (Kapitel 8 hat Vorrang als speziellere Regel).
 - [ ] **Kapitel 6 Hinweis Maßeinheiten veraltet:** kapitel6_equipment.md Zeile 5 sagt noch "Alle Gewichtsangaben sind in Pfund (Pfd. / lb.)". Die App nutzt aber kg. Die .md-Datei sollte aktualisiert werden, damit der RAG-Chatbot keine veralteten Maßeinheiten nennt.
+
+---
+
+## Daten-Audit: Restliche assets/Rules (Stand 2026-03-18)
+
+Geprüfte Dateien: `Zauberbuch/Spellbook.md`, `Zauberbuch/spellbook.json`, `freespells.md`, `stats.json`, `urtier.json`, `vertrauter.json`
+
+### F. spellbook.json — Strukturprobleme & Vollständigkeit
+
+- [ ] **Trailing Whitespace in `classes`-Feld:** 13 Zauber haben einen Leerzeichen-Fehler am Ende des Klassennamens (z. B. `"Hexenmeister "`, `"Kleriker "`, `"Magier "`, `"Zauberer "`). **App-Bug: String-Vergleich `class == "Hexenmeister"` schlägt fehl → Delats Zauber werden nicht korrekt gefiltert.** Muss per Trim bereinigt werden.
+- [ ] **5 Zauber ohne `description`-Feld:** Die Beschwörungs-Zauber `Celestisches Wesen herbeirufen`, `Drachen herbeirufen`, `Elementar herbeirufen`, `Feenwesen herbeirufen` und `Gegenstände beleben` haben nur ein `summon_stat_block`-Feld aber keine Beschreibung. Der RAG-Chatbot kann diese Zauber nicht erklären.
+- [ ] **18 Zauber mit abweichenden deutschen Namen (Spellbook.md ↔ spellbook.json):** Spellbook.md und spellbook.json verwenden verschiedene Übersetzungen für dieselben Zauber. Der RAG-Chatbot und die Suchfunktion könnten Zauber nicht zuordnen:
+  | Spellbook.md | spellbook.json | Englisch |
+  | :--- | :--- | :--- |
+  | Klirren | Zerbersten | Shatter |
+  | Schwächungsstrahl | Schwächestrahl | Ray of Enfeeblement |
+  | Treffsicherer Schlag | Zielsicherer Schlag | True Strike |
+  | Wortgewandtheit | Redegewandtheit | Glibness |
+  | Machtwort Betäuben | Wort der Macht Betäubung | Power Word Stun |
+  | Machtwort Tod | Wort der Macht: Tod | Power Word Kill |
+  | Grauen | Unheimliches Schicksal | Weird |
+  | Kraftkäfig | Energiekäfig | Forcecage |
+  | Unterweltler beschwören | Unhold herbeirufen | Summon Fiend |
+  | Waldwesen beschwören | Wesen des Waldes beschwören | Conjure Woodland Beings |
+  | Fee beschwören | Feenwesen beschwören | Conjure Fey |
+  | Bestie beschwören | Tier herbeirufen | Summon Beast |
+  | Halluzinatorisches Gelände | Scheingelände | Hallucinatory Terrain |
+  | Magierüstung | Magierrüstung | Mage Armor |
+  | Magische Stille | Stille | Silence |
+  | Flamme erzeugen | Flammen erzeugen | Produce Flame |
+  | Greifende Ranke | Schlingranke | Grasping Vine |
+  | Salve beschwören | Pfeilsalve beschwören | Conjure Volley |
+- [ ] **4 Zauber aus Spellbook.md fehlen komplett in spellbook.json:** Weder unter ihrem noch unter einem alternativen Namen auffindbar: `Donnerschritt` (Thunder Step, Stufe 3), `Aberration beschwören` (Summon Aberration, Stufe 4), `Geistige Trübung` (Befuddlement, Stufe 8), `Schwächere Genesung` (Lesser Restoration, Stufe 2). Für Delat und Athania aktuell nicht kritisch, da sie diese Zauber nicht haben — aber für Vollständigkeit der App-Datenbank relevant.
+
+### G. stats.json — Inkonsistenzen Delat & Athania
+
+- [ ] **Delat: Current HP (55) überschreitet Max HP (43):** `current: 55` bei `max: 43` und `temp: 12` bedeutet, dass Temp HP in die Current HP eingerechnet wurden. Korrekt wäre: `max: 43, current: 43, temp: 12`. **App-Bug: HP-Balken und Berechnungen sind falsch, da current > max.**
+- [ ] **Delat: Macht der Tiefe noch in classFeatures:** Stufe-10-Feature des Patrons der Großen Alten — Delat ist Level 5 und kann es nicht besitzen. Muss entfernt werden (betrifft stats.json und stats_delat.md).
+- [ ] **Delat: Sprachen ohne Trennzeichen:** `"languages": "GemeinspracheElfischZwergisch"` — fehlendes Komma/Leerzeichen. Korrekt: `"Gemeinsprache, Elfisch, Zwergisch"`.
+- [ ] **Delat: Furcht + Spiegelbilder ohne `source`-Feld:** Beide Zauber haben `"source": ""`. Furcht ist ein bereitgehaltener Hexenmeister-Zauber (source: "Hexenmeister"), Spiegelbilder ebenfalls (source: "Hexenmeister"). Für den RAG-Chatbot und Zauberbuch-Filter wichtig.
+- [ ] **Athania: Kampfstab-Schaden "1W4"** — identisches Problem wie in stats.md (Abschnitt C), auch in stats.json nicht korrigiert. Muss `"1W6 Wucht"` sein.
+- [ ] **Athania: Dornenhagel `castingTime: "Reaktion"` falsch:** Dornenhagel (Hail of Thorns) ist laut PHB 2024 eine **Bonusaktion** (BA), die vor dem Angriff ausgeführt wird — keine Reaktion. Muss auf `"BA"` korrigiert werden.
+
+### H. urtier.json — Strukturproblem
+
+- [ ] **Attribut-Keys Deutsch vs. Englisch (Inkonsistenz mit stats.json):** `urtier.json` verwendet `STA, GES, KON, INT, WEI, CHA` (deutsche Abkürzungen), während `stats.json` `STR, DEX, CON, INT, WIS, CHA` (englische Abkürzungen) verwendet. Der App-Code muss beide Schemata unterstützen oder eines vereinheitlicht werden.
+- [ ] **HP und RK als Freitext (nicht berechnet):** Z. B. `"trefferpunkte": "5 plus das Fünffache deiner Waldläuferstufe"` und `"ruestungsklasse": "13 plus dein Weisheitsmodifikator"`. Die App muss diese Formeln zur Laufzeit parsen/berechnen. Besser wäre ein berechneter Wert + eine `formula`-Eigenschaft für den Hinweistext.
+
+### I. vertrauter.json — Strukturproblem
+
+- [ ] **Attribut-Keys Deutsch (STA, GES, KON, WEI):** Gleiche Inkonsistenz wie `urtier.json`. Muss für Einheitlichkeit auf `STR, DEX, CON, WIS` umgestellt werden.
+- [ ] **`resistenzen` und `fertigkeiten` als String statt Array:** `"resistenzen": "Gleißend, Nekrotisch, Psychisch"` und `"fertigkeiten": "Arkane Kunde +4, Heimlichkeit +5, Religion +4"` sind nicht maschinenlesbar geparst. Für die App-Anzeige (z. B. Badge-Liste) wäre ein Array wie `["Gleißend", "Nekrotisch", "Psychisch"]` besser geeignet.
+
+### J. freespells.md — Kein Handlungsbedarf (Dokumentation)
+
+- **Keine JSON-Übertragung notwendig.** `freespells.md` ist eine Entwicklerdokumentation, die die Logik für slot-freies Zaubern (Rituale, Fähigkeiten, Gegenstände) als pseudocode beschreibt. Diese Logik gehört in den App-Code, nicht in eine JSON-Datei. Die drei Regeln sind bereits im RAG-Kontext durch `rules.json` und die Merkmale abgedeckt.
