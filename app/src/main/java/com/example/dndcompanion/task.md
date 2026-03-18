@@ -292,3 +292,48 @@
 - [x] **Doppelte DAO-Methoden konsolidieren:** 8× duplizierte `searchX()` / `searchXRaw()` Paare in `RulebookDao.kt` vereinfachen.
 - [x] **Logging hinzufügen:** Stille Fehler in DB-Operationen und Firebase mit `android.util.Log` sichtbar machen.
 - [x] **Unit Tests:** Kritische Logik testen (Slot-Berechnung Ranger vs. Warlock, Schadensformel, Gewichtskapazität).
+
+---
+
+## Daten-Audit: Kapitel vs. JSON (Stand 2026-03-18)
+
+### A. Datenvollständigkeit (Kapitel → JSON)
+
+| Kapitel | Inhalt | Status | JSON-Datei |
+| :--- | :--- | :--- | :--- |
+| Kapitel 1 | Gameplay, Würfel, Attribute, Aktionen, Kampf-Grundlagen | ✅ Vollständig | `rules.json` (22 Gameplay-Einträge) |
+| Kapitel 2 | Spezies (10 Völker) | ✅ Vollständig | `character_options.json` (species-Array) |
+| Kapitel 3 | Klassen + Unterklassen (12 Klassen) | ❌ KRITISCH UNVOLLSTÄNDIG | `character_options.json` (nur Mönch, Paladin, Schurke); `merkmale.json` (nur Waldläufer+Hexenmeister) |
+| Kapitel 4 | Hintergründe (16 Backgrounds) | ⚠️ Vorhanden, falsch platziert | `character_options.json` (classes[3].backgrounds) |
+| Kapitel 5 | Talente (Origin, Stil, Allgemein, Episch) | ⚠️ Vorhanden, falsch platziert | `character_options.json` (classes[3].feats) |
+| Kapitel 6 | Waffen, Rüstungen, Werkzeuge, Ausrüstung, Reittiere | ✅ Vollständig | `equipment.json` (194 Items) |
+| Kapitel 6 | Dienstleistungen | ✅ Vollständig | `rules.json` (4 Einträge) + `equipment.json` (1 Eintrag) |
+| Kapitel 7 | Zaubermechanik, Rituale, Komponenten, Bereiche | ✅ Vollständig | `rules.json` (7 Zauber-Einträge) |
+| Kapitel 8 | Kampfablauf, Aktionen, Zustände (15 Stück) | ✅ Vollständig | `rules.json` (19 Kampf&Zustände-Einträge) |
+
+### B. Strukturprobleme (JSON-Verwertbarkeit)
+
+- [ ] **`character_options.json` Klassen unvollständig:** Das `classes`-Array enthält nur Mönch, Paladin und Schurke. Die anderen 9 Klassen fehlen komplett: **Barbar, Barde, Kleriker, Druide, Kämpfer, Waldläufer, Zauberer, Hexenmeister, Magier**. Athania (Waldläufer) und Delat (Hexenmeister) sind damit NICHT in character_options.json vertreten.
+- [ ] **`character_options.json` Strukturfehler:** `classes[3]` ist kein Klassen-Objekt, sondern `{"backgrounds": [...], "feats": [...]}`. Backgrounds und Feats sind falsch in das Classes-Array eingebettet statt eigene Top-Level-Keys zu sein. **Risiko: App-Code, der über classes iteriert, kann abstürzen oder Backgrounds/Feats ignorieren.**
+- [ ] **`merkmale.json` Volksmerkmale unvollständig:** Nur Elf und Zwerg haben Volksmerkmale. Fehlend: Aasimar, Drachenblütiger, Gnom, Goliath, Halbling, Mensch, Ork, Tiefling. (Vollständige Daten sind in `character_options.json` vorhanden, aber nicht im merkmale.json-Format für den FeaturePickerDialog.)
+- [ ] **`equipment.json` Gewichtseinheit:** Alle Gewichte im Feld `weightLb` (Pfund). Die App zeigt kg an. Prüfen ob die Konvertierung (×0,453) im App-Code korrekt erfolgt oder ob ein Fehler besteht.
+- [ ] **`equipment.json` adventuring_gear ohne `category`-Feld:** Die 93 Abenteuerausrüstungs-Items haben kein `category`-Feld (die anderen Kategorien wie Waffen/Rüstungen haben es). Dies kann den EquipmentPickerDialog-Filter beeinträchtigen.
+
+### C. Inkonsistenzen: Athania (stats.md)
+
+- [ ] **Kampfstab-Schaden falsch:** `stats.md` zeigt `1W4 Wucht` für den Kampfstab. Laut Kapitel 6 macht ein Kampfstab `1W6 Wucht` (einhändig) / `1W8 Wucht` (zweihändig). Muss korrigiert werden.
+- [ ] **"D/W (Lange Schritte)" unbekannte Notation:** Unklar und potentiell falsch. Als Drow-Elf erhält Athania: Tanzende Lichter (St.1), Feenfeuer (St.3), Dunkelheit (St.5) — NICHT "Lange Schritte" (das ist die Waldelf-Abstammung). Eintrag sollte bereinigt oder erklärt werden.
+- [ ] **Drow-Volksmerkmale unvollständig in stats.md:** Der Volksmerkmale-Abschnitt listet nur Dunkelsicht, Feenblut, Scharfe Sinne, Trance — aber nicht die Drow-spezifischen Zauber (Tanzende Lichter als Zaubertrick, Feenfeuer 1/LR). Diese sind zwar im Zauberbuch gelistet, sollten aber auch explizit bei den Volksmerkmalen stehen.
+- [ ] **"Kalte Hand (T)":** Das Suffix "(T)" ist unklar. Falls es für "Tiefling" steht, ist das falsch — Athania ist Elf-Drow, kein Tiefling. Herkunft dieses Zaubertricks muss geklärt werden.
+
+### D. Inkonsistenzen: Delat (stats_delat.md)
+
+- [ ] **Rüstungsübung "Mittlere" falsch:** `stats_delat.md` listet unter Rüstungsübung "Leichte, Mittlere". Hexenmeister haben in D&D 2024 **nur Leichte Rüstung**. Mittlere Rüstung ist eine Fehleingabe und muss entfernt werden. Dies beeinflusst die RK-Berechnung und Ausrüstungsauswahl.
+- [ ] **"Paktwaffe" als Zaubertrick falsch:** `Paktwaffe` steht in Delats Zaubertrick-Liste (Level 0). Paktwaffe ist kein Zaubertrick, sondern eine Funktion der Schauerlichen Anrufung "Pakt der Klinge". Sollte aus der Zauberbuch-Liste entfernt und stattdessen nur unter Merkmale/Anrufungen geführt werden.
+- [ ] **"Macht der Tiefe" auf Stufe 4 falsch:** "Macht der Tiefe" ist ein Stufe-10-Merkmal des Patrons der Großen Alten. Delat ist erst auf Stufe 4 und kann dieses Merkmal regelkonform nicht besitzen. Es muss aus den Merkmalen entfernt werden.
+- [ ] **HP-Maximum 47 falsch:** Berechnung für Stufe-4-Hexenmeister mit KON 15 (+2) und Zwergenzähigkeit: 8 (W8 max Stufe 1) + 3×5 (W8-Schnitt) + 4×2 (KON) + 4×1 (Zwergenzähigkeit) = **35 Max-HP**. Eingetragen sind 35/47. Die 47 entspricht 35 + 12 (Temp HP aus "Unholde Vitalität") — Temp HP dürfen NICHT zum Max-HP addiert werden. **App-Bug: Temp HP werden fälschlicherweise in Max-HP eingerechnet.**
+
+### E. Regelabweichungen (2024 Edition)
+
+- [ ] **Kapitel 8 "Unsichtbar"-Zustand-Widerspruch in rules.json und kapitel8_combat_conditions.md:** Kapitel 7 (und kapitel8.md Zeile 115) sagt: Wenn eine Kreatur dich durch Wahren Blick/Blindsicht sehen kann, profitierst du **nicht** von Vorteil/Nachteil. Kapitel 1 (rules.json) und kapitel1.md sagen hingegen das Gegenteil (allgemeiner Wortlaut). Diese Inkonsistenz zwischen kapitel1 und kapitel8 existiert in den Quelldokumenten — muss für den RAG-Chatbot eindeutig klargestellt werden (Kapitel 8 hat Vorrang als speziellere Regel).
+- [ ] **Kapitel 6 Hinweis Maßeinheiten veraltet:** kapitel6_equipment.md Zeile 5 sagt noch "Alle Gewichtsangaben sind in Pfund (Pfd. / lb.)". Die App nutzt aber kg. Die .md-Datei sollte aktualisiert werden, damit der RAG-Chatbot keine veralteten Maßeinheiten nennt.
