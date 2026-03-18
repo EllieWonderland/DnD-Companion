@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.*
@@ -199,9 +200,9 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                 }
             }
 
-            // Attribute & Rettungswürfe
+            // Attribute, Rettungswürfe & Fertigkeiten
             Text(
-                "Attribute & Rettungswürfe",
+                "Attribute, Rettungswürfe & Fertigkeiten",
                 style = MaterialTheme.typography.titleMedium,
                 color = Waldgruen
             )
@@ -221,67 +222,73 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             val chaSave = viewModel.chaMod + if (chaProf) viewModel.proficiencyBonus else 0
 
             fun formatMod(mod: Int) = if (mod >= 0) "+$mod" else "$mod"
-            fun formatRwResult(save: Int, isProf: Boolean) = "RW: ${formatMod(save)}" + if (isProf) " (Geübt)" else ""
+            fun formatRwResult(save: Int, isProf: Boolean) = "RW: ${formatMod(save)}" + if (isProf) " ★" else ""
+            fun prof(name: String) = viewModel.characterData.proficientSkills.contains(name)
+            fun skillMod(display: String) = viewModel.getSkillModifier(when (display) {
+                "Mit Tieren umg." -> "Mit Tieren umgehen"
+                "Überleben" -> "Überlebenskunst"
+                "Nachforschungen" -> "Nachforschung"
+                "Religion" -> "Religionskunde"
+                else -> display
+            })
 
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                AttributeBox("STR", viewModel.strength.toString(), formatMod(viewModel.strMod), formatRwResult(strSave, strProf), R.drawable.icon_str)
-                AttributeBox("DEX", viewModel.dexterity.toString(), formatMod(viewModel.dexMod), formatRwResult(dexSave, dexProf), R.drawable.icon_dex)
-                AttributeBox("CON", viewModel.constitution.toString(), formatMod(viewModel.conMod), formatRwResult(conSave, conProf), R.drawable.icon_con)
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                AttributeBox("INT", viewModel.intelligence.toString(), formatMod(viewModel.intMod), formatRwResult(intSave, intProf), R.drawable.icon_int)
-                AttributeBox("WIS", viewModel.wisdom.toString(), formatMod(viewModel.wisMod), formatRwResult(wisSave, wisProf), R.drawable.icon_wis)
-                AttributeBox("CHA", viewModel.charisma.toString(), formatMod(viewModel.chaMod), formatRwResult(chaSave, chaProf), R.drawable.icon_cha)
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider(color = Bronze, thickness = 2.dp)
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Fertigkeiten
-            Text("Fertigkeiten", style = MaterialTheme.typography.titleMedium, color = Waldgruen)
-            Spacer(modifier = Modifier.height(8.dp))
-            PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
-                Column(modifier = Modifier.padding(12.dp)) {
-                    val skills = listOf(
-                        "Akrobatik" to viewModel.dexMod,
-                        "Arkane Kunde" to viewModel.intMod,
-                        "Athletik" to viewModel.strMod,
-                        "Auftreten" to viewModel.chaMod,
-                        "Einschüchtern" to viewModel.chaMod,
-                        "Fingerfertigkeit" to viewModel.dexMod,
-                        "Geschichte" to viewModel.intMod,
-                        "Heilkunde" to viewModel.wisMod,
-                        "Heimlichkeit" to viewModel.dexMod,
-                        "Mit Tieren umg." to viewModel.wisMod,
-                        "Motiv erkennen" to viewModel.wisMod,
-                        "Nachforschungen" to viewModel.intMod,
-                        "Naturkunde" to viewModel.intMod,
-                        "Religion" to viewModel.intMod,
-                        "Täuschen" to viewModel.chaMod,
-                        "Überleben" to viewModel.wisMod,
-                        "Überzeugen" to viewModel.chaMod,
-                        "Wahrnehmung" to viewModel.wisMod
-                    )
-
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            skills.take(9).forEach { (name, _) ->
-                                val isProficient = viewModel.characterData.proficientSkills.contains(name)
-                                SkillRow("$name (${if(name == "Athletik") "STR" else if(name in listOf("Akrobatik", "Fingerfertigkeit", "Heimlichkeit")) "DEX" else if(name in listOf("Arkane Kunde", "Geschichte", "Nachforschungen", "Naturkunde", "Religionskunde", "Religion")) "INT" else if(name in listOf("Auftreten", "Einschüchtern", "Täuschen", "Überzeugen")) "CHA" else "WIS"})", viewModel.getSkillModifier(if(name == "Mit Tieren umg.") "Mit Tieren umgehen" else if(name == "Überleben") "Überlebenskunst" else if(name == "Nachforschungen") "Nachforschung" else if(name == "Religion") "Religionskunde" else name), isProficient)
-                            }
-                        }
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Column(modifier = Modifier.weight(1f)) {
-                            skills.drop(9).forEach { (name, _) ->
-                                val isProficient = viewModel.characterData.proficientSkills.contains(name)
-                                SkillRow("$name (${if(name == "Athletik") "STR" else if(name in listOf("Akrobatik", "Fingerfertigkeit", "Heimlichkeit")) "DEX" else if(name in listOf("Arkane Kunde", "Geschichte", "Nachforschungen", "Naturkunde", "Religionskunde", "Religion")) "INT" else if(name in listOf("Auftreten", "Einschüchtern", "Täuschen", "Überzeugen")) "CHA" else "WIS"})", viewModel.getSkillModifier(if(name == "Mit Tieren umg.") "Mit Tieren umgehen" else if(name == "Überleben") "Überlebenskunst" else if(name == "Nachforschungen") "Nachforschung" else if(name == "Religion") "Religionskunde" else name), isProficient)
-                            }
-                        }
-                    }
-                }
-            }
+            AttributeSkillsRow(
+                attrName = "STR", value = viewModel.strength.toString(),
+                mod = formatMod(viewModel.strMod), rw = formatRwResult(strSave, strProf),
+                iconRes = R.drawable.icon_str,
+                skills = listOf(Triple("Athletik", skillMod("Athletik"), prof("Athletik")))
+            )
+            AttributeSkillsRow(
+                attrName = "DEX", value = viewModel.dexterity.toString(),
+                mod = formatMod(viewModel.dexMod), rw = formatRwResult(dexSave, dexProf),
+                iconRes = R.drawable.icon_dex,
+                skills = listOf(
+                    Triple("Akrobatik", skillMod("Akrobatik"), prof("Akrobatik")),
+                    Triple("Fingerfertigkeit", skillMod("Fingerfertigkeit"), prof("Fingerfertigkeit")),
+                    Triple("Heimlichkeit", skillMod("Heimlichkeit"), prof("Heimlichkeit"))
+                )
+            )
+            AttributeSkillsRow(
+                attrName = "CON", value = viewModel.constitution.toString(),
+                mod = formatMod(viewModel.conMod), rw = formatRwResult(conSave, conProf),
+                iconRes = R.drawable.icon_con,
+                skills = emptyList()
+            )
+            AttributeSkillsRow(
+                attrName = "INT", value = viewModel.intelligence.toString(),
+                mod = formatMod(viewModel.intMod), rw = formatRwResult(intSave, intProf),
+                iconRes = R.drawable.icon_int,
+                skills = listOf(
+                    Triple("Arkane Kunde", skillMod("Arkane Kunde"), prof("Arkane Kunde")),
+                    Triple("Geschichte", skillMod("Geschichte"), prof("Geschichte")),
+                    Triple("Nachforschungen", skillMod("Nachforschungen"), prof("Nachforschungen")),
+                    Triple("Naturkunde", skillMod("Naturkunde"), prof("Naturkunde")),
+                    Triple("Religion", skillMod("Religion"), prof("Religion"))
+                )
+            )
+            AttributeSkillsRow(
+                attrName = "WIS", value = viewModel.wisdom.toString(),
+                mod = formatMod(viewModel.wisMod), rw = formatRwResult(wisSave, wisProf),
+                iconRes = R.drawable.icon_wis,
+                skills = listOf(
+                    Triple("Heilkunde", skillMod("Heilkunde"), prof("Heilkunde")),
+                    Triple("Mit Tieren umg.", skillMod("Mit Tieren umg."), prof("Mit Tieren umg.")),
+                    Triple("Motiv erkennen", skillMod("Motiv erkennen"), prof("Motiv erkennen")),
+                    Triple("Überleben", skillMod("Überleben"), prof("Überleben")),
+                    Triple("Wahrnehmung", skillMod("Wahrnehmung"), prof("Wahrnehmung"))
+                )
+            )
+            AttributeSkillsRow(
+                attrName = "CHA", value = viewModel.charisma.toString(),
+                mod = formatMod(viewModel.chaMod), rw = formatRwResult(chaSave, chaProf),
+                iconRes = R.drawable.icon_cha,
+                skills = listOf(
+                    Triple("Auftreten", skillMod("Auftreten"), prof("Auftreten")),
+                    Triple("Einschüchtern", skillMod("Einschüchtern"), prof("Einschüchtern")),
+                    Triple("Täuschen", skillMod("Täuschen"), prof("Täuschen")),
+                    Triple("Überzeugen", skillMod("Überzeugen"), prof("Überzeugen"))
+                )
+            )
 
             HorizontalDivider(color = Bronze, thickness = 2.dp)
             Spacer(modifier = Modifier.height(16.dp))
@@ -402,7 +409,7 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
 }
 
 @Composable
-fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: Int? = null) {
+fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: Int? = null, iconSize: Dp = 95.dp) {
     Card(
         modifier = Modifier
             .width(105.dp)
@@ -419,7 +426,7 @@ fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: 
                 Image(
                     painter = painterResource(id = iconRes),
                     contentDescription = "$name Icon",
-                    modifier = Modifier.size(95.dp).padding(bottom = 2.dp),
+                    modifier = Modifier.size(iconSize).padding(bottom = 2.dp),
                     contentScale = ContentScale.Fit
                 )
             }
@@ -427,6 +434,35 @@ fun AttributeBox(name: String, value: String, mod: String, rw: String, iconRes: 
             Text(value, style = GrenzeGotischStyle, color = TintenSchwarz)
             Text(mod, style = GrenzeGotischSmall, color = OchsenblutRot)
             Text(rw, style = MaterialTheme.typography.labelSmall.copy(fontSize = 12.sp), color = TintenBraun, textAlign = TextAlign.Center)
+        }
+    }
+}
+
+@Composable
+fun AttributeSkillsRow(
+    attrName: String,
+    value: String,
+    mod: String,
+    rw: String,
+    iconRes: Int,
+    skills: List<Triple<String, Int, Boolean>>
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+        verticalAlignment = Alignment.Top
+    ) {
+        AttributeBox(attrName, value, mod, rw, iconRes, iconSize = 60.dp)
+        Spacer(modifier = Modifier.width(8.dp))
+        if (skills.isNotEmpty()) {
+            PergamentCard(modifier = Modifier.weight(1f)) {
+                Column(modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp)) {
+                    skills.forEach { (skillName, skillMod, isProficient) ->
+                        SkillRow(skillName, skillMod, isProficient)
+                    }
+                }
+            }
+        } else {
+            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }
