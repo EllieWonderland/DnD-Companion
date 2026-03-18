@@ -102,6 +102,325 @@
             "description": "Als Bonusaktion erhältst du für 10 Minuten Erschütterungssinn (Tremorsense) von 18 m / 12 Felder. Du musst eine Steinoberfläche berühren oder dich darauf befinden (natürlich oder bearbeitet). Nutzungen = Übungsbonus pro Langer Rast."
         },
         {
+            "id": "trait_aasimar_celestial_resistance",
+            "name": "Himmlische Resistenz",
+            "name_en": "Celestial Resistance",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Aasimar"
+            ],
+            "level_req": 1,
+            "description": "Du hast Resistenz gegen nekrotischen und gleißenden (Radiant) Schaden."
+        },
+        {
+            "id": "trait_aasimar_darkvision",
+            "name": "Dunkelsicht",
+            "name_en": "Darkvision",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Aasimar"
+            ],
+            "level_req": 1,
+            "description": "Dunkelsicht: 18 m / 12 Felder."
+        },
+        {
+            "id": "trait_aasimar_healing_hands",
+            "name": "Heilende Hände",
+            "name_en": "Healing Hands",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Aasimar"
+            ],
+            "level_req": 1,
+            "description": "Als Magie-Aktion kannst du eine Kreatur berühren und eine Anzahl an W4 würfeln, die deinem Übungsbonus entspricht. Die Kreatur heilt Trefferpunkte in Höhe der gewürfelten Summe. 1x pro Langer Rast."
+        },
+        {
+            "id": "trait_aasimar_light_bearer",
+            "name": "Lichtbringer",
+            "name_en": "Light Bearer",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Aasimar"
+            ],
+            "level_req": 1,
+            "description": "Du kennst den Zaubertrick Licht. Dein Zauberattribut dafür ist Charisma."
+        },
+        {
+            "id": "trait_aasimar_celestial_revelation",
+            "name": "Himmlische Offenbarung",
+            "name_en": "Celestial Revelation",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Aasimar"
+            ],
+            "level_req": 3,
+            "description": "Ab Stufe 3 kannst du dich als Bonusaktion für 1 Minute transformieren (1x/Langer Rast). Einmal pro Zug kannst du zusätzlichen Schaden in Höhe deines Übungsbonus zufügen. Wähle eine Form: Himmlische Schwingen (Flugrate + Gleißend), Inneres Strahlen (Lichtstrahlung 3 m + Gleißend), Nekrotisches Leichentuch (Feinde in 3 m CHA-Save oder Verängstigt + Nekrotisch)."
+        },
+        {
+            "id": "trait_dragonborn_draconic_ancestry",
+            "name": "Drakonische Abstammung",
+            "name_en": "Draconic Ancestry",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Drachenblütiger"
+            ],
+            "level_req": 1,
+            "description": "Wähle einen Drachen, der den Schaden deiner Odemwaffe und deine Resistenz bestimmt: Schwarz/Kupfer (Säure), Blau/Bronze (Blitz), Messing/Gold/Rot (Feuer), Grün (Gift), Silber/Weiß (Kälte)."
+        },
+        {
+            "id": "trait_dragonborn_breath_weapon",
+            "name": "Odemwaffe",
+            "name_en": "Breath Weapon",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Drachenblütiger"
+            ],
+            "level_req": 1,
+            "description": "Wenn du die Angriffsaktion ausführst, kannst du einen Angriff durch deine Odemwaffe ersetzen. Wähle: 15-Fuß-Kegel oder 30-Fuß-Linie (1,5 m breit). Ziele machen GES-Save (SG 8 + KON-Mod + ÜB). Fehlschlag: 1W10 Schaden des Abstammungstyps (Hälfte bei Erfolg). Skaliert: 2W10 (Stufe 5), 3W10 (Stufe 11), 4W10 (Stufe 17). Nutzungen = Übungsbonus/LR."
+        },
+        {
+            "id": "trait_dragonborn_damage_resistance",
+            "name": "Schadensresistenz",
+            "name_en": "Damage Resistance",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Drachenblütiger"
+            ],
+            "level_req": 1,
+            "description": "Du erhältst Resistenz gegen den Schadenstyp deiner drakonischen Abstammung."
+        },
+        {
+            "id": "trait_dragonborn_darkvision",
+            "name": "Dunkelsicht",
+            "name_en": "Darkvision",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Drachenblütiger"
+            ],
+            "level_req": 1,
+            "description": "Dunkelsicht: 18 m / 12 Felder."
+        },
+        {
+            "id": "trait_dragonborn_draconic_flight",
+            "name": "Drakonischer Flug",
+            "name_en": "Draconic Flight",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Drachenblütiger"
+            ],
+            "level_req": 5,
+            "description": "Ab Stufe 5 kannst du als Bonusaktion Spektralflügel manifestieren (10 Minuten Dauer). Du erhältst eine Flugrate in Höhe deiner Bewegungsrate. 1x pro Langer Rast."
+        },
+        {
+            "id": "trait_gnome_darkvision",
+            "name": "Dunkelsicht",
+            "name_en": "Darkvision",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Gnom"
+            ],
+            "level_req": 1,
+            "description": "Dunkelsicht: 18 m / 12 Felder."
+        },
+        {
+            "id": "trait_gnome_gnomish_cunning",
+            "name": "Gnomische Gerissenheit",
+            "name_en": "Gnomish Cunning",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Gnom"
+            ],
+            "level_req": 1,
+            "description": "Du hast Vorteil auf Intelligenz-, Weisheits- und Charisma-Rettungswürfe."
+        },
+        {
+            "id": "trait_gnome_gnomish_lineage",
+            "name": "Gnomische Abstammungslinie",
+            "name_en": "Gnomish Lineage",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Gnom"
+            ],
+            "level_req": 1,
+            "description": "Wähle eine Abstammung (INT, WEI oder CHA als Zauberattribut): Waldgnom (Einfache Illusion, Mit Tieren sprechen kostenlos Nutzungen = ÜB/LR) oder Felsengnom (Ausbessern und Zaubertrick; kann winzige Uhrwerk-Geräte mit Zaubertrick erschaffen, max. 3 Geräte)."
+        },
+        {
+            "id": "trait_goliath_powerful_build",
+            "name": "Kräftiger Körperbau",
+            "name_en": "Powerful Build",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Goliath"
+            ],
+            "level_req": 1,
+            "description": "Du hast Vorteil auf Rettungswürfe gegen den Zustand Gepackt. Du zählst bei der Traglast als eine Größenkategorie größer."
+        },
+        {
+            "id": "trait_goliath_large_form",
+            "name": "Große Form",
+            "name_en": "Large Form",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Goliath"
+            ],
+            "level_req": 5,
+            "description": "Ab Stufe 5 kannst du dich als Bonusaktion für 10 Minuten auf die Größe Groß vergrößern. Vorteil auf Stärke-Prüfungen und Bewegungsrate +3 m. 1x pro Langer Rast."
+        },
+        {
+            "id": "trait_goliath_giant_ancestry",
+            "name": "Riesen-Abstammung",
+            "name_en": "Giant Ancestry",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Goliath"
+            ],
+            "level_req": 1,
+            "description": "Wähle einen Segen (Nutzungen = ÜB/LR): Wolkensprung (Bonusaktion: 9 m teleportieren), Feuerbrand (+1W10 Feuerschaden), Frostkälte (+1W6 Kälteschaden, Ziel -3 m Bewegung), Hügelsturz (Treffer: Ziel Liegend), Steinausdauer (Reaktion: 1W12 + KON-Mod Schaden reduzieren), Sturmdonner (Reaktion: 1W8 Donnerschaden zurück)."
+        },
+        {
+            "id": "trait_halfling_brave",
+            "name": "Mutig",
+            "name_en": "Brave",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Halbling"
+            ],
+            "level_req": 1,
+            "description": "Du hast Vorteil auf Rettungswürfe gegen den Zustand Verängstigt."
+        },
+        {
+            "id": "trait_halfling_nimbleness",
+            "name": "Halbling-Gewandtheit",
+            "name_en": "Halfling Nimbleness",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Halbling"
+            ],
+            "level_req": 1,
+            "description": "Du kannst dich durch den Bereich von Kreaturen bewegen, die mindestens eine Größenkategorie größer sind als du."
+        },
+        {
+            "id": "trait_halfling_luck",
+            "name": "Glück",
+            "name_en": "Luck",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Halbling"
+            ],
+            "level_req": 1,
+            "description": "Wenn du bei einem W20-Test eine 1 würfelst, kannst du neu werfen und musst das neue Ergebnis verwenden."
+        },
+        {
+            "id": "trait_halfling_naturally_stealthy",
+            "name": "Von Natur aus heimlich",
+            "name_en": "Naturally Stealthy",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Halbling"
+            ],
+            "level_req": 1,
+            "description": "Du kannst Verstecken ausführen, auch wenn du nur von einer Kreatur verdeckt wirst, die mindestens eine Größe größer ist als du."
+        },
+        {
+            "id": "trait_human_resourceful",
+            "name": "Findig",
+            "name_en": "Resourceful",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Mensch"
+            ],
+            "level_req": 1,
+            "description": "Du erhältst eine Heldenhafte Inspiration, wann immer du eine Lange Rast beendest."
+        },
+        {
+            "id": "trait_human_skillful",
+            "name": "Geschickt",
+            "name_en": "Skillful",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Mensch"
+            ],
+            "level_req": 1,
+            "description": "Du erhältst Übung in einer Fertigkeit deiner Wahl."
+        },
+        {
+            "id": "trait_human_versatile",
+            "name": "Vielseitig",
+            "name_en": "Versatile",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Mensch"
+            ],
+            "level_req": 1,
+            "description": "Du erhältst ein Ursprungstalent deiner Wahl."
+        },
+        {
+            "id": "trait_orc_darkvision",
+            "name": "Dunkelsicht",
+            "name_en": "Darkvision",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Ork"
+            ],
+            "level_req": 1,
+            "description": "Dunkelsicht: 36 m / 24 Felder."
+        },
+        {
+            "id": "trait_orc_adrenaline_rush",
+            "name": "Adrenalinrausch",
+            "name_en": "Adrenaline Rush",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Ork"
+            ],
+            "level_req": 1,
+            "description": "Du kannst Spurt als Bonusaktion ausführen und erhältst temporäre TP in Höhe deines Übungsbonus. Nutzungen = Übungsbonus pro Kurzer oder Langer Rast."
+        },
+        {
+            "id": "trait_orc_relentless_endurance",
+            "name": "Unerbittliche Ausdauer",
+            "name_en": "Relentless Endurance",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Ork"
+            ],
+            "level_req": 1,
+            "description": "Wenn du auf 0 TP fällst (ohne sofort getötet zu werden), fällst du stattdessen auf 1 TP. 1x pro Langer Rast."
+        },
+        {
+            "id": "trait_tiefling_darkvision",
+            "name": "Dunkelsicht",
+            "name_en": "Darkvision",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Tiefling"
+            ],
+            "level_req": 1,
+            "description": "Dunkelsicht: 18 m / 12 Felder."
+        },
+        {
+            "id": "trait_tiefling_otherworldly_presence",
+            "name": "Übernatürliche Präsenz",
+            "name_en": "Otherworldly Presence",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Tiefling"
+            ],
+            "level_req": 1,
+            "description": "Du kennst den Zaubertrick Thaumaturgie."
+        },
+        {
+            "id": "trait_tiefling_fiendish_legacy",
+            "name": "Teuflisches Erbe",
+            "name_en": "Fiendish Legacy",
+            "type": "RACIAL_TRAIT",
+            "race_req": [
+                "Tiefling"
+            ],
+            "level_req": 1,
+            "description": "Wähle ein Erbe (INT, WEI oder CHA als Zauberattribut). Zauber immer vorbereitet, 1x/LR kostenlos (oder mit Slot) wirken: Abyssisch (Resistenz Gift; Stufe 1: Giftspritzer, Stufe 3: Krankheitsstrahl, Stufe 5: Person festhalten), Chthonisch (Resistenz Nekrotisch; Kälteberührung, Falsches Leben, Strahl der Schwächung), Höllisch (Resistenz Feuer; Feuerpfeil, Höllischer Tadel, Dunkelheit)."
+        },
+        {
             "id": "class_ranger_spellcasting",
             "name": "Zauberwirken",
             "name_en": "Spellcasting",
@@ -291,39 +610,6 @@
             ],
             "level_req": 9,
             "description": "Du hast Kontakt zu anderen Ebenen immer vorbereitet und kannst ihn 1x pro Langer Rast kostenlos wirken, um deinen Schutzherrn zu kontaktieren. Du bestehst den Rettungswurf automatisch."
-        },
-        {
-            "id": "trait_human_resourceful",
-            "name": "Findig",
-            "name_en": "Resourceful",
-            "type": "RACIAL_TRAIT",
-            "race_req": [
-                "Mensch"
-            ],
-            "level_req": 1,
-            "description": "Du erhältst eine Heldenhafte Inspiration, wann immer du eine Lange Rast beendest."
-        },
-        {
-            "id": "trait_human_skillful",
-            "name": "Geschickt",
-            "name_en": "Skillful",
-            "type": "RACIAL_TRAIT",
-            "race_req": [
-                "Mensch"
-            ],
-            "level_req": 1,
-            "description": "Du erhältst Übung in einer Fertigkeit deiner Wahl."
-        },
-        {
-            "id": "trait_human_versatile",
-            "name": "Vielseitig",
-            "name_en": "Versatile",
-            "type": "RACIAL_TRAIT",
-            "race_req": [
-                "Mensch"
-            ],
-            "level_req": 1,
-            "description": "Du erhältst ein Ursprungstalent deiner Wahl."
         },
         {
             "id": "feat_magic_initiate",

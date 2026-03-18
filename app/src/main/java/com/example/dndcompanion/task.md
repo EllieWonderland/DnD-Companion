@@ -313,9 +313,9 @@
 
 ### B. Strukturprobleme (JSON-Verwertbarkeit)
 
-- [ ] **`character_options.json` Klassen unvollständig:** Das `classes`-Array enthält nur Mönch, Paladin und Schurke. Die anderen 9 Klassen fehlen komplett: **Barbar, Barde, Kleriker, Druide, Kämpfer, Waldläufer, Zauberer, Hexenmeister, Magier**. Athania (Waldläufer) und Delat (Hexenmeister) sind damit NICHT in character_options.json vertreten.
+- [x] **`character_options.json` Klassen unvollständig:** Das `classes`-Array enthält nur Mönch, Paladin und Schurke. Die anderen 9 Klassen fehlen komplett: **Barbar, Barde, Kleriker, Druide, Kämpfer, Waldläufer, Zauberer, Hexenmeister, Magier**. Athania (Waldläufer) und Delat (Hexenmeister) sind damit NICHT in character_options.json vertreten.
 - [x] **`character_options.json` Strukturfehler:** `classes[3]` ist kein Klassen-Objekt, sondern `{"backgrounds": [...], "feats": [...]}`. Backgrounds und Feats sind falsch in das Classes-Array eingebettet statt eigene Top-Level-Keys zu sein. **Risiko: App-Code, der über classes iteriert, kann abstürzen oder Backgrounds/Feats ignorieren.**
-- [ ] **`merkmale.json` Volksmerkmale unvollständig:** Nur Elf und Zwerg haben Volksmerkmale. Fehlend: Aasimar, Drachenblütiger, Gnom, Goliath, Halbling, Mensch, Ork, Tiefling. (Vollständige Daten sind in `character_options.json` vorhanden, aber nicht im merkmale.json-Format für den FeaturePickerDialog.)
+- [x] **`merkmale.json` Volksmerkmale unvollständig:** Nur Elf und Zwerg haben Volksmerkmale. Fehlend: Aasimar, Drachenblütiger, Gnom, Goliath, Halbling, Mensch, Ork, Tiefling. (Vollständige Daten sind in `character_options.json` vorhanden, aber nicht im merkmale.json-Format für den FeaturePickerDialog.)
 - [x] **`equipment.json` Gewichtseinheit:** Alle Gewichte im Feld `weightLb` (Pfund). Die App zeigt kg an. Prüfen ob die Konvertierung (×0,453) im App-Code korrekt erfolgt oder ob ein Fehler besteht.
 - [x] **`equipment.json` adventuring_gear ohne `category`-Feld:** Die 93 Abenteuerausrüstungs-Items haben kein `category`-Feld (die anderen Kategorien wie Waffen/Rüstungen haben es). Dies kann den EquipmentPickerDialog-Filter beeinträchtigen.
 

@@ -813,6 +813,1322 @@
                     ]
                 }
             ]
+        },
+        {
+            "id": "class_barbarian",
+            "name": "Barbar (Barbarian)",
+            "primaryAbility": "Stärke",
+            "hitDie": "W12",
+            "savingThrows": [
+                "Stärke",
+                "Konstitution"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 2: Athletik, Einschüchtern, Mit Tieren umgehen, Naturkunde, Überleben oder Wahrnehmung",
+                "weapons": [
+                    "Einfache Waffen",
+                    "Kriegswaffen"
+                ],
+                "armor": [
+                    "Leichte Rüstung",
+                    "Mittlere Rüstung",
+                    "Schilde"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Zweihandaxt, 4 Handäxte, Entdeckerausrüstung und 15 GM; oder (B) 75 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Kampfrausch (Rage)",
+                    "description": "Als Bonusaktion für 10 Minuten aktivierbar (Nutzungen = 2, skaliert auf 6 auf Stufe 20). Gewährt Vorteil auf STR-Würfe/-Rettungswürfe, Bonus-Schaden bei STR-Nahkampfangriffen (+2 bis +4) und Resistenz gegen Wucht-, Stich- und Hiebschaden. Verlängerbar durch Angriff, Rettungswurf erzwingen oder Bonusaktion opfern."
+                },
+                {
+                    "level": 1,
+                    "name": "Ungepanzerte Verteidigung",
+                    "description": "Ohne Rüstung ist deine RK = 10 + GES-Modifikator + KON-Modifikator (Schild erlaubt)."
+                },
+                {
+                    "level": 1,
+                    "name": "Waffenmeisterschaft (Weapon Mastery)",
+                    "description": "Du kannst die Meisterschafts-Eigenschaften von 2 Nahkampfwaffen nutzen (austauschbar nach Langer Rast)."
+                },
+                {
+                    "level": 2,
+                    "name": "Gefahreninstinkt (Danger Sense)",
+                    "description": "Vorteil auf GES-Rettungswürfe gegen Effekte, die du sehen kannst."
+                },
+                {
+                    "level": 2,
+                    "name": "Rücksichtsloser Angriff (Reckless Attack)",
+                    "description": "Du kannst beim ersten Angriff im Zug Vorteil auf alle STR-Angriffswürfe erhalten. Bis zu deinem nächsten Zug haben Angriffe gegen dich ebenfalls Vorteil."
+                },
+                {
+                    "level": 3,
+                    "name": "Ursprüngliches Wissen (Primal Knowledge)",
+                    "description": "Übung in einer weiteren Barbaren-Fertigkeit. Während Kampfrausch kannst du STR statt des normalen Attributs für Akrobatik, Einschüchtern, Heimlichkeit, Überleben oder Wahrnehmung nutzen."
+                },
+                {
+                    "level": 5,
+                    "name": "Extra-Angriff (Extra Attack)",
+                    "description": "Du greifst zweimal pro Angriffsaktion an."
+                },
+                {
+                    "level": 5,
+                    "name": "Schnelle Bewegung",
+                    "description": "+3 m / 2 Felder Bewegungsrate (ohne Schwere Rüstung)."
+                },
+                {
+                    "level": 7,
+                    "name": "Wilder Instinkt (Feral Instinct)",
+                    "description": "Vorteil auf Initiative-Würfe."
+                },
+                {
+                    "level": 7,
+                    "name": "Instinktiver Sprung (Instinctive Pounce)",
+                    "description": "Als Teil der Bonusaktion zum Starten des Kampfrauschs kannst du dich bis zur Hälfte deiner Bewegungsrate bewegen."
+                },
+                {
+                    "level": 9,
+                    "name": "Brutaler Schlag (Brutal Strike)",
+                    "description": "Verzichtest du auf den Vorteil eines Rücksichtslosen Angriffs, fügst du bei Treffer +1W10 Schaden hinzu und kannst das Ziel 4,5 m wegstoßen oder seine Bewegung reduzieren."
+                },
+                {
+                    "level": 11,
+                    "name": "Unerbittlicher Kampfrausch (Relentless Rage)",
+                    "description": "Fällst du auf 0 TP, kannst du einen KON-Rettungswurf (SG 10, steigt pro Nutzung) ablegen, um auf 1 TP zu bleiben."
+                },
+                {
+                    "level": 20,
+                    "name": "Ursprünglicher Champion (Primal Champion)",
+                    "description": "STR und KON steigen um 4. Das Maximum für beide Werte ist nun 25."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_barbarian_berserker",
+                    "name": "Pfad des Berserkers (Path of the Berserker)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Raserei (Frenzy)",
+                            "description": "Im Kampfrausch mit Rücksichtslosem Angriff fügst du dem ersten Ziel extra 1W6 Schaden des Waffentyps zu (steigt auf 2W6 Stufe 9, 3W6 Stufe 16, 4W6 Stufe 20)."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Gedankenlose Raserei (Mindless Rage)",
+                            "description": "Immun gegen Bezaubert und Verängstigt im Kampfrausch. Starten des Kampfrauschs unterbricht diese Zustände."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Vergeltung (Retaliation)",
+                            "description": "Wenn du Schaden von einer Kreatur in 1,5 m nimmst, kannst du als Reaktion einen Nahkampfangriff gegen sie ausführen."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Einschüchternde Präsenz (Intimidating Presence)",
+                            "description": "Bonusaktion (kostet 1 Kampfrausch-Nutzung): Feinde in 9 m müssen WIS-Save (SG 8+STR-Mod+ÜB) bestehen oder sind 1 Minute Verängstigt."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_barbarian_wild_heart",
+                    "name": "Pfad des Wilden Herzens (Path of the Wild Heart)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Tierisches Herz (Animal Heart)",
+                            "description": "Bei Kampfrausch wähle ein Tier: Bär (Resistenz außer Psychisch), Adler (Nachteil auf Gelegenheitsangriffe, Spurt als Bonusaktion), Wolf (Verbündete haben Vorteil auf NK-Angriffe gegen Feinde in 1,5 m)."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Aspekt der Wildnis (Aspect of the Wild)",
+                            "description": "Wähle passiven Bonus (änderbar bei LR): Eule (Dunkelsicht 18 m, Übung Heimlichkeit), Panther (Kletterrate = Bewegungsrate, Vorteil Akrobatik/Athletik), Lachs (Schwimmrate = Bewegungsrate)."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Naturwandler (Nature Speaker)",
+                            "description": "Mit Pflanzen sprechen als Ritual. Du kannst Kommune mit der Natur als Ritual wirken."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Macht der Wildnis (Power of the Wild)",
+                            "description": "Zusätzliche Tiermacht bei Kampfrausch: Falke (Flugrate), Löwe (Feinde haben Nachteil auf Angriffe gegen Verbündete), Widder (Angriff wirft Ziel Liegend)."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_barbarian_zealot",
+                    "name": "Pfad des Eiferers (Path of the Zealot)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Göttlicher Zorn (Divine Fury)",
+                            "description": "Erster Treffer pro Zug im Kampfrausch: +1W6 + halbe Barbarenstufe nekrotischen oder gleißenden Schaden."
+                        },
+                        {
+                            "level": 3,
+                            "name": "Krieger der Götter (Warrior of the Gods)",
+                            "description": "Bei magischer Heilung kannst du zusätzliche W12 (Anzahl = Kampfrausch-Nutzungen/Tag) rollen und TP heilen."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Fanatischer Fokus (Fanatical Focus)",
+                            "description": "Wenn du einen Rettungswurf nicht bestehst, kannst du 1 Kampfrausch-Nutzung opfern, um ihn zu wiederholen."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Eifrige Präsenz (Zealous Presence)",
+                            "description": "Bonusaktion: Bis zu 10 Kreaturen in 18 m erhalten Vorteil auf Angriffe und Rettungswürfe bis zu deinem nächsten Zug. 1x/LR oder 1 Kampfrausch-Nutzung."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "class_bard",
+            "name": "Barde (Bard)",
+            "primaryAbility": "Charisma",
+            "hitDie": "W8",
+            "savingThrows": [
+                "Geschicklichkeit",
+                "Charisma"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 3 beliebige Fertigkeiten",
+                "weapons": [
+                    "Einfache Waffen"
+                ],
+                "armor": [
+                    "Leichte Rüstung"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Lederrüstung, 2 Dolche, Musikinstrument, Unterhalterpaket und 19 GM; oder (B) 100 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Bardische Inspiration (Bardic Inspiration)",
+                    "description": "Pool von W6 (Anzahl = CHA-Mod). Als Bonusaktion in 18 m verleihen (hält 1 Stunde). Ziel kann den Würfel für einen fehlgeschlagenen D20-Test (Angriff, Fähigkeit, Rettungswurf) addieren. Regeneriert bei Langer Rast (und ab Stufe 5 auch bei Kurzer Rast)."
+                },
+                {
+                    "level": 1,
+                    "name": "Zauberwirken (Spellcasting)",
+                    "description": "Zauberattribut Charisma. Musikinstrumente können als Fokus genutzt werden."
+                },
+                {
+                    "level": 2,
+                    "name": "Alleskönner (Jack of All Trades)",
+                    "description": "Addiere halben Übungsbonus (abgerundet) auf alle Attributswürfe ohne Übung."
+                },
+                {
+                    "level": 2,
+                    "name": "Expertise",
+                    "description": "Verdopple den Übungsbonus für zwei deiner Fertigkeiten. Erneut auf Stufe 9."
+                },
+                {
+                    "level": 5,
+                    "name": "Quell der Inspiration (Font of Inspiration)",
+                    "description": "Bardische Inspiration regeneriert sich nun auch bei Kurzer Rast. Kannst du durch Zauberplatz-Ausgabe eine Nutzung zurückerhalten."
+                },
+                {
+                    "level": 7,
+                    "name": "Gegenzauber-Melodie (Countercharm)",
+                    "description": "Als Reaktion kannst du Kreaturen in 9 m Vorteil auf Rettungswürfe gegen Bezaubert oder Verängstigt gewähren."
+                },
+                {
+                    "level": 10,
+                    "name": "Magische Geheimnisse (Magical Secrets)",
+                    "description": "Du kannst beim Vorbereiten von Zaubern auch Zauber aus den Listen von Kleriker, Druide oder Magier wählen."
+                },
+                {
+                    "level": 20,
+                    "name": "Worte der Schöpfung (Words of Creation)",
+                    "description": "Machtwort Heilung und Machtwort Tod sind immer vorbereitet. Beim Wirken kannst du ein zweites Ziel in 3 m des ersten wählen."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_bard_lore",
+                    "name": "Schule des Wissens (College of Lore)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Bonus-Übungen & Schneidende Worte",
+                            "description": "Übung in 3 beliebigen Fertigkeiten. Schneidende Worte: Als Reaktion 1 Bardische Inspiration abziehen, um einen Attributs-, Angriffs- oder Schadenswurf eines Feindes in 18 m zu verringern."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Magische Entdeckungen (Magical Discoveries)",
+                            "description": "Erlerne 2 zusätzliche Zauber von jeder Klassen-Zauberliste. Sie zählen als Barden-Zauber."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Unvergleichliches Können (Peerless Skill)",
+                            "description": "Bei einem Attributswurf oder Rettungswurf kannst du 1 Bardische Inspiration auf das Ergebnis addieren. Bei Fehlschlag trotzdem wird der Würfel nicht verbraucht."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_bard_valor",
+                    "name": "Schule der Tapferkeit (College of Valor)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Kampftraining & Kampfinspiration",
+                            "description": "Übung in Kriegswaffen, Mittlerer Rüstung und Schilden. Verbündete können Inspiration für Angriffs- oder Schadenswürfe oder zur RK addieren."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Extra-Angriff (Extra Attack)",
+                            "description": "Du kannst 2x angreifen. Du darfst einen Angriff durch das Wirken eines Zaubertricks ersetzen."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Kampfmagie (Battle Magic)",
+                            "description": "Wenn du einen Zauber (Aktionszeit 1 Aktion) wirkst, kannst du als Bonusaktion einen Nah- oder Fernkampfangriff ausführen."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_bard_glamour",
+                    "name": "Schule des Glamours (College of Glamour)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Betörende Magie & Mantel der Inspiration",
+                            "description": "Bezaubern und Spiegelbilder immer vorbereitet. Bonusaktion (1 Inspiration): Bis CHA-Mod Verbündeten Temp. TP und Halbgeschwindigkeit-Bewegung ohne Gelegenheitsangriffe geben."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Mantel der Majestät (Mantle of Majesty)",
+                            "description": "Befehl immer vorbereitet. Bonusaktion: 1 Minute Konzentration. Du kannst Befehl pro Zug kostenlos als Bonusaktion wirken."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Unbrechbare Majestät (Unbreakable Majesty)",
+                            "description": "Bonusaktion: Für 1 Minute müssen Angreifer einen CHA-Save bestehen oder müssen ein anderes Ziel angreifen. Bei Erfolg hast du Vorteil auf deinen nächsten Angriff gegen sie."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "class_cleric",
+            "name": "Kleriker (Cleric)",
+            "primaryAbility": "Weisheit",
+            "hitDie": "W8",
+            "savingThrows": [
+                "Weisheit",
+                "Charisma"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 2: Geschichte, Motiv erkennen, Heilkunde, Überreden oder Religion",
+                "weapons": [
+                    "Einfache Waffen"
+                ],
+                "armor": [
+                    "Leichte Rüstung",
+                    "Mittlere Rüstung",
+                    "Schilde"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Kettenhemd, Schild, Streitkolben, Heiliges Symbol, Priesterpaket und 7 GM; oder (B) 110 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Zauberwirken (Spellcasting)",
+                    "description": "Zauberattribut Weisheit. Heiliges Symbol als Fokus. Du bereitest Zauber nach Langer Rast vor."
+                },
+                {
+                    "level": 1,
+                    "name": "Göttlicher Orden (Divine Order)",
+                    "description": "Wähle: Gelehrter (zusätzlicher Zaubertrick, WEI-Bonus auf INT-Prüfungen Religion/Geschichte) oder Beschützer (Übung in Schwerer Rüstung und Kriegswaffen)."
+                },
+                {
+                    "level": 2,
+                    "name": "Göttliche Macht fokussieren (Channel Divinity)",
+                    "description": "2 Nutzungen/Kurze/Lange Rast. Heiliges Strahlen: Heilt oder verursacht gleißenden/nekrotischen Schaden (ÜB × W8). Untote vertreiben: Untote in 9 m WIS-Save oder Verängstigt für 1 Minute."
+                },
+                {
+                    "level": 3,
+                    "name": "Kleriker-Unterklasse",
+                    "description": "Wähle eine Göttliche Domäne."
+                },
+                {
+                    "level": 5,
+                    "name": "Untote versengen (Sear Undead)",
+                    "description": "Bei Untote vertreiben: Würfle WEI-Mod × W8. Untote die den Save nicht bestehen erleiden diesen Schaden zusätzlich."
+                },
+                {
+                    "level": 7,
+                    "name": "Gesegnete Schläge (Blessed Strikes)",
+                    "description": "Wähle: Göttliche Macht (1x/Zug +1W8 nekrotischer/gleißender Schaden bei Waffentreffer) oder Machtvolles Zauberwirken (WEI-Mod zu Schaden von Zaubertricks)."
+                },
+                {
+                    "level": 10,
+                    "name": "Göttliche Intervention (Divine Intervention)",
+                    "description": "Als Magische Aktion wirke jeden Klerikerzauber Stufe 5 oder niedriger ohne Slot oder Komponenten. 1x/Langer Rast."
+                },
+                {
+                    "level": 20,
+                    "name": "Größere Göttliche Intervention",
+                    "description": "Wie Göttliche Intervention, aber beliebiger Klerikerzauber. 1x/Langer Rast."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_cleric_life",
+                    "name": "Domäne des Lebens (Life Domain)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Jünger des Lebens",
+                            "description": "Domänenzauber: Beistand, Segnen, Wunden heilen, Schwächere Genesung, Geistige Waffe, Genesung. Heilzauber ab Stufe 1: Ziel erhält zusätzlich (2 + Zauberstufe) TP."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Bewahrte Vitalität",
+                            "description": "Wenn du eine andere Kreatur heilst, heilst du dich selbst um (2 + Zauberstufe) TP."
+                        },
+                        {
+                            "level": 17,
+                            "name": "Höchste Heilung",
+                            "description": "Wenn du heilst, nutze stets das Maximum jedes Würfels."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_cleric_light",
+                    "name": "Domäne des Lichts (Light Domain)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Schützendes Licht",
+                            "description": "Domänenzauber: Brennende Hände, Licht, Feuerball, u.a. Als Reaktion Nachteil auf einen Angriff gegen dich geben. Nutzungen = ÜB/LR."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Glühendes Strahlen",
+                            "description": "Fokus: Feinde in 9 m müssen KON-Save bestehen (Fehlschlag: 2W10 + Klerikerstufe Feuerschaden)."
+                        },
+                        {
+                            "level": 17,
+                            "name": "Korona des Lichts",
+                            "description": "Als Aktion 1 Minute Lichtstrahlung. Feinde haben Nachteil auf Rettungswürfe gegen Feuer-/Gleißenden Schaden von dir."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_cleric_war",
+                    "name": "Domäne des Krieges (War Domain)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Kriegspriester",
+                            "description": "Domänenzauber: Göttliche Gunst, Geistige Waffe, Geisterwächter u.a. Bonusaktion-Angriff nach Angriffsaktion. Nutzungen = WEI-Mod/LR."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Geführter Schlag",
+                            "description": "Wenn du oder ein Verbündeter in 9 m verfehlst, gib +10 auf den Angriffswurf (kostet 1 Fokus)."
+                        },
+                        {
+                            "level": 17,
+                            "name": "Avatar der Schlacht",
+                            "description": "Resistenz gegen Wucht-, Stich- und Schnittschaden von nicht-magischen Waffen."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "class_druid",
+            "name": "Druide (Druid)",
+            "primaryAbility": "Weisheit",
+            "hitDie": "W8",
+            "savingThrows": [
+                "Intelligenz",
+                "Weisheit"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 2: Arkane Kunde, Heilkunde, Mit Tieren umgehen, Motiv erkennen, Naturkunde, Religion, Überleben oder Wahrnehmung",
+                "weapons": [
+                    "Einfache Waffen"
+                ],
+                "armor": [
+                    "Leichte Rüstung",
+                    "Schilde"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Lederrüstung, Schild, Sichel, Druidenfokus, Entdeckerpaket, Kräuterkunde-Ausrüstung und 9 GM; oder (B) 50 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Zauberwirken (Spellcasting)",
+                    "description": "Zauberattribut Weisheit. Du kannst einen Druidenfokus nutzen. Bereite Zauber nach Langer Rast vor."
+                },
+                {
+                    "level": 1,
+                    "name": "Druidisch (Druidic)",
+                    "description": "Du sprichst Druidisch. Du hast Mit Tieren sprechen immer vorbereitet. Du kannst versteckte Nachrichten in Druidisch hinterlassen."
+                },
+                {
+                    "level": 1,
+                    "name": "Ursprünglicher Orden (Primal Order)",
+                    "description": "Wähle: Magier (zusätzlicher Zaubertrick, WEI-Bonus auf INT-Prüfungen) oder Hüter (Übung in Kriegswaffen und Mittlerer Rüstung)."
+                },
+                {
+                    "level": 2,
+                    "name": "Tiergestalt (Wild Shape)",
+                    "description": "Als Bonusaktion in eine Bestiengestalt verwandeln (Dauer = halbe Druidenstufe in Stunden). 2 Nutzungen, 1 Nutzung zurück bei Kurzer Rast. Du behältst INT, WEI, CHA, TP, Übungen und Klassenmerkmale. Du erhältst Temporäre TP in Höhe deiner Druidenstufe."
+                },
+                {
+                    "level": 3,
+                    "name": "Druiden-Unterklasse",
+                    "description": "Wähle einen Zirkel."
+                },
+                {
+                    "level": 5,
+                    "name": "Wilde Wiederbelebung (Wild Resurgence)",
+                    "description": "1x/Zug kannst du einen Zauberplatz ausgeben, um 1 Tiergestalt-Nutzung zurückzuerhalten. 1x/LR kannst du 1 Tiergestalt-Nutzung ausgeben, um einen Stufe-1-Zauberplatz zurückzuerhalten."
+                },
+                {
+                    "level": 7,
+                    "name": "Elementarer Zorn (Elemental Fury)",
+                    "description": "Wähle: Machtvolles Zauberwirken (WEI-Mod zu Zaubertrick-Schaden) oder Ursprünglicher Schlag (1x/Zug +1W8 elementarer Schaden bei Waffen-/Tiergestalt-Treffer)."
+                },
+                {
+                    "level": 18,
+                    "name": "Bestienzauber (Beast Spells)",
+                    "description": "Du kannst Zauber wirken, während du in Tiergestalt bist (außer Zauber mit Materialkomponenten die verbraucht werden)."
+                },
+                {
+                    "level": 20,
+                    "name": "Erzdruide (Archdruid)",
+                    "description": "Immergrüne Tiergestalt: Bei Initiative 0 Nutzungen → 1 zurück. Naturmagier: 2 Tiergestalt-Nutzungen in 1 Zauberplatz umwandeln (1x/LR). Langlebigkeit: 1 Jahr Altern pro 10 Jahre."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_druid_land",
+                    "name": "Zirkel des Landes (Circle of the Land)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Zauber des Landes & Hilfe des Landes",
+                            "description": "Wähle einen Landtyp (Wüste, Polar, Gemäßigt, Tropisch) nach jeder Langen Rast. Du hast die entsprechenden Zauber immer vorbereitet. Als Magische Aktion (1 Tiergestalt-Nutzung): 2W6 nekrotischen Schaden oder 2W6 Heilung in 18 m."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Natürliche Erholung (Natural Recovery)",
+                            "description": "1x/LR Zirkel-Zauber ohne Slot wirken. Nach Kurzer Rast Zauberplätze regenerieren (Summe ≤ halbe Druidenstufe, max. Stufe 5)."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Schutz der Natur (Nature's Ward)",
+                            "description": "Immun gegen Vergiftet. Resistenz je nach Landtyp (Wüste: Feuer, Polar: Kälte, Gemäßigt: Blitz, Tropisch: Gift)."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Zuflucht der Natur (Nature's Sanctuary)",
+                            "description": "Als Magische Aktion (1 Nutzung) erschaffst du für 1 Minute spektrale Bäume/Ranken. Du und Verbündete darin erhalten Halbe Deckung und Resistenz deines Schutz der Natur."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_druid_moon",
+                    "name": "Zirkel des Mondes (Circle of the Moon)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Zirkel-Gestalten (Circle Forms)",
+                            "description": "Max. CR = Druidenstufe / 3 (abgerundet). RK = max(Bestie, 13 + WEI-Mod). Temporäre TP = Druidenstufe × 3."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Verbesserte Zirkel-Gestalten",
+                            "description": "In Tiergestalt können Angriffe optional Gleißenden Schaden verursachen. Addiere WEI-Mod zu KON-Rettungswürfen."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Mondschritt (Moonlight Step)",
+                            "description": "Bonusaktion: 9 m teleportieren, Vorteil auf nächsten Angriff. Nutzungen = WEI-Mod/LR."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Mondgestalt (Lunar Form)",
+                            "description": "1x/Zug +2W10 gleißender Schaden in Tiergestalt. Du kannst eine Kreatur beim Mondschritt mitnehmen."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_druid_stars",
+                    "name": "Zirkel der Sterne (Circle of the Stars)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Sternenkarte & Sternenform",
+                            "description": "Sternenkarte als Zauberfokus. Als Bonusaktion für 10 Minuten in Sternenform wechseln (Chalice: Heiltrank-Bonus, Archer: Strahlen-Angriff als Bonusaktion, Dragon: Konzentrations-Vorteil)."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Kosmisches Omen (Cosmic Omen)",
+                            "description": "Nach LR würfle 1W6. Positiv (1-3): Als Reaktion Verbündeten +1W6 auf Wurf geben. Negativ (4-6): Feinden -1W6 auferlegen. Nutzungen = WEI-Mod."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Gestirn-Körper (Starry Form - Twinkling Constellations)",
+                            "description": "Alle drei Formen der Sternengestalt verbessert. Während Tiergestalt kannst du in Sternenform sein."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Voller Mondlicht (Full of Stars)",
+                            "description": "In Sternenform bist du halbdurchsichtig. Du erhältst Resistenz gegen Wucht-, Stich- und Schnittschaden."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "class_fighter",
+            "name": "Kämpfer (Fighter)",
+            "primaryAbility": "Stärke oder Geschicklichkeit",
+            "hitDie": "W10",
+            "savingThrows": [
+                "Stärke",
+                "Konstitution"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 2: Akrobatik, Athletik, Einschüchtern, Geschichte, Mit Tieren umgehen, Motiv erkennen, Überleben oder Wahrnehmung",
+                "weapons": [
+                    "Einfache Waffen",
+                    "Kriegswaffen"
+                ],
+                "armor": [
+                    "Leichte Rüstung",
+                    "Mittlere Rüstung",
+                    "Schwere Rüstung",
+                    "Schilde"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Kettenhemd, Langschwert, 2 Handäxte, Entdeckerausrüstung und 8 GM; oder (B) 155 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Kampfstil (Fighting Style)",
+                    "description": "Wähle ein Kampfstil-Talent."
+                },
+                {
+                    "level": 1,
+                    "name": "Durchschnaufen (Second Wind)",
+                    "description": "Als Bonusaktion heile 1W10 + Kämpferstufe TP. 2 Nutzungen; 1 zurück bei Kurzer Rast, alle bei Langer Rast."
+                },
+                {
+                    "level": 1,
+                    "name": "Waffenmeisterschaft (Weapon Mastery)",
+                    "description": "Meisterschafts-Eigenschaften von 3 Waffen nutzen (austauschbar nach Langer Rast)."
+                },
+                {
+                    "level": 2,
+                    "name": "Aktionswoge (Action Surge)",
+                    "description": "1x/Rast: In deinem Zug eine zusätzliche Aktion ausführen (keine Zaubern-Aktion)."
+                },
+                {
+                    "level": 2,
+                    "name": "Taktischer Verstand (Tactical Mind)",
+                    "description": "Bei fehlgeschlagenem Attributswurf kannst du 1 Durchschnaufen-Nutzung ausgeben und 1W10 addieren."
+                },
+                {
+                    "level": 5,
+                    "name": "Extra-Angriff (Extra Attack)",
+                    "description": "2x angreifen (3x ab Stufe 11, 4x ab Stufe 20)."
+                },
+                {
+                    "level": 7,
+                    "name": "Kämpfer-Unterklasse Stufe 7",
+                    "description": "Erstes Unterklassen-Stufen-7-Merkmal."
+                },
+                {
+                    "level": 9,
+                    "name": "Unbezwingbar (Indomitable)",
+                    "description": "Bei fehlgeschlagenem Rettungswurf: neu würfeln und Kämpferstufe addieren (muss neues Ergebnis nehmen). 1x/LR."
+                },
+                {
+                    "level": 13,
+                    "name": "Studierte Angriffe (Studied Attacks)",
+                    "description": "Wenn du mit einem Waffenangriff verfehlst, hast du Vorteil auf deinen nächsten Angriff gegen dasselbe Ziel bis Ende deines nächsten Zuges."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_fighter_battle_master",
+                    "name": "Kampfmeister (Battle Master)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Überlegenheit im Kampf (Combat Superiority)",
+                            "description": "3 Manöver deiner Wahl. 4 Überlegenheitswürfel W8 (regeneriert bei Kurzer/Langer Rast)."
+                        },
+                        {
+                            "level": 7,
+                            "name": "Kenne deinen Feind (Know Your Enemy)",
+                            "description": "Bonusaktion: Analysiere Feind (Resistenzen, Verwundbarkeiten, Immunitäten). 1x/LR (oder 1 Überlegenheitswürfel)."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Verbesserte Überlegenheit",
+                            "description": "Überlegenheitswürfel werden zu W10."
+                        },
+                        {
+                            "level": 15,
+                            "name": "Unerbittlich (Relentless)",
+                            "description": "1x/Zug: Bei 0 Würfeln kannst du einen W8 nutzen ohne ihn aus dem Pool zu verbrauchen."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_fighter_champion",
+                    "name": "Champion",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Verbesserter Kritischer Treffer & Bemerkenswerter Athlet",
+                            "description": "Kritischer Treffer bei 19-20. Vorteil auf Initiative und Athletik. Weitsprung + STR-Mod Fuß extra."
+                        },
+                        {
+                            "level": 7,
+                            "name": "Zusätzlicher Kampfstil",
+                            "description": "Wähle ein weiteres Kampfstil-Talent."
+                        },
+                        {
+                            "level": 15,
+                            "name": "Überlegener Kritischer Treffer",
+                            "description": "Kritischer Treffer bei 18-20."
+                        },
+                        {
+                            "level": 18,
+                            "name": "Überlebenskünstler (Survivor)",
+                            "description": "Zu Beginn deines Zuges bei unter halben Max-TP: regeneriere (5 + KON-Mod) TP. Vorteil auf Todesrettungswürfe."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_fighter_eldritch_knight",
+                    "name": "Mystischer Ritter (Eldritch Knight)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Zauberwirken & Waffenbindung",
+                            "description": "Magier-Zauberliste mit INT. Binde 2 Waffen: nicht entwaffnebar, per Bonusaktion herbeirufen."
+                        },
+                        {
+                            "level": 7,
+                            "name": "Kriegsmagie (War Magic)",
+                            "description": "Angriffsaktion: Einen Angriff durch das Wirken eines Zaubertricks ersetzen."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Mystischer Schlag (Eldritch Strike)",
+                            "description": "Waffentreffer: Ziel hat Nachteil auf nächsten Rettungswurf gegen einen deiner Zauber bis Ende deines nächsten Zuges."
+                        },
+                        {
+                            "level": 15,
+                            "name": "Arkaner Ansturm (Arcane Charge)",
+                            "description": "Bei Aktionswoge kannst du dich bis zu 9 m teleportieren."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "class_ranger",
+            "name": "Waldläufer (Ranger)",
+            "primaryAbility": "Geschicklichkeit und Weisheit",
+            "hitDie": "W10",
+            "savingThrows": [
+                "Stärke",
+                "Geschicklichkeit"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 3: Akrobatik, Athletik, Heimlichkeit, Mit Tieren umgehen, Motiv erkennen, Naturkunde, Überleben oder Wahrnehmung",
+                "weapons": [
+                    "Einfache Waffen",
+                    "Kriegswaffen"
+                ],
+                "armor": [
+                    "Leichte Rüstung",
+                    "Mittlere Rüstung",
+                    "Schilde"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Beschlagene Lederrüstung, Kurzschwert, Krummsäbel, Langbogen, 20 Pfeile, Köcher, Druidischer Fokus, Entdeckerausrüstung und 7 GM; oder (B) 150 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Zauberwirken (Spellcasting)",
+                    "description": "Zauberattribut Weisheit. Druidischer Fokus verwendbar. Beginne mit 2 vorbereiteten Waldläufer-Zaubern der Stufe 1."
+                },
+                {
+                    "level": 1,
+                    "name": "Erzfeind (Favored Enemy)",
+                    "description": "Zeichen des Jägers (Hunter's Mark) ist immer vorbereitet. Du kannst ihn 2x/LR ohne Zauberplatz wirken."
+                },
+                {
+                    "level": 1,
+                    "name": "Waffenmeisterschaft (Weapon Mastery)",
+                    "description": "Meisterschafts-Eigenschaften von 2 Waffen nutzen (austauschbar nach Langer Rast)."
+                },
+                {
+                    "level": 2,
+                    "name": "Kampfstil (Fighting Style)",
+                    "description": "Wähle ein Kampfstil-Talent (z.B. Bogenschießen, Duellieren, Kampf mit zwei Waffen, Druidischer Krieger)."
+                },
+                {
+                    "level": 2,
+                    "name": "Geschickte Erkundung (Deft Explorer)",
+                    "description": "Expertise: Eine Waldläufer-Fertigkeit mit doppeltem Übungsbonus. Du erlernst zwei zusätzliche Sprachen."
+                },
+                {
+                    "level": 5,
+                    "name": "Extra-Angriff (Extra Attack)",
+                    "description": "Du kannst zweimal statt einmal angreifen, wenn du die Angriffsaktion wählst."
+                },
+                {
+                    "level": 6,
+                    "name": "Vagabund (Roving)",
+                    "description": "+3 m / 2 Felder Bewegungsrate (ohne Schwere Rüstung). Klettern und Schwimmen mit voller Bewegungsrate."
+                },
+                {
+                    "level": 7,
+                    "name": "Waldläufer-Unterklasse Stufe 7",
+                    "description": "Erstes Unterklassen-Stufen-7-Merkmal."
+                },
+                {
+                    "level": 9,
+                    "name": "Expertise",
+                    "description": "Zwei weitere Waldläufer-Fertigkeiten mit doppeltem Übungsbonus."
+                },
+                {
+                    "level": 10,
+                    "name": "Unermüdlich (Tireless)",
+                    "description": "Als Magische Aktion: 1W8 + WEI-Mod temporäre TP (Nutzungen = ÜB/LR). Nach Kurzer Rast: Erschöpfung um 1 reduzieren."
+                },
+                {
+                    "level": 14,
+                    "name": "Naturschleier (Nature's Veil)",
+                    "description": "Als Bonusaktion bis Ende deines nächsten Zuges Unsichtbar werden. Nutzungen = WEI-Mod/LR."
+                },
+                {
+                    "level": 20,
+                    "name": "Schlächter der Feinde (Foe Slayer)",
+                    "description": "Bonusschaden von Zeichen des Jägers steigt auf 1W10."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_ranger_beast_master",
+                    "name": "Herr der Tiere (Beast Master)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Ursprünglicher Gefährte (Primal Companion)",
+                            "description": "Rufe ein magisches Tier herbei (Land, Meer oder Himmel). Als Bonusaktion oder durch Ersetzen eines Angriffs befehlen, anzugreifen. Ohne Befehl weicht es aus."
+                        },
+                        {
+                            "level": 7,
+                            "name": "Außergewöhnliches Training (Exceptional Training)",
+                            "description": "Bonusaktion: Tier kann Spurt, Rückzug, Ausweichen oder Helfen nutzen. Angriffe des Tiers gelten als magisch."
+                        },
+                        {
+                            "level": 11,
+                            "name": "Bestialischer Zorn (Bestial Fury)",
+                            "description": "Auf Befehl angreifen: Tier kann zweimal zuschlagen. Zeichen des Jägers gilt auch für Tier-Angriffe."
+                        },
+                        {
+                            "level": 15,
+                            "name": "Gemeinsame Zauber (Share Spells)",
+                            "description": "Wenn du einen Zauber auf dich wirkst, kannst du ihn auch auf deinen Gefährten in 9 m wirken."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_ranger_gloom_stalker",
+                    "name": "Düsterpirscher (Gloom Stalker)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Düsterer Hinterhalt & Umbrale Sicht",
+                            "description": "Runde 1: +3 m Bewegung, zusätzliche Angriffe mit +2W6 psychischem Schaden (WEI-Mod Nutzungen/LR). Dunkelsicht 18 m; in Dunkelheit für Dunkelsicht-abhängige Wesen unsichtbar."
+                        },
+                        {
+                            "level": 7,
+                            "name": "Eiserner Verstand (Iron Mind)",
+                            "description": "Übung in WEI-Rettungswürfen."
+                        },
+                        {
+                            "level": 11,
+                            "name": "Schlaghagel des Pirschers (Stalker's Flurry)",
+                            "description": "Düsterer Hinterhalt steigt auf 2W8. Wähle: Weiterer Angriff auf ein Nebenziel oder Massenfurcht (WIS-Save)."
+                        },
+                        {
+                            "level": 15,
+                            "name": "Schattenhaftes Ausweichen (Shadowy Dodge)",
+                            "description": "Als Reaktion auf einen Angriff: 9 m teleportieren, Angriff erhält Nachteil."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_ranger_hunter",
+                    "name": "Jäger (Hunter)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Beute des Jägers & Wissen des Jägers",
+                            "description": "Wähle: Hordenbrecher (Angriff auf zweites Ziel neben dem ersten) oder Kolossschlächter (+1W8 gegen große/größere Feinde). Kennst Resistenzen/Verwundbarkeiten des markierten Ziels."
+                        },
+                        {
+                            "level": 7,
+                            "name": "Defensive Taktiken",
+                            "description": "Wähle: Der Horde entkommen (keine Gelegenheitsangriffe nach Treffen) oder Verteidigung gegen Mehrfachangriffe (bei Treffern nach dem ersten: Resistenz)."
+                        },
+                        {
+                            "level": 11,
+                            "name": "Beute des überlegenen Jägers",
+                            "description": "1x/Zug: Zeichen-des-Jägers-Schaden auch auf zweites Ziel in 9 m des ersten übertragen."
+                        },
+                        {
+                            "level": 15,
+                            "name": "Verteidigung des überlegenen Jägers",
+                            "description": "Als Reaktion auf Schaden: Resistenz gegen diesen und gleichartigen Schaden bis Ende deines Zuges."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "class_sorcerer",
+            "name": "Zauberer (Sorcerer)",
+            "primaryAbility": "Charisma",
+            "hitDie": "W6",
+            "savingThrows": [
+                "Konstitution",
+                "Charisma"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 2: Arkane Kunde, Einschüchtern, Motiv erkennen, Nachforschen, Überreden oder Religion",
+                "weapons": [
+                    "Einfache Waffen"
+                ],
+                "armor": [
+                    "Keine"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Arkaner Fokus (Stab), 2 Dolche, Entdeckerausrüstung und 4 GM; oder (B) 50 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Zauberwirken (Spellcasting)",
+                    "description": "Zauberattribut Charisma. Du kennst Zaubertricks und Zauber aus der Zauberer-Liste (keine Vorbereitung nötig). Arkaner Fokus verwendbar."
+                },
+                {
+                    "level": 1,
+                    "name": "Angeborene Zauberei (Innate Sorcery)",
+                    "description": "Als Bonusaktion für 1 Minute aktivieren. Du erhältst Vorteil auf Zauber-Angriffswürfe und Feinde haben Nachteil auf Rettungswürfe gegen deine Zauber. Nutzungen = 2/LR."
+                },
+                {
+                    "level": 2,
+                    "name": "Schicksalspunkte (Font of Magic / Sorcery Points)",
+                    "description": "Du hast Schicksalspunkte = Zauberer-Stufe (Regeneration bei LR). Flexibler Geist: Ausgeben für Zauberplätze oder Zauberplätze in Punkte umwandeln."
+                },
+                {
+                    "level": 2,
+                    "name": "Metamagie (Metamagic)",
+                    "description": "Wähle 2 Metamagie-Optionen (erweitert auf höheren Stufen): z.B. Fernzauber (+Reichweite), Verdoppelter Zauber (zweites Ziel), Stärkender Zauber (1 W6 neu würfeln), Flüsternder Zauber (Keine verbale Komponente)."
+                },
+                {
+                    "level": 3,
+                    "name": "Zauberer-Unterklasse",
+                    "description": "Wähle eine Zauberursprung-Unterklasse."
+                },
+                {
+                    "level": 5,
+                    "name": "Angeborene Magie Rückholen (Sorcerous Restoration)",
+                    "description": "Ab Stufe 5: Wenn du Initiative würfelst und 0 Schicksalspunkte hast, erhältst du 1W4 zurück."
+                },
+                {
+                    "level": 7,
+                    "name": "Arkane Apotheose (Arcane Apotheosis)",
+                    "description": "Während Angeborener Zauberei kannst du einmal pro Zug eine Metamagie-Option kostenlos anwenden."
+                },
+                {
+                    "level": 20,
+                    "name": "Mächtiger Urstandpunkt (Sorcerous Master)",
+                    "description": "Angeborene Zauberei dauert 1 Minute pro Zug. Wenn sie endet und du keine Schicksalspunkte hast, erhältst du 4 zurück."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_sorcerer_draconic",
+                    "name": "Drakonische Zauberei (Draconic Sorcery)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Drakonische Abstammung & Drachenstärke",
+                            "description": "Wähle einen Drachen-Typ (Schadensresistenz, Schadenstyp). Deine TP steigen um 1 pro Zauberer-Stufe. Deine RK ist 13 + GES-Mod, wenn du keine Rüstung trägst."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Elementare Affinität (Elemental Affinity)",
+                            "description": "Wenn du einen Zauber deines Abstammungs-Schadenstyps wirkst, addiere CHA-Mod zu einem Schadenswurf. 1 Schicksalspunkt: Resistenz gegen diesen Schadenstyp für 1 Stunde."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Drakonische Flügel (Draconic Wings)",
+                            "description": "Bonusaktion: Flügel manifestieren. Flugrate = Bewegungsrate. Anhalten mit weiterer Bonusaktion."
+                        },
+                        {
+                            "level": 18,
+                            "name": "Drachenpräsenz (Dragon Presence)",
+                            "description": "Als Aktion: Kreaturen in 18 m müssen WIS-Save (SG = dein Zauber-SG) bestehen oder sind 1 Minute Bezaubert oder Verängstigt. 1x/LR oder 5 Schicksalspunkte."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_sorcerer_wild_magic",
+                    "name": "Wilde Magie-Zauberei (Wild Magic Sorcery)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Wilder Magiestoß (Wild Magic Surge)",
+                            "description": "Nach dem Wirken eines Zaubers (außer Zaubertricks) kann der DM verlangen, 1W20 zu würfeln. Bei Ergebnis 1 tritt ein zufälliger Wilden-Magie-Effekt auf."
+                        },
+                        {
+                            "level": 3,
+                            "name": "Gezähmte Energie (Tides of Chaos)",
+                            "description": "1x/LR Vorteil auf einen Angriffswurf, Attributswurf oder Rettungswurf erhalten. Kann einen Wilden Magiestoß auslösen."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Bendbare Energiewelle (Bend Luck)",
+                            "description": "2 Schicksalspunkte: Reaktion, um 1W4 auf einen Angriff/Attributswurf/Save einer sichtbaren Kreatur zu addieren oder abzuziehen."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Kontrolliertes Chaos (Controlled Chaos)",
+                            "description": "Bei einem Wilden Magiestoß: Würfle zweimal auf der Tabelle und wähle selbst."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_sorcerer_aberrant",
+                    "name": "Aberrante Zauberei (Aberrant Sorcery)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Aberrantes Fleisch & Psionische Zauber",
+                            "description": "Übung in PSY-Rettungswürfen. Schadenstyp deiner Zauber kann in Psychisch geändert werden."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Tentakelform (Warping Implosion)",
+                            "description": "Als Aktion: Psionische Schockwelle (9 m). Alle Kreaturen STR-Save (Fehlschlag: 3W10 Psychisch + 9 m zu dir ziehen). 1x/LR."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Создание Auge der Irritation (Create Thrall)",
+                            "description": "1 Minute Bezaubern einer handlungsunfähigen humanoiden Kreatur (CHA-Save zum Beenden). Du hast telepathische Verbindung."
+                        },
+                        {
+                            "level": 18,
+                            "name": "Aberrante Form (Aberrant Form)",
+                            "description": "Für 1 Minute: Flugrate, Dunkelsicht 18 m, Tentakel-Angriff, Resistenz gegen Psychisch/Gift, Immunität gegen Erschöpft und Verängstigt."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "class_warlock",
+            "name": "Hexenmeister (Warlock)",
+            "primaryAbility": "Charisma",
+            "hitDie": "W8",
+            "savingThrows": [
+                "Weisheit",
+                "Charisma"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 2: Arkane Kunde, Einschüchtern, Geschichte, Motiv erkennen, Nachforschen, Religion, Täuschen oder Überreden",
+                "weapons": [
+                    "Einfache Waffen"
+                ],
+                "armor": [
+                    "Leichte Rüstung"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Lederrüstung, Arkaner Fokus (Zauberstab), 2 Dolche, Entdeckerausrüstung und 15 GM; oder (B) 100 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Paktmagie (Eldritch Pact Magic)",
+                    "description": "Paktmagie-Zauberplätze regenerieren bei Kurzer oder Langer Rast. Alle Plätze haben dieselbe, mit Stufe skalierende Höhe. Zauberattribut: Charisma."
+                },
+                {
+                    "level": 1,
+                    "name": "Schauerliche Anrufungen (Eldritch Invocations)",
+                    "description": "Wähle 2 Anrufungen (skaliert auf höheren Stufen). Sie gewähren passive Boni oder kostenlos wirkbare Zauber (z.B. Schauriger Strahl, Rüstung des Agathys, usw.)."
+                },
+                {
+                    "level": 2,
+                    "name": "Magische Raffinesse (Magical Cunning)",
+                    "description": "Nach 1 Minute Ritus erhältst du verbrauchte Paktmagie-Plätze bis zur Hälfte deines Maximums (aufgerundet) zurück. 1x/LR."
+                },
+                {
+                    "level": 3,
+                    "name": "Hexenmeister-Unterklasse",
+                    "description": "Wähle einen Schutzherrn."
+                },
+                {
+                    "level": 5,
+                    "name": "Mystischer Halbzauber (Mystic Arcanum)",
+                    "description": "Ab Stufe 11: Du erhältst einen Zauber höherer Stufe (Arcanum), den du 1x/LR ohne Slot wirken kannst."
+                },
+                {
+                    "level": 7,
+                    "name": "Hexenmeister-Unterklasse Stufe 7",
+                    "description": "Zweites Unterklassen-Merkmal."
+                },
+                {
+                    "level": 9,
+                    "name": "Schutzherrn kontaktieren (Contact Patron)",
+                    "description": "Kontakt zu anderen Ebenen immer vorbereitet, 1x/LR kostenlos wirken um deinen Schutzherrn zu kontaktieren."
+                },
+                {
+                    "level": 20,
+                    "name": "Höchste Magie (Eldritch Master)",
+                    "description": "Du kannst 1 Minute bitten, deine Paktmagie-Plätze vollständig zurückzuerhalten. 1x/LR."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_warlock_archfey",
+                    "name": "Patron der Erzfee (Archfey Patron)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Feenzauber & Schritt ins Fee-Reich",
+                            "description": "Zauber: Schlaf, Feenfeuer, Verwirrung, Furcht. Als Bonusaktion teleportiere in einen unbesetzten Bereich in 9 m und du oder eine Kreatur in 9 m von dir ist bis Ende deines nächsten Zuges Verängstigt oder Bezaubert."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Mystische Beeinflussung (Misty Escape)",
+                            "description": "Als Reaktion auf Schaden: Unsichtbar werden und bis zu 18 m teleportieren. Endet bei deinem nächsten Zug. 1x/LR oder 1 Paktmagie-Slot."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Betörender Blick (Beguiling Defenses)",
+                            "description": "Immunität gegen Bezaubert. Als Reaktion: Kreatur, die dich zu bezaubern versucht, wird stattdessen bis zu 1 Minute von dir bezaubert."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Dunkle Traummagie (Dark Delirium)",
+                            "description": "Als Aktion: Kreatur in 18 m muss WIS-Save bestehen oder ist 1 Minute lang in einer Halluzination (Bezaubert oder Verängstigt, Konzentration). 1x/LR oder 1 Paktmagie-Slot."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_warlock_fiend",
+                    "name": "Unterweltlicher Patron (Fiend Patron)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Höllische Verheerung & Glücksbonus des Unterweltlichen",
+                            "description": "Schaden: Brennende Hände, Befehl, Feuerball u.a. immer vorbereitet. Wenn du einen Feind auf 0 TP bringst, erhältst du Temp. TP (CHA-Mod + Hexenmeister-Stufe)."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Unholde Belastbarkeit (Fiendish Resilience)",
+                            "description": "Wähle Schadenstyp nach jeder Kurzen/Langen Rast: Resistenz gegen diesen Typ."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Schütteln der Hölle (Hurl Through Hell)",
+                            "description": "Wenn du triffst: Kreatur durch Höllendimensionen reißen (10W10 psychischer Schaden, KON-Save für Halbe). 1x/LR."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Immunität des Unterweltlichen (Fiend Immunity)",
+                            "description": "Resistenz gegen Feuer und Gift. Immunität gegen Vergiftet."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_warlock_great_old_one",
+                    "name": "Patron des Großen Alten (Great Old One Patron)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Erwachter Geist & Psionische Zauber",
+                            "description": "Telepathie mit Kreatur in 9 m (keine gemeinsame Sprache nötig). Zauber: Person bezaubern, Tashas schreckliches Lachen u.a. Schadenstyp in Psychisch änderbar; keine Verbal-/Gestenkomponenten bei Verzauberung/Illusion."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Entropisches Schild (Entropic Ward)",
+                            "description": "Als Reaktion auf Angriff: Nachteil auferlegen. Bei Verfehlen: Vorteil auf deinen nächsten Angriff. 1x/LR oder 1 Paktmagie-Slot."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Gedankliche Übertragung (Thought Shield)",
+                            "description": "Gedanken können nicht gelesen werden. Resistenz gegen Psychisch. Wenn jemand Psychischen Schaden an dir verursacht, erleidet er ebenso viel Schaden."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Schaffung einer Marionette (Create Thrall)",
+                            "description": "Berühre Handlungsunfähige Humanoide: CHA-Save oder bezaubert für bis zu 30 Tage. Du hast telepathische Verbindung."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "class_wizard",
+            "name": "Magier (Wizard)",
+            "primaryAbility": "Intelligenz",
+            "hitDie": "W6",
+            "savingThrows": [
+                "Intelligenz",
+                "Weisheit"
+            ],
+            "proficiencies": {
+                "skills": "Wähle 2: Arkane Kunde, Geschichte, Heilkunde, Motiv erkennen, Nachforschen oder Religion",
+                "weapons": [
+                    "Einfache Waffen"
+                ],
+                "armor": [
+                    "Keine"
+                ]
+            },
+            "startingEquipment": "Wähle A oder B: (A) Kampfstab, Arkaner Fokus (Zauberbuch), Gelehrtenpaket und 5 GM; oder (B) 55 GM",
+            "features": [
+                {
+                    "level": 1,
+                    "name": "Zauberwirken (Spellcasting)",
+                    "description": "Zauberattribut Intelligenz. Bereite Zauber aus deinem Zauberbuch vor. Du startest mit 6 Zauber der Stufe 1. Bei Stufenaufstieg lernst du 2 neue Magier-Zauber."
+                },
+                {
+                    "level": 1,
+                    "name": "Arkane Erholung (Arcane Recovery)",
+                    "description": "1x/Tag bei Kurzer Rast Zauberplätze regenerieren (Summe der Zauberstufen ≤ halbe Magier-Stufe, max. Stufe 5)."
+                },
+                {
+                    "level": 1,
+                    "name": "Ritualexperte (Ritual Adept)",
+                    "description": "Magier-Zauber mit dem Tag Ritual können direkt aus dem Zauberbuch als Ritual gewirkt werden, auch ohne Vorbereitung."
+                },
+                {
+                    "level": 2,
+                    "name": "Gelehrter (Scholar)",
+                    "description": "Wähle eine geübte Fertigkeit (Arkane Kunde, Geschichte, Naturkunde oder Religion): Expertise (doppelter Übungsbonus)."
+                },
+                {
+                    "level": 5,
+                    "name": "Zauber einprägen (Memorize Spell)",
+                    "description": "1 Minute studieren: Einen vorbereiteten Zauber gegen einen anderen im Zauberbuch austauschen."
+                },
+                {
+                    "level": 7,
+                    "name": "Magier-Unterklasse Stufe 7",
+                    "description": "Zweites Unterklassen-Merkmal."
+                },
+                {
+                    "level": 18,
+                    "name": "Zaubermeisterschaft (Spell Mastery)",
+                    "description": "Wähle einen Magier-Zauber der Stufe 1 und einen der Stufe 2 (je 1 Aktion oder Bonusaktion Zauberzeit). Immer vorbereitet, unbegrenzt ohne Slot auf Grundstufe wirkbar."
+                },
+                {
+                    "level": 20,
+                    "name": "Signaturzauber (Signature Spells)",
+                    "description": "Wähle zwei Stufe-3-Magier-Zauber. Immer vorbereitet. Je einmal ohne Slot wirkbar (Regeneration bei Kurzer/Langer Rast)."
+                }
+            ],
+            "subclasses": [
+                {
+                    "id": "subclass_wizard_abjurer",
+                    "name": "Bannbeschwörer (Abjurer)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Gelehrter der Bannmagie & Arkaner Schutz",
+                            "description": "Bannmagie-Zauber zu halben Kosten erlernen. Arkaner Schutz-Pool (Magier-Stufe x 2 + INT-Mod): Fängt Schaden ab. Lädt sich durch Bannzauber auf."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Projizierter Schutz (Projected Ward)",
+                            "description": "Als Reaktion kannst du deinen Arkanen Schutz nutzen, um Schaden von einem Verbündeten in 9 m abzufangen."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Zauber-Unterbrecher (Spellbreaker)",
+                            "description": "Gegenzauber und Magie bannen wirken als wären sie mit einem um 1 höheren Zauberplatz gewirkt worden."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Magie-Resistenz (Spell Resistance)",
+                            "description": "Vorteil auf alle Rettungswürfe gegen Zauber. Resistenz gegen Zauberschaden."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_wizard_evoker",
+                    "name": "Hervorrufer (Evoker)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Gelehrter der Hervorrufung & Zauber formen",
+                            "description": "Hervorrufungszauber zu halben Kosten erlernen. Zauber formen: Bis zu (1 + Zauberstufe) Verbündete automatisch schützen."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Mächtiger Zaubertrick (Potent Cantrip)",
+                            "description": "Gegner bestehen Rettungswurf gegen deinen Zaubertrick: Nehmen trotzdem halben Schaden."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Verstärkte Hervorrufung (Empowered Evocation)",
+                            "description": "Addiere INT-Mod zu einem Schadenswurf eines Evocations-Zaubers."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Überladene Magie (Overchannel)",
+                            "description": "Maximierten Schaden bei Stufe-1-5-Zaubern. Erster Einsatz/LR kostenlos; danach 2W12 nekrotischen Schaden pro Zauberstufe (ignoriert Resistenzen)."
+                        }
+                    ]
+                },
+                {
+                    "id": "subclass_wizard_diviner",
+                    "name": "Erkenntnismagier (Diviner)",
+                    "features": [
+                        {
+                            "level": 3,
+                            "name": "Gelehrter der Erkenntnismagie & Vorzeichen",
+                            "description": "Erkenntniszauber zu halben Kosten. Vorzeichen: Nach LR 2W20 würfeln; Ergebnisse können Würfe von sichtbaren Kreaturen ersetzen (vor dem Wurf)."
+                        },
+                        {
+                            "level": 6,
+                            "name": "Experte der Erkenntnismagie (Expert Divination)",
+                            "description": "Erkenntniszauber Stufe 2+ wirken: Einen Zauberplatz niedrigerer Stufe zurückerhalten (max. Stufe 5)."
+                        },
+                        {
+                            "level": 10,
+                            "name": "Das Dritte Auge (The Third Eye)",
+                            "description": "Bonusaktion: Dunkelsicht 36 m, Unsichtbares sehen oder Ätherische Sicht für 1 Stunde aktivieren."
+                        },
+                        {
+                            "level": 14,
+                            "name": "Größeres Vorzeichen (Greater Portent)",
+                            "description": "Vorzeichen steigt auf 3W20."
+                        }
+                    ]
+                }
+            ]
         }
     ],
     "backgrounds": [
