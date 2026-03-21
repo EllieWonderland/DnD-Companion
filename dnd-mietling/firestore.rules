@@ -1,0 +1,30 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Geteilte Collections – zugänglich für beide Apps (Companion + Mietling)
+    match /globalQuests/{questId} {
+      allow read, write: if true;
+    }
+    match /groupChat/{msgId} {
+      allow read, write: if true;
+    }
+    match /groupLootCoins/{docId} {
+      allow read, write: if true;
+    }
+    match /groupLootItems/{itemId} {
+      allow read, write: if true;
+    }
+    match /publicGeneralNotes/{noteId} {
+      allow read, write: if true;
+    }
+    match /publicGrudgeNotes/{noteId} {
+      allow read, write: if true;
+    }
+
+    // NEU: Initiative Tracker – von Mietling verwaltet, Companion kann lesen
+    match /initiativeTracker/{entryId} {
+      allow read, write: if true;
+    }
+  }
+}
