@@ -349,7 +349,7 @@ fun CombatScreen(
 
             var showWeaponEditDialog by remember { mutableStateOf<Int?>(null) }
             if (inventoryVm.availableWeapons.isEmpty()) {
-                Text("Keine Waffen im Rucksack gefunden. Füge Waffen im Rucksack-Tab hinzu.", style = MaterialTheme.typography.bodySmall, color = TintenBraun, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, modifier = Modifier.padding(8.dp))
+                Text("Keine Waffen im Rucksack gefunden. Füge Waffen im Rucksack-Tab hinzu.", fontSize = 14.sp, color = TintenBraun, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, modifier = Modifier.padding(8.dp))
             } else {
                 var weaponDropdownExpanded by remember { mutableStateOf(false) }
                 ExposedDropdownMenuBox(
@@ -454,7 +454,7 @@ fun CombatScreen(
                         colors = CheckboxDefaults.colors(checkedColor = accentColor)
                     )
                     val hint = if (combatVm.isShieldEquipped) " (Deaktiviert Schild-Bonus)" else ""
-                    Text("Zweihändig führen$hint", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                    Text("Zweihändig führen$hint", fontSize = 14.sp, color = TintenSchwarz)
                 }
             }
 
@@ -630,7 +630,7 @@ fun CombatScreen(
                                 Button(onClick = { viewModel.updateStandardTactic(editTacticText); isTacticEditing = false }, colors = ButtonDefaults.buttonColors(containerColor = accentColor), shape = RoundedCornerShape(8.dp)) { Text("Speichern", fontFamily = Almendra) }
                             }
                         } else {
-                            Text(viewModel.standardTactic, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                            Text(viewModel.standardTactic, fontSize = 14.sp, color = TintenSchwarz)
                         }
                     }
                 }

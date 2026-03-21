@@ -298,33 +298,33 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
             PergamentCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     if (viewModel.characterData.name == "Athania") {
-                        Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
-                        Text("Magisches Tattoo (Blutige Hand eines Kindes)", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = OchsenblutRot)
+                        Text("Magisches Tattoo (Blutige Hand eines Kindes)", fontSize = 14.sp, lineHeight = 20.sp, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
-                        Text("Gemeinsprache, Gebärden-Gemeinsprache, Halblingisch, Zwergisch, Elfisch", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = OchsenblutRot)
+                        Text("Gemeinsprache, Gebärden-Gemeinsprache, Halblingisch, Zwergisch, Elfisch", fontSize = 14.sp, lineHeight = 20.sp, color = TintenSchwarz)
                         HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
 
-                        Text("Ideal (Höheres Ziel):", style = MaterialTheme.typography.labelLarge, color = WaldGold)
-                        Text("Es ist die Verantwortung jeder Einzelnen, für das Wohl des Stammes zu sorgen.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Ideal (Höheres Ziel):", style = MaterialTheme.typography.labelLarge, color = OchsenblutRot)
+                        Text("Es ist die Verantwortung jeder Einzelnen, für das Wohl des Stammes zu sorgen.", fontSize = 14.sp, lineHeight = 20.sp, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        Text("Makel (Nachtragend):", style = MaterialTheme.typography.labelLarge, color = WaldGold)
-                        Text("Ich erinnere mich an jede einzelne Beleidigung, die mir galt, und hege eine stumme Abneigung gegen all jene, die mich schon einmal falsch behandelt haben.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Makel (Nachtragend):", style = MaterialTheme.typography.labelLarge, color = OchsenblutRot)
+                        Text("Ich erinnere mich an jede einzelne Beleidigung, die mir galt, und hege eine stumme Abneigung gegen all jene, die mich schon einmal falsch behandelt haben.", fontSize = 14.sp, lineHeight = 20.sp, color = TintenSchwarz)
                     } else {
-                        Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
-                        Text("Gepflegt, mysteriöses Buch immer in der Hand", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = HexenLila)
+                        Text("Gepflegt, mysteriöses Buch immer in der Hand", fontSize = 14.sp, lineHeight = 20.sp, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
-                        Text("Gemeinsprache, Elfisch, Zwergisch", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = HexenLila)
+                        Text("Gemeinsprache, Elfisch, Zwergisch", fontSize = 14.sp, lineHeight = 20.sp, color = TintenSchwarz)
                         HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
 
                         Text("Ideal (Freiheit):", style = MaterialTheme.typography.labelLarge, color = HexenLila)
-                        Text("Ketten sind dazu da um Sie zu brechen, ebenso wie die die sie halten.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Ketten sind dazu da um Sie zu brechen, ebenso wie die die sie halten.", fontSize = 14.sp, lineHeight = 20.sp, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text("Makel:", style = MaterialTheme.typography.labelLarge, color = HexenLila)
-                        Text("Ich würde alles behaupten um zusätzlicher Arbeit aus dem Weg zu gehen.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Ich würde alles behaupten um zusätzlicher Arbeit aus dem Weg zu gehen.", fontSize = 14.sp, lineHeight = 20.sp, color = TintenSchwarz)
                     }
                 }
             }
@@ -408,7 +408,7 @@ fun AttributeBox(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(mod, style = GrenzeGotischSmall, color = OchsenblutRot)
                 }
-                Text(rw, style = MaterialTheme.typography.labelSmall.copy(fontSize = 12.sp), color = TintenBraun)
+                Text(rw, style = MaterialTheme.typography.labelSmall.copy(fontSize = 13.sp), color = TintenBraun)
                 if (skills.isNotEmpty()) {
                     HorizontalDivider(color = TintenBraun.copy(alpha = 0.3f), thickness = 1.dp, modifier = Modifier.padding(vertical = 4.dp))
                     skills.forEach { (skillName, skillMod, isProficient) ->
@@ -427,10 +427,10 @@ fun SkillRow(name: String, mod: Int, proficient: Boolean = false) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val color = if (proficient) WaldGold else TintenSchwarz
+        val color = if (proficient) OchsenblutRot else TintenSchwarz
         val weight = if (proficient) FontWeight.Bold else FontWeight.Normal
         val modStr = if (mod >= 0) "+$mod" else "$mod"
-        Text(name, color = color, style = MaterialTheme.typography.bodySmall, fontWeight = weight)
-        Text(modStr, color = color, style = MaterialTheme.typography.bodySmall, fontWeight = weight)
+        Text(name, color = color, fontSize = 13.sp, fontWeight = weight)
+        Text(modStr, color = color, fontSize = 13.sp, fontWeight = weight)
     }
 }

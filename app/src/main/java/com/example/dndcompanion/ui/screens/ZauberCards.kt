@@ -82,7 +82,7 @@ fun SpellCard(
             }
             if (expanded || isEditMode) {
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("Zeit: ${spell.castingTime} | Dauer: ${spell.duration} | Reichweite: ${spell.range}", color = TintenSchwarz, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                Text("Zeit: ${spell.castingTime} | Dauer: ${spell.duration} | Reichweite: ${spell.range}", color = TintenSchwarz, fontSize = 15.sp, fontWeight = FontWeight.Medium)
 
                 val comps = mutableListOf<String>()
                 if (spell.componentsV) comps.add("V")
@@ -97,7 +97,7 @@ fun SpellCard(
 
                 Spacer(modifier = Modifier.height(6.dp))
                 val fullDescription = globalSpellbook.find { it.name.equals(spell.name, ignoreCase = true) }?.description ?: spell.description
-                Text(fullDescription, color = TintenSchwarz, fontSize = 15.sp, lineHeight = 20.sp)
+                Text(fullDescription, color = TintenSchwarz, fontSize = 15.sp, lineHeight = 22.sp)
 
                 if (spell.isRitual && onCastAsRitual != null) {
                     Spacer(modifier = Modifier.height(12.dp))
@@ -209,7 +209,7 @@ fun ExpandableFreeSpellCard(
                     Text(title, color = TintenSchwarz, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                     if (!expanded) {
                         val subText = if (maxUses >= 999) "Beliebig oft" else ""
-                        Text(subText, color = TintenBraun, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(subText, color = TintenBraun, fontSize = 14.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
 
