@@ -1129,7 +1129,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         tempHp = prefs.getInt("${characterId}_tempHp", if (characterId == "Delat") 12 else 0)
         
         // --- ONE-TIME DATA SYNC / REPAIR v2 (Stand 13.03.2026 - Strict Separation) ---
-        val syncKeyV2 = "isSyncedWithStatsFiles_2026_03_13_v2"
+        val syncKeyV2 = "isSyncedWithStatsFiles_2026_03_21_v3"
         val alreadySyncedV2 = prefs.getBoolean(syncKeyV2, false)
 
         if (!alreadySyncedV2) {
@@ -1225,7 +1225,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 if (repaired) saveTraits()
             }
             if (characterId == "Delat") {
-                level = 5
+                level = 4
                 if (coinsSM < 80) coinsSM = 80
                 if (coinsGM < 19) coinsGM = 19
                 if (tempHp < 12) tempHp = 12
@@ -1879,7 +1879,7 @@ private val model25Flash = GenerativeModel(
                 allSpells.addAll(safeItems)
 
                 // --- ONE-TIME SPELL SYNC v2 (Stand 13.03.2026 - Strict Separation) ---
-                val syncKeyV2 = "isSyncedWithSpells_2026_03_13_v2"
+                val syncKeyV2 = "isSyncedWithSpells_2026_03_21_v3"
                 val alreadySyncedV2 = prefs.getBoolean(syncKeyV2, false)
 
                 if (!alreadySyncedV2) {
@@ -2013,8 +2013,8 @@ private val model25Flash = GenerativeModel(
         val primaryCastingInfo = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
             "Zauberplätze: G1: $spellSlotsLevel1, G2: $spellSlotsLevel2, G3: $spellSlotsLevel3"
         } else {
-            val maxSlots = characterData.baseSpellSlotsLevel3
-            "Paktmagie: $spellSlotsLevel3/$maxSlots (Level 3 Slots)"
+            val maxSlots = characterData.baseSpellSlotsLevel2
+            "Paktmagie: $spellSlotsLevel2/$maxSlots (Level 2 Slots)"
         }
 
         val baseContext = """
