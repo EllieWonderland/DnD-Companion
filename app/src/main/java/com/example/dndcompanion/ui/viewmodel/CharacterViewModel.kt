@@ -425,7 +425,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         
         // Proficiencies
         if (characterData.id == "Athania") {
-            if (skillName in listOf("Heimlichkeit", "Wahrnehmung", "Überlebenskunst", "Naturkunde", "Mit Tieren umgehen")) {
+            if (skillName in listOf("Heimlichkeit", "Wahrnehmung", "Überleben", "Naturkunde", "Mit Tieren umgehen", "Motiv erkennen")) {
                 totalBonus += proficiencyBonus
                 // Expertise for Athania
                 if (skillName == "Heimlichkeit" || skillName == "Wahrnehmung") {
@@ -2009,7 +2009,7 @@ private val model25Flash = GenerativeModel(
         val traitsStr = customTraits.joinToString(" | ") { "${it.name}: ${it.desc.replace("\n", " ")}" }
 
         val className = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) "Waldläufer (Beast Master)" else "Warlock (Pakt der Klinge)"
-        val race = if (characterData.name == "Athania") "Elf (Waldelf / Feenblut)" else "Zwerg"
+        val race = if (characterData.name == "Athania") "Elf-Drow" else "Zwerg"
         val primaryCastingInfo = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
             "Zauberplätze: G1: $spellSlotsLevel1, G2: $spellSlotsLevel2, G3: $spellSlotsLevel3"
         } else {
