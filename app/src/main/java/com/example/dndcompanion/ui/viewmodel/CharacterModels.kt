@@ -75,6 +75,18 @@ data class SharedCoins(
     @get:PropertyName("pm") @set:PropertyName("pm") var pm: Int = 0
 )
 
+// Initiative Tracker – wird vom DnD Mietling verwaltet, Companion liest mit
+data class InitiativeEntry(
+    @get:PropertyName("id") @set:PropertyName("id") var id: String = java.util.UUID.randomUUID().toString(),
+    @get:PropertyName("name") @set:PropertyName("name") var name: String = "",
+    @get:PropertyName("initiative") @set:PropertyName("initiative") var initiative: Int = 0,
+    @get:PropertyName("type") @set:PropertyName("type") var type: String = "CHARACTER",
+    @get:PropertyName("isActive") @set:PropertyName("isActive") var isActive: Boolean = false,
+    @get:PropertyName("damageTaken") @set:PropertyName("damageTaken") var damageTaken: Int = 0,
+    @get:PropertyName("criticalHint") @set:PropertyName("criticalHint") var criticalHint: Boolean = false,
+    @get:PropertyName("maxHp") @set:PropertyName("maxHp") var maxHp: Int = 0
+)
+
 data class Spell(
     val id: String = java.util.UUID.randomUUID().toString(),
     val name: String,

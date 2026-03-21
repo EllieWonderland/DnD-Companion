@@ -92,6 +92,19 @@ fun LibraryView(onBookSelected: (BookType) -> Unit) {
                     onClick = { onBookSelected(BookType.QUESTLOG) }
                 )
             }
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                BookCard(
+                    title = "Initiative",
+                    subtitle = "Kampfreihenfolge (Mietling)",
+                    imageRes = R.drawable.kampf,
+                    onClick = { onBookSelected(BookType.INITIATIVE) }
+                )
+                Spacer(modifier = Modifier.width(150.dp))
+            }
             Spacer(modifier = Modifier.height(32.dp))
         }
     }

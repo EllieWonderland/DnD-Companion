@@ -24,11 +24,15 @@ class GroupViewModel(
     var sharedCoins by mutableStateOf(SharedCoins())
     val sharedLootItems = mutableStateListOf<GroupLootItem>()
 
+    // Initiative Tracker (sync mit DnD Mietling)
+    val initiativeEntries = mutableStateListOf<InitiativeEntry>()
+
     init {
         listenToPublicNotes()
         listenToGroupChat()
         listenToQuests()
         listenToSharedLoot()
+        listenToInitiative()
     }
 
     private fun listenToPublicNotes() {
@@ -243,5 +247,23 @@ class GroupViewModel(
 
     fun deleteSharedLootItem(id: String) {
         db.collection("groupLootItems").document(id).delete()
+    }
+
+    private fun listenToInitiative() {
+        db.collection("initiativeTracker")
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.e("Firebase", "Initiative Listener Fehler", e)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    initiativeEntries.clear()
+                    for (doc in snapshot.documents) {
+                        val entry = doc.toObject(InitiativeEntry::class.java)
+                        if (entry != null) initiativeEntries.add(entry)
+                    }
+                    initiativeEntries.sortByDescending { it.initiative }
+                }
+            }
     }
 }
