@@ -433,7 +433,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 }
             }
         } else if (characterData.id == "Delat") {
-            if (skillName in listOf("Arkane Kunde", "Täuschen", "Einschüchtern", "Motiv erkennen")) {
+            if (skillName in listOf("Arkane Kunde", "Täuschen", "Einschüchtern", "Fingerfertigkeit")) {
                 totalBonus += proficiencyBonus
             }
             // Gloves of Arcana +2
@@ -1225,7 +1225,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 if (repaired) saveTraits()
             }
             if (characterId == "Delat") {
-                level = 4
+                level = 5
                 if (coinsSM < 80) coinsSM = 80
                 if (coinsGM < 19) coinsGM = 19
                 if (tempHp < 12) tempHp = 12
@@ -2009,12 +2009,12 @@ private val model25Flash = GenerativeModel(
         val traitsStr = customTraits.joinToString(" | ") { "${it.name}: ${it.desc.replace("\n", " ")}" }
 
         val className = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) "Waldläufer (Beast Master)" else "Warlock (Pakt der Klinge)"
-        val race = if (characterData.name == "Athania") "Elf (Waldelf / Feenblut)" else "Mensch"
+        val race = if (characterData.name == "Athania") "Elf (Waldelf / Feenblut)" else "Zwerg"
         val primaryCastingInfo = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
             "Zauberplätze: G1: $spellSlotsLevel1, G2: $spellSlotsLevel2, G3: $spellSlotsLevel3"
         } else {
-            val maxSlots = characterData.baseSpellSlotsLevel2
-            "Paktmagie: $spellSlotsLevel2/$maxSlots (Level 2 Slots)"
+            val maxSlots = characterData.baseSpellSlotsLevel3
+            "Paktmagie: $spellSlotsLevel3/$maxSlots (Level 3 Slots)"
         }
 
         val baseContext = """
