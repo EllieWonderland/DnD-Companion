@@ -302,10 +302,23 @@ fun RuleCard(rule: RuleEntity) {
                 Markdown(rule.content)
             }
             if (rule.tags.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(12.dp))
-                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                    rule.tags.take(3).forEach { tag ->
-                        Text("#$tag", fontSize = 13.sp, style = GrenzeGotischSmall, color = WaldgruenDunkel)
+                Spacer(modifier = Modifier.height(10.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    rule.tags.take(5).forEach { tag ->
+                        Text(
+                            "#$tag",
+                            fontSize = 12.sp,
+                            fontFamily = Almendra,
+                            color = WaldgruenDunkel,
+                            modifier = Modifier
+                                .background(WaldgruenDunkel.copy(alpha = 0.12f), RoundedCornerShape(4.dp))
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        )
                     }
                 }
             }
@@ -381,10 +394,16 @@ fun SpeciesCard(species: SpeciesEntity) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(species.name, fontSize = 20.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = OchsenblutRot)
             Text("Größe: ${species.size} | Tempo: ${species.speed}m", fontSize = 14.sp, color = TintenSchwarz.copy(alpha = 0.8f))
-            Spacer(modifier = Modifier.height(8.dp))
             species.traits.forEach { trait ->
-                Text(trait.name, fontWeight = FontWeight.Bold, color = TintenSchwarz, modifier = Modifier.padding(top = 4.dp))
-                Text(trait.description, fontSize = 14.sp, color = TintenSchwarz.copy(alpha = 0.9f))
+                HorizontalDivider(
+                    modifier = Modifier.padding(vertical = 8.dp),
+                    color = EisenGrau.copy(alpha = 0.4f)
+                )
+                Text(trait.name, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = TintenSchwarz)
+                Spacer(modifier = Modifier.height(2.dp))
+                Material3RichText(modifier = Modifier.fillMaxWidth()) {
+                    Markdown(trait.description)
+                }
             }
         }
     }
@@ -397,22 +416,37 @@ fun ClassCard(cls: ClassEntity) {
             Text(cls.name, fontSize = 22.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = HexenLila)
             Text("Primär: ${cls.primaryAbility} | Trefferwürfel: ${cls.hitDie}", fontSize = 14.sp, color = TintenSchwarz.copy(alpha = 0.8f))
             Text("Rettungswürfe: ${cls.savingThrows.joinToString(", ")}", fontSize = 14.sp, color = TintenSchwarz.copy(alpha = 0.8f))
-            Spacer(modifier = Modifier.height(12.dp))
 
-            Text("Klassenmerkmale", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TintenSchwarz)
+            HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = EisenGrau.copy(alpha = 0.6f), thickness = 1.5.dp)
+            Text("Klassenmerkmale", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = TintenSchwarz)
+
             cls.classFeatures.forEach { feature ->
-                Text("Lv ${feature.level}: ${feature.name}", fontWeight = FontWeight.Bold, color = TintenSchwarz, modifier = Modifier.padding(top = 8.dp))
-                Text(feature.description, fontSize = 14.sp, color = TintenSchwarz.copy(alpha = 0.9f))
+                HorizontalDivider(modifier = Modifier.padding(vertical = 6.dp), color = EisenGrau.copy(alpha = 0.3f))
+                Text(
+                    "Stufe ${feature.level}: ${feature.name}",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    color = HexenLila
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                Material3RichText(modifier = Modifier.fillMaxWidth()) {
+                    Markdown(feature.description)
+                }
             }
 
             if (cls.subclasses.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(12.dp))
-                Text("Unterklassen", fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TintenSchwarz)
+                HorizontalDivider(modifier = Modifier.padding(vertical = 10.dp), color = EisenGrau.copy(alpha = 0.6f), thickness = 1.5.dp)
+                Text("Unterklassen", fontWeight = FontWeight.Bold, fontSize = 16.sp, color = TintenSchwarz)
                 cls.subclasses.forEach { sub ->
-                    Text(sub.name, fontWeight = FontWeight.Bold, color = OchsenblutRot, modifier = Modifier.padding(top = 8.dp))
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(sub.name, fontWeight = FontWeight.Bold, fontSize = 15.sp, color = OchsenblutRot)
                     sub.features.forEach { sf ->
-                        Text("Lv ${sf.level}: ${sf.name}", fontSize = 14.sp, fontWeight = FontWeight.Medium, color = TintenSchwarz)
-                        Text(sf.description, fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.8f))
+                        HorizontalDivider(modifier = Modifier.padding(vertical = 6.dp), color = EisenGrau.copy(alpha = 0.3f))
+                        Text("Stufe ${sf.level}: ${sf.name}", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = TintenSchwarz)
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Material3RichText(modifier = Modifier.fillMaxWidth()) {
+                            Markdown(sf.description)
+                        }
                     }
                 }
             }
@@ -432,10 +466,17 @@ fun FeatureCard(feature: FeatureEntity) {
                 else -> WaldgruenDunkel
             }
             Text(feature.name, fontSize = 20.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = titleColor)
+            val typeLabel = when (feature.type) {
+                "FEAT" -> "Talent"
+                "RACIAL_TRAIT" -> "Volksmerkmal"
+                "CLASS_FEATURE" -> "Klassenmerkmal"
+                "SUBCLASS_FEATURE" -> "Unterklassenmerkmal"
+                else -> feature.type
+            }
             val subText = buildString {
-                append(feature.type)
-                if (!feature.category.isNullOrBlank()) append(" - ${feature.category}")
-                if (feature.levelReq > 1) append(" (Ab Stufe ${feature.levelReq})")
+                append(typeLabel)
+                if (!feature.category.isNullOrBlank()) append(" – ${feature.category}")
+                if (feature.levelReq > 1) append(" (ab Stufe ${feature.levelReq})")
             }.toString()
             Text(subText, fontSize = 14.sp, fontFamily = Almendra, color = TintenSchwarz.copy(alpha = 0.8f))
 
