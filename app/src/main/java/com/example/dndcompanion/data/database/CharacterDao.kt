@@ -11,11 +11,11 @@ interface CharacterDao {
 
     /** Seed-only insert: never overwrites existing in-app edits. */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertIfAbsent(characters: List<CharacterEntity>)
+    suspend fun insertIfAbsent(characters: List<CharacterEntity>): List<Long>
 
     /** Write a character update from the app (level-up, new spell, etc.). */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun save(character: CharacterEntity)
+    suspend fun save(character: CharacterEntity): Long
 
     /** Reactive stream — emits whenever this character row changes. */
     @Query("SELECT * FROM characters WHERE id = :id")
