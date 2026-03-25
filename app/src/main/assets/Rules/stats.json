@@ -8,7 +8,7 @@
             "species": "Zwerg",
             "subclass": "Großer Alter Schutzherr",
             "alignment": "Chaotisch Gut",
-            "xp": 6500,
+            "xp": 6501,
             "stats": {
                 "STR": {
                     "score": 8,
@@ -84,16 +84,16 @@
             },
             "weapons": [
                 {
-                    "name": "Versilberter Speer",
+                    "name": "Versilberter Speer (Pakt)",
                     "bonus": "-1",
                     "damage": "1W6 Stich",
                     "damageVersatile": "1W8 Stich",
-                    "notes": "Silber"
+                    "notes": "BA; gleißend, nekrotisch o. psychisch"
                 }
             ],
             "featuresAndTraits": {
                 "classFeatures": [
-                    "Paktmagie: 3 Zaubertricks, 2 Stufe 3 Zauberplätze,6 vorbereitete Zauber Schauerliche Anrufungen: Pakt der Kette, Unholde Vitalität, Qualvoller Strahl (verstärkt Schauriger Strahl), Gabe des Kettenmeisters, Zurückdrängender Strahl, Magische Rafinesse (1/LR 1min Ritus, Hälfte der Zauberplätze zurück (aufgerundet)), Erwachter Geist: Telepathische Verbindung zwischen mir und einem anderen Geist: BA auf eine Kreatur in max. 9m: telepathische Kommunikation. Höchster Abstand: CM*1,6km. Selbe Sprache. Dauer: Hexerstufe in Minuten Psychische Zauber: Ich kann die Schadensart von Hexenmeisterzaubern in psychisch ändern.Keine Verbal oder Gestenkomponente bei Verzauberungs- oder Illusionszaubern"
+                    "Paktmagie: 3 Zaubertricks, 2 St. 3 Zauberplätze, 6 vorbereitete Zauber Schauerliche Anrufungen: Pakt der Kette, Unholde Vitalität, Qualvoller Strahl (verstärkt Schauriger Strahl), Gabe des Kettenmeisters, Zurückdrängender Strahl - 3m, Magische Rafinesse (1/LR 1min Ritus, Hälfte der Zauberplätze zurück (abgerundet bzw. aufgerundet laut Bogen)), Erwachter Geist: Telepathische Verbindung zwischen mir und einem anderen Geist: BA auf eine Kreatur in max. 9m: telepathische Kommunikation. Höchster Abstand: CM*1,6km. Selbe Sprache. Dauer: Hexerstufe in Minuten Psychische Zauber: Ich kann die Schadensart von Hexenmeisterzaubern in psychisch ändern. Keine Verbal- oder Gestenkomponente bei Verzauberungs- oder Illusionszaubern"
                 ],
                 "speciesTraits": "Dunkelsicht: 36m, Steingespür (Bonusaktion): (keine Art v. Sicht) Erschütterungssinn: Ich kenne für 10 min den Ort von Kreaturen u. bewegten Gegenständen innerhalb von 18m wenn wir auf Gestein stehen oder Gestein berührenHäufigkeit: Übungsbonus. Reset: Lange Rast Zwergische Unverwüstlichkeit: Giftresistenz, Vorteil bei Rettungswurf Vergiftet Zwergische Zähigkeit: +1 TP pro Stufe",
                 "feats": "Eingeweihter der Magie (Magier)  Feenberührt",
