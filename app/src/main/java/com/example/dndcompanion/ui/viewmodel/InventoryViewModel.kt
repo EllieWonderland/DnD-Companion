@@ -11,7 +11,6 @@ import androidx.compose.runtime.setValue
 import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dndcompanion.data.CharacterRepository
 import com.example.dndcompanion.data.DndCalculations
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -128,7 +127,7 @@ class InventoryViewModel(
         val cleanupKey = "lootCleanupV3_$id"
         if (prefs.getBoolean(cleanupKey, false)) return
         val otherCharId = if (id == "Athania") "Delat" else "Athania"
-        val otherDefaultNames = CharacterRepository.getCharacter(otherCharId).defaultLoot.map { it.name }.toSet()
+        val otherDefaultNames = characterVm.characterRepository.getCharacter(otherCharId).defaultLoot.map { it.name }.toSet()
         val thisDefaultNames = characterVm.characterData.defaultLoot.map { it.name }.toSet()
         val contaminated = customLoot.filter { it.name in otherDefaultNames && it.name !in thisDefaultNames }
         if (contaminated.isNotEmpty()) {

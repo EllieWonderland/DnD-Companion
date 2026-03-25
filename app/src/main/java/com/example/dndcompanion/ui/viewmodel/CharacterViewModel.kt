@@ -23,6 +23,8 @@ import org.json.JSONObject
 import com.example.dndcompanion.data.CharacterData
 import com.example.dndcompanion.data.CharacterRepository
 import com.example.dndcompanion.data.CharacterClass
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.filterNotNull
 import com.example.dndcompanion.data.DndCalculations
 import com.example.dndcompanion.data.PrefsManager
 import com.example.dndcompanion.data.database.AppDatabase
@@ -52,15 +54,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     private val _activeCharacterIdFlow = MutableStateFlow("Athania")
     val activeCharacterIdFlow: StateFlow<String> = _activeCharacterIdFlow.asStateFlow()
 
-    var characterData by mutableStateOf(CharacterRepository.getCharacter("Athania"))
-        private set
-
     val prefsManager = PrefsManager(application)
     private val prefs get() = prefsManager.prefs
     private val gson = Gson()
 
     private val database = AppDatabase.getDatabase(application)
     private val rulebookDao = database.rulebookDao()
+    internal val characterRepository = CharacterRepository(application, database)
+
+    var characterData by mutableStateOf(characterRepository.getCharacter("Athania"))
+        private set
 
     private val _searchedRules = MutableStateFlow<List<RuleEntity>>(emptyList())
     val searchedRules: StateFlow<List<RuleEntity>> = _searchedRules.asStateFlow()
@@ -104,6 +107,15 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         private set
 
     init {
+        // Keep characterData in sync with DB — picks up in-app edits (level-ups, etc.)
+        viewModelScope.launch {
+            _activeCharacterIdFlow.flatMapLatest { id ->
+                characterRepository.getCharacterFlow(id)
+            }.filterNotNull().collect { dbChar ->
+                characterData = dbChar
+            }
+        }
+
         // Load initial data (all content)
         searchRulebook("")
         loadLoot()
@@ -214,6 +226,10 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     var showLevelUpNotification by mutableStateOf(false)
         private set
+
+    var showCharacterEditDialog by mutableStateOf(false)
+        private set
+
     var snackbarMessage = mutableStateOf<String?>(null)
     
     var isUsingTwoHanded by mutableStateOf(prefs.getBoolean("isUsingTwoHanded", false))
@@ -339,6 +355,41 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun dismissLevelUpNotification() {
         showLevelUpNotification = false
+    }
+
+    fun openCharacterEdit() { showCharacterEditDialog = true }
+    fun closeCharacterEdit() { showCharacterEditDialog = false }
+
+    fun saveCharacterData(updated: CharacterData) {
+        strength = updated.baseStrength
+        dexterity = updated.baseDexterity
+        constitution = updated.baseConstitution
+        intelligence = updated.baseIntelligence
+        wisdom = updated.baseWisdom
+        charisma = updated.baseCharisma
+        maxHp = updated.baseMaxHp
+        currentHp = currentHp.coerceAtMost(maxHp)
+        hitDice = updated.baseHitDice
+        level = updated.baseLevel
+        currentEP = updated.baseEP
+        prefs.edit {
+            putInt("strength", strength)
+            putInt("dexterity", dexterity)
+            putInt("constitution", constitution)
+            putInt("intelligence", intelligence)
+            putInt("wisdom", wisdom)
+            putInt("charisma", charisma)
+            putInt("maxHp", maxHp)
+            putInt("currentHp", currentHp)
+            putInt("hitDice", hitDice)
+            putInt("level", level)
+            putInt("currentEP_${updated.id}", currentEP)
+            putInt("currentEP", currentEP)
+        }
+        viewModelScope.launch {
+            characterRepository.saveCharacter(updated)
+        }
+        closeCharacterEdit()
     }
 
     var targetRulebookChapter by mutableStateOf<String?>(null)
@@ -1113,7 +1164,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         if (activeCharacterId == characterId) return
         activeCharacterId = characterId
         _activeCharacterIdFlow.value = characterId
-        characterData = CharacterRepository.getCharacter(characterId)
+        characterData = characterRepository.getCharacter(characterId)
         prefsManager.switchCharacter(characterId)
 
         currentEP = prefs.getInt("currentEP", characterData.baseEP)
@@ -1136,7 +1187,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             val defaultLoot = characterData.defaultLoot
             val defaultLootNames = defaultLoot.map { it.name }
             val otherCharId = if (characterId == "Athania") "Delat" else "Athania"
-            val otherDefaults = CharacterRepository.getCharacter(otherCharId)
+            val otherDefaults = characterRepository.getCharacter(otherCharId)
             val otherLootNames = otherDefaults.defaultLoot.map { it.name }.filter { it !in defaultLootNames }
             val otherTraitNames = otherDefaults.defaultTraits.map { it.name }
 

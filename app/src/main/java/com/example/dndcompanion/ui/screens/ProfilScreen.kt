@@ -33,6 +33,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Edit
 
 @Composable
 fun ProfilScreen(viewModel: CharacterViewModel) {
@@ -59,6 +60,14 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                     )
                 }
 
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = { viewModel.openCharacterEdit() }) {
+                    Icon(
+                        Icons.Default.Edit,
+                        contentDescription = "Charakter bearbeiten",
+                        tint = WaldGold
+                    )
+                }
                 var expanded by remember { mutableStateOf(false) }
                 val accentColor = if (viewModel.characterData.charClass == CharacterClass.RANGER) WaldGold else HexenLila
                 Box {
@@ -90,6 +99,7 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                         )
                     }
                 }
+                } // end inner Row (edit button + dropdown)
             }
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -331,6 +341,10 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
 
             Spacer(modifier = Modifier.height(16.dp))
         }
+    }
+
+    if (viewModel.showCharacterEditDialog) {
+        CharacterEditDialog(viewModel = viewModel)
     }
 
     if (viewModel.showLevelUpDialog) {

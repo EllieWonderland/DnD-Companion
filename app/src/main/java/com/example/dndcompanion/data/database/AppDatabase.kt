@@ -10,22 +10,24 @@ import kotlinx.coroutines.SupervisorJob
 
 @Database(
     entities = [
-        RuleEntity::class, 
-        WeaponEntity::class, 
-        ArmorEntity::class, 
-        ToolEntity::class, 
-        SpeciesEntity::class, 
+        RuleEntity::class,
+        WeaponEntity::class,
+        ArmorEntity::class,
+        ToolEntity::class,
+        SpeciesEntity::class,
         ClassEntity::class,
         FeatureEntity::class,
-        SpellEntity::class
+        SpellEntity::class,
+        CharacterEntity::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 @TypeConverters(StringListConverter::class, CharacterOptionConverters::class)
 abstract class AppDatabase : RoomDatabase() {
-    
+
     abstract fun rulebookDao(): RulebookDao
+    abstract fun characterDao(): CharacterDao
 
     companion object {
         @Volatile

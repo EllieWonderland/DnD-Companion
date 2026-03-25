@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.dndcompanion.data.CharacterDto
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.example.dndcompanion.ui.viewmodel.SpellDto
@@ -20,7 +21,7 @@ class AppDatabaseCallback(
         super.onCreate(db)
         INSTANCE?.let { database ->
             scope.launch(Dispatchers.IO) {
-                populateDatabase(database.rulebookDao(), context)
+                populateDatabase(database.rulebookDao(), database.characterDao(), context)
             }
         }
     }
@@ -29,12 +30,12 @@ class AppDatabaseCallback(
         super.onDestructiveMigration(db)
         INSTANCE?.let { database ->
             scope.launch(Dispatchers.IO) {
-                populateDatabase(database.rulebookDao(), context)
+                populateDatabase(database.rulebookDao(), database.characterDao(), context)
             }
         }
     }
 
-    private suspend fun populateDatabase(dao: RulebookDao, context: Context) {
+    private suspend fun populateDatabase(dao: RulebookDao, characterDao: CharacterDao, context: Context) {
         val gson = Gson()
 
         // 1. Load Rules
@@ -74,6 +75,18 @@ class AppDatabaseCallback(
             dao.insertFeatures(featuresData.features)
         } catch (e: Exception) {
             Log.e("AppDatabaseCallback", "Failed to load merkmale.json", e)
+        }
+
+        // 6. Seed Characters (INSERT OR IGNORE — never overwrites in-app edits)
+        try {
+            val charactersJson = context.assets.open("Rules/characters.json")
+                .bufferedReader().use { it.readText() }
+            val dtos: List<CharacterDto> = gson.fromJson(
+                charactersJson, object : TypeToken<List<CharacterDto>>() {}.type
+            )
+            characterDao.insertIfAbsent(dtos.map { it.toEntity(gson) })
+        } catch (e: Exception) {
+            Log.e("AppDatabaseCallback", "Failed to seed characters.json", e)
         }
 
         // 5. Load Spells
