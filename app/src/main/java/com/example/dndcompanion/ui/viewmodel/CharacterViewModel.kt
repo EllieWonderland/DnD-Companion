@@ -1167,15 +1167,18 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         characterData = characterRepository.getCharacter(characterId)
         prefsManager.switchCharacter(characterId)
 
-        currentEP = prefs.getInt("currentEP", characterData.baseEP)
-        level = prefs.getInt("level", characterData.baseLevel)
-        strength = prefs.getInt("strength", characterData.baseStrength)
-        dexterity = prefs.getInt("dexterity", characterData.baseDexterity)
-        constitution = prefs.getInt("constitution", characterData.baseConstitution)
-        intelligence = prefs.getInt("intelligence", characterData.baseIntelligence)
-        wisdom = prefs.getInt("wisdom", characterData.baseWisdom)
-        charisma = prefs.getInt("charisma", characterData.baseCharisma)
-        maxHp = prefs.getInt("maxHp", characterData.baseMaxHp)
+        // Use maxOf(prefs, jsonBase) so that DM upgrades in characters.json are always picked up,
+        // but in-app increases (level-up dialog, edit dialog) are preserved if they are higher.
+        val jsonBase = characterData  // set above from getCharacter() — always fresh JSON values
+        currentEP = maxOf(prefs.getInt("currentEP", jsonBase.baseEP), jsonBase.baseEP)
+        level = maxOf(prefs.getInt("level", jsonBase.baseLevel), jsonBase.baseLevel)
+        strength = prefs.getInt("strength", jsonBase.baseStrength)
+        dexterity = prefs.getInt("dexterity", jsonBase.baseDexterity)
+        constitution = prefs.getInt("constitution", jsonBase.baseConstitution)
+        intelligence = prefs.getInt("intelligence", jsonBase.baseIntelligence)
+        wisdom = prefs.getInt("wisdom", jsonBase.baseWisdom)
+        charisma = prefs.getInt("charisma", jsonBase.baseCharisma)
+        maxHp = maxOf(prefs.getInt("maxHp", jsonBase.baseMaxHp), jsonBase.baseMaxHp)
         currentHp = prefs.getInt("currentHp", maxHp)
         tempHp = prefs.getInt("${characterId}_tempHp", if (characterId == "Delat") 12 else 0)
         

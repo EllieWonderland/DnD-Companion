@@ -7,6 +7,7 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
+@JvmSuppressWildcards
 interface CharacterDao {
 
     /** Seed-only insert: never overwrites existing in-app edits. */

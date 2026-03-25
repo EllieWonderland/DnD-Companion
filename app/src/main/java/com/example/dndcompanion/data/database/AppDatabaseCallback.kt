@@ -26,12 +26,62 @@ class AppDatabaseCallback(
         }
     }
 
+    override fun onOpen(db: SupportSQLiteDatabase) {
+        super.onOpen(db)
+        INSTANCE?.let { database ->
+            scope.launch(Dispatchers.IO) {
+                syncCharactersFromJson(database.characterDao(), context)
+            }
+        }
+    }
+
     override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
         super.onDestructiveMigration(db)
         INSTANCE?.let { database ->
             scope.launch(Dispatchers.IO) {
                 populateDatabase(database.rulebookDao(), database.characterDao(), context)
             }
+        }
+    }
+
+    /**
+     * Runs on every DB open. Merges characters.json into the DB:
+     * - level / EP / maxHp: MAX(db, json) — DM upgrades propagate, in-app level-ups are kept
+     * - All other base fields: JSON always wins (DM-controlled stat block)
+     */
+    private suspend fun syncCharactersFromJson(characterDao: CharacterDao, context: Context) {
+        val gson = Gson()
+        try {
+            val json = context.assets.open("Rules/characters.json").bufferedReader().use { it.readText() }
+            val dtos: List<CharacterDto> = gson.fromJson(json, object : TypeToken<List<CharacterDto>>() {}.type)
+            for (dto in dtos) {
+                val existing = characterDao.get(dto.id) ?: continue
+                val updated = existing.copy(
+                    baseLevel = maxOf(existing.baseLevel, dto.baseLevel),
+                    baseEP = maxOf(existing.baseEP, dto.baseEP),
+                    baseMaxHp = maxOf(existing.baseMaxHp, dto.baseMaxHp),
+                    baseStrength = dto.baseStrength,
+                    baseDexterity = dto.baseDexterity,
+                    baseConstitution = dto.baseConstitution,
+                    baseIntelligence = dto.baseIntelligence,
+                    baseWisdom = dto.baseWisdom,
+                    baseCharisma = dto.baseCharisma,
+                    baseHitDice = dto.baseHitDice,
+                    baseSpellSlotsLevel1 = dto.baseSpellSlotsLevel1,
+                    baseSpellSlotsLevel2 = dto.baseSpellSlotsLevel2,
+                    baseSpellSlotsLevel3 = dto.baseSpellSlotsLevel3,
+                    speed = dto.speed,
+                    passivePerception = dto.passivePerception,
+                    proficientSkillsJson = gson.toJson(dto.proficientSkills),
+                    defaultLootJson = gson.toJson(dto.defaultLoot),
+                    defaultTraitsJson = gson.toJson(dto.defaultTraits)
+                )
+                if (updated != existing) {
+                    characterDao.save(updated)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("AppDatabaseCallback", "Failed to sync characters from JSON", e)
         }
     }
 
