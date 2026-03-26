@@ -103,7 +103,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     var companionData by mutableStateOf<CompanionDto?>(null)
         private set
     var activeBeastType by mutableStateOf(BeastType.valueOf(prefs.getString("activeBeastType", BeastType.SKY.name) ?: BeastType.SKY.name))
-        private set
+        internal set
 
     init {
         // Keep characterData in sync with DB — picks up in-app edits (level-ups, etc.)
