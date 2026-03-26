@@ -6,7 +6,7 @@
     <!-- Das Premium-Logo zentriert -->
     <item>
         <bitmap
-            android:src="@drawable/icon_d20_premium"
+            android:src="@drawable/dndcompanion_logo"
             android:gravity="center" />
     </item>
 </layer-list>
