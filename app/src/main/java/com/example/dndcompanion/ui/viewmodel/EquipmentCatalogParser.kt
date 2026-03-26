@@ -1,6 +1,7 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import com.example.dndcompanion.data.database.RulebookDao
+import kotlinx.coroutines.flow.first
 
 data class EquipmentCatalogItem(
     val name: String,
@@ -17,16 +18,16 @@ object EquipmentCatalogParser {
     suspend fun loadFromDb(dao: RulebookDao): List<EquipmentCatalogItem> {
         return cache ?: run {
             val items = mutableListOf<EquipmentCatalogItem>()
-            dao.getAllWeaponsList().forEach { w ->
+            dao.getAllWeapons().first().forEach { w ->
                 items.add(EquipmentCatalogItem(w.name, w.weightLb, w.price, mapWeaponCategory(w.category)))
             }
-            dao.getAllArmorList().forEach { a ->
+            dao.getAllArmor().first().forEach { a ->
                 items.add(EquipmentCatalogItem(a.name, a.weightLb, a.price, "Rüstung"))
             }
-            dao.getAllToolsList().forEach { t ->
+            dao.getAllTools().first().forEach { t ->
                 items.add(EquipmentCatalogItem(t.name, t.weightLb ?: 0.0, t.price, "Werkzeug"))
             }
-            dao.getAllGearList().forEach { g ->
+            dao.getAllGear().first().forEach { g ->
                 items.add(EquipmentCatalogItem(g.name, g.weightLb, g.price, "Ausrüstung"))
             }
             items.also { cache = it }
