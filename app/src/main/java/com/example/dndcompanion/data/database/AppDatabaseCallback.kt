@@ -55,7 +55,10 @@ class AppDatabaseCallback(
             val json = context.assets.open("Rules/characters.json").bufferedReader().use { it.readText() }
             val dtos: List<CharacterDto> = gson.fromJson(json, object : TypeToken<List<CharacterDto>>() {}.type)
             for (dto in dtos) {
-                val existing = characterDao.get(dto.id) ?: continue
+                val existing = characterDao.get(dto.id) ?: run {
+                    characterDao.insertIfAbsent(listOf(dto.toEntity(gson)))
+                    null
+                } ?: continue
                 val updated = existing.copy(
                     baseLevel = maxOf(existing.baseLevel, dto.baseLevel),
                     baseEP = maxOf(existing.baseEP, dto.baseEP),
@@ -73,6 +76,7 @@ class AppDatabaseCallback(
                     speed = dto.speed,
                     passivePerception = dto.passivePerception,
                     proficientSkillsJson = gson.toJson(dto.proficientSkills),
+                    expertiseSkillsJson = gson.toJson(dto.expertiseSkills),
                     defaultLootJson = gson.toJson(dto.defaultLoot),
                     defaultTraitsJson = gson.toJson(dto.defaultTraits)
                 )
@@ -104,6 +108,7 @@ class AppDatabaseCallback(
             dao.insertWeapons(equipmentData.weapons)
             dao.insertArmor(equipmentData.armor)
             dao.insertTools(equipmentData.tools)
+            dao.insertGear(equipmentData.gear)
         } catch (e: Exception) {
             Log.e("AppDatabaseCallback", "Failed to load equipment.json", e)
         }
@@ -125,18 +130,6 @@ class AppDatabaseCallback(
             dao.insertFeatures(featuresData.features)
         } catch (e: Exception) {
             Log.e("AppDatabaseCallback", "Failed to load merkmale.json", e)
-        }
-
-        // 6. Seed Characters (INSERT OR IGNORE — never overwrites in-app edits)
-        try {
-            val charactersJson = context.assets.open("Rules/characters.json")
-                .bufferedReader().use { it.readText() }
-            val dtos: List<CharacterDto> = gson.fromJson(
-                charactersJson, object : TypeToken<List<CharacterDto>>() {}.type
-            )
-            characterDao.insertIfAbsent(dtos.map { it.toEntity(gson) })
-        } catch (e: Exception) {
-            Log.e("AppDatabaseCallback", "Failed to seed characters.json", e)
         }
 
         // 5. Load Spells
@@ -175,7 +168,8 @@ class AppDatabaseCallback(
     private data class EquipmentData(
         val weapons: List<WeaponEntity>,
         val armor: List<ArmorEntity>,
-        val tools: List<ToolEntity>
+        val tools: List<ToolEntity>,
+        val gear: List<GearEntity>
     )
 
     private data class CharacterOptionsData(

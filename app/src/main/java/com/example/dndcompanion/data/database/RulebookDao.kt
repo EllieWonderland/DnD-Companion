@@ -22,6 +22,9 @@ interface RulebookDao {
     fun insertTools(tools: List<ToolEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertGear(gear: List<GearEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSpecies(species: List<SpeciesEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -72,6 +75,25 @@ interface RulebookDao {
 
     @Query("SELECT * FROM tools ORDER BY category, name")
     fun getAllTools(): Flow<List<ToolEntity>>
+
+    @Query("SELECT * FROM gear ORDER BY name")
+    fun getAllGear(): Flow<List<GearEntity>>
+
+    @Query("SELECT * FROM gear WHERE name LIKE '%' || :searchQuery || '%'")
+    fun searchGear(searchQuery: String): Flow<List<GearEntity>>
+
+    // Suspend queries for one-shot catalog loading
+    @Query("SELECT * FROM weapons ORDER BY category, name")
+    suspend fun getAllWeaponsList(): List<WeaponEntity>
+
+    @Query("SELECT * FROM armor ORDER BY category, name")
+    suspend fun getAllArmorList(): List<ArmorEntity>
+
+    @Query("SELECT * FROM tools ORDER BY category, name")
+    suspend fun getAllToolsList(): List<ToolEntity>
+
+    @Query("SELECT * FROM gear ORDER BY name")
+    suspend fun getAllGearList(): List<GearEntity>
 
     @Query("SELECT * FROM species ORDER BY name")
     fun getAllSpecies(): Flow<List<SpeciesEntity>>

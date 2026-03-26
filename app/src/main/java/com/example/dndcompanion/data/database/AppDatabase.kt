@@ -18,9 +18,10 @@ import kotlinx.coroutines.SupervisorJob
         ClassEntity::class,
         FeatureEntity::class,
         SpellEntity::class,
-        CharacterEntity::class
+        CharacterEntity::class,
+        GearEntity::class
     ],
-    version = 6,
+    version = 8,
     exportSchema = false
 )
 @TypeConverters(StringListConverter::class, CharacterOptionConverters::class)

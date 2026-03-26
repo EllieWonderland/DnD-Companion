@@ -31,6 +31,10 @@
       "Stärke-Rettungswurf",
       "Geschicklichkeit-Rettungswurf"
     ],
+    "expertiseSkills": [
+      "Heimlichkeit",
+      "Wahrnehmung"
+    ],
     "defaultLoot": [
       { "name": "Beschlagene Lederrüstung", "amount": 1, "weight": 6.5, "category": "Rüstung & Waffen" },
       { "name": "Peitsche", "amount": 2, "weight": 1.5, "category": "Rüstung & Waffen" },
@@ -101,6 +105,7 @@
       "Weisheit-Rettungswurf",
       "Charisma-Rettungswurf"
     ],
+    "expertiseSkills": [],
     "defaultLoot": [
       { "name": "Flöte", "amount": 1, "weight": 0.5, "category": "Ausrüstung" },
       { "name": "Reisekleidung", "amount": 1, "weight": 2.0, "category": "Ausrüstung" },

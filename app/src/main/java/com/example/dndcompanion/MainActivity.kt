@@ -221,7 +221,7 @@ fun DnDApp(
                     if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER || viewModel.activeCharacterId == "Delat") {
                         CompanionScreen(viewModel)
                     } else {
-                        ProfilScreen(viewModel)
+                        ProfilScreen(viewModel, combatViewModel)
                     }
                 }
                 2 -> HelpScreen(viewModel, onNavigateToRulebook = { chapter, search -> 
@@ -333,7 +333,7 @@ fun AthaniaScreen(
             modifier = Modifier.fillMaxSize()
         ) { page ->
             when (tabs[page]) {
-                AthaniaTab.Profil -> ProfilScreen(viewModel)
+                AthaniaTab.Profil -> ProfilScreen(viewModel, combatViewModel)
                 AthaniaTab.Kampf -> CombatScreen(
                     viewModel = viewModel,
                     combatVm = combatViewModel,
@@ -351,7 +351,7 @@ fun AthaniaScreen(
                 )
                 AthaniaTab.Zauber -> ZauberScreen(viewModel, spellViewModel, combatViewModel)
                 AthaniaTab.Rucksack -> RucksackScreen(viewModel, inventoryViewModel, groupViewModel)
-                else -> ProfilScreen(viewModel)
+                else -> ProfilScreen(viewModel, combatViewModel)
             }
         }
     }

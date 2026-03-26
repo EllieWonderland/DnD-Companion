@@ -1,7 +1,6 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.getValue
@@ -10,7 +9,6 @@ import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dndcompanion.data.CharacterClass
-import com.google.gson.Gson
 import kotlinx.coroutines.launch
 
 class CombatViewModel(
@@ -20,14 +18,12 @@ class CombatViewModel(
     val inventoryVm: InventoryViewModel
 ) : AndroidViewModel(application) {
 
-    private val gson = Gson()
-
     private val prefs get() = characterVm.prefsManager.prefs
 
     // --- LEBENSPUNKTE ---
-    var maxHp by mutableIntStateOf(prefs.getInt("maxHp", characterVm.characterData.baseMaxHp))
+    var maxHp by mutableIntStateOf(characterVm.maxHp)
         private set
-    var currentHp by mutableIntStateOf(prefs.getInt("currentHp", prefs.getInt("maxHp", characterVm.characterData.baseMaxHp)))
+    var currentHp by mutableIntStateOf(prefs.getInt("currentHp", characterVm.maxHp))
         private set
     var tempHp by mutableIntStateOf(prefs.getInt("tempHp", 0))
         private set
@@ -81,8 +77,7 @@ class CombatViewModel(
         )
     )
 
-    var companionData by mutableStateOf<CompanionDto?>(null)
-        private set
+    val companionData: CompanionDto? get() = characterVm.companionData
 
     init {
         viewModelScope.launch {
@@ -94,7 +89,7 @@ class CombatViewModel(
     }
 
     private fun reloadForCharacter(id: String) {
-        maxHp = prefs.getInt("maxHp", characterVm.characterData.baseMaxHp)
+        maxHp = characterVm.maxHp
         currentHp = prefs.getInt("currentHp", maxHp)
         tempHp = prefs.getInt("${id}_tempHp", if (id == "Delat") 12 else 0)
         hitDice = prefs.getInt("hitDice", characterVm.level).coerceAtMost(characterVm.level)
@@ -398,29 +393,8 @@ class CombatViewModel(
 
     // --- BEGLEITER ---
     fun loadCompanion() {
-        viewModelScope.launch {
-            try {
-                val context = getApplication<Application>()
-                if (characterVm.characterData.charClass == CharacterClass.RANGER) {
-                    val jsonString = context.assets.open("Rules/urtier.json").bufferedReader().use { it.readText() }
-                    val fileDto: UrtierFileDto = gson.fromJson(jsonString, UrtierFileDto::class.java)
-                    val targetName = when (activeBeastType) {
-                        BeastType.LAND -> "Urtier des Landes"
-                        BeastType.SKY -> "Urtier des Himmels"
-                        BeastType.SEA -> "Urtier des Meeres"
-                    }
-                    companionData = fileDto.urtiere.find { it.name == targetName }
-                } else if (characterVm.activeCharacterId == "Delat") {
-                    val jsonString = context.assets.open("Rules/vertrauter.json").bufferedReader().use { it.readText() }
-                    companionData = gson.fromJson(jsonString, CompanionDto::class.java)
-                } else {
-                    companionData = null
-                }
-            } catch (e: Exception) {
-                Log.e("CombatVM", "Error loading companion", e)
-                companionData = null
-            }
-        }
+        characterVm.activeBeastType = activeBeastType
+        characterVm.loadCompanion()
     }
 
     fun toggleBeastType(type: BeastType) {

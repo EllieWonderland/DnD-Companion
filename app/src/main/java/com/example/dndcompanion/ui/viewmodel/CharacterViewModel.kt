@@ -99,7 +99,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val allSpells = mutableStateListOf<Spell>()
     val globalFeatures = mutableStateListOf<Feature>()
     val globalSpellbook = MutableStateFlow<List<SpellEntity>>(emptyList())
-    val allEquipment = mutableStateListOf<EquipmentDefinition>()
     // companionData and activeBeastType also accessed/set by loadCompanion() via Main.immediate coroutine
     var companionData by mutableStateOf<CompanionDto?>(null)
         private set
@@ -122,7 +121,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         loadFaqs()
         loadSpells()
         loadGlobalFeatures()
-        loadEquipment()
         loadTraits()
         loadBooks()
         loadCompanion()
@@ -133,6 +131,14 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 globalSpellbook.value = spells
             }
         }
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val items = EquipmentCatalogParser.loadFromDb(database.rulebookDao())
+            withContext(Dispatchers.Main) {
+                if (equipmentCatalog.isEmpty()) equipmentCatalog.addAll(items)
+            }
+        }
+
     }
 
     fun searchRulebook(query: String) {
@@ -428,6 +434,20 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    // Runs once per character prefs file; forces maxHp from JSON to clear stale/swapped prefs.
+    private fun applySyncV3() {
+        val key = "isSyncedStats_2026_03_25_v3"
+        if (!prefs.getBoolean(key, false)) {
+            maxHp = characterData.baseMaxHp
+            currentHp = currentHp.coerceAtMost(maxHp)
+            prefs.edit {
+                putBoolean(key, true)
+                putInt("maxHp", maxHp)
+                putInt("currentHp", currentHp)
+            }
+        }
+    }
+
     private fun saveBaseStats() {
         prefs.edit {
             putInt("strength", strength)
@@ -471,28 +491,23 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             "Täuschen", "Einschüchtern", "Auftreten", "Überzeugen" -> chaMod
             else -> 0
         }
-        
+
         var totalBonus = baseMod
-        
-        // Proficiencies
-        if (characterData.id == "Athania") {
-            if (skillName in listOf("Heimlichkeit", "Wahrnehmung", "Überlebenskunst", "Naturkunde", "Mit Tieren umgehen")) {
+
+        // "Überlebenskunst" in code corresponds to "Überleben" in JSON.
+        val jsonSkillName = if (skillName == "Überlebenskunst") "Überleben" else skillName
+        if (characterData.proficientSkills.contains(jsonSkillName)) {
+            totalBonus += proficiencyBonus
+            if (characterData.expertiseSkills.contains(skillName)) {
                 totalBonus += proficiencyBonus
-                // Expertise for Athania
-                if (skillName == "Heimlichkeit" || skillName == "Wahrnehmung") {
-                    totalBonus += proficiencyBonus
-                }
-            }
-        } else if (characterData.id == "Delat") {
-            if (skillName in listOf("Arkane Kunde", "Täuschen", "Einschüchtern", "Motiv erkennen")) {
-                totalBonus += proficiencyBonus
-            }
-            // Gloves of Arcana +2
-            if (skillName == "Arkane Kunde" && customLoot.any { it.name.contains("Handschuhe der arkanen Kunde", ignoreCase = true) }) {
-                totalBonus += 2
             }
         }
-        
+
+        // Gloves of Arcana +2
+        if (skillName == "Arkane Kunde" && customLoot.any { it.name.contains("Handschuhe der arkanen Kunde", ignoreCase = true) }) {
+            totalBonus += 2
+        }
+
         return totalBonus
     }
 
@@ -508,6 +523,10 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         private set
     var hitDice by mutableIntStateOf(prefs.getInt("hitDice", characterData.baseHitDice))
         private set
+
+    // HP properties are now initialized — run one-time correction for the initial character.
+    // (loadProfile has an early-return guard that skips this character, so it must run here.)
+    init { applySyncV3() }
 
     var deathSaveSuccesses by mutableIntStateOf(prefs.getInt("deathSaveSuccesses", 0))
         private set
@@ -839,9 +858,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     // --- EQUIPMENT-KATALOG ---
-    val equipmentCatalog: List<EquipmentCatalogItem> by lazy {
-        EquipmentCatalogParser.loadFromAssets(getApplication())
-    }
+    val equipmentCatalog = mutableStateListOf<EquipmentCatalogItem>()
 
     // --- GEWICHTS-BERECHNUNG (in kg) ---
     val maxWeight: Double
@@ -1163,7 +1180,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     fun loadProfile(characterId: String) {
         if (activeCharacterId == characterId) return
         activeCharacterId = characterId
-        _activeCharacterIdFlow.value = characterId
         characterData = characterRepository.getCharacter(characterId)
         prefsManager.switchCharacter(characterId)
 
@@ -1279,7 +1295,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 if (repaired) saveTraits()
             }
             if (characterId == "Delat") {
-                level = 4
                 if (coinsSM < 80) coinsSM = 80
                 if (coinsGM < 19) coinsGM = 19
                 if (tempHp < 12) tempHp = 12
@@ -1289,6 +1304,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             saveBaseStats()
         }
         // --- END SYNC ---
+
+        applySyncV3()
+
         hitDice = prefs.getInt("hitDice", characterData.baseHitDice)
         
         deathSaveSuccesses = prefs.getInt("deathSaveSuccesses", 0)
@@ -1839,83 +1857,6 @@ private val model25Flash = GenerativeModel(
             val levelMatch = level >= feature.levelReq
             
             classMatch && raceMatch && levelMatch
-        }
-    }
-
-    private fun loadEquipment() {
-        viewModelScope.launch(kotlinx.coroutines.Dispatchers.IO) {
-            try {
-                val context = getApplication<Application>()
-                val text = context.assets.open("Rules/Handbuch/Kapitel/kapitel6_equipment.md").bufferedReader().use { it.readText() }
-                
-                val equipmentList = mutableListOf<EquipmentDefinition>()
-                var currentCategory = "Sonstiges"
-                
-                val lines = text.lines()
-                for (line in lines) {
-                    val trimmed = line.trim()
-                    
-                    // Kategorienerkennung
-                    if (trimmed.startsWith("## 2.") || trimmed.startsWith("## 3.")) {
-                        currentCategory = "Rüstung & Waffen"
-                    } else if (trimmed.startsWith("## 4.")) {
-                        currentCategory = "Werkzeug"
-                    } else if (trimmed.startsWith("## 5.")) {
-                        currentCategory = "Ausrüstung"
-                    } else if (trimmed.startsWith("## 6.")) {
-                        currentCategory = "Reittiere & Fahrzeuge"
-                    } else if (trimmed.startsWith("## 7.")) {
-                        currentCategory = "Dienstleistungen"
-                    }
-
-                    // Tabellenzeilen parsen (ignorieren von Titel- und Trennzeilen)
-                    if (trimmed.startsWith("|") && !trimmed.startsWith("| :---") && !trimmed.contains("Waffe (Name)") && !trimmed.contains("Rüstungstyp") && !trimmed.contains("Werkzeug |") && !trimmed.contains("Gegenstand |") && !trimmed.contains("Tier (Animal)") && !trimmed.contains("Schiffstyp") && !trimmed.contains("Qualität |")) {
-                        
-                        // Überschrift innerhalb einer Tabelle (z.B. "**Leichte Rüstung**") überspringen
-                        if (trimmed.startsWith("| **") && trimmed.indexOf("|", startIndex = 2) < 0) continue
-
-                        val parts = trimmed.split("|").map { it.trim() }
-                        // Die Split-Methode erzeugt ein leeres Element am Anfang und Ende, wenn die Zeile mit | beginnt/endet
-                        if (parts.size >= 4) { 
-                            val rawName = parts[1].replace("**", "") // Entferne Fettmarkierungen
-                            var name = rawName
-                            
-                            // Bereinige den Namen (falls englischer Name in Klammern steht, nimm den deutschen Teil)
-                            val bracketIndex = rawName.indexOf("(")
-                            if (bracketIndex > 0) {
-                                name = rawName.substring(0, bracketIndex).trim()
-                            }
-                            
-                            if (name.isNotEmpty() && !name.startsWith("**")) {
-                                // Gewicht extrahieren. Es ist typischerweise in der vorletzten Spalte (bei Waffen/Rüstungen/Ausrüstung)
-                                // Wir suchen in allen Spalten nach
-                                var weight = 0.0
-                                for (part in parts) {
-                                    val cleanPart = part.lowercase().trim()
-                                    if (cleanPart.endsWith("kg")) {
-                                        val weightStr = cleanPart.replace("kg", "").trim().replace(",", ".")
-                                        weight = weightStr.toDoubleOrNull() ?: 0.0
-                                        break
-                                    } else if (cleanPart.contains("tonne")) {
-                                        val weightStr = cleanPart.replace("tonnen", "").replace("tonne", "").trim().replace(",", ".")
-                                        weight = (weightStr.toDoubleOrNull() ?: 0.0) * 1000.0 // 1 Tonne = 1000 kg (in Metric context)
-                                        break
-                                    }
-                                }
-                                
-                                equipmentList.add(EquipmentDefinition(name, weight, currentCategory))
-                            }
-                        }
-                    }
-                }
-                
-                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-                    allEquipment.clear()
-                    allEquipment.addAll(equipmentList)
-                }
-            } catch (e: Exception) {
-                Log.e("CharacterVM", "Error loading equipment catalog", e)
-            }
         }
     }
 

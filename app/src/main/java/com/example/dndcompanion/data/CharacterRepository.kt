@@ -38,6 +38,7 @@ data class CharacterDto(
     val baseSpellSlotsLevel2: Int,
     val baseSpellSlotsLevel3: Int,
     val proficientSkills: List<String>,
+    val expertiseSkills: List<String> = emptyList(),
     val defaultLoot: List<InventoryItem>,
     val defaultTraits: List<TraitItem>
 ) {
@@ -64,6 +65,7 @@ data class CharacterDto(
         baseSpellSlotsLevel2 = baseSpellSlotsLevel2,
         baseSpellSlotsLevel3 = baseSpellSlotsLevel3,
         proficientSkills = proficientSkills,
+        expertiseSkills = expertiseSkills,
         defaultLoot = defaultLoot,
         defaultTraits = defaultTraits
     )

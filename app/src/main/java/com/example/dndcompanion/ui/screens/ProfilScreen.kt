@@ -26,6 +26,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+import com.example.dndcompanion.ui.viewmodel.CombatViewModel
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.data.CharacterClass
 import com.example.dndcompanion.R
@@ -36,7 +37,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 
 @Composable
-fun ProfilScreen(viewModel: CharacterViewModel) {
+fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
     var epInput by remember { mutableStateOf("") }
 
     PergamentBackground {
@@ -150,19 +151,19 @@ fun ProfilScreen(viewModel: CharacterViewModel) {
                         }
                         Column(horizontalAlignment = Alignment.End) {
                             val hpProgress by animateFloatAsState(
-                                targetValue = if (viewModel.maxHp > 0) viewModel.currentHp.toFloat() / viewModel.maxHp.toFloat() else 0f,
+                                targetValue = if (combatVm.maxHp > 0) combatVm.currentHp.toFloat() / combatVm.maxHp.toFloat() else 0f,
                                 animationSpec = tween(durationMillis = 500),
                                 label = "HP Animation Profile"
                             )
 
                             Text(
-                                "HP: ${viewModel.currentHp} / ${viewModel.maxHp}",
+                                "HP: ${combatVm.currentHp} / ${combatVm.maxHp}",
                                 style = GrenzeGotischSmall,
                                 color = OchsenblutRot
                             )
-                            if (viewModel.tempHp > 0) {
+                            if (combatVm.tempHp > 0) {
                                 Text(
-                                    "+${viewModel.tempHp} Temp HP",
+                                    "+${combatVm.tempHp} Temp HP",
                                     style = GrenzeGotischSmall.copy(fontSize = 16.sp),
                                     color = TempHPBlau
                                 )

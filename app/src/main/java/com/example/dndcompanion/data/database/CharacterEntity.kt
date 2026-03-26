@@ -34,6 +34,7 @@ data class CharacterEntity(
     val baseSpellSlotsLevel2: Int,
     val baseSpellSlotsLevel3: Int,
     val proficientSkillsJson: String,
+    val expertiseSkillsJson: String,
     val defaultLootJson: String,
     val defaultTraitsJson: String
 )
@@ -61,6 +62,7 @@ fun CharacterEntity.toCharacterData(gson: Gson): CharacterData = CharacterData(
     baseSpellSlotsLevel2 = baseSpellSlotsLevel2,
     baseSpellSlotsLevel3 = baseSpellSlotsLevel3,
     proficientSkills = gson.fromJson(proficientSkillsJson, object : TypeToken<List<String>>() {}.type),
+    expertiseSkills = gson.fromJson(expertiseSkillsJson, object : TypeToken<List<String>>() {}.type),
     defaultLoot = gson.fromJson(defaultLootJson, object : TypeToken<List<InventoryItem>>() {}.type),
     defaultTraits = gson.fromJson(defaultTraitsJson, object : TypeToken<List<TraitItem>>() {}.type)
 )
@@ -88,6 +90,7 @@ fun CharacterData.toEntity(gson: Gson): CharacterEntity = CharacterEntity(
     baseSpellSlotsLevel2 = baseSpellSlotsLevel2,
     baseSpellSlotsLevel3 = baseSpellSlotsLevel3,
     proficientSkillsJson = gson.toJson(proficientSkills),
+    expertiseSkillsJson = gson.toJson(expertiseSkills),
     defaultLootJson = gson.toJson(defaultLoot),
     defaultTraitsJson = gson.toJson(defaultTraits)
 )
@@ -116,6 +119,7 @@ fun CharacterDto.toEntity(gson: Gson): CharacterEntity = CharacterEntity(
     baseSpellSlotsLevel2 = baseSpellSlotsLevel2,
     baseSpellSlotsLevel3 = baseSpellSlotsLevel3,
     proficientSkillsJson = gson.toJson(proficientSkills),
+    expertiseSkillsJson = gson.toJson(expertiseSkills),
     defaultLootJson = gson.toJson(defaultLoot),
     defaultTraitsJson = gson.toJson(defaultTraits)
 )

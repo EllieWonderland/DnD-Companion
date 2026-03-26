@@ -3,7 +3,6 @@ package com.example.dndcompanion.ui.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.getValue
@@ -14,8 +13,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.dndcompanion.data.DndCalculations
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import com.example.dndcompanion.data.database.AppDatabase
 
 class InventoryViewModel(
     application: Application,
@@ -58,11 +59,7 @@ class InventoryViewModel(
         private set
 
     // --- EQUIPMENT-KATALOG ---
-    val equipmentCatalog: List<EquipmentCatalogItem> by lazy {
-        EquipmentCatalogParser.loadFromAssets(getApplication())
-    }
-
-    val allEquipment = mutableStateListOf<EquipmentDefinition>()
+    val equipmentCatalog = mutableStateListOf<EquipmentCatalogItem>()
 
     // --- ABGELEITETE EIGENSCHAFTEN ---
     val maxWeight: Double get() = DndCalculations.maxWeightKg(characterVm.strength)
@@ -105,7 +102,13 @@ class InventoryViewModel(
             }
         }
         loadLoot()
-        loadEquipment()
+        viewModelScope.launch(Dispatchers.IO) {
+            val dao = AppDatabase.getDatabase(getApplication()).rulebookDao()
+            val items = EquipmentCatalogParser.loadFromDb(dao)
+            withContext(Dispatchers.Main) {
+                if (equipmentCatalog.isEmpty()) equipmentCatalog.addAll(items)
+            }
+        }
     }
 
     private fun reloadForCharacter(id: String) {
@@ -296,72 +299,4 @@ class InventoryViewModel(
         }
     }
 
-    // --- EQUIPMENT LADEN ---
-    private fun loadEquipment() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val context = getApplication<Application>()
-                val text = context.assets.open("Rules/Handbuch/Kapitel/kapitel6_equipment.md").bufferedReader().use { it.readText() }
-
-                val equipmentList = mutableListOf<EquipmentDefinition>()
-                var currentCategory = "Sonstiges"
-
-                val lines = text.lines()
-                for (line in lines) {
-                    val trimmed = line.trim()
-
-                    if (trimmed.startsWith("## 2.") || trimmed.startsWith("## 3.")) {
-                        currentCategory = "Rüstung & Waffen"
-                    } else if (trimmed.startsWith("## 4.")) {
-                        currentCategory = "Werkzeug"
-                    } else if (trimmed.startsWith("## 5.")) {
-                        currentCategory = "Ausrüstung"
-                    } else if (trimmed.startsWith("## 6.")) {
-                        currentCategory = "Reittiere & Fahrzeuge"
-                    } else if (trimmed.startsWith("## 7.")) {
-                        currentCategory = "Dienstleistungen"
-                    }
-
-                    if (trimmed.startsWith("|") && !trimmed.startsWith("| :---") && !trimmed.contains("Waffe (Name)") && !trimmed.contains("Rüstungstyp") && !trimmed.contains("Werkzeug |") && !trimmed.contains("Gegenstand |") && !trimmed.contains("Tier (Animal)") && !trimmed.contains("Schiffstyp") && !trimmed.contains("Qualität |")) {
-                        if (trimmed.startsWith("| **") && trimmed.indexOf("|", startIndex = 2) < 0) continue
-
-                        val parts = trimmed.split("|").map { it.trim() }
-                        if (parts.size >= 4) {
-                            val rawName = parts[1].replace("**", "")
-                            var name = rawName
-
-                            val bracketIndex = rawName.indexOf("(")
-                            if (bracketIndex > 0) {
-                                name = rawName.substring(0, bracketIndex).trim()
-                            }
-
-                            if (name.isNotEmpty() && !name.startsWith("**")) {
-                                var weight = 0.0
-                                for (part in parts) {
-                                    val cleanPart = part.lowercase().trim()
-                                    if (cleanPart.endsWith("kg")) {
-                                        val weightStr = cleanPart.replace("kg", "").trim().replace(",", ".")
-                                        weight = weightStr.toDoubleOrNull() ?: 0.0
-                                        break
-                                    } else if (cleanPart.contains("tonne")) {
-                                        val weightStr = cleanPart.replace("tonnen", "").replace("tonne", "").trim().replace(",", ".")
-                                        weight = (weightStr.toDoubleOrNull() ?: 0.0) * 1000.0
-                                        break
-                                    }
-                                }
-                                equipmentList.add(EquipmentDefinition(name, weight, currentCategory))
-                            }
-                        }
-                    }
-                }
-
-                kotlinx.coroutines.withContext(Dispatchers.Main) {
-                    allEquipment.clear()
-                    allEquipment.addAll(equipmentList)
-                }
-            } catch (e: Exception) {
-                Log.e("InventoryVM", "Error loading equipment catalog", e)
-            }
-        }
-    }
 }

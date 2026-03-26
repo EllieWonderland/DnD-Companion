@@ -31,6 +31,7 @@ data class CharacterData(
     val baseSpellSlotsLevel2: Int,
     val baseSpellSlotsLevel3: Int,
     val proficientSkills: List<String>,
+    val expertiseSkills: List<String>,
     val defaultLoot: List<InventoryItem>,
     val defaultTraits: List<TraitItem>
 )

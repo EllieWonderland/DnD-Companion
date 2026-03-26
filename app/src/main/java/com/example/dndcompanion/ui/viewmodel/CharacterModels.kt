@@ -101,12 +101,6 @@ enum class ActiveWeapon {
     SPEER_PAKT
 }
 
-data class EquipmentDefinition(
-    val name: String,
-    val weight: Double,
-    val category: String
-)
-
 enum class BeastType {
     LAND,
     SKY,

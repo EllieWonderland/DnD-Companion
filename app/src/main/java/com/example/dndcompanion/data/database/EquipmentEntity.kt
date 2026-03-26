@@ -37,3 +37,11 @@ data class ToolEntity(
     val weightLb: Double?,
     val price: String
 )
+
+@Entity(tableName = "gear")
+data class GearEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val weightLb: Double,
+    val price: String
+)
