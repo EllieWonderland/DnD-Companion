@@ -84,16 +84,16 @@ interface RulebookDao {
 
     // Suspend queries for one-shot catalog loading
     @Query("SELECT * FROM weapons ORDER BY category, name")
-    suspend fun getAllWeaponsList(): List<WeaponEntity>
+    suspend fun getAllWeaponsList(): List<@JvmSuppressWildcards WeaponEntity>
 
     @Query("SELECT * FROM armor ORDER BY category, name")
-    suspend fun getAllArmorList(): List<ArmorEntity>
+    suspend fun getAllArmorList(): List<@JvmSuppressWildcards ArmorEntity>
 
     @Query("SELECT * FROM tools ORDER BY category, name")
-    suspend fun getAllToolsList(): List<ToolEntity>
+    suspend fun getAllToolsList(): List<@JvmSuppressWildcards ToolEntity>
 
     @Query("SELECT * FROM gear ORDER BY name")
-    suspend fun getAllGearList(): List<GearEntity>
+    suspend fun getAllGearList(): List<@JvmSuppressWildcards GearEntity>
 
     @Query("SELECT * FROM species ORDER BY name")
     fun getAllSpecies(): Flow<List<SpeciesEntity>>
