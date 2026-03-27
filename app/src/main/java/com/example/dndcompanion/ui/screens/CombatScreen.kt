@@ -475,7 +475,7 @@ fun CombatScreen(
                         Switch(
                             checked = combatVm.isMageArmorActive,
                             onCheckedChange = { combatVm.toggleMageArmor(it) },
-                            colors = SwitchDefaults.colors(checkedThumbColor = HexenLila, checkedTrackColor = HexenLila.copy(alpha = 0.5f))
+                            colors = SwitchDefaults.colors(checkedThumbColor = accentColor, checkedTrackColor = accentColor.copy(alpha = 0.5f))
                         )
                     }
                 }
