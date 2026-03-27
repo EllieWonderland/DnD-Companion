@@ -96,7 +96,7 @@ fun ZauberScreen(
                             combatVm.attemptLongRest()
                             if (!combatVm.showRestWarningDialog) showLongRestDialog = true
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White),
+                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = PergamentHell),
                         modifier = Modifier.weight(1f).fillMaxHeight(),
                         contentPadding = PaddingValues(0.dp),
                         shape = RoundedCornerShape(8.dp)
@@ -114,7 +114,7 @@ fun ZauberScreen(
                 colors = CardDefaults.cardColors(containerColor = WaldgruenDunkel)
             ) {
                 Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
-                    Text("Kostenlose Zauber (Talente & Gegenstände)", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    Text("Kostenlose Zauber (Talente & Gegenstände)", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(8.dp))
 
                     val freeFeatures = viewModel.customTraits.filter { trait ->
@@ -185,17 +185,17 @@ fun ZauberScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column {
-                            Text("Zauberplätze Grad 1", color = Color.White, fontWeight = FontWeight.Bold)
-                            Text("Vielseitige Waldläufer-Magie", color = Color.White, fontSize = 14.sp)
+                            Text("Zauberplätze Grad 1", color = PergamentHell, fontWeight = FontWeight.Bold)
+                            Text("Vielseitige Waldläufer-Magie", color = PergamentHell, fontSize = 14.sp)
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("${spellVm.spellSlotsLevel1} / 3", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                            Text("${spellVm.spellSlotsLevel1} / 3", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                             Button(
                                 onClick = { spellVm.useSpellSlotLevel1() },
                                 enabled = spellVm.spellSlotsLevel1 > 0,
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
-                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White,
+                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else PergamentHell,
                                     disabledContainerColor = EisenGrau
                                 )
                             ) {
@@ -235,11 +235,11 @@ fun ZauberScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column {
-                                Text("Zauberplätze Grad 2", color = Color.White, fontWeight = FontWeight.Bold)
-                                Text("Fortgeschrittene Naturkräfte", color = Color.White, fontSize = 14.sp)
+                                Text("Zauberplätze Grad 2", color = PergamentHell, fontWeight = FontWeight.Bold)
+                                Text("Fortgeschrittene Naturkräfte", color = PergamentHell, fontSize = 14.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("${spellVm.spellSlotsLevel2} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                                Text("${spellVm.spellSlotsLevel2} / 2", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                                 Button(
                                     onClick = { spellVm.useSpellSlotLevel2() },
                                     enabled = spellVm.spellSlotsLevel2 > 0,
@@ -268,11 +268,11 @@ fun ZauberScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column {
-                                Text("Zauberplätze Grad 3", color = Color.White, fontWeight = FontWeight.Bold)
-                                Text("Mächtige Waldläufer-Künste", color = Color.White, fontSize = 14.sp)
+                                Text("Zauberplätze Grad 3", color = PergamentHell, fontWeight = FontWeight.Bold)
+                                Text("Mächtige Waldläufer-Künste", color = PergamentHell, fontSize = 14.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("${spellVm.spellSlotsLevel3} / 2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                                Text("${spellVm.spellSlotsLevel3} / 2", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                                 Button(
                                     onClick = { spellVm.useSpellSlotLevel3() },
                                     enabled = spellVm.spellSlotsLevel3 > 0,
@@ -304,11 +304,11 @@ fun ZauberScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column {
-                                Text("Paktmagie (Level 2)", color = Color.White, fontWeight = FontWeight.Bold)
-                                Text("Slots erholen sich bei kurzer Rast", color = Color.White, fontSize = 14.sp)
+                                Text("Paktmagie (Level 2)", color = PergamentHell, fontWeight = FontWeight.Bold)
+                                Text("Slots erholen sich bei kurzer Rast", color = PergamentHell, fontSize = 14.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("$currentSlotsLevel2 / $maxSlotsLevel2", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                                Text("$currentSlotsLevel2 / $maxSlotsLevel2", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                                 Button(
                                     onClick = { spellVm.useSpellSlotLevel2() },
                                     enabled = currentSlotsLevel2 > 0,
@@ -335,7 +335,7 @@ fun ZauberScreen(
 
                             Button(
                                 onClick = { spellVm.applyMagicalCunning() },
-                                colors = ButtonDefaults.buttonColors(containerColor = HexenLila, contentColor = Color.White)
+                                colors = ButtonDefaults.buttonColors(containerColor = HexenLila, contentColor = PergamentHell)
                             ) {
                                 Text("Magische Rafinesse", color = PergamentHell, fontSize = 12.sp)
                             }
@@ -346,14 +346,14 @@ fun ZauberScreen(
                         Button(
                             onClick = { combatVm.applyFalseLife() },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White)
+                            colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = PergamentHell)
                         ) {
                             Text("Unholde Vitalität (12 Temp HP)", fontSize = 12.sp)
                         }
 
                         // --- BESONDERE ZAUBER (TALENTE & ANRUFUNGEN) ---
                         Spacer(modifier = Modifier.height(16.dp))
-                        Text("Besondere Zauber (Talente)", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        Text("Besondere Zauber (Talente)", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                         Spacer(modifier = Modifier.height(8.dp))
 
                         // Segnen
@@ -363,10 +363,10 @@ fun ZauberScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Segnen", color = Color.White, fontSize = 14.sp)
-                                Text("Talent: Eingeweihter", color = Color.White.copy(alpha = 0.75f), fontSize = 13.sp)
+                                Text("Segnen", color = PergamentHell, fontSize = 14.sp)
+                                Text("Talent: Eingeweihter", color = PergamentHell.copy(alpha = 0.75f), fontSize = 13.sp)
                             }
-                            Text("${if (spellVm.freeBlessUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
+                            Text("${if (spellVm.freeBlessUsed) 0 else 1} / 1", color = PergamentHell, modifier = Modifier.padding(horizontal = 8.dp))
                             Button(
                                 onClick = { spellVm.useFreeBless() },
                                 enabled = !spellVm.freeBlessUsed,
@@ -385,10 +385,10 @@ fun ZauberScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Nebelschritt", color = Color.White, fontSize = 14.sp)
-                                Text("Talent: Feenberührt", color = Color.White.copy(alpha = 0.75f), fontSize = 13.sp)
+                                Text("Nebelschritt", color = PergamentHell, fontSize = 14.sp)
+                                Text("Talent: Feenberührt", color = PergamentHell.copy(alpha = 0.75f), fontSize = 13.sp)
                             }
-                            Text("${if (spellVm.freeMistyStepUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
+                            Text("${if (spellVm.freeMistyStepUsed) 0 else 1} / 1", color = PergamentHell, modifier = Modifier.padding(horizontal = 8.dp))
                             Button(
                                 onClick = { spellVm.useFreeMistyStep() },
                                 enabled = !spellVm.freeMistyStepUsed,
@@ -407,10 +407,10 @@ fun ZauberScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("Magierrüstung", color = Color.White, fontSize = 14.sp)
-                                Text("Talent: Eingeweihter", color = Color.White.copy(alpha = 0.75f), fontSize = 13.sp)
+                                Text("Magierrüstung", color = PergamentHell, fontSize = 14.sp)
+                                Text("Talent: Eingeweihter", color = PergamentHell.copy(alpha = 0.75f), fontSize = 13.sp)
                             }
-                            Text("${if (spellVm.freeMageArmorUsed) 0 else 1} / 1", color = Color.White, modifier = Modifier.padding(horizontal = 8.dp))
+                            Text("${if (spellVm.freeMageArmorUsed) 0 else 1} / 1", color = PergamentHell, modifier = Modifier.padding(horizontal = 8.dp))
                             Button(
                                 onClick = {
                                     spellVm.useFreeMageArmor()
@@ -532,7 +532,7 @@ fun ZauberScreen(
                                 hitDiceToSpend = 1
                             }
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White)
+                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = PergamentHell)
                     ) {
                         Text("Heilen")
                     }
@@ -557,7 +557,7 @@ fun ZauberScreen(
                             showLongRestDialog = false
                             showSpellbookEditDialog = true
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White)
+                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = PergamentHell)
                     ) {
                         Text("Ja")
                     }
@@ -586,7 +586,7 @@ fun ZauberScreen(
                             viewModel.forceLongRestWithoutResources() 
                             showLongRestDialog = true
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White)
+                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = PergamentHell)
                     ) {
                         Text("Trotzdem Rasten", fontFamily = Almendra)
                     }

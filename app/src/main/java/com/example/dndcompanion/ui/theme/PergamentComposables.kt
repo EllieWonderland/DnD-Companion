@@ -109,7 +109,7 @@ fun SteinCard(
 @Composable
 fun MetallButtonColors() = androidx.compose.material3.ButtonDefaults.buttonColors(
     containerColor = Bronze,
-    contentColor = Color.White,
+    contentColor = PergamentHell,
     disabledContainerColor = EisenGrau,
-    disabledContentColor = Color.White.copy(alpha = 0.6f)
+    disabledContentColor = PergamentHell.copy(alpha = 0.6f)
 )

@@ -56,10 +56,10 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, 
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = PergamentHell)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Gruppen-Chat", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.weight(1f))
+                Text("Gruppen-Chat", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = PergamentHell, modifier = Modifier.weight(1f))
 
                 var showDeleteDialog by remember { mutableStateOf(false) }
                 if (showDeleteDialog) {
@@ -152,7 +152,7 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, 
                                 .size(48.dp)
                                 .background(if (isOoc) WaldgruenDunkel else OchsenblutRot, RoundedCornerShape(12.dp))
                         ) {
-                            Text("➡️", color = Color.White, fontSize = 20.sp)
+                            Text("➡️", color = PergamentHell, fontSize = 20.sp)
                         }
                     }
                 }

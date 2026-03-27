@@ -180,7 +180,7 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
                         }
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell),
                 enabled = if (currentStep == 2 && choiceOption == "A") totalBonusA == 2 else if (currentStep == 2 && choiceOption == "B") featName.isNotBlank() else true
             ) {
                 Text(if (currentStep == 1 && isAsiLevel) "Weiter" else "Abschließen", color = PergamentHell, fontFamily = Almendra)
@@ -205,9 +205,9 @@ fun AttributeAdjustRow(name: String, baseVal: Int, bonus: Int, onChange: (Int) -
     ) {
         Text("$name: ${baseVal + bonus}", color = TintenSchwarz, fontWeight = FontWeight.Bold)
         Row {
-            Button(onClick = { onChange(-1) }, enabled = bonus > 0, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(48.dp)) { Text("-", color = PergamentHell, fontSize = 20.sp) }
+            Button(onClick = { onChange(-1) }, enabled = bonus > 0, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(48.dp)) { Text("-", color = PergamentHell, fontSize = 20.sp) }
             Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = { onChange(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(48.dp)) { Text("+", color = PergamentHell, fontSize = 20.sp) }
+            Button(onClick = { onChange(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = PergamentHell), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(48.dp)) { Text("+", color = PergamentHell, fontSize = 20.sp) }
         }
     }
 }

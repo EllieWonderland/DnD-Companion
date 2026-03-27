@@ -106,10 +106,10 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                 ) {
                     Button(
                         onClick = { showAddSpellDialog = true },
-                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White),
+                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = PergamentHell),
                         modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
                     ) {
-                        Text("+ Zauber aus Kompendium hinzufügen", color = Color.White, fontSize = 16.sp, fontFamily = Almendra)
+                        Text("+ Zauber aus Kompendium hinzufügen", color = PergamentHell, fontSize = 16.sp, fontFamily = Almendra)
                     }
                 }
                 Spacer(modifier = Modifier.height(32.dp))
@@ -176,7 +176,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (selectedLevel == lvl) OchsenblutRot else PergamentDunkel,
-                                contentColor = if (selectedLevel == lvl) Color.White else if (hasSpells) TintenSchwarz else Color.DarkGray,
+                                contentColor = if (selectedLevel == lvl) PergamentHell else if (hasSpells) TintenSchwarz else Color.DarkGray,
                                 disabledContainerColor = Color.LightGray
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
@@ -216,7 +216,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                                 }
                                             },
                                             enabled = !alreadyInBook,
-                                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White, disabledContainerColor = Color.Gray),
+                                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell, disabledContainerColor = Color.Gray),
                                             modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(48.dp)
                                         ) {
                                             Text(if (alreadyInBook) "Bereits im Buch" else "+ Hinzufügen", fontSize = 16.sp, fontFamily = Almendra)

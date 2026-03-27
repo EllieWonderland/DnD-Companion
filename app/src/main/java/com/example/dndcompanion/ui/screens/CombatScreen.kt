@@ -145,10 +145,10 @@ fun CombatScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        Button(onClick = { combatVm.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-5", fontFamily = Almendra, fontSize = 16.sp) }
-                        Button(onClick = { combatVm.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontFamily = Almendra, fontSize = 16.sp) }
-                        Button(onClick = { combatVm.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontFamily = Almendra, fontSize = 16.sp) }
-                        Button(onClick = { combatVm.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+5", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { combatVm.takeDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-5", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { combatVm.takeDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { combatVm.healManual(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = PergamentHell), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontFamily = Almendra, fontSize = 16.sp) }
+                        Button(onClick = { combatVm.healManual(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = PergamentHell), shape = RoundedCornerShape(8.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+5", fontFamily = Almendra, fontSize = 16.sp) }
                     }
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -162,9 +162,9 @@ fun CombatScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text("Temp HP:", style = MaterialTheme.typography.labelLarge, color = WaldgruenHell, modifier = Modifier.weight(1.5f))
-                        Button(onClick = { combatVm.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.6f), contentColor = Color.White), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontSize = 14.sp) }
-                        Button(onClick = { combatVm.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze.copy(alpha = 0.7f), contentColor = Color.White), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontSize = 14.sp) }
-                        Button(onClick = { combatVm.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze, contentColor = Color.White), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+12", fontSize = 14.sp) }
+                        Button(onClick = { combatVm.modifyTempHp(-1) }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.6f), contentColor = PergamentHell), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("-1", fontSize = 14.sp) }
+                        Button(onClick = { combatVm.modifyTempHp(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze.copy(alpha = 0.7f), contentColor = PergamentHell), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+1", fontSize = 14.sp) }
+                        Button(onClick = { combatVm.modifyTempHp(12) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze, contentColor = PergamentHell), shape = RoundedCornerShape(6.dp), modifier = Modifier.weight(1f).height(48.dp), contentPadding = PaddingValues(0.dp)) { Text("+12", fontSize = 14.sp) }
                     }
 
                     if (inventoryVm.goodberries > 0 || isRanger) {
@@ -528,7 +528,7 @@ fun CombatScreen(
                             Button(
                                 onClick = { inventoryVm.shootArrow() },
                                 enabled = inventoryVm.totalArrows > 0,
-                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, disabledContainerColor = EisenGrau, contentColor = Color.White, disabledContentColor = Color.White.copy(alpha=0.5f)),
+                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, disabledContainerColor = EisenGrau, contentColor = PergamentHell, disabledContentColor = PergamentHell.copy(alpha=0.5f)),
                                 modifier = Modifier.height(48.dp),
                                 shape = RoundedCornerShape(8.dp)
                             ) { Text("Schießen", fontFamily = Almendra, fontSize = 16.sp) }
@@ -541,8 +541,8 @@ fun CombatScreen(
                             Text("Nach dem Kampf:", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                             Spacer(modifier = Modifier.height(4.dp))
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                                Button(onClick = { inventoryVm.recoverArrows() }, colors = ButtonDefaults.buttonColors(containerColor = Bronze, contentColor = Color.White), modifier = Modifier.weight(1f).padding(end = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("½ Einsammeln", fontSize = 16.sp, fontFamily = Almendra) }
-                                Button(onClick = { inventoryVm.discardShotArrows() }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.7f), contentColor = Color.White), modifier = Modifier.weight(1f).padding(start = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("Alle verloren", fontSize = 16.sp, fontFamily = Almendra) }
+                                Button(onClick = { inventoryVm.recoverArrows() }, colors = ButtonDefaults.buttonColors(containerColor = Bronze, contentColor = PergamentHell), modifier = Modifier.weight(1f).padding(end = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("½ Einsammeln", fontSize = 16.sp, fontFamily = Almendra) }
+                                Button(onClick = { inventoryVm.discardShotArrows() }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.7f), contentColor = PergamentHell), modifier = Modifier.weight(1f).padding(start = 4.dp).height(48.dp), shape = RoundedCornerShape(8.dp)) { Text("Alle verloren", fontSize = 16.sp, fontFamily = Almendra) }
                             }
                         }
 
@@ -553,9 +553,9 @@ fun CombatScreen(
                         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
                             Text("Pfeile...", style = MaterialTheme.typography.labelLarge, color = Waldgruen)
                             Row {
-                                Button(onClick = { inventoryVm.changeTotalArrows(-1) }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("- Ablegen", fontSize = 16.sp, fontFamily = Almendra) }
+                                Button(onClick = { inventoryVm.changeTotalArrows(-1) }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("- Ablegen", fontSize = 16.sp, fontFamily = Almendra) }
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Button(onClick = { inventoryVm.changeTotalArrows(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze, contentColor = Color.White), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("+ Aufnehmen", fontSize = 16.sp, fontFamily = Almendra) }
+                                Button(onClick = { inventoryVm.changeTotalArrows(1) }, colors = ButtonDefaults.buttonColors(containerColor = Bronze, contentColor = PergamentHell), contentPadding = PaddingValues(horizontal = 12.dp, vertical = 0.dp), modifier = Modifier.height(48.dp), shape = RoundedCornerShape(6.dp)) { Text("+ Aufnehmen", fontSize = 16.sp, fontFamily = Almendra) }
                             }
                         }
                     }
@@ -577,7 +577,7 @@ fun CombatScreen(
                         modifier = Modifier.size(32.dp)
                     )
                     Spacer(modifier = Modifier.width(12.dp))
-                    Text("Loot eintragen", style = MaterialTheme.typography.titleMedium, color = Color.White)
+                    Text("Loot eintragen", style = MaterialTheme.typography.titleMedium, color = PergamentHell)
                 }
             }
 
@@ -627,7 +627,7 @@ fun CombatScreen(
                             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                                 TextButton(onClick = { isTacticEditing = false }) { Text("Abbrechen", color = TintenBraun, fontFamily = Almendra) }
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Button(onClick = { viewModel.updateStandardTactic(editTacticText); isTacticEditing = false }, colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White), shape = RoundedCornerShape(8.dp)) { Text("Speichern", fontFamily = Almendra) }
+                                Button(onClick = { viewModel.updateStandardTactic(editTacticText); isTacticEditing = false }, colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = PergamentHell), shape = RoundedCornerShape(8.dp)) { Text("Speichern", fontFamily = Almendra) }
                             }
                         } else {
                             Text(viewModel.standardTactic, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
@@ -699,7 +699,7 @@ fun CombatScreen(
                                         viewModel.updateCustomTrait(index, editTraitName, editTraitDesc)
                                         editingTraitIndex = -1
                                     },
-                                    colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White),
+                                    colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = PergamentHell),
                                     shape = RoundedCornerShape(8.dp)
                                 ) { Text("Speichern", fontFamily = Almendra) }
                             }

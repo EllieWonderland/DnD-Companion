@@ -63,20 +63,20 @@ fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, groupVm: G
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = PergamentHell)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(title, fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = Color.White)
+                Text(title, fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = PergamentHell)
             }
 
             TabRow(
                 selectedTabIndex = if (showPublicTab) 1 else 0,
                 containerColor = tintColor,
-                contentColor = Color.White,
+                contentColor = PergamentHell,
                 indicator = { tabPositions ->
                     TabRowDefaults.SecondaryIndicator(
                         Modifier.tabIndicatorOffset(tabPositions[if (showPublicTab) 1 else 0]),
-                        color = Color.White
+                        color = PergamentHell
                     )
                 }
             ) {
@@ -84,16 +84,16 @@ fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, groupVm: G
                     selected = !showPublicTab,
                     onClick = { showPublicTab = false },
                     text = { Text("Persönlich", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
-                    selectedContentColor = Color.White,
-                    unselectedContentColor = Color.White.copy(alpha = 0.7f),
+                    selectedContentColor = PergamentHell,
+                    unselectedContentColor = PergamentHell.copy(alpha = 0.7f),
                     modifier = Modifier.height(48.dp)
                 )
                 Tab(
                     selected = showPublicTab,
                     onClick = { showPublicTab = true },
                     text = { Text("Gruppe", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
-                    selectedContentColor = Color.White,
-                    unselectedContentColor = Color.White.copy(alpha = 0.7f),
+                    selectedContentColor = PergamentHell,
+                    unselectedContentColor = PergamentHell.copy(alpha = 0.7f),
                     modifier = Modifier.height(48.dp)
                 )
             }

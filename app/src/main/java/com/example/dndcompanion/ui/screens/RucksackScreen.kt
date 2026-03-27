@@ -66,11 +66,11 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                     TabRow(
                         selectedTabIndex = if (showGroupLoot) 1 else 0,
                         containerColor = WaldgruenDunkel,
-                        contentColor = Color.White,
+                        contentColor = PergamentHell,
                         indicator = { tabPositions ->
                             TabRowDefaults.SecondaryIndicator(
                                 Modifier.tabIndicatorOffset(tabPositions[if (showGroupLoot) 1 else 0]),
-                                color = Color.White
+                                color = PergamentHell
                             )
                         }
                     ) {
@@ -78,15 +78,15 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                             selected = !showGroupLoot,
                             onClick = { showGroupLoot = false },
                             text = { Text("Persönlich", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
-                            selectedContentColor = Color.White,
-                            unselectedContentColor = Color.White.copy(alpha = 0.7f)
+                            selectedContentColor = PergamentHell,
+                            unselectedContentColor = PergamentHell.copy(alpha = 0.7f)
                         )
                         Tab(
                             selected = showGroupLoot,
                             onClick = { showGroupLoot = true },
                             text = { Text("Gruppen-Loot", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
-                            selectedContentColor = Color.White,
-                            unselectedContentColor = Color.White.copy(alpha = 0.7f)
+                            selectedContentColor = PergamentHell,
+                            unselectedContentColor = PergamentHell.copy(alpha = 0.7f)
                         )
                     }
 
@@ -290,7 +290,7 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                             Button(
                                 onClick = { showEquipmentPicker = true },
                                 modifier = Modifier.fillMaxWidth(),
-                                colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White),
+                                colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = PergamentHell),
                                 shape = RoundedCornerShape(8.dp)
                             ) {
                                 Icon(Icons.Default.MenuBook, contentDescription = null, modifier = Modifier.size(20.dp))

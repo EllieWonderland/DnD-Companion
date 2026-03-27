@@ -143,7 +143,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
         ) {
             Button(
                 onClick = { showResetDialog = true },
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell),
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
                 Icon(Icons.Default.Delete, contentDescription = "Chat zurücksetzen", tint = PergamentHell)

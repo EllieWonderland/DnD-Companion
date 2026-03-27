@@ -74,7 +74,7 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
                 Box {
                     Button(
                         onClick = { expanded = true },
-                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White),
+                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = PergamentHell),
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(viewModel.characterData.name, fontFamily = Almendra, fontWeight = FontWeight.Bold)
@@ -365,7 +365,7 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
                         viewModel.forceLongRestWithoutResources()
                         viewModel.dismissRestWarningDialog()
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text("Trotzdem Rasten", fontFamily = Almendra)

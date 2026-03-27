@@ -103,22 +103,22 @@ fun SpellCard(
                     Spacer(modifier = Modifier.height(12.dp))
                     Button(
                         onClick = onCastAsRitual,
-                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White),
+                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = PergamentHell),
                         modifier = Modifier.fillMaxWidth().height(48.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("Als Ritual wirken (+10 Min)", fontSize = 16.sp, color = Color.White, fontFamily = Almendra)
+                        Text("Als Ritual wirken (+10 Min)", fontSize = 16.sp, color = PergamentHell, fontFamily = Almendra)
                     }
                 }
                 if (isEditMode && onDelete != null) {
                     Spacer(modifier = Modifier.height(12.dp))
                     Button(
                         onClick = onDelete,
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.8f), contentColor = Color.White),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.8f), contentColor = PergamentHell),
                         modifier = Modifier.fillMaxWidth().height(48.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text("Aus dem Buch löschen", fontSize = 16.sp, color = Color.White, fontFamily = Almendra)
+                        Text("Aus dem Buch löschen", fontSize = 16.sp, color = PergamentHell, fontFamily = Almendra)
                     }
                 }
                 if (extraContent != null) {

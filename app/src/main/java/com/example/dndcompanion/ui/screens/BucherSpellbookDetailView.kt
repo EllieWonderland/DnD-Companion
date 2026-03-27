@@ -58,10 +58,10 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = PergamentHell)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Zauberbuch", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = Color.White)
+                Text("Zauberbuch", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = PergamentHell)
             }
 
             Column(modifier = Modifier.padding(16.dp)) {
@@ -107,7 +107,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (selectedLevel == lvl) OchsenblutRot else PergamentDunkel,
-                                contentColor = if (selectedLevel == lvl) Color.White else if (hasSpells) TintenSchwarz else Color.DarkGray,
+                                contentColor = if (selectedLevel == lvl) PergamentHell else if (hasSpells) TintenSchwarz else Color.DarkGray,
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
@@ -137,7 +137,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (selectedClassFilter == filterClass) OchsenblutRot else PergamentDunkel,
-                                contentColor = if (selectedClassFilter == filterClass) Color.White else if (hasSpells) TintenSchwarz else Color.DarkGray,
+                                contentColor = if (selectedClassFilter == filterClass) PergamentHell else if (hasSpells) TintenSchwarz else Color.DarkGray,
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
@@ -168,7 +168,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (selectedSchoolFilter == filterSchool) OchsenblutRot else PergamentDunkel,
-                                contentColor = if (selectedSchoolFilter == filterSchool) Color.White else if (hasSpells) TintenSchwarz else Color.DarkGray,
+                                contentColor = if (selectedSchoolFilter == filterSchool) PergamentHell else if (hasSpells) TintenSchwarz else Color.DarkGray,
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
@@ -221,7 +221,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                                         modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(48.dp)
                                     ) {
                                         val buttonText = if (alreadyInBook) "Bereits ausgerüstet" else if (!canEquip) "Max 1 Druidenzauber" else "+ Ausrüsten"
-                                        Text(buttonText, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = Color.White)
+                                        Text(buttonText, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = PergamentHell)
                                     }
                                 }
                             )
