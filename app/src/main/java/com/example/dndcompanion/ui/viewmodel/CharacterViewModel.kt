@@ -1225,7 +1225,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             }
             
             // REMOVE items from the OTHER character or legacy names
-            val itemsToRemove = listOf("Köcher mit 20 Pfeilen", "Kleine Onyxstatue (Fokus)", "Flöte (alt)") + otherLootNames
+            val itemsToRemove = listOf("Köcher", "Kleine Onyxstatue (Fokus)", "Flöte (alt)") + otherLootNames
             val finalLoot = customLoot.filter { it.name !in itemsToRemove || it.name in defaultLootNames }
             if (finalLoot.size != customLoot.size) {
                 customLoot.clear()

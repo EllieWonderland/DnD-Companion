@@ -186,9 +186,13 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
                         }
                     }
 
-                    val className = if (viewModel.characterData.charClass == CharacterClass.RANGER) "Waldläufer (Herrin der Tiere)" else "Warlock (Pakt der Klinge)"
+                    val subclassDisplay = if (viewModel.characterData.subclass.isNotBlank()) " (${viewModel.characterData.subclass})" else ""
+                    val classLabel = when (viewModel.characterData.charClass) {
+                        CharacterClass.RANGER -> "Waldläufer$subclassDisplay"
+                        CharacterClass.WARLOCK -> "Hexenmeister$subclassDisplay"
+                    }
                     Text(
-                        "$className | Stufe ${viewModel.level}",
+                        "$classLabel | Stufe ${viewModel.level}",
                         style = MaterialTheme.typography.bodyMedium,
                         color = TintenBraun
                     )
@@ -308,36 +312,33 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
             Spacer(modifier = Modifier.height(8.dp))
             PergamentCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(12.dp)) {
-                    if (viewModel.characterData.name == "Athania") {
-                        val accentColorLocal = MaterialTheme.colorScheme.tertiary
+                    val accentColorLocal = MaterialTheme.colorScheme.tertiary
+                    val data = viewModel.characterData
+
+                    if (data.appearance.isNotBlank()) {
                         Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Magisches Tattoo (Blutige Hand eines Kindes)", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text(data.appearance, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
+                    }
+
+                    if (data.languages.isNotBlank()) {
                         Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Gemeinsprache, Gebärden-Gemeinsprache, Halblingisch, Zwergisch, Elfisch", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text(data.languages, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                    }
+
+                    if (data.ideal.isNotBlank() || data.flaw.isNotBlank()) {
                         HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
+                    }
 
-                        Text("Ideal (Höheres Ziel):", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Es ist die Verantwortung jeder Einzelnen, für das Wohl des Stammes zu sorgen.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                    if (data.ideal.isNotBlank()) {
+                        Text("Ideal:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
+                        Text(data.ideal, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
+                    }
 
-                        Text("Makel (Nachtragend):", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Ich erinnere mich an jede einzelne Beleidigung, die mir galt, und hege eine stumme Abneigung gegen all jene, die mich schon einmal falsch behandelt haben.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
-                    } else {
-                        val accentColorLocal = MaterialTheme.colorScheme.tertiary
-                        Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Unscheinbar", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Gemeinsprache, Elfisch, Zwergisch", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
-                        HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
-
-                        Text("Ideal (Freiheit):", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Ketten sind dazu da um sie zu brechen, ebenso wie die, die sie halten.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
-                        Spacer(modifier = Modifier.height(8.dp))
-
+                    if (data.flaw.isNotBlank()) {
                         Text("Makel:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Ich würde alles behaupten, um zusätzlicher Arbeit aus dem Weg zu gehen.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text(data.flaw, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                     }
                 }
             }
