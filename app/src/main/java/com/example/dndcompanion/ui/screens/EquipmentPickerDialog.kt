@@ -118,7 +118,7 @@ fun EquipmentPickerDialog(
                     label = { Text("Alle", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
                     colors = FilterChipDefaults.filterChipColors(
                         selectedContainerColor = Waldgruen,
-                        selectedLabelColor = Color.White
+                        selectedLabelColor = PergamentHell
                     ),
                     modifier = Modifier.heightIn(min = 40.dp)
                 )
@@ -138,7 +138,7 @@ fun EquipmentPickerDialog(
                         label = { Text(chipLabel, maxLines = 1, overflow = TextOverflow.Ellipsis, fontFamily = Almendra) },
                         colors = FilterChipDefaults.filterChipColors(
                             selectedContainerColor = Waldgruen,
-                            selectedLabelColor = Color.White
+                            selectedLabelColor = PergamentHell
                         ),
                         modifier = Modifier.heightIn(min = 40.dp)
                     )
@@ -213,7 +213,7 @@ private fun CatalogItemCard(item: EquipmentCatalogItem, onAdd: () -> Unit) {
                 Icon(
                     Icons.Default.Add,
                     contentDescription = "Hinzufügen",
-                    tint = Color.White,
+                    tint = PergamentHell,
                     modifier = Modifier
                         .size(32.dp)
                         .background(Waldgruen, RoundedCornerShape(8.dp))

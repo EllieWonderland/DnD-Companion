@@ -450,7 +450,7 @@ fun CompanionScreen(viewModel: CharacterViewModel) {
                         label = "Companion HP Animation"
                     )
 
-                    Text("HP: ${viewModel.capyCurrentHp} / ${viewModel.capyMaxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color.White, fontFamily = Almendra)
+                    Text("HP: ${viewModel.capyCurrentHp} / ${viewModel.capyMaxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = PergamentHell, fontFamily = Almendra)
 
                     Spacer(modifier = Modifier.height(8.dp))
 

@@ -237,7 +237,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
                             messageToFaq = null
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell)
                 ) {
                     Text("Speichern", fontFamily = Almendra)
                 }
@@ -261,7 +261,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
                         viewModel.resetChat()
                         showResetDialog = false
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell)
                 ) {
                     Text("Ja, löschen", color = PergamentHell, fontFamily = Almendra)
                 }
@@ -528,7 +528,7 @@ fun FaqView(viewModel: CharacterViewModel) {
                             editingFaq = null
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell)
                 ) {
                     Text("Speichern", color = PergamentHell, fontFamily = Almendra)
                 }
