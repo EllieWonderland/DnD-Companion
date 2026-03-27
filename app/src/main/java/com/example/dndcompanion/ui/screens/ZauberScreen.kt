@@ -353,16 +353,6 @@ fun ZauberScreen(
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        Button(
-                            onClick = { combatVm.applyFalseLife() },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = PergamentHell)
-                        ) {
-                            Text("Unholde Vitalität (12 Temp HP)", fontSize = 12.sp)
-                        }
-
                         // --- BESONDERE ZAUBER (TALENTE & ANRUFUNGEN) ---
                         Spacer(modifier = Modifier.height(16.dp))
                         Text("Besondere Zauber (Talente)", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 14.sp)
