@@ -458,7 +458,7 @@ fun CompanionScreen(viewModel: CharacterViewModel) {
                         progress = { capyHpProgress },
                         modifier = Modifier.fillMaxWidth().height(16.dp),
                         color = if (viewModel.capyCurrentHp > (viewModel.capyMaxHp / 4)) beastColorDark else OchsenblutRot,
-                        trackColor = PergamentHell
+                        trackColor = PergamentDunkel
                     )
 
                     Spacer(modifier = Modifier.height(12.dp))

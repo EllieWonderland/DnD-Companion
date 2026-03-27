@@ -171,9 +171,9 @@ fun GroupChatMessageCard(message: GroupChatMessage) {
     val nameColor = if (message.isOoc) WaldgruenDunkel else OchsenblutRot
 
     val authorBgColor = when (message.author.trim()) {
-        "Athania" -> Color(0xFFE8F5E9)
-        "Delat" -> Color(0xFFF3E5F5)
-        else -> Color(0xFFF5F5F5)
+        "Athania" -> Pergament
+        "Delat" -> PergamentDunkel
+        else -> PergamentHell
     }
 
     Card(

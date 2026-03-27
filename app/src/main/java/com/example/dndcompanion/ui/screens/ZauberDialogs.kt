@@ -177,7 +177,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (selectedLevel == lvl) OchsenblutRot else PergamentDunkel,
                                 contentColor = if (selectedLevel == lvl) PergamentHell else if (hasSpells) TintenSchwarz else Color.DarkGray,
-                                disabledContainerColor = Color.LightGray
+                                disabledContainerColor = PergamentDunkel
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
                             modifier = Modifier.height(48.dp)
@@ -216,7 +216,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                                 }
                                             },
                                             enabled = !alreadyInBook,
-                                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell, disabledContainerColor = Color.Gray),
+                                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell, disabledContainerColor = EisenGrau),
                                             modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(48.dp)
                                         ) {
                                             Text(if (alreadyInBook) "Bereits im Buch" else "+ Hinzufügen", fontSize = 16.sp, fontFamily = Almendra)

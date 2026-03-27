@@ -162,7 +162,7 @@ fun ZauberScreen(
                     }
 
                     if (freeFeatures.isEmpty() && amuletSpell == null) {
-                        Text("Keine aktiven kostenlosen Zauber verfügbar.", color = Color.LightGray, fontSize = 12.sp, style = androidx.compose.ui.text.TextStyle(fontStyle = androidx.compose.ui.text.font.FontStyle.Italic))
+                        Text("Keine aktiven kostenlosen Zauber verfügbar.", color = PergamentDunkel, fontSize = 12.sp, style = androidx.compose.ui.text.TextStyle(fontStyle = androidx.compose.ui.text.font.FontStyle.Italic))
                     }
                 }
             }
@@ -246,7 +246,7 @@ fun ZauberScreen(
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
                                         contentColor = MaterialTheme.colorScheme.onTertiary,
-                                        disabledContainerColor = Color.Gray
+                                        disabledContainerColor = EisenGrau
                                     )
                                 ) {
                                     Text("Wirken")
@@ -279,7 +279,7 @@ fun ZauberScreen(
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
                                         contentColor = MaterialTheme.colorScheme.onTertiary,
-                                        disabledContainerColor = Color.Gray
+                                        disabledContainerColor = EisenGrau
                                     )
                                 ) {
                                     Text("Wirken")
@@ -315,7 +315,7 @@ fun ZauberScreen(
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
                                         contentColor = MaterialTheme.colorScheme.onTertiary,
-                                        disabledContainerColor = Color.Gray
+                                        disabledContainerColor = EisenGrau
                                     )
                                 ) {
                                     Text("Wirken")

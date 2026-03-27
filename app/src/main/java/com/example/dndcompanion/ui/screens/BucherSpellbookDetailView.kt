@@ -107,7 +107,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (selectedLevel == lvl) OchsenblutRot else PergamentDunkel,
-                                contentColor = if (selectedLevel == lvl) PergamentHell else if (hasSpells) TintenSchwarz else Color.DarkGray,
+                                contentColor = if (selectedLevel == lvl) PergamentHell else if (hasSpells) TintenSchwarz else TintenBraun.copy(alpha=0.5f),
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
@@ -137,7 +137,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (selectedClassFilter == filterClass) OchsenblutRot else PergamentDunkel,
-                                contentColor = if (selectedClassFilter == filterClass) PergamentHell else if (hasSpells) TintenSchwarz else Color.DarkGray,
+                                contentColor = if (selectedClassFilter == filterClass) PergamentHell else if (hasSpells) TintenSchwarz else TintenBraun.copy(alpha=0.5f),
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
@@ -168,7 +168,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = if (selectedSchoolFilter == filterSchool) OchsenblutRot else PergamentDunkel,
-                                contentColor = if (selectedSchoolFilter == filterSchool) PergamentHell else if (hasSpells) TintenSchwarz else Color.DarkGray,
+                                contentColor = if (selectedSchoolFilter == filterSchool) PergamentHell else if (hasSpells) TintenSchwarz else TintenBraun.copy(alpha=0.5f),
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 4.dp),
