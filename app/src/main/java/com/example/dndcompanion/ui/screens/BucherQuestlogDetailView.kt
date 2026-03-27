@@ -51,20 +51,20 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, o
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = WaldGold)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Questlog", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold)
+                Text("Questlog", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = Color.White)
             }
 
             TabRow(
                 selectedTabIndex = if (showCompleted) 1 else 0,
                 containerColor = OchsenblutRot,
-                contentColor = WaldGold,
+                contentColor = Color.White,
                 indicator = { tabPositions ->
                     TabRowDefaults.SecondaryIndicator(
                         Modifier.tabIndicatorOffset(tabPositions[if (showCompleted) 1 else 0]),
-                        color = WaldGold
+                        color = Color.White
                     )
                 }
             ) {
@@ -72,7 +72,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, o
                     selected = !showCompleted,
                     onClick = { showCompleted = false },
                     text = { Text("Aktive Quests", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp) },
-                    selectedContentColor = WaldGold,
+                    selectedContentColor = Color.White,
                     unselectedContentColor = Color.White.copy(alpha = 0.7f),
                     modifier = Modifier.height(48.dp)
                 )
@@ -80,7 +80,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, o
                     selected = showCompleted,
                     onClick = { showCompleted = true },
                     text = { Text("Abgeschlossen", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp) },
-                    selectedContentColor = WaldGold,
+                    selectedContentColor = Color.White,
                     unselectedContentColor = Color.White.copy(alpha = 0.7f),
                     modifier = Modifier.height(48.dp)
                 )
@@ -127,7 +127,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, o
                                 shape = RoundedCornerShape(8.dp),
                                 modifier = Modifier.align(Alignment.End).height(48.dp)
                             ) {
-                                Text("Quest hinzufügen", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = WaldGold)
+                                Text("Quest hinzufügen", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp, color = Color.White)
                             }
                         }
                     }

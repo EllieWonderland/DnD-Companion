@@ -10,21 +10,21 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val PergamentColorScheme = lightColorScheme(
+private fun createPergamentScheme(isRanger: Boolean) = lightColorScheme(
     primary = Waldgruen,
-    onPrimary = Color.White,
+    onPrimary = PergamentHell,
     primaryContainer = WaldgruenHell,
-    onPrimaryContainer = Color.White,
+    onPrimaryContainer = PergamentHell,
 
     secondary = Bronze,
-    onSecondary = Color.White,
+    onSecondary = PergamentHell,
     secondaryContainer = BronzeHell,
     onSecondaryContainer = TintenSchwarz,
 
-    tertiary = OchsenblutRot,
-    onTertiary = Color.White,
-    tertiaryContainer = OchsenblutRotHell,
-    onTertiaryContainer = Color.White,
+    tertiary = if (isRanger) OchsenblutRot else HexenLila,
+    onTertiary = PergamentHell,
+    tertiaryContainer = if (isRanger) OchsenblutRotHell else HexenLilaHell,
+    onTertiaryContainer = PergamentHell,
 
     background = Pergament,
     onBackground = TintenSchwarz,
@@ -38,14 +38,15 @@ private val PergamentColorScheme = lightColorScheme(
     outlineVariant = PergamentDunkel,
 
     error = OchsenblutRot,
-    onError = Color.White
+    onError = PergamentHell
 )
 
 @Composable
 fun DnDCompanionTheme(
+    isRanger: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = PergamentColorScheme
+    val colorScheme = createPergamentScheme(isRanger)
 
     val view = LocalView.current
     if (!view.isInEditMode) {

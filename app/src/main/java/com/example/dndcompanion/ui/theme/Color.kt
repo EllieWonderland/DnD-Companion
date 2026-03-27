@@ -27,8 +27,8 @@ val EisenGrau = Color(0xFF6B6B6B)          // Für deaktivierte Elemente
 // Charakter-spezifische Akzente
 val WaldGold = Color(0xFFC9A84C)           // Athania / Ranger – warmes Gold
 val WaldGoldHell = Color(0xFFE0C56E)       // Helleres Gold
-val HexenLila = Color(0xFF6B3FA0)          // Delat / Warlock – mystisches Lila
-val HexenLilaHell = Color(0xFF8B5FC4)      // Helleres Lila
+val HexenLila = Color(0xFF391F4F)          // Delat / Warlock – mystisches Lila
+val HexenLilaHell = Color(0xFF5A3D80)      // Helleres Lila
 
 // Spezialfarben
 val TempHPBlau = Color(0xFF5CACEE)         // Eisblau für temporäre HP

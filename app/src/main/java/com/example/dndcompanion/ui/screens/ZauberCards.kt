@@ -72,7 +72,7 @@ fun SpellCard(
                         checked = spell.isPrepared,
                         onCheckedChange = { onTogglePrep() },
                         colors = SwitchDefaults.colors(
-                            checkedThumbColor = WaldGold,
+                            checkedThumbColor = MaterialTheme.colorScheme.tertiary,
                             checkedTrackColor = Waldgruen,
                             uncheckedThumbColor = EisenGrau,
                             uncheckedTrackColor = PergamentDunkel
@@ -103,7 +103,7 @@ fun SpellCard(
                     Spacer(modifier = Modifier.height(12.dp))
                     Button(
                         onClick = onCastAsRitual,
-                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
+                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White),
                         modifier = Modifier.fillMaxWidth().height(48.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
@@ -114,7 +114,7 @@ fun SpellCard(
                     Spacer(modifier = Modifier.height(12.dp))
                     Button(
                         onClick = onDelete,
-                        colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot.copy(alpha = 0.8f)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.8f), contentColor = Color.White),
                         modifier = Modifier.fillMaxWidth().height(48.dp),
                         shape = RoundedCornerShape(8.dp)
                     ) {
@@ -157,7 +157,7 @@ fun EditableTraitCard(title: String, desc: String, onEdit: () -> Unit, onDelete:
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(title, color = OchsenblutRot, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                    Text(title, color = MaterialTheme.colorScheme.tertiary, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(desc, color = TintenSchwarz, fontSize = 16.sp)
                 }
@@ -169,11 +169,11 @@ fun EditableTraitCard(title: String, desc: String, onEdit: () -> Unit, onDelete:
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = onEdit) {
-                        Text("✏️ Bearbeiten", color = WaldGold, fontSize = 14.sp)
+                        Text("✏️ Bearbeiten", color = MaterialTheme.colorScheme.tertiary, fontSize = 14.sp)
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     TextButton(onClick = onDelete) {
-                        Text("🗑️ Löschen", color = OchsenblutRot, fontSize = 14.sp)
+                        Text("🗑️ Löschen", color = MaterialTheme.colorScheme.tertiary, fontSize = 14.sp)
                     }
                 }
             }
@@ -224,7 +224,7 @@ fun ExpandableFreeSpellCard(
                     modifier = Modifier.height(48.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = accentColor,
-                        contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                        contentColor = MaterialTheme.colorScheme.onTertiary
                     )
                 ) { Text("Wirken", fontSize = 16.sp, fontFamily = Almendra) }
             }

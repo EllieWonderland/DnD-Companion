@@ -85,9 +85,9 @@ fun FeatureSelectionScreen(viewModel: CharacterViewModel, onDismiss: () -> Unit)
                     placeholder = { Text("Nach Merkmal suchen...", color = TintenBraun) },
                     leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = TintenSchwarz) },
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = WaldGold,
+                        focusedBorderColor = MaterialTheme.colorScheme.tertiary,
                         unfocusedBorderColor = PergamentDunkel,
-                        cursorColor = WaldGold
+                        cursorColor = MaterialTheme.colorScheme.tertiary
                     ),
                     singleLine = true
                 )
@@ -105,7 +105,7 @@ fun FeatureSelectionScreen(viewModel: CharacterViewModel, onDismiss: () -> Unit)
                             onClick = { selectedCategory = category },
                             label = { Text(category, fontFamily = Almendra) },
                             colors = FilterChipDefaults.filterChipColors(
-                                selectedContainerColor = WaldGold,
+                                selectedContainerColor = MaterialTheme.colorScheme.tertiary,
                                 selectedLabelColor = TintenSchwarz,
                                 containerColor = PergamentDunkel,
                                 labelColor = TintenBraun

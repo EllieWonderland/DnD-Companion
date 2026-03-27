@@ -34,7 +34,7 @@ fun WeaponButton(title: String, isSelected: Boolean, accentColor: Color, modifie
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isSelected) accentColor else PergamentDunkel,
-            contentColor = if (isSelected) (if (accentColor == WaldGold) TintenSchwarz else Color.White) else TintenSchwarz
+            contentColor = if (isSelected) MaterialTheme.colorScheme.onTertiary else TintenSchwarz
         ),
         shape = RoundedCornerShape(8.dp),
         modifier = modifier

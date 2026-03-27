@@ -66,11 +66,11 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                     TabRow(
                         selectedTabIndex = if (showGroupLoot) 1 else 0,
                         containerColor = WaldgruenDunkel,
-                        contentColor = WaldGold,
+                        contentColor = Color.White,
                         indicator = { tabPositions ->
                             TabRowDefaults.SecondaryIndicator(
                                 Modifier.tabIndicatorOffset(tabPositions[if (showGroupLoot) 1 else 0]),
-                                color = WaldGold
+                                color = Color.White
                             )
                         }
                     ) {
@@ -78,14 +78,14 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                             selected = !showGroupLoot,
                             onClick = { showGroupLoot = false },
                             text = { Text("Persönlich", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
-                            selectedContentColor = WaldGold,
+                            selectedContentColor = Color.White,
                             unselectedContentColor = Color.White.copy(alpha = 0.7f)
                         )
                         Tab(
                             selected = showGroupLoot,
                             onClick = { showGroupLoot = true },
                             text = { Text("Gruppen-Loot", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
-                            selectedContentColor = WaldGold,
+                            selectedContentColor = Color.White,
                             unselectedContentColor = Color.White.copy(alpha = 0.7f)
                         )
                     }
@@ -216,7 +216,7 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                                             label = { Text("Name", fontFamily = Almendra) },
                                             modifier = Modifier.weight(1f),
                                             textStyle = TextStyle(fontFamily = Almendra),
-                                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = WaldGold, focusedLabelColor = WaldGold)
+                                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.tertiary, focusedLabelColor = MaterialTheme.colorScheme.tertiary)
                                         )
                                         Spacer(modifier = Modifier.width(8.dp))
                                         OutlinedTextField(
@@ -225,7 +225,7 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                                             label = { Text("kg", fontFamily = Almendra) },
                                             modifier = Modifier.width(70.dp),
                                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = WaldGold, focusedLabelColor = WaldGold)
+                                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.tertiary, focusedLabelColor = MaterialTheme.colorScheme.tertiary)
                                         )
                                     }
                                     Spacer(modifier = Modifier.height(8.dp))
@@ -247,7 +247,7 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = categoryExpanded) },
                                             modifier = Modifier.menuAnchor().fillMaxWidth(),
                                             textStyle = TextStyle(fontFamily = Almendra),
-                                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = WaldGold, focusedLabelColor = WaldGold)
+                                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.tertiary, focusedLabelColor = MaterialTheme.colorScheme.tertiary)
                                         )
                                         ExposedDropdownMenu(
                                             expanded = categoryExpanded,
@@ -290,7 +290,7 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                             Button(
                                 onClick = { showEquipmentPicker = true },
                                 modifier = Modifier.fillMaxWidth(),
-                                colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
+                                colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White),
                                 shape = RoundedCornerShape(8.dp)
                             ) {
                                 Icon(Icons.Default.MenuBook, contentDescription = null, modifier = Modifier.size(20.dp))
@@ -487,7 +487,7 @@ fun GroupLootView(viewModel: CharacterViewModel, groupVm: GroupViewModel) {
                 onValueChange = { newItemName = it },
                 label = { Text("Gegenstand") },
                 modifier = Modifier.weight(1f),
-                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = WaldGold)
+                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.tertiary)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Button(onClick = { if (newItemName.isNotBlank()) { groupVm.addSharedLootItem(newItemName.trim(), 1, 0.0, "Sonstiges"); newItemName = "" } }, colors = MetallButtonColors()) {

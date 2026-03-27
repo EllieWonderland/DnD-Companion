@@ -106,7 +106,7 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                 ) {
                     Button(
                         onClick = { showAddSpellDialog = true },
-                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
+                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White),
                         modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
                     ) {
                         Text("+ Zauber aus Kompendium hinzufügen", color = Color.White, fontSize = 16.sp, fontFamily = Almendra)
@@ -216,7 +216,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                                 }
                                             },
                                             enabled = !alreadyInBook,
-                                            colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot, disabledContainerColor = Color.Gray),
+                                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White, disabledContainerColor = Color.Gray),
                                             modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(48.dp)
                                         ) {
                                             Text(if (alreadyInBook) "Bereits im Buch" else "+ Hinzufügen", fontSize = 16.sp, fontFamily = Almendra)

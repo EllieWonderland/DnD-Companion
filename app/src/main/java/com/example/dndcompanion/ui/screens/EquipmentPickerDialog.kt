@@ -96,9 +96,9 @@ fun EquipmentPickerDialog(
                 shape = RoundedCornerShape(12.dp),
                 textStyle = Typography.bodyLarge,
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = WaldGold,
+                    focusedBorderColor = MaterialTheme.colorScheme.tertiary,
                     unfocusedBorderColor = PergamentDunkel,
-                    cursorColor = WaldGold
+                    cursorColor = MaterialTheme.colorScheme.tertiary
                 )
             )
 

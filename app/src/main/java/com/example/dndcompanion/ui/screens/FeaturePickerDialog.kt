@@ -60,11 +60,11 @@ fun FeaturePickerDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                     leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Suchen", tint = TintenSchwarz) },
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = OchsenblutRot,
+                        focusedBorderColor = MaterialTheme.colorScheme.tertiary,
                         unfocusedBorderColor = TintenBraun,
                         focusedTextColor = TintenSchwarz,
                         unfocusedTextColor = TintenSchwarz,
-                        cursorColor = OchsenblutRot
+                        cursorColor = MaterialTheme.colorScheme.tertiary
                     ),
                     singleLine = true
                 )
@@ -104,7 +104,7 @@ fun FeaturePickerDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
         },
         confirmButton = {
             TextButton(onClick = onDismiss) {
-                Text("Abbrechen", color = OchsenblutRot, fontFamily = Almendra, fontSize = 18.sp)
+                Text("Abbrechen", color = MaterialTheme.colorScheme.tertiary, fontFamily = Almendra, fontSize = 18.sp)
             }
         }
     )
@@ -121,7 +121,7 @@ fun FeatureListItem(feature: FeatureEntity, onClick: () -> Unit) {
         Column(modifier = Modifier.padding(12.dp)) {
             val titleColor = when (feature.type) {
                 "FEAT" -> WaldgruenDunkel
-                "RACIAL_TRAIT" -> OchsenblutRot
+                "RACIAL_TRAIT" -> MaterialTheme.colorScheme.tertiary
                 "CLASS_FEATURE" -> HexenLila
                 "SUBCLASS_FEATURE" -> TintenSchwarz
                 else -> WaldgruenDunkel

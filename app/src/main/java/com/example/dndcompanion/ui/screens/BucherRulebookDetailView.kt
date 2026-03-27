@@ -96,21 +96,21 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = WaldGold)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Regelwerk", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold)
+                Text("Regelwerk", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = Color.White)
             }
 
             ScrollableTabRow(
                 selectedTabIndex = pagerState.currentPage,
                 containerColor = WaldgruenDunkel,
-                contentColor = WaldGold,
+                contentColor = Color.White,
                 edgePadding = 8.dp,
                 indicator = { tabPositions ->
                     TabRowDefaults.SecondaryIndicator(
                         Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
-                        color = WaldGold
+                        color = MaterialTheme.colorScheme.tertiary
                     )
                 }
             ) {
@@ -121,7 +121,7 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                             coroutineScope.launch { pagerState.animateScrollToPage(index) }
                         },
                         text = { Text(tabTitle, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold) },
-                        selectedContentColor = WaldGold,
+                        selectedContentColor = Color.White,
                         unselectedContentColor = Color.White.copy(alpha = 0.7f),
                         modifier = Modifier.height(48.dp)
                     )
@@ -319,7 +319,7 @@ fun WeaponCard(weapon: WeaponEntity) {
         Column(modifier = Modifier.padding(12.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(weapon.name, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TintenSchwarz)
-                Text(weapon.price, fontWeight = FontWeight.Bold, color = WaldGold, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
+                Text("${weapon.price}", fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
             }
             Text(weapon.category, fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
             Spacer(modifier = Modifier.height(8.dp))
@@ -341,7 +341,7 @@ fun ArmorCard(armor: ArmorEntity) {
         Column(modifier = Modifier.padding(12.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(armor.name, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = TintenSchwarz)
-                Text(armor.price, fontWeight = FontWeight.Bold, color = WaldGold, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
+                Text("${armor.price}", fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
             }
             Text(armor.category, fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.7f), fontStyle = androidx.compose.ui.text.font.FontStyle.Italic)
             Spacer(modifier = Modifier.height(8.dp))
@@ -370,7 +370,7 @@ fun ToolCard(tool: ToolEntity) {
                     Text("Gewicht: ${DndCalculations.lbToKg(tool.weightLb)} kg", fontSize = 13.sp, color = TintenSchwarz.copy(alpha = 0.8f))
                 }
             }
-            Text(tool.price, fontWeight = FontWeight.Bold, color = WaldGold, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
+            Text("${tool.price}", fontWeight = FontWeight.Bold, color = Color.White, modifier = Modifier.background(WaldgruenDunkel, RoundedCornerShape(4.dp)).padding(horizontal = 6.dp, vertical = 2.dp))
         }
     }
 }

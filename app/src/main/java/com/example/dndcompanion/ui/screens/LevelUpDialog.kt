@@ -71,7 +71,7 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text("Athania erhält feste Trefferpunkte (6) plus den Konstitutions-Modifikator (+${viewModel.conMod}).", color = TintenSchwarz)
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text("Deine Max HP steigen um ${6 + viewModel.conMod}", fontWeight = FontWeight.Bold, color = OchsenblutRot, fontSize = 18.sp)
+                    Text("Deine Max HP steigen um ${6 + viewModel.conMod}", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.tertiary, fontSize = 18.sp)
                     Text("Deine Trefferwürfel steigen um 1.", color = TintenSchwarz)
                 } 
                 else if (currentStep == 2) {
@@ -81,11 +81,11 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
                     Spacer(modifier = Modifier.height(16.dp))
                     
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        RadioButton(selected = choiceOption == "A", onClick = { choiceOption = "A" }, colors = RadioButtonDefaults.colors(selectedColor = OchsenblutRot, unselectedColor = TintenBraun))
+                        RadioButton(selected = choiceOption == "A", onClick = { choiceOption = "A" }, colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.tertiary, unselectedColor = TintenBraun))
                         Text("Option A: +2 Attribute (ASI)", color = TintenSchwarz, fontWeight = FontWeight.Bold)
                     }
                     if (choiceOption == "A") {
-                        Text("Verteile genau 2 Punkte:", color = OchsenblutRot, fontWeight = FontWeight.Bold)
+                        Text("Verteile genau 2 Punkte:", color = MaterialTheme.colorScheme.tertiary, fontWeight = FontWeight.Bold)
                         Text("Verteilt: $totalBonusA / 2", color = if (totalBonusA == 2) TintenSchwarz else Color.Red)
                         
                         AttributeAdjustRow("STR", viewModel.strength, strBonus) { strBonus += it }
@@ -98,7 +98,7 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
 
                     Spacer(modifier = Modifier.height(12.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        RadioButton(selected = choiceOption == "B", onClick = { choiceOption = "B" }, colors = RadioButtonDefaults.colors(selectedColor = OchsenblutRot, unselectedColor = TintenBraun))
+                        RadioButton(selected = choiceOption == "B", onClick = { choiceOption = "B" }, colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.tertiary, unselectedColor = TintenBraun))
                         Text("Option B: Neues Talent + 1 Attribut", color = TintenSchwarz, fontWeight = FontWeight.Bold)
                     }
                     if (choiceOption == "B") {
@@ -106,14 +106,14 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
                             value = featName,
                             onValueChange = { featName = it },
                             label = { Text("Name des Talents", color = TintenBraun) },
-                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = OchsenblutRot, focusedLabelColor = OchsenblutRot, focusedTextColor = TintenSchwarz, unfocusedTextColor = TintenSchwarz),
+                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.tertiary, focusedLabelColor = MaterialTheme.colorScheme.tertiary, focusedTextColor = TintenSchwarz, unfocusedTextColor = TintenSchwarz),
                             modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
                         )
                         OutlinedTextField(
                             value = featDesc,
                             onValueChange = { featDesc = it },
                             label = { Text("Beschreibung / Effekt", color = TintenBraun) },
-                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = OchsenblutRot, focusedLabelColor = OchsenblutRot, focusedTextColor = TintenSchwarz, unfocusedTextColor = TintenSchwarz),
+                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.tertiary, focusedLabelColor = MaterialTheme.colorScheme.tertiary, focusedTextColor = TintenSchwarz, unfocusedTextColor = TintenSchwarz),
                             modifier = Modifier.fillMaxWidth().height(100.dp)
                         )
                         Button(
@@ -180,7 +180,7 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
                         }
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White),
                 enabled = if (currentStep == 2 && choiceOption == "A") totalBonusA == 2 else if (currentStep == 2 && choiceOption == "B") featName.isNotBlank() else true
             ) {
                 Text(if (currentStep == 1 && isAsiLevel) "Weiter" else "Abschließen", color = PergamentHell, fontFamily = Almendra)
@@ -205,9 +205,9 @@ fun AttributeAdjustRow(name: String, baseVal: Int, bonus: Int, onChange: (Int) -
     ) {
         Text("$name: ${baseVal + bonus}", color = TintenSchwarz, fontWeight = FontWeight.Bold)
         Row {
-            Button(onClick = { onChange(-1) }, enabled = bonus > 0, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(48.dp)) { Text("-", color = PergamentHell, fontSize = 20.sp) }
+            Button(onClick = { onChange(-1) }, enabled = bonus > 0, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(48.dp)) { Text("-", color = PergamentHell, fontSize = 20.sp) }
             Spacer(modifier = Modifier.width(8.dp))
-            Button(onClick = { onChange(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(48.dp)) { Text("+", color = PergamentHell, fontSize = 20.sp) }
+            Button(onClick = { onChange(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White), contentPadding = PaddingValues(0.dp), modifier = Modifier.size(48.dp)) { Text("+", color = PergamentHell, fontSize = 20.sp) }
         }
     }
 }

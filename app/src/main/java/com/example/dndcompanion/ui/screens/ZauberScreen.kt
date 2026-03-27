@@ -46,7 +46,7 @@ fun ZauberScreen(
     var rolledDiceInput by remember { mutableStateOf("") }
 
     val isRanger = viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER
-    val accentColor = if (isRanger) WaldGold else HexenLila
+    val accentColor = MaterialTheme.colorScheme.tertiary
     PergamentBackground {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -96,7 +96,7 @@ fun ZauberScreen(
                             combatVm.attemptLongRest()
                             if (!combatVm.showRestWarningDialog) showLongRestDialog = true
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
+                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = Color.White),
                         modifier = Modifier.weight(1f).fillMaxHeight(),
                         contentPadding = PaddingValues(0.dp),
                         shape = RoundedCornerShape(8.dp)
@@ -245,7 +245,7 @@ fun ZauberScreen(
                                     enabled = spellVm.spellSlotsLevel2 > 0,
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
-                                        contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White,
+                                        contentColor = MaterialTheme.colorScheme.onTertiary,
                                         disabledContainerColor = Color.Gray
                                     )
                                 ) {
@@ -278,7 +278,7 @@ fun ZauberScreen(
                                     enabled = spellVm.spellSlotsLevel3 > 0,
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
-                                        contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White,
+                                        contentColor = MaterialTheme.colorScheme.onTertiary,
                                         disabledContainerColor = Color.Gray
                                     )
                                 ) {
@@ -314,7 +314,7 @@ fun ZauberScreen(
                                     enabled = currentSlotsLevel2 > 0,
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = accentColor,
-                                        contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White,
+                                        contentColor = MaterialTheme.colorScheme.onTertiary,
                                         disabledContainerColor = Color.Gray
                                     )
                                 ) {
@@ -335,7 +335,7 @@ fun ZauberScreen(
 
                             Button(
                                 onClick = { spellVm.applyMagicalCunning() },
-                                colors = ButtonDefaults.buttonColors(containerColor = HexenLila)
+                                colors = ButtonDefaults.buttonColors(containerColor = HexenLila, contentColor = Color.White)
                             ) {
                                 Text("Magische Rafinesse", color = PergamentHell, fontSize = 12.sp)
                             }
@@ -346,7 +346,7 @@ fun ZauberScreen(
                         Button(
                             onClick = { combatVm.applyFalseLife() },
                             modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                            colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White)
                         ) {
                             Text("Unholde Vitalität (12 Temp HP)", fontSize = 12.sp)
                         }
@@ -373,7 +373,7 @@ fun ZauberScreen(
                                 modifier = Modifier.height(48.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
-                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                    contentColor = MaterialTheme.colorScheme.onTertiary
                                 )
                             ) { Text("Wirken", fontSize = 14.sp) }
                         }
@@ -395,7 +395,7 @@ fun ZauberScreen(
                                 modifier = Modifier.height(48.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
-                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                    contentColor = MaterialTheme.colorScheme.onTertiary
                                 )
                             ) { Text("Wirken", fontSize = 14.sp) }
                         }
@@ -420,7 +420,7 @@ fun ZauberScreen(
                                 modifier = Modifier.height(48.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
-                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else Color.White
+                                    contentColor = MaterialTheme.colorScheme.onTertiary
                                 )
                             ) { Text("Wirken", fontSize = 14.sp) }
                         }
@@ -532,7 +532,7 @@ fun ZauberScreen(
                                 hitDiceToSpend = 1
                             }
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White)
                     ) {
                         Text("Heilen")
                     }
@@ -557,7 +557,7 @@ fun ZauberScreen(
                             showLongRestDialog = false
                             showSpellbookEditDialog = true
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White)
                     ) {
                         Text("Ja")
                     }
@@ -586,7 +586,7 @@ fun ZauberScreen(
                             viewModel.forceLongRestWithoutResources() 
                             showLongRestDialog = true
                         },
-                        colors = ButtonDefaults.buttonColors(containerColor = accentColor)
+                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White)
                     ) {
                         Text("Trotzdem Rasten", fontFamily = Almendra)
                     }

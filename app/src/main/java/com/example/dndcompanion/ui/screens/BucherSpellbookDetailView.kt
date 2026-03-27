@@ -58,10 +58,10 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = onBack, modifier = Modifier.size(48.dp)) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = WaldGold)
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = Color.White)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Zauberbuch", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold)
+                Text("Zauberbuch", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = Color.White)
             }
 
             Column(modifier = Modifier.padding(16.dp)) {
@@ -221,7 +221,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                                         modifier = Modifier.fillMaxWidth().padding(top = 8.dp).height(48.dp)
                                     ) {
                                         val buttonText = if (alreadyInBook) "Bereits ausgerüstet" else if (!canEquip) "Max 1 Druidenzauber" else "+ Ausrüsten"
-                                        Text(buttonText, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = WaldGold)
+                                        Text(buttonText, fontSize = 16.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = Color.White)
                                     }
                                 }
                             )

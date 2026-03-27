@@ -143,7 +143,7 @@ private fun CharEditSection(text: String) {
     Text(
         text,
         style = MaterialTheme.typography.labelLarge,
-        color = WaldGold,
+        color = MaterialTheme.colorScheme.tertiary,
         fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(bottom = 6.dp)
     )

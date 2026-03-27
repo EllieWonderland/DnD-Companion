@@ -51,7 +51,7 @@ fun HelpScreen(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Str
                         selected = selectedTab == index,
                         onClick = { selectedTab = index },
                         text = { Text(title, fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 18.sp) },
-                        selectedContentColor = OchsenblutRot,
+                        selectedContentColor = MaterialTheme.colorScheme.tertiary,
                         unselectedContentColor = TintenSchwarz
                     )
                 }
@@ -100,7 +100,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
             Text(
                 text = "Gemini Slots: ${viewModel.geminiMax - viewModel.geminiUsesToday} / ${viewModel.geminiMax}",
                 fontSize = 13.sp,
-                color = if (viewModel.geminiUsesToday >= viewModel.geminiMax) Color.Red else OchsenblutRot,
+                color = if (viewModel.geminiUsesToday >= viewModel.geminiMax) Color.Red else MaterialTheme.colorScheme.tertiary,
                 fontFamily = Almendra
             )
         }
@@ -114,7 +114,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
                 val used = i < viewModel.geminiUsesToday
                 Text(
                     text = if (used) "ᛣ" else "ᛟ", // Runic symbols for used/unused
-                    color = if (used) TintenBraun else WaldGold,
+                    color = if (used) TintenBraun else MaterialTheme.colorScheme.tertiary,
                     fontSize = 20.sp,
                     modifier = Modifier.padding(horizontal = 4.dp)
                 )
@@ -143,7 +143,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
         ) {
             Button(
                 onClick = { showResetDialog = true },
-                colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White),
                 modifier = Modifier.padding(bottom = 8.dp)
             ) {
                 Icon(Icons.Default.Delete, contentDescription = "Chat zurücksetzen", tint = PergamentHell)
@@ -164,7 +164,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
                 maxLines = 4,
                 placeholder = { Text("z.B. Wie funktioniert Zeichen des Jägers?", color = TintenBraun.copy(alpha = 0.6f)) },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = WaldGold,
+                    focusedBorderColor = MaterialTheme.colorScheme.tertiary,
                     focusedContainerColor = PergamentHell,
                     unfocusedContainerColor = PergamentHell,
                     focusedTextColor = TintenSchwarz,
@@ -188,7 +188,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
                         RoundedCornerShape(12.dp)
                     )
             ) {
-                Icon(Icons.Default.Send, contentDescription = "Senden", tint = WaldGold)
+                Icon(Icons.Default.Send, contentDescription = "Senden", tint = MaterialTheme.colorScheme.tertiary)
             }
         }
     }
@@ -237,7 +237,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
                             messageToFaq = null
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
                 ) {
                     Text("Speichern", fontFamily = Almendra)
                 }
@@ -253,7 +253,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
         AlertDialog(
             onDismissRequest = { showResetDialog = false },
             containerColor = PergamentHell,
-            title = { Text("Chat zurücksetzen?", color = OchsenblutRot, fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+            title = { Text("Chat zurücksetzen?", color = MaterialTheme.colorScheme.tertiary, fontFamily = Almendra, fontWeight = FontWeight.Bold) },
             text = { Text("Alle Nachrichten werden unwiderruflich gelöscht.", color = TintenSchwarz) },
             confirmButton = {
                 Button(
@@ -261,7 +261,7 @@ fun ChatView(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Strin
                         viewModel.resetChat()
                         showResetDialog = false
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
                 ) {
                     Text("Ja, löschen", color = PergamentHell, fontFamily = Almendra)
                 }
@@ -317,7 +317,7 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                 // NEU: Animierter Typing-Indikator statt statischer Text
                 Card(
                     colors = CardDefaults.cardColors(containerColor = PergamentHell),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, OchsenblutRot),
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.widthIn(max = 300.dp)
                 ) {
@@ -327,7 +327,7 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                 // Standard-Anzeige für User oder Fehler-Rohtext
                 Card(
                     colors = CardDefaults.cardColors(containerColor = if (isUser) TintenSchwarz else PergamentHell),
-                    border = if (!isUser) androidx.compose.foundation.BorderStroke(1.dp, OchsenblutRot) else null,
+                    border = if (!isUser) androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.tertiary) else null,
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.widthIn(max = 300.dp)
                 ) {
@@ -345,19 +345,19 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                     // --- LOKALER TEIL (Handbuch) ---
                     if (!message.localText.isNullOrBlank()) {
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)) {
-                            Icon(Icons.Default.Info, contentDescription = "Lokale Quelle", modifier = Modifier.size(16.dp), tint = OchsenblutRot)
+                            Icon(Icons.Default.Info, contentDescription = "Lokale Quelle", modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.tertiary)
                             Spacer(Modifier.width(4.dp))
                             Text(
                                 "LOKALES REGELWERK",
                                 fontSize = 12.sp,
                                 fontWeight = FontWeight.Black,
-                                color = OchsenblutRot
+                                color = MaterialTheme.colorScheme.tertiary
                             )
                         }
                         Card(
                             colors = CardDefaults.cardColors(containerColor = PergamentHell),
                             shape = RoundedCornerShape(12.dp),
-                            border = androidx.compose.foundation.BorderStroke(1.5.dp, OchsenblutRot),
+                            border = androidx.compose.foundation.BorderStroke(1.5.dp, MaterialTheme.colorScheme.tertiary),
                             modifier = Modifier.fillMaxWidth().padding(bottom = 6.dp)
                         ) {
                             Box(modifier = Modifier.padding(12.dp)) {
@@ -382,7 +382,7 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                                 Spacer(Modifier.width(4.dp))
                                 Text(
                                     text = "Quelle: ${message.chapterLink}",
-                                    color = WaldGold,
+                                    color = MaterialTheme.colorScheme.tertiary,
                                     fontSize = 14.sp,
                                     fontFamily = GrenzeGotisch,
                                     fontWeight = FontWeight.Bold
@@ -428,9 +428,9 @@ fun ChatBubble(message: ChatMessage, onSaveToFaq: () -> Unit, onNavigateToRulebo
                     contentPadding = PaddingValues(0.dp),
                     modifier = Modifier.align(Alignment.Start)
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(14.dp), tint = OchsenblutRot)
+                    Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(14.dp), tint = MaterialTheme.colorScheme.tertiary)
                     Spacer(Modifier.width(4.dp))
-                    Text("Ins FAQ", color = OchsenblutRot, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text("Ins FAQ", color = MaterialTheme.colorScheme.tertiary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -458,7 +458,7 @@ fun FaqView(viewModel: CharacterViewModel) {
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.Top
                         ) {
-                            Text(text = faq.question, fontWeight = FontWeight.Bold, fontFamily = Almendra, color = OchsenblutRot, fontSize = 20.sp, modifier = Modifier.weight(1f))
+                            Text(text = faq.question, fontWeight = FontWeight.Bold, fontFamily = Almendra, color = MaterialTheme.colorScheme.tertiary, fontSize = 20.sp, modifier = Modifier.weight(1f))
                             Row {
                                 IconButton(
                                     onClick = { editingFaq = faq },
@@ -528,7 +528,7 @@ fun FaqView(viewModel: CharacterViewModel) {
                             editingFaq = null
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary)
                 ) {
                     Text("Speichern", color = PergamentHell, fontFamily = Almendra)
                 }

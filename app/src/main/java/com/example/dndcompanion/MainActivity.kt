@@ -64,8 +64,10 @@ class MainActivity : ComponentActivity() {
         setTheme(R.style.Theme_DnDCompanion)
         super.onCreate(savedInstanceState)
         setContent {
-            DnDCompanionTheme {
-                val viewModel: CharacterViewModel = viewModel()
+            val viewModel: CharacterViewModel = viewModel()
+            val isRanger = viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER
+
+            DnDCompanionTheme(isRanger = isRanger) {
                 val groupViewModel: GroupViewModel = viewModel(
                     factory = GroupViewModelFactory(application, viewModel)
                 )

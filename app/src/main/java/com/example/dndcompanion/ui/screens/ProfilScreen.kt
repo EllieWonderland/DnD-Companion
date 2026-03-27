@@ -66,15 +66,15 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
                     Icon(
                         Icons.Default.Edit,
                         contentDescription = "Charakter bearbeiten",
-                        tint = WaldGold
+                        tint = MaterialTheme.colorScheme.tertiary
                     )
                 }
                 var expanded by remember { mutableStateOf(false) }
-                val accentColor = if (viewModel.characterData.charClass == CharacterClass.RANGER) WaldGold else HexenLila
+                val accentColor = MaterialTheme.colorScheme.tertiary
                 Box {
                     Button(
                         onClick = { expanded = true },
-                        colors = ButtonDefaults.buttonColors(containerColor = accentColor),
+                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = Color.White),
                         shape = RoundedCornerShape(8.dp)
                     ) {
                         Text(viewModel.characterData.name, fontFamily = Almendra, fontWeight = FontWeight.Bold)
@@ -105,7 +105,7 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Grunddaten-Karte
-            val accentColor = if (viewModel.characterData.charClass == CharacterClass.RANGER) WaldGold else HexenLila
+            val accentColor = MaterialTheme.colorScheme.tertiary
             PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
                 Column(modifier = Modifier.padding(14.dp)) {
                     val nextLevelEP = if (viewModel.level < viewModel.epThresholds.size) viewModel.epThresholds[viewModel.level] else viewModel.currentEP
@@ -159,13 +159,13 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
                             Text(
                                 "HP: ${combatVm.currentHp} / ${combatVm.maxHp}",
                                 style = GrenzeGotischSmall,
-                                color = OchsenblutRot
+                                color = MaterialTheme.colorScheme.tertiary
                             )
                             if (combatVm.tempHp > 0) {
                                 Text(
                                     "+${combatVm.tempHp} Temp HP",
                                     style = GrenzeGotischSmall.copy(fontSize = 16.sp),
-                                    color = TempHPBlau
+                                    color = WaldgruenHell
                                 )
                             }
                             
@@ -309,32 +309,34 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
             PergamentCard(modifier = Modifier.fillMaxWidth()) {
                 Column(modifier = Modifier.padding(12.dp)) {
                     if (viewModel.characterData.name == "Athania") {
-                        Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
+                        val accentColorLocal = MaterialTheme.colorScheme.tertiary
+                        Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text("Magisches Tattoo (Blutige Hand eines Kindes)", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
+                        Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text("Gemeinsprache, Gebärden-Gemeinsprache, Halblingisch, Zwergisch, Elfisch", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
 
-                        Text("Ideal (Höheres Ziel):", style = MaterialTheme.typography.labelLarge, color = WaldGold)
+                        Text("Ideal (Höheres Ziel):", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text("Es ist die Verantwortung jeder Einzelnen, für das Wohl des Stammes zu sorgen.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        Text("Makel (Nachtragend):", style = MaterialTheme.typography.labelLarge, color = WaldGold)
+                        Text("Makel (Nachtragend):", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text("Ich erinnere mich an jede einzelne Beleidigung, die mir galt, und hege eine stumme Abneigung gegen all jene, die mich schon einmal falsch behandelt haben.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                     } else {
-                        Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
+                        val accentColorLocal = MaterialTheme.colorScheme.tertiary
+                        Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text("Gepflegt, mysteriöses Buch immer in der Hand", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = WaldGold)
+                        Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text("Gemeinsprache, Drakonisch, Abyssal", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
 
-                        Text("Ideal (Macht):", style = MaterialTheme.typography.labelLarge, color = HexenLila)
+                        Text("Ideal (Macht):", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text("Wissen ist Macht, und ich werde alles tun, um mehr davon zu erlangen.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        Text("Makel (Arroganz):", style = MaterialTheme.typography.labelLarge, color = HexenLila)
+                        Text("Makel (Arroganz):", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text("Ich unterschätze oft andere, weil ich glaube, dass ich klüger bin als sie.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                     }
                 }
@@ -355,7 +357,7 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
     if (viewModel.showRestWarningDialog) {
         AlertDialog(
             onDismissRequest = { viewModel.dismissRestWarningDialog() },
-            title = { Text("Unzureichende Rationen", style = MaterialTheme.typography.titleSmall, color = OchsenblutRot) },
+            title = { Text("Unzureichende Rationen", style = MaterialTheme.typography.titleSmall, color = MaterialTheme.colorScheme.tertiary) },
             text = { Text("Du hast nicht genug Wasserschläuche (0.5 benötigt) oder Tagesrationen (1 benötigt) für eine vollständige Lange Rast. Willst du trotzdem rasten? (Es werden keine Rationen verbraucht, aber du erhältst keine HP oder Zauberslots zurück... oder wir ignorieren die Regeln für jetzt und rasten trotzdem ohne Ressourcen-Abzug?)", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz) },
             confirmButton = {
                 Button(
@@ -363,7 +365,7 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
                         viewModel.forceLongRestWithoutResources()
                         viewModel.dismissRestWarningDialog()
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = Color.White),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text("Trotzdem Rasten", fontFamily = Almendra)
@@ -421,7 +423,7 @@ fun AttributeBox(
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(value, style = GrenzeGotischStyle, color = TintenSchwarz)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(mod, style = GrenzeGotischSmall, color = OchsenblutRot)
+                    Text(mod, style = GrenzeGotischSmall, color = MaterialTheme.colorScheme.tertiary)
                 }
                 Text(rw, style = MaterialTheme.typography.labelSmall.copy(fontSize = 12.sp), color = TintenBraun)
                 if (skills.isNotEmpty()) {
@@ -442,7 +444,7 @@ fun SkillRow(name: String, mod: Int, proficient: Boolean = false) {
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val color = if (proficient) WaldGold else TintenSchwarz
+        val color = if (proficient) MaterialTheme.colorScheme.tertiary else TintenSchwarz
         val weight = if (proficient) FontWeight.Bold else FontWeight.Normal
         val modStr = if (mod >= 0) "+$mod" else "$mod"
         Text(name, color = color, style = MaterialTheme.typography.bodySmall, fontWeight = weight)
