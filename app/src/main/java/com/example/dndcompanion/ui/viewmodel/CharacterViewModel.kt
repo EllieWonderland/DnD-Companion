@@ -1156,7 +1156,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         coinsEM = 0
         coinsGM = if (characterData.id == "Athania") 44 else 72
         coinsPM = 0
-        totalArrows = if (characterData.id == "Athania") 28 else 0
+        totalArrows = if (characterData.id == "Athania") 26 else 0
         shotArrows = 0
         deathSaveSuccesses = 0
         deathSaveFailures = 0
@@ -1272,7 +1272,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
             // Specialized Fixes
             if (characterId == "Athania") {
-                if (totalArrows < 28) totalArrows = 28
+                if (totalArrows < 26) totalArrows = 26
                 if (coinsKM < 20) coinsKM = 20
                 if (coinsSM < 1) coinsSM = 1
                 if (coinsGM < 44) coinsGM = 44
