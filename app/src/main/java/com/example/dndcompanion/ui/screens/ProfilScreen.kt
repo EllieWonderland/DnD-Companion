@@ -326,18 +326,18 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
                     } else {
                         val accentColorLocal = MaterialTheme.colorScheme.tertiary
                         Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Gepflegt, mysteriöses Buch immer in der Hand", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Unscheinbar", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
                         Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Gemeinsprache, Drakonisch, Abyssal", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Gemeinsprache, Elfisch, Zwergisch", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
 
-                        Text("Ideal (Macht):", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Wissen ist Macht, und ich werde alles tun, um mehr davon zu erlangen.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Ideal (Freiheit):", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
+                        Text("Ketten sind dazu da um sie zu brechen, ebenso wie die, die sie halten.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        Text("Makel (Arroganz):", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
-                        Text("Ich unterschätze oft andere, weil ich glaube, dass ich klüger bin als sie.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                        Text("Makel:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
+                        Text("Ich würde alles behaupten, um zusätzlicher Arbeit aus dem Weg zu gehen.", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                     }
                 }
             }
