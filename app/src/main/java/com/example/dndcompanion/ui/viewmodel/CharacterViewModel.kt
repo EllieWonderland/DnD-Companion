@@ -1151,10 +1151,10 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         water = 2.0f
         rations = if (characterData.id == "Athania") 10 else 3
         goodberries = if (characterData.id == "Athania") 10 else 1
-        coinsKM = 0
-        coinsSM = if (characterData.id == "Athania") 1 else 80
+        coinsKM = if (characterData.id == "Athania") 20 else 0
+        coinsSM = if (characterData.id == "Athania") 1 else 9
         coinsEM = 0
-        coinsGM = if (characterData.id == "Athania") 18 else 19
+        coinsGM = if (characterData.id == "Athania") 44 else 72
         coinsPM = 0
         totalArrows = if (characterData.id == "Athania") 28 else 0
         shotArrows = 0
@@ -1273,8 +1273,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             // Specialized Fixes
             if (characterId == "Athania") {
                 if (totalArrows < 28) totalArrows = 28
+                if (coinsKM < 20) coinsKM = 20
                 if (coinsSM < 1) coinsSM = 1
-                if (coinsGM < 18) coinsGM = 18
+                if (coinsGM < 44) coinsGM = 44
                 
                 // Repariere versehentlich durch den vorherigen Bug gelöschte Traits
                 val athaniaMissingTraits = listOf(
@@ -1295,8 +1296,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 if (repaired) saveTraits()
             }
             if (characterId == "Delat") {
-                if (coinsSM < 80) coinsSM = 80
-                if (coinsGM < 19) coinsGM = 19
+                // Override Delat's mistakenly high SM to correct stats.json standard
+                if (coinsSM > 9 || coinsSM < 9) coinsSM = 9
+                if (coinsGM < 72) coinsGM = 72
                 if (tempHp < 12) tempHp = 12
             }
             
@@ -1306,6 +1308,25 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         // --- END SYNC ---
 
         applySyncV3()
+
+        val syncKeyV4 = "isSyncedWithStatsFiles_2026_03_27_wealth"
+        if (!prefs.getBoolean(syncKeyV4, false)) {
+            if (characterId == "Athania") {
+                coinsKM = 20
+                coinsSM = 1
+                coinsGM = 44
+            } else if (characterId == "Delat") {
+                coinsKM = 0
+                coinsSM = 9
+                coinsGM = 72
+            }
+            prefs.edit {
+                putInt("coinsKM", coinsKM)
+                putInt("coinsSM", coinsSM)
+                putInt("coinsGM", coinsGM)
+                putBoolean(syncKeyV4, true)
+            }
+        }
 
         hitDice = prefs.getInt("hitDice", characterData.baseHitDice)
         
