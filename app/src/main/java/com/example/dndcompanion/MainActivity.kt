@@ -365,7 +365,7 @@ fun CompanionScreen(viewModel: CharacterViewModel) {
     val isRanger = viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER
     val isDead = viewModel.companionIsDead
     
-    val companionName = companion?.name ?: if(isRanger) "Urtier-Begleiter" else "Sphinx des Wunders"
+    val companionName = companion?.name ?: if(isRanger) "Urtier-Begleiter" else "Vertrauter"
     val portraitRes = if(isRanger) R.drawable.icon_capybara else R.drawable.vertrauter
 
     val beastColorLight = if(isRanger) {
@@ -399,7 +399,7 @@ fun CompanionScreen(viewModel: CharacterViewModel) {
                 modifier = Modifier
                     .size(150.dp)
                     .clip(RoundedCornerShape(20.dp))
-                    .border(3.dp, WaldGold, RoundedCornerShape(20.dp)),
+                    .border(3.dp, MaterialTheme.colorScheme.tertiary, RoundedCornerShape(20.dp)),
                 contentScale = ContentScale.Fit,
                 alpha = if(isDead) 0.5f else 1f
             )
@@ -433,7 +433,11 @@ fun CompanionScreen(viewModel: CharacterViewModel) {
                         colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
                         shape = RoundedCornerShape(8.dp)
                     ) {
-                        Text(if(isRanger) "Urtier beleben (1 Zauberslot)" else "Vertrauten neu beschwören", fontFamily = Almendra)
+                        val reviveLabel = when (viewModel.characterData.charClass) {
+                            com.example.dndcompanion.data.CharacterClass.RANGER -> "Urtier beleben (1 Zauberslot)"
+                            com.example.dndcompanion.data.CharacterClass.WARLOCK -> "Vertrauten neu beschwören"
+                        }
+                        Text(reviveLabel, fontFamily = Almendra)
                     }
                 }
             }

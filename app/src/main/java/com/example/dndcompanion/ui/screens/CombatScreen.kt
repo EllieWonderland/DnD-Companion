@@ -468,7 +468,7 @@ fun CombatScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = if(combatVm.isMageArmorActive) HexenLila else EisenGrau)
+                            Icon(Icons.Default.CheckCircle, contentDescription = null, tint = if(combatVm.isMageArmorActive) accentColor else EisenGrau)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("Magierrüstung aktiv", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
                         }

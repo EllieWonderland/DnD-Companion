@@ -185,8 +185,12 @@ fun ZauberScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         Column {
+                            val flavorText = when (viewModel.characterData.charClass) {
+                                com.example.dndcompanion.data.CharacterClass.RANGER -> "Vielseitige Naturmagie"
+                                com.example.dndcompanion.data.CharacterClass.WARLOCK -> "Basis-Paktmagie"
+                            }
                             Text("Zauberplätze Grad 1", color = PergamentHell, fontWeight = FontWeight.Bold)
-                            Text("Vielseitige Waldläufer-Magie", color = PergamentHell, fontSize = 14.sp)
+                            Text(flavorText, color = PergamentHell, fontSize = 14.sp)
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Text("${spellVm.spellSlotsLevel1} / 3", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
@@ -235,8 +239,12 @@ fun ZauberScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column {
+                                val flavorText = when (viewModel.characterData.charClass) {
+                                    com.example.dndcompanion.data.CharacterClass.RANGER -> "Schutz & Jagd"
+                                    com.example.dndcompanion.data.CharacterClass.WARLOCK -> "Vertiefte Paktmagie"
+                                }
                                 Text("Zauberplätze Grad 2", color = PergamentHell, fontWeight = FontWeight.Bold)
-                                Text("Fortgeschrittene Naturkräfte", color = PergamentHell, fontSize = 14.sp)
+                                Text(flavorText, color = PergamentHell, fontSize = 14.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text("${spellVm.spellSlotsLevel2} / 2", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
@@ -268,8 +276,12 @@ fun ZauberScreen(
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column {
+                                val flavorText = when (viewModel.characterData.charClass) {
+                                    com.example.dndcompanion.data.CharacterClass.RANGER -> "Meisterliche Wildnismagie"
+                                    com.example.dndcompanion.data.CharacterClass.WARLOCK -> "Mächtige Paktmagie"
+                                }
                                 Text("Zauberplätze Grad 3", color = PergamentHell, fontWeight = FontWeight.Bold)
-                                Text("Mächtige Waldläufer-Künste", color = PergamentHell, fontSize = 14.sp)
+                                Text(flavorText, color = PergamentHell, fontSize = 14.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text("${spellVm.spellSlotsLevel3} / 2", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
