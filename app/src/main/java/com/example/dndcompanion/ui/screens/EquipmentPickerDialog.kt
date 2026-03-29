@@ -125,9 +125,9 @@ fun EquipmentPickerDialog(
                 categories.forEach { cat ->
                     val chipLabel = when {
                         cat.contains("Waffen", ignoreCase = true) -> "⚔️ ${cat.substringAfterLast("(").removeSuffix(")")}"
+                        cat == "Ausrüstung" -> "🎒 Ausrüstung"
                         cat.contains("Rüstung", ignoreCase = true) -> "🛡️ Rüstung"
                         cat.contains("Werkzeug", ignoreCase = true) -> "🔧 Werkzeug"
-                        cat.contains("Ausrüstung", ignoreCase = true) -> "🎒 Ausrüstung"
                         else -> cat
                     }
                     FilterChip(

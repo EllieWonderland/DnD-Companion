@@ -1,1784 +1,1596 @@
 {
-    "weapons": [
-        {
-            "id": "weap_club",
-            "name": "Knüppel (Club)",
-            "category": "Einfache Nahkampfwaffen",
-            "damage": "1W4 Wucht",
-            "properties": [
-                "Leicht"
-            ],
-            "mastery": "Verlangsamen",
-            "weightLb": 2.0,
-            "price": "1 SM"
-        },
-        {
-            "id": "weap_dagger",
-            "name": "Dolch (Dagger)",
-            "category": "Einfache Nahkampfwaffen",
-            "damage": "1W4 Stich",
-            "properties": [
-                "Finesse",
-                "Leicht",
-                "Wurfwaffe (20/60)"
-            ],
-            "mastery": "Kerbe",
-            "weightLb": 1.0,
-            "price": "2 GM"
-        },
-        {
-            "id": "weap_greatclub",
-            "name": "Großknüppel (Greatclub)",
-            "category": "Einfache Nahkampfwaffen",
-            "damage": "1W8 Wucht",
-            "properties": [
-                "Zweihändig"
-            ],
-            "mastery": "Stoß",
-            "weightLb": 10.0,
-            "price": "2 SM"
-        },
-        {
-            "id": "weap_handaxe",
-            "name": "Handaxt (Handaxe)",
-            "category": "Einfache Nahkampfwaffen",
-            "damage": "1W6 Hieb",
-            "properties": [
-                "Leicht",
-                "Wurfwaffe (20/60)"
-            ],
-            "mastery": "Ärgern",
-            "weightLb": 2.0,
-            "price": "5 GM"
-        },
-        {
-            "id": "weap_light_hammer",
-            "name": "Leichter Hammer (Light Hammer)",
-            "category": "Einfache Nahkampfwaffen",
-            "damage": "1W4 Wucht",
-            "properties": [
-                "Leicht",
-                "Wurfwaffe (20/60)"
-            ],
-            "mastery": "Kerbe",
-            "weightLb": 2.0,
-            "price": "2 GM"
-        },
-        {
-            "id": "weap_spear",
-            "name": "Speer (Spear)",
-            "category": "Einfache Nahkampfwaffen",
-            "damage": "1W6 Stich",
-            "properties": [
-                "Wurfwaffe (20/60)",
-                "Vielseitig (1W8)"
-            ],
-            "mastery": "Schwächen",
-            "weightLb": 3.0,
-            "price": "1 GM"
-        },
-        {
-            "id": "weap_mace",
-            "name": "Streitkolben (Mace)",
-            "category": "Einfache Nahkampfwaffen",
-            "damage": "1W6 Wucht",
-            "properties": [],
-            "mastery": "Schwächen",
-            "weightLb": 4.0,
-            "price": "5 GM"
-        },
-        {
-            "id": "weap_quarterstaff",
-            "name": "Kampfstab (Quarterstaff)",
-            "category": "Einfache Nahkampfwaffen",
-            "damage": "1W6 Wucht",
-            "properties": [
-                "Vielseitig (1W8)"
-            ],
-            "mastery": "Umwerfen",
-            "weightLb": 4.0,
-            "price": "2 SM"
-        },
-        {
-            "id": "weap_sickle",
-            "name": "Sichel (Sickle)",
-            "category": "Einfache Nahkampfwaffen",
-            "damage": "1W4 Hieb",
-            "properties": [
-                "Leicht"
-            ],
-            "mastery": "Kerbe",
-            "weightLb": 2.0,
-            "price": "1 GM"
-        },
-        {
-            "id": "weap_javelin",
-            "name": "Wurfspeer (Javelin)",
-            "category": "Einfache Nahkampfwaffen",
-            "damage": "1W6 Stich",
-            "properties": [
-                "Wurfwaffe (30/120)"
-            ],
-            "mastery": "Verlangsamen",
-            "weightLb": 2.0,
-            "price": "5 SM"
-        },
-        {
-            "id": "weap_shortbow",
-            "name": "Kurzbogen (Shortbow)",
-            "category": "Einfache Fernkampfwaffen",
-            "damage": "1W6 Stich",
-            "properties": [
-                "Munition (80/320)",
-                "Zweihändig"
-            ],
-            "mastery": "Ärgern",
-            "weightLb": 2.0,
-            "price": "25 GM"
-        },
-        {
-            "id": "weap_light_crossbow",
-            "name": "Leichte Armbrust (Light Crossbow)",
-            "category": "Einfache Fernkampfwaffen",
-            "damage": "1W8 Stich",
-            "properties": [
-                "Munition (80/320)",
-                "Ladeeigenschaft",
-                "Zweihändig"
-            ],
-            "mastery": "Verlangsamen",
-            "weightLb": 5.0,
-            "price": "25 GM"
-        },
-        {
-            "id": "weap_sling",
-            "name": "Schleuder (Sling)",
-            "category": "Einfache Fernkampfwaffen",
-            "damage": "1W4 Wucht",
-            "properties": [
-                "Munition (30/120)"
-            ],
-            "mastery": "Verlangsamen",
-            "weightLb": 0.0,
-            "price": "1 SM"
-        },
-        {
-            "id": "weap_dart",
-            "name": "Wurfpfeil (Dart)",
-            "category": "Einfache Fernkampfwaffen",
-            "damage": "1W4 Stich",
-            "properties": [
-                "Finesse",
-                "Wurfwaffe (20/60)"
-            ],
-            "mastery": "Ärgern",
-            "weightLb": 0.25,
-            "price": "5 KM"
-        },
-        {
-            "id": "weap_trident",
-            "name": "Dreizack (Trident)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W8 Stich",
-            "properties": [
-                "Wurfwaffe (20/60)",
-                "Vielseitig (1W10)"
-            ],
-            "mastery": "Umwerfen",
-            "weightLb": 4.0,
-            "price": "5 GM"
-        },
-        {
-            "id": "weap_flail",
-            "name": "Flegel (Flail)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W8 Wucht",
-            "properties": [],
-            "mastery": "Schwächen",
-            "weightLb": 2.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "weap_glaive",
-            "name": "Glefe (Glaive)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W10 Hieb",
-            "properties": [
-                "Schwer",
-                "Reichweite",
-                "Zweihändig"
-            ],
-            "mastery": "Streifen",
-            "weightLb": 6.0,
-            "price": "20 GM"
-        },
-        {
-            "id": "weap_maul",
-            "name": "Hammer (Maul)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "2W6 Wucht",
-            "properties": [
-                "Schwer",
-                "Zweihändig"
-            ],
-            "mastery": "Umwerfen",
-            "weightLb": 10.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "weap_halberd",
-            "name": "Hellebarde (Halberd)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W10 Hieb",
-            "properties": [
-                "Schwer",
-                "Reichweite",
-                "Zweihändig"
-            ],
-            "mastery": "Spalten",
-            "weightLb": 6.0,
-            "price": "20 GM"
-        },
-        {
-            "id": "weap_warhammer",
-            "name": "Kriegshammer (Warhammer)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W8 Wucht",
-            "properties": [
-                "Vielseitig (1W10)"
-            ],
-            "mastery": "Stoß",
-            "weightLb": 5.0,
-            "price": "15 GM"
-        },
-        {
-            "id": "weap_scimitar",
-            "name": "Krummsäbel (Scimitar)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W6 Hieb",
-            "properties": [
-                "Finesse",
-                "Leicht"
-            ],
-            "mastery": "Kerbe",
-            "weightLb": 3.0,
-            "price": "25 GM"
-        },
-        {
-            "id": "weap_shortsword",
-            "name": "Kurzschwert (Shortsword)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W6 Stich",
-            "properties": [
-                "Finesse",
-                "Leicht"
-            ],
-            "mastery": "Ärgern",
-            "weightLb": 2.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "weap_longsword",
-            "name": "Langschwert (Longsword)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W8 Hieb",
-            "properties": [
-                "Vielseitig (1W10)"
-            ],
-            "mastery": "Schwächen",
-            "weightLb": 3.0,
-            "price": "15 GM"
-        },
-        {
-            "id": "weap_lance",
-            "name": "Lanze (Lance)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W10 Stich",
-            "properties": [
-                "Schwer",
-                "Reichweite",
-                "Zweihändig (außer beritten)"
-            ],
-            "mastery": "Umwerfen",
-            "weightLb": 6.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "weap_morningstar",
-            "name": "Morgenstern (Morningstar)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W8 Stich",
-            "properties": [],
-            "mastery": "Schwächen",
-            "weightLb": 4.0,
-            "price": "15 GM"
-        },
-        {
-            "id": "weap_whip",
-            "name": "Peitsche (Whip)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W4 Hieb",
-            "properties": [
-                "Finesse",
-                "Reichweite"
-            ],
-            "mastery": "Verlangsamen",
-            "weightLb": 3.0,
-            "price": "2 GM"
-        },
-        {
-            "id": "weap_pike",
-            "name": "Pike (Pike)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W10 Stich",
-            "properties": [
-                "Schwer",
-                "Reichweite",
-                "Zweihändig"
-            ],
-            "mastery": "Stoß",
-            "weightLb": 18.0,
-            "price": "5 GM"
-        },
-        {
-            "id": "weap_rapier",
-            "name": "Rapier (Rapier)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W8 Stich",
-            "properties": [
-                "Finesse"
-            ],
-            "mastery": "Ärgern",
-            "weightLb": 2.0,
-            "price": "25 GM"
-        },
-        {
-            "id": "weap_war_pick",
-            "name": "Spitzhacke (War Pick)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W8 Stich",
-            "properties": [
-                "Vielseitig (1W10)"
-            ],
-            "mastery": "Schwächen",
-            "weightLb": 2.0,
-            "price": "5 GM"
-        },
-        {
-            "id": "weap_battleaxe",
-            "name": "Streitaxt (Battleaxe)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W8 Hieb",
-            "properties": [
-                "Vielseitig (1W10)"
-            ],
-            "mastery": "Umwerfen",
-            "weightLb": 4.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "weap_greataxe",
-            "name": "Zweihandaxt (Greataxe)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "1W12 Hieb",
-            "properties": [
-                "Schwer",
-                "Zweihändig"
-            ],
-            "mastery": "Spalten",
-            "weightLb": 7.0,
-            "price": "30 GM"
-        },
-        {
-            "id": "weap_greatsword",
-            "name": "Zweihänder (Greatsword)",
-            "category": "Kriegs-Nahkampfwaffen",
-            "damage": "2W6 Hieb",
-            "properties": [
-                "Schwer",
-                "Zweihändig"
-            ],
-            "mastery": "Streifen",
-            "weightLb": 6.0,
-            "price": "50 GM"
-        },
-        {
-            "id": "weap_blowgun",
-            "name": "Blasrohr (Blowgun)",
-            "category": "Kriegs-Fernkampfwaffen",
-            "damage": "1 Stich",
-            "properties": [
-                "Munition (25/100)",
-                "Ladeeigenschaft"
-            ],
-            "mastery": "Ärgern",
-            "weightLb": 1.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "weap_hand_crossbow",
-            "name": "Handarmbrust (Hand Crossbow)",
-            "category": "Kriegs-Fernkampfwaffen",
-            "damage": "1W6 Stich",
-            "properties": [
-                "Munition (30/120)",
-                "Leicht",
-                "Ladeeigenschaft"
-            ],
-            "mastery": "Ärgern",
-            "weightLb": 3.0,
-            "price": "75 GM"
-        },
-        {
-            "id": "weap_longbow",
-            "name": "Langbogen (Longbow)",
-            "category": "Kriegs-Fernkampfwaffen",
-            "damage": "1W8 Stich",
-            "properties": [
-                "Munition (150/600)",
-                "Schwer",
-                "Zweihändig"
-            ],
-            "mastery": "Verlangsamen",
-            "weightLb": 2.0,
-            "price": "50 GM"
-        },
-        {
-            "id": "weap_musket",
-            "name": "Muskete (Musket)",
-            "category": "Kriegs-Fernkampfwaffen",
-            "damage": "1W12 Stich",
-            "properties": [
-                "Munition (40/120)",
-                "Ladeeigenschaft",
-                "Zweihändig"
-            ],
-            "mastery": "Verlangsamen",
-            "weightLb": 10.0,
-            "price": "500 GM"
-        },
-        {
-            "id": "weap_pistol",
-            "name": "Pistole (Pistol)",
-            "category": "Kriegs-Fernkampfwaffen",
-            "damage": "1W10 Stich",
-            "properties": [
-                "Munition (30/90)",
-                "Ladeeigenschaft"
-            ],
-            "mastery": "Ärgern",
-            "weightLb": 3.0,
-            "price": "250 GM"
-        },
-        {
-            "id": "weap_heavy_crossbow",
-            "name": "Schwere Armbrust (Heavy Crossbow)",
-            "category": "Kriegs-Fernkampfwaffen",
-            "damage": "1W10 Stich",
-            "properties": [
-                "Munition (100/400)",
-                "Schwer",
-                "Ladeeigenschaft",
-                "Zweihändig"
-            ],
-            "mastery": "Stoß",
-            "weightLb": 18.0,
-            "price": "50 GM"
-        }
-    ],
-    "armor": [
-        {
-            "id": "arm_padded",
-            "name": "Wattiert (Padded)",
-            "category": "Leichte Rüstung",
-            "baseAC": 11,
-            "addDexModifier": true,
-            "maxDexModifier": null,
-            "stealthDisadvantage": true,
-            "strengthRequirement": 0,
-            "weightLb": 8.0,
-            "price": "5 GM"
-        },
-        {
-            "id": "arm_leather",
-            "name": "Leder (Leather)",
-            "category": "Leichte Rüstung",
-            "baseAC": 11,
-            "addDexModifier": true,
-            "maxDexModifier": null,
-            "stealthDisadvantage": false,
-            "strengthRequirement": 0,
-            "weightLb": 10.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "arm_studded_leather",
-            "name": "Beschlagenes Leder (Studded)",
-            "category": "Leichte Rüstung",
-            "baseAC": 12,
-            "addDexModifier": true,
-            "maxDexModifier": null,
-            "stealthDisadvantage": false,
-            "strengthRequirement": 0,
-            "weightLb": 13.0,
-            "price": "45 GM"
-        },
-        {
-            "id": "arm_hide",
-            "name": "Fell (Hide)",
-            "category": "Mittelschwere Rüstung",
-            "baseAC": 12,
-            "addDexModifier": true,
-            "maxDexModifier": 2,
-            "stealthDisadvantage": false,
-            "strengthRequirement": 0,
-            "weightLb": 12.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "arm_chain_shirt",
-            "name": "Kettenhemd (Chain Shirt)",
-            "category": "Mittelschwere Rüstung",
-            "baseAC": 13,
-            "addDexModifier": true,
-            "maxDexModifier": 2,
-            "stealthDisadvantage": false,
-            "strengthRequirement": 0,
-            "weightLb": 20.0,
-            "price": "50 GM"
-        },
-        {
-            "id": "arm_scale_mail",
-            "name": "Schuppenpanzer (Scale Mail)",
-            "category": "Mittelschwere Rüstung",
-            "baseAC": 14,
-            "addDexModifier": true,
-            "maxDexModifier": 2,
-            "stealthDisadvantage": true,
-            "strengthRequirement": 0,
-            "weightLb": 45.0,
-            "price": "50 GM"
-        },
-        {
-            "id": "arm_breastplate",
-            "name": "Brustplatte (Breastplate)",
-            "category": "Mittelschwere Rüstung",
-            "baseAC": 14,
-            "addDexModifier": true,
-            "maxDexModifier": 2,
-            "stealthDisadvantage": false,
-            "strengthRequirement": 0,
-            "weightLb": 20.0,
-            "price": "400 GM"
-        },
-        {
-            "id": "arm_half_plate",
-            "name": "Halber Plattenpanzer (Half Plate)",
-            "category": "Mittelschwere Rüstung",
-            "baseAC": 15,
-            "addDexModifier": true,
-            "maxDexModifier": 2,
-            "stealthDisadvantage": true,
-            "strengthRequirement": 0,
-            "weightLb": 40.0,
-            "price": "750 GM"
-        },
-        {
-            "id": "arm_ring_mail",
-            "name": "Ringpanzer (Ring Mail)",
-            "category": "Schwere Rüstung",
-            "baseAC": 14,
-            "addDexModifier": false,
-            "maxDexModifier": 0,
-            "stealthDisadvantage": true,
-            "strengthRequirement": 0,
-            "weightLb": 40.0,
-            "price": "30 GM"
-        },
-        {
-            "id": "arm_chain_mail",
-            "name": "Kettenpanzer (Chain Mail)",
-            "category": "Schwere Rüstung",
-            "baseAC": 16,
-            "addDexModifier": false,
-            "maxDexModifier": 0,
-            "stealthDisadvantage": true,
-            "strengthRequirement": 13,
-            "weightLb": 55.0,
-            "price": "75 GM"
-        },
-        {
-            "id": "arm_splint",
-            "name": "Schienenpanzer (Splint Armor)",
-            "category": "Schwere Rüstung",
-            "baseAC": 17,
-            "addDexModifier": false,
-            "maxDexModifier": 0,
-            "stealthDisadvantage": true,
-            "strengthRequirement": 15,
-            "weightLb": 60.0,
-            "price": "200 GM"
-        },
-        {
-            "id": "arm_plate",
-            "name": "Plattenpanzer (Plate Armor)",
-            "category": "Schwere Rüstung",
-            "baseAC": 18,
-            "addDexModifier": false,
-            "maxDexModifier": 0,
-            "stealthDisadvantage": true,
-            "strengthRequirement": 15,
-            "weightLb": 65.0,
-            "price": "1.500 GM"
-        },
-        {
-            "id": "arm_shield",
-            "name": "Schild (Shield)",
-            "category": "Schilde",
-            "baseAC": 2,
-            "addDexModifier": false,
-            "maxDexModifier": null,
-            "stealthDisadvantage": false,
-            "strengthRequirement": 0,
-            "weightLb": 6.0,
-            "price": "10 GM"
-        }
-    ],
-    "tools": [
-        {
-            "id": "tool_alchemist",
-            "name": "Alchemisten-Zubehör (Alchemist's Supplies)",
-            "category": "Handwerkszeug",
-            "weightLb": 8.0,
-            "price": "50 GM"
-        },
-        {
-            "id": "tool_brewer",
-            "name": "Brauer-Zubehör (Brewer's Supplies)",
-            "category": "Handwerkszeug",
-            "weightLb": 9.0,
-            "price": "20 GM"
-        },
-        {
-            "id": "tool_glassblower",
-            "name": "Glasbläser-Werkzeug (Glassblower's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 5.0,
-            "price": "30 GM"
-        },
-        {
-            "id": "tool_woodcarver",
-            "name": "Holzschnitzer-Werkzeug (Woodcarver's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 5.0,
-            "price": "1 GM"
-        },
-        {
-            "id": "tool_jeweler",
-            "name": "Juwelier-Werkzeug (Jeweler's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 2.0,
-            "price": "25 GM"
-        },
-        {
-            "id": "tool_calligrapher",
-            "name": "Kalligrafen-Zubehör (Calligrapher's Supplies)",
-            "category": "Handwerkszeug",
-            "weightLb": 5.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "tool_cartographer",
-            "name": "Kartografen-Werkzeug (Cartographer's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 6.0,
-            "price": "15 GM"
-        },
-        {
-            "id": "tool_cook",
-            "name": "Kochutensilien (Cook's Utensils)",
-            "category": "Handwerkszeug",
-            "weightLb": 8.0,
-            "price": "1 GM"
-        },
-        {
-            "id": "tool_leatherworker",
-            "name": "Lederer-Werkzeug (Leatherworker's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 5.0,
-            "price": "5 GM"
-        },
-        {
-            "id": "tool_painter",
-            "name": "Maler-Zubehör (Painter's Supplies)",
-            "category": "Handwerkszeug",
-            "weightLb": 5.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "tool_mason",
-            "name": "Maurer-Werkzeug (Mason's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 8.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "tool_smith",
-            "name": "Schmiede-Werkzeug (Smith's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 8.0,
-            "price": "20 GM"
-        },
-        {
-            "id": "tool_cobbler",
-            "name": "Schuhmacher-Werkzeug (Cobbler's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 5.0,
-            "price": "5 GM"
-        },
-        {
-            "id": "tool_potter",
-            "name": "Töpfer-Werkzeug (Potter's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 3.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "tool_tinker",
-            "name": "Tüftler-Werkzeug (Tinker's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 10.0,
-            "price": "50 GM"
-        },
-        {
-            "id": "tool_weaver",
-            "name": "Weber-Werkzeug (Weaver's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 5.0,
-            "price": "1 GM"
-        },
-        {
-            "id": "tool_carpenter",
-            "name": "Zimmerer-Werkzeug (Carpenter's Tools)",
-            "category": "Handwerkszeug",
-            "weightLb": 6.0,
-            "price": "8 GM"
-        },
-        {
-            "id": "tool_thieves",
-            "name": "Diebeswerkzeug (Thieves' Tools)",
-            "category": "Sonstige Werkzeuge",
-            "weightLb": 1.0,
-            "price": "25 GM"
-        },
-        {
-            "id": "tool_forgery",
-            "name": "Fälscher-Ausrüstung (Forgery Kit)",
-            "category": "Sonstige Werkzeuge",
-            "weightLb": 5.0,
-            "price": "15 GM"
-        },
-        {
-            "id": "tool_poisoner",
-            "name": "Giftmischer-Ausrüstung (Poisoner's Kit)",
-            "category": "Sonstige Werkzeuge",
-            "weightLb": 2.0,
-            "price": "50 GM"
-        },
-        {
-            "id": "tool_herbalism",
-            "name": "Kräuterkunde-Ausrüstung (Herbalism Kit)",
-            "category": "Sonstige Werkzeuge",
-            "weightLb": 3.0,
-            "price": "5 GM"
-        },
-        {
-            "id": "tool_musical_instrument",
-            "name": "Musikinstrument (Musical Instrument)",
-            "category": "Sonstige Werkzeuge",
-            "weightLb": null,
-            "price": "Variiert"
-        },
-        {
-            "id": "tool_navigator",
-            "name": "Navigatoren-Werkzeug (Navigator's Tools)",
-            "category": "Sonstige Werkzeuge",
-            "weightLb": 2.0,
-            "price": "25 GM"
-        },
-        {
-            "id": "tool_gaming_set",
-            "name": "Spielset (Gaming Set)",
-            "category": "Sonstige Werkzeuge",
-            "weightLb": 0.0,
-            "price": "Variiert"
-        },
-        {
-            "id": "tool_disguise",
-            "name": "Verkleidungs-Ausrüstung (Disguise Kit)",
-            "category": "Sonstige Werkzeuge",
-            "weightLb": 3.0,
-            "price": "25 GM"
-        }
-    ],
-    "adventuring_gear": [
-        {
-            "id": "gear_alchemist_fire",
-            "name": "Alchemistenfeuer (Alchemist's Fire)",
-            "weightLb": 1.0,
-            "price": "50 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_arcane_focus_crystal",
-            "name": "Arkaner Fokus: Kristall (Crystal)",
-            "weightLb": 1.0,
-            "price": "10 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_arcane_focus_orb",
-            "name": "Arkaner Fokus: Kugel (Orb)",
-            "weightLb": 3.0,
-            "price": "20 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_arcane_focus_rod",
-            "name": "Arkaner Fokus: Rute (Rod)",
-            "weightLb": 2.0,
-            "price": "10 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_arcane_focus_staff",
-            "name": "Arkaner Fokus: Stab (Staff)",
-            "weightLb": 4.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_arcane_focus_wand",
-            "name": "Arkaner Fokus: Zauberstab (Wand)",
-            "weightLb": 1.0,
-            "price": "10 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_crowbar",
-            "name": "Brecheisen (Crowbar)",
-            "weightLb": 5.0,
-            "price": "2 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_book",
-            "name": "Buch (Book)",
-            "weightLb": 5.0,
-            "price": "25 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_blanket",
-            "name": "Decke (Blanket)",
-            "weightLb": 3.0,
-            "price": "5 SM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_diplomat_pack",
-            "name": "Diplomaten-Ausrüstung (Diplomat's Pack)",
-            "weightLb": 39.0,
-            "price": "39 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_druidic_focus_yew",
-            "name": "Druidischer Fokus: Eiben-Zauberstab",
-            "weightLb": 1.0,
-            "price": "10 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_druidic_focus_staff",
-            "name": "Druidischer Fokus: Holzstab",
-            "weightLb": 4.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_druidic_focus_mistletoe",
-            "name": "Druidischer Fokus: Mistelzweig",
-            "weightLb": 0.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_bucket",
-            "name": "Eimer (Bucket)",
-            "weightLb": 2.0,
-            "price": "5 KM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_burglar_pack",
-            "name": "Einbrecher-Ausrüstung (Burglar's Pack)",
-            "weightLb": 42.0,
-            "price": "16 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_iron_pot",
-            "name": "Eisentopf (Pot, Iron)",
-            "weightLb": 10.0,
-            "price": "2 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_explorer_pack",
-            "name": "Entdecker-Ausrüstung (Explorer's Pack)",
-            "weightLb": 55.0,
-            "price": "10 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_torch",
-            "name": "Fackel (Torch)",
-            "weightLb": 1.0,
-            "price": "1 KM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_barrel",
-            "name": "Fass (Barrel)",
-            "weightLb": 70.0,
-            "price": "2 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_flask",
-            "name": "Flachmann (Flask)",
-            "weightLb": 1.0,
-            "price": "2 KM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_block_tackle",
-            "name": "Flaschenzug (Block and Tackle)",
-            "weightLb": 5.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_vial",
-            "name": "Fläschchen (Vial)",
-            "weightLb": 0.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_antitoxin",
-            "name": "Gegengift (Antitoxin)",
-            "weightLb": 0.0,
-            "price": "50 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_scholar_pack",
-            "name": "Gelehrten-Ausrüstung (Scholar's Pack)",
-            "weightLb": 22.0,
-            "price": "40 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_dungeoneer_pack",
-            "name": "Gewölbeforscher-Ausrüstung (Dungeoneer's Pack)",
-            "weightLb": 55.0,
-            "price": "12 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_poison_basic",
-            "name": "Gift, Basis (Poison, Basic)",
-            "weightLb": 0.0,
-            "price": "100 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_bottle_glass",
-            "name": "Glasflasche (Bottle, Glass)",
-            "weightLb": 2.0,
-            "price": "2 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_bell",
-            "name": "Glocke (Bell)",
-            "weightLb": 0.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_manacles",
-            "name": "Handschellen (Manacles)",
-            "weightLb": 6.0,
-            "price": "2 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_healer_kit",
-            "name": "Heiler-Satz (Healer's Kit)",
-            "weightLb": 3.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_holy_symbol_amulet",
-            "name": "Heiliges Symbol: Amulett (Amulet)",
-            "weightLb": 1.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_holy_symbol_emblem",
-            "name": "Heiliges Symbol: Emblem (Emblem)",
-            "weightLb": 0.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_holy_symbol_reliquary",
-            "name": "Heiliges Symbol: Reliquie (Reliquary)",
-            "weightLb": 2.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_potion_healing",
-            "name": "Heiltrank (Potion of Healing)",
-            "weightLb": 0.5,
-            "price": "50 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_hunting_trap",
-            "name": "Jagdfalle (Hunting Trap)",
-            "weightLb": 25.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_case_map_scroll",
-            "name": "Karten-/Schriftrollenbehälter (Case, Map/Scroll)",
-            "weightLb": 1.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_map",
-            "name": "Karte (Map)",
-            "weightLb": 0.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_candle",
-            "name": "Kerze (Candle)",
-            "weightLb": 0.0,
-            "price": "1 KM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_chain",
-            "name": "Kette, 3 m / 2 Felder (Chain)",
-            "weightLb": 10.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_clothes_fine",
-            "name": "Kleidung, fein (Clothes, Fine)",
-            "weightLb": 6.0,
-            "price": "15 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_clothes_traveler",
-            "name": "Kleidung, Reise (Clothes, Traveler's)",
-            "weightLb": 4.0,
-            "price": "2 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_climber_kit",
-            "name": "Kletterausrüstung (Climber's Kit)",
-            "weightLb": 12.0,
-            "price": "25 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_quiver",
-            "name": "Köcher (Quiver)",
-            "weightLb": 1.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_basket",
-            "name": "Korb (Basket)",
-            "weightLb": 2.0,
-            "price": "4 SM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_costume",
-            "name": "Kostüm (Costume)",
-            "weightLb": 4.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_caltrops",
-            "name": "Krähenfüße (Caltrops)",
-            "weightLb": 2.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_jug",
-            "name": "Krug (Jug)",
-            "weightLb": 4.0,
-            "price": "2 KM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_lamp",
-            "name": "Lampe (Lamp)",
-            "weightLb": 1.0,
-            "price": "5 SM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_lantern_bullseye",
-            "name": "Lanterne, Blend- (Lantern, Bullseye)",
-            "weightLb": 2.0,
-            "price": "10 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_lantern_hooded",
-            "name": "Lanterne, Kapuzen- (Lantern, Hooded)",
-            "weightLb": 2.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_ladder",
-            "name": "Leiter, 3 m / 2 Felder (Ladder)",
-            "weightLb": 25.0,
-            "price": "1 SM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_magnifying_glass",
-            "name": "Lupe (Magnifying Glass)",
-            "weightLb": 0.0,
-            "price": "100 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_component_pouch",
-            "name": "Materialkomponentenbeutel (Component Pouch)",
-            "weightLb": 2.0,
-            "price": "25 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_ball_bearings",
-            "name": "Metallkügelchen (Ball Bearings)",
-            "weightLb": 2.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_ammo_bolts",
-            "name": "Munition: Bolzen (Bolts, 20)",
-            "weightLb": 1.5,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_ammo_bolt_case",
-            "name": "Munition: Bolzenköcher (Crossbow Bolt Case)",
-            "weightLb": 1.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_ammo_bullets",
-            "name": "Munition: Feuerwaffen-Kugeln (Bullets, 10)",
-            "weightLb": 2.0,
-            "price": "3 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_ammo_needles",
-            "name": "Munition: Nadeln (Needles, 50)",
-            "weightLb": 1.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_ammo_arrows",
-            "name": "Munition: Pfeile (Arrows, 20)",
-            "weightLb": 1.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_ammo_sling_bullets",
-            "name": "Munition: Schleuderkugeln (Sling Bullets, 20)",
-            "weightLb": 1.5,
-            "price": "4 KM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_net",
-            "name": "Netz (Net)",
-            "weightLb": 3.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_oil",
-            "name": "Öl (Oil, 1 Flasche)",
-            "weightLb": 1.0,
-            "price": "1 SM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_paper",
-            "name": "Papier (Paper, 1 Blatt)",
-            "weightLb": 0.0,
-            "price": "2 SM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_perfume",
-            "name": "Parfüm (Perfume)",
-            "weightLb": 0.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_parchment",
-            "name": "Pergament (Parchment, 1 Blatt)",
-            "weightLb": 0.0,
-            "price": "1 SM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_priest_pack",
-            "name": "Priester-Ausrüstung (Priest's Pack)",
-            "weightLb": 29.0,
-            "price": "33 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_ram_portable",
-            "name": "Rammbock (Ram, Portable)",
-            "weightLb": 35.0,
-            "price": "4 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_rations",
-            "name": "Rationen (Rations, 1 Tag)",
-            "weightLb": 2.0,
-            "price": "5 SM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_robe",
-            "name": "Robe (Robe)",
-            "weightLb": 4.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_backpack",
-            "name": "Rucksack (Backpack)",
-            "weightLb": 5.0,
-            "price": "2 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_sack",
-            "name": "Sack (Sack)",
-            "weightLb": 0.5,
-            "price": "1 KM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_acid",
-            "name": "Säure (Acid)",
-            "weightLb": 1.0,
-            "price": "25 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_shovel",
-            "name": "Schaufel (Shovel)",
-            "weightLb": 5.0,
-            "price": "2 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_bedroll",
-            "name": "Schlafsack (Bedroll)",
-            "weightLb": 7.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_lock",
-            "name": "Schloss (Lock)",
-            "weightLb": 1.0,
-            "price": "10 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_string",
-            "name": "Schnur, 3 m / 2 Felder (String)",
-            "weightLb": 0.0,
-            "price": "1 SM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_ink_pen",
-            "name": "Schreibfeder (Ink Pen)",
-            "weightLb": 0.0,
-            "price": "2 KM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_rope",
-            "name": "Seil, 15 m / 10 Felder (Rope)",
-            "weightLb": 5.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_signal_whistle",
-            "name": "Signalpfeife (Signal Whistle)",
-            "weightLb": 0.0,
-            "price": "5 KM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_mirror",
-            "name": "Spiegel, Stahl (Mirror)",
-            "weightLb": 0.5,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_spikes_iron",
-            "name": "Spikes, Eisen (Spikes, Iron, 10 Stück)",
-            "weightLb": 5.0,
-            "price": "1 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_pole",
-            "name": "Stange, 3 m / 2 Felder (Pole)",
-            "weightLb": 7.0,
-            "price": "5 KM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_ink",
-            "name": "Tinte (Ink)",
-            "weightLb": 0.0,
-            "price": "10 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_pouch",
-            "name": "Tasche / Beutel (Pouch)",
-            "weightLb": 1.0,
-            "price": "5 SM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_chest",
-            "name": "Truhe (Chest)",
-            "weightLb": 25.0,
-            "price": "5 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_spyglass",
-            "name": "Teleskop / Fernrohr (Spyglass)",
-            "weightLb": 1.0,
-            "price": "1.000 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_entertainer_pack",
-            "name": "Unterhalter-Ausrüstung (Entertainer's Pack)",
-            "weightLb": 58.5,
-            "price": "40 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_holy_water",
-            "name": "Weihwasser (Holy Water)",
-            "weightLb": 1.0,
-            "price": "25 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_waterskin",
-            "name": "Trinkschlauch (Waterskin, voll)",
-            "weightLb": 5.0,
-            "price": "2 SM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_scroll_cantrip",
-            "name": "Zauberspruchrolle: Zaubertrick (Cantrip)",
-            "weightLb": 0.0,
-            "price": "30 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_scroll_level1",
-            "name": "Zauberspruchrolle: Stufe 1",
-            "weightLb": 0.0,
-            "price": "50 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_tent",
-            "name": "Zelt (Tent)",
-            "weightLb": 20.0,
-            "price": "2 GM",
-            "category": "Ausrüstung"
-        },
-        {
-            "id": "gear_tinderbox",
-            "name": "Zunderkästchen (Tinderbox)",
-            "weightLb": 1.0,
-            "price": "5 SM",
-            "category": "Ausrüstung"
-        }
-    ],
-    "mounts_and_vehicles": [
-        {
-            "id": "mnt_elephant",
-            "name": "Elefant (Elephant)",
-            "category": "Reittier/Zugtier",
-            "capacityLb": 1320.0,
-            "price": "200 GM"
-        },
-        {
-            "id": "mnt_camel",
-            "name": "Kamel (Camel)",
-            "category": "Reittier/Zugtier",
-            "capacityLb": 450.0,
-            "price": "50 GM"
-        },
-        {
-            "id": "mnt_mastiff",
-            "name": "Mastiff",
-            "category": "Reittier/Zugtier",
-            "capacityLb": 195.0,
-            "price": "25 GM"
-        },
-        {
-            "id": "mnt_mule",
-            "name": "Maultier (Mule)",
-            "category": "Reittier/Zugtier",
-            "capacityLb": 420.0,
-            "price": "8 GM"
-        },
-        {
-            "id": "mnt_pony",
-            "name": "Pony",
-            "category": "Reittier/Zugtier",
-            "capacityLb": 225.0,
-            "price": "30 GM"
-        },
-        {
-            "id": "mnt_horse_riding",
-            "name": "Reitpferd (Horse, Riding)",
-            "category": "Reittier/Zugtier",
-            "capacityLb": 480.0,
-            "price": "75 GM"
-        },
-        {
-            "id": "mnt_warhorse",
-            "name": "Schlachtross (Warhorse)",
-            "category": "Reittier/Zugtier",
-            "capacityLb": 540.0,
-            "price": "400 GM"
-        },
-        {
-            "id": "mnt_horse_draft",
-            "name": "Zugpferd (Horse, Draft)",
-            "category": "Reittier/Zugtier",
-            "capacityLb": 540.0,
-            "price": "50 GM"
-        },
-        {
-            "id": "veh_feed",
-            "name": "Futter, pro Tag (Feed)",
-            "category": "Fahrzeugausrüstung",
-            "weightLb": 10.0,
-            "price": "5 KM"
-        },
-        {
-            "id": "veh_cart",
-            "name": "Karren (Cart)",
-            "category": "Fahrzeug (Land)",
-            "weightLb": 200.0,
-            "price": "15 GM"
-        },
-        {
-            "id": "veh_carriage",
-            "name": "Kutsche (Carriage)",
-            "category": "Fahrzeug (Land)",
-            "weightLb": 600.0,
-            "price": "100 GM"
-        },
-        {
-            "id": "veh_saddle_exotic",
-            "name": "Sattel, Exotisch (Saddle, Exotic)",
-            "category": "Fahrzeugausrüstung",
-            "weightLb": 40.0,
-            "price": "60 GM"
-        },
-        {
-            "id": "veh_saddle_military",
-            "name": "Sattel, Militär (Saddle, Military)",
-            "category": "Fahrzeugausrüstung",
-            "weightLb": 30.0,
-            "price": "20 GM"
-        },
-        {
-            "id": "veh_saddle_riding",
-            "name": "Sattel, Reit- (Saddle, Riding)",
-            "category": "Fahrzeugausrüstung",
-            "weightLb": 25.0,
-            "price": "10 GM"
-        },
-        {
-            "id": "veh_sled",
-            "name": "Schlitten (Sled)",
-            "category": "Fahrzeug (Land)",
-            "weightLb": 300.0,
-            "price": "20 GM"
-        },
-        {
-            "id": "veh_stabling",
-            "name": "Stallung, pro Tag (Stabling)",
-            "category": "Dienstleistung",
-            "weightLb": 0.0,
-            "price": "5 SM"
-        },
-        {
-            "id": "veh_chariot",
-            "name": "Streitwagen (Chariot)",
-            "category": "Fahrzeug (Land)",
-            "weightLb": 100.0,
-            "price": "250 GM"
-        },
-        {
-            "id": "veh_wagon",
-            "name": "Wagen (Wagon)",
-            "category": "Fahrzeug (Land)",
-            "weightLb": 400.0,
-            "price": "35 GM"
-        },
-        {
-            "id": "veh_galley",
-            "name": "Galeere (Galley)",
-            "category": "Fahrzeug (Wasser)",
-            "speed": "4 mph",
-            "crew": 80,
-            "passengers": 150,
-            "cargo": "15 Tonnen",
-            "ac": 15,
-            "hp": 500,
-            "price": "30.000 GM"
-        },
-        {
-            "id": "veh_keelboat",
-            "name": "Kielboot (Keelboat)",
-            "category": "Fahrzeug (Wasser)",
-            "speed": "1 mph",
-            "crew": 1,
-            "passengers": 6,
-            "cargo": "0,5 Tonnen",
-            "ac": 15,
-            "hp": 100,
-            "price": "3.000 GM"
-        },
-        {
-            "id": "veh_longship",
-            "name": "Langschiff (Longship)",
-            "category": "Fahrzeug (Wasser)",
-            "speed": "3 mph",
-            "crew": 40,
-            "passengers": 150,
-            "cargo": "10 Tonnen",
-            "ac": 15,
-            "hp": 300,
-            "price": "10.000 GM"
-        },
-        {
-            "id": "veh_airship",
-            "name": "Luftschiff (Airship)",
-            "category": "Fahrzeug (Luft)",
-            "speed": "8 mph",
-            "crew": 10,
-            "passengers": 20,
-            "cargo": "1 Tonne",
-            "ac": 13,
-            "hp": 300,
-            "price": "40.000 GM"
-        },
-        {
-            "id": "veh_rowboat",
-            "name": "Ruderboot (Rowboat)",
-            "category": "Fahrzeug (Wasser)",
-            "speed": "1,5 mph",
-            "crew": 1,
-            "passengers": 3,
-            "cargo": "0",
-            "ac": 11,
-            "hp": 50,
-            "price": "50 GM"
-        },
-        {
-            "id": "veh_sailingship",
-            "name": "Segelschiff (Sailing Ship)",
-            "category": "Fahrzeug (Wasser)",
-            "speed": "2 mph",
-            "crew": 20,
-            "passengers": 20,
-            "cargo": "100 Tonnen",
-            "ac": 15,
-            "hp": 300,
-            "price": "10.000 GM"
-        },
-        {
-            "id": "veh_warship",
-            "name": "Kriegsschiff (Warship)",
-            "category": "Fahrzeug (Wasser)",
-            "speed": "2,5 mph",
-            "crew": 60,
-            "passengers": 60,
-            "cargo": "200 Tonnen",
-            "ac": 15,
-            "hp": 500,
-            "price": "25.000 GM"
-        }
-    ],
-    "gear": [
-        {"id": "gear_alchemistenfeuer", "name": "Alchemistenfeuer (Alchemist's Fire)", "weightLb": 1.0, "price": "50 GM"},
-        {"id": "gear_arkaner_fokus_kristall", "name": "Arkaner Fokus: Kristall (Crystal)", "weightLb": 1.0, "price": "10 GM"},
-        {"id": "gear_arkaner_fokus_kugel", "name": "Arkaner Fokus: Kugel (Orb)", "weightLb": 3.0, "price": "20 GM"},
-        {"id": "gear_arkaner_fokus_rute", "name": "Arkaner Fokus: Rute (Rod)", "weightLb": 2.0, "price": "10 GM"},
-        {"id": "gear_arkaner_fokus_stab", "name": "Arkaner Fokus: Stab (Staff)", "weightLb": 4.0, "price": "5 GM"},
-        {"id": "gear_arkaner_fokus_zauberstab", "name": "Arkaner Fokus: Zauberstab (Wand)", "weightLb": 1.0, "price": "10 GM"},
-        {"id": "gear_brecheisen", "name": "Brecheisen (Crowbar)", "weightLb": 5.0, "price": "2 GM"},
-        {"id": "gear_buch", "name": "Buch (Book)", "weightLb": 5.0, "price": "25 GM"},
-        {"id": "gear_decke", "name": "Decke (Blanket)", "weightLb": 3.0, "price": "5 SM"},
-        {"id": "gear_diplomaten_ausruestung", "name": "Diplomaten-Ausrüstung (Diplomat's Pack)", "weightLb": 39.0, "price": "39 GM"},
-        {"id": "gear_druidischer_fokus_eiben", "name": "Druidischer Fokus: Eiben-Zauberstab", "weightLb": 1.0, "price": "10 GM"},
-        {"id": "gear_druidischer_fokus_holzstab", "name": "Druidischer Fokus: Holzstab", "weightLb": 4.0, "price": "5 GM"},
-        {"id": "gear_druidischer_fokus_mistelzweig", "name": "Druidischer Fokus: Mistelzweig", "weightLb": 0.0, "price": "1 GM"},
-        {"id": "gear_eimer", "name": "Eimer (Bucket)", "weightLb": 2.0, "price": "5 KM"},
-        {"id": "gear_einbrecher_ausruestung", "name": "Einbrecher-Ausrüstung (Burglar's Pack)", "weightLb": 42.0, "price": "16 GM"},
-        {"id": "gear_eisentopf", "name": "Eisentopf (Pot, Iron)", "weightLb": 10.0, "price": "2 GM"},
-        {"id": "gear_entdecker_ausruestung", "name": "Entdecker-Ausrüstung (Explorer's Pack)", "weightLb": 55.0, "price": "10 GM"},
-        {"id": "gear_fackel", "name": "Fackel (Torch)", "weightLb": 1.0, "price": "1 KM"},
-        {"id": "gear_fass", "name": "Fass (Barrel)", "weightLb": 70.0, "price": "2 GM"},
-        {"id": "gear_flachmann", "name": "Flachmann (Flask)", "weightLb": 1.0, "price": "2 KM"},
-        {"id": "gear_flaschenzug", "name": "Flaschenzug (Block and Tackle)", "weightLb": 5.0, "price": "1 GM"},
-        {"id": "gear_flaeschchen", "name": "Fläschchen (Vial)", "weightLb": 0.0, "price": "1 GM"},
-        {"id": "gear_gegengift", "name": "Gegengift (Antitoxin)", "weightLb": 0.0, "price": "50 GM"},
-        {"id": "gear_gelehrten_ausruestung", "name": "Gelehrten-Ausrüstung (Scholar's Pack)", "weightLb": 22.0, "price": "40 GM"},
-        {"id": "gear_gewoelbeforscher_ausruestung", "name": "Gewölbeforscher-Ausrüstung (Dungeoneer's Pack)", "weightLb": 55.0, "price": "12 GM"},
-        {"id": "gear_gift_basis", "name": "Gift, Basis (Poison, Basic)", "weightLb": 0.0, "price": "100 GM"},
-        {"id": "gear_glasflasche", "name": "Glasflasche (Bottle, Glass)", "weightLb": 2.0, "price": "2 GM"},
-        {"id": "gear_glocke", "name": "Glocke (Bell)", "weightLb": 0.0, "price": "1 GM"},
-        {"id": "gear_handschellen", "name": "Handschellen (Manacles)", "weightLb": 6.0, "price": "2 GM"},
-        {"id": "gear_heiler_satz", "name": "Heiler-Satz (Healer's Kit)", "weightLb": 3.0, "price": "5 GM"},
-        {"id": "gear_heiliges_symbol_amulett", "name": "Heiliges Symbol: Amulett (Amulet)", "weightLb": 1.0, "price": "5 GM"},
-        {"id": "gear_heiliges_symbol_emblem", "name": "Heiliges Symbol: Emblem (Emblem)", "weightLb": 0.0, "price": "5 GM"},
-        {"id": "gear_heiliges_symbol_reliquie", "name": "Heiliges Symbol: Reliquie (Reliquary)", "weightLb": 2.0, "price": "5 GM"},
-        {"id": "gear_heiltrank", "name": "Heiltrank (Potion of Healing)", "weightLb": 0.5, "price": "50 GM"},
-        {"id": "gear_jagdfalle", "name": "Jagdfalle (Hunting Trap)", "weightLb": 25.0, "price": "5 GM"},
-        {"id": "gear_karten_behaelter", "name": "Karten-/Schriftrollenbehälter (Case, Map/Scroll)", "weightLb": 1.0, "price": "1 GM"},
-        {"id": "gear_karte", "name": "Karte (Map)", "weightLb": 0.0, "price": "1 GM"},
-        {"id": "gear_kerze", "name": "Kerze (Candle)", "weightLb": 0.0, "price": "1 KM"},
-        {"id": "gear_kette", "name": "Kette, 3 m / 2 Felder (Chain)", "weightLb": 10.0, "price": "5 GM"},
-        {"id": "gear_kleidung_fein", "name": "Kleidung, fein (Clothes, Fine)", "weightLb": 6.0, "price": "15 GM"},
-        {"id": "gear_kleidung_reise", "name": "Kleidung, Reise (Clothes, Traveler's)", "weightLb": 4.0, "price": "2 GM"},
-        {"id": "gear_kletterausruestung", "name": "Kletterausrüstung (Climber's Kit)", "weightLb": 12.0, "price": "25 GM"},
-        {"id": "gear_koecher", "name": "Köcher (Quiver)", "weightLb": 1.0, "price": "1 GM"},
-        {"id": "gear_korb", "name": "Korb (Basket)", "weightLb": 2.0, "price": "4 SM"},
-        {"id": "gear_kostuem", "name": "Kostüm (Costume)", "weightLb": 4.0, "price": "5 GM"},
-        {"id": "gear_kraehenfuesse", "name": "Krähenfüße (Caltrops)", "weightLb": 2.0, "price": "1 GM"},
-        {"id": "gear_krug", "name": "Krug (Jug)", "weightLb": 4.0, "price": "2 KM"},
-        {"id": "gear_lampe", "name": "Lampe (Lamp)", "weightLb": 1.0, "price": "5 SM"},
-        {"id": "gear_lanterne_blend", "name": "Lanterne, Blend- (Lantern, Bullseye)", "weightLb": 2.0, "price": "10 GM"},
-        {"id": "gear_lanterne_kapuzen", "name": "Lanterne, Kapuzen- (Lantern, Hooded)", "weightLb": 2.0, "price": "5 GM"},
-        {"id": "gear_leiter", "name": "Leiter, 3 m / 2 Felder (Ladder)", "weightLb": 25.0, "price": "1 SM"},
-        {"id": "gear_lupe", "name": "Lupe (Magnifying Glass)", "weightLb": 0.0, "price": "100 GM"},
-        {"id": "gear_materialkomponentenbeutel", "name": "Materialkomponentenbeutel (Component Pouch)", "weightLb": 2.0, "price": "25 GM"},
-        {"id": "gear_metallkuegelchen", "name": "Metallkügelchen (Ball Bearings)", "weightLb": 2.0, "price": "1 GM"},
-        {"id": "gear_muni_bolzen", "name": "Munition: Bolzen (Bolts, 20)", "weightLb": 1.5, "price": "1 GM"},
-        {"id": "gear_muni_bolzenkoecher", "name": "Munition: Bolzenköcher (Crossbow Bolt Case)", "weightLb": 1.0, "price": "1 GM"},
-        {"id": "gear_muni_feuerwaffen_kugeln", "name": "Munition: Feuerwaffen-Kugeln (Bullets, 10)", "weightLb": 2.0, "price": "3 GM"},
-        {"id": "gear_muni_nadeln", "name": "Munition: Nadeln (Needles, 50)", "weightLb": 1.0, "price": "1 GM"},
-        {"id": "gear_muni_pfeile", "name": "Munition: Pfeile (Arrows, 20)", "weightLb": 1.0, "price": "1 GM"},
-        {"id": "gear_muni_schleuderkugeln", "name": "Munition: Schleuderkugeln (Sling Bullets, 20)", "weightLb": 1.5, "price": "4 KM"},
-        {"id": "gear_netz", "name": "Netz (Net)", "weightLb": 3.0, "price": "1 GM"},
-        {"id": "gear_oel", "name": "Öl (Oil, 1 Flasche)", "weightLb": 1.0, "price": "1 SM"},
-        {"id": "gear_papier", "name": "Papier (Paper, 1 Blatt)", "weightLb": 0.0, "price": "2 SM"},
-        {"id": "gear_parfuem", "name": "Parfüm (Perfume)", "weightLb": 0.0, "price": "5 GM"},
-        {"id": "gear_pergament_blatt", "name": "Pergament (Parchment, 1 Blatt)", "weightLb": 0.0, "price": "1 SM"},
-        {"id": "gear_priester_ausruestung", "name": "Priester-Ausrüstung (Priest's Pack)", "weightLb": 29.0, "price": "33 GM"},
-        {"id": "gear_rammbock", "name": "Rammbock (Ram, Portable)", "weightLb": 35.0, "price": "4 GM"},
-        {"id": "gear_rationen", "name": "Rationen (Rations, 1 Tag)", "weightLb": 2.0, "price": "5 SM"},
-        {"id": "gear_robe", "name": "Robe (Robe)", "weightLb": 4.0, "price": "1 GM"},
-        {"id": "gear_rucksack", "name": "Rucksack (Backpack)", "weightLb": 5.0, "price": "2 GM"},
-        {"id": "gear_sack", "name": "Sack (Sack)", "weightLb": 0.5, "price": "1 KM"},
-        {"id": "gear_saeure", "name": "Säure (Acid)", "weightLb": 1.0, "price": "25 GM"},
-        {"id": "gear_schaufel", "name": "Schaufel (Shovel)", "weightLb": 5.0, "price": "2 GM"},
-        {"id": "gear_schlafsack", "name": "Schlafsack (Bedroll)", "weightLb": 7.0, "price": "1 GM"},
-        {"id": "gear_schloss", "name": "Schloss (Lock)", "weightLb": 1.0, "price": "10 GM"},
-        {"id": "gear_schnur", "name": "Schnur, 3 m / 2 Felder (String)", "weightLb": 0.0, "price": "1 SM"},
-        {"id": "gear_schreibfeder", "name": "Schreibfeder (Ink Pen)", "weightLb": 0.0, "price": "2 KM"},
-        {"id": "gear_seil", "name": "Seil, 15 m / 10 Felder (Rope)", "weightLb": 5.0, "price": "1 GM"},
-        {"id": "gear_signalpfeife", "name": "Signalpfeife (Signal Whistle)", "weightLb": 0.0, "price": "5 KM"},
-        {"id": "gear_spiegel", "name": "Spiegel, Stahl (Mirror)", "weightLb": 0.5, "price": "5 GM"},
-        {"id": "gear_spikes", "name": "Spikes, Eisen (Spikes, Iron, 10 Stück)", "weightLb": 5.0, "price": "1 GM"},
-        {"id": "gear_stange", "name": "Stange, 3 m / 2 Felder (Pole)", "weightLb": 7.0, "price": "5 KM"},
-        {"id": "gear_tinte", "name": "Tinte (Ink)", "weightLb": 0.0, "price": "10 GM"},
-        {"id": "gear_tasche", "name": "Tasche / Beutel (Pouch)", "weightLb": 1.0, "price": "5 SM"},
-        {"id": "gear_truhe", "name": "Truhe (Chest)", "weightLb": 25.0, "price": "5 GM"},
-        {"id": "gear_teleskop", "name": "Teleskop / Fernrohr (Spyglass)", "weightLb": 1.0, "price": "1.000 GM"},
-        {"id": "gear_unterhalter_ausruestung", "name": "Unterhalter-Ausrüstung (Entertainer's Pack)", "weightLb": 58.5, "price": "40 GM"},
-        {"id": "gear_weihwasser", "name": "Weihwasser (Holy Water)", "weightLb": 1.0, "price": "25 GM"},
-        {"id": "gear_trinkschlauch", "name": "Trinkschlauch (Waterskin, voll)", "weightLb": 5.0, "price": "2 SM"},
-        {"id": "gear_zauberspruchrolle_trick", "name": "Zauberspruchrolle: Zaubertrick (Cantrip)", "weightLb": 0.0, "price": "30 GM"},
-        {"id": "gear_zauberspruchrolle_stufe1", "name": "Zauberspruchrolle: Stufe 1", "weightLb": 0.0, "price": "50 GM"},
-        {"id": "gear_zelt", "name": "Zelt (Tent)", "weightLb": 20.0, "price": "2 GM"},
-        {"id": "gear_zunderkaestchen", "name": "Zunderkästchen (Tinderbox)", "weightLb": 1.0, "price": "5 SM"}
-    ]
+  "weapons": [
+    {
+      "id": "weap_club",
+      "name": "Knüppel (Club)",
+      "category": "Einfache Nahkampfwaffen",
+      "damage": "1W4 Wucht",
+      "properties": [
+        "Leicht"
+      ],
+      "mastery": "Verlangsamen",
+      "weightLb": 2,
+      "price": "1 SM"
+    },
+    {
+      "id": "weap_dagger",
+      "name": "Dolch (Dagger)",
+      "category": "Einfache Nahkampfwaffen",
+      "damage": "1W4 Stich",
+      "properties": [
+        "Finesse",
+        "Leicht",
+        "Wurfwaffe (20/60)"
+      ],
+      "mastery": "Kerbe",
+      "weightLb": 1,
+      "price": "2 GM"
+    },
+    {
+      "id": "weap_greatclub",
+      "name": "Großknüppel (Greatclub)",
+      "category": "Einfache Nahkampfwaffen",
+      "damage": "1W8 Wucht",
+      "properties": [
+        "Zweihändig"
+      ],
+      "mastery": "Stoß",
+      "weightLb": 10,
+      "price": "2 SM"
+    },
+    {
+      "id": "weap_handaxe",
+      "name": "Handaxt (Handaxe)",
+      "category": "Einfache Nahkampfwaffen",
+      "damage": "1W6 Hieb",
+      "properties": [
+        "Leicht",
+        "Wurfwaffe (20/60)"
+      ],
+      "mastery": "Ärgern",
+      "weightLb": 2,
+      "price": "5 GM"
+    },
+    {
+      "id": "weap_light_hammer",
+      "name": "Leichter Hammer (Light Hammer)",
+      "category": "Einfache Nahkampfwaffen",
+      "damage": "1W4 Wucht",
+      "properties": [
+        "Leicht",
+        "Wurfwaffe (20/60)"
+      ],
+      "mastery": "Kerbe",
+      "weightLb": 2,
+      "price": "2 GM"
+    },
+    {
+      "id": "weap_spear",
+      "name": "Speer (Spear)",
+      "category": "Einfache Nahkampfwaffen",
+      "damage": "1W6 Stich",
+      "properties": [
+        "Wurfwaffe (20/60)",
+        "Vielseitig (1W8)"
+      ],
+      "mastery": "Schwächen",
+      "weightLb": 3,
+      "price": "1 GM"
+    },
+    {
+      "id": "weap_mace",
+      "name": "Streitkolben (Mace)",
+      "category": "Einfache Nahkampfwaffen",
+      "damage": "1W6 Wucht",
+      "properties": [],
+      "mastery": "Schwächen",
+      "weightLb": 4,
+      "price": "5 GM"
+    },
+    {
+      "id": "weap_quarterstaff",
+      "name": "Kampfstab (Quarterstaff)",
+      "category": "Einfache Nahkampfwaffen",
+      "damage": "1W6 Wucht",
+      "properties": [
+        "Vielseitig (1W8)"
+      ],
+      "mastery": "Umwerfen",
+      "weightLb": 4,
+      "price": "2 SM"
+    },
+    {
+      "id": "weap_sickle",
+      "name": "Sichel (Sickle)",
+      "category": "Einfache Nahkampfwaffen",
+      "damage": "1W4 Hieb",
+      "properties": [
+        "Leicht"
+      ],
+      "mastery": "Kerbe",
+      "weightLb": 2,
+      "price": "1 GM"
+    },
+    {
+      "id": "weap_javelin",
+      "name": "Wurfspeer (Javelin)",
+      "category": "Einfache Nahkampfwaffen",
+      "damage": "1W6 Stich",
+      "properties": [
+        "Wurfwaffe (30/120)"
+      ],
+      "mastery": "Verlangsamen",
+      "weightLb": 2,
+      "price": "5 SM"
+    },
+    {
+      "id": "weap_shortbow",
+      "name": "Kurzbogen (Shortbow)",
+      "category": "Einfache Fernkampfwaffen",
+      "damage": "1W6 Stich",
+      "properties": [
+        "Munition (80/320)",
+        "Zweihändig"
+      ],
+      "mastery": "Ärgern",
+      "weightLb": 2,
+      "price": "25 GM"
+    },
+    {
+      "id": "weap_light_crossbow",
+      "name": "Leichte Armbrust (Light Crossbow)",
+      "category": "Einfache Fernkampfwaffen",
+      "damage": "1W8 Stich",
+      "properties": [
+        "Munition (80/320)",
+        "Ladeeigenschaft",
+        "Zweihändig"
+      ],
+      "mastery": "Verlangsamen",
+      "weightLb": 5,
+      "price": "25 GM"
+    },
+    {
+      "id": "weap_sling",
+      "name": "Schleuder (Sling)",
+      "category": "Einfache Fernkampfwaffen",
+      "damage": "1W4 Wucht",
+      "properties": [
+        "Munition (30/120)"
+      ],
+      "mastery": "Verlangsamen",
+      "weightLb": 0,
+      "price": "1 SM"
+    },
+    {
+      "id": "weap_dart",
+      "name": "Wurfpfeil (Dart)",
+      "category": "Einfache Fernkampfwaffen",
+      "damage": "1W4 Stich",
+      "properties": [
+        "Finesse",
+        "Wurfwaffe (20/60)"
+      ],
+      "mastery": "Ärgern",
+      "weightLb": 0.25,
+      "price": "5 KM"
+    },
+    {
+      "id": "weap_trident",
+      "name": "Dreizack (Trident)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W8 Stich",
+      "properties": [
+        "Wurfwaffe (20/60)",
+        "Vielseitig (1W10)"
+      ],
+      "mastery": "Umwerfen",
+      "weightLb": 4,
+      "price": "5 GM"
+    },
+    {
+      "id": "weap_flail",
+      "name": "Flegel (Flail)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W8 Wucht",
+      "properties": [],
+      "mastery": "Schwächen",
+      "weightLb": 2,
+      "price": "10 GM"
+    },
+    {
+      "id": "weap_glaive",
+      "name": "Glefe (Glaive)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W10 Hieb",
+      "properties": [
+        "Schwer",
+        "Reichweite",
+        "Zweihändig"
+      ],
+      "mastery": "Streifen",
+      "weightLb": 6,
+      "price": "20 GM"
+    },
+    {
+      "id": "weap_maul",
+      "name": "Hammer (Maul)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "2W6 Wucht",
+      "properties": [
+        "Schwer",
+        "Zweihändig"
+      ],
+      "mastery": "Umwerfen",
+      "weightLb": 10,
+      "price": "10 GM"
+    },
+    {
+      "id": "weap_halberd",
+      "name": "Hellebarde (Halberd)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W10 Hieb",
+      "properties": [
+        "Schwer",
+        "Reichweite",
+        "Zweihändig"
+      ],
+      "mastery": "Spalten",
+      "weightLb": 6,
+      "price": "20 GM"
+    },
+    {
+      "id": "weap_warhammer",
+      "name": "Kriegshammer (Warhammer)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W8 Wucht",
+      "properties": [
+        "Vielseitig (1W10)"
+      ],
+      "mastery": "Stoß",
+      "weightLb": 5,
+      "price": "15 GM"
+    },
+    {
+      "id": "weap_scimitar",
+      "name": "Krummsäbel (Scimitar)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W6 Hieb",
+      "properties": [
+        "Finesse",
+        "Leicht"
+      ],
+      "mastery": "Kerbe",
+      "weightLb": 3,
+      "price": "25 GM"
+    },
+    {
+      "id": "weap_shortsword",
+      "name": "Kurzschwert (Shortsword)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W6 Stich",
+      "properties": [
+        "Finesse",
+        "Leicht"
+      ],
+      "mastery": "Ärgern",
+      "weightLb": 2,
+      "price": "10 GM"
+    },
+    {
+      "id": "weap_longsword",
+      "name": "Langschwert (Longsword)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W8 Hieb",
+      "properties": [
+        "Vielseitig (1W10)"
+      ],
+      "mastery": "Schwächen",
+      "weightLb": 3,
+      "price": "15 GM"
+    },
+    {
+      "id": "weap_lance",
+      "name": "Lanze (Lance)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W10 Stich",
+      "properties": [
+        "Schwer",
+        "Reichweite",
+        "Zweihändig (außer beritten)"
+      ],
+      "mastery": "Umwerfen",
+      "weightLb": 6,
+      "price": "10 GM"
+    },
+    {
+      "id": "weap_morningstar",
+      "name": "Morgenstern (Morningstar)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W8 Stich",
+      "properties": [],
+      "mastery": "Schwächen",
+      "weightLb": 4,
+      "price": "15 GM"
+    },
+    {
+      "id": "weap_whip",
+      "name": "Peitsche (Whip)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W4 Hieb",
+      "properties": [
+        "Finesse",
+        "Reichweite"
+      ],
+      "mastery": "Verlangsamen",
+      "weightLb": 3,
+      "price": "2 GM"
+    },
+    {
+      "id": "weap_pike",
+      "name": "Pike (Pike)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W10 Stich",
+      "properties": [
+        "Schwer",
+        "Reichweite",
+        "Zweihändig"
+      ],
+      "mastery": "Stoß",
+      "weightLb": 18,
+      "price": "5 GM"
+    },
+    {
+      "id": "weap_rapier",
+      "name": "Rapier (Rapier)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W8 Stich",
+      "properties": [
+        "Finesse"
+      ],
+      "mastery": "Ärgern",
+      "weightLb": 2,
+      "price": "25 GM"
+    },
+    {
+      "id": "weap_war_pick",
+      "name": "Spitzhacke (War Pick)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W8 Stich",
+      "properties": [
+        "Vielseitig (1W10)"
+      ],
+      "mastery": "Schwächen",
+      "weightLb": 2,
+      "price": "5 GM"
+    },
+    {
+      "id": "weap_battleaxe",
+      "name": "Streitaxt (Battleaxe)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W8 Hieb",
+      "properties": [
+        "Vielseitig (1W10)"
+      ],
+      "mastery": "Umwerfen",
+      "weightLb": 4,
+      "price": "10 GM"
+    },
+    {
+      "id": "weap_greataxe",
+      "name": "Zweihandaxt (Greataxe)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "1W12 Hieb",
+      "properties": [
+        "Schwer",
+        "Zweihändig"
+      ],
+      "mastery": "Spalten",
+      "weightLb": 7,
+      "price": "30 GM"
+    },
+    {
+      "id": "weap_greatsword",
+      "name": "Zweihänder (Greatsword)",
+      "category": "Kriegs-Nahkampfwaffen",
+      "damage": "2W6 Hieb",
+      "properties": [
+        "Schwer",
+        "Zweihändig"
+      ],
+      "mastery": "Streifen",
+      "weightLb": 6,
+      "price": "50 GM"
+    },
+    {
+      "id": "weap_blowgun",
+      "name": "Blasrohr (Blowgun)",
+      "category": "Kriegs-Fernkampfwaffen",
+      "damage": "1 Stich",
+      "properties": [
+        "Munition (25/100)",
+        "Ladeeigenschaft"
+      ],
+      "mastery": "Ärgern",
+      "weightLb": 1,
+      "price": "10 GM"
+    },
+    {
+      "id": "weap_hand_crossbow",
+      "name": "Handarmbrust (Hand Crossbow)",
+      "category": "Kriegs-Fernkampfwaffen",
+      "damage": "1W6 Stich",
+      "properties": [
+        "Munition (30/120)",
+        "Leicht",
+        "Ladeeigenschaft"
+      ],
+      "mastery": "Ärgern",
+      "weightLb": 3,
+      "price": "75 GM"
+    },
+    {
+      "id": "weap_longbow",
+      "name": "Langbogen (Longbow)",
+      "category": "Kriegs-Fernkampfwaffen",
+      "damage": "1W8 Stich",
+      "properties": [
+        "Munition (150/600)",
+        "Schwer",
+        "Zweihändig"
+      ],
+      "mastery": "Verlangsamen",
+      "weightLb": 2,
+      "price": "50 GM"
+    },
+    {
+      "id": "weap_musket",
+      "name": "Muskete (Musket)",
+      "category": "Kriegs-Fernkampfwaffen",
+      "damage": "1W12 Stich",
+      "properties": [
+        "Munition (40/120)",
+        "Ladeeigenschaft",
+        "Zweihändig"
+      ],
+      "mastery": "Verlangsamen",
+      "weightLb": 10,
+      "price": "500 GM"
+    },
+    {
+      "id": "weap_pistol",
+      "name": "Pistole (Pistol)",
+      "category": "Kriegs-Fernkampfwaffen",
+      "damage": "1W10 Stich",
+      "properties": [
+        "Munition (30/90)",
+        "Ladeeigenschaft"
+      ],
+      "mastery": "Ärgern",
+      "weightLb": 3,
+      "price": "250 GM"
+    },
+    {
+      "id": "weap_heavy_crossbow",
+      "name": "Schwere Armbrust (Heavy Crossbow)",
+      "category": "Kriegs-Fernkampfwaffen",
+      "damage": "1W10 Stich",
+      "properties": [
+        "Munition (100/400)",
+        "Schwer",
+        "Ladeeigenschaft",
+        "Zweihändig"
+      ],
+      "mastery": "Stoß",
+      "weightLb": 18,
+      "price": "50 GM"
+    }
+  ],
+  "armor": [
+    {
+      "id": "arm_padded",
+      "name": "Wattiert (Padded)",
+      "category": "Leichte Rüstung",
+      "baseAC": 11,
+      "addDexModifier": true,
+      "maxDexModifier": null,
+      "stealthDisadvantage": true,
+      "strengthRequirement": 0,
+      "weightLb": 8,
+      "price": "5 GM"
+    },
+    {
+      "id": "arm_leather",
+      "name": "Leder (Leather)",
+      "category": "Leichte Rüstung",
+      "baseAC": 11,
+      "addDexModifier": true,
+      "maxDexModifier": null,
+      "stealthDisadvantage": false,
+      "strengthRequirement": 0,
+      "weightLb": 10,
+      "price": "10 GM"
+    },
+    {
+      "id": "arm_studded_leather",
+      "name": "Beschlagenes Leder (Studded)",
+      "category": "Leichte Rüstung",
+      "baseAC": 12,
+      "addDexModifier": true,
+      "maxDexModifier": null,
+      "stealthDisadvantage": false,
+      "strengthRequirement": 0,
+      "weightLb": 13,
+      "price": "45 GM"
+    },
+    {
+      "id": "arm_hide",
+      "name": "Fell (Hide)",
+      "category": "Mittelschwere Rüstung",
+      "baseAC": 12,
+      "addDexModifier": true,
+      "maxDexModifier": 2,
+      "stealthDisadvantage": false,
+      "strengthRequirement": 0,
+      "weightLb": 12,
+      "price": "10 GM"
+    },
+    {
+      "id": "arm_chain_shirt",
+      "name": "Kettenhemd (Chain Shirt)",
+      "category": "Mittelschwere Rüstung",
+      "baseAC": 13,
+      "addDexModifier": true,
+      "maxDexModifier": 2,
+      "stealthDisadvantage": false,
+      "strengthRequirement": 0,
+      "weightLb": 20,
+      "price": "50 GM"
+    },
+    {
+      "id": "arm_scale_mail",
+      "name": "Schuppenpanzer (Scale Mail)",
+      "category": "Mittelschwere Rüstung",
+      "baseAC": 14,
+      "addDexModifier": true,
+      "maxDexModifier": 2,
+      "stealthDisadvantage": true,
+      "strengthRequirement": 0,
+      "weightLb": 45,
+      "price": "50 GM"
+    },
+    {
+      "id": "arm_breastplate",
+      "name": "Brustplatte (Breastplate)",
+      "category": "Mittelschwere Rüstung",
+      "baseAC": 14,
+      "addDexModifier": true,
+      "maxDexModifier": 2,
+      "stealthDisadvantage": false,
+      "strengthRequirement": 0,
+      "weightLb": 20,
+      "price": "400 GM"
+    },
+    {
+      "id": "arm_half_plate",
+      "name": "Halber Plattenpanzer (Half Plate)",
+      "category": "Mittelschwere Rüstung",
+      "baseAC": 15,
+      "addDexModifier": true,
+      "maxDexModifier": 2,
+      "stealthDisadvantage": true,
+      "strengthRequirement": 0,
+      "weightLb": 40,
+      "price": "750 GM"
+    },
+    {
+      "id": "arm_ring_mail",
+      "name": "Ringpanzer (Ring Mail)",
+      "category": "Schwere Rüstung",
+      "baseAC": 14,
+      "addDexModifier": false,
+      "maxDexModifier": 0,
+      "stealthDisadvantage": true,
+      "strengthRequirement": 0,
+      "weightLb": 40,
+      "price": "30 GM"
+    },
+    {
+      "id": "arm_chain_mail",
+      "name": "Kettenpanzer (Chain Mail)",
+      "category": "Schwere Rüstung",
+      "baseAC": 16,
+      "addDexModifier": false,
+      "maxDexModifier": 0,
+      "stealthDisadvantage": true,
+      "strengthRequirement": 13,
+      "weightLb": 55,
+      "price": "75 GM"
+    },
+    {
+      "id": "arm_splint",
+      "name": "Schienenpanzer (Splint Armor)",
+      "category": "Schwere Rüstung",
+      "baseAC": 17,
+      "addDexModifier": false,
+      "maxDexModifier": 0,
+      "stealthDisadvantage": true,
+      "strengthRequirement": 15,
+      "weightLb": 60,
+      "price": "200 GM"
+    },
+    {
+      "id": "arm_plate",
+      "name": "Plattenpanzer (Plate Armor)",
+      "category": "Schwere Rüstung",
+      "baseAC": 18,
+      "addDexModifier": false,
+      "maxDexModifier": 0,
+      "stealthDisadvantage": true,
+      "strengthRequirement": 15,
+      "weightLb": 65,
+      "price": "1.500 GM"
+    },
+    {
+      "id": "arm_shield",
+      "name": "Schild (Shield)",
+      "category": "Schilde",
+      "baseAC": 2,
+      "addDexModifier": false,
+      "maxDexModifier": null,
+      "stealthDisadvantage": false,
+      "strengthRequirement": 0,
+      "weightLb": 6,
+      "price": "10 GM"
+    }
+  ],
+  "tools": [
+    {
+      "id": "tool_alchemist",
+      "name": "Alchemisten-Zubehör (Alchemist's Supplies)",
+      "category": "Handwerkszeug",
+      "weightLb": 8,
+      "price": "50 GM"
+    },
+    {
+      "id": "tool_brewer",
+      "name": "Brauer-Zubehör (Brewer's Supplies)",
+      "category": "Handwerkszeug",
+      "weightLb": 9,
+      "price": "20 GM"
+    },
+    {
+      "id": "tool_glassblower",
+      "name": "Glasbläser-Werkzeug (Glassblower's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 5,
+      "price": "30 GM"
+    },
+    {
+      "id": "tool_woodcarver",
+      "name": "Holzschnitzer-Werkzeug (Woodcarver's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 5,
+      "price": "1 GM"
+    },
+    {
+      "id": "tool_jeweler",
+      "name": "Juwelier-Werkzeug (Jeweler's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 2,
+      "price": "25 GM"
+    },
+    {
+      "id": "tool_calligrapher",
+      "name": "Kalligrafen-Zubehör (Calligrapher's Supplies)",
+      "category": "Handwerkszeug",
+      "weightLb": 5,
+      "price": "10 GM"
+    },
+    {
+      "id": "tool_cartographer",
+      "name": "Kartografen-Werkzeug (Cartographer's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 6,
+      "price": "15 GM"
+    },
+    {
+      "id": "tool_cook",
+      "name": "Kochutensilien (Cook's Utensils)",
+      "category": "Handwerkszeug",
+      "weightLb": 8,
+      "price": "1 GM"
+    },
+    {
+      "id": "tool_leatherworker",
+      "name": "Lederer-Werkzeug (Leatherworker's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 5,
+      "price": "5 GM"
+    },
+    {
+      "id": "tool_painter",
+      "name": "Maler-Zubehör (Painter's Supplies)",
+      "category": "Handwerkszeug",
+      "weightLb": 5,
+      "price": "10 GM"
+    },
+    {
+      "id": "tool_mason",
+      "name": "Maurer-Werkzeug (Mason's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 8,
+      "price": "10 GM"
+    },
+    {
+      "id": "tool_smith",
+      "name": "Schmiede-Werkzeug (Smith's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 8,
+      "price": "20 GM"
+    },
+    {
+      "id": "tool_cobbler",
+      "name": "Schuhmacher-Werkzeug (Cobbler's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 5,
+      "price": "5 GM"
+    },
+    {
+      "id": "tool_potter",
+      "name": "Töpfer-Werkzeug (Potter's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 3,
+      "price": "10 GM"
+    },
+    {
+      "id": "tool_tinker",
+      "name": "Tüftler-Werkzeug (Tinker's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 10,
+      "price": "50 GM"
+    },
+    {
+      "id": "tool_weaver",
+      "name": "Weber-Werkzeug (Weaver's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 5,
+      "price": "1 GM"
+    },
+    {
+      "id": "tool_carpenter",
+      "name": "Zimmerer-Werkzeug (Carpenter's Tools)",
+      "category": "Handwerkszeug",
+      "weightLb": 6,
+      "price": "8 GM"
+    },
+    {
+      "id": "tool_thieves",
+      "name": "Diebeswerkzeug (Thieves' Tools)",
+      "category": "Sonstige Werkzeuge",
+      "weightLb": 1,
+      "price": "25 GM"
+    },
+    {
+      "id": "tool_forgery",
+      "name": "Fälscher-Ausrüstung (Forgery Kit)",
+      "category": "Sonstige Werkzeuge",
+      "weightLb": 5,
+      "price": "15 GM"
+    },
+    {
+      "id": "tool_poisoner",
+      "name": "Giftmischer-Ausrüstung (Poisoner's Kit)",
+      "category": "Sonstige Werkzeuge",
+      "weightLb": 2,
+      "price": "50 GM"
+    },
+    {
+      "id": "tool_herbalism",
+      "name": "Kräuterkunde-Ausrüstung (Herbalism Kit)",
+      "category": "Sonstige Werkzeuge",
+      "weightLb": 3,
+      "price": "5 GM"
+    },
+    {
+      "id": "tool_musical_instrument",
+      "name": "Musikinstrument (Musical Instrument)",
+      "category": "Sonstige Werkzeuge",
+      "weightLb": null,
+      "price": "Variiert"
+    },
+    {
+      "id": "tool_navigator",
+      "name": "Navigatoren-Werkzeug (Navigator's Tools)",
+      "category": "Sonstige Werkzeuge",
+      "weightLb": 2,
+      "price": "25 GM"
+    },
+    {
+      "id": "tool_gaming_set",
+      "name": "Spielset (Gaming Set)",
+      "category": "Sonstige Werkzeuge",
+      "weightLb": 0,
+      "price": "Variiert"
+    },
+    {
+      "id": "tool_disguise",
+      "name": "Verkleidungs-Ausrüstung (Disguise Kit)",
+      "category": "Sonstige Werkzeuge",
+      "weightLb": 3,
+      "price": "25 GM"
+    }
+  ],
+  "mounts_and_vehicles": [
+    {
+      "id": "mnt_elephant",
+      "name": "Elefant (Elephant)",
+      "category": "Reittier/Zugtier",
+      "capacityLb": 1320,
+      "price": "200 GM"
+    },
+    {
+      "id": "mnt_camel",
+      "name": "Kamel (Camel)",
+      "category": "Reittier/Zugtier",
+      "capacityLb": 450,
+      "price": "50 GM"
+    },
+    {
+      "id": "mnt_mastiff",
+      "name": "Mastiff",
+      "category": "Reittier/Zugtier",
+      "capacityLb": 195,
+      "price": "25 GM"
+    },
+    {
+      "id": "mnt_mule",
+      "name": "Maultier (Mule)",
+      "category": "Reittier/Zugtier",
+      "capacityLb": 420,
+      "price": "8 GM"
+    },
+    {
+      "id": "mnt_pony",
+      "name": "Pony",
+      "category": "Reittier/Zugtier",
+      "capacityLb": 225,
+      "price": "30 GM"
+    },
+    {
+      "id": "mnt_horse_riding",
+      "name": "Reitpferd (Horse, Riding)",
+      "category": "Reittier/Zugtier",
+      "capacityLb": 480,
+      "price": "75 GM"
+    },
+    {
+      "id": "mnt_warhorse",
+      "name": "Schlachtross (Warhorse)",
+      "category": "Reittier/Zugtier",
+      "capacityLb": 540,
+      "price": "400 GM"
+    },
+    {
+      "id": "mnt_horse_draft",
+      "name": "Zugpferd (Horse, Draft)",
+      "category": "Reittier/Zugtier",
+      "capacityLb": 540,
+      "price": "50 GM"
+    },
+    {
+      "id": "veh_feed",
+      "name": "Futter, pro Tag (Feed)",
+      "category": "Fahrzeugausrüstung",
+      "weightLb": 10,
+      "price": "5 KM"
+    },
+    {
+      "id": "veh_cart",
+      "name": "Karren (Cart)",
+      "category": "Fahrzeug (Land)",
+      "weightLb": 200,
+      "price": "15 GM"
+    },
+    {
+      "id": "veh_carriage",
+      "name": "Kutsche (Carriage)",
+      "category": "Fahrzeug (Land)",
+      "weightLb": 600,
+      "price": "100 GM"
+    },
+    {
+      "id": "veh_saddle_exotic",
+      "name": "Sattel, Exotisch (Saddle, Exotic)",
+      "category": "Fahrzeugausrüstung",
+      "weightLb": 40,
+      "price": "60 GM"
+    },
+    {
+      "id": "veh_saddle_military",
+      "name": "Sattel, Militär (Saddle, Military)",
+      "category": "Fahrzeugausrüstung",
+      "weightLb": 30,
+      "price": "20 GM"
+    },
+    {
+      "id": "veh_saddle_riding",
+      "name": "Sattel, Reit- (Saddle, Riding)",
+      "category": "Fahrzeugausrüstung",
+      "weightLb": 25,
+      "price": "10 GM"
+    },
+    {
+      "id": "veh_sled",
+      "name": "Schlitten (Sled)",
+      "category": "Fahrzeug (Land)",
+      "weightLb": 300,
+      "price": "20 GM"
+    },
+    {
+      "id": "veh_stabling",
+      "name": "Stallung, pro Tag (Stabling)",
+      "category": "Dienstleistung",
+      "weightLb": 0,
+      "price": "5 SM"
+    },
+    {
+      "id": "veh_chariot",
+      "name": "Streitwagen (Chariot)",
+      "category": "Fahrzeug (Land)",
+      "weightLb": 100,
+      "price": "250 GM"
+    },
+    {
+      "id": "veh_wagon",
+      "name": "Wagen (Wagon)",
+      "category": "Fahrzeug (Land)",
+      "weightLb": 400,
+      "price": "35 GM"
+    },
+    {
+      "id": "veh_galley",
+      "name": "Galeere (Galley)",
+      "category": "Fahrzeug (Wasser)",
+      "speed": "4 mph",
+      "crew": 80,
+      "passengers": 150,
+      "cargo": "15 Tonnen",
+      "ac": 15,
+      "hp": 500,
+      "price": "30.000 GM"
+    },
+    {
+      "id": "veh_keelboat",
+      "name": "Kielboot (Keelboat)",
+      "category": "Fahrzeug (Wasser)",
+      "speed": "1 mph",
+      "crew": 1,
+      "passengers": 6,
+      "cargo": "0,5 Tonnen",
+      "ac": 15,
+      "hp": 100,
+      "price": "3.000 GM"
+    },
+    {
+      "id": "veh_longship",
+      "name": "Langschiff (Longship)",
+      "category": "Fahrzeug (Wasser)",
+      "speed": "3 mph",
+      "crew": 40,
+      "passengers": 150,
+      "cargo": "10 Tonnen",
+      "ac": 15,
+      "hp": 300,
+      "price": "10.000 GM"
+    },
+    {
+      "id": "veh_airship",
+      "name": "Luftschiff (Airship)",
+      "category": "Fahrzeug (Luft)",
+      "speed": "8 mph",
+      "crew": 10,
+      "passengers": 20,
+      "cargo": "1 Tonne",
+      "ac": 13,
+      "hp": 300,
+      "price": "40.000 GM"
+    },
+    {
+      "id": "veh_rowboat",
+      "name": "Ruderboot (Rowboat)",
+      "category": "Fahrzeug (Wasser)",
+      "speed": "1,5 mph",
+      "crew": 1,
+      "passengers": 3,
+      "cargo": "0",
+      "ac": 11,
+      "hp": 50,
+      "price": "50 GM"
+    },
+    {
+      "id": "veh_sailingship",
+      "name": "Segelschiff (Sailing Ship)",
+      "category": "Fahrzeug (Wasser)",
+      "speed": "2 mph",
+      "crew": 20,
+      "passengers": 20,
+      "cargo": "100 Tonnen",
+      "ac": 15,
+      "hp": 300,
+      "price": "10.000 GM"
+    },
+    {
+      "id": "veh_warship",
+      "name": "Kriegsschiff (Warship)",
+      "category": "Fahrzeug (Wasser)",
+      "speed": "2,5 mph",
+      "crew": 60,
+      "passengers": 60,
+      "cargo": "200 Tonnen",
+      "ac": 15,
+      "hp": 500,
+      "price": "25.000 GM"
+    }
+  ],
+  "gear": [
+    {
+      "id": "gear_alchemistenfeuer",
+      "name": "Alchemistenfeuer (Alchemist's Fire)",
+      "weightLb": 1,
+      "price": "50 GM"
+    },
+    {
+      "id": "gear_arkaner_fokus_kristall",
+      "name": "Arkaner Fokus: Kristall (Crystal)",
+      "weightLb": 1,
+      "price": "10 GM"
+    },
+    {
+      "id": "gear_arkaner_fokus_kugel",
+      "name": "Arkaner Fokus: Kugel (Orb)",
+      "weightLb": 3,
+      "price": "20 GM"
+    },
+    {
+      "id": "gear_arkaner_fokus_rute",
+      "name": "Arkaner Fokus: Rute (Rod)",
+      "weightLb": 2,
+      "price": "10 GM"
+    },
+    {
+      "id": "gear_arkaner_fokus_stab",
+      "name": "Arkaner Fokus: Stab (Staff)",
+      "weightLb": 4,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_arkaner_fokus_zauberstab",
+      "name": "Arkaner Fokus: Zauberstab (Wand)",
+      "weightLb": 1,
+      "price": "10 GM"
+    },
+    {
+      "id": "gear_brecheisen",
+      "name": "Brecheisen (Crowbar)",
+      "weightLb": 5,
+      "price": "2 GM"
+    },
+    {
+      "id": "gear_buch",
+      "name": "Buch (Book)",
+      "weightLb": 5,
+      "price": "25 GM"
+    },
+    {
+      "id": "gear_decke",
+      "name": "Decke (Blanket)",
+      "weightLb": 3,
+      "price": "5 SM"
+    },
+    {
+      "id": "gear_diplomaten_ausruestung",
+      "name": "Diplomaten-Ausrüstung (Diplomat's Pack)",
+      "weightLb": 39,
+      "price": "39 GM"
+    },
+    {
+      "id": "gear_druidischer_fokus_eiben",
+      "name": "Druidischer Fokus: Eiben-Zauberstab",
+      "weightLb": 1,
+      "price": "10 GM"
+    },
+    {
+      "id": "gear_druidischer_fokus_holzstab",
+      "name": "Druidischer Fokus: Holzstab",
+      "weightLb": 4,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_druidischer_fokus_mistelzweig",
+      "name": "Druidischer Fokus: Mistelzweig",
+      "weightLb": 0,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_eimer",
+      "name": "Eimer (Bucket)",
+      "weightLb": 2,
+      "price": "5 KM"
+    },
+    {
+      "id": "gear_einbrecher_ausruestung",
+      "name": "Einbrecher-Ausrüstung (Burglar's Pack)",
+      "weightLb": 42,
+      "price": "16 GM"
+    },
+    {
+      "id": "gear_eisentopf",
+      "name": "Eisentopf (Pot, Iron)",
+      "weightLb": 10,
+      "price": "2 GM"
+    },
+    {
+      "id": "gear_entdecker_ausruestung",
+      "name": "Entdecker-Ausrüstung (Explorer's Pack)",
+      "weightLb": 55,
+      "price": "10 GM"
+    },
+    {
+      "id": "gear_fackel",
+      "name": "Fackel (Torch)",
+      "weightLb": 1,
+      "price": "1 KM"
+    },
+    {
+      "id": "gear_fass",
+      "name": "Fass (Barrel)",
+      "weightLb": 70,
+      "price": "2 GM"
+    },
+    {
+      "id": "gear_flachmann",
+      "name": "Flachmann (Flask)",
+      "weightLb": 1,
+      "price": "2 KM"
+    },
+    {
+      "id": "gear_flaschenzug",
+      "name": "Flaschenzug (Block and Tackle)",
+      "weightLb": 5,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_flaeschchen",
+      "name": "Fläschchen (Vial)",
+      "weightLb": 0,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_gegengift",
+      "name": "Gegengift (Antitoxin)",
+      "weightLb": 0,
+      "price": "50 GM"
+    },
+    {
+      "id": "gear_gelehrten_ausruestung",
+      "name": "Gelehrten-Ausrüstung (Scholar's Pack)",
+      "weightLb": 22,
+      "price": "40 GM"
+    },
+    {
+      "id": "gear_gewoelbeforscher_ausruestung",
+      "name": "Gewölbeforscher-Ausrüstung (Dungeoneer's Pack)",
+      "weightLb": 55,
+      "price": "12 GM"
+    },
+    {
+      "id": "gear_gift_basis",
+      "name": "Gift, Basis (Poison, Basic)",
+      "weightLb": 0,
+      "price": "100 GM"
+    },
+    {
+      "id": "gear_glasflasche",
+      "name": "Glasflasche (Bottle, Glass)",
+      "weightLb": 2,
+      "price": "2 GM"
+    },
+    {
+      "id": "gear_glocke",
+      "name": "Glocke (Bell)",
+      "weightLb": 0,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_handschellen",
+      "name": "Handschellen (Manacles)",
+      "weightLb": 6,
+      "price": "2 GM"
+    },
+    {
+      "id": "gear_heiler_satz",
+      "name": "Heiler-Satz (Healer's Kit)",
+      "weightLb": 3,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_heiliges_symbol_amulett",
+      "name": "Heiliges Symbol: Amulett (Amulet)",
+      "weightLb": 1,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_heiliges_symbol_emblem",
+      "name": "Heiliges Symbol: Emblem (Emblem)",
+      "weightLb": 0,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_heiliges_symbol_reliquie",
+      "name": "Heiliges Symbol: Reliquie (Reliquary)",
+      "weightLb": 2,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_heiltrank",
+      "name": "Heiltrank (Potion of Healing)",
+      "weightLb": 0.5,
+      "price": "50 GM"
+    },
+    {
+      "id": "gear_jagdfalle",
+      "name": "Jagdfalle (Hunting Trap)",
+      "weightLb": 25,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_karten_behaelter",
+      "name": "Karten-/Schriftrollenbehälter (Case, Map/Scroll)",
+      "weightLb": 1,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_karte",
+      "name": "Karte (Map)",
+      "weightLb": 0,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_kerze",
+      "name": "Kerze (Candle)",
+      "weightLb": 0,
+      "price": "1 KM"
+    },
+    {
+      "id": "gear_kette",
+      "name": "Kette, 3 m / 2 Felder (Chain)",
+      "weightLb": 10,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_kleidung_fein",
+      "name": "Kleidung, fein (Clothes, Fine)",
+      "weightLb": 6,
+      "price": "15 GM"
+    },
+    {
+      "id": "gear_kleidung_reise",
+      "name": "Kleidung, Reise (Clothes, Traveler's)",
+      "weightLb": 4,
+      "price": "2 GM"
+    },
+    {
+      "id": "gear_kletterausruestung",
+      "name": "Kletterausrüstung (Climber's Kit)",
+      "weightLb": 12,
+      "price": "25 GM"
+    },
+    {
+      "id": "gear_koecher",
+      "name": "Köcher (Quiver)",
+      "weightLb": 1,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_korb",
+      "name": "Korb (Basket)",
+      "weightLb": 2,
+      "price": "4 SM"
+    },
+    {
+      "id": "gear_kostuem",
+      "name": "Kostüm (Costume)",
+      "weightLb": 4,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_kraehenfuesse",
+      "name": "Krähenfüße (Caltrops)",
+      "weightLb": 2,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_krug",
+      "name": "Krug (Jug)",
+      "weightLb": 4,
+      "price": "2 KM"
+    },
+    {
+      "id": "gear_lampe",
+      "name": "Lampe (Lamp)",
+      "weightLb": 1,
+      "price": "5 SM"
+    },
+    {
+      "id": "gear_lanterne_blend",
+      "name": "Lanterne, Blend- (Lantern, Bullseye)",
+      "weightLb": 2,
+      "price": "10 GM"
+    },
+    {
+      "id": "gear_lanterne_kapuzen",
+      "name": "Lanterne, Kapuzen- (Lantern, Hooded)",
+      "weightLb": 2,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_leiter",
+      "name": "Leiter, 3 m / 2 Felder (Ladder)",
+      "weightLb": 25,
+      "price": "1 SM"
+    },
+    {
+      "id": "gear_lupe",
+      "name": "Lupe (Magnifying Glass)",
+      "weightLb": 0,
+      "price": "100 GM"
+    },
+    {
+      "id": "gear_materialkomponentenbeutel",
+      "name": "Materialkomponentenbeutel (Component Pouch)",
+      "weightLb": 2,
+      "price": "25 GM"
+    },
+    {
+      "id": "gear_metallkuegelchen",
+      "name": "Metallkügelchen (Ball Bearings)",
+      "weightLb": 2,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_muni_bolzen",
+      "name": "Munition: Bolzen (Bolts, 20)",
+      "weightLb": 1.5,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_muni_bolzenkoecher",
+      "name": "Munition: Bolzenköcher (Crossbow Bolt Case)",
+      "weightLb": 1,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_muni_feuerwaffen_kugeln",
+      "name": "Munition: Feuerwaffen-Kugeln (Bullets, 10)",
+      "weightLb": 2,
+      "price": "3 GM"
+    },
+    {
+      "id": "gear_muni_nadeln",
+      "name": "Munition: Nadeln (Needles, 50)",
+      "weightLb": 1,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_muni_pfeile",
+      "name": "Munition: Pfeile (Arrows, 20)",
+      "weightLb": 1,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_muni_schleuderkugeln",
+      "name": "Munition: Schleuderkugeln (Sling Bullets, 20)",
+      "weightLb": 1.5,
+      "price": "4 KM"
+    },
+    {
+      "id": "gear_netz",
+      "name": "Netz (Net)",
+      "weightLb": 3,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_oel",
+      "name": "Öl (Oil, 1 Flasche)",
+      "weightLb": 1,
+      "price": "1 SM"
+    },
+    {
+      "id": "gear_papier",
+      "name": "Papier (Paper, 1 Blatt)",
+      "weightLb": 0,
+      "price": "2 SM"
+    },
+    {
+      "id": "gear_parfuem",
+      "name": "Parfüm (Perfume)",
+      "weightLb": 0,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_pergament_blatt",
+      "name": "Pergament (Parchment, 1 Blatt)",
+      "weightLb": 0,
+      "price": "1 SM"
+    },
+    {
+      "id": "gear_priester_ausruestung",
+      "name": "Priester-Ausrüstung (Priest's Pack)",
+      "weightLb": 29,
+      "price": "33 GM"
+    },
+    {
+      "id": "gear_rammbock",
+      "name": "Rammbock (Ram, Portable)",
+      "weightLb": 35,
+      "price": "4 GM"
+    },
+    {
+      "id": "gear_rationen",
+      "name": "Rationen (Rations, 1 Tag)",
+      "weightLb": 2,
+      "price": "5 SM"
+    },
+    {
+      "id": "gear_robe",
+      "name": "Robe (Robe)",
+      "weightLb": 4,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_rucksack",
+      "name": "Rucksack (Backpack)",
+      "weightLb": 5,
+      "price": "2 GM"
+    },
+    {
+      "id": "gear_sack",
+      "name": "Sack (Sack)",
+      "weightLb": 0.5,
+      "price": "1 KM"
+    },
+    {
+      "id": "gear_saeure",
+      "name": "Säure (Acid)",
+      "weightLb": 1,
+      "price": "25 GM"
+    },
+    {
+      "id": "gear_schaufel",
+      "name": "Schaufel (Shovel)",
+      "weightLb": 5,
+      "price": "2 GM"
+    },
+    {
+      "id": "gear_schlafsack",
+      "name": "Schlafsack (Bedroll)",
+      "weightLb": 7,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_schloss",
+      "name": "Schloss (Lock)",
+      "weightLb": 1,
+      "price": "10 GM"
+    },
+    {
+      "id": "gear_schnur",
+      "name": "Schnur, 3 m / 2 Felder (String)",
+      "weightLb": 0,
+      "price": "1 SM"
+    },
+    {
+      "id": "gear_schreibfeder",
+      "name": "Schreibfeder (Ink Pen)",
+      "weightLb": 0,
+      "price": "2 KM"
+    },
+    {
+      "id": "gear_seil",
+      "name": "Seil, 15 m / 10 Felder (Rope)",
+      "weightLb": 5,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_signalpfeife",
+      "name": "Signalpfeife (Signal Whistle)",
+      "weightLb": 0,
+      "price": "5 KM"
+    },
+    {
+      "id": "gear_spiegel",
+      "name": "Spiegel, Stahl (Mirror)",
+      "weightLb": 0.5,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_spikes",
+      "name": "Spikes, Eisen (Spikes, Iron, 10 Stück)",
+      "weightLb": 5,
+      "price": "1 GM"
+    },
+    {
+      "id": "gear_stange",
+      "name": "Stange, 3 m / 2 Felder (Pole)",
+      "weightLb": 7,
+      "price": "5 KM"
+    },
+    {
+      "id": "gear_tinte",
+      "name": "Tinte (Ink)",
+      "weightLb": 0,
+      "price": "10 GM"
+    },
+    {
+      "id": "gear_tasche",
+      "name": "Tasche / Beutel (Pouch)",
+      "weightLb": 1,
+      "price": "5 SM"
+    },
+    {
+      "id": "gear_truhe",
+      "name": "Truhe (Chest)",
+      "weightLb": 25,
+      "price": "5 GM"
+    },
+    {
+      "id": "gear_teleskop",
+      "name": "Teleskop / Fernrohr (Spyglass)",
+      "weightLb": 1,
+      "price": "1.000 GM"
+    },
+    {
+      "id": "gear_unterhalter_ausruestung",
+      "name": "Unterhalter-Ausrüstung (Entertainer's Pack)",
+      "weightLb": 58.5,
+      "price": "40 GM"
+    },
+    {
+      "id": "gear_weihwasser",
+      "name": "Weihwasser (Holy Water)",
+      "weightLb": 1,
+      "price": "25 GM"
+    },
+    {
+      "id": "gear_trinkschlauch",
+      "name": "Trinkschlauch (Waterskin, voll)",
+      "weightLb": 5,
+      "price": "2 SM"
+    },
+    {
+      "id": "gear_zauberspruchrolle_trick",
+      "name": "Zauberspruchrolle: Zaubertrick (Cantrip)",
+      "weightLb": 0,
+      "price": "30 GM"
+    },
+    {
+      "id": "gear_zauberspruchrolle_stufe1",
+      "name": "Zauberspruchrolle: Stufe 1",
+      "weightLb": 0,
+      "price": "50 GM"
+    },
+    {
+      "id": "gear_zelt",
+      "name": "Zelt (Tent)",
+      "weightLb": 20,
+      "price": "2 GM"
+    },
+    {
+      "id": "gear_zunderkaestchen",
+      "name": "Zunderkästchen (Tinderbox)",
+      "weightLb": 1,
+      "price": "5 SM"
+    }
+  ]
 }
