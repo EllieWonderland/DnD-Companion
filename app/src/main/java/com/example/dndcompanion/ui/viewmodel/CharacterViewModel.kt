@@ -1175,7 +1175,6 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         generalBookEntries.clear()
         saveGeneralBookEntries()
         grudgeBookEntries.clear()
-        saveGrudgeBookEntries()
         standardTactic = if (characterData.id == "Athania") "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen" else ""
 
         // Loot und Traits zurücksetzen
@@ -1393,22 +1392,14 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         prefs.edit { putString("generalBookEntries", gson.toJson(generalBookEntries)) }
     }
 
-    private fun saveGrudgeBookEntries() {
-        prefs.edit { putString("grudgeBookEntries", gson.toJson(grudgeBookEntries)) }
-    }
-
     private fun loadBooks() {
         val generalJson = prefs.getString("generalBookEntries", "[]") ?: "[]"
-        val grudgeJson = prefs.getString("grudgeBookEntries", "[]") ?: "[]"
         try {
             val type = object : TypeToken<List<BookEntry>>() {}.type
             generalBookEntries.clear()
             generalBookEntries.addAll(gson.fromJson(generalJson, type))
-            
-            grudgeBookEntries.clear()
-            grudgeBookEntries.addAll(gson.fromJson(grudgeJson, type))
-            
-            // Migration von alten Einzeleinträgen, falls die neue Liste leer ist
+
+            // Migration: alte Einzelnotiz
             if (generalBookEntries.isEmpty()) {
                 val oldGeneral = prefs.getString("generalNotes", "") ?: ""
                 if (oldGeneral.isNotBlank()) {
@@ -1416,51 +1407,48 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                     prefs.edit { remove("generalNotes") }
                 }
             }
-            if (grudgeBookEntries.isEmpty()) {
-                val oldGrudge = prefs.getString("grudgeNotes", "") ?: ""
-                if (oldGrudge.isNotBlank()) {
-                    addGrudgeBookEntry(oldGrudge)
-                    prefs.edit { remove("grudgeNotes") }
-                }
+
+            // Migration: Groll-Buch → Notizbuch mit isGrudge=true
+            val grudgeJson = prefs.getString("grudgeBookEntries", "[]") ?: "[]"
+            val grudgeList: List<BookEntry> = try { gson.fromJson(grudgeJson, type) } catch (e: Exception) { emptyList() }
+            if (grudgeList.isNotEmpty()) {
+                generalBookEntries.addAll(grudgeList.map { it.copy(isGrudge = true) })
+                generalBookEntries.sortByDescending { it.timestamp }
+                saveGeneralBookEntries()
+                prefs.edit { remove("grudgeBookEntries") }
             }
         } catch (e: Exception) {
             Log.w("CharacterVM", "Failed to load book entries from prefs", e)
         }
     }
 
-    fun addGeneralBookEntry(text: String, isPublic: Boolean = false) {
+    fun addGeneralBookEntry(text: String, isPublic: Boolean = false, isGrudge: Boolean = false, grudgeTargets: List<String> = emptyList()) {
         if (text.isNotBlank() && !isPublic) {
-            val entry = BookEntry(text = text.trim(), isPublic = false)
+            val entry = BookEntry(text = text.trim(), isPublic = false, isGrudge = isGrudge, grudgeTargets = grudgeTargets)
             generalBookEntries.add(0, entry)
             saveGeneralBookEntries()
         }
     }
 
-    fun updateGeneralBookEntry(id: String, newText: String, isPublic: Boolean = false) {
+    fun updateGeneralBookEntry(id: String, newText: String, isPublic: Boolean = false, isGrudge: Boolean = false, grudgeTargets: List<String> = emptyList()) {
         if (newText.isNotBlank() && !isPublic) {
             val index = generalBookEntries.indexOfFirst { it.id == id }
             if (index != -1) {
-                generalBookEntries[index] = generalBookEntries[index].copy(text = newText.trim())
+                generalBookEntries[index] = generalBookEntries[index].copy(
+                    text = newText.trim(),
+                    isGrudge = isGrudge,
+                    grudgeTargets = grudgeTargets
+                )
                 saveGeneralBookEntries()
             }
         }
     }
 
-    fun addGrudgeBookEntry(text: String, isPublic: Boolean = false) {
-        if (text.isNotBlank() && !isPublic) {
-            val entry = BookEntry(text = text.trim(), isPublic = false)
-            grudgeBookEntries.add(0, entry)
-            saveGrudgeBookEntries()
-        }
-    }
-
-    fun updateGrudgeBookEntry(id: String, newText: String, isPublic: Boolean = false) {
-        if (newText.isNotBlank() && !isPublic) {
-            val index = grudgeBookEntries.indexOfFirst { it.id == id }
-            if (index != -1) {
-                grudgeBookEntries[index] = grudgeBookEntries[index].copy(text = newText.trim())
-                saveGrudgeBookEntries()
-            }
+    fun deleteGeneralBookEntry(id: String) {
+        val index = generalBookEntries.indexOfFirst { it.id == id }
+        if (index != -1) {
+            generalBookEntries.removeAt(index)
+            saveGeneralBookEntries()
         }
     }
 
@@ -2032,7 +2020,7 @@ private val model25Flash = GenerativeModel(
         val allKnownSpells = allSpells.joinToString(", ") { "${it.name} (Lvl ${it.level})" }
         val inventoryStr = customLoot.joinToString(", ") { "${it.amount}x ${it.name}" }
         val notes = generalBookEntries.joinToString(" | ") { it.text }
-        val grudges = grudgeBookEntries.joinToString(" | ") { it.text }
+        val grudges = generalBookEntries.filter { it.isGrudge }.joinToString(" | ") { "[Groll gegen ${it.grudgeTargets.joinToString()}] ${it.text}" }
         val traitsStr = customTraits.joinToString(" | ") { "${it.name}: ${it.desc.replace("\n", " ")}" }
 
         val className = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) "Waldläufer (Beast Master)" else "Warlock (Pakt der Klinge)"

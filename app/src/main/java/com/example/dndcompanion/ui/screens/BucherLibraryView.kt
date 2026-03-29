@@ -29,8 +29,6 @@ import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 
 @Composable
 fun LibraryView(viewModel: CharacterViewModel, onBookSelected: (BookType) -> Unit) {
-    val isAthania = viewModel.activeCharacterId == "Athania"
-
     PergamentBackground {
         Column(
             modifier = Modifier
@@ -48,25 +46,16 @@ fun LibraryView(viewModel: CharacterViewModel, onBookSelected: (BookType) -> Uni
             ) {
                 BookCard(
                     title = "Notizbuch",
-                    subtitle = "Allgemeines & Infos",
+                    subtitle = "Notizen, Groll & Quests",
                     imageRes = R.drawable.notizbuch,
                     onClick = { onBookSelected(BookType.GENERAL) }
                 )
-                if (isAthania) {
-                    BookCard(
-                        title = "Buch des Grolls",
-                        subtitle = "Vergeltung wartet",
-                        imageRes = R.drawable.buch_des_grolls,
-                        onClick = { onBookSelected(BookType.GRUDGE) }
-                    )
-                } else {
-                    BookCard(
-                        title = "Questlog",
-                        subtitle = "Aktive & fertige Aufträge",
-                        imageRes = R.drawable.questlog,
-                        onClick = { onBookSelected(BookType.QUESTLOG) }
-                    )
-                }
+                BookCard(
+                    title = "Zauberbuch",
+                    subtitle = "Alle bekannten Zauber",
+                    imageRes = R.drawable.zauberbuch,
+                    onClick = { onBookSelected(BookType.SPELLBOOK) }
+                )
             }
             Spacer(modifier = Modifier.height(16.dp))
             Row(
@@ -74,32 +63,12 @@ fun LibraryView(viewModel: CharacterViewModel, onBookSelected: (BookType) -> Uni
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 BookCard(
-                    title = "Zauberbuch",
-                    subtitle = "Alle bekannten Zauber",
-                    imageRes = R.drawable.zauberbuch,
-                    onClick = { onBookSelected(BookType.SPELLBOOK) }
-                )
-                BookCard(
                     title = "Regelwerk",
                     subtitle = "Handbuch & D&D Regeln",
                     imageRes = R.drawable.regelwerk,
                     onClick = { onBookSelected(BookType.RULEBOOK) }
                 )
-            }
-            if (isAthania) {
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    BookCard(
-                        title = "Questlog",
-                        subtitle = "Aktive & fertige Aufträge",
-                        imageRes = R.drawable.questlog,
-                        onClick = { onBookSelected(BookType.QUESTLOG) }
-                    )
-                    Spacer(modifier = Modifier.width(150.dp))
-                }
+                Spacer(modifier = Modifier.width(150.dp))
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

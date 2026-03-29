@@ -39,7 +39,9 @@ data class BookEntry(
     val text: String = "",
     val timestamp: Long = System.currentTimeMillis(),
     val isPublic: Boolean = false,
-    val author: String = "Athania"
+    val author: String = "Athania",
+    val isGrudge: Boolean = false,
+    val grudgeTargets: List<String> = emptyList()
 )
 
 data class GroupChatMessage(

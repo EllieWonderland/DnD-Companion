@@ -62,7 +62,7 @@ import com.example.dndcompanion.data.database.ClassEntity
 import com.example.dndcompanion.data.database.FeatureEntity
 
 enum class BookType {
-    GENERAL, GRUDGE, SPELLBOOK, RULEBOOK, QUESTLOG
+    GENERAL, SPELLBOOK, RULEBOOK
 }
 
 @Composable
@@ -101,12 +101,6 @@ fun BucherScreen(viewModel: CharacterViewModel, groupVm: GroupViewModel) {
                     viewModel.targetRulebookChapter = null
                     viewModel.targetRulebookSearch = null
                 }
-            )
-        } else if (activeBook == BookType.QUESTLOG) {
-            QuestlogDetailView(
-                viewModel = viewModel,
-                groupVm = groupVm,
-                onBack = { activeBook = null }
             )
         } else {
             BookDetailView(
