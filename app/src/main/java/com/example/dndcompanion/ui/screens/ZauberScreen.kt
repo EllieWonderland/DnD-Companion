@@ -109,6 +109,13 @@ fun ZauberScreen(
             // --- KOSTENLOSE ZAUBER (TALENTE) ---
             val globalSpellbook by spellVm.globalSpellbook.collectAsState()
 
+            val freeFeatures = viewModel.customTraits.filter { trait ->
+                val spellId = trait.grantedSpellId
+                if (spellId == null) return@filter false
+                if (spellId.equals("Wunden heilen", ignoreCase = true) || spellId.equals("Heilendes Wort", ignoreCase = true)) return@filter false
+                globalSpellbook.any { spell -> spell.name.equals(spellId, ignoreCase = true) }
+            }
+
             Card(
                 modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp),
                 colors = CardDefaults.cardColors(containerColor = WaldgruenDunkel)
@@ -117,17 +124,6 @@ fun ZauberScreen(
                     Text("Kostenlose Zauber (Talente & Gegenstände)", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    val freeFeatures = viewModel.customTraits.filter { trait ->
-                        val spellId = trait.grantedSpellId
-                        if (spellId == null) return@filter false
-
-                        // Ignoriere die alten "Amulett"-Traits, da diese nun unten dynamisch geladen werden
-                        if (spellId.equals("Wunden heilen", ignoreCase = true) || spellId.equals("Heilendes Wort", ignoreCase = true)) return@filter false
-
-                        spellVm.allSpells.any { spell ->
-                            spell.name.equals(spellId, ignoreCase = true)
-                        }
-                    }
                     freeFeatures.forEach { trait ->
                         val matchingSpell = globalSpellbook.find { it.name.equals(trait.grantedSpellId, ignoreCase = true) }
                         val fullDescription = if (matchingSpell != null) "${trait.desc}\n\n${matchingSpell.description}" else trait.desc
@@ -223,6 +219,36 @@ fun ZauberScreen(
                             Text("Gute Beere wirken", fontFamily = Almendra, fontSize = 16.sp, fontWeight = FontWeight.Bold)
                             Spacer(modifier = Modifier.width(8.dp))
                             Text("(${combatVm.inventoryVm?.goodberries ?: 0} im Inventar)", fontSize = 12.sp)
+                        }
+                    }
+
+                    // --- KOSTENLOSE GRAD-1-ZAUBER (Talente) im Slot-Feld ---
+                    val level1FreeTraits = freeFeatures.filter { trait ->
+                        globalSpellbook.find { it.name.equals(trait.grantedSpellId, ignoreCase = true) }?.level == 1
+                    }
+                    level1FreeTraits.forEach { trait ->
+                        HorizontalDivider(color = PergamentHell)
+                        Row(
+                            modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Column(modifier = Modifier.weight(1f)) {
+                                Text(trait.grantedSpellId ?: trait.name, color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                Text("Kostenlos (${trait.currentUses}/${trait.maxUses} verbleibend)", color = PergamentHell.copy(alpha = 0.75f), fontSize = 12.sp)
+                            }
+                            Button(
+                                onClick = { viewModel.useTraitSpell(trait) },
+                                enabled = trait.currentUses > 0,
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = accentColor,
+                                    contentColor = PergamentHell,
+                                    disabledContainerColor = EisenGrau
+                                ),
+                                shape = RoundedCornerShape(8.dp)
+                            ) {
+                                Text("Kostenlos")
+                            }
                         }
                     }
                 }
@@ -353,79 +379,6 @@ fun ZauberScreen(
                             }
                         }
 
-                        // --- BESONDERE ZAUBER (TALENTE & ANRUFUNGEN) ---
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text("Besondere Zauber (Talente)", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-                        Spacer(modifier = Modifier.height(8.dp))
-
-                        // Segnen
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Segnen", color = PergamentHell, fontSize = 14.sp)
-                                Text("Talent: Eingeweihter", color = PergamentHell.copy(alpha = 0.75f), fontSize = 13.sp)
-                            }
-                            Text("${if (spellVm.freeBlessUsed) 0 else 1} / 1", color = PergamentHell, modifier = Modifier.padding(horizontal = 8.dp))
-                            Button(
-                                onClick = { spellVm.useFreeBless() },
-                                enabled = !spellVm.freeBlessUsed,
-                                modifier = Modifier.height(48.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = accentColor,
-                                    contentColor = MaterialTheme.colorScheme.onTertiary
-                                )
-                            ) { Text("Wirken", fontSize = 14.sp) }
-                        }
-
-                        // Nebelschritt
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Nebelschritt", color = PergamentHell, fontSize = 14.sp)
-                                Text("Talent: Feenberührt", color = PergamentHell.copy(alpha = 0.75f), fontSize = 13.sp)
-                            }
-                            Text("${if (spellVm.freeMistyStepUsed) 0 else 1} / 1", color = PergamentHell, modifier = Modifier.padding(horizontal = 8.dp))
-                            Button(
-                                onClick = { spellVm.useFreeMistyStep() },
-                                enabled = !spellVm.freeMistyStepUsed,
-                                modifier = Modifier.height(48.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = accentColor,
-                                    contentColor = MaterialTheme.colorScheme.onTertiary
-                                )
-                            ) { Text("Wirken", fontSize = 14.sp) }
-                        }
-
-                        // Magierrüstung
-                        Row(
-                            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Column(modifier = Modifier.weight(1f)) {
-                                Text("Magierrüstung", color = PergamentHell, fontSize = 14.sp)
-                                Text("Talent: Eingeweihter", color = PergamentHell.copy(alpha = 0.75f), fontSize = 13.sp)
-                            }
-                            Text("${if (spellVm.freeMageArmorUsed) 0 else 1} / 1", color = PergamentHell, modifier = Modifier.padding(horizontal = 8.dp))
-                            Button(
-                                onClick = {
-                                    spellVm.useFreeMageArmor()
-                                    combatVm.toggleMageArmor(true) // Activate the AC effect
-                                },
-                                enabled = !spellVm.freeMageArmorUsed,
-                                modifier = Modifier.height(48.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = accentColor,
-                                    contentColor = MaterialTheme.colorScheme.onTertiary
-                                )
-                            ) { Text("Wirken", fontSize = 14.sp) }
-                        }
                     }
                 }
             }

@@ -25,4 +25,4 @@ Probleme:
 
 Aufgabe: Mechanik für beide Charaktere (Athania & Delat) vollständig und korrekt automatisieren.
 Ggf. assets/rules prüfen für die zugrunde liegenden Regeln.
-**Status:** Offen
+**Status:** Erledigt

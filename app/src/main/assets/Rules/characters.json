@@ -150,8 +150,9 @@
       { "name": "Magische Raffinesse", "desc": "1/LR 1min Ritus, Hälfte der Zauberplätze zurück.", "maxUses": 1, "currentUses": 1 },
       { "name": "Erwachter Geist", "desc": "Telepathische Verbindung (BA, max 9m)." },
       { "name": "Psychische Zauber", "desc": "Schadensart in psychisch ändern. Keine V/G an Verzauberungs-/Illusionszaubern." },
-      { "name": "Eingeweihter der Magie (Magier)", "desc": "Druide/Magier Skills." },
-      { "name": "Feenberührt", "desc": "+1 CHA, Nebelschritt & Zauber." },
+      { "name": "Eingeweihter der Magie (Magier)", "desc": "Schild & Zaubertricks aus der Magier-Liste. Schild 1x pro lange Rast kostenlos wirkbar.", "maxUses": 1, "currentUses": 1, "grantedSpellId": "Schild" },
+      { "name": "Feenberührt", "desc": "+1 CHA, Nebelschritt (1x/LR kostenlos) & ein Verzauberungs-/Divinations-Zauber.", "maxUses": 1, "currentUses": 1, "grantedSpellId": "Nebelschritt" },
+      { "name": "Segnen (Feenberührt)", "desc": "Aus Feenberührt: Segnen 1x pro lange Rast kostenlos wirkbar.", "maxUses": 1, "currentUses": 1, "grantedSpellId": "Segnen" },
       { "name": "Sprachen", "desc": "Gemeinsprache, Elfisch, Zwergisch." }
     ]
   }

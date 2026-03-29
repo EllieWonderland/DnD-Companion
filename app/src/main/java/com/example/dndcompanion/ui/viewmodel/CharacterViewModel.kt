@@ -1007,21 +1007,33 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 customTraits.addAll(items)
                 
                 // Sicherstellen, dass neue Standard-Merkmale (Free Spells) auch bei bestehenden Saves erscheinen
-                // UND Namen aktualisiert werden (Migration)
+                // UND Namen, grantedSpellId und maxUses aktualisiert werden (Migration)
                 var listChanged = false
                 characterData.defaultTraits.forEach { defaultTrait ->
-                    val existingIndex = customTraits.indexOfFirst { 
-                        it.grantedSpellId != null && it.grantedSpellId == defaultTrait.grantedSpellId 
-                    }
-                    if (existingIndex != -1) {
-                        // Falls der Name abweicht (Migration), Namen aktualisieren
-                        if (customTraits[existingIndex].name != defaultTrait.name) {
-                            customTraits[existingIndex] = customTraits[existingIndex].copy(name = defaultTrait.name)
+                    val existingBySpellId = if (defaultTrait.grantedSpellId != null) {
+                        customTraits.indexOfFirst { it.grantedSpellId != null && it.grantedSpellId == defaultTrait.grantedSpellId }
+                    } else -1
+
+                    if (existingBySpellId != -1) {
+                        // Trait mit gleicher grantedSpellId gefunden – Namen ggf. aktualisieren
+                        if (customTraits[existingBySpellId].name != defaultTrait.name) {
+                            customTraits[existingBySpellId] = customTraits[existingBySpellId].copy(name = defaultTrait.name)
                             listChanged = true
                         }
-                    } else if (customTraits.none { it.name == defaultTrait.name }) {
-                        customTraits.add(defaultTrait)
-                        listChanged = true
+                    } else {
+                        val nameIndex = customTraits.indexOfFirst { it.name == defaultTrait.name }
+                        if (nameIndex == -1) {
+                            // Neuer Trait – hinzufügen
+                            customTraits.add(defaultTrait)
+                            listChanged = true
+                        } else {
+                            // Trait per Name gefunden – grantedSpellId oder maxUses aktualisieren (Migration)
+                            val existing = customTraits[nameIndex]
+                            if (existing.grantedSpellId != defaultTrait.grantedSpellId || existing.maxUses != defaultTrait.maxUses) {
+                                customTraits[nameIndex] = defaultTrait
+                                listChanged = true
+                            }
+                        }
                     }
                 }
                 if (listChanged) saveTraits()
