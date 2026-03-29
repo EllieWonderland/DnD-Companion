@@ -20,9 +20,6 @@ val OchsenblutRotHell = Color(0xFFB33A00)  // Athania – tertiaryContainer / Ho
 val HexenLila = Color(0xFF391F4F)          // Delat / Warlock – primäre Aktions-Buttons
 val HexenLilaHell = Color(0xFF5A3D80)      // Delat – tertiaryContainer / Hover
 
-// Goldtöne – UI-Chrome (NavigationBar aktiv, Begleiter-Akzent)
-val WaldGold = Color(0xFFC9A84C)           // Aktive Nav-Items, SEA-Begleiter-Akzent
-
 // Metall-Töne – Sekundäre UI-Elemente (Kurze Rast, Trennlinien, Rahmen)
 val Bronze = Color(0xFF9C7A3C)             // Warmes Bronze
 val BronzeHell = Color(0xFFBE9B5C)         // Helles Bronze (secondaryContainer)

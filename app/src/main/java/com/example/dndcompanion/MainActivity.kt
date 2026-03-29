@@ -145,8 +145,8 @@ fun DnDApp(
                     },
                     label = { Text(viewModel.characterData.name, fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = WaldGold,
-                        selectedTextColor = WaldGold,
+                        selectedIconColor = PergamentHell,
+                        selectedTextColor = PergamentHell,
                         unselectedIconColor = PergamentDunkel,
                         unselectedTextColor = PergamentDunkel,
                         indicatorColor = Waldgruen
@@ -167,8 +167,8 @@ fun DnDApp(
                         },
                         label = { Text("Begleiter", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                         colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = WaldGold,
-                            selectedTextColor = WaldGold,
+                            selectedIconColor = PergamentHell,
+                            selectedTextColor = PergamentHell,
                             unselectedIconColor = PergamentDunkel,
                             unselectedTextColor = PergamentDunkel,
                             indicatorColor = Waldgruen
@@ -187,8 +187,8 @@ fun DnDApp(
                     },
                     label = { Text("Hilfe", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = WaldGold,
-                        selectedTextColor = WaldGold,
+                        selectedIconColor = PergamentHell,
+                        selectedTextColor = PergamentHell,
                         unselectedIconColor = PergamentDunkel,
                         unselectedTextColor = PergamentDunkel,
                         indicatorColor = Waldgruen
@@ -206,8 +206,8 @@ fun DnDApp(
                     },
                     label = { Text("Bücher", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = WaldGold,
-                        selectedTextColor = WaldGold,
+                        selectedIconColor = PergamentHell,
+                        selectedTextColor = PergamentHell,
                         unselectedIconColor = PergamentDunkel,
                         unselectedTextColor = PergamentDunkel,
                         indicatorColor = Waldgruen
@@ -324,7 +324,7 @@ fun AthaniaScreen(
                         )
                     },
                     text = { Text(tab.title, fontFamily = Almendra, fontSize = 10.sp) },
-                    selectedContentColor = OchsenblutRot,
+                    selectedContentColor = MaterialTheme.colorScheme.tertiary,
                     unselectedContentColor = TintenBraun
                 )
             }
@@ -371,7 +371,7 @@ fun CompanionScreen(viewModel: CharacterViewModel) {
     val beastColorLight = if(isRanger) {
         when(viewModel.activeBeastType) {
             com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> WaldgruenDunkel
-            com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> HexenLila
+            com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> Bronze
             com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> Bronze
         }
     } else HexenLila
@@ -380,9 +380,9 @@ fun CompanionScreen(viewModel: CharacterViewModel) {
         when(viewModel.activeBeastType) {
             com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> Waldgruen
             com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> OchsenblutRot
-            com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> WaldGold
+            com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> BronzeDunkel
         }
-    } else WaldGold
+    } else HexenLilaHell
 
     PergamentBackground {
     Column(

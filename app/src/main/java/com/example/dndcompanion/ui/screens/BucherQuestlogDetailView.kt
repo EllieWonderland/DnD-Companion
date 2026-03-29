@@ -46,7 +46,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, o
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(OchsenblutRot)
+                    .background(WaldgruenDunkel)
                     .padding(vertical = 8.dp, horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -59,7 +59,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, o
 
             TabRow(
                 selectedTabIndex = if (showCompleted) 1 else 0,
-                containerColor = OchsenblutRot,
+                containerColor = WaldgruenDunkel,
                 contentColor = PergamentHell,
                 indicator = { tabPositions ->
                     TabRowDefaults.SecondaryIndicator(
@@ -96,7 +96,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, o
                                 modifier = Modifier.fillMaxWidth(),
                                 placeholder = { Text("Quest-Titel...", color = TintenSchwarz.copy(alpha = 0.6f)) },
                                 colors = OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = OchsenblutRot,
+                                    focusedBorderColor = Waldgruen,
                                     unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f)
                                 ),
                                 textStyle = androidx.compose.ui.text.TextStyle(color = TintenSchwarz, fontSize = 16.sp, fontWeight = FontWeight.Bold),
@@ -109,7 +109,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, o
                                 modifier = Modifier.fillMaxWidth().height(80.dp),
                                 placeholder = { Text("Beschreibung (optional)...", color = TintenSchwarz.copy(alpha = 0.6f)) },
                                 colors = OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = OchsenblutRot,
+                                    focusedBorderColor = Waldgruen,
                                     unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f)
                                 ),
                                 textStyle = androidx.compose.ui.text.TextStyle(color = TintenSchwarz, fontSize = 14.sp)
@@ -123,7 +123,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, o
                                         newQuestDesc = ""
                                     }
                                 },
-                                colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot),
+                                colors = ButtonDefaults.buttonColors(containerColor = WaldgruenDunkel),
                                 shape = RoundedCornerShape(8.dp),
                                 modifier = Modifier.align(Alignment.End).height(48.dp)
                             ) {
@@ -147,7 +147,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, o
                                         fontFamily = Almendra,
                                         fontSize = 20.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = if (quest.isCompleted) TintenSchwarz.copy(alpha = 0.5f) else OchsenblutRot,
+                                        color = if (quest.isCompleted) TintenSchwarz.copy(alpha = 0.5f) else Waldgruen,
                                         modifier = Modifier.weight(1f),
                                         textDecoration = if (quest.isCompleted) TextDecoration.LineThrough else TextDecoration.None
                                     )
@@ -162,7 +162,7 @@ fun QuestlogDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, o
                                         onClick = { groupVm.deleteQuest(quest.id) },
                                         modifier = Modifier.size(48.dp)
                                     ) {
-                                        Icon(Icons.Default.Clear, contentDescription = "Löschen", tint = if (quest.isCompleted) TintenSchwarz.copy(alpha = 0.5f) else Color.Red)
+                                        Icon(Icons.Default.Clear, contentDescription = "Löschen", tint = if (quest.isCompleted) TintenSchwarz.copy(alpha = 0.5f) else MaterialTheme.colorScheme.error)
                                     }
                                 }
                                 if (quest.description.isNotBlank()) {

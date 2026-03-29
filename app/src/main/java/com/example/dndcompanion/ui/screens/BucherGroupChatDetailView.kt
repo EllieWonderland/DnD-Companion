@@ -51,7 +51,7 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, 
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(TintenSchwarz)
+                    .background(WaldgruenDunkel)
                     .padding(vertical = 8.dp, horizontal = 16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -65,14 +65,14 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, 
                 if (showDeleteDialog) {
                     AlertDialog(
                         onDismissRequest = { showDeleteDialog = false },
-                        title = { Text("Chat löschen", fontFamily = Almendra, color = OchsenblutRot) },
+                        title = { Text("Chat löschen", fontFamily = Almendra, color = MaterialTheme.colorScheme.error) },
                         text = { Text("Möchtest du wirklich alle ${if (isOoc) "OOC" else "IC"} Nachrichten löschen? Dies kann nicht rückgängig gemacht werden.", color = TintenSchwarz) },
                         confirmButton = {
                             TextButton(onClick = {
                                 groupVm.deleteGroupChat(isOoc)
                                 showDeleteDialog = false
                             }) {
-                                Text("Löschen", color = OchsenblutRot)
+                                Text("Löschen", color = MaterialTheme.colorScheme.error)
                             }
                         },
                         dismissButton = {
@@ -85,7 +85,7 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, 
                 }
 
                 IconButton(onClick = { showDeleteDialog = true }) {
-                    Icon(Icons.Default.Delete, contentDescription = "Chat löschen", tint = OchsenblutRot)
+                    Icon(Icons.Default.Delete, contentDescription = "Chat löschen", tint = MaterialTheme.colorScheme.error)
                 }
             }
 
@@ -168,11 +168,16 @@ fun GroupChatMessageCard(message: GroupChatMessage) {
         sdf.format(java.util.Date(message.timestamp))
     }
 
-    val nameColor = if (message.isOoc) WaldgruenDunkel else OchsenblutRot
+    val nameColor = when {
+        message.isOoc -> WaldgruenDunkel
+        message.author.trim() == "Athania" -> OchsenblutRot
+        message.author.trim() == "Delat" -> HexenLilaHell
+        else -> TintenSchwarz
+    }
 
     val authorBgColor = when (message.author.trim()) {
-        "Athania" -> Pergament
-        "Delat" -> PergamentDunkel
+        "Athania" -> OchsenblutRot.copy(alpha = 0.10f)
+        "Delat" -> HexenLila.copy(alpha = 0.10f)
         else -> PergamentHell
     }
 

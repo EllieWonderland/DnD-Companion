@@ -204,7 +204,7 @@ private fun CatalogItemCard(item: EquipmentCatalogItem, onAdd: () -> Unit) {
                         Text(
                             text = item.price,
                             style = GrenzeGotischSmall.copy(fontSize = 14.sp),
-                            color = BronzeDunkel
+                            color = TintenBraun
                         )
                     }
                 }
