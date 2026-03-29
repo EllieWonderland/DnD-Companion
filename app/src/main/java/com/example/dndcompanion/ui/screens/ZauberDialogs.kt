@@ -50,7 +50,7 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                 ) {
                     Text("Zauberbuch verwalten", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra)
                     TextButton(onClick = onDismiss) {
-                        Text("Schließen", color = OchsenblutRot, fontWeight = FontWeight.Bold, fontFamily = Almendra)
+                        Text("Schließen", color = MaterialTheme.colorScheme.tertiary, fontWeight = FontWeight.Bold, fontFamily = Almendra)
                     }
                 }
 
@@ -144,7 +144,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text("Zauberkompendium", fontSize = 20.sp, fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra)
-                    TextButton(onClick = onDismiss) { Text("Schließen", color = OchsenblutRot, fontWeight = FontWeight.Bold, fontFamily = Almendra) }
+                    TextButton(onClick = onDismiss) { Text("Schließen", color = MaterialTheme.colorScheme.tertiary, fontWeight = FontWeight.Bold, fontFamily = Almendra) }
                 }
 
                 OutlinedTextField(
@@ -154,8 +154,8 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                     modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = OchsenblutRot,
-                        focusedLabelColor = OchsenblutRot
+                        focusedBorderColor = MaterialTheme.colorScheme.tertiary,
+                        focusedLabelColor = MaterialTheme.colorScheme.tertiary
                     )
                 )
 
@@ -175,7 +175,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                             onClick = { selectedLevel = lvl },
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (selectedLevel == lvl) OchsenblutRot else PergamentDunkel,
+                                containerColor = if (selectedLevel == lvl) MaterialTheme.colorScheme.tertiary else PergamentDunkel,
                                 contentColor = if (selectedLevel == lvl) PergamentHell else if (hasSpells) TintenSchwarz else Color.DarkGray,
                                 disabledContainerColor = PergamentDunkel
                             ),

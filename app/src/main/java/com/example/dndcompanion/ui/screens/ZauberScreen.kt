@@ -199,7 +199,7 @@ fun ZauberScreen(
                                 enabled = spellVm.spellSlotsLevel1 > 0,
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = accentColor,
-                                    contentColor = if (accentColor == WaldGold) TintenSchwarz else PergamentHell,
+                                    contentColor = PergamentHell,
                                     disabledContainerColor = EisenGrau
                                 )
                             ) {
@@ -347,7 +347,7 @@ fun ZauberScreen(
 
                             Button(
                                 onClick = { spellVm.applyMagicalCunning() },
-                                colors = ButtonDefaults.buttonColors(containerColor = HexenLila, contentColor = PergamentHell)
+                                colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = PergamentHell)
                             ) {
                                 Text("Magische Rafinesse", color = PergamentHell, fontSize = 12.sp)
                             }
@@ -517,8 +517,8 @@ fun ZauberScreen(
                             label = { Text("Summe gewürfelte Augen") },
                             singleLine = true,
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = OchsenblutRot,
-                                focusedLabelColor = OchsenblutRot
+                                focusedBorderColor = accentColor,
+                                focusedLabelColor = accentColor
                             )
                         )
                     }
@@ -580,7 +580,7 @@ fun ZauberScreen(
         if (viewModel.showRestWarningDialog) {
             AlertDialog(
                 onDismissRequest = { viewModel.dismissRestWarningDialog() },
-                title = { Text("Unzureichende Rationen", color = OchsenblutRot, fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+                title = { Text("Unzureichende Rationen", color = MaterialTheme.colorScheme.error, fontFamily = Almendra, fontWeight = FontWeight.Bold) },
                 text = { Text("Du hast nicht genug Wasserschläuche (0.5 benötigt) oder Tagesrationen (1 benötigt) für eine Lange Rast. Rasten ohne Ressourcen?", color = TintenSchwarz) },
                 confirmButton = {
                     Button(

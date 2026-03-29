@@ -74,7 +74,7 @@ fun DeathSavesRow(combatVm: CombatViewModel) {
             onDismissRequest = { showFailureDialog = false },
             title = { Text("Gefallen...", style = MaterialTheme.typography.titleSmall, color = TodRuneRot) },
             text = { Text("Du hast 3 fehlgeschlagene Rettungswürfe ereilt. Der Charakter ist gestorben...", style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz) },
-            confirmButton = { Button(onClick = { showFailureDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("RiP", fontFamily = Almendra) } },
+            confirmButton = { Button(onClick = { showFailureDialog = false }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error, contentColor = PergamentHell), shape = RoundedCornerShape(8.dp)) { Text("RiP", fontFamily = Almendra) } },
             containerColor = PergamentHell,
             shape = RoundedCornerShape(12.dp)
         )

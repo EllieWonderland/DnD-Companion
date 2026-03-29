@@ -107,7 +107,7 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                             
                             val weightRatio = (viewModel.currentWeight / viewModel.maxWeight).toFloat().coerceIn(0f, 1f)
                             val weightColor = when {
-                                weightRatio > 0.9f -> OchsenblutRot
+                                weightRatio > 0.9f -> MaterialTheme.colorScheme.error
                                 weightRatio > 0.7f -> BronzeDunkel
                                 else -> Waldgruen
                             }

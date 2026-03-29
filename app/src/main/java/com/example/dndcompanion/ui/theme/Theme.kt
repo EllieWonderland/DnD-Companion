@@ -37,7 +37,7 @@ private fun createPergamentScheme(isRanger: Boolean) = lightColorScheme(
     outline = BronzeDunkel,
     outlineVariant = PergamentDunkel,
 
-    error = OchsenblutRot,
+    error = TodRuneRot,
     onError = PergamentHell
 )
 

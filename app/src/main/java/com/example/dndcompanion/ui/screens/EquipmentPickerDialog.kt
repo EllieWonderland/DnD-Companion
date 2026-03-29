@@ -85,7 +85,7 @@ fun EquipmentPickerDialog(
                 trailingIcon = {
                     if (searchQuery.isNotEmpty()) {
                         IconButton(onClick = { searchQuery = "" }, modifier = Modifier.size(48.dp)) {
-                            Icon(Icons.Default.Close, contentDescription = "Löschen", tint = OchsenblutRot)
+                            Icon(Icons.Default.Close, contentDescription = "Löschen", tint = MaterialTheme.colorScheme.error)
                         }
                     }
                 },

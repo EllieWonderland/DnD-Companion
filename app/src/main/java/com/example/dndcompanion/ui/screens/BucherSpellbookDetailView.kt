@@ -106,7 +106,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             onClick = { selectedLevel = lvl },
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (selectedLevel == lvl) OchsenblutRot else PergamentDunkel,
+                                containerColor = if (selectedLevel == lvl) MaterialTheme.colorScheme.tertiary else PergamentDunkel,
                                 contentColor = if (selectedLevel == lvl) PergamentHell else if (hasSpells) TintenSchwarz else TintenBraun.copy(alpha=0.5f),
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
@@ -136,7 +136,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             onClick = { selectedClassFilter = filterClass },
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (selectedClassFilter == filterClass) OchsenblutRot else PergamentDunkel,
+                                containerColor = if (selectedClassFilter == filterClass) MaterialTheme.colorScheme.tertiary else PergamentDunkel,
                                 contentColor = if (selectedClassFilter == filterClass) PergamentHell else if (hasSpells) TintenSchwarz else TintenBraun.copy(alpha=0.5f),
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),
@@ -167,7 +167,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                             onClick = { selectedSchoolFilter = filterSchool },
                             enabled = hasSpells,
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = if (selectedSchoolFilter == filterSchool) OchsenblutRot else PergamentDunkel,
+                                containerColor = if (selectedSchoolFilter == filterSchool) MaterialTheme.colorScheme.tertiary else PergamentDunkel,
                                 contentColor = if (selectedSchoolFilter == filterSchool) PergamentHell else if (hasSpells) TintenSchwarz else TintenBraun.copy(alpha=0.5f),
                                 disabledContainerColor = TintenSchwarz.copy(alpha = 0.1f)
                             ),

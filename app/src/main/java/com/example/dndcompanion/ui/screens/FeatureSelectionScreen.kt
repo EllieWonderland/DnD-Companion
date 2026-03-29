@@ -122,7 +122,7 @@ fun FeatureSelectionScreen(viewModel: CharacterViewModel, onDismiss: () -> Unit)
                         Column(horizontalAlignment = Alignment.CenterHorizontally) {
                             Text("Keine Merkmale gefunden", color = TintenBraun, fontFamily = Almendra)
                             if (allAvailable.isEmpty()) {
-                                Text("(Katalog scheint leer zu sein)", style = MaterialTheme.typography.labelSmall, color = OchsenblutRot)
+                                Text("(Katalog scheint leer zu sein)", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.error)
                             }
                         }
                     }
@@ -177,7 +177,7 @@ fun FeatureCard(
                         Text(
                             "Voraussetzung: ${reqs.joinToString(", ")}",
                             style = MaterialTheme.typography.labelSmall,
-                            color = OchsenblutRot,
+                            color = MaterialTheme.colorScheme.error,
                             fontStyle = androidx.compose.ui.text.font.FontStyle.Italic
                         )
                     }
