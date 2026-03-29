@@ -25,9 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndcompanion.R
 import com.example.dndcompanion.ui.theme.*
+import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 
 @Composable
-fun LibraryView(onBookSelected: (BookType) -> Unit) {
+fun LibraryView(viewModel: CharacterViewModel, onBookSelected: (BookType) -> Unit) {
+    val isAthania = viewModel.activeCharacterId == "Athania"
+
     PergamentBackground {
         Column(
             modifier = Modifier
@@ -49,12 +52,21 @@ fun LibraryView(onBookSelected: (BookType) -> Unit) {
                     imageRes = R.drawable.notizbuch,
                     onClick = { onBookSelected(BookType.GENERAL) }
                 )
-                BookCard(
-                    title = "Buch des Grolls",
-                    subtitle = "Vergeltung wartet",
-                    imageRes = R.drawable.buch_des_grolls,
-                    onClick = { onBookSelected(BookType.GRUDGE) }
-                )
+                if (isAthania) {
+                    BookCard(
+                        title = "Buch des Grolls",
+                        subtitle = "Vergeltung wartet",
+                        imageRes = R.drawable.buch_des_grolls,
+                        onClick = { onBookSelected(BookType.GRUDGE) }
+                    )
+                } else {
+                    BookCard(
+                        title = "Questlog",
+                        subtitle = "Aktive & fertige Aufträge",
+                        imageRes = R.drawable.questlog,
+                        onClick = { onBookSelected(BookType.QUESTLOG) }
+                    )
+                }
             }
             Spacer(modifier = Modifier.height(16.dp))
             Row(
@@ -74,23 +86,20 @@ fun LibraryView(onBookSelected: (BookType) -> Unit) {
                     onClick = { onBookSelected(BookType.RULEBOOK) }
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ) {
-                BookCard(
-                    title = "Gruppen-Chat",
-                    subtitle = "IC & OOC Nachrichten",
-                    imageRes = R.drawable.gruppenchat,
-                    onClick = { onBookSelected(BookType.GROUP_CHAT) }
-                )
-                BookCard(
-                    title = "Questlog",
-                    subtitle = "Aktive & fertige Aufträge",
-                    imageRes = R.drawable.questlog,
-                    onClick = { onBookSelected(BookType.QUESTLOG) }
-                )
+            if (isAthania) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    BookCard(
+                        title = "Questlog",
+                        subtitle = "Aktive & fertige Aufträge",
+                        imageRes = R.drawable.questlog,
+                        onClick = { onBookSelected(BookType.QUESTLOG) }
+                    )
+                    Spacer(modifier = Modifier.width(150.dp))
+                }
             }
             Spacer(modifier = Modifier.height(32.dp))
         }

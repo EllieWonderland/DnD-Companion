@@ -143,30 +143,33 @@ class CombatViewModel(
             return ac
         }
 
+    // Finesse-Waffe: verwende den höheren Wert aus STR und DEX
+    private val finesseWeaponMod: Int get() = maxOf(characterVm.strMod, characterVm.dexMod)
+
     val currentAttackBonus: String
         get() = when (currentWeapon) {
             ActiveWeapon.LANGBOGEN -> "+${characterVm.proficiencyBonus + characterVm.dexMod + 2}"
-            ActiveWeapon.KURZSCHWERT_SCHILD -> "+${characterVm.proficiencyBonus + characterVm.dexMod}"
+            ActiveWeapon.KURZSCHWERT_SCHILD -> "+${characterVm.proficiencyBonus + finesseWeaponMod}"
             ActiveWeapon.SHILLELAGH_SCHILD -> "+${characterVm.proficiencyBonus + characterVm.wisMod}"
-            ActiveWeapon.KRIEGSHAMMER_PAKT -> "+${characterVm.proficiencyBonus + characterVm.chaMod}"
-            ActiveWeapon.SPEER_PAKT -> "+${characterVm.proficiencyBonus + characterVm.chaMod}"
+            ActiveWeapon.KRIEGSHAMMER_PAKT -> "+${characterVm.proficiencyBonus + characterVm.strMod}"
+            ActiveWeapon.SPEER_PAKT -> "+${characterVm.proficiencyBonus + characterVm.strMod}"
         }
 
     val currentDamage: String
         get() = when (currentWeapon) {
             ActiveWeapon.LANGBOGEN -> "1W8 + ${characterVm.dexMod} Stich (Verlangsamen: -3m Tempo)"
-            ActiveWeapon.KURZSCHWERT_SCHILD -> "1W6 + ${characterVm.dexMod} Stich (Ärgern: Vorteil auf nächsten Angriff)"
+            ActiveWeapon.KURZSCHWERT_SCHILD -> "1W6 + $finesseWeaponMod Stich (Ärgern: Vorteil auf nächsten Angriff)"
             ActiveWeapon.SHILLELAGH_SCHILD -> {
                 val die = if (isUsingTwoHanded) "1W10" else "1W8"
                 "$die + ${characterVm.wisMod} Wucht (Umwerfen: KON-Save SG 12)"
             }
             ActiveWeapon.KRIEGSHAMMER_PAKT -> {
                 val die = if (isUsingTwoHanded) "1W10" else "1W8"
-                "$die + ${characterVm.chaMod} Wucht (Stoß: bis zu 3m wegstoßen)"
+                "$die + ${characterVm.strMod} Wucht (Stoß: bis zu 3m wegstoßen)"
             }
             ActiveWeapon.SPEER_PAKT -> {
                 val die = if (isUsingTwoHanded) "1W8" else "1W6"
-                "$die + ${characterVm.chaMod} Stich (Schwächen: Gegner hat Nachteil auf nächsten Angriff)"
+                "$die + ${characterVm.strMod} Stich (Schwächen: Gegner hat Nachteil auf nächsten Angriff)"
             }
         }
 

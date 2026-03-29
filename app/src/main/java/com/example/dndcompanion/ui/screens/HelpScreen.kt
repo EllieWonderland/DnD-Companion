@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.viewmodel.ChatMessage
 import com.example.dndcompanion.ui.viewmodel.FaqItem
+import com.example.dndcompanion.ui.viewmodel.GroupViewModel
 import com.example.dndcompanion.ui.theme.*
 import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.material3.Material3RichText
@@ -35,9 +36,9 @@ import androidx.compose.runtime.CompositionLocalProvider
 import kotlinx.coroutines.delay
 
 @Composable
-fun HelpScreen(viewModel: CharacterViewModel, onNavigateToRulebook: (String, String?) -> Unit = { _, _ -> }) {
+fun HelpScreen(viewModel: CharacterViewModel, groupVm: GroupViewModel, onNavigateToRulebook: (String, String?) -> Unit = { _, _ -> }) {
     var selectedTab by remember { mutableStateOf(0) }
-    val tabs = listOf("Regel-Chat", "Mein FAQ")
+    val tabs = listOf("Regel-Chat", "Mein FAQ", "Gruppenchat")
 
     PergamentBackground {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -61,6 +62,7 @@ fun HelpScreen(viewModel: CharacterViewModel, onNavigateToRulebook: (String, Str
                 when (selectedTab) {
                     0 -> ChatView(viewModel, onNavigateToRulebook)
                     1 -> FaqView(viewModel)
+                    2 -> GroupChatTabContent(groupVm, viewModel)
                 }
             }
         }

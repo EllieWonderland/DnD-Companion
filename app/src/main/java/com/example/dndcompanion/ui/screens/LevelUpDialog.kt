@@ -69,9 +69,9 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
                 if (currentStep == 1) {
                     Text("Schritt 1: Trefferpunkte (HP)", fontWeight = FontWeight.Bold, color = TintenSchwarz, fontSize = 18.sp)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Text("Athania erhält feste Trefferpunkte (6) plus den Konstitutions-Modifikator (+${viewModel.conMod}).", color = TintenSchwarz)
+                    Text("${viewModel.characterName} erhält feste Trefferpunkte (${viewModel.hitDie}) plus den Konstitutions-Modifikator (+${viewModel.conMod}).", color = TintenSchwarz)
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text("Deine Max HP steigen um ${6 + viewModel.conMod}", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.tertiary, fontSize = 18.sp)
+                    Text("Deine Max HP steigen um ${viewModel.hitDie + viewModel.conMod}", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.tertiary, fontSize = 18.sp)
                     Text("Deine Trefferwürfel steigen um 1.", color = TintenSchwarz)
                 } 
                 else if (currentStep == 2) {
@@ -153,7 +153,7 @@ fun LevelUpDialog(viewModel: CharacterViewModel) {
             Button(
                 onClick = {
                     if (currentStep == 1) {
-                        viewModel.applyHpIncrease(viewModel.conMod, 6)
+                        viewModel.applyHpIncrease(viewModel.conMod, viewModel.hitDie)
                         if (isAsiLevel) {
                             currentStep = 2
                         } else {

@@ -162,32 +162,151 @@ fun GroupChatDetailView(viewModel: CharacterViewModel, groupVm: GroupViewModel, 
 }
 
 @Composable
+fun GroupChatTabContent(groupVm: GroupViewModel, viewModel: CharacterViewModel) {
+    var newMessageText by remember { mutableStateOf("") }
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
+    val isOoc = selectedTabIndex == 1
+    val listState = rememberLazyListState()
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    val filteredMessages = groupVm.groupChatMessages.filter { it.isOoc == isOoc }
+
+    LaunchedEffect(filteredMessages.size) {
+        if (filteredMessages.isNotEmpty()) {
+            listState.animateScrollToItem(filteredMessages.size - 1)
+        }
+    }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text("Chat löschen", fontFamily = Almendra, color = MaterialTheme.colorScheme.error) },
+            text = { Text("Möchtest du wirklich alle ${if (isOoc) "OOC" else "IC"} Nachrichten löschen? Dies kann nicht rückgängig gemacht werden.", color = TintenSchwarz) },
+            confirmButton = {
+                TextButton(onClick = {
+                    groupVm.deleteGroupChat(isOoc)
+                    showDeleteDialog = false
+                }) {
+                    Text("Löschen", color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteDialog = false }) {
+                    Text("Abbrechen", color = TintenSchwarz)
+                }
+            },
+            containerColor = PergamentHell
+        )
+    }
+
+    Column(modifier = Modifier.fillMaxSize()) {
+        TabRow(
+            selectedTabIndex = selectedTabIndex,
+            containerColor = PergamentDunkel,
+            contentColor = TintenSchwarz
+        ) {
+            Tab(
+                selected = selectedTabIndex == 0,
+                onClick = { selectedTabIndex = 0 },
+                text = { Text("In-Character", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp) }
+            )
+            Tab(
+                selected = selectedTabIndex == 1,
+                onClick = { selectedTabIndex = 1 },
+                text = { Text("Out-of-Character", fontFamily = Almendra, fontWeight = FontWeight.Bold, fontSize = 16.sp) }
+            )
+        }
+
+        androidx.compose.foundation.layout.Box(modifier = Modifier.weight(1f)) {
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
+            ) {
+                items(filteredMessages) { message ->
+                    GroupChatMessageCard(message)
+                }
+            }
+            androidx.compose.material3.SmallFloatingActionButton(
+                onClick = { showDeleteDialog = true },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(8.dp),
+                containerColor = MaterialTheme.colorScheme.error
+            ) {
+                Icon(Icons.Default.Delete, contentDescription = "Chat löschen", tint = PergamentHell)
+            }
+        }
+
+        SteinCard(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Column(modifier = Modifier.padding(12.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    OutlinedTextField(
+                        value = newMessageText,
+                        onValueChange = { newMessageText = it },
+                        modifier = Modifier.weight(1f),
+                        placeholder = { Text(if (isOoc) "Schreibe etwas OOC..." else "Sprich als dein Charakter...", color = TintenSchwarz.copy(alpha = 0.6f)) },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedBorderColor = if (isOoc) WaldgruenDunkel else OchsenblutRot,
+                            unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f),
+                        ),
+                        textStyle = androidx.compose.ui.text.TextStyle(color = TintenSchwarz, fontSize = 16.sp),
+                        maxLines = 3
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    IconButton(
+                        onClick = {
+                            if (newMessageText.isNotBlank()) {
+                                groupVm.sendGroupMessage(newMessageText, isOoc)
+                                newMessageText = ""
+                            }
+                        },
+                        modifier = Modifier
+                            .size(48.dp)
+                            .background(if (isOoc) WaldgruenDunkel else OchsenblutRot, RoundedCornerShape(12.dp))
+                    ) {
+                        Text("➡️", color = PergamentHell, fontSize = 20.sp)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
 fun GroupChatMessageCard(message: GroupChatMessage) {
     val dateStr = remember(message.timestamp) {
         val sdf = java.text.SimpleDateFormat("HH:mm", java.util.Locale.getDefault())
         sdf.format(java.util.Date(message.timestamp))
     }
 
-    val nameColor = when {
-        message.isOoc -> WaldgruenDunkel
-        message.author.trim() == "Athania" -> OchsenblutRot
-        message.author.trim() == "Delat" -> HexenLilaHell
+    val nameColor = when (message.author.trim()) {
+        "Athania" -> OchsenblutRot
+        "Delat" -> HexenLila
         else -> TintenSchwarz
     }
 
     val authorBgColor = when (message.author.trim()) {
-        "Athania" -> OchsenblutRot.copy(alpha = 0.10f)
-        "Delat" -> HexenLila.copy(alpha = 0.10f)
+        "Athania" -> OchsenblutRot.copy(alpha = 0.30f)
+        "Delat" -> HexenLila.copy(alpha = 0.30f)
         else -> PergamentHell
     }
 
     Card(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-        colors = CardDefaults.cardColors(containerColor = authorBgColor.copy(alpha = 0.95f)),
+        modifier = Modifier.fillMaxWidth().padding(vertical = 1.dp),
+        colors = CardDefaults.cardColors(containerColor = authorBgColor),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Column(modifier = Modifier.padding(12.dp)) {
+        Column(modifier = Modifier.padding(16.dp)) {
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween) {
                 Text(
                     text = if (message.isOoc) "[OOC] ${message.author}" else message.author,

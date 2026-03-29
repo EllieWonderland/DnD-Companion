@@ -226,7 +226,7 @@ fun DnDApp(
                         ProfilScreen(viewModel, combatViewModel)
                     }
                 }
-                2 -> HelpScreen(viewModel, onNavigateToRulebook = { chapter, search -> 
+                2 -> HelpScreen(viewModel, groupViewModel, onNavigateToRulebook = { chapter, search ->
                     viewModel.targetRulebookChapter = chapter
                     viewModel.targetRulebookSearch = search
                     currentScreen = 3

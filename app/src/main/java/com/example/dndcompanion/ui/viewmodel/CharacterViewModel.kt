@@ -466,6 +466,13 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     val proficiencyBonus: Int get() = DndCalculations.proficiencyBonus(level)
 
+    // Trefferwürfelgröße je nach Klasse (Ranger d10, Hexenmeister d8)
+    val hitDie: Int get() = when (characterData.charClass) {
+        CharacterClass.RANGER -> 10
+        CharacterClass.WARLOCK -> 8
+        else -> 8
+    }
+
     val strMod: Int get() = DndCalculations.abilityMod(strength)
     val dexMod: Int get() = DndCalculations.abilityMod(dexterity)
     val conMod: Int get() = DndCalculations.abilityMod(constitution)
@@ -478,6 +485,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val passivePerception: Int get() = 10 + wisMod + if (characterData.proficientSkills.contains("Wahrnehmung")) proficiencyBonus else 0
 
     // Neue Metadata-Properties für die UI
+    val characterName: String get() = characterData.name
     val characterRace: String get() = characterData.race
     val characterBackground: String get() = characterData.background
     val characterAlignment: String get() = characterData.alignment
@@ -659,30 +667,33 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             return ac
         }
 
+    // Finesse-Waffe: verwende den höheren Wert aus STR und DEX
+    private val finesseWeaponMod: Int get() = maxOf(strMod, dexMod)
+
     val currentAttackBonus: String
         get() = when (currentWeapon) {
             ActiveWeapon.LANGBOGEN -> "+${proficiencyBonus + dexMod + 2}"
-            ActiveWeapon.KURZSCHWERT_SCHILD -> "+${proficiencyBonus + dexMod}"
+            ActiveWeapon.KURZSCHWERT_SCHILD -> "+${proficiencyBonus + finesseWeaponMod}"
             ActiveWeapon.SHILLELAGH_SCHILD -> "+${proficiencyBonus + wisMod}"
-            ActiveWeapon.KRIEGSHAMMER_PAKT -> "+${proficiencyBonus + chaMod}"
-            ActiveWeapon.SPEER_PAKT -> "+${proficiencyBonus + chaMod}"
+            ActiveWeapon.KRIEGSHAMMER_PAKT -> "+${proficiencyBonus + strMod}"
+            ActiveWeapon.SPEER_PAKT -> "+${proficiencyBonus + strMod}"
         }
 
     val currentDamage: String
         get() = when (currentWeapon) {
             ActiveWeapon.LANGBOGEN -> "1W8 + $dexMod Stich (Verlangsamen: -3m Tempo)"
-            ActiveWeapon.KURZSCHWERT_SCHILD -> "1W6 + $dexMod Stich (Ärgern: Vorteil auf nächsten Angriff)"
+            ActiveWeapon.KURZSCHWERT_SCHILD -> "1W6 + $finesseWeaponMod Stich (Ärgern: Vorteil auf nächsten Angriff)"
             ActiveWeapon.SHILLELAGH_SCHILD -> {
                 val die = if (isUsingTwoHanded) "1W10" else "1W8"
                 "$die + $wisMod Wucht (Umwerfen: KON-Save SG 12)"
             }
             ActiveWeapon.KRIEGSHAMMER_PAKT -> {
                 val die = if (isUsingTwoHanded) "1W10" else "1W8"
-                "$die + $chaMod Wucht (Stoß: bis zu 3m wegstoßen)"
+                "$die + $strMod Wucht (Stoß: bis zu 3m wegstoßen)"
             }
             ActiveWeapon.SPEER_PAKT -> {
                 val die = if (isUsingTwoHanded) "1W8" else "1W6"
-                "$die + $chaMod Stich (Schwächen: Gegner hat Nachteil auf nächsten Angriff)"
+                "$die + $strMod Stich (Schwächen: Gegner hat Nachteil auf nächsten Angriff)"
             }
         }
 
