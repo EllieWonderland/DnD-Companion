@@ -8,7 +8,7 @@ Im Ausrüstungskatalog im Rucksack sind alle Kategorien doppelt vertreten.
 
 ## Bug 2 – Athania: Falscher Name bei kostenlosem Zauber
 Bei Athania steht im Zauber-Tab unter „Kostenlose Zauber" noch „Erzfeind" – korrekt wäre „Zeichen des Jägers".
-**Status:** Offen
+**Status:** Erledigt
 
 ---
 

@@ -133,7 +133,7 @@ fun ZauberScreen(
                         val fullDescription = if (matchingSpell != null) "${trait.desc}\n\n${matchingSpell.description}" else trait.desc
 
                         ExpandableFreeSpellCard(
-                            title = trait.name,
+                            title = trait.grantedSpellId ?: trait.name,
                             description = fullDescription,
                             currentUses = trait.currentUses,
                             maxUses = trait.maxUses,
