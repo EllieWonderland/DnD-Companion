@@ -729,5 +729,101 @@
             "heilung",
             "wiederbelebung"
         ]
+    },
+    {
+        "id": "rule_currency",
+        "category": "Ausrüstung & Dienstleistungen",
+        "title": "Münzwährungen & Umrechnung",
+        "content": "Alle Preise werden in Münzen angegeben. Die Standardwährung ist das Goldstück (GM / GP).\n\n| Münze | Wert in Gold |\n|---|---|\n| Kupferstück (KM / CP) | 1/100 GM |\n| Silberstück (SM / SP) | 1/10 GM |\n| Elektrummünze (EM / EP) | 1/2 GM |\n| Goldstück (GM / GP) | 1 GM |\n| Platinmünze (PM / PP) | 10 GM |\n\n**Gewicht:** 50 Münzen wiegen zusammen exakt 0,5 kg – unabhängig vom Münztyp.",
+        "tags": [
+            "münze",
+            "gold",
+            "silber",
+            "kupfer",
+            "platin",
+            "elektrum",
+            "währung",
+            "umrechnung",
+            "gewicht",
+            "km",
+            "sm",
+            "gm",
+            "pm",
+            "em"
+        ]
+    },
+    {
+        "id": "rule_weapon_properties",
+        "category": "Ausrüstung & Dienstleistungen",
+        "title": "Waffen-Eigenschaften (Weapon Properties)",
+        "content": "Viele Waffen besitzen besondere Eigenschaften, die ihren Einsatz beeinflussen:\n\n* **Finesse:** Für Angriffs- und Schadenswurf darf man Stärke oder Geschicklichkeit wählen – aber für beide Würfe muss derselbe Modifikator verwendet werden.\n* **Leicht (Light):** Nutzt man die Angriffsaktion mit einer leichten Waffe, kann man als Bonusaktion eine zusätzliche Attacke mit einer zweiten leichten Waffe ausführen. Der Attributsmodifikator wird beim Bonusangriff nicht auf den Schaden addiert (außer er ist negativ).\n* **Ladeeigenschaft (Loading):** Unabhängig von der Anzahl eigener Angriffe darf man pro Aktion, Bonusaktion oder Reaktion nur eine einzige Munition abfeuern.\n* **Munition (Ammunition):** Man benötigt passende Munition (z. B. Pfeile, Bolzen). Nach einem Kampf kann man bis zu einer Minute investieren, um die Hälfte der verschossenen Munition (abgerundet) wieder einzusammeln.\n* **Reichweite (Reach):** Nahkampfwaffen mit dieser Eigenschaft erhöhen die eigene Reichweite für Nahkampfangriffe und Gelegenheitsangriffe um 1,5 m / 1 Feld.\n* **Schwer (Heavy):** Bei Nahkampfwaffen hat man Nachteil auf den Angriffswurf, wenn der eigene Stärkewert unter 13 liegt. Bei Fernkampfwaffen ist Geschicklichkeit ≥ 13 erforderlich, um den Nachteil zu vermeiden.\n* **Vielseitig (Versatile):** Die Waffe kann einhändig oder zweihändig geführt werden. Der zweihändige Schadenswürfel steht in Klammern (z. B. Kriegshammer: 1W8 / 1W10).\n* **Wurfwaffe (Thrown):** Kann für einen Fernkampfangriff geworfen werden und nutzt dasselbe Attribut wie im Nahkampf.\n* **Zweihändig (Two-Handed):** Erfordert zwingend beide Hände zum Angreifen.",
+        "tags": [
+            "waffe",
+            "eigenschaft",
+            "finesse",
+            "leicht",
+            "loading",
+            "ladeeigenschaft",
+            "munition",
+            "reichweite",
+            "reach",
+            "schwer",
+            "heavy",
+            "vielseitig",
+            "versatile",
+            "wurfwaffe",
+            "thrown",
+            "zweihändig",
+            "two-handed",
+            "weapon",
+            "property"
+        ]
+    },
+    {
+        "id": "rule_weapon_mastery",
+        "category": "Ausrüstung & Dienstleistungen",
+        "title": "Waffen-Meisterschaften (Mastery Properties)",
+        "content": "Um Waffen-Meisterschaften nutzen zu können, benötigt der Charakter ein entsprechendes Merkmal (z. B. *Weapon Mastery*). Jede Waffe hat genau eine Meisterschaftseigenschaft:\n\n* **Ärgern / Irritieren (Vex):** Fügt man dem Ziel Schaden zu, erhält man Vorteil auf den nächsten eigenen Angriffswurf gegen dieses Ziel vor Ende des nächsten Zuges.\n* **Kerbe (Nick):** Der zusätzliche Angriff durch die \"Leicht\"-Eigenschaft kann als Teil der normalen Angriffsaktion durchgeführt werden statt als Bonusaktion.\n* **Schwächen (Sap):** Das getroffene Ziel hat bei seinem nächsten Angriffswurf vor Beginn des nächsten eigenen Zuges Nachteil.\n* **Spalten (Cleave):** Bei einem Treffer kann man einen weiteren Angriffswurf gegen eine zweite Kreatur machen, die sich innerhalb der eigenen Reichweite und innerhalb von 1,5 m zur ersten Kreatur befindet (nur 1× pro Zug).\n* **Stoß (Push):** Bei einem Treffer kann das Ziel bis zu 3 m in gerader Linie weggestoßen werden (nur Kreaturen der Größe Groß oder kleiner).\n* **Streifen (Graze):** Verfehlt man mit seinem Angriff, fügt man dem Ziel dennoch Schaden in Höhe des verwendeten Attributsmodifikators zu.\n* **Umwerfen (Topple):** Triffst du, muss das Ziel einen KON-Rettungswurf bestehen oder erleidet den Zustand *Liegend* (Prone).\n* **Verlangsamen (Slow):** Fügt man dem Ziel Schaden zu, reduziert sich dessen Bewegungsrate bis zum Beginn des nächsten eigenen Zuges um 3 m / 2 Felder.",
+        "tags": [
+            "meisterschaft",
+            "mastery",
+            "waffe",
+            "weapon",
+            "ärgern",
+            "vex",
+            "kerbe",
+            "nick",
+            "schwächen",
+            "sap",
+            "spalten",
+            "cleave",
+            "stoß",
+            "push",
+            "streifen",
+            "graze",
+            "umwerfen",
+            "topple",
+            "verlangsamen",
+            "slow"
+        ]
+    },
+    {
+        "id": "rule_armor_proficiency",
+        "category": "Ausrüstung & Dienstleistungen",
+        "title": "Rüstungs-Malus bei fehlender Übung",
+        "content": "Trägt ein Charakter eine Rüstung, für die er keine Übung (Proficiency) besitzt, gelten folgende Strafen:\n\n* **Nachteil** auf alle W20-Tests, die Stärke oder Geschicklichkeit nutzen (Fertigkeitsproben, Angriffswürfe, Rettungswürfe).\n* **Kein Zauberwirken:** Der Charakter kann keine Zauber wirken, solange er diese Rüstung trägt.\n\nDiese Einschränkungen gelten unabhängig von der Rüstungsklasse und entfallen erst, wenn die entsprechende Rüstungsübung erworben wird.",
+        "tags": [
+            "rüstung",
+            "armor",
+            "übung",
+            "proficiency",
+            "malus",
+            "nachteil",
+            "strafe",
+            "zaubern",
+            "einschränkung",
+            "stärke",
+            "geschicklichkeit"
+        ]
     }
 ]
