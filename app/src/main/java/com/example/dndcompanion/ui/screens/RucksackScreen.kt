@@ -338,6 +338,7 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
         EquipmentPickerDialog(
             catalog = viewModel.equipmentCatalog,
             onItemSelected = { viewModel.addFromCatalog(it) },
+            onItemBought = { viewModel.buyItemFromCatalog(it) },
             onDismiss = { showEquipmentPicker = false }
         )
     }

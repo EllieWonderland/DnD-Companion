@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -29,6 +30,7 @@ import com.example.dndcompanion.ui.viewmodel.EquipmentCatalogItem
 fun EquipmentPickerDialog(
     catalog: List<EquipmentCatalogItem>,
     onItemSelected: (EquipmentCatalogItem) -> Unit,
+    onItemBought: (EquipmentCatalogItem) -> Unit,
     onDismiss: () -> Unit
 ) {
     var searchQuery by remember { mutableStateOf("") }
@@ -164,7 +166,7 @@ fun EquipmentPickerDialog(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(filteredItems, key = { "${it.name}_${it.category}" }) { item ->
-                    CatalogItemCard(item = item, onAdd = { onItemSelected(item) })
+                    CatalogItemCard(item = item, onAdd = { onItemSelected(item) }, onItemBought = { onItemBought(item) })
                 }
             }
         }
@@ -172,7 +174,7 @@ fun EquipmentPickerDialog(
 }
 
 @Composable
-private fun CatalogItemCard(item: EquipmentCatalogItem, onAdd: () -> Unit) {
+private fun CatalogItemCard(item: EquipmentCatalogItem, onAdd: () -> Unit, onItemBought: () -> Unit) {
     PergamentCard(modifier = Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier
@@ -209,16 +211,31 @@ private fun CatalogItemCard(item: EquipmentCatalogItem, onAdd: () -> Unit) {
                     }
                 }
             }
-            IconButton(onClick = onAdd, modifier = Modifier.size(48.dp)) {
-                Icon(
-                    Icons.Default.Add,
-                    contentDescription = "Hinzufügen",
-                    tint = PergamentHell,
-                    modifier = Modifier
-                        .size(32.dp)
-                        .background(Waldgruen, RoundedCornerShape(8.dp))
-                        .padding(4.dp)
-                )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                if (item.price.isNotBlank() && item.price != "-" && item.price != "—" && !item.price.contains("Variiert", ignoreCase = true)) {
+                    IconButton(onClick = onItemBought, modifier = Modifier.size(48.dp)) {
+                        Icon(
+                            Icons.Default.ShoppingCart,
+                            contentDescription = "Kaufen",
+                            tint = PergamentHell,
+                            modifier = Modifier
+                                .size(32.dp)
+                                .background(MaterialTheme.colorScheme.tertiary, RoundedCornerShape(8.dp))
+                                .padding(4.dp)
+                        )
+                    }
+                }
+                IconButton(onClick = onAdd, modifier = Modifier.size(48.dp)) {
+                    Icon(
+                        Icons.Default.Add,
+                        contentDescription = "Hinzufügen",
+                        tint = PergamentHell,
+                        modifier = Modifier
+                            .size(32.dp)
+                            .background(Waldgruen, RoundedCornerShape(8.dp))
+                            .padding(4.dp)
+                    )
+                }
             }
         }
     }

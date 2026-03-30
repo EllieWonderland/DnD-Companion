@@ -945,6 +945,91 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         addCustomLoot(item.name, item.weight, inventoryCategory, item.price)
     }
 
+    fun buyItemFromCatalog(item: EquipmentCatalogItem) {
+        val priceInKM = parsePriceToKM(item.price)
+        if (priceInKM <= 0) {
+            addFromCatalog(item)
+            return
+        }
+
+        val totalOwnedKM = coinsKM + (coinsSM * 10) + (coinsEM * 50) + (coinsGM * 100) + (coinsPM * 1000)
+        
+        if (totalOwnedKM < priceInKM) {
+            snackbarMessage.value = "Zu wenig Geld! (Preis: ${item.price})"
+            return
+        }
+
+        val remainingKM = totalOwnedKM - priceInKM
+        
+        var tempRemaining = remainingKM
+        val newPM = tempRemaining / 1000
+        tempRemaining %= 1000
+        
+        val newGM = tempRemaining / 100
+        tempRemaining %= 100
+        
+        // Skip optimizing EM, just use SM and KM to give exact change in common D&D fashion.
+        val newSM = tempRemaining / 10
+        tempRemaining %= 10
+        
+        val newKM = tempRemaining
+
+        coinsPM = newPM
+        coinsGM = newGM
+        coinsSM = newSM
+        coinsKM = newKM
+        coinsEM = 0 // Convert any electrum they had into standard coins during exact change
+
+        prefs.edit {
+            putInt("coinsPM", coinsPM)
+            putInt("coinsGM", coinsGM)
+            putInt("coinsEM", coinsEM)
+            putInt("coinsSM", coinsSM)
+            putInt("coinsKM", coinsKM)
+        }
+        
+        val inventoryCategory = when {
+            item.category.startsWith("Waffen") -> "Rüstung & Waffen"
+            item.category == "Rüstung" -> "Rüstung & Waffen"
+            item.category == "Werkzeug" -> "Werkzeug"
+            item.category == "Ausrüstung" -> "Ausrüstung"
+            else -> "Sonstiges"
+        }
+        val itemName = item.name
+        val index = customLoot.indexOfFirst { it.name.equals(itemName, ignoreCase = true) }
+        if (index != -1) {
+            val existingItem = customLoot[index]
+            val newWeight = if (existingItem.weight == 0.0 && item.weight > 0.0) item.weight else existingItem.weight
+            val newPrice = if (existingItem.price == null) item.price else existingItem.price
+            customLoot[index] = existingItem.copy(amount = existingItem.amount + 1, weight = newWeight, price = newPrice)
+        } else {
+            customLoot.add(InventoryItem(itemName, 1, item.weight, inventoryCategory, price = item.price))
+        }
+        saveLoot()
+        
+        snackbarMessage.value = "${item.name} für ${item.price} gekauft!"
+    }
+
+    private fun parsePriceToKM(priceStr: String): Int {
+        if (priceStr.isBlank() || priceStr == "-" || priceStr == "—") return 0
+        val cleanStr = priceStr.replace(".", "")
+        val regex = Regex("""(\d+)\s*(GM|SM|KM|EM|PM)""", RegexOption.IGNORE_CASE)
+        var totalKM = 0
+        val matches = regex.findAll(cleanStr)
+        for (match in matches) {
+            val amount = match.groupValues[1].toIntOrNull() ?: continue
+            totalKM += when (match.groupValues[2].uppercase()) {
+                "PM" -> amount * 1000
+                "GM" -> amount * 100
+                "EM" -> amount * 50
+                "SM" -> amount * 10
+                "KM" -> amount
+                else -> 0
+            }
+        }
+        return totalKM
+    }
+
     // --- FREIE MERKMALE (TRAITS) ---    // --- FREE SPELLS LOGIC ---
     fun canCastAsRitual(spell: Spell): Boolean {
         if (!spell.isRitual) return false

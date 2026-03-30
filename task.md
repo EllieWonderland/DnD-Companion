@@ -32,3 +32,10 @@ Ggf. assets/rules prÃ¼fen fÃ¼r die zugrunde liegenden Regeln.
 **Status:** Erledigt
 *Commit-Notiz:* Feat: Display equipment prices in RucksackScreen (InventoryItem price property, CharacterViewModel catalog transfer, InventoryRow UI display)
 
+
+## Feature - Gegenstände kaufen & Feedback
+- Feedback beim Hinzufügen (über snackbarMessage) ist sowohl beim Katalog als auch in der Eingabemaske voll verknüpft.
+- Neuer Kaufen-Button im Katalog ('Einkaufswagen') zieht bei Erfolg den Betrag optimal gewechselt ab (in PM, GM, SM, KM).
+**Status:** Erledigt
+*Commit-Notiz:* Feat: Add logic to buy items from catalog including exact coin change deduction
+
