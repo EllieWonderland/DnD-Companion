@@ -24,6 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.draw.clip
+import com.example.dndcompanion.ui.screens.CompanionSelectionDialog
 import com.example.dndcompanion.ui.screens.CombatScreen
 import com.example.dndcompanion.ui.screens.RucksackScreen
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
@@ -373,6 +374,7 @@ fun AthaniaScreen(
 
 @Composable
 fun CompanionScreen(viewModel: CharacterViewModel) {
+    var showCompanionSelectionDialog by remember { mutableStateOf(false) }
     val companion = viewModel.companionData
     val isRanger = viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER
     val isDead = viewModel.companionIsDead
@@ -423,10 +425,14 @@ fun CompanionScreen(viewModel: CharacterViewModel) {
         }
 
         if (isRanger && !isDead) {
-            SegmentedBeastControl(
-                activeType = viewModel.activeBeastType,
-                onTypeSelected = { viewModel.toggleBeastType(it) }
-            )
+            Button(
+                onClick = { showCompanionSelectionDialog = true },
+                colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
+                modifier = Modifier.fillMaxWidth().height(48.dp),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Text("Tierart wechseln", fontSize = 16.sp, fontFamily = Almendra)
+            }
             Spacer(modifier = Modifier.height(16.dp))
         }
 
@@ -540,42 +546,11 @@ fun CompanionScreen(viewModel: CharacterViewModel) {
             }
         }
     }
-    }
-}
 
-@Composable
-fun SegmentedBeastControl(activeType: com.example.dndcompanion.ui.viewmodel.BeastType, onTypeSelected: (com.example.dndcompanion.ui.viewmodel.BeastType) -> Unit) {
-    val options = listOf(
-        com.example.dndcompanion.ui.viewmodel.BeastType.LAND to "Land",
-        com.example.dndcompanion.ui.viewmodel.BeastType.SKY to "Himmel",
-        com.example.dndcompanion.ui.viewmodel.BeastType.SEA to "Meer"
-    )
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(48.dp)
-            .clip(RoundedCornerShape(24.dp))
-            .background(WaldgruenDunkel),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        options.forEach { (type, label) ->
-            val isSelected = activeType == type
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight()
-                    .background(if (isSelected) Waldgruen else Color.Transparent)
-                    .clickable { onTypeSelected(type) },
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = label,
-                    color = if (isSelected) PergamentHell else PergamentDunkel,
-                    fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                    fontSize = 16.sp,
-                    fontFamily = Almendra
-                )
-            }
-        }
+    if (showCompanionSelectionDialog) {
+        CompanionSelectionDialog(
+            viewModel = viewModel,
+            onDismiss = { showCompanionSelectionDialog = false }
+        )
     }
 }
