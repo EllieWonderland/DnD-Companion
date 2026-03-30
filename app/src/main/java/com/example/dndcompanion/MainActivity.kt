@@ -553,4 +553,4 @@ fun CompanionScreen(viewModel: CharacterViewModel) {
             onDismiss = { showCompanionSelectionDialog = false }
         )
     }
-}
+}}

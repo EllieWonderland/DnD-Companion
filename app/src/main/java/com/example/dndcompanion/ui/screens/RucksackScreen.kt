@@ -318,8 +318,9 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                                             name = item.name,
                                             amount = item.amount.toString(),
                                             weight = item.weight,
+                                            price = item.price,
                                             onMinus = { viewModel.removeCustomLoot(item.name) },
-                                            onPlus = { viewModel.addCustomLoot(item.name, item.weight, cat) }
+                                            onPlus = { viewModel.addCustomLoot(item.name, item.weight, cat, item.price) }
                                         )
                                     }
                                 }
@@ -397,7 +398,7 @@ fun ChainProgressBar(progress: Float, color: Color) {
 }
 
 @Composable
-fun InventoryRow(name: String, amount: String, weight: Double? = null, extraAction: @Composable (() -> Unit)? = null, onMinus: () -> Unit, onPlus: () -> Unit) {
+fun InventoryRow(name: String, amount: String, weight: Double? = null, price: String? = null, extraAction: @Composable (() -> Unit)? = null, onMinus: () -> Unit, onPlus: () -> Unit) {
     PergamentCard(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
         Row(
             modifier = Modifier.padding(12.dp).fillMaxWidth(),
@@ -408,6 +409,9 @@ fun InventoryRow(name: String, amount: String, weight: Double? = null, extraActi
                 Text(text = name, style = Typography.bodyLarge, fontWeight = FontWeight.Bold)
                 if (weight != null && weight > 0.0) {
                     Text(text = "${weight} kg", style = Typography.bodySmall)
+                }
+                if (!price.isNullOrBlank()) {
+                    Text(text = price, style = Typography.bodySmall, color = MaterialTheme.colorScheme.tertiary)
                 }
                 if (extraAction != null) {
                     Box(modifier = Modifier.padding(top = 4.dp)) {

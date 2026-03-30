@@ -12,7 +12,8 @@ data class InventoryItem(
     val category: String = "Sonstiges",
     var maxCharges: Int = 0,
     var currentCharges: Int = 0,
-    val spellCharges: Map<String, Int>? = null // Map spellId -> cost
+    val spellCharges: Map<String, Int>? = null, // Map spellId -> cost
+    val price: String? = null
 )
 data class ChatMessage(
     val id: String = java.util.UUID.randomUUID().toString(),

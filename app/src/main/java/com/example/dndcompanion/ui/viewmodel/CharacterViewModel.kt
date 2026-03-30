@@ -919,15 +919,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun addCustomLoot(itemName: String, weight: Double = 0.0, category: String = "Sonstiges") {
+    fun addCustomLoot(itemName: String, weight: Double = 0.0, category: String = "Sonstiges", price: String? = null) {
         val index = customLoot.indexOfFirst { it.name.equals(itemName, ignoreCase = true) }
         if (index != -1) {
             val existingItem = customLoot[index]
             // Falls das bestehende Item kein Gewicht hat, aber jetzt eines übergeben wird, übernehmen
             val newWeight = if (existingItem.weight == 0.0 && weight > 0.0) weight else existingItem.weight
-            customLoot[index] = existingItem.copy(amount = existingItem.amount + 1, weight = newWeight)
+            val newPrice = if (existingItem.price == null && price != null) price else existingItem.price
+            customLoot[index] = existingItem.copy(amount = existingItem.amount + 1, weight = newWeight, price = newPrice)
         } else {
-            customLoot.add(InventoryItem(itemName, 1, weight, category))
+            customLoot.add(InventoryItem(itemName, 1, weight, category, price = price))
         }
         saveLoot()
         snackbarMessage.value = "$itemName zum Rucksack hinzugefügt"
@@ -941,7 +942,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             item.category == "Ausrüstung" -> "Ausrüstung"
             else -> "Sonstiges"
         }
-        addCustomLoot(item.name, item.weight, inventoryCategory)
+        addCustomLoot(item.name, item.weight, inventoryCategory, item.price)
     }
 
     // --- FREIE MERKMALE (TRAITS) ---    // --- FREE SPELLS LOGIC ---
