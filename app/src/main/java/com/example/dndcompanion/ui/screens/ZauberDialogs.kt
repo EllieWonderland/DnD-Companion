@@ -131,6 +131,13 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedLevel by remember { mutableIntStateOf(-1) }
     val globalSpellbook by viewModel.globalSpellbook.collectAsState()
+    
+    val localizedClassName = when (viewModel.characterData.charClass) {
+        com.example.dndcompanion.data.CharacterClass.RANGER -> "Waldläufer"
+        com.example.dndcompanion.data.CharacterClass.WARLOCK -> "Hexenmeister"
+        else -> "Eigene Klasse"
+    }
+    var classFilterEnabled by remember { mutableStateOf(true) }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -159,6 +166,17 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                     )
                 )
 
+                FilterChip(
+                    selected = classFilterEnabled,
+                    onClick = { classFilterEnabled = !classFilterEnabled },
+                    label = { Text("Nur Klassenzauber ($localizedClassName)", color = TintenSchwarz) },
+                    colors = FilterChipDefaults.filterChipColors(
+                        selectedContainerColor = MaterialTheme.colorScheme.tertiary.copy(alpha = 0.2f),
+                        selectedLabelColor = TintenSchwarz
+                    ),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
                 val scrollRowState = rememberScrollState()
                 Row(
                     modifier = Modifier.fillMaxWidth().horizontalScroll(scrollRowState).padding(bottom = 8.dp),
@@ -169,7 +187,8 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                     val levels = listOf(-1) + (0..9).toList()
                     levels.forEach { lvl ->
                         val hasSpells = lvl == -1 || globalSpellbook.any { spell ->
-                            spell.level == lvl && (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
+                            val classMatch = !classFilterEnabled || spell.classes.contains(localizedClassName)
+                            spell.level == lvl && classMatch && (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
                         }
                         Button(
                             onClick = { selectedLevel = lvl },
@@ -190,7 +209,9 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
 
                 Box(modifier = Modifier.weight(1f)) {
                     val filteredSpells = globalSpellbook.filter { spell ->
+                        val classMatch = !classFilterEnabled || spell.classes.contains(localizedClassName)
                         (selectedLevel == -1 || spell.level == selectedLevel) &&
+                        classMatch &&
                         (searchQuery.isBlank() || spell.name.contains(searchQuery, ignoreCase = true))
                     }.sortedWith(compareBy({ it.level }, { it.name }))
 
