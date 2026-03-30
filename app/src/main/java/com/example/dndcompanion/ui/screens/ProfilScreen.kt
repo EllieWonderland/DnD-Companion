@@ -20,6 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.ui.unit.sp
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
@@ -192,22 +197,37 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel, onNav
                         CharacterClass.WARLOCK -> "Hexenmeister"
                     }
                     
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("$baseClassLabel", style = MaterialTheme.typography.bodyMedium, color = TintenBraun)
+                    val annotatedString = buildAnnotatedString {
+                        append("$baseClassLabel")
                         if (viewModel.characterData.subclass.isNotBlank()) {
-                            Text(
-                                " (${viewModel.characterData.subclass})",
-                                style = MaterialTheme.typography.bodyMedium.copy(textDecoration = androidx.compose.ui.text.style.TextDecoration.Underline),
+                            append(" (")
+                            pushStringAnnotation("SUBCLASS", viewModel.characterData.subclass)
+                            withStyle(style = SpanStyle(
                                 color = MaterialTheme.colorScheme.tertiary,
-                                modifier = Modifier
-                                    .clickable {
-                                        onNavigateToRulebook?.invoke("Klassen", viewModel.characterData.subclass)
-                                    }
-                                    .padding(horizontal = 2.dp)
-                            )
+                                textDecoration = TextDecoration.Underline
+                            )) {
+                                append(viewModel.characterData.subclass)
+                            }
+                            pop()
+                            append(")")
                         }
-                        Text(" | Stufe ${viewModel.level}", style = MaterialTheme.typography.bodyMedium, color = TintenBraun)
+                        append(" | Stufe ${viewModel.level}")
                     }
+                    
+                    ClickableText(
+                        text = annotatedString,
+                        style = MaterialTheme.typography.bodyMedium.copy(color = TintenBraun, textAlign = TextAlign.Center),
+                        onClick = { offset ->
+                            annotatedString.getStringAnnotations("SUBCLASS", offset, offset)
+                                .firstOrNull()?.let { annotation ->
+                                    val searchTarget = when {
+                                        annotation.item.contains("Herrin der Tiere", ignoreCase = true) -> "Herr der Tiere"
+                                        else -> annotation.item
+                                    }
+                                    onNavigateToRulebook?.invoke("Klassen", searchTarget)
+                                }
+                        }
+                    )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
