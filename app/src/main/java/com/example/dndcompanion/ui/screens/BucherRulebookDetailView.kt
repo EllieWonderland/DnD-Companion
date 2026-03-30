@@ -189,7 +189,14 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                                 }
                                 if (classes.isNotEmpty()) {
                                     item { SectionHeader("Klassen") }
-                                    items(classes) { cls -> ClassCard(cls) }
+                                    items(classes) { cls -> 
+                                        val matchSubclass = cls.subclasses.find { it.name.contains(searchQuery, ignoreCase = true) }
+                                        if (searchQuery.isNotBlank() && matchSubclass != null && !cls.name.contains(searchQuery, ignoreCase = true)) {
+                                            SubclassCard(matchSubclass)
+                                        } else {
+                                            ClassCard(cls)
+                                        }
+                                    }
                                     foundAnything = true
                                 }
                                 if (features.isNotEmpty()) {
@@ -225,7 +232,14 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                             }
                             if (classes.isNotEmpty()) {
                                 item { SectionHeader("Klassen (Classes)") }
-                                items(classes) { cls -> ClassCard(cls) }
+                                items(classes) { cls -> 
+                                    val matchSubclass = cls.subclasses.find { it.name.contains(searchQuery, ignoreCase = true) }
+                                    if (searchQuery.isNotBlank() && matchSubclass != null && !cls.name.contains(searchQuery, ignoreCase = true)) {
+                                        SubclassCard(matchSubclass)
+                                    } else {
+                                        ClassCard(cls) 
+                                    }
+                                }
                             }
                             if (species.isEmpty() && classes.isEmpty()) item { EmptySearchResult() }
                         }
@@ -451,6 +465,21 @@ fun FeatureCard(feature: FeatureEntity) {
             Spacer(modifier = Modifier.height(8.dp))
             Material3RichText(modifier = Modifier.fillMaxWidth()) {
                 Markdown(feature.description)
+            }
+        }
+    }
+}
+
+@Composable
+fun SubclassCard(sub: com.example.dndcompanion.data.database.Subclass) {
+    SteinCard(modifier = Modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(sub.name, fontSize = 22.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = OchsenblutRot)
+            Spacer(modifier = Modifier.height(12.dp))
+            sub.features.forEach { sf ->
+                Text("Lv ${sf.level}: ${sf.name}", fontSize = 16.sp, fontWeight = FontWeight.SemiBold, color = TintenSchwarz)
+                Text(sf.description, fontSize = 14.sp, color = TintenSchwarz.copy(alpha = 0.9f))
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }

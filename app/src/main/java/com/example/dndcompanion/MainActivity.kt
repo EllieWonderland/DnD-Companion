@@ -218,12 +218,23 @@ fun DnDApp(
     ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues).fillMaxSize()) {
             when (currentScreen) {
-                0 -> AthaniaScreen(viewModel, groupViewModel, combatViewModel, spellViewModel, inventoryViewModel)
+                0 -> AthaniaScreen(
+                    viewModel, groupViewModel, combatViewModel, spellViewModel, inventoryViewModel,
+                    onNavigateToRulebook = { chapter, search ->
+                        viewModel.targetRulebookChapter = chapter
+                        viewModel.targetRulebookSearch = search
+                        currentScreen = 3
+                    }
+                )
                 1 -> {
                     if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER || viewModel.activeCharacterId == "Delat") {
                         CompanionScreen(viewModel)
                     } else {
-                        ProfilScreen(viewModel, combatViewModel)
+                        ProfilScreen(viewModel, combatViewModel, onNavigateToRulebook = { chapter, search ->
+                            viewModel.targetRulebookChapter = chapter
+                            viewModel.targetRulebookSearch = search
+                            currentScreen = 3
+                        })
                     }
                 }
                 2 -> HelpScreen(viewModel, groupViewModel, onNavigateToRulebook = { chapter, search ->
@@ -271,7 +282,8 @@ fun AthaniaScreen(
     groupViewModel: GroupViewModel,
     combatViewModel: CombatViewModel,
     spellViewModel: SpellViewModel,
-    inventoryViewModel: InventoryViewModel
+    inventoryViewModel: InventoryViewModel,
+    onNavigateToRulebook: ((String, String) -> Unit)? = null
 ) {
     val tabs = AthaniaTab.entries.filter { it != AthaniaTab.Hilfe }
     val pagerState = rememberPagerState(initialPage = tabs.indexOf(AthaniaTab.Kampf), pageCount = { tabs.size })
@@ -335,7 +347,7 @@ fun AthaniaScreen(
             modifier = Modifier.fillMaxSize()
         ) { page ->
             when (tabs[page]) {
-                AthaniaTab.Profil -> ProfilScreen(viewModel, combatViewModel)
+                AthaniaTab.Profil -> ProfilScreen(viewModel, combatViewModel, onNavigateToRulebook)
                 AthaniaTab.Kampf -> CombatScreen(
                     viewModel = viewModel,
                     combatVm = combatViewModel,
@@ -353,7 +365,7 @@ fun AthaniaScreen(
                 )
                 AthaniaTab.Zauber -> ZauberScreen(viewModel, spellViewModel, combatViewModel)
                 AthaniaTab.Rucksack -> RucksackScreen(viewModel, inventoryViewModel, groupViewModel)
-                else -> ProfilScreen(viewModel, combatViewModel)
+                else -> ProfilScreen(viewModel, combatViewModel, onNavigateToRulebook)
             }
         }
     }

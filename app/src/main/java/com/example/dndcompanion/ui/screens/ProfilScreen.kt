@@ -37,7 +37,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 
 @Composable
-fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
+fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel, onNavigateToRulebook: ((String, String) -> Unit)? = null) {
     var epInput by remember { mutableStateOf("") }
 
     PergamentBackground {
@@ -186,16 +186,27 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel) {
                         }
                     }
 
-                    val subclassDisplay = if (viewModel.characterData.subclass.isNotBlank()) " (${viewModel.characterData.subclass})" else ""
-                    val classLabel = when (viewModel.characterData.charClass) {
-                        CharacterClass.RANGER -> "Waldläufer$subclassDisplay"
-                        CharacterClass.WARLOCK -> "Hexenmeister$subclassDisplay"
+                    val baseClassLabel = when (viewModel.characterData.charClass) {
+                        CharacterClass.RANGER -> "Waldläufer"
+                        CharacterClass.WARLOCK -> "Hexenmeister"
                     }
-                    Text(
-                        "$classLabel | Stufe ${viewModel.level}",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = TintenBraun
-                    )
+                    
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text("$baseClassLabel", style = MaterialTheme.typography.bodyMedium, color = TintenBraun)
+                        if (viewModel.characterData.subclass.isNotBlank()) {
+                            Text(
+                                " (${viewModel.characterData.subclass})",
+                                style = MaterialTheme.typography.bodyMedium.copy(textDecoration = androidx.compose.ui.text.style.TextDecoration.Underline),
+                                color = MaterialTheme.colorScheme.tertiary,
+                                modifier = Modifier
+                                    .clickable {
+                                        onNavigateToRulebook?.invoke("Klassen", viewModel.characterData.subclass)
+                                    }
+                                    .padding(horizontal = 2.dp)
+                            )
+                        }
+                        Text(" | Stufe ${viewModel.level}", style = MaterialTheme.typography.bodyMedium, color = TintenBraun)
+                    }
 
                     Spacer(modifier = Modifier.height(8.dp))
 
