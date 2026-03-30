@@ -190,8 +190,9 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                                 if (classes.isNotEmpty()) {
                                     item { SectionHeader("Klassen") }
                                     items(classes) { cls -> 
-                                        val matchSubclass = cls.subclasses.find { it.name.contains(searchQuery, ignoreCase = true) }
-                                        if (searchQuery.isNotBlank() && matchSubclass != null && !cls.name.contains(searchQuery, ignoreCase = true)) {
+                                        val normalizedQuery = searchQuery.replace("Herrin", "Herr", ignoreCase = true)
+                                        val matchSubclass = cls.subclasses.find { it.name.contains(normalizedQuery, ignoreCase = true) }
+                                        if (searchQuery.isNotBlank() && matchSubclass != null && !cls.name.contains(normalizedQuery, ignoreCase = true)) {
                                             SubclassCard(matchSubclass)
                                         } else {
                                             ClassCard(cls)
@@ -233,8 +234,9 @@ fun RulebookDetailView(targetChapter: String?, targetSearch: String? = null, vie
                             if (classes.isNotEmpty()) {
                                 item { SectionHeader("Klassen (Classes)") }
                                 items(classes) { cls -> 
-                                    val matchSubclass = cls.subclasses.find { it.name.contains(searchQuery, ignoreCase = true) }
-                                    if (searchQuery.isNotBlank() && matchSubclass != null && !cls.name.contains(searchQuery, ignoreCase = true)) {
+                                    val normalizedQuery = searchQuery.replace("Herrin", "Herr", ignoreCase = true)
+                                    val matchSubclass = cls.subclasses.find { it.name.contains(normalizedQuery, ignoreCase = true) }
+                                    if (searchQuery.isNotBlank() && matchSubclass != null && !cls.name.contains(normalizedQuery, ignoreCase = true)) {
                                         SubclassCard(matchSubclass)
                                     } else {
                                         ClassCard(cls) 
