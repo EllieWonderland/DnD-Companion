@@ -26,10 +26,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+import com.example.dndcompanion.ui.viewmodel.SpellViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
+fun SpellbookEditDialog(spellVm: SpellViewModel, charVm: CharacterViewModel, onDismiss: () -> Unit) {
     var showAddSpellDialog by remember { mutableStateOf(false) }
 
     Dialog(
@@ -63,11 +64,11 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
 
                 Box(modifier = Modifier.weight(1f).padding(bottom = 8.dp)) {
                     val scrollState = rememberScrollState()
-                    val globalSpellbook by viewModel.globalSpellbook.collectAsState()
+                    val globalSpellbook by spellVm.globalSpellbook.collectAsState()
 
                     Column(modifier = Modifier.verticalScroll(scrollState).fillMaxWidth()) {
-                        val cantrips = viewModel.allSpells.filter { it.level == 0 }
-                        val leveled = viewModel.allSpells.filter { it.level > 0 }.sortedBy { it.level }
+                        val cantrips = spellVm.allSpells.filter { it.level == 0 }
+                        val leveled = spellVm.allSpells.filter { it.level > 0 }.sortedBy { it.level }
 
                         if (cantrips.isNotEmpty()) {
                             Text("Zaubertricks", color = Waldgruen, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 8.dp, bottom = 4.dp))
@@ -75,8 +76,8 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                 SpellCard(
                                     spell = spell,
                                     isEditMode = true,
-                                    onTogglePrep = { viewModel.toggleSpellPrepared(spell.id) },
-                                    onDelete = { viewModel.removeSpell(spell.id) },
+                                    onTogglePrep = { spellVm.toggleSpellPrepared(spell.id) },
+                                    onDelete = { spellVm.removeSpell(spell.id) },
                                     globalSpellbook = globalSpellbook
                                 )
                             }
@@ -88,8 +89,8 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                 SpellCard(
                                     spell = spell,
                                     isEditMode = true,
-                                    onTogglePrep = { viewModel.toggleSpellPrepared(spell.id) },
-                                    onDelete = { viewModel.removeSpell(spell.id) },
+                                    onTogglePrep = { spellVm.toggleSpellPrepared(spell.id) },
+                                    onDelete = { spellVm.removeSpell(spell.id) },
                                     globalSpellbook = globalSpellbook
                                 )
                             }
@@ -116,7 +117,8 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
 
                 if (showAddSpellDialog) {
                     SpellCatalogDialog(
-                        viewModel = viewModel,
+                        spellVm = spellVm,
+                        charVm = charVm,
                         onDismiss = { showAddSpellDialog = false }
                     )
                 }
@@ -127,12 +129,12 @@ fun SpellbookEditDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
+fun SpellCatalogDialog(spellVm: SpellViewModel, charVm: CharacterViewModel, onDismiss: () -> Unit) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedLevel by remember { mutableIntStateOf(-1) }
-    val globalSpellbook by viewModel.globalSpellbook.collectAsState()
-    
-    val localizedClassName = when (viewModel.characterData.charClass) {
+    val globalSpellbook by spellVm.globalSpellbook.collectAsState()
+
+    val localizedClassName = when (charVm.characterData.charClass) {
         com.example.dndcompanion.data.CharacterClass.RANGER -> "Waldläufer"
         com.example.dndcompanion.data.CharacterClass.WARLOCK -> "Hexenmeister"
         else -> "Eigene Klasse"
@@ -222,7 +224,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                         Column(modifier = Modifier.verticalScroll(scrollState).fillMaxWidth()) {
                             filteredSpells.forEach { catalogSpellEntity ->
                                 val catalogSpell = catalogSpellEntity.toSpell()
-                                val alreadyInBook = viewModel.allSpells.any { it.name == catalogSpell.name }
+                                val alreadyInBook = spellVm.allSpells.any { it.name == catalogSpell.name }
                                 SpellCard(
                                     spell = catalogSpell,
                                     isEditMode = true,
@@ -233,7 +235,7 @@ fun SpellCatalogDialog(viewModel: CharacterViewModel, onDismiss: () -> Unit) {
                                         Button(
                                             onClick = {
                                                 if (!alreadyInBook) {
-                                                    viewModel.addNewSpell(catalogSpell.copy(isPrepared = true, id = java.util.UUID.randomUUID().toString()))
+                                                    spellVm.addNewSpell(catalogSpell.copy(isPrepared = true, id = java.util.UUID.randomUUID().toString()))
                                                 }
                                             },
                                             enabled = !alreadyInBook,

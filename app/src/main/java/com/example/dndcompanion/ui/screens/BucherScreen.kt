@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.viewmodel.GroupViewModel
+import com.example.dndcompanion.ui.viewmodel.SpellViewModel
 import com.example.dndcompanion.ui.viewmodel.BookEntry
 import java.text.SimpleDateFormat
 import java.util.*
@@ -66,7 +67,7 @@ enum class BookType {
 }
 
 @Composable
-fun BucherScreen(viewModel: CharacterViewModel, groupVm: GroupViewModel) {
+fun BucherScreen(viewModel: CharacterViewModel, spellVm: SpellViewModel, groupVm: GroupViewModel) {
     var activeBook by remember { mutableStateOf<BookType?>(null) }
 
     BackHandler(enabled = activeBook != null) {
@@ -84,7 +85,8 @@ fun BucherScreen(viewModel: CharacterViewModel, groupVm: GroupViewModel) {
     } else {
         if (activeBook == BookType.SPELLBOOK) {
             SpellbookDetailView(
-                viewModel = viewModel,
+                spellVm = spellVm,
+                charVm = viewModel,
                 onBack = { activeBook = null }
             )
         } else if (activeBook == BookType.RULEBOOK) {

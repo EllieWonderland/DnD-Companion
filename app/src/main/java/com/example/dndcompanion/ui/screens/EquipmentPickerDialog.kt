@@ -24,17 +24,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.ui.viewmodel.EquipmentCatalogItem
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EquipmentPickerDialog(
     catalog: List<EquipmentCatalogItem>,
     onItemSelected: (EquipmentCatalogItem) -> Unit,
-    onItemBought: (EquipmentCatalogItem) -> Unit,
+    onItemBought: (EquipmentCatalogItem) -> String,
     onDismiss: () -> Unit
 ) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedCategory by remember { mutableStateOf<String?>(null) }
+    val localSnackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
     val categories = remember(catalog) {
         catalog.map { it.category }.distinct().sorted()
@@ -59,6 +62,7 @@ fun EquipmentPickerDialog(
         shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
         modifier = Modifier.fillMaxHeight(0.85f)
     ) {
+        Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             // --- HEADER ---
             Row(
@@ -166,10 +170,22 @@ fun EquipmentPickerDialog(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(filteredItems, key = { "${it.name}_${it.category}" }) { item ->
-                    CatalogItemCard(item = item, onAdd = { onItemSelected(item) }, onItemBought = { onItemBought(item) })
+                    CatalogItemCard(
+                        item = item,
+                        onAdd = { onItemSelected(item) },
+                        onItemBought = {
+                            val msg = onItemBought(item)
+                            coroutineScope.launch { localSnackbarHostState.showSnackbar(msg) }
+                        }
+                    )
                 }
             }
         }
+        SnackbarHost(
+            hostState = localSnackbarHostState,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
+        } // end Box
     }
 }
 

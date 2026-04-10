@@ -945,33 +945,32 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         addCustomLoot(item.name, item.weight, inventoryCategory, item.price)
     }
 
-    fun buyItemFromCatalog(item: EquipmentCatalogItem) {
+    fun buyItemFromCatalog(item: EquipmentCatalogItem): String {
         val priceInKM = parsePriceToKM(item.price)
         if (priceInKM <= 0) {
             addFromCatalog(item)
-            return
+            return "${item.name} zum Rucksack hinzugefügt"
         }
 
         val totalOwnedKM = coinsKM + (coinsSM * 10) + (coinsEM * 50) + (coinsGM * 100) + (coinsPM * 1000)
-        
+
         if (totalOwnedKM < priceInKM) {
-            snackbarMessage.value = "Zu wenig Geld! (Preis: ${item.price})"
-            return
+            return "Zu wenig Geld! (Preis: ${item.price})"
         }
 
         val remainingKM = totalOwnedKM - priceInKM
-        
+
         var tempRemaining = remainingKM
         val newPM = tempRemaining / 1000
         tempRemaining %= 1000
-        
+
         val newGM = tempRemaining / 100
         tempRemaining %= 100
-        
+
         // Skip optimizing EM, just use SM and KM to give exact change in common D&D fashion.
         val newSM = tempRemaining / 10
         tempRemaining %= 10
-        
+
         val newKM = tempRemaining
 
         coinsPM = newPM
@@ -987,7 +986,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putInt("coinsSM", coinsSM)
             putInt("coinsKM", coinsKM)
         }
-        
+
         val inventoryCategory = when {
             item.category.startsWith("Waffen") -> "Rüstung & Waffen"
             item.category == "Rüstung" -> "Rüstung & Waffen"
@@ -1006,8 +1005,48 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             customLoot.add(InventoryItem(itemName, 1, item.weight, inventoryCategory, price = item.price))
         }
         saveLoot()
-        
-        snackbarMessage.value = "${item.name} für ${item.price} gekauft!"
+
+        return "${item.name} für ${item.price} gekauft!"
+    }
+
+    fun sellItem(item: InventoryItem): String {
+        val priceStr = item.price
+        if (priceStr.isNullOrBlank() || priceStr == "-" || priceStr == "—") {
+            removeCustomLoot(item.name)
+            return "${item.name} abgelegt (kein Preis hinterlegt)"
+        }
+        val halfValueKM = parsePriceToKM(priceStr) / 2
+        if (halfValueKM <= 0) {
+            removeCustomLoot(item.name)
+            return "${item.name} abgelegt"
+        }
+
+        // Distribute sell proceeds into coin denominations using existing changeCoins* functions
+        var remaining = halfValueKM
+        val pm = remaining / 1000; remaining %= 1000
+        val gm = remaining / 100; remaining %= 100
+        val sm = remaining / 10; remaining %= 10
+        val km = remaining
+        if (pm > 0) changeCoinsPM(pm)
+        if (gm > 0) changeCoinsGM(gm)
+        if (sm > 0) changeCoinsSM(sm)
+        if (km > 0) changeCoinsKM(km)
+
+        removeCustomLoot(item.name)
+
+        val sellPriceDisplay = formatKMToCoins(halfValueKM)
+        return "${item.name} verkauft für $sellPriceDisplay"
+    }
+
+    private fun formatKMToCoins(km: Int): String {
+        if (km <= 0) return "0 KM"
+        var remaining = km
+        val parts = mutableListOf<String>()
+        val pm = remaining / 1000; remaining %= 1000; if (pm > 0) parts.add("$pm PM")
+        val gm = remaining / 100; remaining %= 100; if (gm > 0) parts.add("$gm GM")
+        val sm = remaining / 10; remaining %= 10; if (sm > 0) parts.add("$sm SM")
+        if (remaining > 0) parts.add("$remaining KM")
+        return parts.joinToString(" ")
     }
 
     private fun parsePriceToKM(priceStr: String): Int {

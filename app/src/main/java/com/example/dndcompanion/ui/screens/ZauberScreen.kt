@@ -525,7 +525,8 @@ fun ZauberScreen(
 
         if (showSpellbookEditDialog) {
             SpellbookEditDialog(
-                viewModel = viewModel,
+                spellVm = spellVm,
+                charVm = viewModel,
                 onDismiss = { showSpellbookEditDialog = false }
             )
         }

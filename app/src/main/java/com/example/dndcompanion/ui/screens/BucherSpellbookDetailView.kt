@@ -30,13 +30,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+import com.example.dndcompanion.ui.viewmodel.SpellViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
+fun SpellbookDetailView(spellVm: SpellViewModel, charVm: CharacterViewModel, onBack: () -> Unit) {
     var searchQuery by remember { mutableStateOf("") }
     var selectedLevel by remember { mutableIntStateOf(-1) }
-    val globalSpellbook by viewModel.globalSpellbook.collectAsState()
+    val globalSpellbook by spellVm.globalSpellbook.collectAsState()
 
     var selectedClassFilter by remember { mutableStateOf("Alle") }
     val classFilters = remember(globalSpellbook) {
@@ -196,10 +197,10 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                     LazyColumn(modifier = Modifier.weight(1f)) {
                         items(filteredSpells) { catalogSpellEntity ->
                             val catalogSpell = catalogSpellEntity.toSpell()
-                            val alreadyInBook = viewModel.allSpells.any { it.name == catalogSpell.name }
+                            val alreadyInBook = spellVm.allSpells.any { it.name == catalogSpell.name }
                             val isDruidSpell = catalogSpell.classes.contains("Druide") && !catalogSpell.classes.contains("Waldläufer")
                             val isDruidLevel1 = isDruidSpell && catalogSpell.level == 1
-                            val druidLevel1Count = viewModel.allSpells.count { it.classes.contains("Druide") && !it.classes.contains("Waldläufer") && it.level == 1 }
+                            val druidLevel1Count = spellVm.allSpells.count { it.classes.contains("Druide") && !it.classes.contains("Waldläufer") && it.level == 1 }
 
                             SpellCard(
                                 spell = catalogSpell,
@@ -213,7 +214,7 @@ fun SpellbookDetailView(viewModel: CharacterViewModel, onBack: () -> Unit) {
                                     Button(
                                         onClick = {
                                             if (canEquip) {
-                                                viewModel.addNewSpell(catalogSpell.copy(isPrepared = true, id = java.util.UUID.randomUUID().toString()))
+                                                spellVm.addNewSpell(catalogSpell.copy(isPrepared = true, id = java.util.UUID.randomUUID().toString()))
                                             }
                                         },
                                         enabled = canEquip || alreadyInBook,

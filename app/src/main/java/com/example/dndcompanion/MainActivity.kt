@@ -243,7 +243,7 @@ fun DnDApp(
                     viewModel.targetRulebookSearch = search
                     currentScreen = 3
                 })
-                3 -> BucherScreen(viewModel, groupViewModel)
+                3 -> BucherScreen(viewModel, spellViewModel, groupViewModel)
             }
         }
 

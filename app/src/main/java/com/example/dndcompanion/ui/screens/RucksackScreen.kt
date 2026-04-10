@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.Sell
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.ui.Modifier
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.runtime.*
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.viewmodel.GroupViewModel
+import com.example.dndcompanion.ui.viewmodel.InventoryItem
 import com.example.dndcompanion.ui.viewmodel.InventoryViewModel
 import com.example.dndcompanion.ui.theme.*
 
@@ -47,6 +49,7 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
     var isMoneyBagExpanded by remember { mutableStateOf(false) }
     var showEquipmentPicker by remember { mutableStateOf(false) }
     var showGroupLoot by remember { mutableStateOf(false) }
+    var itemToSell by remember { mutableStateOf<InventoryItem?>(null) }
     val snackbarHostState = remember { SnackbarHostState() }
     
     LaunchedEffect(viewModel.snackbarMessage.value) {
@@ -320,7 +323,8 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                                             weight = item.weight,
                                             price = item.price,
                                             onMinus = { viewModel.removeCustomLoot(item.name) },
-                                            onPlus = { viewModel.addCustomLoot(item.name, item.weight, cat, item.price) }
+                                            onPlus = { viewModel.addCustomLoot(item.name, item.weight, cat, item.price) },
+                                            onSell = { itemToSell = item }
                                         )
                                     }
                                 }
@@ -332,6 +336,29 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                 }
             }
         }
+    }
+
+    if (itemToSell != null) {
+        val item = itemToSell!!
+        val sellPrice = if (!item.price.isNullOrBlank() && item.price != "-" && item.price != "—") {
+            " (${item.price} / 2)"
+        } else ""
+        AlertDialog(
+            onDismissRequest = { itemToSell = null },
+            title = { Text("Verkaufen?", fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+            text = { Text("${item.name} verkaufen$sellPrice?", fontFamily = Almendra) },
+            confirmButton = {
+                TextButton(onClick = {
+                    val msg = viewModel.sellItem(item)
+                    viewModel.snackbarMessage.value = msg
+                    itemToSell = null
+                }) { Text("Verkaufen", color = Waldgruen, fontFamily = Almendra) }
+            },
+            dismissButton = {
+                TextButton(onClick = { itemToSell = null }) { Text("Abbrechen", fontFamily = Almendra) }
+            },
+            containerColor = Pergament
+        )
     }
 
     if (showEquipmentPicker) {
@@ -399,7 +426,7 @@ fun ChainProgressBar(progress: Float, color: Color) {
 }
 
 @Composable
-fun InventoryRow(name: String, amount: String, weight: Double? = null, price: String? = null, extraAction: @Composable (() -> Unit)? = null, onMinus: () -> Unit, onPlus: () -> Unit) {
+fun InventoryRow(name: String, amount: String, weight: Double? = null, price: String? = null, extraAction: @Composable (() -> Unit)? = null, onSell: (() -> Unit)? = null, onMinus: () -> Unit, onPlus: () -> Unit) {
     PergamentCard(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
         Row(
             modifier = Modifier.padding(12.dp).fillMaxWidth(),
@@ -422,6 +449,11 @@ fun InventoryRow(name: String, amount: String, weight: Double? = null, price: St
             }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
+                if (onSell != null) {
+                    IconButton(onClick = onSell, modifier = Modifier.size(48.dp)) {
+                        Icon(Icons.Default.Sell, contentDescription = "Verkaufen", tint = TintenBraun, modifier = Modifier.size(24.dp))
+                    }
+                }
                 IconButton(onClick = onMinus, modifier = Modifier.size(48.dp)) {
                     Icon(Icons.Default.Remove, contentDescription = null, tint = OchsenblutRot, modifier = Modifier.size(32.dp))
                 }
