@@ -13,7 +13,7 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] `LoginScreen.kt` erstellen (E-Mail + Passwort)
 - [x] `AuthViewModel.kt` erstellen (Login, Logout, aktuellen User halten)
 - [x] `MainActivity.kt` anpassen: vor dem Haupt-UI Auth-Zustand prüfen – nicht eingeloggt → LoginScreen
-- [ ] Beim ersten Login: Weiterleitung zum Charakter-Setup-Assistenten (→ Task 3.1)
+- [x] Beim ersten Login: Weiterleitung zum Charakter-Setup-Assistenten (→ Task 3.1)
 - [x] Logout-Funktion im Profil-Tab einbauen
 - [x] Passwort-Reset-Flow (Forgot Password)
 
@@ -71,9 +71,9 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Wizard speichert in Firestore (`users/{uid}/character`) + Room via `saveCharacterFromSetup`
 - [x] Wizard nur beim ersten Login: Flag `setupComplete` in `users/{uid}/setup/main`; `CharacterRepository.isSetupComplete/markSetupComplete` + `CharacterViewModel.checkSetupComplete/markSetupComplete`
 - [x] Bestehende Sicherheitsregeln decken `users/{uid}/setup/**` bereits ab
-- [ ] „Charakter bearbeiten"-Button im Profil öffnet einzelne Setup-Schritte zum Nachbearbeiten (→ Task 3.3)
-- [ ] Level im Wizard wählbar machen (1–20, Schritt 1); Gruppe ist bereits Level 3–5
-- [ ] Startausrüstung frei wählbar: Dropdown aus `equipment.json` + Freitext-Eingabe statt fester klassenbasierter Liste
+- [x] „Charakter bearbeiten"-Button im Profil öffnet einzelne Setup-Schritte zum Nachbearbeiten (→ Task 3.3)
+- [x] Level im Wizard wählbar machen (1–20, Schritt 1); Gruppe ist bereits Level 3–5
+- [x] Startausrüstung frei wählbar: Freitext-Eingabe + klassenbasierte Vorauswahl als Checkboxen (Schritt 4)
 
 ### 3.2 Charakter-Tab umbenennen
 - [x] `AthaniaScreen.kt` in `CharacterScreen.kt` umbenennen (neue Datei `ui/screens/CharacterScreen.kt`, `AthaniaTab` → `CharacterTab`)

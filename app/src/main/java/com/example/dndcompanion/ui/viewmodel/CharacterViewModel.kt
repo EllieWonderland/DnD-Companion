@@ -429,6 +429,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         str: Int, dex: Int, con: Int, int: Int, wis: Int, cha: Int,
         maxHpVal: Int,
         hitDiceVal: Int,
+        levelVal: Int = 1,
         background: String,
         starterItems: List<InventoryItem>
     ) {
@@ -448,7 +449,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             baseWisdom = wis,
             baseCharisma = cha,
             baseMaxHp = maxHpVal,
-            baseHitDice = hitDiceVal
+            baseHitDice = hitDiceVal,
+            baseLevel = levelVal
         )
         strength = str
         dexterity = dex
@@ -459,6 +461,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         maxHp = maxHpVal
         currentHp = maxHpVal
         hitDice = hitDiceVal
+        level = levelVal
         prefs.edit {
             putInt("strength", str)
             putInt("dexterity", dex)
@@ -469,6 +472,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putInt("maxHp", maxHpVal)
             putInt("currentHp", maxHpVal)
             putInt("hitDice", hitDiceVal)
+            putInt("level", levelVal)
         }
         if (starterItems.isNotEmpty()) {
             val newItems = starterItems.filter { item -> customLoot.none { it.name == item.name } }

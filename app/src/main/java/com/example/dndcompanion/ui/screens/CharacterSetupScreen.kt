@@ -11,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -78,6 +79,7 @@ fun CharacterSetupScreen(
     var race by remember { mutableStateOf("") }
     var selectedClass by remember { mutableStateOf(CharacterClass.RANGER) }
     var subclass by remember { mutableStateOf("") }
+    var level by remember { mutableIntStateOf(3) }
 
     // Step 1 – Attribute
     var str by remember { mutableIntStateOf(10) }
@@ -95,6 +97,7 @@ fun CharacterSetupScreen(
     // Step 3 – Ausrüstung
     val equipmentOptions = remember(selectedClass) { starterEquipmentFor(selectedClass) }
     val selectedEquipment = remember(selectedClass) { mutableStateListOf(*equipmentOptions.map { it.name }.toTypedArray()) }
+    val customEquipmentItems = remember { mutableStateListOf<InventoryItem>() }
 
     // Step 4 – Hintergrund
     var background by remember { mutableStateOf("") }
@@ -147,8 +150,10 @@ fun CharacterSetupScreen(
                     0 -> StepIdentity(
                         name = name, race = race,
                         selectedClass = selectedClass, subclass = subclass,
+                        level = level,
                         onNameChange = { name = it }, onRaceChange = { race = it },
-                        onClassChange = { selectedClass = it }, onSubclassChange = { subclass = it }
+                        onClassChange = { selectedClass = it }, onSubclassChange = { subclass = it },
+                        onLevelChange = { level = it }
                     )
                     1 -> StepAttributes(
                         str = str, dex = dex, con = con,
@@ -175,10 +180,13 @@ fun CharacterSetupScreen(
                     3 -> StepEquipment(
                         options = equipmentOptions,
                         selected = selectedEquipment,
+                        customItems = customEquipmentItems,
                         onToggle = { itemName ->
                             if (selectedEquipment.contains(itemName)) selectedEquipment.remove(itemName)
                             else selectedEquipment.add(itemName)
-                        }
+                        },
+                        onAddCustomItem = { customEquipmentItems.add(it) },
+                        onRemoveCustomItem = { customEquipmentItems.removeAt(it) }
                     )
                     4 -> StepBackground(
                         background = background,
@@ -218,7 +226,8 @@ fun CharacterSetupScreen(
                 } else {
                     Button(
                         onClick = {
-                            val items = equipmentOptions.filter { it.name in selectedEquipment }
+                            val baseItems = equipmentOptions.filter { it.name in selectedEquipment }
+                            val allItems = baseItems + customEquipmentItems
                             val maxHp = maxHpInput.toIntOrNull() ?: 10
                             val ac = acInput.toIntOrNull() ?: 10
                             viewModel.saveCharacterFromSetup(
@@ -227,7 +236,8 @@ fun CharacterSetupScreen(
                                 subclass = subclass.trim(),
                                 str = str, dex = dex, con = con, int = int, wis = wis, cha = cha,
                                 maxHpVal = maxHp, hitDiceVal = hitDiceVal,
-                                background = background.trim(), starterItems = items
+                                levelVal = level,
+                                background = background.trim(), starterItems = allItems
                             )
                             viewModel.markSetupComplete(uid)
                             onSetupComplete()
@@ -246,8 +256,10 @@ fun CharacterSetupScreen(
 @Composable
 private fun StepIdentity(
     name: String, race: String, selectedClass: CharacterClass, subclass: String,
+    level: Int,
     onNameChange: (String) -> Unit, onRaceChange: (String) -> Unit,
-    onClassChange: (CharacterClass) -> Unit, onSubclassChange: (String) -> Unit
+    onClassChange: (CharacterClass) -> Unit, onSubclassChange: (String) -> Unit,
+    onLevelChange: (Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -277,6 +289,28 @@ private fun StepIdentity(
         }
 
         SetupTextField("Unterklasse / Archetype", subclass, onSubclassChange, placeholder = "z.B. Tierherr, Großer Alte …")
+
+        Text("Stufe (1–20)", style = MaterialTheme.typography.labelLarge, color = TintenBraun, fontWeight = FontWeight.Bold)
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            IconButton(
+                onClick = { onLevelChange((level - 1).coerceAtLeast(1)) },
+                modifier = Modifier.size(36.dp)
+            ) {
+                Icon(Icons.Default.Remove, contentDescription = "-", tint = TintenBraun)
+            }
+            Text(
+                "$level",
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.tertiary
+            )
+            IconButton(
+                onClick = { onLevelChange((level + 1).coerceAtMost(20)) },
+                modifier = Modifier.size(36.dp)
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "+", tint = TintenBraun)
+            }
+        }
     }
 }
 
@@ -441,8 +475,13 @@ private fun StepCombatStats(
 private fun StepEquipment(
     options: List<InventoryItem>,
     selected: List<String>,
-    onToggle: (String) -> Unit
+    customItems: List<InventoryItem>,
+    onToggle: (String) -> Unit,
+    onAddCustomItem: (InventoryItem) -> Unit,
+    onRemoveCustomItem: (Int) -> Unit
 ) {
+    var customInput by remember { mutableStateOf("") }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -474,6 +513,61 @@ private fun StepEquipment(
                     Column {
                         Text(item.name, style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz, fontWeight = FontWeight.Medium)
                         Text("${item.weight} kg · ${item.category}", style = MaterialTheme.typography.labelSmall, color = TintenBraun)
+                    }
+                }
+            }
+        }
+
+        Spacer(Modifier.height(8.dp))
+        Text("Eigene Gegenstände", style = MaterialTheme.typography.labelLarge, color = TintenBraun, fontWeight = FontWeight.Bold)
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            OutlinedTextField(
+                value = customInput,
+                onValueChange = { customInput = it },
+                label = { Text("Gegenstand / Freitext", style = MaterialTheme.typography.labelSmall) },
+                singleLine = true,
+                modifier = Modifier.weight(1f),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Waldgruen,
+                    unfocusedBorderColor = TintenBraun,
+                    focusedLabelColor = Waldgruen,
+                    unfocusedLabelColor = TintenBraun,
+                    focusedTextColor = TintenSchwarz,
+                    unfocusedTextColor = TintenSchwarz,
+                    cursorColor = Waldgruen,
+                    unfocusedContainerColor = PergamentHell,
+                    focusedContainerColor = PergamentHell
+                )
+            )
+            IconButton(
+                onClick = {
+                    val trimmed = customInput.trim()
+                    if (trimmed.isNotBlank()) {
+                        onAddCustomItem(InventoryItem(name = trimmed, amount = 1, category = "Ausrüstung"))
+                        customInput = ""
+                    }
+                }
+            ) {
+                Icon(Icons.Default.Add, contentDescription = "Hinzufügen", tint = Waldgruen)
+            }
+        }
+
+        customItems.forEachIndexed { index, item ->
+            PergamentCard(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(item.name, style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz, modifier = Modifier.weight(1f))
+                    IconButton(onClick = { onRemoveCustomItem(index) }, modifier = Modifier.size(32.dp)) {
+                        Icon(Icons.Default.Delete, contentDescription = "Entfernen", tint = OchsenblutRot, modifier = Modifier.size(18.dp))
                     }
                 }
             }
