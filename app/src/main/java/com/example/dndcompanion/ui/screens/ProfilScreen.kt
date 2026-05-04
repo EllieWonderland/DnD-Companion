@@ -38,7 +38,6 @@ import com.example.dndcompanion.data.CharacterClass
 import com.example.dndcompanion.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Logout
@@ -88,38 +87,7 @@ fun ProfilScreen(
                         tint = OchsenblutRot
                     )
                 }
-                var expanded by remember { mutableStateOf(false) }
-                val accentColor = MaterialTheme.colorScheme.tertiary
-                Box {
-                    Button(
-                        onClick = { expanded = true },
-                        colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = PergamentHell),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text(viewModel.characterData.name, fontFamily = Almendra, fontWeight = FontWeight.Bold)
-                        Icon(Icons.Default.ArrowDropDown, contentDescription = "Profil wechseln")
-                    }
-                    DropdownMenu(
-                        expanded = expanded,
-                        onDismissRequest = { expanded = false }
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text("Athania", fontFamily = Almendra) },
-                            onClick = {
-                                viewModel.loadProfile("Athania")
-                                expanded = false
-                            }
-                        )
-                        DropdownMenuItem(
-                            text = { Text("Delat", fontFamily = Almendra) },
-                            onClick = {
-                                viewModel.loadProfile("Delat")
-                                expanded = false
-                            }
-                        )
-                    }
-                }
-                } // end inner Row (edit button + dropdown)
+                } // end inner Row
             }
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -141,7 +109,7 @@ fun ProfilScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            val avatarId = if (viewModel.characterData.name == "Athania") R.drawable.athania else R.drawable.delat
+                            val avatarId = if (viewModel.characterData.charClass == CharacterClass.RANGER) R.drawable.athania else R.drawable.delat
                             Box(contentAlignment = Alignment.Center, modifier = Modifier.size(160.dp)) {
                                 CircularProgressIndicator(
                                     progress = { animatedEpProgress },

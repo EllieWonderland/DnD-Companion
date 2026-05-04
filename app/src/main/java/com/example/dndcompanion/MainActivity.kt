@@ -73,6 +73,11 @@ class MainActivity : ComponentActivity() {
             val characterViewModel: CharacterViewModel = viewModel()
             val isRanger = characterViewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER
 
+            LaunchedEffect(currentUser?.uid) {
+                val uid = currentUser?.uid ?: return@LaunchedEffect
+                characterViewModel.loadUserCharacter(uid)
+            }
+
             DnDCompanionTheme(isRanger = isRanger) {
                 if (currentUser == null) {
                     LoginScreen(authViewModel)

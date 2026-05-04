@@ -18,13 +18,15 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Passwort-Reset-Flow (Forgot Password)
 
 ### 1.2 Charakterdaten pro Benutzer (Firestore statt JSON)
-- [ ] Firestore-Collection `users/{uid}/character` anlegen (Datenstruktur: alle Felder aus `CharacterData.kt`)
-- [ ] `CharacterRepository.kt` umschreiben: Daten aus Firestore lesen/schreiben statt aus `characters.json`
-- [ ] Lokaler Room-Cache für Offline-Betrieb (CharacterEntity bereits vorhanden, erweitern um `userId`)
-- [ ] `CharacterViewModel.kt` anpassen: lädt Charakter des eingeloggten Users, kein Hardcode auf Athania/Delat
-- [ ] Bestehende Charaktere (Athania, Delat) als Admin-Tool oder Seed-Skript in Firestore übertragen
-- [ ] Alte Hardcode-Logik (activeCharacterId 0/1, `characters.json` für Spielercharaktere) entfernen
-- [ ] `characters.json` löschen (nach Migration)
+- [x] Firestore-Collection `users/{uid}/character` anlegen (gespeichert als Gson-JSON unter `data`-Feld)
+- [x] `CharacterRepository.kt`: `getCharacterFlowFromFirestore`, `saveCharacterToFirestore`, `getCharacterOrDefault` hinzugefügt
+- [x] Lokaler Room-Cache via bestehendem CharacterEntity – uid wird als character.id verwendet (kein Schema-Bruch nötig)
+- [x] `CharacterViewModel.kt`: `loadUserCharacter(uid)` hinzugefügt; `loadProfile` nutzt `getCharacterOrDefault`; Firestore-Listener seeded und cached in Room
+- [x] Bestehende Charaktere: Beim ersten Login ohne Firestore-Daten wird automatisch Athania-Defaults (Ranger) als Seed genutzt
+- [x] Alle `characterData.id == "Athania/Delat"` auf `characterData.charClass == RANGER/WARLOCK` umgestellt; Legacy-Sync-Blöcke auf Athania/Delat beschränkt
+- [x] Charakter-Wechsel-Dropdown aus ProfilScreen entfernt (jeder User hat einen eigenen Charakter)
+- [x] `MainActivity.kt`: `LaunchedEffect(uid)` ruft `loadUserCharacter(uid)` nach Login auf
+- [ ] `characters.json` löschen (nach vollständiger Migration → Task 3.x)
 
 ### 1.3 Gruppen-Zugangssteuerung
 - [ ] Firestore Security Rules: `users/{uid}/*` nur für eigenen User lesbar/schreibbar
@@ -267,3 +269,4 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Route spellbook edits through SpellViewModel (fix broken add/remove/toggle)
 - [x] Restore text formatting in ProfilScreen
 - [x] Task 1.1 – Firebase Authentication einrichten (LoginScreen, AuthViewModel, Auth-Gate in MainActivity, Logout im ProfilScreen, Passwort-Reset)
+- [x] Task 1.2 – Charakterdaten pro Benutzer: Firestore-Repository, loadUserCharacter, Dropdown-Entfernung, class-basierte Logik

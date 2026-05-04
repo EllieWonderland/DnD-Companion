@@ -54,6 +54,31 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     private val _activeCharacterIdFlow = MutableStateFlow("Athania")
     val activeCharacterIdFlow: StateFlow<String> = _activeCharacterIdFlow.asStateFlow()
 
+    /**
+     * Called once after login with the Firebase UID.
+     * Loads the user's character from Firestore (with Room cache and JSON fallback),
+     * and starts a live listener that keeps characterData in sync with Firestore.
+     */
+    fun loadUserCharacter(uid: String) {
+        loadProfile(uid)
+        viewModelScope.launch {
+            characterRepository.getCharacterFlowFromFirestore(uid).collect { firestoreData ->
+                if (firestoreData != null) {
+                    val data = firestoreData.copy(id = uid)
+                    characterRepository.saveCharacter(data)
+                    // Room flow in init{} will pick up the update → characterData refreshed
+                } else {
+                    // No Firestore document yet → seed from current characterData
+                    try {
+                        characterRepository.saveCharacterToFirestore(uid, characterData.copy(id = uid))
+                    } catch (e: Exception) {
+                        android.util.Log.e("CharacterVM", "Failed to seed Firestore", e)
+                    }
+                }
+            }
+        }
+    }
+
     val prefsManager = PrefsManager(application)
     private val prefs get() = prefsManager.prefs
     private val gson = Gson()
@@ -403,7 +428,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
     fun applyHpIncrease(conModifier: Int, rolledHp: Int = 6) {
         var hpIncrease = rolledHp + conModifier
-        if (characterData.id == "Delat") {
+        if (characterData.charClass == CharacterClass.WARLOCK) {
             hpIncrease += 1
         }
         maxHp += hpIncrease
@@ -627,7 +652,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     // Single source of truth: CombatViewModel writes this, CharacterViewModel reads it on-demand (e.g. AI summary)
     val currentWeapon: ActiveWeapon
         get() {
-            val default = if (characterData.id == "Athania") ActiveWeapon.LANGBOGEN.name else ActiveWeapon.KRIEGSHAMMER_PAKT.name
+            val default = if (characterData.charClass == CharacterClass.RANGER) ActiveWeapon.LANGBOGEN.name else ActiveWeapon.KRIEGSHAMMER_PAKT.name
             return ActiveWeapon.valueOf(prefs.getString("currentWeapon", default) ?: default)
         }
     val currentArmorClass: Int
@@ -1074,9 +1099,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         if (!spell.isRitual) return false
         
         // Magier benötigen den Zauber nicht vorbereitet, solange er im globalen Buch (ihrem Zauberbuch) steht
-        return if (characterData.charClass == CharacterClass.WARLOCK && characterData.id == "Delat") {
-            // Delat ist Warlock, aber hat vielleicht Wizard-Rituale durch Talente/Invocations? 
-            // Laut PHB 2024: Wizards only for "unprepared ritual casting".
+        return if (characterData.charClass == CharacterClass.WARLOCK) {
             spell.isPrepared
         } else if (characterData.charClass == CharacterClass.RANGER) {
             spell.isPrepared
@@ -1296,15 +1319,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         freeFaerieFireUsed = false
         freeDarknessUsed = false
         freeDruidSpellUsed = false
+        val isRanger = characterData.charClass == CharacterClass.RANGER
         water = 2.0f
-        rations = if (characterData.id == "Athania") 10 else 3
-        goodberries = if (characterData.id == "Athania") 10 else 1
-        coinsKM = if (characterData.id == "Athania") 20 else 0
-        coinsSM = if (characterData.id == "Athania") 1 else 9
+        rations = if (isRanger) 10 else 3
+        goodberries = if (isRanger) 10 else 1
+        coinsKM = if (isRanger) 20 else 0
+        coinsSM = if (isRanger) 1 else 9
         coinsEM = 0
-        coinsGM = if (characterData.id == "Athania") 44 else 72
+        coinsGM = if (isRanger) 44 else 72
         coinsPM = 0
-        totalArrows = if (characterData.id == "Athania") 26 else 0
+        totalArrows = if (isRanger) 26 else 0
         shotArrows = 0
         deathSaveSuccesses = 0
         deathSaveFailures = 0
@@ -1312,7 +1336,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         generalBookEntries.clear()
         saveGeneralBookEntries()
         grudgeBookEntries.clear()
-        standardTactic = if (characterData.id == "Athania") "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen" else ""
+        standardTactic = if (isRanger) "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen" else ""
 
         // Loot und Traits zurücksetzen
         customLoot.clear()
@@ -1327,7 +1351,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     fun loadProfile(characterId: String) {
         if (activeCharacterId == characterId) return
         activeCharacterId = characterId
-        characterData = characterRepository.getCharacter(characterId)
+        characterData = characterRepository.getCharacterOrDefault(characterId)
         prefsManager.switchCharacter(characterId)
 
         // Use maxOf(prefs, jsonBase) so that DM upgrades in characters.json are always picked up,
@@ -1343,13 +1367,13 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         charisma = prefs.getInt("charisma", jsonBase.baseCharisma)
         maxHp = maxOf(prefs.getInt("maxHp", jsonBase.baseMaxHp), jsonBase.baseMaxHp)
         currentHp = prefs.getInt("currentHp", maxHp)
-        tempHp = prefs.getInt("${characterId}_tempHp", if (characterId == "Delat") 12 else 0)
+        tempHp = prefs.getInt("${characterId}_tempHp", 0)
         
-        // --- ONE-TIME DATA SYNC / REPAIR v2 (Stand 13.03.2026 - Strict Separation) ---
+        // --- ONE-TIME DATA SYNC / REPAIR v2 (only for legacy characters Athania/Delat) ---
         val syncKeyV2 = "isSyncedWithStatsFiles_2026_03_13_v2"
         val alreadySyncedV2 = prefs.getBoolean(syncKeyV2, false)
 
-        if (!alreadySyncedV2) {
+        if (!alreadySyncedV2 && (characterId == "Athania" || characterId == "Delat")) {
             val defaultLoot = characterData.defaultLoot
             val defaultLootNames = defaultLoot.map { it.name }
             val otherCharId = if (characterId == "Athania") "Delat" else "Athania"
@@ -1426,8 +1450,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                 
                 // Repariere versehentlich durch den vorherigen Bug gelöschte Traits
                 val athaniaMissingTraits = listOf(
-                    TraitItem("Feenfeuer", "1x pro Lange Rast kostenlos wirkbar.", grantedSpellId = "Feenfeuer", maxUses = 1, currentUses = 1),
-                    TraitItem("Dunkelheit", "1x pro Lange Rast kostenlos wirkbar.", grantedSpellId = "Dunkelheit", maxUses = 1, currentUses = 1),
+                    TraitItem("Feenfeuer", "1x pro Lange Rast kostenlos wirkbar.", grantedSpellId = "Feenfeuer", maxUses = 1, currentUses = 1, minLevel = 3),
+                    TraitItem("Dunkelheit", "1x pro Lange Rast kostenlos wirkbar.", grantedSpellId = "Dunkelheit", maxUses = 1, currentUses = 1, minLevel = 5),
                     TraitItem("Elfen-Abstammungslinie (Drow)", "Du kennst Tanzende Lichter, Feenfeuer und Dunkelheit."),
                     TraitItem("Eingeweihter der Magie (Segnen)", "Du kannst Segnen 1x pro Lange Rast kostenlos wirken.", grantedSpellId = "Segnen", maxUses = 1, currentUses = 1),
                     TraitItem("Eingeweihter der Magie (Magierrüstung)", "Du kannst Magierrüstung 1x pro Lange Rast kostenlos wirken.", grantedSpellId = "Magierrüstung", maxUses = 1, currentUses = 1)
@@ -1441,6 +1465,23 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                     }
                 }
                 if (repaired) saveTraits()
+            }
+            // Migrate minLevel for Drow lineage traits (Feenfeuer lvl 3, Dunkelheit lvl 5)
+            val minLevelMigKey = "minLevel_drow_migration_2026_04_10"
+            if (!prefs.getBoolean(minLevelMigKey, false) && characterId == "Athania") {
+                var migrated = false
+                val feenIdx = customTraits.indexOfFirst { it.grantedSpellId == "Feenfeuer" }
+                if (feenIdx != -1 && customTraits[feenIdx].minLevel != 3) {
+                    customTraits[feenIdx] = customTraits[feenIdx].copy(minLevel = 3)
+                    migrated = true
+                }
+                val dunIdx = customTraits.indexOfFirst { it.grantedSpellId == "Dunkelheit" }
+                if (dunIdx != -1 && customTraits[dunIdx].minLevel != 5) {
+                    customTraits[dunIdx] = customTraits[dunIdx].copy(minLevel = 5)
+                    migrated = true
+                }
+                if (migrated) saveTraits()
+                prefs.edit { putBoolean(minLevelMigKey, true) }
             }
             if (characterId == "Delat") {
                 // Override Delat's mistakenly high SM to correct stats.json standard
@@ -1457,7 +1498,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         applySyncV3()
 
         val syncKeyV4 = "isSyncedWithStatsFiles_2026_03_27_wealth"
-        if (!prefs.getBoolean(syncKeyV4, false)) {
+        if (!prefs.getBoolean(syncKeyV4, false) && (characterId == "Athania" || characterId == "Delat")) {
             if (characterId == "Athania") {
                 coinsKM = 20
                 coinsSM = 1
@@ -1506,7 +1547,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         totalArrows = prefs.getInt("totalArrows", 20)
         shotArrows = prefs.getInt("shotArrows", 0)
         
-        standardTactic = prefs.getString("standardTactic", if (characterId == "Athania") "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen" else "") ?: ""
+        val defaultTactic = if (characterData.charClass == CharacterClass.RANGER) "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen" else ""
+        standardTactic = prefs.getString("standardTactic", defaultTactic) ?: ""
         
         loadLoot()
         loadTraits()
@@ -1771,10 +1813,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         // Todeswürfe bei langer Rast zurücksetzen
         updateDeathSaves(0, 0)
 
-        // Begleiter-Wiederbelebung bei langer Rast
-        if (companionIsDead) {
-            reviveCompanion()
-        }
+        // Begleiter bei langer Rast vollständig regenerieren (HP auf Max, Tod aufheben)
+        reviveCompanion()
         saveTraits()
         
         if (consumeResources) {
@@ -1816,7 +1856,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
                         BeastType.SEA -> "Urtier des Meeres"
                     }
                     companionData = fileDto.urtiere.find { it.name == targetName }
-                } else if (activeCharacterId == "Delat") {
+                } else if (characterData.charClass == CharacterClass.WARLOCK) {
                     val jsonString = context.assets.open("Rules/vertrauter.json").bufferedReader().use { it.readText() }
                     companionData = gson.fromJson(jsonString, CompanionDto::class.java)
                 } else {
@@ -2034,11 +2074,10 @@ private val model25Flash = GenerativeModel(
                 val syncKeyV2 = "isSyncedWithSpells_2026_03_13_v2"
                 val alreadySyncedV2 = prefs.getBoolean(syncKeyV2, false)
 
-                if (!alreadySyncedV2) {
+                if (!alreadySyncedV2 && (characterData.id == "Athania" || characterData.id == "Delat")) {
                     val defaultSpells = getDefaultSpells()
                     val defaultNames = defaultSpells.map { it.name }
-                    val otherCharId = if (characterData.id == "Athania") "Delat" else "Athania"
-                    val otherSpells = if (otherCharId == "Delat") getDelatDefaultSpells() else getAthaniaDefaultSpells()
+                    val otherSpells = if (characterData.charClass == CharacterClass.RANGER) getDelatDefaultSpells() else getAthaniaDefaultSpells()
                     val otherSpellNames = otherSpells.map { it.name }
                     
                     var changed = false
@@ -2079,7 +2118,7 @@ private val model25Flash = GenerativeModel(
     }
 
     private fun getDefaultSpells(): List<Spell> {
-        return if (characterData.id == "Delat") getDelatDefaultSpells() else getAthaniaDefaultSpells()
+        return if (characterData.charClass == CharacterClass.WARLOCK) getDelatDefaultSpells() else getAthaniaDefaultSpells()
     }
 
     private fun getDelatDefaultSpells(): List<Spell> {
@@ -2161,7 +2200,7 @@ private val model25Flash = GenerativeModel(
         val traitsStr = customTraits.joinToString(" | ") { "${it.name}: ${it.desc.replace("\n", " ")}" }
 
         val className = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) "Waldläufer (Beast Master)" else "Warlock (Pakt der Klinge)"
-        val race = if (characterData.name == "Athania") "Elf (Waldelf / Feenblut)" else "Mensch"
+        val race = characterData.race.ifBlank { if (characterData.charClass == CharacterClass.RANGER) "Elf (Waldelf / Feenblut)" else "Mensch" }
         val primaryCastingInfo = if (characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) {
             "Zauberplätze: G1: $spellSlotsLevel1, G2: $spellSlotsLevel2, G3: $spellSlotsLevel3"
         } else {

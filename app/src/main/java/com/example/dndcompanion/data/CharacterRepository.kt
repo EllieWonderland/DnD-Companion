@@ -6,10 +6,16 @@ import com.example.dndcompanion.data.database.toCharacterData
 import com.example.dndcompanion.data.database.toEntity
 import com.example.dndcompanion.ui.viewmodel.InventoryItem
 import com.example.dndcompanion.ui.viewmodel.TraitItem
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 /**
  * DTO matching characters.json — plain fields, no hardcoded logic.
@@ -96,6 +102,7 @@ class CharacterRepository(
     private val database: AppDatabase
 ) {
     private val gson = Gson()
+    private val firestore = FirebaseFirestore.getInstance()
 
     // ----- sync (JSON) -----
 
@@ -113,6 +120,18 @@ class CharacterRepository(
         return dtos.first { it.id == id }.toCharacterData()
     }
 
+    /**
+     * Tries to load a character by [id]; falls back to Athania if not found.
+     * Allows loading with a Firebase UID as id (not present in characters.json).
+     */
+    fun getCharacterOrDefault(id: String): CharacterData {
+        return try {
+            getCharacter(id)
+        } catch (e: Exception) {
+            getCharacter("Athania").copy(id = id)
+        }
+    }
+
     // ----- async (DB) -----
 
     /**
@@ -128,5 +147,52 @@ class CharacterRepository(
      */
     suspend fun saveCharacter(data: CharacterData) {
         database.characterDao().save(data.toEntity(gson))
+    }
+
+    // ----- Firestore (per-user character) -----
+
+    /**
+     * Reactive stream from Firestore. Emits null if no document exists for this user yet.
+     * The character is stored as Gson JSON under users/{uid}/character/main.
+     */
+    fun getCharacterFlowFromFirestore(uid: String): Flow<CharacterData?> = callbackFlow {
+        val docRef = firestore.collection("users").document(uid)
+            .collection("character").document("main")
+        val listener = docRef.addSnapshotListener { snapshot, error ->
+            if (error != null) {
+                close(error)
+                return@addSnapshotListener
+            }
+            if (snapshot != null && snapshot.exists()) {
+                val json = snapshot.getString("data")
+                if (json != null) {
+                    try {
+                        trySend(gson.fromJson(json, CharacterData::class.java))
+                    } catch (e: Exception) {
+                        trySend(null)
+                    }
+                } else {
+                    trySend(null)
+                }
+            } else {
+                trySend(null)
+            }
+        }
+        awaitClose { listener.remove() }
+    }
+
+    /**
+     * Writes the character to Firestore under users/{uid}/character/main.
+     * Call from a coroutine scope.
+     */
+    suspend fun saveCharacterToFirestore(uid: String, data: CharacterData) {
+        val json = gson.toJson(data)
+        suspendCancellableCoroutine { cont ->
+            firestore.collection("users").document(uid)
+                .collection("character").document("main")
+                .set(mapOf("data" to json))
+                .addOnSuccessListener { cont.resume(Unit) }
+                .addOnFailureListener { cont.resumeWithException(it) }
+        }
     }
 }
