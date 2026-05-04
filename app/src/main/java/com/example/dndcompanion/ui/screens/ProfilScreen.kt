@@ -36,6 +36,9 @@ import com.example.dndcompanion.ui.viewmodel.CombatViewModel
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.data.CharacterClass
 import com.example.dndcompanion.R
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import coil.compose.AsyncImage
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
@@ -49,7 +52,9 @@ fun ProfilScreen(
     onNavigateToRulebook: ((String, String) -> Unit)? = null,
     onLogout: () -> Unit = {}
 ) {
-    var epInput by remember { mutableStateOf("") }
+    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let { viewModel.uploadPortrait(viewModel.activeCharacterId, it) }
+    }
 
     PergamentBackground {
         Column(
@@ -109,7 +114,15 @@ fun ProfilScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            val avatarId = if (viewModel.characterData.charClass == CharacterClass.RANGER) R.drawable.athania else R.drawable.delat
+                            val fallbackAvatarId = when (viewModel.characterData.charClass) {
+                                CharacterClass.RANGER -> R.drawable.athania
+                                CharacterClass.WARLOCK -> R.drawable.delat
+                            }
+                            val portraitModifier = Modifier
+                                .size(144.dp)
+                                .clip(CircleShape)
+                                .border(2.dp, TintenBraun.copy(alpha = 0.3f), CircleShape)
+                                .clickable { galleryLauncher.launch("image/*") }
                             Box(contentAlignment = Alignment.Center, modifier = Modifier.size(160.dp)) {
                                 CircularProgressIndicator(
                                     progress = { animatedEpProgress },
@@ -119,15 +132,21 @@ fun ProfilScreen(
                                     strokeWidth = 6.dp,
                                     strokeCap = androidx.compose.ui.graphics.StrokeCap.Round
                                 )
-                                Image(
-                                    painter = painterResource(id = avatarId),
-                                    contentDescription = "Charakter Portrait",
-                                    modifier = Modifier
-                                        .size(144.dp)
-                                        .clip(CircleShape)
-                                        .border(2.dp, TintenBraun.copy(alpha = 0.3f), CircleShape),
-                                    contentScale = ContentScale.Crop
-                                )
+                                if (viewModel.characterData.portraitUrl.isNotBlank()) {
+                                    AsyncImage(
+                                        model = viewModel.characterData.portraitUrl,
+                                        contentDescription = "Charakter Portrait",
+                                        modifier = portraitModifier,
+                                        contentScale = ContentScale.Crop
+                                    )
+                                } else {
+                                    Image(
+                                        painter = painterResource(id = fallbackAvatarId),
+                                        contentDescription = "Charakter Portrait",
+                                        modifier = portraitModifier,
+                                        contentScale = ContentScale.Crop
+                                    )
+                                }
                             }
                             Spacer(modifier = Modifier.width(12.dp))
                             Text(
@@ -360,8 +379,14 @@ fun ProfilScreen(
             HorizontalDivider(color = Bronze, thickness = 2.dp)
             Spacer(modifier = Modifier.height(16.dp))
 
-            val companionTitle = if (viewModel.characterData.charClass == CharacterClass.RANGER) "Urtier-Begleiter" else "Vertrauter"
-            val companionPortrait = if (viewModel.characterData.charClass == CharacterClass.RANGER) R.drawable.icon_capybara else R.drawable.vertrauter
+            val companionTitle = when (viewModel.characterData.charClass) {
+                CharacterClass.RANGER -> "Urtier-Begleiter"
+                CharacterClass.WARLOCK -> "Vertrauter"
+            }
+            val companionPortrait = when (viewModel.characterData.charClass) {
+                CharacterClass.RANGER -> R.drawable.icon_capybara
+                CharacterClass.WARLOCK -> R.drawable.vertrauter
+            }
             Text(companionTitle, style = MaterialTheme.typography.titleMedium, color = Waldgruen)
             Spacer(modifier = Modifier.height(8.dp))
             PergamentCard(modifier = Modifier.fillMaxWidth()) {

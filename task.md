@@ -72,6 +72,8 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Wizard nur beim ersten Login: Flag `setupComplete` in `users/{uid}/setup/main`; `CharacterRepository.isSetupComplete/markSetupComplete` + `CharacterViewModel.checkSetupComplete/markSetupComplete`
 - [x] Bestehende Sicherheitsregeln decken `users/{uid}/setup/**` bereits ab
 - [ ] „Charakter bearbeiten"-Button im Profil öffnet einzelne Setup-Schritte zum Nachbearbeiten (→ Task 3.3)
+- [ ] Level im Wizard wählbar machen (1–20, Schritt 1); Gruppe ist bereits Level 3–5
+- [ ] Startausrüstung frei wählbar: Dropdown aus `equipment.json` + Freitext-Eingabe statt fester klassenbasierter Liste
 
 ### 3.2 Charakter-Tab umbenennen
 - [x] `AthaniaScreen.kt` in `CharacterScreen.kt` umbenennen (neue Datei `ui/screens/CharacterScreen.kt`, `AthaniaTab` → `CharacterTab`)
@@ -79,13 +81,14 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Tab-Icon: charClass-basiertes Fallback-Portrait (RANGER → athania, WARLOCK → delat); dynamisches Storage-Laden → Task 3.3
 
 ### 3.3 Profil-Tab editierbar machen
-- [ ] `ProfilScreen.kt`: alle Anzeigefelder (Name, Rasse, Klasse, Attribute, EP, Hintergrund) inline editierbar
-  - Tipp-Icon / Edit-Mode-Toggle
-  - Änderungen sofort in Firestore persistieren
-- [ ] Charakter-Portrait: Foto aus Galerie wählen oder Kamera, hochladen nach Firebase Storage
-- [ ] EP-Eingabe direkt tippbar (nicht nur per Schaltfläche)
-- [ ] Level-Up-Dialog mit Firestore-Persistenz verbinden
-- [ ] Unterklasse als klickbarer Link ins Regelwerk (aus IMPLEMENTATION_PLAN.md übernommen)
+- [x] `CharacterEditDialog` um Textfelder erweitert: Name, Rasse, Unterklasse, Gesinnung, Hintergrund, Aussehen, Sprachen, Ideal, Makel
+- [x] `saveCharacterData`: persistiert jetzt auch in Firestore + berechnet `passivePerception` neu
+- [x] `applyHpIncrease` + `updateAttributes`: rufen `saveCurrentStateToFirestore()` auf (Level-Up → Firestore)
+- [x] Portrait: Klick öffnet Galerie-Picker; Upload nach Firebase Storage (`users/{uid}/portrait.jpg`); URL in `CharacterData.portraitUrl`; Anzeige via Coil `AsyncImage`; Fallback classbased
+- [x] Alle `if/else`-Klassenabfragen in `ProfilScreen` auf exhaustive `when` umgestellt
+- [x] `portraitUrl: String = ""` zu `CharacterData` hinzugefügt (Gson-kompatibel, kein Room-Schema-Bruch)
+- [x] Firebase Storage + Coil als Abhängigkeiten hinzugefügt
+- [x] Unterklasse als klickbarer Link ins Regelwerk (bereits implementiert)
 
 ### 3.4 Kampf-Tab editierbar machen
 - [ ] `CombatScreen.kt`: Max-HP manuell einstellbar (nicht nur aus JSON)
@@ -105,6 +108,13 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [ ] Eigene Gegenstände mit Name, Gewicht, Menge, Notizen eintragen
 - [ ] Preisanzeige aus equipment.json (aus IMPLEMENTATION_PLAN.md, Schritt 4 – bereits erledigt, ggf. in Firestore übernehmen)
 - [ ] Alle Inventar-States in Firestore speichern
+
+### 3.7 Multiklassen-Support
+- [ ] `CharacterData.charClass: CharacterClass` → `charClasses: List<CharacterClass>` (primäre Klasse + optionale Multiklasse)
+- [ ] Room-Entity + Firestore-Serialisierung anpassen (kein Schema-Bruch durch Gson-Default `[]`)
+- [ ] Setup-Wizard Schritt 1: zweite Klasse optional wählbar
+- [ ] `CharacterScreen.kt` + Bottom-Nav: Portrait anhand primärer Klasse bestimmen (bis Portrait-Upload via Task 3.3 fertig)
+- [ ] Alle Verwendungen von `charClass` (Theme-Check, Zauberfilter, Legacy-Sync) auf `charClasses.first()` oder primäre Klasse migrieren
 
 ---
 

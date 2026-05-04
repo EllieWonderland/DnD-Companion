@@ -20,6 +20,7 @@ data class CharacterData(
     val languages: String = "",
     val ideal: String = "",
     val flaw: String = "",
+    val portraitUrl: String = "",
     val speed: Int,
     val passivePerception: Int,
     val baseLevel: Int,

@@ -1,12 +1,14 @@
 package com.example.dndcompanion.data
 
 import android.content.Context
+import android.net.Uri
 import com.example.dndcompanion.data.database.AppDatabase
 import com.example.dndcompanion.data.database.toCharacterData
 import com.example.dndcompanion.data.database.toEntity
 import com.example.dndcompanion.ui.viewmodel.InventoryItem
 import com.example.dndcompanion.ui.viewmodel.TraitItem
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.channels.awaitClose
@@ -203,6 +205,18 @@ class CharacterRepository(
                 .get()
                 .addOnSuccessListener { snapshot ->
                     cont.resume(snapshot.getBoolean("setupComplete") == true)
+                }
+                .addOnFailureListener { cont.resumeWithException(it) }
+        }
+
+    suspend fun uploadPortrait(uid: String, imageUri: Uri): String =
+        suspendCancellableCoroutine { cont ->
+            val ref = FirebaseStorage.getInstance().reference.child("users/$uid/portrait.jpg")
+            ref.putFile(imageUri)
+                .addOnSuccessListener {
+                    ref.downloadUrl
+                        .addOnSuccessListener { uri -> cont.resume(uri.toString()) }
+                        .addOnFailureListener { cont.resumeWithException(it) }
                 }
                 .addOnFailureListener { cont.resumeWithException(it) }
         }

@@ -507,10 +507,55 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putInt("currentEP_${updated.id}", currentEP)
             putInt("currentEP", currentEP)
         }
+        val wisMod = (updated.baseWisdom - 10) / 2
+        val withPerception = updated.copy(passivePerception = 10 + wisMod)
         viewModelScope.launch {
-            characterRepository.saveCharacter(updated)
+            characterRepository.saveCharacter(withPerception)
+            try {
+                characterRepository.saveCharacterToFirestore(activeCharacterId, withPerception)
+            } catch (e: Exception) {
+                Log.e("CharacterVM", "Firestore save failed in saveCharacterData", e)
+            }
         }
         closeCharacterEdit()
+    }
+
+    private fun saveCurrentStateToFirestore() {
+        val wisMod = (wisdom - 10) / 2
+        val snapshot = characterData.copy(
+            baseStrength = strength,
+            baseDexterity = dexterity,
+            baseConstitution = constitution,
+            baseIntelligence = intelligence,
+            baseWisdom = wisdom,
+            baseCharisma = charisma,
+            baseMaxHp = maxHp,
+            baseHitDice = hitDice,
+            baseLevel = level,
+            baseEP = currentEP,
+            passivePerception = 10 + wisMod
+        )
+        viewModelScope.launch {
+            try {
+                characterRepository.saveCharacter(snapshot)
+                characterRepository.saveCharacterToFirestore(activeCharacterId, snapshot)
+            } catch (e: Exception) {
+                Log.e("CharacterVM", "Firestore sync failed", e)
+            }
+        }
+    }
+
+    fun uploadPortrait(uid: String, imageUri: android.net.Uri) {
+        viewModelScope.launch {
+            try {
+                val url = characterRepository.uploadPortrait(uid, imageUri)
+                val updated = characterData.copy(portraitUrl = url)
+                characterRepository.saveCharacter(updated)
+                characterRepository.saveCharacterToFirestore(uid, updated)
+            } catch (e: Exception) {
+                Log.e("CharacterVM", "Portrait upload failed", e)
+            }
+        }
     }
 
     var targetRulebookChapter by mutableStateOf<String?>(null)
@@ -524,13 +569,14 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         maxHp += hpIncrease
         hitDice += 1
         currentHp = (currentHp + hpIncrease).coerceAtMost(maxHp)
-        prefs.edit { 
+        prefs.edit {
             putInt("maxHp", maxHp)
             putInt("hitDice", hitDice)
-            putInt("currentHp", currentHp) 
+            putInt("currentHp", currentHp)
         }
+        saveCurrentStateToFirestore()
     }
-    
+
     fun updateAttributes(strMod: Int = 0, dexMod: Int = 0, conMod: Int = 0, intMod: Int = 0, wisMod: Int = 0, chaMod: Int = 0) {
         strength += strMod
         dexterity += dexMod
@@ -538,7 +584,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         intelligence += intMod
         wisdom += wisMod
         charisma += chaMod
-        
+
         prefs.edit {
             putInt("strength", strength)
             putInt("dexterity", dexterity)
@@ -547,6 +593,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             putInt("wisdom", wisdom)
             putInt("charisma", charisma)
         }
+        saveCurrentStateToFirestore()
     }
 
     // Runs once per character prefs file; forces maxHp from JSON to clear stale/swapped prefs.
