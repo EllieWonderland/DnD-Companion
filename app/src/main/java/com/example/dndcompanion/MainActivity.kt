@@ -147,7 +147,11 @@ fun DnDApp(
                     selected = currentScreen == 0,
                     onClick = { currentScreen = 0 },
                     icon = {
-                        val avatarId = if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER) R.drawable.athania else R.drawable.delat
+                        val avatarId = when (viewModel.characterData.charClass) {
+                            com.example.dndcompanion.data.CharacterClass.RANGER -> R.drawable.athania
+                            com.example.dndcompanion.data.CharacterClass.WARLOCK -> R.drawable.delat
+                            // Neue Klassen hier ergänzen; Task 3.3 ersetzt dies durch das hochgeladene Nutzer-Portrait
+                        }
                         Image(
                             painter = painterResource(id = avatarId),
                             contentDescription = "Charakter",

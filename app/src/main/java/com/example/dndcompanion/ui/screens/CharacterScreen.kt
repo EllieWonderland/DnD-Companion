@@ -81,7 +81,11 @@ fun CharacterScreen(
                     },
                     icon = {
                         val iconRes = when (tab) {
-                            CharacterTab.Profil -> if (viewModel.characterData.charClass == CharacterClass.RANGER) R.drawable.athania else R.drawable.delat
+                            CharacterTab.Profil -> when (viewModel.characterData.charClass) {
+                                CharacterClass.RANGER -> R.drawable.athania
+                                CharacterClass.WARLOCK -> R.drawable.delat
+                                // Neue Klassen hier ergänzen; Task 3.3 ersetzt dies durch das hochgeladene Nutzer-Portrait
+                            }
                             CharacterTab.Kampf -> R.drawable.kampf
                             CharacterTab.Zauber -> R.drawable.zauberbuch
                             CharacterTab.Rucksack -> R.drawable.rucksack
