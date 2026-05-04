@@ -23,6 +23,7 @@ import org.json.JSONObject
 import com.example.dndcompanion.data.CharacterData
 import com.example.dndcompanion.data.CharacterRepository
 import com.example.dndcompanion.data.CharacterClass
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.filterNotNull
 import com.example.dndcompanion.data.DndCalculations
@@ -62,20 +63,22 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     fun loadUserCharacter(uid: String) {
         loadProfile(uid)
         viewModelScope.launch {
-            characterRepository.getCharacterFlowFromFirestore(uid).collect { firestoreData ->
-                if (firestoreData != null) {
-                    val data = firestoreData.copy(id = uid)
-                    characterRepository.saveCharacter(data)
-                    // Room flow in init{} will pick up the update → characterData refreshed
-                } else {
-                    // No Firestore document yet → seed from current characterData
-                    try {
-                        characterRepository.saveCharacterToFirestore(uid, characterData.copy(id = uid))
-                    } catch (e: Exception) {
-                        android.util.Log.e("CharacterVM", "Failed to seed Firestore", e)
+            characterRepository.getCharacterFlowFromFirestore(uid)
+                .catch { e -> android.util.Log.e("CharacterVM", "Firestore stream error (check security rules)", e) }
+                .collect { firestoreData ->
+                    if (firestoreData != null) {
+                        val data = firestoreData.copy(id = uid)
+                        characterRepository.saveCharacter(data)
+                        // Room flow in init{} will pick up the update → characterData refreshed
+                    } else {
+                        // No Firestore document yet → seed from current characterData
+                        try {
+                            characterRepository.saveCharacterToFirestore(uid, characterData.copy(id = uid))
+                        } catch (e: Exception) {
+                            android.util.Log.e("CharacterVM", "Failed to seed Firestore", e)
+                        }
                     }
                 }
-            }
         }
     }
 
