@@ -1,6 +1,7 @@
 package com.example.dndcompanion.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.getValue
@@ -9,6 +10,8 @@ import androidx.core.content.edit
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dndcompanion.data.CharacterClass
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.launch
 
 class CombatViewModel(
@@ -19,6 +22,7 @@ class CombatViewModel(
 ) : AndroidViewModel(application) {
 
     private val prefs get() = characterVm.prefsManager.prefs
+    private val gson = Gson()
 
     // --- LEBENSPUNKTE ---
     var maxHp by mutableIntStateOf(characterVm.maxHp)
@@ -55,6 +59,12 @@ class CombatViewModel(
 
     var equippedWeaponName by mutableStateOf(prefs.getString("equippedWeaponName", null) ?: "Keine Waffe")
         private set
+    var manualArmorClass by mutableIntStateOf(prefs.getInt("manualArmorClass", 0))
+        private set
+    var customCombatWeapons by mutableStateOf<List<CustomCombatWeapon>>(emptyList())
+        private set
+    private var activeCustomWeapon: CustomCombatWeapon? = null
+    val isCustomWeaponActive: Boolean get() = activeCustomWeapon != null
 
     // --- RAST-WARNDIALOG ---
     var showRestWarningDialog by mutableStateOf(false)
@@ -80,6 +90,8 @@ class CombatViewModel(
     val companionData: CompanionDto? get() = characterVm.companionData
 
     init {
+        customCombatWeapons = loadCustomWeapons()
+        activeCustomWeapon = customCombatWeapons.find { it.name == equippedWeaponName }
         viewModelScope.launch {
             characterVm.activeCharacterIdFlow.collect { newId ->
                 reloadForCharacter(newId)
@@ -89,7 +101,7 @@ class CombatViewModel(
     }
 
     private fun reloadForCharacter(id: String) {
-        maxHp = characterVm.maxHp
+        maxHp = prefs.getInt("maxHp", characterVm.maxHp)
         currentHp = prefs.getInt("currentHp", maxHp)
         tempHp = prefs.getInt("${id}_tempHp", if (id == "Delat") 12 else 0)
         hitDice = prefs.getInt("hitDice", characterVm.level).coerceAtMost(characterVm.level)
@@ -103,6 +115,9 @@ class CombatViewModel(
         val wn = prefs.getString("currentWeapon_${id}", defaultWeapon) ?: defaultWeapon
         currentWeapon = ActiveWeapon.valueOf(wn)
         equippedWeaponName = prefs.getString("equippedWeaponName_${id}", null) ?: "Keine Waffe"
+        manualArmorClass = prefs.getInt("manualArmorClass", 0)
+        customCombatWeapons = loadCustomWeapons()
+        activeCustomWeapon = customCombatWeapons.find { it.name == equippedWeaponName }
         activeBeastType = BeastType.valueOf(prefs.getString("activeBeastType", BeastType.SKY.name) ?: BeastType.SKY.name)
         capyCurrentHp = prefs.getInt("capyCurrentHp_${id}_${activeBeastType.name}", capyMaxHp)
         companionIsDead = prefs.getBoolean("companionIsDead_${id}_${activeBeastType.name}", false)
@@ -114,6 +129,7 @@ class CombatViewModel(
 
     val currentArmorClass: Int
         get() {
+            if (manualArmorClass > 0) return manualArmorClass
             var baseAc = if (isMageArmorActive) 13 else 10
             var armorBonus = 0
             if (inventoryVm.customLoot.any { it.name.contains("Plattenpanzer", ignoreCase = true) }) {
@@ -147,7 +163,9 @@ class CombatViewModel(
     private val finesseWeaponMod: Int get() = maxOf(characterVm.strMod, characterVm.dexMod)
 
     val currentAttackBonus: String
-        get() = when (currentWeapon) {
+        get() = activeCustomWeapon?.let { w ->
+            w.attackBonus.ifBlank { "+${characterVm.proficiencyBonus + characterVm.strMod}" }
+        } ?: when (currentWeapon) {
             ActiveWeapon.LANGBOGEN -> "+${characterVm.proficiencyBonus + characterVm.dexMod + 2}"
             ActiveWeapon.KURZSCHWERT_SCHILD -> "+${characterVm.proficiencyBonus + finesseWeaponMod}"
             ActiveWeapon.SHILLELAGH_SCHILD -> "+${characterVm.proficiencyBonus + characterVm.wisMod}"
@@ -156,7 +174,8 @@ class CombatViewModel(
         }
 
     val currentDamage: String
-        get() = when (currentWeapon) {
+        get() = activeCustomWeapon?.damage?.ifBlank { "—" }
+            ?: when (currentWeapon) {
             ActiveWeapon.LANGBOGEN -> "1W8 + ${characterVm.dexMod} Stich (Verlangsamen: -3m Tempo)"
             ActiveWeapon.KURZSCHWERT_SCHILD -> "1W6 + $finesseWeaponMod Stich (Ärgern: Vorteil auf nächsten Angriff)"
             ActiveWeapon.SHILLELAGH_SCHILD -> {
@@ -177,6 +196,8 @@ class CombatViewModel(
 
     val hasShieldInInventory: Boolean get() = inventoryVm.hasShieldInInventory
     val availableWeapons: List<String> get() = inventoryVm.availableWeapons
+    val allWeaponsForDropdown: List<String>
+        get() = inventoryVm.availableWeapons + customCombatWeapons.map { it.name }
 
     private val isRanger: Boolean get() = characterVm.characterData.charClass == CharacterClass.RANGER
 
@@ -276,18 +297,21 @@ class CombatViewModel(
 
     fun equipWeaponByName(name: String) {
         equippedWeaponName = name
-        val weaponStr = name.lowercase()
-        currentWeapon = when {
-            weaponStr.contains("bogen") -> ActiveWeapon.LANGBOGEN
-            weaponStr.contains("schwert") -> ActiveWeapon.KURZSCHWERT_SCHILD
-            weaponStr.contains("hammer") -> ActiveWeapon.KRIEGSHAMMER_PAKT
-            weaponStr.contains("speer") -> ActiveWeapon.SPEER_PAKT
-            weaponStr.contains("shillelagh") || weaponStr.contains("kampfstab") -> ActiveWeapon.SHILLELAGH_SCHILD
-            else -> if (characterVm.characterData.charClass == CharacterClass.RANGER) ActiveWeapon.KURZSCHWERT_SCHILD else ActiveWeapon.SPEER_PAKT
+        activeCustomWeapon = customCombatWeapons.find { it.name == name }
+        if (activeCustomWeapon == null) {
+            val weaponStr = name.lowercase()
+            currentWeapon = when {
+                weaponStr.contains("bogen") -> ActiveWeapon.LANGBOGEN
+                weaponStr.contains("schwert") -> ActiveWeapon.KURZSCHWERT_SCHILD
+                weaponStr.contains("hammer") -> ActiveWeapon.KRIEGSHAMMER_PAKT
+                weaponStr.contains("speer") -> ActiveWeapon.SPEER_PAKT
+                weaponStr.contains("shillelagh") || weaponStr.contains("kampfstab") -> ActiveWeapon.SHILLELAGH_SCHILD
+                else -> if (characterVm.characterData.charClass == CharacterClass.RANGER) ActiveWeapon.KURZSCHWERT_SCHILD else ActiveWeapon.SPEER_PAKT
+            }
         }
         prefs.edit {
             putString("equippedWeaponName_${characterVm.activeCharacterId}", name)
-            putString("currentWeapon_${characterVm.activeCharacterId}", currentWeapon.name)
+            if (activeCustomWeapon == null) putString("currentWeapon_${characterVm.activeCharacterId}", currentWeapon.name)
         }
     }
 
@@ -391,6 +415,80 @@ class CombatViewModel(
         prefs.edit {
             putInt("currentHp", currentHp)
             putInt("hitDice", hitDice)
+        }
+    }
+
+    // --- MANUELLES EDITIEREN ---
+    fun applyManualMaxHp(value: Int) {
+        maxHp = value.coerceAtLeast(1)
+        currentHp = currentHp.coerceAtMost(maxHp)
+        prefs.edit {
+            putInt("maxHp", maxHp)
+            putInt("currentHp", currentHp)
+        }
+        saveCombatToFirestore()
+    }
+
+    fun applyManualHitDice(value: Int) {
+        hitDice = value.coerceIn(0, characterVm.level)
+        prefs.edit { putInt("hitDice", hitDice) }
+        saveCombatToFirestore()
+    }
+
+    fun applyManualArmorClass(value: Int) {
+        manualArmorClass = value.coerceAtLeast(0)
+        prefs.edit { putInt("manualArmorClass", manualArmorClass) }
+        saveCombatToFirestore()
+    }
+
+    fun addCustomWeapon(weapon: CustomCombatWeapon) {
+        customCombatWeapons = customCombatWeapons + weapon
+        saveCustomWeapons()
+        saveCombatToFirestore()
+    }
+
+    fun removeCustomWeapon(index: Int) {
+        val removed = customCombatWeapons.getOrNull(index)
+        customCombatWeapons = customCombatWeapons.filterIndexed { i, _ -> i != index }
+        if (activeCustomWeapon?.name == removed?.name) {
+            activeCustomWeapon = null
+            equippedWeaponName = "Keine Waffe"
+            prefs.edit { remove("equippedWeaponName_${characterVm.activeCharacterId}") }
+        }
+        saveCustomWeapons()
+        saveCombatToFirestore()
+    }
+
+    private fun saveCustomWeapons() {
+        prefs.edit { putString("customCombatWeapons", gson.toJson(customCombatWeapons)) }
+    }
+
+    private fun loadCustomWeapons(): List<CustomCombatWeapon> {
+        val json = prefs.getString("customCombatWeapons", null) ?: return emptyList()
+        return try {
+            gson.fromJson(json, object : TypeToken<List<CustomCombatWeapon>>() {}.type)
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    private fun saveCombatToFirestore() {
+        val uid = characterVm.activeCharacterId
+        if (uid == "Athania" || uid.isBlank()) return
+        val data = mapOf(
+            "currentHp" to currentHp,
+            "maxHp" to maxHp,
+            "tempHp" to tempHp,
+            "hitDice" to hitDice,
+            "manualArmorClass" to manualArmorClass,
+            "customCombatWeapons" to customCombatWeapons
+        )
+        viewModelScope.launch {
+            try {
+                characterVm.characterRepository.saveCombatToFirestore(uid, gson.toJson(data))
+            } catch (e: Exception) {
+                Log.e("CombatVM", "Firestore combat sync failed", e)
+            }
         }
     }
 

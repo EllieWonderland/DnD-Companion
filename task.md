@@ -91,11 +91,11 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Unterklasse als klickbarer Link ins Regelwerk (bereits implementiert)
 
 ### 3.4 Kampf-Tab editierbar machen
-- [ ] `CombatScreen.kt`: Max-HP manuell einstellbar (nicht nur aus JSON)
-- [ ] Trefferwürfelanzahl editierbar
-- [ ] Waffen frei hinzufügen / entfernen (mit Freitextfeldern, nicht nur aus Katalog)
-- [ ] Rüstung frei auswählen/eintragen
-- [ ] Alle Combat-States in Firestore speichern (HP, Conditions, etc.)
+- [x] `CombatScreen.kt`: Max-HP manuell einstellbar (Stift-Icon öffnet Dialog)
+- [x] Trefferwürfelanzahl editierbar (selber Dialog wie Max-HP)
+- [x] Eigene Waffen frei hinzufügen / entfernen (Name, Schaden, Trefferbonus als Freitextfelder; erscheinen im Waffen-Dropdown)
+- [x] Rüstungsklasse manuell überschreiben (0 = auto aus Inventar berechnen)
+- [x] Combat-States in Firestore speichern: maxHp, currentHp, tempHp, hitDice, manualArmorClass, customCombatWeapons
 
 ### 3.5 Zauber-Tab editierbar machen
 - [ ] `ZauberScreen.kt`: Zauberliste nach Klasse filtern (aus IMPLEMENTATION_PLAN.md, Schritt 1)

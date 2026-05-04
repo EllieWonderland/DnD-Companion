@@ -44,6 +44,7 @@ import androidx.compose.ui.draw.shadow
 import com.example.dndcompanion.ui.viewmodel.ActiveWeapon
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.viewmodel.CombatViewModel
+import com.example.dndcompanion.ui.viewmodel.CustomCombatWeapon
 import com.example.dndcompanion.ui.viewmodel.InventoryViewModel
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.data.CharacterClass
@@ -70,6 +71,16 @@ fun CombatScreen(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            var showHpEditDialog by remember { mutableStateOf(false) }
+            var maxHpEditInput by remember { mutableStateOf("") }
+            var hitDiceEditInput by remember { mutableStateOf("") }
+            var showAcEditDialog by remember { mutableStateOf(false) }
+            var acEditInput by remember { mutableStateOf("") }
+            var showAddWeaponDialog by remember { mutableStateOf(false) }
+            var newWeaponName by remember { mutableStateOf("") }
+            var newWeaponDamage by remember { mutableStateOf("") }
+            var newWeaponBonus by remember { mutableStateOf("") }
+
             // Lebenspunkte & Trefferwürfel
             PergamentCard(modifier = Modifier.fillMaxWidth().padding(bottom = 12.dp)) {
                 Column(modifier = Modifier.padding(12.dp)) {
@@ -97,13 +108,25 @@ fun CombatScreen(
 
                         Spacer(modifier = Modifier.weight(1f))
 
-                        Text(
-                            "HD ${combatVm.hitDice}/${viewModel.level}W${viewModel.characterData.baseHitDice}",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = TintenBraun,
-                            fontFamily = Almendra,
-                            modifier = Modifier.padding(bottom = 4.dp)
-                        )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                "HD ${combatVm.hitDice}/${viewModel.level}W${viewModel.characterData.baseHitDice}",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = TintenBraun,
+                                fontFamily = Almendra,
+                                modifier = Modifier.padding(bottom = 4.dp)
+                            )
+                            IconButton(
+                                onClick = {
+                                    maxHpEditInput = combatVm.maxHp.toString()
+                                    hitDiceEditInput = combatVm.hitDice.toString()
+                                    showHpEditDialog = true
+                                },
+                                modifier = Modifier.size(24.dp)
+                            ) {
+                                Icon(Icons.Default.Edit, contentDescription = "HP bearbeiten", tint = accentColor, modifier = Modifier.size(16.dp))
+                            }
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -203,12 +226,27 @@ fun CombatScreen(
                         modifier = Modifier.padding(12.dp).fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text("Rüstungsklasse", style = MaterialTheme.typography.labelMedium, color = Waldgruen)
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text("Rüstungsklasse", style = MaterialTheme.typography.labelMedium, color = Waldgruen)
+                            Spacer(Modifier.width(4.dp))
+                            IconButton(
+                                onClick = {
+                                    acEditInput = if (combatVm.manualArmorClass > 0) combatVm.manualArmorClass.toString() else ""
+                                    showAcEditDialog = true
+                                },
+                                modifier = Modifier.size(20.dp)
+                            ) {
+                                Icon(Icons.Default.Edit, contentDescription = "RK bearbeiten", tint = accentColor, modifier = Modifier.size(14.dp))
+                            }
+                        }
                         Text(
                             combatVm.currentArmorClass.toString(),
                             style = GrenzeGotischStyle.copy(fontSize = 48.sp),
                             color = TintenSchwarz
                         )
+                        if (combatVm.manualArmorClass > 0) {
+                            Text("(manuell)", style = MaterialTheme.typography.labelSmall, color = TintenBraun)
+                        }
                     }
                 }
 
@@ -314,6 +352,96 @@ fun CombatScreen(
                 )
             }
 
+            // HP / Trefferwürfel bearbeiten
+            if (showHpEditDialog) {
+                AlertDialog(
+                    onDismissRequest = { showHpEditDialog = false },
+                    containerColor = PergamentHell,
+                    shape = RoundedCornerShape(12.dp),
+                    title = { Text("HP & Trefferwürfel", style = MaterialTheme.typography.titleMedium, color = Waldgruen) },
+                    text = {
+                        Column {
+                            OutlinedTextField(
+                                value = maxHpEditInput,
+                                onValueChange = { if (it.isEmpty() || it.all { c -> c.isDigit() }) maxHpEditInput = it },
+                                label = { Text("Max HP", fontFamily = Almendra) },
+                                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = accentColor, focusedLabelColor = accentColor, unfocusedTextColor = TintenSchwarz, focusedTextColor = TintenSchwarz)
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            OutlinedTextField(
+                                value = hitDiceEditInput,
+                                onValueChange = { if (it.isEmpty() || it.all { c -> c.isDigit() }) hitDiceEditInput = it },
+                                label = { Text("Trefferwürfel (verbleibend)", fontFamily = Almendra) },
+                                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = accentColor, focusedLabelColor = accentColor, unfocusedTextColor = TintenSchwarz, focusedTextColor = TintenSchwarz)
+                            )
+                        }
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                maxHpEditInput.toIntOrNull()?.let { combatVm.applyManualMaxHp(it) }
+                                hitDiceEditInput.toIntOrNull()?.let { combatVm.applyManualHitDice(it) }
+                                showHpEditDialog = false
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = MaterialTheme.colorScheme.onTertiary),
+                            modifier = Modifier.height(48.dp),
+                            shape = RoundedCornerShape(8.dp)
+                        ) { Text("Speichern", fontFamily = Almendra, fontSize = 16.sp) }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showHpEditDialog = false }, modifier = Modifier.height(48.dp)) {
+                            Text("Abbrechen", color = Waldgruen, fontFamily = Almendra, fontSize = 16.sp)
+                        }
+                    }
+                )
+            }
+
+            // Rüstungsklasse manuell setzen
+            if (showAcEditDialog) {
+                AlertDialog(
+                    onDismissRequest = { showAcEditDialog = false },
+                    containerColor = PergamentHell,
+                    shape = RoundedCornerShape(12.dp),
+                    title = { Text("Rüstungsklasse", style = MaterialTheme.typography.titleMedium, color = Waldgruen) },
+                    text = {
+                        Column {
+                            Text("Manuellen Wert setzen (0 = automatisch aus Ausrüstung berechnen)", style = MaterialTheme.typography.bodySmall, color = TintenBraun, modifier = Modifier.padding(bottom = 8.dp))
+                            OutlinedTextField(
+                                value = acEditInput,
+                                onValueChange = { if (it.isEmpty() || it.all { c -> c.isDigit() }) acEditInput = it },
+                                label = { Text("RK (0 = auto)", fontFamily = Almendra) },
+                                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Number),
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = accentColor, focusedLabelColor = accentColor, unfocusedTextColor = TintenSchwarz, focusedTextColor = TintenSchwarz)
+                            )
+                        }
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                combatVm.applyManualArmorClass(acEditInput.toIntOrNull() ?: 0)
+                                showAcEditDialog = false
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = MaterialTheme.colorScheme.onTertiary),
+                            modifier = Modifier.height(48.dp),
+                            shape = RoundedCornerShape(8.dp)
+                        ) { Text("Speichern", fontFamily = Almendra, fontSize = 16.sp) }
+                    },
+                    dismissButton = {
+                        TextButton(onClick = { showAcEditDialog = false }, modifier = Modifier.height(48.dp)) {
+                            Text("Abbrechen", color = Waldgruen, fontFamily = Almendra, fontSize = 16.sp)
+                        }
+                    }
+                )
+            }
+
             // Level Up Benachrichtigung
             if (viewModel.showLevelUpNotification) {
                 AlertDialog(
@@ -347,9 +475,9 @@ fun CombatScreen(
             Text("Waffe ausrüsten", style = MaterialTheme.typography.titleMedium, color = Waldgruen)
             Spacer(modifier = Modifier.height(8.dp))
 
-            var showWeaponEditDialog by remember { mutableStateOf<Int?>(null) }
-            if (inventoryVm.availableWeapons.isEmpty()) {
-                Text("Keine Waffen im Rucksack gefunden. Füge Waffen im Rucksack-Tab hinzu.", style = MaterialTheme.typography.bodySmall, color = TintenBraun, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, modifier = Modifier.padding(8.dp))
+            val allWeapons = combatVm.allWeaponsForDropdown
+            if (allWeapons.isEmpty()) {
+                Text("Keine Waffen vorhanden. Füge Waffen im Rucksack-Tab hinzu oder erstelle eine eigene Waffe.", style = MaterialTheme.typography.bodySmall, color = TintenBraun, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, modifier = Modifier.padding(8.dp))
             } else {
                 var weaponDropdownExpanded by remember { mutableStateOf(false) }
                 ExposedDropdownMenuBox(
@@ -378,7 +506,7 @@ fun CombatScreen(
                         onDismissRequest = { weaponDropdownExpanded = false },
                         modifier = Modifier.background(PergamentHell)
                     ) {
-                        inventoryVm.availableWeapons.forEach { weaponName ->
+                        allWeapons.forEach { weaponName ->
                             DropdownMenuItem(
                                 text = { Text(weaponName, fontFamily = Almendra, color = TintenSchwarz) },
                                 onClick = {
@@ -407,43 +535,110 @@ fun CombatScreen(
                     color = if (inventoryVm.hasShieldInInventory) TintenSchwarz else EisenGrau
                 )
             }
-            if (showWeaponEditDialog != null) {
-                val index = showWeaponEditDialog!!
-                val currentName = combatVm.getWeaponName(index).replace("\n", " ")
 
-                var newName by remember { mutableStateOf(currentName) }
+            // Eigene Kampfwaffen
+            Spacer(modifier = Modifier.height(12.dp))
+            HorizontalDivider(color = PergamentDunkel)
+            Spacer(modifier = Modifier.height(8.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text("Eigene Waffen", style = MaterialTheme.typography.titleSmall, color = Waldgruen)
+                IconButton(onClick = {
+                    newWeaponName = ""; newWeaponDamage = ""; newWeaponBonus = ""
+                    showAddWeaponDialog = true
+                }) {
+                    Icon(Icons.Default.Add, contentDescription = "Eigene Waffe hinzufügen", tint = accentColor)
+                }
+            }
+            combatVm.customCombatWeapons.forEachIndexed { index, weapon ->
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(weapon.name, style = MaterialTheme.typography.bodyMedium, color = TintenSchwarz)
+                        if (weapon.damage.isNotBlank()) Text(weapon.damage, style = MaterialTheme.typography.bodySmall, color = TintenBraun)
+                    }
+                    IconButton(onClick = { combatVm.removeCustomWeapon(index) }, modifier = Modifier.size(36.dp)) {
+                        Icon(Icons.Default.Delete, contentDescription = "Entfernen", tint = MaterialTheme.colorScheme.tertiary, modifier = Modifier.size(18.dp))
+                    }
+                }
+            }
+            if (combatVm.customCombatWeapons.isEmpty()) {
+                Text("Keine eigenen Waffen. Tippe auf + um eine hinzuzufügen.", style = MaterialTheme.typography.bodySmall, color = TintenBraun, fontStyle = androidx.compose.ui.text.font.FontStyle.Italic, modifier = Modifier.padding(4.dp))
+            }
 
+            // Dialog: Eigene Waffe hinzufügen
+            if (showAddWeaponDialog) {
                 AlertDialog(
-                    onDismissRequest = { showWeaponEditDialog = null },
-                    title = { Text("Waffe umbenennen", fontFamily = Almendra) },
+                    onDismissRequest = { showAddWeaponDialog = false },
+                    containerColor = PergamentHell,
+                    shape = RoundedCornerShape(12.dp),
+                    title = { Text("Eigene Waffe", style = MaterialTheme.typography.titleMedium, color = Waldgruen) },
                     text = {
-                        OutlinedTextField(
-                            value = newName,
-                            onValueChange = { newName = it },
-                            label = { Text("Name") },
-                            singleLine = true
-                        )
+                        Column {
+                            OutlinedTextField(
+                                value = newWeaponName,
+                                onValueChange = { newWeaponName = it },
+                                label = { Text("Name (z.B. Magisches Schwert)", fontFamily = Almendra) },
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = accentColor, focusedLabelColor = accentColor, unfocusedTextColor = TintenSchwarz, focusedTextColor = TintenSchwarz)
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            OutlinedTextField(
+                                value = newWeaponDamage,
+                                onValueChange = { newWeaponDamage = it },
+                                label = { Text("Schaden (z.B. 1W8+3 Feuer)", fontFamily = Almendra) },
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = accentColor, focusedLabelColor = accentColor, unfocusedTextColor = TintenSchwarz, focusedTextColor = TintenSchwarz)
+                            )
+                            Spacer(Modifier.height(8.dp))
+                            OutlinedTextField(
+                                value = newWeaponBonus,
+                                onValueChange = { newWeaponBonus = it },
+                                label = { Text("Trefferbonus (z.B. +6, leer = auto)", fontFamily = Almendra) },
+                                singleLine = true,
+                                modifier = Modifier.fillMaxWidth(),
+                                colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = accentColor, focusedLabelColor = accentColor, unfocusedTextColor = TintenSchwarz, focusedTextColor = TintenSchwarz)
+                            )
+                        }
                     },
                     confirmButton = {
-                        Button(onClick = {
-                            combatVm.saveWeaponName(index, newName.replace(" & ", "\n& "))
-                            showWeaponEditDialog = null
-                        }) { Text("Speichern", fontFamily = Almendra) }
+                        Button(
+                            onClick = {
+                                if (newWeaponName.isNotBlank()) {
+                                    combatVm.addCustomWeapon(CustomCombatWeapon(newWeaponName.trim(), newWeaponDamage.trim(), newWeaponBonus.trim()))
+                                    showAddWeaponDialog = false
+                                }
+                            },
+                            enabled = newWeaponName.isNotBlank(),
+                            colors = ButtonDefaults.buttonColors(containerColor = accentColor, contentColor = MaterialTheme.colorScheme.onTertiary),
+                            modifier = Modifier.height(48.dp),
+                            shape = RoundedCornerShape(8.dp)
+                        ) { Text("Hinzufügen", fontFamily = Almendra, fontSize = 16.sp) }
                     },
                     dismissButton = {
-                        TextButton(onClick = { showWeaponEditDialog = null }) { Text("Abbrechen", fontFamily = Almendra) }
+                        TextButton(onClick = { showAddWeaponDialog = false }, modifier = Modifier.height(48.dp)) {
+                            Text("Abbrechen", color = Waldgruen, fontFamily = Almendra, fontSize = 16.sp)
+                        }
                     }
                 )
             }
 
             val equippedName = combatVm.equippedWeaponName ?: ""
-            val isVersatile = equippedName.contains("Kriegshammer", ignoreCase = true) ||
+            val isVersatile = !combatVm.isCustomWeaponActive && (
+                              equippedName.contains("Kriegshammer", ignoreCase = true) ||
                               equippedName.contains("Speer", ignoreCase = true) ||
                               equippedName.contains("Shillelagh", ignoreCase = true) ||
                               equippedName.contains("Kampfstab", ignoreCase = true) ||
                               equippedName.contains("Langschwert", ignoreCase = true) ||
                               equippedName.contains("Streitaxt", ignoreCase = true) ||
-                              equippedName.contains("Dreizack", ignoreCase = true)
+                              equippedName.contains("Dreizack", ignoreCase = true))
 
             if (isVersatile) {
                 Spacer(modifier = Modifier.height(8.dp))
@@ -492,7 +687,7 @@ fun CombatScreen(
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    val extraNote = when (combatVm.currentWeapon) {
+                    val extraNote = if (combatVm.isCustomWeaponActive) "" else when (combatVm.currentWeapon) {
                         ActiveWeapon.LANGBOGEN -> "Verlangsamen (Mastery): Tempo -3m.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
                         ActiveWeapon.KURZSCHWERT_SCHILD -> "Ärgern (Mastery): Nächster Angriff hat Vorteil.\nMesserstecher: 1x/Zug 1 Angriffswürfel (Stich) neu werfen. Bei Krit +1 Schadenswürfel."
                         ActiveWeapon.SHILLELAGH_SCHILD -> "Umwerfen (Mastery): Ziel muss KON-RW (SG 12) bestehen oder liegt am Boden."
@@ -500,12 +695,14 @@ fun CombatScreen(
                         ActiveWeapon.SPEER_PAKT -> "Schwächen (Mastery): Nächster Angriff des Gegners hat Nachteil."
                     }
 
-                    Text(
-                        text = extraNote,
-                        style = MaterialTheme.typography.bodySmall,
-                        fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
-                        color = TintenBraun
-                    )
+                    if (extraNote.isNotBlank()) {
+                        Text(
+                            text = extraNote,
+                            style = MaterialTheme.typography.bodySmall,
+                            fontStyle = androidx.compose.ui.text.font.FontStyle.Italic,
+                            color = TintenBraun
+                        )
+                    }
                 }
             }
 

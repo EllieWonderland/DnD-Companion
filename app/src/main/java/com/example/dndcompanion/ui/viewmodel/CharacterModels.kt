@@ -33,7 +33,8 @@ data class TraitItem(
     var maxUses: Int = 0,
     var currentUses: Int = 0,
     val grantedSpellId: String? = null,
-    val resetOnShortRest: Boolean = false
+    val resetOnShortRest: Boolean = false,
+    val minLevel: Int = 0  // 0 = always available; > 0 = grayed out until character reaches this level
 )
 data class BookEntry(
     val id: String = java.util.UUID.randomUUID().toString(),
@@ -94,6 +95,12 @@ data class Spell(
     val school: String = "Unbekannt",
     var isPrepared: Boolean = false,
     var isRitual: Boolean = false
+)
+
+data class CustomCombatWeapon(
+    val name: String = "",
+    val damage: String = "",
+    val attackBonus: String = ""
 )
 
 enum class ActiveWeapon {

@@ -221,6 +221,15 @@ class CharacterRepository(
                 .addOnFailureListener { cont.resumeWithException(it) }
         }
 
+    suspend fun saveCombatToFirestore(uid: String, combatJson: String) =
+        suspendCancellableCoroutine<Unit> { cont ->
+            firestore.collection("users").document(uid)
+                .collection("combat").document("main")
+                .set(mapOf("data" to combatJson))
+                .addOnSuccessListener { cont.resume(Unit) }
+                .addOnFailureListener { cont.resumeWithException(it) }
+        }
+
     suspend fun markSetupComplete(uid: String) =
         suspendCancellableCoroutine<Unit> { cont ->
             firestore.collection("users").document(uid)
