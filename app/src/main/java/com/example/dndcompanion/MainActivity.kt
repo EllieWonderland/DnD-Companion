@@ -59,7 +59,7 @@ enum class AthaniaTab(val title: String) {
     Kampf("Kampf"),
     Zauber("Zauber"),
     Rucksack("Rucksack"),
-    Hilfe("Hilfe")
+    Hilfe("Chat")
 }
 
 class MainActivity : ComponentActivity() {
@@ -118,7 +118,7 @@ fun DnDApp(
     inventoryViewModel: InventoryViewModel,
     onLogout: () -> Unit = {}
 ) {
-    // 0 = Athania, 1 = Urtier, 2 = Hilfe, 3 = Bücher
+    // 0 = Athania, 1 = Urtier, 2 = Chat, 3 = Bibliothek
     var currentScreen by rememberSaveable { mutableStateOf(0) }
     var previousScreen by rememberSaveable { mutableStateOf(0) }
     val lastScreen = remember { mutableStateOf(currentScreen) }
@@ -195,16 +195,16 @@ fun DnDApp(
                     )
                 }
                 NavigationBarItem(
-                    selected = currentScreen == 2, // Hilfe
+                    selected = currentScreen == 2, // Chat
                     onClick = { currentScreen = 2 },
-                    icon = { 
+                    icon = {
                         Image(
                             painter = painterResource(id = R.drawable.hilfe),
-                            contentDescription = "Hilfe",
+                            contentDescription = "Chat",
                             modifier = Modifier.size(38.dp)
                         )
                     },
-                    label = { Text("Hilfe", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
+                    label = { Text("Chat", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = PergamentHell,
                         selectedTextColor = PergamentHell,
@@ -214,16 +214,16 @@ fun DnDApp(
                     )
                 )
                 NavigationBarItem(
-                    selected = currentScreen == 3, // Bücher
+                    selected = currentScreen == 3, // Bibliothek
                     onClick = { currentScreen = 3 },
-                    icon = { 
+                    icon = {
                         Image(
                             painter = painterResource(id = R.drawable.bucher),
-                            contentDescription = "Bücher",
+                            contentDescription = "Bibliothek",
                             modifier = Modifier.size(38.dp)
                         )
                     },
-                    label = { Text("Bücher", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
+                    label = { Text("Bibliothek", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
                     colors = NavigationBarItemDefaults.colors(
                         selectedIconColor = PergamentHell,
                         selectedTextColor = PergamentHell,

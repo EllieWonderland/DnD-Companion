@@ -41,10 +41,10 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 > Schnell umzusetzen, schafft sofort die neue App-Struktur.
 
 ### 2.1 Tabs umbenennen
-- [ ] `MainActivity.kt`: Bottom-Navigation-Tab „Bücher" → **„Bibliothek"**
-- [ ] `MainActivity.kt`: Bottom-Navigation-Tab „Hilfe" → **„Chat"**
-- [ ] `BucherScreen.kt` und alle internen Referenzen: `Bücher` → `Bibliothek` (Strings, Kommentare, Variablen)
-- [ ] `HelpScreen.kt` und alle internen Referenzen: `Hilfe` → `Chat`
+- [x] `MainActivity.kt`: Bottom-Navigation-Tab „Bücher" → **„Bibliothek"**
+- [x] `MainActivity.kt`: Bottom-Navigation-Tab „Hilfe" → **„Chat"**
+- [x] `BucherScreen.kt` interne Referenzen: `BucherLibraryView.kt` zeigt bereits „Bibliothek" — keine weiteren Strings
+- [x] `HelpScreen.kt` interne Referenzen: keine user-facing „Hilfe"-Strings vorhanden — keine Änderung nötig
 
 ### 2.2 Begleiter-Tab entfernen
 - [ ] Bottom-Navigation-Tab „Begleiter" vollständig aus `MainActivity.kt` entfernen
