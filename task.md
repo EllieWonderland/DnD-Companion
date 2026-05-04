@@ -29,9 +29,10 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [ ] `characters.json` löschen (nach vollständiger Migration → Task 3.x)
 
 ### 1.3 Gruppen-Zugangssteuerung
-- [ ] Firestore Security Rules: `users/{uid}/*` nur für eigenen User lesbar/schreibbar
-- [ ] Gruppen-Collections (`groupChat`, `quests`, `publicGeneralNotes`, `sharedLoot`, `sharedCoins`, `lore/*`) für alle eingeloggten User lesbar
-- [ ] `GroupViewModel.kt` bleibt wie bisher (kein User-Filter nötig)
+- [x] Firestore Security Rules: `users/{uid}/*` nur für eigenen User lesbar/schreibbar
+- [x] Gruppen-Collections (`groupChat`, `globalQuests`, `publicGeneralNotes`, `publicGrudgeNotes`, `groupLootItems`, `groupLootCoins`) für alle eingeloggten User lesbar/schreibbar
+- [x] `GroupViewModel.kt` bleibt wie bisher (kein User-Filter nötig)
+- [x] `firestore.rules` + `firebase.json` im Projektstamm angelegt (deploybar via `firebase deploy --only firestore:rules`)
 
 ---
 
