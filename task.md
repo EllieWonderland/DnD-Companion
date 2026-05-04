@@ -74,9 +74,9 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [ ] „Charakter bearbeiten"-Button im Profil öffnet einzelne Setup-Schritte zum Nachbearbeiten (→ Task 3.3)
 
 ### 3.2 Charakter-Tab umbenennen
-- [ ] `AthaniaScreen.kt` in `CharacterScreen.kt` umbenennen
-- [ ] Alle Tabs intern und im Bottom-Nav: „Athania"/„Delat" → **„Charakter"**
-- [ ] Tab-Icon: Charakter-Portrait dynamisch aus Firestore/Storage laden (Fallback: Default-Icon)
+- [x] `AthaniaScreen.kt` in `CharacterScreen.kt` umbenennen (neue Datei `ui/screens/CharacterScreen.kt`, `AthaniaTab` → `CharacterTab`)
+- [x] Alle Tabs intern und im Bottom-Nav: „Athania"/„Delat" → **„Charakter"**
+- [x] Tab-Icon: charClass-basiertes Fallback-Portrait (RANGER → athania, WARLOCK → delat); dynamisches Storage-Laden → Task 3.3
 
 ### 3.3 Profil-Tab editierbar machen
 - [ ] `ProfilScreen.kt`: alle Anzeigefelder (Name, Rasse, Klasse, Attribute, EP, Hintergrund) inline editierbar
