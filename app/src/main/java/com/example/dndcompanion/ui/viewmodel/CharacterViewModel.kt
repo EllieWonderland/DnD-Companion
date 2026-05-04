@@ -394,6 +394,93 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     fun openCharacterEdit() { showCharacterEditDialog = true }
     fun closeCharacterEdit() { showCharacterEditDialog = false }
 
+    // --- SETUP WIZARD ---
+    var setupComplete by mutableStateOf<Boolean?>(null)
+        private set
+
+    fun checkSetupComplete(uid: String) {
+        viewModelScope.launch {
+            try {
+                setupComplete = characterRepository.isSetupComplete(uid)
+            } catch (e: Exception) {
+                Log.e("CharacterVM", "Setup check failed, assuming incomplete", e)
+                setupComplete = false
+            }
+        }
+    }
+
+    fun markSetupComplete(uid: String) {
+        setupComplete = true
+        viewModelScope.launch {
+            try {
+                characterRepository.markSetupComplete(uid)
+            } catch (e: Exception) {
+                Log.e("CharacterVM", "Failed to persist setup flag", e)
+            }
+        }
+    }
+
+    fun saveCharacterFromSetup(
+        uid: String,
+        name: String,
+        race: String,
+        charClass: CharacterClass,
+        subclass: String,
+        str: Int, dex: Int, con: Int, int: Int, wis: Int, cha: Int,
+        maxHpVal: Int,
+        hitDiceVal: Int,
+        background: String,
+        starterItems: List<InventoryItem>
+    ) {
+        val wisMod = (wis - 10) / 2
+        val newData = characterData.copy(
+            id = uid,
+            name = name,
+            race = race,
+            charClass = charClass,
+            subclass = subclass,
+            background = background,
+            passivePerception = 10 + wisMod,
+            baseStrength = str,
+            baseDexterity = dex,
+            baseConstitution = con,
+            baseIntelligence = int,
+            baseWisdom = wis,
+            baseCharisma = cha,
+            baseMaxHp = maxHpVal,
+            baseHitDice = hitDiceVal
+        )
+        strength = str
+        dexterity = dex
+        constitution = con
+        intelligence = int
+        wisdom = wis
+        charisma = cha
+        maxHp = maxHpVal
+        currentHp = maxHpVal
+        hitDice = hitDiceVal
+        prefs.edit {
+            putInt("strength", str)
+            putInt("dexterity", dex)
+            putInt("constitution", con)
+            putInt("intelligence", int)
+            putInt("wisdom", wis)
+            putInt("charisma", cha)
+            putInt("maxHp", maxHpVal)
+            putInt("currentHp", maxHpVal)
+            putInt("hitDice", hitDiceVal)
+        }
+        if (starterItems.isNotEmpty()) {
+            val newItems = starterItems.filter { item -> customLoot.none { it.name == item.name } }
+            customLoot.addAll(newItems)
+            saveLoot()
+        }
+        viewModelScope.launch {
+            characterRepository.saveCharacterToFirestore(uid, newData)
+            characterRepository.saveCharacter(newData)
+        }
+    }
+
     fun saveCharacterData(updated: CharacterData) {
         strength = updated.baseStrength
         dexterity = updated.baseDexterity

@@ -41,6 +41,7 @@ import com.example.dndcompanion.ui.screens.ZauberScreen
 import com.example.dndcompanion.ui.screens.HelpScreen
 import com.example.dndcompanion.ui.screens.ProfilScreen
 import com.example.dndcompanion.ui.screens.BucherScreen
+import com.example.dndcompanion.ui.screens.CharacterSetupScreen
 import com.example.dndcompanion.ui.screens.FeatureSelectionScreen
 import com.example.dndcompanion.ui.theme.*
 import androidx.compose.foundation.Image
@@ -75,6 +76,7 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(currentUser?.uid) {
                 val uid = currentUser?.uid ?: return@LaunchedEffect
                 characterViewModel.loadUserCharacter(uid)
+                characterViewModel.checkSetupComplete(uid)
             }
 
             DnDCompanionTheme(isRanger = isRanger) {
@@ -98,10 +100,27 @@ class MainActivity : ComponentActivity() {
                     spellViewModel.inventoryVm = inventoryViewModel
                     characterViewModel.connectSiblings(combatViewModel, spellViewModel, inventoryViewModel)
 
-                    DnDApp(
-                        characterViewModel, groupViewModel, combatViewModel, spellViewModel, inventoryViewModel,
-                        onLogout = { authViewModel.logout() }
-                    )
+                    val uid = currentUser!!.uid
+                    when (characterViewModel.setupComplete) {
+                        null -> {
+                            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator(color = WaldgruenDunkel)
+                            }
+                        }
+                        false -> {
+                            CharacterSetupScreen(
+                                uid = uid,
+                                viewModel = characterViewModel,
+                                onSetupComplete = {}
+                            )
+                        }
+                        else -> {
+                            DnDApp(
+                                characterViewModel, groupViewModel, combatViewModel, spellViewModel, inventoryViewModel,
+                                onLogout = { authViewModel.logout() }
+                            )
+                        }
+                    }
                 }
             }
         }

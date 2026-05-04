@@ -195,4 +195,24 @@ class CharacterRepository(
                 .addOnFailureListener { cont.resumeWithException(it) }
         }
     }
+
+    suspend fun isSetupComplete(uid: String): Boolean =
+        suspendCancellableCoroutine { cont ->
+            firestore.collection("users").document(uid)
+                .collection("setup").document("main")
+                .get()
+                .addOnSuccessListener { snapshot ->
+                    cont.resume(snapshot.getBoolean("setupComplete") == true)
+                }
+                .addOnFailureListener { cont.resumeWithException(it) }
+        }
+
+    suspend fun markSetupComplete(uid: String) =
+        suspendCancellableCoroutine<Unit> { cont ->
+            firestore.collection("users").document(uid)
+                .collection("setup").document("main")
+                .set(mapOf("setupComplete" to true))
+                .addOnSuccessListener { cont.resume(Unit) }
+                .addOnFailureListener { cont.resumeWithException(it) }
+        }
 }

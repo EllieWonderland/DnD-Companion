@@ -62,15 +62,16 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 > Ersetzt den bisherigen Athania/Delat-Tab. Jeder Spieler verwaltet seinen eigenen Charakter.
 
 ### 3.1 Charakter-Setup-Assistent (erster Login)
-- [ ] `CharacterSetupScreen.kt` erstellen (mehrstufiger Wizard):
-  - Schritt 1: Name, Rasse, Klasse, Unterklasse
-  - Schritt 2: Attribute (STR, DEX, CON, INT, WIS, CHA) mit Würfelsimulator oder manuelle Eingabe
-  - Schritt 3: HP, Trefferwürfel, Rüstungsklasse (Basis)
-  - Schritt 4: Startausrüstung wählen (aus equipment.json) oder überspringen
+- [x] `CharacterSetupScreen.kt` erstellt (5-stufiger Wizard):
+  - Schritt 1: Name, Rasse, Klasse (RANGER/WARLOCK via Karten), Unterklasse
+  - Schritt 2: Attribute (STR, DEX, CON, INT, WIS, CHA) mit 4W6-Würfelsimulator + manuellen ±-Buttons
+  - Schritt 3: Max HP (mit CON-Mod-Tipp), Trefferwürfel (W6/W8/W10/W12-Chips), Rüstungsklasse
+  - Schritt 4: Startausrüstung (klassenbasierte Vorauswahl, Checkbox-Liste)
   - Schritt 5: Hintergrundgeschichte / Notizen (optional)
-- [ ] Wizard speichert direkt in Firestore (`users/{uid}/character`)
-- [ ] Wizard nur beim allerersten Login anzeigen (Flag in Firestore: `setupComplete: Boolean`)
-- [ ] „Charakter bearbeiten"-Button im Profil öffnet einzelne Setup-Schritte zum Nachbearbeiten
+- [x] Wizard speichert in Firestore (`users/{uid}/character`) + Room via `saveCharacterFromSetup`
+- [x] Wizard nur beim ersten Login: Flag `setupComplete` in `users/{uid}/setup/main`; `CharacterRepository.isSetupComplete/markSetupComplete` + `CharacterViewModel.checkSetupComplete/markSetupComplete`
+- [x] Bestehende Sicherheitsregeln decken `users/{uid}/setup/**` bereits ab
+- [ ] „Charakter bearbeiten"-Button im Profil öffnet einzelne Setup-Schritte zum Nachbearbeiten (→ Task 3.3)
 
 ### 3.2 Charakter-Tab umbenennen
 - [ ] `AthaniaScreen.kt` in `CharacterScreen.kt` umbenennen
