@@ -9,13 +9,13 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 > Alles weitere baut hierauf auf. Ohne Login ist keine Benutzertrennung möglich.
 
 ### 1.1 Firebase Authentication einrichten
-- [ ] Firebase Auth SDK als Gradle-Dependency hinzufügen
-- [ ] `LoginScreen.kt` erstellen (E-Mail + Passwort, optional Google Sign-In)
-- [ ] `AuthViewModel.kt` erstellen (Login, Logout, aktuellen User halten)
-- [ ] `MainActivity.kt` anpassen: vor dem Haupt-UI Auth-Zustand prüfen – nicht eingeloggt → LoginScreen
+- [x] Firebase Auth SDK als Gradle-Dependency hinzufügen
+- [x] `LoginScreen.kt` erstellen (E-Mail + Passwort)
+- [x] `AuthViewModel.kt` erstellen (Login, Logout, aktuellen User halten)
+- [x] `MainActivity.kt` anpassen: vor dem Haupt-UI Auth-Zustand prüfen – nicht eingeloggt → LoginScreen
 - [ ] Beim ersten Login: Weiterleitung zum Charakter-Setup-Assistenten (→ Task 3.1)
-- [ ] Logout-Funktion im Profil-Tab einbauen
-- [ ] Passwort-Reset-Flow (Forgot Password)
+- [x] Logout-Funktion im Profil-Tab einbauen
+- [x] Passwort-Reset-Flow (Forgot Password)
 
 ### 1.2 Charakterdaten pro Benutzer (Firestore statt JSON)
 - [ ] Firestore-Collection `users/{uid}/character` anlegen (Datenstruktur: alle Felder aus `CharacterData.kt`)
@@ -266,3 +266,4 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Schritt 4 – Preise im Inventar anzeigen (aus IMPLEMENTATION_PLAN.md)
 - [x] Route spellbook edits through SpellViewModel (fix broken add/remove/toggle)
 - [x] Restore text formatting in ProfilScreen
+- [x] Task 1.1 – Firebase Authentication einrichten (LoginScreen, AuthViewModel, Auth-Gate in MainActivity, Logout im ProfilScreen, Passwort-Reset)

@@ -75,9 +75,10 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
-    // Firebase (Firestore & BoM)
+    // Firebase (Auth, Firestore & BoM)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
 
     // Einfaches SDK ohne Firebase-Cloud-Zwang
     implementation(libs.google.generativeai)

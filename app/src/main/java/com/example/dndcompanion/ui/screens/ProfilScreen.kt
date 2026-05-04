@@ -41,9 +41,15 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Logout
 
 @Composable
-fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel, onNavigateToRulebook: ((String, String) -> Unit)? = null) {
+fun ProfilScreen(
+    viewModel: CharacterViewModel,
+    combatVm: CombatViewModel,
+    onNavigateToRulebook: ((String, String) -> Unit)? = null,
+    onLogout: () -> Unit = {}
+) {
     var epInput by remember { mutableStateOf("") }
 
     PergamentBackground {
@@ -73,6 +79,13 @@ fun ProfilScreen(viewModel: CharacterViewModel, combatVm: CombatViewModel, onNav
                         Icons.Default.Edit,
                         contentDescription = "Charakter bearbeiten",
                         tint = MaterialTheme.colorScheme.tertiary
+                    )
+                }
+                IconButton(onClick = onLogout) {
+                    Icon(
+                        Icons.Default.Logout,
+                        contentDescription = "Abmelden",
+                        tint = OchsenblutRot
                     )
                 }
                 var expanded by remember { mutableStateOf(false) }

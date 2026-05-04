@@ -26,7 +26,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.draw.clip
 import com.example.dndcompanion.ui.screens.CompanionSelectionDialog
 import com.example.dndcompanion.ui.screens.CombatScreen
+import com.example.dndcompanion.ui.screens.LoginScreen
 import com.example.dndcompanion.ui.screens.RucksackScreen
+import com.example.dndcompanion.ui.viewmodel.AuthViewModel
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
 import com.example.dndcompanion.ui.viewmodel.GroupViewModel
 import com.example.dndcompanion.ui.viewmodel.GroupViewModelFactory
@@ -65,28 +67,38 @@ class MainActivity : ComponentActivity() {
         setTheme(R.style.Theme_DnDCompanion)
         super.onCreate(savedInstanceState)
         setContent {
-            val viewModel: CharacterViewModel = viewModel()
-            val isRanger = viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER
+            val authViewModel: AuthViewModel = viewModel()
+            val currentUser by authViewModel.currentUser.collectAsState()
+
+            val characterViewModel: CharacterViewModel = viewModel()
+            val isRanger = characterViewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER
 
             DnDCompanionTheme(isRanger = isRanger) {
-                val groupViewModel: GroupViewModel = viewModel(
-                    factory = GroupViewModelFactory(application, viewModel)
-                )
-                val inventoryViewModel: InventoryViewModel = viewModel(
-                    factory = InventoryViewModelFactory(application, viewModel)
-                )
-                val spellViewModel: SpellViewModel = viewModel(
-                    factory = SpellViewModelFactory(application, viewModel)
-                )
-                val combatViewModel: CombatViewModel = viewModel(
-                    factory = CombatViewModelFactory(application, viewModel, spellViewModel, inventoryViewModel)
-                )
-                // Wire up cross-references
-                inventoryViewModel.combatVm = combatViewModel
-                spellViewModel.inventoryVm = inventoryViewModel
-                viewModel.connectSiblings(combatViewModel, spellViewModel, inventoryViewModel)
+                if (currentUser == null) {
+                    LoginScreen(authViewModel)
+                } else {
+                    val groupViewModel: GroupViewModel = viewModel(
+                        factory = GroupViewModelFactory(application, characterViewModel)
+                    )
+                    val inventoryViewModel: InventoryViewModel = viewModel(
+                        factory = InventoryViewModelFactory(application, characterViewModel)
+                    )
+                    val spellViewModel: SpellViewModel = viewModel(
+                        factory = SpellViewModelFactory(application, characterViewModel)
+                    )
+                    val combatViewModel: CombatViewModel = viewModel(
+                        factory = CombatViewModelFactory(application, characterViewModel, spellViewModel, inventoryViewModel)
+                    )
+                    // Wire up cross-references
+                    inventoryViewModel.combatVm = combatViewModel
+                    spellViewModel.inventoryVm = inventoryViewModel
+                    characterViewModel.connectSiblings(combatViewModel, spellViewModel, inventoryViewModel)
 
-                DnDApp(viewModel, groupViewModel, combatViewModel, spellViewModel, inventoryViewModel)
+                    DnDApp(
+                        characterViewModel, groupViewModel, combatViewModel, spellViewModel, inventoryViewModel,
+                        onLogout = { authViewModel.logout() }
+                    )
+                }
             }
         }
     }
@@ -98,7 +110,8 @@ fun DnDApp(
     groupViewModel: GroupViewModel,
     combatViewModel: CombatViewModel,
     spellViewModel: SpellViewModel,
-    inventoryViewModel: InventoryViewModel
+    inventoryViewModel: InventoryViewModel,
+    onLogout: () -> Unit = {}
 ) {
     // 0 = Athania, 1 = Urtier, 2 = Hilfe, 3 = Bücher
     var currentScreen by rememberSaveable { mutableStateOf(0) }
@@ -225,7 +238,8 @@ fun DnDApp(
                         viewModel.targetRulebookChapter = chapter
                         viewModel.targetRulebookSearch = search
                         currentScreen = 3
-                    }
+                    },
+                    onLogout = onLogout
                 )
                 1 -> {
                     if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER || viewModel.activeCharacterId == "Delat") {
@@ -235,7 +249,7 @@ fun DnDApp(
                             viewModel.targetRulebookChapter = chapter
                             viewModel.targetRulebookSearch = search
                             currentScreen = 3
-                        })
+                        }, onLogout = onLogout)
                     }
                 }
                 2 -> HelpScreen(viewModel, groupViewModel, onNavigateToRulebook = { chapter, search ->
@@ -284,7 +298,8 @@ fun AthaniaScreen(
     combatViewModel: CombatViewModel,
     spellViewModel: SpellViewModel,
     inventoryViewModel: InventoryViewModel,
-    onNavigateToRulebook: ((String, String) -> Unit)? = null
+    onNavigateToRulebook: ((String, String) -> Unit)? = null,
+    onLogout: () -> Unit = {}
 ) {
     val tabs = AthaniaTab.entries.filter { it != AthaniaTab.Hilfe }
     val pagerState = rememberPagerState(initialPage = tabs.indexOf(AthaniaTab.Kampf), pageCount = { tabs.size })
@@ -348,7 +363,7 @@ fun AthaniaScreen(
             modifier = Modifier.fillMaxSize()
         ) { page ->
             when (tabs[page]) {
-                AthaniaTab.Profil -> ProfilScreen(viewModel, combatViewModel, onNavigateToRulebook)
+                AthaniaTab.Profil -> ProfilScreen(viewModel, combatViewModel, onNavigateToRulebook, onLogout = onLogout)
                 AthaniaTab.Kampf -> CombatScreen(
                     viewModel = viewModel,
                     combatVm = combatViewModel,
