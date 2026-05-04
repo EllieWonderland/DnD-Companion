@@ -47,12 +47,13 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] `HelpScreen.kt` interne Referenzen: keine user-facing „Hilfe"-Strings vorhanden — keine Änderung nötig
 
 ### 2.2 Begleiter-Tab entfernen
-- [ ] Bottom-Navigation-Tab „Begleiter" vollständig aus `MainActivity.kt` entfernen
-- [ ] `CompanionScreen.kt` löschen
-- [ ] `CompanionSelectionDialog.kt` löschen
-- [ ] Begleiter-Daten (Urtier/Vertrauter) bleiben im Profil sichtbar (Read-only-Block im ProfilScreen), aber kein eigener Tab mehr
-- [ ] `urtier.json`, `vertrauter.json` in der Asset-Struktur belassen (werden noch im Profil referenziert)
-- [ ] `CompanionDto`, `BeastType`-Enum in `CharacterModels.kt` belassen (weiterhin in Profil genutzt)
+- [x] Bottom-Navigation-Tab „Begleiter" vollständig aus `MainActivity.kt` entfernen
+- [x] `CompanionScreen`-Composable aus `MainActivity.kt` entfernt (war nicht in eigener Datei)
+- [x] `CompanionSelectionDialog.kt` gelöscht
+- [x] Begleiter-Daten (Urtier/Vertrauter) als Read-only-Karte am Ende von `ProfilScreen.kt` hinzugefügt (HP-Balken, RK, Tempo, GEFALLEN-Status)
+- [x] Bottom-Nav-Indizes angepasst: Athania=0, Chat=1, Bibliothek=2
+- [x] `urtier.json`, `vertrauter.json` in der Asset-Struktur belassen
+- [x] `CompanionDto`, `BeastType`-Enum in `CharacterModels.kt` belassen
 
 ---
 

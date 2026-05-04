@@ -357,6 +357,59 @@ fun ProfilScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+            HorizontalDivider(color = Bronze, thickness = 2.dp)
+            Spacer(modifier = Modifier.height(16.dp))
+
+            val companionTitle = if (viewModel.characterData.charClass == CharacterClass.RANGER) "Urtier-Begleiter" else "Vertrauter"
+            val companionPortrait = if (viewModel.characterData.charClass == CharacterClass.RANGER) R.drawable.icon_capybara else R.drawable.vertrauter
+            Text(companionTitle, style = MaterialTheme.typography.titleMedium, color = Waldgruen)
+            Spacer(modifier = Modifier.height(8.dp))
+            PergamentCard(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    modifier = Modifier.padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = companionPortrait),
+                        contentDescription = companionTitle,
+                        modifier = Modifier
+                            .size(72.dp)
+                            .clip(RoundedCornerShape(12.dp)),
+                        contentScale = ContentScale.Fit,
+                        alpha = if (viewModel.companionIsDead) 0.5f else 1f
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        val companionData = viewModel.companionData
+                        Text(
+                            companionData?.name ?: companionTitle,
+                            style = MaterialTheme.typography.labelLarge,
+                            color = if (viewModel.companionIsDead) EisenGrau else Waldgruen
+                        )
+                        if (viewModel.companionIsDead) {
+                            Text("GEFALLEN", style = MaterialTheme.typography.labelSmall, color = OchsenblutRot, fontWeight = FontWeight.Bold)
+                        } else {
+                            val capyHpProgress by animateFloatAsState(
+                                targetValue = if (viewModel.capyMaxHp > 0) viewModel.capyCurrentHp.toFloat() / viewModel.capyMaxHp.toFloat() else 0f,
+                                animationSpec = tween(durationMillis = 500),
+                                label = "Companion HP Profil"
+                            )
+                            Text("HP: ${viewModel.capyCurrentHp} / ${viewModel.capyMaxHp}", style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
+                            Spacer(modifier = Modifier.height(4.dp))
+                            LinearProgressIndicator(
+                                progress = { capyHpProgress },
+                                modifier = Modifier.fillMaxWidth().height(8.dp),
+                                color = Waldgruen,
+                                trackColor = PergamentDunkel
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text("RK: ${viewModel.capyAc} | Tempo: ${viewModel.capySpeed}", style = MaterialTheme.typography.bodySmall, color = TintenBraun)
+                        }
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 

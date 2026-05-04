@@ -1,4 +1,4 @@
-package com.example.dndcompanion
+﻿package com.example.dndcompanion
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -24,7 +24,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.draw.clip
-import com.example.dndcompanion.ui.screens.CompanionSelectionDialog
 import com.example.dndcompanion.ui.screens.CombatScreen
 import com.example.dndcompanion.ui.screens.LoginScreen
 import com.example.dndcompanion.ui.screens.RucksackScreen
@@ -53,7 +52,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import kotlinx.coroutines.launch
 
-// Definition der Tabs für bessere Lesbarkeit
+// Definition der Tabs fÃ¼r bessere Lesbarkeit
 enum class AthaniaTab(val title: String) {
     Profil("Profil"),
     Kampf("Kampf"),
@@ -118,7 +117,7 @@ fun DnDApp(
     inventoryViewModel: InventoryViewModel,
     onLogout: () -> Unit = {}
 ) {
-    // 0 = Athania, 1 = Urtier, 2 = Chat, 3 = Bibliothek
+    // 0 = Athania, 1 = Chat, 2 = Bibliothek
     var currentScreen by rememberSaveable { mutableStateOf(0) }
     var previousScreen by rememberSaveable { mutableStateOf(0) }
     val lastScreen = remember { mutableStateOf(currentScreen) }
@@ -132,7 +131,7 @@ fun DnDApp(
     var introOpacity by remember { mutableStateOf(1f) }
     var introFinished by remember { mutableStateOf(false) }
 
-    // Intro Animation Logik für sanftes Ausfaden
+    // Intro Animation Logik fÃ¼r sanftes Ausfaden
     LaunchedEffect(Unit) {
         kotlinx.coroutines.delay(2000) // 2 Sekunden voll sichtbar
         introOpacity = 0f              // Startet Fade-Out
@@ -171,32 +170,9 @@ fun DnDApp(
                         indicatorColor = Waldgruen
                     )
                 )
-                if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER || viewModel.activeCharacterId == "Delat") {
-                    NavigationBarItem(
-                        selected = currentScreen == 1,
-                        onClick = { currentScreen = 1 },
-                        icon = { 
-                            val iconRes = if (viewModel.activeCharacterId == "Delat") R.drawable.vertrauter else R.drawable.icon_capybara
-                            Image(
-                                painter = painterResource(id = iconRes),
-                                contentDescription = "Begleiter",
-                                modifier = Modifier.size(38.dp),
-                                contentScale = ContentScale.Fit
-                            )
-                        },
-                        label = { Text("Begleiter", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = PergamentHell,
-                            selectedTextColor = PergamentHell,
-                            unselectedIconColor = PergamentDunkel,
-                            unselectedTextColor = PergamentDunkel,
-                            indicatorColor = Waldgruen
-                        )
-                    )
-                }
                 NavigationBarItem(
-                    selected = currentScreen == 2, // Chat
-                    onClick = { currentScreen = 2 },
+                    selected = currentScreen == 1, // Chat
+                    onClick = { currentScreen = 1 },
                     icon = {
                         Image(
                             painter = painterResource(id = R.drawable.hilfe),
@@ -214,8 +190,8 @@ fun DnDApp(
                     )
                 )
                 NavigationBarItem(
-                    selected = currentScreen == 3, // Bibliothek
-                    onClick = { currentScreen = 3 },
+                    selected = currentScreen == 2, // Bibliothek
+                    onClick = { currentScreen = 2 },
                     icon = {
                         Image(
                             painter = painterResource(id = R.drawable.bucher),
@@ -242,27 +218,16 @@ fun DnDApp(
                     onNavigateToRulebook = { chapter, search ->
                         viewModel.targetRulebookChapter = chapter
                         viewModel.targetRulebookSearch = search
-                        currentScreen = 3
+                        currentScreen = 2
                     },
                     onLogout = onLogout
                 )
-                1 -> {
-                    if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER || viewModel.activeCharacterId == "Delat") {
-                        CompanionScreen(viewModel)
-                    } else {
-                        ProfilScreen(viewModel, combatViewModel, onNavigateToRulebook = { chapter, search ->
-                            viewModel.targetRulebookChapter = chapter
-                            viewModel.targetRulebookSearch = search
-                            currentScreen = 3
-                        }, onLogout = onLogout)
-                    }
-                }
-                2 -> HelpScreen(viewModel, groupViewModel, onNavigateToRulebook = { chapter, search ->
+                1 -> HelpScreen(viewModel, groupViewModel, onNavigateToRulebook = { chapter, search ->
                     viewModel.targetRulebookChapter = chapter
                     viewModel.targetRulebookSearch = search
-                    currentScreen = 3
+                    currentScreen = 2
                 })
-                3 -> BucherScreen(viewModel, spellViewModel, groupViewModel)
+                2 -> BucherScreen(viewModel, spellViewModel, groupViewModel)
             }
         }
 
@@ -284,7 +249,7 @@ fun DnDApp(
                     painter = painterResource(id = R.drawable.splash_premium_final),
                     contentDescription = "Premium Intro",
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Fit, // Fit statt Crop, damit keine Ränder abgeschnitten werden
+                    contentScale = ContentScale.Fit, // Fit statt Crop, damit keine RÃ¤nder abgeschnitten werden
                     alpha = alpha
                 )
             }
@@ -391,186 +356,3 @@ fun AthaniaScreen(
         }
     }
 }
-
-@Composable
-fun CompanionScreen(viewModel: CharacterViewModel) {
-    var showCompanionSelectionDialog by remember { mutableStateOf(false) }
-    val companion = viewModel.companionData
-    val isRanger = viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.RANGER
-    val isDead = viewModel.companionIsDead
-    
-    val companionName = companion?.name ?: if(isRanger) "Urtier-Begleiter" else "Vertrauter"
-    val portraitRes = if(isRanger) R.drawable.icon_capybara else R.drawable.vertrauter
-
-    val beastColorLight = if(isRanger) {
-        when(viewModel.activeBeastType) {
-            com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> WaldgruenDunkel
-            com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> Bronze
-            com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> Bronze
-        }
-    } else HexenLila
-
-    val beastColorDark = if(isRanger) {
-        when(viewModel.activeBeastType) {
-            com.example.dndcompanion.ui.viewmodel.BeastType.LAND -> Waldgruen
-            com.example.dndcompanion.ui.viewmodel.BeastType.SKY -> OchsenblutRot
-            com.example.dndcompanion.ui.viewmodel.BeastType.SEA -> BronzeDunkel
-        }
-    } else HexenLilaHell
-
-    PergamentBackground {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(8.dp).verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Image(
-                painter = painterResource(id = portraitRes),
-                contentDescription = "Begleiter Portrait",
-                modifier = Modifier
-                    .size(150.dp)
-                    .clip(RoundedCornerShape(20.dp))
-                    .border(3.dp, MaterialTheme.colorScheme.tertiary, RoundedCornerShape(20.dp)),
-                contentScale = ContentScale.Fit,
-                alpha = if(isDead) 0.5f else 1f
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(companionName, style = MaterialTheme.typography.titleLarge, color = if(isDead) EisenGrau else Waldgruen, fontFamily = Almendra)
-            if (companion != null) {
-                Text(companion.typ_und_gesinnung, style = MaterialTheme.typography.labelMedium, color = TintenBraun)
-            }
-        }
-
-        if (isRanger && !isDead) {
-            Button(
-                onClick = { showCompanionSelectionDialog = true },
-                colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
-                modifier = Modifier.fillMaxWidth().height(48.dp),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text("Tierart wechseln", fontSize = 16.sp, fontFamily = Almendra)
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-        }
-
-        if (isDead) {
-            Card(
-                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
-                colors = CardDefaults.cardColors(containerColor = OchsenblutRot.copy(alpha = 0.15f)),
-                border = BorderStroke(2.dp, OchsenblutRot),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Column(modifier = Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("BEGLEITER IST GEFALLEN", color = OchsenblutRot, fontWeight = FontWeight.Bold, fontSize = 20.sp, fontFamily = Almendra)
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Button(
-                        onClick = { viewModel.reviveCompanion() },
-                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        val reviveLabel = when (viewModel.characterData.charClass) {
-                            com.example.dndcompanion.data.CharacterClass.RANGER -> "Urtier beleben (1 Zauberslot)"
-                            com.example.dndcompanion.data.CharacterClass.WARLOCK -> "Vertrauten neu beschwören"
-                        }
-                        Text(reviveLabel, fontFamily = Almendra)
-                    }
-                }
-            }
-        } else {
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = beastColorLight),
-                shape = RoundedCornerShape(16.dp)
-            ) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    val capyHpProgress by animateFloatAsState(
-                        targetValue = if (viewModel.capyMaxHp > 0) viewModel.capyCurrentHp.toFloat() / viewModel.capyMaxHp.toFloat() else 0f,
-                        animationSpec = tween(durationMillis = 500),
-                        label = "Companion HP Animation"
-                    )
-
-                    Text("HP: ${viewModel.capyCurrentHp} / ${viewModel.capyMaxHp}", fontSize = 28.sp, fontWeight = FontWeight.Bold, color = PergamentHell, fontFamily = Almendra)
-
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    LinearProgressIndicator(
-                        progress = { capyHpProgress },
-                        modifier = Modifier.fillMaxWidth().height(16.dp),
-                        color = if (viewModel.capyCurrentHp > (viewModel.capyMaxHp / 4)) beastColorDark else OchsenblutRot,
-                        trackColor = PergamentDunkel
-                    )
-
-                    Spacer(modifier = Modifier.height(12.dp))
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Button(onClick = { viewModel.takeCapyDamage(5) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("-5", fontFamily = Almendra) }
-                        Button(onClick = { viewModel.takeCapyDamage(1) }, colors = ButtonDefaults.buttonColors(containerColor = OchsenblutRot), shape = RoundedCornerShape(8.dp)) { Text("-1", fontFamily = Almendra) }
-                        Button(onClick = { viewModel.healCapy(1) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("+1", fontFamily = Almendra) }
-                        Button(onClick = { viewModel.healCapy(5) }, colors = ButtonDefaults.buttonColors(containerColor = Waldgruen), shape = RoundedCornerShape(8.dp)) { Text("+5", fontFamily = Almendra) }
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            PergamentCard(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                        Text("Rüstungsklasse (RK)", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra)
-                        Text("${viewModel.capyAc}", fontWeight = FontWeight.Bold, fontSize = 20.sp, color = TintenSchwarz)
-                    }
-                    HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
-
-                    Text("Tempo: ${viewModel.capySpeed}", fontSize = 16.sp, color = TintenSchwarz)
-                    
-                    if (companion != null) {
-                        Text("Sinne: ${companion.sinne}", fontSize = 14.sp, color = TintenBraun)
-                        Text("Sprachen: ${companion.sprachen}", fontSize = 14.sp, color = TintenBraun)
-                        HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
-                    }
-
-                    Text("Merkmale:", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra, fontSize = 16.sp)
-                    Text(viewModel.capySpecial, fontSize = 14.sp, color = TintenSchwarz)
-
-                    HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
-
-                    Text("Aktionen:", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra, modifier = Modifier.padding(bottom = 4.dp), fontSize = 16.sp)
-                    Text("Angriffsbonus: ${viewModel.capyAttackBonus}", fontSize = 18.sp, color = TintenSchwarz)
-                    Text("Schaden: ${viewModel.capyDamage}", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = beastColorDark)
-                    
-                    companion?.aktionen?.forEach { aktion ->
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text("${aktion.name}:", fontWeight = FontWeight.Bold, color = TintenSchwarz, fontSize = 14.sp)
-                        Text(aktion.beschreibung ?: "", fontSize = 14.sp, color = TintenBraun)
-                    }
-                    
-                    companion?.reaktionen?.let { reaktionen ->
-                        if (reaktionen.isNotEmpty()) {
-                            HorizontalDivider(color = PergamentDunkel, modifier = Modifier.padding(vertical = 8.dp))
-                            Text("Reaktionen:", fontWeight = FontWeight.Bold, color = Waldgruen, fontFamily = Almendra, fontSize = 16.sp)
-                            reaktionen.forEach { reaktion ->
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text("${reaktion.name}:", fontWeight = FontWeight.Bold, color = TintenSchwarz, fontSize = 14.sp)
-                                if (reaktion.ausloeser != null) Text("Auslöser: ${reaktion.ausloeser}", fontSize = 13.sp, color = TintenBraun)
-                                if (reaktion.antwort != null) Text("Antwort: ${reaktion.antwort}", fontSize = 13.sp, color = TintenBraun)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (showCompanionSelectionDialog) {
-        CompanionSelectionDialog(
-            viewModel = viewModel,
-            onDismiss = { showCompanionSelectionDialog = false }
-        )
-    }
-}}
