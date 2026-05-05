@@ -168,9 +168,9 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 > Umbenennung und Umstrukturierung des persönlichen Notizbuchs.
 
 ### 5.1 Notizbuch in Tagebuch umbenennen
-- [ ] In `BucherLibraryView.kt`: Eintrag „Notizbuch" → **„Tagebuch"**
-- [ ] `BucherBookDetailView.kt` (oder relevante Komponente): Titel und Strings anpassen
-- [ ] Interne Variablen/Klassen umbenennen: `bookEntries`, `BookEntry` → Beibehaltung oder Umbenennung nach `DiaryEntry`
+- [x] In `BucherLibraryView.kt`: Eintrag „Notizbuch" → **„Tagebuch"**
+- [x] `BucherBookDetailView.kt` (oder relevante Komponente): Titel und Strings anpassen
+- [x] Interne Variablen/Klassen umbenennen: `bookEntries`, `BookEntry` → Beibehaltung (Umbenennung in 5.2/5.3 sinnvoller)
 
 ### 5.2 Tagebuch-Layout nach Gruppen-Vorbild anpassen
 - [ ] Layout von `BucherGroupChatDetailView.kt` übernehmen (Listenansicht mit Einträgen, Tipp-FAB)

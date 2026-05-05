@@ -2176,7 +2176,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         {
           "lokale_antwort": "Deine Antwort NUR basierend auf den bereitgestellten Handbüchern/Stats. Wenn nichts gefunden, schreibe 'Keine spezifischen Informationen gefunden.'",
           "externe_antwort": "Deine Antwort basierend auf deinem allgemeinen Wissen über D&D 2024. Gehe auf die Klasse und das Volk des Charakters ein, falls relevant.",
-          "kapitel_link": "NUR der exakte Name eines HANDBUCH-Kapitels aus den '--- Quelle: ... ---' Markierungen (z.B. '3. Klassen', '7. Kampf'). Erlaubte Werte: '1. Gameplay', '2. Völker', '3. Klassen', '4. Herkünfte', '5. Talente', '6. Ausrüstung', '7. Kampf', '8. Zauber', 'Zauberbuch Übersicht'. WICHTIG: Wenn die Antwort aus dem CHARAKTERBLATT kommt (Stats, Begleiter/Capys, Inventar, Zauberplätze, Notizbuch etc.) und NICHT aus einem Handbuch-Kapitel, setze den Wert auf null!",
+          "kapitel_link": "NUR der exakte Name eines HANDBUCH-Kapitels aus den '--- Quelle: ... ---' Markierungen (z.B. '3. Klassen', '7. Kampf'). Erlaubte Werte: '1. Gameplay', '2. Völker', '3. Klassen', '4. Herkünfte', '5. Talente', '6. Ausrüstung', '7. Kampf', '8. Zauber', 'Zauberbuch Übersicht'. WICHTIG: Wenn die Antwort aus dem CHARAKTERBLATT kommt (Stats, Begleiter/Capys, Inventar, Zauberplätze, Tagebuch etc.) und NICHT aus einem Handbuch-Kapitel, setze den Wert auf null!",
           "suchbegriff": "Ein kurzes Stichwort (1-2 Worte) aus dem Kapitel, das exakt zu deiner Antwort passt, um im UI genau zu dieser Regel zu scrollen (z.B. 'Zaubertricks' oder 'Kampfstile'). Nur setzen wenn kapitel_link gesetzt ist.",
           "faq_titel": "Ein knackiges, kurzes Schlagwort (max 3 Worte), das diese Antwort zusammenfasst (z.B. 'Initiative', 'Paktmagie', 'Rüstungsklasse'), falls der User die Info ins FAQ aufnehmen will. IMMER setzen!"
         }
@@ -2446,7 +2446,7 @@ private val model25Flash = GenerativeModel(
             Vorrätig: $water L Wasser, $rations Rationen, $goodberries Beeren, $totalArrows Pfeile
             Geld: $coinsGM GM, $coinsSM SM
             Inventar: $inventoryStr
-            Notizbuch: $notes
+            Tagebuch: $notes
             Buch des Grolls: $grudges
         """.trimIndent()
 

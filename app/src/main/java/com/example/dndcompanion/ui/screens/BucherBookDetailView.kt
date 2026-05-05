@@ -52,7 +52,7 @@ fun BookDetailView(bookType: BookType, viewModel: CharacterViewModel, groupVm: G
                     Icon(Icons.Default.ArrowBack, contentDescription = "Zurück", tint = PergamentHell)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Notizbuch", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = PergamentHell)
+                Text("Tagebuch", fontSize = 24.sp, fontFamily = Almendra, fontWeight = FontWeight.Bold, color = PergamentHell)
             }
 
             TabRow(

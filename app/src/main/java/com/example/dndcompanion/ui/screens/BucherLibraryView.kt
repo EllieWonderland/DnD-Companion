@@ -45,8 +45,8 @@ fun LibraryView(viewModel: CharacterViewModel, onBookSelected: (BookType) -> Uni
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 BookCard(
-                    title = "Notizbuch",
-                    subtitle = "Notizen, Groll & Quests",
+                    title = "Tagebuch",
+                    subtitle = "Persönliche Notizen & Groll",
                     imageRes = R.drawable.notizbuch,
                     onClick = { onBookSelected(BookType.GENERAL) }
                 )
