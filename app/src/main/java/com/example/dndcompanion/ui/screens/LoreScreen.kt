@@ -1,31 +1,55 @@
 package com.example.dndcompanion.ui.screens
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import coil.compose.AsyncImage
 import com.example.dndcompanion.ui.theme.*
+import com.example.dndcompanion.ui.viewmodel.LoreMap
 import com.example.dndcompanion.ui.viewmodel.LoreQuest
 import com.example.dndcompanion.ui.viewmodel.LoreQuestStatus
 import com.example.dndcompanion.ui.viewmodel.LoreViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
+import java.io.File
 
 private val loreTabs = listOf("Quests", "Karten", "Hausregeln", "Geschichten")
 
@@ -71,7 +95,7 @@ fun LoreScreen(loreVm: LoreViewModel) {
             ) { page ->
                 when (page) {
                     0 -> LoreQuestsTab(loreVm)
-                    1 -> LoreMapsTab()
+                    1 -> LoreMapsTab(loreVm)
                     2 -> LoreHouserulesTab()
                     3 -> LoreStoriesTab()
                 }
@@ -79,6 +103,8 @@ fun LoreScreen(loreVm: LoreViewModel) {
         }
     }
 }
+
+// ─── Quests Tab ─────────────────────────────────────────────────────────────
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -385,10 +411,444 @@ private fun LoreStatusChip(selected: Boolean, label: String, onClick: () -> Unit
     }
 }
 
+// ─── Maps Tab ────────────────────────────────────────────────────────────────
+
 @Composable
-fun LoreMapsTab() {
-    LorePlaceholder("Karten", "Gruppen-Karten – kommt in Task 4.3")
+fun LoreMapsTab(loreVm: LoreViewModel) {
+    val context = LocalContext.current
+    val currentUid = remember { FirebaseAuth.getInstance().currentUser?.uid ?: "" }
+
+    var showAddDialog by remember { mutableStateOf(false) }
+    var selectedMap by remember { mutableStateOf<LoreMap?>(null) }
+
+    var pendingTitle by remember { mutableStateOf("") }
+    var pendingDesc by remember { mutableStateOf("") }
+    var pendingUri by remember { mutableStateOf<Uri?>(null) }
+    var tempCameraUri by remember { mutableStateOf<Uri?>(null) }
+
+    val galleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+        uri?.let {
+            pendingUri = it
+            showAddDialog = true
+        }
+    }
+
+    val cameraLauncher = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success && tempCameraUri != null) {
+            pendingUri = tempCameraUri
+            showAddDialog = true
+        }
+    }
+
+    val cameraPermLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) {
+            val file = File(context.cacheDir, "map_${System.currentTimeMillis()}.jpg")
+            val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+            tempCameraUri = uri
+            cameraLauncher.launch(uri)
+        }
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (loreVm.loreMaps.isEmpty() && !loreVm.isUploading) {
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Noch keine Karten vorhanden",
+                    fontFamily = Almendra,
+                    fontSize = 16.sp,
+                    color = TintenSchwarz.copy(alpha = 0.5f)
+                )
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    text = "Füge eine Karte über das + hinzu",
+                    fontSize = 13.sp,
+                    color = TintenSchwarz.copy(alpha = 0.35f)
+                )
+            }
+        } else {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(8.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(loreVm.loreMaps, key = { it.id }) { map ->
+                    LoreMapCard(
+                        map = map,
+                        currentUid = currentUid,
+                        onClick = { selectedMap = map },
+                        onDelete = { loreVm.deleteLoreMap(map) }
+                    )
+                }
+            }
+        }
+
+        if (loreVm.isUploading) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 80.dp)
+                    .background(WaldgruenDunkel.copy(alpha = 0.9f), RoundedCornerShape(24.dp))
+                    .padding(horizontal = 20.dp, vertical = 10.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(18.dp),
+                        color = PergamentHell,
+                        strokeWidth = 2.dp
+                    )
+                    Text("Karte wird hochgeladen...", color = PergamentHell, fontFamily = Almendra, fontSize = 13.sp)
+                }
+            }
+        }
+
+        FloatingActionButton(
+            onClick = { if (!loreVm.isUploading) showAddDialog = true },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp),
+            containerColor = WaldgruenDunkel,
+            contentColor = PergamentHell,
+            shape = CircleShape
+        ) {
+            Icon(Icons.Default.Add, contentDescription = "Karte hinzufügen")
+        }
+    }
+
+    if (showAddDialog) {
+        AddMapDialog(
+            title = pendingTitle,
+            onTitleChange = { pendingTitle = it },
+            desc = pendingDesc,
+            onDescChange = { pendingDesc = it },
+            selectedUri = pendingUri,
+            isUploading = loreVm.isUploading,
+            onGalleryClick = {
+                showAddDialog = false
+                galleryLauncher.launch("image/*")
+            },
+            onCameraClick = {
+                showAddDialog = false
+                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                    val file = File(context.cacheDir, "map_${System.currentTimeMillis()}.jpg")
+                    val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+                    tempCameraUri = uri
+                    cameraLauncher.launch(uri)
+                } else {
+                    cameraPermLauncher.launch(Manifest.permission.CAMERA)
+                }
+            },
+            onDismiss = {
+                showAddDialog = false
+                pendingTitle = ""
+                pendingDesc = ""
+                pendingUri = null
+            },
+            onUpload = {
+                val uri = pendingUri
+                if (uri != null && pendingTitle.isNotBlank()) {
+                    loreVm.uploadMap(uri, pendingTitle, pendingDesc)
+                    pendingTitle = ""
+                    pendingDesc = ""
+                    pendingUri = null
+                    showAddDialog = false
+                }
+            }
+        )
+    }
+
+    selectedMap?.let { map ->
+        LoreMapFullscreenDialog(map = map, onDismiss = { selectedMap = null })
+    }
 }
+
+@Composable
+private fun LoreMapCard(
+    map: LoreMap,
+    currentUid: String,
+    onClick: () -> Unit,
+    onDelete: () -> Unit
+) {
+    val isOwner = map.uploadedBy == currentUid
+
+    PergamentCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
+    ) {
+        Box {
+            AsyncImage(
+                model = map.url,
+                contentDescription = map.title,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(4f / 3f),
+                contentScale = ContentScale.Crop
+            )
+            // Title overlay
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .fillMaxWidth()
+                    .background(Color.Black.copy(alpha = 0.45f))
+                    .padding(horizontal = 8.dp, vertical = 5.dp)
+            ) {
+                Text(
+                    text = map.title,
+                    color = Color.White,
+                    fontFamily = Almendra,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(end = if (isOwner) 28.dp else 0.dp)
+                )
+            }
+            if (isOwner) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .size(32.dp)
+                        .background(Color.Black.copy(alpha = 0.4f))
+                        .clickable { onDelete() },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Default.Clear,
+                        contentDescription = "Löschen",
+                        tint = Color.White.copy(alpha = 0.9f),
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun AddMapDialog(
+    title: String,
+    onTitleChange: (String) -> Unit,
+    desc: String,
+    onDescChange: (String) -> Unit,
+    selectedUri: Uri?,
+    isUploading: Boolean,
+    onGalleryClick: () -> Unit,
+    onCameraClick: () -> Unit,
+    onDismiss: () -> Unit,
+    onUpload: () -> Unit
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        PergamentCard(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    "Karte hinzufügen",
+                    fontFamily = Almendra,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TintenSchwarz
+                )
+                Spacer(Modifier.height(12.dp))
+
+                // Image preview or picker buttons
+                if (selectedUri != null) {
+                    AsyncImage(
+                        model = selectedUri,
+                        contentDescription = "Vorschau",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(160.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        OutlinedButton(
+                            onClick = onGalleryClick,
+                            modifier = Modifier.weight(1f),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = WaldgruenDunkel)
+                        ) {
+                            Text("Galerie", fontFamily = Almendra, fontSize = 13.sp)
+                        }
+                        OutlinedButton(
+                            onClick = onCameraClick,
+                            modifier = Modifier.weight(1f),
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = WaldgruenDunkel)
+                        ) {
+                            Text("Kamera", fontFamily = Almendra, fontSize = 13.sp)
+                        }
+                    }
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(120.dp)
+                            .background(TintenSchwarz.copy(alpha = 0.06f), RoundedCornerShape(8.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                            Text("Bild auswählen", color = TintenSchwarz.copy(alpha = 0.5f), fontFamily = Almendra)
+                            Spacer(Modifier.height(10.dp))
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                Button(
+                                    onClick = onGalleryClick,
+                                    colors = ButtonDefaults.buttonColors(containerColor = WaldgruenDunkel),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
+                                    Text("Galerie", fontFamily = Almendra, fontSize = 13.sp, color = PergamentHell)
+                                }
+                                Button(
+                                    onClick = onCameraClick,
+                                    colors = ButtonDefaults.buttonColors(containerColor = WaldgruenDunkel),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
+                                    Text("Kamera", fontFamily = Almendra, fontSize = 13.sp, color = PergamentHell)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                Spacer(Modifier.height(10.dp))
+                OutlinedTextField(
+                    value = title,
+                    onValueChange = onTitleChange,
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Titel *", color = TintenSchwarz.copy(alpha = 0.7f)) },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Waldgruen,
+                        unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f)
+                    ),
+                    textStyle = TextStyle(color = TintenSchwarz, fontWeight = FontWeight.Bold),
+                    singleLine = true
+                )
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = desc,
+                    onValueChange = onDescChange,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(70.dp),
+                    label = { Text("Beschreibung (optional)", color = TintenSchwarz.copy(alpha = 0.7f)) },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Waldgruen,
+                        unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f)
+                    ),
+                    textStyle = TextStyle(color = TintenSchwarz)
+                )
+                Spacer(Modifier.height(14.dp))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    TextButton(onClick = onDismiss) {
+                        Text("Abbrechen", fontFamily = Almendra, color = TintenBraun)
+                    }
+                    Spacer(Modifier.width(8.dp))
+                    Button(
+                        onClick = onUpload,
+                        enabled = selectedUri != null && title.isNotBlank() && !isUploading,
+                        colors = ButtonDefaults.buttonColors(containerColor = WaldgruenDunkel),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        if (isUploading) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(16.dp),
+                                color = PergamentHell,
+                                strokeWidth = 2.dp
+                            )
+                        } else {
+                            Text("Hochladen", fontFamily = Almendra, color = PergamentHell)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun LoreMapFullscreenDialog(map: LoreMap, onDismiss: () -> Unit) {
+    var scale by remember { mutableStateOf(1f) }
+
+    Dialog(
+        onDismissRequest = onDismiss,
+        properties = DialogProperties(usePlatformDefaultWidth = false)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black)
+        ) {
+            AsyncImage(
+                model = map.url,
+                contentDescription = map.title,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .pointerInput(Unit) {
+                        detectTransformGestures { _, _, zoom, _ ->
+                            scale = (scale * zoom).coerceIn(1f, 5f)
+                        }
+                    }
+                    .scale(scale),
+                contentScale = ContentScale.Fit
+            )
+
+            // Title/description overlay
+            if (map.title.isNotBlank()) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .fillMaxWidth()
+                        .background(Color.Black.copy(alpha = 0.55f))
+                        .padding(horizontal = 16.dp, vertical = 12.dp)
+                ) {
+                    Column {
+                        Text(
+                            text = map.title,
+                            color = Color.White,
+                            fontFamily = Almendra,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        if (map.description.isNotBlank()) {
+                            Spacer(Modifier.height(4.dp))
+                            Text(
+                                text = map.description,
+                                color = Color.White.copy(alpha = 0.8f),
+                                fontSize = 13.sp,
+                                lineHeight = 18.sp
+                            )
+                        }
+                    }
+                }
+            }
+
+            // Close button
+            IconButton(
+                onClick = onDismiss,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(8.dp)
+                    .background(Color.Black.copy(alpha = 0.4f), CircleShape)
+            ) {
+                Icon(
+                    Icons.Default.Clear,
+                    contentDescription = "Schließen",
+                    tint = Color.White
+                )
+            }
+        }
+    }
+}
+
+// ─── Placeholder Tabs ────────────────────────────────────────────────────────
 
 @Composable
 fun LoreHouserulesTab() {

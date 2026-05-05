@@ -79,6 +79,15 @@ data class LoreQuest(
     @get:PropertyName("timestamp") @set:PropertyName("timestamp") var timestamp: Long = System.currentTimeMillis()
 )
 
+data class LoreMap(
+    @get:PropertyName("id") @set:PropertyName("id") var id: String = java.util.UUID.randomUUID().toString(),
+    @get:PropertyName("url") @set:PropertyName("url") var url: String = "",
+    @get:PropertyName("title") @set:PropertyName("title") var title: String = "",
+    @get:PropertyName("description") @set:PropertyName("description") var description: String = "",
+    @get:PropertyName("uploadedBy") @set:PropertyName("uploadedBy") var uploadedBy: String = "",
+    @get:PropertyName("timestamp") @set:PropertyName("timestamp") var timestamp: Long = System.currentTimeMillis()
+)
+
 data class GroupLootItem(
     @get:PropertyName("id") @set:PropertyName("id") var id: String = java.util.UUID.randomUUID().toString(),
     @get:PropertyName("name") @set:PropertyName("name") var name: String = "",

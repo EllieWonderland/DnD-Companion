@@ -136,14 +136,14 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Separate `LoreViewModel.kt` mit `loreQuests`-Flow erstellt
 
 ### 4.3 Sub-Tab: Karten
-- [ ] `LoreMapsTab.kt` erstellen
-- [ ] Foto aufnehmen (Kamera-Intent) oder aus Galerie wählen
-- [ ] Foto in Firebase Storage hochladen (`lore/maps/{uid}/{timestamp}`)
-- [ ] Firestore-Collection `lore/maps`: `{url, title, description, uploadedBy, timestamp}`
-- [ ] Karten-Grid-Ansicht mit Bildvorschau
-- [ ] Karte antippen → Vollbild-Ansicht mit Zoom (Pinch-to-Zoom)
-- [ ] Karte löschen (nur eigene oder DM)
-- [ ] `CameraPermission` und `GalleryPermission` korrekt anfragen
+- [x] `LoreMapsTab` in `LoreScreen.kt` implementiert (kein separates File nötig)
+- [x] Foto aufnehmen (Kamera-Intent) oder aus Galerie wählen
+- [x] Foto in Firebase Storage hochladen (`lore/maps/{uid}/{timestamp}`)
+- [x] Firestore-Collection `loreMaps`: `{id, url, title, description, uploadedBy, timestamp}`
+- [x] Karten-Grid-Ansicht (2 Spalten) mit Bildvorschau via Coil AsyncImage
+- [x] Karte antippen → Vollbild-Ansicht mit Pinch-to-Zoom (`detectTransformGestures`)
+- [x] Karte löschen (nur eigene: uploadedBy == currentUid)
+- [x] CAMERA-Permission und Gallery via `ActivityResultContracts` korrekt angefragt; FileProvider für Kamera-URI konfiguriert
 
 ### 4.4 Sub-Tab: Houserules
 - [ ] `LoreHouserulesTab.kt` erstellen
