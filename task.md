@@ -128,12 +128,12 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Firebase Security Rules: alle `lore/*`-Collections für eingeloggte User lese-/schreibbar
 
 ### 4.2 Sub-Tab: Quests
-- [ ] Layout von `BucherQuestlogDetailView.kt` übernehmen
-- [ ] Firestore-Collection `lore/quests` (kann bestehende `quests`-Collection umziehen oder aliasieren)
-- [ ] Quest erstellen: Titel, Beschreibung, Status (Offen / In Bearbeitung / Abgeschlossen), Ort
-- [ ] Quest editieren und löschen
-- [ ] Filter nach Status
-- [ ] `GroupViewModel.kt` um `loreQuests`-Flow erweitern (oder separate `LoreViewModel.kt`)
+- [x] Layout von `BucherQuestlogDetailView.kt` übernehmen
+- [x] Firestore-Collection `loreQuests` (top-level, Regeln in firestore.rules ergänzt)
+- [x] Quest erstellen: Titel, Beschreibung, Status (Offen / In Bearbeitung / Abgeschlossen), Ort
+- [x] Quest editieren und löschen
+- [x] Filter nach Status
+- [x] Separate `LoreViewModel.kt` mit `loreQuests`-Flow erstellt
 
 ### 4.3 Sub-Tab: Karten
 - [ ] `LoreMapsTab.kt` erstellen

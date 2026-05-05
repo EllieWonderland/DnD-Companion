@@ -64,6 +64,21 @@ data class Quest(
     @get:PropertyName("timestamp") @set:PropertyName("timestamp") var timestamp: Long = System.currentTimeMillis()
 )
 
+enum class LoreQuestStatus(val label: String) {
+    OFFEN("Offen"),
+    IN_BEARBEITUNG("In Bearbeitung"),
+    ABGESCHLOSSEN("Abgeschlossen")
+}
+
+data class LoreQuest(
+    @get:PropertyName("id") @set:PropertyName("id") var id: String = java.util.UUID.randomUUID().toString(),
+    @get:PropertyName("title") @set:PropertyName("title") var title: String = "",
+    @get:PropertyName("description") @set:PropertyName("description") var description: String = "",
+    @get:PropertyName("status") @set:PropertyName("status") var status: String = LoreQuestStatus.OFFEN.name,
+    @get:PropertyName("location") @set:PropertyName("location") var location: String = "",
+    @get:PropertyName("timestamp") @set:PropertyName("timestamp") var timestamp: Long = System.currentTimeMillis()
+)
+
 data class GroupLootItem(
     @get:PropertyName("id") @set:PropertyName("id") var id: String = java.util.UUID.randomUUID().toString(),
     @get:PropertyName("name") @set:PropertyName("name") var name: String = "",

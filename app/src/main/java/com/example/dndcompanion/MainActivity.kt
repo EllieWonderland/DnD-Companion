@@ -26,6 +26,7 @@ import com.example.dndcompanion.ui.viewmodel.SpellViewModel
 import com.example.dndcompanion.ui.viewmodel.SpellViewModelFactory
 import com.example.dndcompanion.ui.viewmodel.CombatViewModel
 import com.example.dndcompanion.ui.viewmodel.CombatViewModelFactory
+import com.example.dndcompanion.ui.viewmodel.LoreViewModel
 import com.example.dndcompanion.ui.screens.HelpScreen
 import com.example.dndcompanion.ui.screens.BucherScreen
 import com.example.dndcompanion.ui.screens.CharacterScreen
@@ -113,6 +114,7 @@ fun DnDApp(
     inventoryViewModel: InventoryViewModel,
     onLogout: () -> Unit = {}
 ) {
+    val loreViewModel: LoreViewModel = androidx.lifecycle.viewmodel.compose.viewModel()
     // 0 = Charakter, 1 = Chat, 2 = Bibliothek, 3 = Lore
     var currentScreen by rememberSaveable { mutableStateOf(0) }
     var previousScreen by rememberSaveable { mutableStateOf(0) }
@@ -246,7 +248,7 @@ fun DnDApp(
                     currentScreen = 2
                 })
                 2 -> BucherScreen(viewModel, spellViewModel, groupViewModel)
-                3 -> LoreScreen()
+                3 -> LoreScreen(loreVm = loreViewModel)
             }
         }
 
