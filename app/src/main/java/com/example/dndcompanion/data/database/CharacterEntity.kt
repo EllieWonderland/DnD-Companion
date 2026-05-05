@@ -14,7 +14,7 @@ import com.google.gson.reflect.TypeToken
 data class CharacterEntity(
     @PrimaryKey val id: String,
     val name: String,
-    val charClass: String,
+    val charClassesJson: String,
     val race: String,
     val background: String,
     val alignment: String,
@@ -47,7 +47,7 @@ data class CharacterEntity(
 fun CharacterEntity.toCharacterData(gson: Gson): CharacterData = CharacterData(
     id = id,
     name = name,
-    charClass = CharacterClass.valueOf(charClass),
+    charClasses = gson.fromJson(charClassesJson, object : TypeToken<List<CharacterClass>>() {}.type),
     race = race,
     background = background,
     alignment = alignment,
@@ -80,7 +80,7 @@ fun CharacterEntity.toCharacterData(gson: Gson): CharacterData = CharacterData(
 fun CharacterData.toEntity(gson: Gson): CharacterEntity = CharacterEntity(
     id = id,
     name = name,
-    charClass = charClass.name,
+    charClassesJson = gson.toJson(charClasses ?: listOf(CharacterClass.RANGER)),
     race = race,
     background = background,
     alignment = alignment,
@@ -114,7 +114,7 @@ fun CharacterData.toEntity(gson: Gson): CharacterEntity = CharacterEntity(
 fun CharacterDto.toEntity(gson: Gson): CharacterEntity = CharacterEntity(
     id = id,
     name = name,
-    charClass = charClass,
+    charClassesJson = if (!charClasses.isNullOrEmpty()) gson.toJson(charClasses) else gson.toJson(listOf(charClass)),
     race = race,
     background = background,
     alignment = alignment,

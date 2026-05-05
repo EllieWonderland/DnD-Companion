@@ -26,7 +26,8 @@ import kotlin.coroutines.resumeWithException
 data class CharacterDto(
     val id: String,
     val name: String,
-    val charClass: String,
+    val charClass: String = "RANGER",
+    val charClasses: List<String>? = null,
     val race: String,
     val background: String,
     val alignment: String,
@@ -58,7 +59,10 @@ data class CharacterDto(
     fun toCharacterData() = CharacterData(
         id = id,
         name = name,
-        charClass = CharacterClass.valueOf(charClass),
+        charClasses = if (!charClasses.isNullOrEmpty())
+            charClasses.map { CharacterClass.valueOf(it) }
+        else
+            listOf(CharacterClass.valueOf(charClass)),
         race = race,
         background = background,
         alignment = alignment,

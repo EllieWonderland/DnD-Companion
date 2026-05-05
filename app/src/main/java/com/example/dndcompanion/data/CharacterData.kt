@@ -11,7 +11,7 @@ enum class CharacterClass {
 data class CharacterData(
     val id: String,
     val name: String,
-    val charClass: CharacterClass,
+    val charClasses: List<CharacterClass>? = null,
     val race: String,
     val background: String,
     val alignment: String,
@@ -40,7 +40,9 @@ data class CharacterData(
     val expertiseSkills: List<String>,
     val defaultLoot: List<InventoryItem>,
     val defaultTraits: List<TraitItem>
-)
+) {
+    val charClass: CharacterClass get() = charClasses?.firstOrNull() ?: CharacterClass.RANGER
+}
 
 // Character definitions live in assets/Rules/characters.json.
 // Load them via CharacterRepository — see CharacterRepository.kt.

@@ -110,11 +110,11 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Alle Inventar-States in Firestore speichern — `saveInventoryToFirestore()`/`loadInventoryFromFirestore()` unter `users/{uid}/inventory/main`
 
 ### 3.7 Multiklassen-Support
-- [ ] `CharacterData.charClass: CharacterClass` → `charClasses: List<CharacterClass>` (primäre Klasse + optionale Multiklasse)
-- [ ] Room-Entity + Firestore-Serialisierung anpassen (kein Schema-Bruch durch Gson-Default `[]`)
-- [ ] Setup-Wizard Schritt 1: zweite Klasse optional wählbar
-- [ ] `CharacterScreen.kt` + Bottom-Nav: Portrait anhand primärer Klasse bestimmen (bis Portrait-Upload via Task 3.3 fertig)
-- [ ] Alle Verwendungen von `charClass` (Theme-Check, Zauberfilter, Legacy-Sync) auf `charClasses.first()` oder primäre Klasse migrieren
+- [x] `CharacterData.charClass: CharacterClass` → `charClasses: List<CharacterClass>` (primäre Klasse + optionale Multiklasse)
+- [x] Room-Entity + Firestore-Serialisierung anpassen (kein Schema-Bruch durch Gson-Default `[]`)
+- [x] Setup-Wizard Schritt 1: zweite Klasse optional wählbar
+- [x] `CharacterScreen.kt` + Bottom-Nav: Portrait anhand primärer Klasse bestimmen (bis Portrait-Upload via Task 3.3 fertig)
+- [x] Alle Verwendungen von `charClass` (Theme-Check, Zauberfilter, Legacy-Sync) auf `charClasses.first()` oder primäre Klasse migrieren
 
 ---
 

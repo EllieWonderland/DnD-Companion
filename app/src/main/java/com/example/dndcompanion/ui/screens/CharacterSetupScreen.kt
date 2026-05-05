@@ -78,6 +78,7 @@ fun CharacterSetupScreen(
     var name by remember { mutableStateOf("") }
     var race by remember { mutableStateOf("") }
     var selectedClass by remember { mutableStateOf(CharacterClass.RANGER) }
+    var selectedSecondClass by remember { mutableStateOf<CharacterClass?>(null) }
     var subclass by remember { mutableStateOf("") }
     var level by remember { mutableIntStateOf(3) }
 
@@ -149,10 +150,17 @@ fun CharacterSetupScreen(
                 when (step) {
                     0 -> StepIdentity(
                         name = name, race = race,
-                        selectedClass = selectedClass, subclass = subclass,
+                        selectedClass = selectedClass,
+                        selectedSecondClass = selectedSecondClass,
+                        subclass = subclass,
                         level = level,
                         onNameChange = { name = it }, onRaceChange = { race = it },
-                        onClassChange = { selectedClass = it }, onSubclassChange = { subclass = it },
+                        onClassChange = {
+                            selectedClass = it
+                            if (selectedSecondClass == it) selectedSecondClass = null
+                        },
+                        onSecondClassChange = { selectedSecondClass = it },
+                        onSubclassChange = { subclass = it },
                         onLevelChange = { level = it }
                     )
                     1 -> StepAttributes(
@@ -232,7 +240,8 @@ fun CharacterSetupScreen(
                             val ac = acInput.toIntOrNull() ?: 10
                             viewModel.saveCharacterFromSetup(
                                 uid = uid, name = name.trim(),
-                                race = race.trim(), charClass = selectedClass,
+                                race = race.trim(),
+                                charClasses = listOfNotNull(selectedClass, selectedSecondClass),
                                 subclass = subclass.trim(),
                                 str = str, dex = dex, con = con, int = int, wis = wis, cha = cha,
                                 maxHpVal = maxHp, hitDiceVal = hitDiceVal,
@@ -255,10 +264,15 @@ fun CharacterSetupScreen(
 
 @Composable
 private fun StepIdentity(
-    name: String, race: String, selectedClass: CharacterClass, subclass: String,
+    name: String, race: String,
+    selectedClass: CharacterClass,
+    selectedSecondClass: CharacterClass?,
+    subclass: String,
     level: Int,
     onNameChange: (String) -> Unit, onRaceChange: (String) -> Unit,
-    onClassChange: (CharacterClass) -> Unit, onSubclassChange: (String) -> Unit,
+    onClassChange: (CharacterClass) -> Unit,
+    onSecondClassChange: (CharacterClass?) -> Unit,
+    onSubclassChange: (String) -> Unit,
     onLevelChange: (Int) -> Unit
 ) {
     Column(
@@ -270,7 +284,7 @@ private fun StepIdentity(
         SetupTextField("Name *", name, onNameChange, placeholder = "z.B. Lyraniel")
         SetupTextField("Rasse", race, onRaceChange, placeholder = "z.B. Halbelfe, Mensch …")
 
-        Text("Klasse", style = MaterialTheme.typography.labelLarge, color = TintenBraun, fontWeight = FontWeight.Bold)
+        Text("Primärklasse", style = MaterialTheme.typography.labelLarge, color = TintenBraun, fontWeight = FontWeight.Bold)
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             ClassCard(
                 label = "Waldläufer",
@@ -286,6 +300,30 @@ private fun StepIdentity(
                 modifier = Modifier.weight(1f),
                 onClick = { onClassChange(CharacterClass.WARLOCK) }
             )
+        }
+
+        Text("Multiklasse (optional)", style = MaterialTheme.typography.labelLarge, color = TintenBraun, fontWeight = FontWeight.Bold)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ClassCard(
+                label = "Keine",
+                sublabel = "—",
+                isSelected = selectedSecondClass == null,
+                modifier = Modifier.weight(1f),
+                onClick = { onSecondClassChange(null) }
+            )
+            CharacterClass.values().filter { it != selectedClass }.forEach { cls ->
+                val (label, sublabel) = when (cls) {
+                    CharacterClass.RANGER -> "Waldläufer" to "Ranger"
+                    CharacterClass.WARLOCK -> "Hexenmeister" to "Warlock"
+                }
+                ClassCard(
+                    label = label,
+                    sublabel = sublabel,
+                    isSelected = selectedSecondClass == cls,
+                    modifier = Modifier.weight(1f),
+                    onClick = { onSecondClassChange(cls) }
+                )
+            }
         }
 
         SetupTextField("Unterklasse / Archetype", subclass, onSubclassChange, placeholder = "z.B. Tierherr, Großer Alte …")

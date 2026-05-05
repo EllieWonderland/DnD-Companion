@@ -21,7 +21,7 @@ import kotlinx.coroutines.SupervisorJob
         CharacterEntity::class,
         GearEntity::class
     ],
-    version = 10,
+    version = 11,
     exportSchema = false
 )
 @TypeConverters(StringListConverter::class, CharacterOptionConverters::class)
