@@ -98,10 +98,10 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Combat-States in Firestore speichern: maxHp, currentHp, tempHp, hitDice, manualArmorClass, customCombatWeapons
 
 ### 3.5 Zauber-Tab editierbar machen
-- [ ] `ZauberScreen.kt`: Zauberliste nach Klasse filtern (aus IMPLEMENTATION_PLAN.md, Schritt 1)
-- [ ] Zauber frei hinzufügen/entfernen (auch homebrew Zauber als Freitext)
-- [ ] Zauberschlitze editierbar (max. Slots pro Stufe anpassbar)
-- [ ] Alle Zauber-States in Firestore speichern
+- [x] `ZauberScreen.kt`: Zauberliste nach Klasse filtern — `SpellCatalogDialog` filtert via `classFilterEnabled` nach Klasse
+- [x] Zauber frei hinzufügen/entfernen (auch homebrew Zauber als Freitext) — `HomebrewSpellDialog` in `ZauberDialogs.kt`; Entfernen via Löschen-Button in `SpellbookEditDialog`
+- [x] Zauberschlitze editierbar (max. Slots pro Stufe anpassbar) — `SpellViewModel.setMaxSlots()`; ±-UI in `SpellbookEditDialog`; Slot-Anzeige dynamisch
+- [x] Alle Zauber-States in Firestore speichern — `SpellViewModel.saveSpellsToFirestore()`/`loadSpellsFromFirestore()` unter `users/{uid}/spells/main`
 
 ### 3.6 Rucksack-Tab editierbar machen
 - [ ] `RucksackScreen.kt`: Münzen frei eintippbar (nicht nur per +/–)

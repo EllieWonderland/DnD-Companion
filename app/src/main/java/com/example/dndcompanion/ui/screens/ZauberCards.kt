@@ -188,16 +188,20 @@ fun ExpandableFreeSpellCard(
     currentUses: Int,
     maxUses: Int,
     accentColor: Color,
-    onCast: () -> Unit
+    onCast: () -> Unit,
+    lockedUntilLevel: Int = 0
 ) {
     var expanded by remember { mutableStateOf(false) }
+    val isLocked = lockedUntilLevel > 0
+    val textColor = if (isLocked) TintenSchwarz.copy(alpha = 0.4f) else TintenSchwarz
+    val subTextColor = if (isLocked) TintenBraun.copy(alpha = 0.4f) else TintenBraun
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .clickable { expanded = !expanded },
-        colors = CardDefaults.cardColors(containerColor = PergamentDunkel)
+            .clickable { if (!isLocked) expanded = !expanded },
+        colors = CardDefaults.cardColors(containerColor = if (isLocked) PergamentDunkel.copy(alpha = 0.5f) else PergamentDunkel)
     ) {
         Column(modifier = Modifier.padding(12.dp).fillMaxWidth()) {
             Row(
@@ -206,30 +210,35 @@ fun ExpandableFreeSpellCard(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(modifier = Modifier.weight(1f)) {
-                    Text(title, color = TintenSchwarz, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                    if (!expanded) {
-                        val subText = if (maxUses >= 999) "Beliebig oft" else ""
-                        Text(subText, color = TintenBraun, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                    Text(title, color = textColor, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    val subText = when {
+                        isLocked -> "Ab Level $lockedUntilLevel verfügbar"
+                        maxUses >= 999 -> "Beliebig oft"
+                        else -> ""
+                    }
+                    if (subText.isNotEmpty() || !expanded) {
+                        Text(subText, color = subTextColor, fontSize = 13.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     }
                 }
 
-                if (maxUses < 999) {
+                if (!isLocked && maxUses < 999) {
                     Text("$currentUses / $maxUses", color = TintenSchwarz, modifier = Modifier.padding(horizontal = 8.dp), fontWeight = FontWeight.Bold)
                 }
 
                 Button(
                     onClick = onCast,
-                    enabled = currentUses > 0,
+                    enabled = !isLocked && currentUses > 0,
                     contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
                     modifier = Modifier.height(48.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = accentColor,
-                        contentColor = MaterialTheme.colorScheme.onTertiary
+                        containerColor = if (isLocked) EisenGrau else accentColor,
+                        contentColor = MaterialTheme.colorScheme.onTertiary,
+                        disabledContainerColor = EisenGrau
                     )
-                ) { Text("Wirken", fontSize = 16.sp, fontFamily = Almendra) }
+                ) { Text(if (isLocked) "Gesperrt" else "Wirken", fontSize = 16.sp, fontFamily = Almendra) }
             }
 
-            if (expanded) {
+            if (expanded && !isLocked) {
                 Spacer(modifier = Modifier.height(8.dp))
                 HorizontalDivider(color = Bronze.copy(alpha = 0.5f))
                 Spacer(modifier = Modifier.height(8.dp))

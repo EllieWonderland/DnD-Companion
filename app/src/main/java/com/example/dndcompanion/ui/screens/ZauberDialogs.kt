@@ -11,27 +11,35 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.example.dndcompanion.ui.theme.*
 import com.example.dndcompanion.ui.viewmodel.CharacterViewModel
+import com.example.dndcompanion.ui.viewmodel.Spell
 import com.example.dndcompanion.ui.viewmodel.SpellViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SpellbookEditDialog(spellVm: SpellViewModel, charVm: CharacterViewModel, onDismiss: () -> Unit) {
     var showAddSpellDialog by remember { mutableStateOf(false) }
+    var showHomebrewDialog by remember { mutableStateOf(false) }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -61,6 +69,47 @@ fun SpellbookEditDialog(spellVm: SpellViewModel, charVm: CharacterViewModel, onD
                     color = TintenSchwarz,
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
+
+                // --- ZAUBERPLATZ-MAXIMA BEARBEITEN ---
+                val charClass = charVm.characterData.charClass
+                val showLevel1 = spellVm.maxSpellSlotsLevel1 > 0 || charVm.characterData.baseSpellSlotsLevel1 > 0
+                val showLevel2 = spellVm.maxSpellSlotsLevel2 > 0 || charVm.characterData.baseSpellSlotsLevel2 > 0
+                val showLevel3 = spellVm.maxSpellSlotsLevel3 > 0 || charVm.characterData.baseSpellSlotsLevel3 > 0
+
+                if (showLevel1 || showLevel2 || showLevel3) {
+                    Text("Zauberschlitze (Maximum)", fontSize = 13.sp, color = Waldgruen, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 4.dp))
+                    Row(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        listOf(1, 2, 3).forEach { lvl ->
+                            val currentMax = when (lvl) {
+                                1 -> spellVm.maxSpellSlotsLevel1
+                                2 -> spellVm.maxSpellSlotsLevel2
+                                else -> spellVm.maxSpellSlotsLevel3
+                            }
+                            val show = when (lvl) {
+                                1 -> showLevel1
+                                2 -> showLevel2
+                                else -> showLevel3
+                            }
+                            if (show) {
+                                Card(modifier = Modifier.weight(1f), colors = CardDefaults.cardColors(containerColor = PergamentDunkel)) {
+                                    Column(modifier = Modifier.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                                        Text("Grad $lvl", fontSize = 12.sp, color = TintenBraun, fontWeight = FontWeight.Bold)
+                                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                                            IconButton(onClick = { spellVm.setMaxSlots(lvl, currentMax - 1) }, modifier = Modifier.size(28.dp)) {
+                                                Icon(Icons.Default.Remove, contentDescription = "-", tint = TintenSchwarz, modifier = Modifier.size(16.dp))
+                                            }
+                                            Text("$currentMax", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.tertiary, modifier = Modifier.widthIn(min = 24.dp), textAlign = TextAlign.Center)
+                                            IconButton(onClick = { spellVm.setMaxSlots(lvl, currentMax + 1) }, modifier = Modifier.size(28.dp)) {
+                                                Icon(Icons.Default.Add, contentDescription = "+", tint = TintenSchwarz, modifier = Modifier.size(16.dp))
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    HorizontalDivider(color = Bronze.copy(alpha = 0.5f), modifier = Modifier.padding(bottom = 8.dp))
+                }
 
                 Box(modifier = Modifier.weight(1f).padding(bottom = 8.dp)) {
                     val scrollState = rememberScrollState()
@@ -105,12 +154,21 @@ fun SpellbookEditDialog(spellVm: SpellViewModel, charVm: CharacterViewModel, onD
                     color = PergamentHell,
                     shadowElevation = 8.dp
                 ) {
-                    Button(
-                        onClick = { showAddSpellDialog = true },
-                        colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = PergamentHell),
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)
-                    ) {
-                        Text("+ Zauber aus Kompendium hinzufügen", color = PergamentHell, fontSize = 16.sp, fontFamily = Almendra)
+                    Column(modifier = Modifier.padding(vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Button(
+                            onClick = { showAddSpellDialog = true },
+                            colors = ButtonDefaults.buttonColors(containerColor = Waldgruen, contentColor = PergamentHell),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("+ Aus Kompendium hinzufügen", color = PergamentHell, fontSize = 15.sp, fontFamily = Almendra)
+                        }
+                        OutlinedButton(
+                            onClick = { showHomebrewDialog = true },
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.tertiary),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("+ Eigenen Zauber erstellen", fontSize = 15.sp, fontFamily = Almendra)
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(32.dp))
@@ -122,9 +180,102 @@ fun SpellbookEditDialog(spellVm: SpellViewModel, charVm: CharacterViewModel, onD
                         onDismiss = { showAddSpellDialog = false }
                     )
                 }
+                if (showHomebrewDialog) {
+                    HomebrewSpellDialog(
+                        onDismiss = { showHomebrewDialog = false },
+                        onAdd = { spell ->
+                            spellVm.addNewSpell(spell)
+                            showHomebrewDialog = false
+                        }
+                    )
+                }
             }
         }
     }
+}
+
+@Composable
+fun HomebrewSpellDialog(onDismiss: () -> Unit, onAdd: (Spell) -> Unit) {
+    var name by remember { mutableStateOf("") }
+    var level by remember { mutableIntStateOf(1) }
+    var description by remember { mutableStateOf("") }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = PergamentHell,
+        title = {
+            Text("Eigenen Zauber erstellen", color = Waldgruen, fontFamily = Almendra, fontWeight = FontWeight.Bold)
+        },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedTextField(
+                    value = name,
+                    onValueChange = { name = it },
+                    label = { Text("Name") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.tertiary,
+                        focusedLabelColor = MaterialTheme.colorScheme.tertiary
+                    )
+                )
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("Stufe:", color = TintenSchwarz, fontWeight = FontWeight.Bold)
+                    IconButton(onClick = { level = (level - 1).coerceAtLeast(0) }, modifier = Modifier.size(32.dp)) {
+                        Icon(Icons.Default.Remove, contentDescription = "-", tint = TintenSchwarz)
+                    }
+                    Text(
+                        text = if (level == 0) "Trick" else "$level",
+                        color = MaterialTheme.colorScheme.tertiary,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.widthIn(min = 36.dp),
+                        textAlign = TextAlign.Center
+                    )
+                    IconButton(onClick = { level = (level + 1).coerceAtMost(9) }, modifier = Modifier.size(32.dp)) {
+                        Icon(Icons.Default.Add, contentDescription = "+", tint = TintenSchwarz)
+                    }
+                }
+                OutlinedTextField(
+                    value = description,
+                    onValueChange = { description = it },
+                    label = { Text("Beschreibung") },
+                    modifier = Modifier.fillMaxWidth().height(100.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = MaterialTheme.colorScheme.tertiary,
+                        focusedLabelColor = MaterialTheme.colorScheme.tertiary
+                    )
+                )
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    if (name.trim().isNotBlank()) {
+                        onAdd(
+                            Spell(
+                                name = name.trim(),
+                                level = level,
+                                castingTime = "1 Aktion",
+                                range = "Selbst",
+                                duration = "Sofort",
+                                description = description.trim(),
+                                isPrepared = true
+                            )
+                        )
+                    }
+                },
+                enabled = name.trim().isNotBlank(),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiary, contentColor = PergamentHell)
+            ) {
+                Text("Hinzufügen")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Abbrechen", color = Waldgruen, fontFamily = Almendra)
+            }
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

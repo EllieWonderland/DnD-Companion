@@ -13,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.dndcompanion.data.CharacterClass
 import com.example.dndcompanion.data.database.AppDatabase
 import com.example.dndcompanion.data.database.SpellEntity
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,10 +28,11 @@ class SpellViewModel(
     var inventoryVm: InventoryViewModel? = null // set later by MainActivity
 
     private val gson = Gson()
+    private val firestore = FirebaseFirestore.getInstance()
 
     private val prefs get() = characterVm.prefsManager.prefs
 
-    // --- ZAUBERPLÄTZE ---
+    // --- ZAUBERPLÄTZE (aktuell) ---
     var spellSlotsLevel1 by mutableIntStateOf(prefs.getInt("spellSlotsLevel1", characterVm.characterData.baseSpellSlotsLevel1))
         private set
     var spellSlotsLevel2 by mutableIntStateOf(prefs.getInt("spellSlotsLevel2", characterVm.characterData.baseSpellSlotsLevel2))
@@ -40,6 +42,14 @@ class SpellViewModel(
     var spellSlotsLevel4 by mutableIntStateOf(prefs.getInt("spellSlotsLevel4", 0))
         private set
     var spellSlotsLevel5 by mutableIntStateOf(prefs.getInt("spellSlotsLevel5", 0))
+        private set
+
+    // --- ZAUBERPLÄTZE (Maximum, editierbar) ---
+    var maxSpellSlotsLevel1 by mutableIntStateOf(prefs.getInt("maxSlotsOverride1", characterVm.characterData.baseSpellSlotsLevel1))
+        private set
+    var maxSpellSlotsLevel2 by mutableIntStateOf(prefs.getInt("maxSlotsOverride2", characterVm.characterData.baseSpellSlotsLevel2))
+        private set
+    var maxSpellSlotsLevel3 by mutableIntStateOf(prefs.getInt("maxSlotsOverride3", characterVm.characterData.baseSpellSlotsLevel3))
         private set
 
     // --- FREIE ZAUBER ---
@@ -87,6 +97,9 @@ class SpellViewModel(
         spellSlotsLevel3 = prefs.getInt("spellSlotsLevel3", characterVm.characterData.baseSpellSlotsLevel3)
         spellSlotsLevel4 = prefs.getInt("spellSlotsLevel4", 0)
         spellSlotsLevel5 = prefs.getInt("spellSlotsLevel5", 0)
+        maxSpellSlotsLevel1 = prefs.getInt("maxSlotsOverride1", characterVm.characterData.baseSpellSlotsLevel1)
+        maxSpellSlotsLevel2 = prefs.getInt("maxSlotsOverride2", characterVm.characterData.baseSpellSlotsLevel2)
+        maxSpellSlotsLevel3 = prefs.getInt("maxSlotsOverride3", characterVm.characterData.baseSpellSlotsLevel3)
         huntersMarkFreeUses = prefs.getInt("huntersMarkFreeUses", 2)
         freeAmuletSpellUsed = prefs.getBoolean("freeAmuletSpellUsed", false)
         freeFaerieFireUsed = prefs.getBoolean("freeFaerieFireUsed", false)
@@ -96,6 +109,7 @@ class SpellViewModel(
         freeBlessUsed = prefs.getBoolean("freeBlessUsed", false)
         freeMistyStepUsed = prefs.getBoolean("freeMistyStepUsed", false)
         loadSpells()
+        loadSpellsFromFirestore(id)
     }
 
     // --- ZAUBERPLATZ-FUNKTIONEN ---
@@ -103,6 +117,7 @@ class SpellViewModel(
         if (spellSlotsLevel1 > 0) {
             spellSlotsLevel1--
             prefs.edit { putInt("spellSlotsLevel1", spellSlotsLevel1) }
+            saveSpellsToFirestore()
         }
     }
 
@@ -110,6 +125,7 @@ class SpellViewModel(
         if (spellSlotsLevel2 > 0) {
             spellSlotsLevel2--
             prefs.edit { putInt("spellSlotsLevel2", spellSlotsLevel2) }
+            saveSpellsToFirestore()
         }
     }
 
@@ -117,6 +133,7 @@ class SpellViewModel(
         if (spellSlotsLevel3 > 0) {
             spellSlotsLevel3--
             prefs.edit { putInt("spellSlotsLevel3", spellSlotsLevel3) }
+            saveSpellsToFirestore()
         }
     }
 
@@ -136,9 +153,9 @@ class SpellViewModel(
 
     fun resetWarlockSlots() {
         val level = characterVm.level
-        spellSlotsLevel1 = characterVm.getMaxSpellSlots(level, 1)
-        spellSlotsLevel2 = characterVm.getMaxSpellSlots(level, 2)
-        spellSlotsLevel3 = characterVm.getMaxSpellSlots(level, 3)
+        spellSlotsLevel1 = maxSpellSlotsLevel1.takeIf { it > 0 } ?: characterVm.getMaxSpellSlots(level, 1)
+        spellSlotsLevel2 = maxSpellSlotsLevel2.takeIf { it > 0 } ?: characterVm.getMaxSpellSlots(level, 2)
+        spellSlotsLevel3 = maxSpellSlotsLevel3.takeIf { it > 0 } ?: characterVm.getMaxSpellSlots(level, 3)
         spellSlotsLevel4 = characterVm.getMaxSpellSlots(level, 4)
         spellSlotsLevel5 = characterVm.getMaxSpellSlots(level, 5)
         prefs.edit {
@@ -148,6 +165,17 @@ class SpellViewModel(
             putInt("spellSlotsLevel4", spellSlotsLevel4)
             putInt("spellSlotsLevel5", spellSlotsLevel5)
         }
+        saveSpellsToFirestore()
+    }
+
+    fun setMaxSlots(level: Int, value: Int) {
+        val clamped = value.coerceIn(0, 9)
+        when (level) {
+            1 -> { maxSpellSlotsLevel1 = clamped; prefs.edit { putInt("maxSlotsOverride1", clamped) } }
+            2 -> { maxSpellSlotsLevel2 = clamped; prefs.edit { putInt("maxSlotsOverride2", clamped) } }
+            3 -> { maxSpellSlotsLevel3 = clamped; prefs.edit { putInt("maxSlotsOverride3", clamped) } }
+        }
+        saveSpellsToFirestore()
     }
 
     fun applyMagicalCunning() {
@@ -267,9 +295,9 @@ class SpellViewModel(
     // --- RAST-RESET ---
     fun resetSlotsForLongRest() {
         val level = characterVm.level
-        spellSlotsLevel1 = characterVm.getMaxSpellSlots(level, 1)
-        spellSlotsLevel2 = characterVm.getMaxSpellSlots(level, 2)
-        spellSlotsLevel3 = characterVm.getMaxSpellSlots(level, 3)
+        spellSlotsLevel1 = if (maxSpellSlotsLevel1 > 0) maxSpellSlotsLevel1 else characterVm.getMaxSpellSlots(level, 1)
+        spellSlotsLevel2 = if (maxSpellSlotsLevel2 > 0) maxSpellSlotsLevel2 else characterVm.getMaxSpellSlots(level, 2)
+        spellSlotsLevel3 = if (maxSpellSlotsLevel3 > 0) maxSpellSlotsLevel3 else characterVm.getMaxSpellSlots(level, 3)
         spellSlotsLevel4 = characterVm.getMaxSpellSlots(level, 4)
         spellSlotsLevel5 = characterVm.getMaxSpellSlots(level, 5)
         huntersMarkFreeUses = 2
@@ -289,6 +317,7 @@ class SpellViewModel(
             putInt("spellSlotsLevel5", spellSlotsLevel5)
             putInt("huntersMarkFreeUses", huntersMarkFreeUses)
         }
+        saveSpellsToFirestore()
     }
 
     fun resetSlotsForShortRest() {
@@ -313,6 +342,71 @@ class SpellViewModel(
     fun saveSpells() {
         val json = gson.toJson(allSpells)
         prefs.edit { putString("savedSpells", json) }
+        saveSpellsToFirestore()
+    }
+
+    fun saveSpellsToFirestore() {
+        val uid = characterVm.activeCharacterId
+        if (uid == "Athania" || uid == "Delat") return
+        val spellsJson = gson.toJson(allSpells.toList())
+        val data = mapOf(
+            "spellsJson" to spellsJson,
+            "spellSlotsLevel1" to spellSlotsLevel1,
+            "spellSlotsLevel2" to spellSlotsLevel2,
+            "spellSlotsLevel3" to spellSlotsLevel3,
+            "maxSlotsOverride1" to maxSpellSlotsLevel1,
+            "maxSlotsOverride2" to maxSpellSlotsLevel2,
+            "maxSlotsOverride3" to maxSpellSlotsLevel3
+        )
+        firestore.collection("users").document(uid)
+            .collection("spells").document("main")
+            .set(data)
+            .addOnFailureListener { Log.e("SpellVM", "Firestore spell save failed", it) }
+    }
+
+    fun loadSpellsFromFirestore(uid: String) {
+        if (uid == "Athania" || uid == "Delat") return
+        viewModelScope.launch {
+            firestore.collection("users").document(uid)
+                .collection("spells").document("main")
+                .get()
+                .addOnSuccessListener { snapshot ->
+                    if (snapshot == null || !snapshot.exists()) return@addOnSuccessListener
+                    val spellsJson = snapshot.getString("spellsJson")
+                    if (!spellsJson.isNullOrEmpty()) {
+                        try {
+                            val type = object : TypeToken<List<Spell>>() {}.type
+                            val loaded: List<Spell> = gson.fromJson(spellsJson, type)
+                            allSpells.clear()
+                            allSpells.addAll(loaded.map {
+                                if (it.classes == null) it.copy(classes = emptyList()) else it
+                            })
+                            prefs.edit { putString("savedSpells", spellsJson) }
+                        } catch (e: Exception) {
+                            Log.e("SpellVM", "Failed to parse Firestore spells", e)
+                        }
+                    }
+                    snapshot.getLong("spellSlotsLevel1")?.toInt()?.let {
+                        spellSlotsLevel1 = it; prefs.edit { putInt("spellSlotsLevel1", it) }
+                    }
+                    snapshot.getLong("spellSlotsLevel2")?.toInt()?.let {
+                        spellSlotsLevel2 = it; prefs.edit { putInt("spellSlotsLevel2", it) }
+                    }
+                    snapshot.getLong("spellSlotsLevel3")?.toInt()?.let {
+                        spellSlotsLevel3 = it; prefs.edit { putInt("spellSlotsLevel3", it) }
+                    }
+                    snapshot.getLong("maxSlotsOverride1")?.toInt()?.let {
+                        maxSpellSlotsLevel1 = it; prefs.edit { putInt("maxSlotsOverride1", it) }
+                    }
+                    snapshot.getLong("maxSlotsOverride2")?.toInt()?.let {
+                        maxSpellSlotsLevel2 = it; prefs.edit { putInt("maxSlotsOverride2", it) }
+                    }
+                    snapshot.getLong("maxSlotsOverride3")?.toInt()?.let {
+                        maxSpellSlotsLevel3 = it; prefs.edit { putInt("maxSlotsOverride3", it) }
+                    }
+                }
+                .addOnFailureListener { Log.e("SpellVM", "Firestore spell load failed", it) }
+        }
     }
 
     private fun loadSpells() {

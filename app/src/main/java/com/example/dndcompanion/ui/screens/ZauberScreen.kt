@@ -127,6 +127,7 @@ fun ZauberScreen(
                     freeFeatures.forEach { trait ->
                         val matchingSpell = globalSpellbook.find { it.name.equals(trait.grantedSpellId, ignoreCase = true) }
                         val fullDescription = if (matchingSpell != null) "${trait.desc}\n\n${matchingSpell.description}" else trait.desc
+                        val lockedLevel = if (trait.minLevel > 0 && viewModel.level < trait.minLevel) trait.minLevel else 0
 
                         ExpandableFreeSpellCard(
                             title = trait.grantedSpellId ?: trait.name,
@@ -134,7 +135,8 @@ fun ZauberScreen(
                             currentUses = trait.currentUses,
                             maxUses = trait.maxUses,
                             accentColor = accentColor,
-                            onCast = { viewModel.useTraitSpell(trait) }
+                            onCast = { viewModel.useTraitSpell(trait) },
+                            lockedUntilLevel = lockedLevel
                         )
                     }
 
@@ -189,7 +191,7 @@ fun ZauberScreen(
                             Text(flavorText, color = PergamentHell, fontSize = 14.sp)
                         }
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text("${spellVm.spellSlotsLevel1} / 3", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                            Text("${spellVm.spellSlotsLevel1} / ${spellVm.maxSpellSlotsLevel1}", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                             Button(
                                 onClick = { spellVm.useSpellSlotLevel1() },
                                 enabled = spellVm.spellSlotsLevel1 > 0,
@@ -224,7 +226,8 @@ fun ZauberScreen(
 
                     // --- KOSTENLOSE GRAD-1-ZAUBER (Talente) im Slot-Feld ---
                     val level1FreeTraits = freeFeatures.filter { trait ->
-                        globalSpellbook.find { it.name.equals(trait.grantedSpellId, ignoreCase = true) }?.level == 1
+                        val isUnlocked = trait.minLevel == 0 || viewModel.level >= trait.minLevel
+                        isUnlocked && globalSpellbook.find { it.name.equals(trait.grantedSpellId, ignoreCase = true) }?.level == 1
                     }
                     level1FreeTraits.forEach { trait ->
                         HorizontalDivider(color = PergamentHell)
@@ -273,7 +276,7 @@ fun ZauberScreen(
                                 Text(flavorText, color = PergamentHell, fontSize = 14.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("${spellVm.spellSlotsLevel2} / 2", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                                Text("${spellVm.spellSlotsLevel2} / ${spellVm.maxSpellSlotsLevel2}", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                                 Button(
                                     onClick = { spellVm.useSpellSlotLevel2() },
                                     enabled = spellVm.spellSlotsLevel2 > 0,
@@ -310,7 +313,7 @@ fun ZauberScreen(
                                 Text(flavorText, color = PergamentHell, fontSize = 14.sp)
                             }
                             Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text("${spellVm.spellSlotsLevel3} / 2", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
+                                Text("${spellVm.spellSlotsLevel3} / ${spellVm.maxSpellSlotsLevel3}", color = PergamentHell, fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier.padding(end = 16.dp))
                                 Button(
                                     onClick = { spellVm.useSpellSlotLevel3() },
                                     enabled = spellVm.spellSlotsLevel3 > 0,
@@ -328,7 +331,7 @@ fun ZauberScreen(
                 }
             } else if (viewModel.characterData.charClass == com.example.dndcompanion.data.CharacterClass.WARLOCK) {
                 // --- WARLOCK PAKTMAGIE ---
-                val maxSlotsLevel2 = viewModel.characterData.baseSpellSlotsLevel2
+                val maxSlotsLevel2 = spellVm.maxSpellSlotsLevel2
                 val currentSlotsLevel2 = spellVm.spellSlotsLevel2
 
                 Card(
