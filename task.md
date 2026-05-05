@@ -104,10 +104,10 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Alle Zauber-States in Firestore speichern — `SpellViewModel.saveSpellsToFirestore()`/`loadSpellsFromFirestore()` unter `users/{uid}/spells/main`
 
 ### 3.6 Rucksack-Tab editierbar machen
-- [ ] `RucksackScreen.kt`: Münzen frei eintippbar (nicht nur per +/–)
-- [ ] Eigene Gegenstände mit Name, Gewicht, Menge, Notizen eintragen
-- [ ] Preisanzeige aus equipment.json (aus IMPLEMENTATION_PLAN.md, Schritt 4 – bereits erledigt, ggf. in Firestore übernehmen)
-- [ ] Alle Inventar-States in Firestore speichern
+- [x] `RucksackScreen.kt`: Münzen frei eintippbar — Tippen auf Betrag öffnet Direkteingabe-Dialog; `setCoins*()` in CharacterViewModel
+- [x] Eigene Gegenstände mit Name, Gewicht, Menge, Notizen eintragen — Felder „Anz." + „Notizen" im Neuer-Fund-Formular; `notes: String?` in InventoryItem
+- [x] Preisanzeige aus equipment.json — bereits erledigt (InventoryRow zeigt price); Notizen ebenfalls angezeigt
+- [x] Alle Inventar-States in Firestore speichern — `saveInventoryToFirestore()`/`loadInventoryFromFirestore()` unter `users/{uid}/inventory/main`
 
 ### 3.7 Multiklassen-Support
 - [ ] `CharacterData.charClass: CharacterClass` → `charClasses: List<CharacterClass>` (primäre Klasse + optionale Multiklasse)

@@ -46,6 +46,8 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
     var newItemName by remember { mutableStateOf("") }
     var newItemWeight by remember { mutableStateOf("") }
     var newItemCategory by remember { mutableStateOf("Sonstiges") }
+    var newItemQuantity by remember { mutableStateOf("1") }
+    var newItemNotes by remember { mutableStateOf("") }
     var isMoneyBagExpanded by remember { mutableStateOf(false) }
     var showEquipmentPicker by remember { mutableStateOf(false) }
     var showGroupLoot by remember { mutableStateOf(false) }
@@ -188,11 +190,11 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
 
                                     if (isMoneyBagExpanded) {
                                         Spacer(modifier = Modifier.height(12.dp))
-                                        CoinRow("Kupfer (KM)", viewModel.coinsKM.toString(), Color(0xFFCD7F32), onMinus = { viewModel.changeCoinsKM(-it) }, onPlus = { viewModel.changeCoinsKM(it) })
-                                        CoinRow("Silber (SM)", viewModel.coinsSM.toString(), Color(0xFFC0C0C0), onMinus = { viewModel.changeCoinsSM(-it) }, onPlus = { viewModel.changeCoinsSM(it) })
-                                        CoinRow("Elektrum (EM)", viewModel.coinsEM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsEM(-it) }, onPlus = { viewModel.changeCoinsEM(it) })
-                                        CoinRow("Gold (GM)", viewModel.coinsGM.toString(), Color(0xFFFFD700), onMinus = { viewModel.changeCoinsGM(-it) }, onPlus = { viewModel.changeCoinsGM(it) })
-                                        CoinRow("Platin (PM)", viewModel.coinsPM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsPM(-it) }, onPlus = { viewModel.changeCoinsPM(it) })
+                                        CoinRow("Kupfer (KM)", viewModel.coinsKM.toString(), Color(0xFFCD7F32), onMinus = { viewModel.changeCoinsKM(-it) }, onPlus = { viewModel.changeCoinsKM(it) }, onSetDirect = { viewModel.setCoinsKM(it) })
+                                        CoinRow("Silber (SM)", viewModel.coinsSM.toString(), Color(0xFFC0C0C0), onMinus = { viewModel.changeCoinsSM(-it) }, onPlus = { viewModel.changeCoinsSM(it) }, onSetDirect = { viewModel.setCoinsSM(it) })
+                                        CoinRow("Elektrum (EM)", viewModel.coinsEM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsEM(-it) }, onPlus = { viewModel.changeCoinsEM(it) }, onSetDirect = { viewModel.setCoinsEM(it) })
+                                        CoinRow("Gold (GM)", viewModel.coinsGM.toString(), Color(0xFFFFD700), onMinus = { viewModel.changeCoinsGM(-it) }, onPlus = { viewModel.changeCoinsGM(it) }, onSetDirect = { viewModel.setCoinsGM(it) })
+                                        CoinRow("Platin (PM)", viewModel.coinsPM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsPM(-it) }, onPlus = { viewModel.changeCoinsPM(it) }, onSetDirect = { viewModel.setCoinsPM(it) })
                                     } else {
                                         Text(
                                             text = "${viewModel.coinsKM}KM | ${viewModel.coinsSM}SM | ${viewModel.coinsEM}EM | ${viewModel.coinsGM}GM | ${viewModel.coinsPM}PM",
@@ -226,11 +228,30 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                                             value = newItemWeight,
                                             onValueChange = { if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) newItemWeight = it },
                                             label = { Text("kg", fontFamily = Almendra) },
-                                            modifier = Modifier.width(70.dp),
+                                            modifier = Modifier.width(60.dp),
+                                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                            colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.tertiary, focusedLabelColor = MaterialTheme.colorScheme.tertiary)
+                                        )
+                                        Spacer(modifier = Modifier.width(8.dp))
+                                        OutlinedTextField(
+                                            value = newItemQuantity,
+                                            onValueChange = { if (it.isEmpty() || it.all { c -> c.isDigit() }) newItemQuantity = it },
+                                            label = { Text("Anz.", fontFamily = Almendra) },
+                                            modifier = Modifier.width(56.dp),
                                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                             colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.tertiary, focusedLabelColor = MaterialTheme.colorScheme.tertiary)
                                         )
                                     }
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    OutlinedTextField(
+                                        value = newItemNotes,
+                                        onValueChange = { newItemNotes = it },
+                                        label = { Text("Notizen (optional)", fontFamily = Almendra) },
+                                        modifier = Modifier.fillMaxWidth(),
+                                        textStyle = TextStyle(fontFamily = Almendra),
+                                        maxLines = 2,
+                                        colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.tertiary, focusedLabelColor = MaterialTheme.colorScheme.tertiary)
+                                    )
                                     Spacer(modifier = Modifier.height(8.dp))
                                     
                                     // Kategorien-Dropdown
@@ -274,9 +295,13 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                                     Button(
                                         onClick = {
                                             if (newItemName.isNotBlank()) {
-                                                viewModel.addCustomLoot(newItemName.trim(), newItemWeight.toDoubleOrNull() ?: 0.0, newItemCategory)
+                                                val qty = newItemQuantity.toIntOrNull()?.coerceAtLeast(1) ?: 1
+                                                val notes = newItemNotes.trim().ifBlank { null }
+                                                viewModel.addCustomLoot(newItemName.trim(), newItemWeight.toDoubleOrNull() ?: 0.0, newItemCategory, notes = notes, quantity = qty)
                                                 newItemName = ""
                                                 newItemWeight = ""
+                                                newItemQuantity = "1"
+                                                newItemNotes = ""
                                             }
                                         },
                                         modifier = Modifier.fillMaxWidth(),
@@ -322,6 +347,7 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
                                             amount = item.amount.toString(),
                                             weight = item.weight,
                                             price = item.price,
+                                            notes = item.notes,
                                             onMinus = { viewModel.removeCustomLoot(item.name) },
                                             onPlus = { viewModel.addCustomLoot(item.name, item.weight, cat, item.price) },
                                             onSell = { itemToSell = item }
@@ -426,7 +452,7 @@ fun ChainProgressBar(progress: Float, color: Color) {
 }
 
 @Composable
-fun InventoryRow(name: String, amount: String, weight: Double? = null, price: String? = null, extraAction: @Composable (() -> Unit)? = null, onSell: (() -> Unit)? = null, onMinus: () -> Unit, onPlus: () -> Unit) {
+fun InventoryRow(name: String, amount: String, weight: Double? = null, price: String? = null, notes: String? = null, extraAction: @Composable (() -> Unit)? = null, onSell: (() -> Unit)? = null, onMinus: () -> Unit, onPlus: () -> Unit) {
     PergamentCard(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
         Row(
             modifier = Modifier.padding(12.dp).fillMaxWidth(),
@@ -440,6 +466,9 @@ fun InventoryRow(name: String, amount: String, weight: Double? = null, price: St
                 }
                 if (!price.isNullOrBlank()) {
                     Text(text = price, style = Typography.bodySmall, color = MaterialTheme.colorScheme.tertiary)
+                }
+                if (!notes.isNullOrBlank()) {
+                    Text(text = notes, style = Typography.bodySmall, color = TintenBraun)
                 }
                 if (extraAction != null) {
                     Box(modifier = Modifier.padding(top = 4.dp)) {
@@ -467,7 +496,37 @@ fun InventoryRow(name: String, amount: String, weight: Double? = null, price: St
 }
 
 @Composable
-fun CoinRow(name: String, amount: String, coinColor: Color, onMinus: (Int) -> Unit, onPlus: (Int) -> Unit) {
+fun CoinRow(name: String, amount: String, coinColor: Color, onMinus: (Int) -> Unit, onPlus: (Int) -> Unit, onSetDirect: ((Int) -> Unit)? = null) {
+    var showDirectInput by remember { mutableStateOf(false) }
+    var directInput by remember { mutableStateOf("") }
+
+    if (showDirectInput) {
+        AlertDialog(
+            onDismissRequest = { showDirectInput = false; directInput = "" },
+            title = { Text(name, fontFamily = Almendra, fontWeight = FontWeight.Bold) },
+            text = {
+                OutlinedTextField(
+                    value = directInput,
+                    onValueChange = { if (it.isEmpty() || it.all { c -> c.isDigit() }) directInput = it },
+                    label = { Text("Menge", fontFamily = Almendra) },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                    singleLine = true,
+                    colors = OutlinedTextFieldDefaults.colors(focusedBorderColor = MaterialTheme.colorScheme.tertiary, focusedLabelColor = MaterialTheme.colorScheme.tertiary)
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = { directInput.toIntOrNull()?.let { onSetDirect?.invoke(it) }; showDirectInput = false; directInput = "" },
+                    enabled = directInput.isNotEmpty()
+                ) { Text("Übernehmen", color = Waldgruen, fontFamily = Almendra) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDirectInput = false; directInput = "" }) { Text("Abbrechen", fontFamily = Almendra) }
+            },
+            containerColor = Pergament
+        )
+    }
+
     Row(
         modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -482,7 +541,14 @@ fun CoinRow(name: String, amount: String, coinColor: Color, onMinus: (Int) -> Un
         Row(verticalAlignment = Alignment.CenterVertically) {
             TextButton(onClick = { onMinus(10) }, modifier = Modifier.size(width = 48.dp, height = 48.dp)) { Text("-10", fontSize = 13.sp, color = OchsenblutRot) }
             IconButton(onClick = { onMinus(1) }, modifier = Modifier.size(48.dp)) { Icon(Icons.Default.Remove, contentDescription = "-1 $name", tint = OchsenblutRot, modifier = Modifier.size(20.dp)) }
-            Text(text = amount, style = GrenzeGotischSmall, modifier = Modifier.widthIn(min = 30.dp), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            Text(
+                text = amount,
+                style = GrenzeGotischSmall,
+                modifier = Modifier
+                    .widthIn(min = 30.dp)
+                    .clickable(enabled = onSetDirect != null) { directInput = amount; showDirectInput = true },
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            )
             IconButton(onClick = { onPlus(1) }, modifier = Modifier.size(48.dp)) { Icon(Icons.Default.Add, contentDescription = "+1 $name", tint = Waldgruen, modifier = Modifier.size(20.dp)) }
             TextButton(onClick = { onPlus(10) }, modifier = Modifier.size(width = 48.dp, height = 48.dp)) { Text("+10", fontSize = 13.sp, color = Waldgruen) }
         }

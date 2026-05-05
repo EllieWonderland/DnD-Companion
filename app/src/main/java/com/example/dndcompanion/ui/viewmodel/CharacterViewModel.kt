@@ -42,6 +42,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
+import com.google.firebase.firestore.FirebaseFirestore
 
 data class UrtierFileDto(
     val urtiere: List<CompanionDto>
@@ -62,6 +63,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
      */
     fun loadUserCharacter(uid: String) {
         loadProfile(uid)
+        loadInventoryFromFirestore(uid)
         viewModelScope.launch {
             characterRepository.getCharacterFlowFromFirestore(uid)
                 .catch { e -> android.util.Log.e("CharacterVM", "Firestore stream error (check security rules)", e) }
@@ -85,6 +87,8 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     val prefsManager = PrefsManager(application)
     private val prefs get() = prefsManager.prefs
     private val gson = Gson()
+    private val firestore = FirebaseFirestore.getInstance()
+    private var suppressInventoryFirestoreSync = false
 
     private val database = AppDatabase.getDatabase(application)
     private val rulebookDao = database.rulebookDao()
@@ -145,7 +149,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
 
         // Load initial data (all content)
         searchRulebook("")
+        suppressInventoryFirestoreSync = true
         loadLoot()
+        suppressInventoryFirestoreSync = false
         loadFaqs()
         loadSpells()
         loadGlobalFeatures()
@@ -940,16 +946,19 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     fun changeWater(amount: Float) {
         water = (water + amount).coerceAtLeast(0f)
         prefs.edit { putFloat("water", water) }
+        saveInventoryToFirestore()
     }
 
     fun changeRations(amount: Int) {
         rations = (rations + amount).coerceAtLeast(0)
         prefs.edit { putInt("rations", rations) }
+        saveInventoryToFirestore()
     }
 
     fun changeGoodberries(amount: Int) {
         goodberries = (goodberries + amount).coerceAtLeast(0)
         prefs.edit { putInt("goodberries", goodberries) }
+        saveInventoryToFirestore()
     }
 
     fun eatGoodberry() {
@@ -978,23 +987,34 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     fun changeCoinsKM(amount: Int) {
         coinsKM = (coinsKM + amount).coerceAtLeast(0)
         prefs.edit { putInt("coinsKM", coinsKM) }
+        saveInventoryToFirestore()
     }
     fun changeCoinsSM(amount: Int) {
         coinsSM = (coinsSM + amount).coerceAtLeast(0)
         prefs.edit { putInt("coinsSM", coinsSM) }
+        saveInventoryToFirestore()
     }
     fun changeCoinsEM(amount: Int) {
         coinsEM = (coinsEM + amount).coerceAtLeast(0)
         prefs.edit { putInt("coinsEM", coinsEM) }
+        saveInventoryToFirestore()
     }
     fun changeCoinsGM(amount: Int) {
         coinsGM = (coinsGM + amount).coerceAtLeast(0)
         prefs.edit { putInt("coinsGM", coinsGM) }
+        saveInventoryToFirestore()
     }
     fun changeCoinsPM(amount: Int) {
         coinsPM = (coinsPM + amount).coerceAtLeast(0)
         prefs.edit { putInt("coinsPM", coinsPM) }
+        saveInventoryToFirestore()
     }
+
+    fun setCoinsKM(value: Int) { coinsKM = value.coerceAtLeast(0); prefs.edit { putInt("coinsKM", coinsKM) }; saveInventoryToFirestore() }
+    fun setCoinsSM(value: Int) { coinsSM = value.coerceAtLeast(0); prefs.edit { putInt("coinsSM", coinsSM) }; saveInventoryToFirestore() }
+    fun setCoinsEM(value: Int) { coinsEM = value.coerceAtLeast(0); prefs.edit { putInt("coinsEM", coinsEM) }; saveInventoryToFirestore() }
+    fun setCoinsGM(value: Int) { coinsGM = value.coerceAtLeast(0); prefs.edit { putInt("coinsGM", coinsGM) }; saveInventoryToFirestore() }
+    fun setCoinsPM(value: Int) { coinsPM = value.coerceAtLeast(0); prefs.edit { putInt("coinsPM", coinsPM) }; saveInventoryToFirestore() }
 
     var totalArrows by mutableIntStateOf(prefs.getInt("totalArrows", 20))
         private set
@@ -1053,6 +1073,7 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
     private fun saveLoot() {
         val json = gson.toJson(customLoot)
         prefs.edit { putString("customLoot", json) }
+        if (!suppressInventoryFirestoreSync) saveInventoryToFirestore()
     }
 
     private fun loadLoot() {
@@ -1085,16 +1106,16 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    fun addCustomLoot(itemName: String, weight: Double = 0.0, category: String = "Sonstiges", price: String? = null) {
+    fun addCustomLoot(itemName: String, weight: Double = 0.0, category: String = "Sonstiges", price: String? = null, quantity: Int = 1, notes: String? = null) {
         val index = customLoot.indexOfFirst { it.name.equals(itemName, ignoreCase = true) }
         if (index != -1) {
             val existingItem = customLoot[index]
-            // Falls das bestehende Item kein Gewicht hat, aber jetzt eines übergeben wird, übernehmen
             val newWeight = if (existingItem.weight == 0.0 && weight > 0.0) weight else existingItem.weight
             val newPrice = if (existingItem.price == null && price != null) price else existingItem.price
-            customLoot[index] = existingItem.copy(amount = existingItem.amount + 1, weight = newWeight, price = newPrice)
+            val newNotes = if (existingItem.notes == null && notes != null) notes else existingItem.notes
+            customLoot[index] = existingItem.copy(amount = existingItem.amount + quantity, weight = newWeight, price = newPrice, notes = newNotes)
         } else {
-            customLoot.add(InventoryItem(itemName, 1, weight, category, price = price))
+            customLoot.add(InventoryItem(itemName, quantity, weight, category, price = price, notes = notes))
         }
         saveLoot()
         snackbarMessage.value = "$itemName zum Rucksack hinzugefügt"
@@ -1233,6 +1254,64 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
         return totalKM
+    }
+
+    // --- INVENTAR FIRESTORE ---
+    private fun saveInventoryToFirestore() {
+        val uid = activeCharacterId
+        if (uid == "Athania" || uid == "Delat") return
+        val lootJson = gson.toJson(customLoot.toList())
+        val data = mapOf(
+            "customLootJson" to lootJson,
+            "coinsKM" to coinsKM,
+            "coinsSM" to coinsSM,
+            "coinsEM" to coinsEM,
+            "coinsGM" to coinsGM,
+            "coinsPM" to coinsPM,
+            "totalArrows" to totalArrows,
+            "shotArrows" to shotArrows,
+            "water" to water,
+            "rations" to rations,
+            "goodberries" to goodberries
+        )
+        firestore.collection("users").document(uid)
+            .collection("inventory").document("main")
+            .set(data)
+            .addOnFailureListener { Log.e("CharacterVM", "Firestore inventory save failed", it) }
+    }
+
+    private fun loadInventoryFromFirestore(uid: String) {
+        if (uid == "Athania" || uid == "Delat") return
+        firestore.collection("users").document(uid)
+            .collection("inventory").document("main")
+            .get()
+            .addOnSuccessListener { doc ->
+                if (doc != null && doc.exists()) {
+                    val lootJson = doc.getString("customLootJson")
+                    if (!lootJson.isNullOrEmpty()) {
+                        try {
+                            val type = object : TypeToken<List<InventoryItem>>() {}.type
+                            val items: List<InventoryItem> = gson.fromJson(lootJson, type)
+                            customLoot.clear()
+                            customLoot.addAll(items)
+                            prefs.edit { putString("customLoot", lootJson) }
+                        } catch (e: Exception) {
+                            Log.w("CharacterVM", "Failed to parse Firestore inventory loot", e)
+                        }
+                    }
+                    doc.getLong("coinsKM")?.toInt()?.let { coinsKM = it; prefs.edit { putInt("coinsKM", it) } }
+                    doc.getLong("coinsSM")?.toInt()?.let { coinsSM = it; prefs.edit { putInt("coinsSM", it) } }
+                    doc.getLong("coinsEM")?.toInt()?.let { coinsEM = it; prefs.edit { putInt("coinsEM", it) } }
+                    doc.getLong("coinsGM")?.toInt()?.let { coinsGM = it; prefs.edit { putInt("coinsGM", it) } }
+                    doc.getLong("coinsPM")?.toInt()?.let { coinsPM = it; prefs.edit { putInt("coinsPM", it) } }
+                    doc.getLong("totalArrows")?.toInt()?.let { totalArrows = it; prefs.edit { putInt("totalArrows", it) } }
+                    doc.getLong("shotArrows")?.toInt()?.let { shotArrows = it; prefs.edit { putInt("shotArrows", it) } }
+                    doc.getDouble("water")?.toFloat()?.let { water = it; prefs.edit { putFloat("water", it) } }
+                    doc.getLong("rations")?.toInt()?.let { rations = it; prefs.edit { putInt("rations", it) } }
+                    doc.getLong("goodberries")?.toInt()?.let { goodberries = it; prefs.edit { putInt("goodberries", it) } }
+                }
+            }
+            .addOnFailureListener { Log.w("CharacterVM", "Failed to load Firestore inventory", it) }
     }
 
     // --- FREIE MERKMALE (TRAITS) ---    // --- FREE SPELLS LOGIC ---
@@ -1691,7 +1770,9 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         val defaultTactic = if (characterData.charClass == CharacterClass.RANGER) "1. Zeichen des Jägers wirken (Bonusaktion)\n2. Mit Langbogen angreifen" else ""
         standardTactic = prefs.getString("standardTactic", defaultTactic) ?: ""
         
+        suppressInventoryFirestoreSync = true
         loadLoot()
+        suppressInventoryFirestoreSync = false
         loadTraits()
         loadBooks()
         loadFaqs()
