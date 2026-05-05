@@ -1010,11 +1010,11 @@ class CharacterViewModel(application: Application) : AndroidViewModel(applicatio
         saveInventoryToFirestore()
     }
 
-    fun setCoinsKM(value: Int) { coinsKM = value.coerceAtLeast(0); prefs.edit { putInt("coinsKM", coinsKM) }; saveInventoryToFirestore() }
-    fun setCoinsSM(value: Int) { coinsSM = value.coerceAtLeast(0); prefs.edit { putInt("coinsSM", coinsSM) }; saveInventoryToFirestore() }
-    fun setCoinsEM(value: Int) { coinsEM = value.coerceAtLeast(0); prefs.edit { putInt("coinsEM", coinsEM) }; saveInventoryToFirestore() }
-    fun setCoinsGM(value: Int) { coinsGM = value.coerceAtLeast(0); prefs.edit { putInt("coinsGM", coinsGM) }; saveInventoryToFirestore() }
-    fun setCoinsPM(value: Int) { coinsPM = value.coerceAtLeast(0); prefs.edit { putInt("coinsPM", coinsPM) }; saveInventoryToFirestore() }
+    fun directSetCoinsKM(value: Int) { coinsKM = value.coerceAtLeast(0); prefs.edit { putInt("coinsKM", coinsKM) }; saveInventoryToFirestore() }
+    fun directSetCoinsSM(value: Int) { coinsSM = value.coerceAtLeast(0); prefs.edit { putInt("coinsSM", coinsSM) }; saveInventoryToFirestore() }
+    fun directSetCoinsEM(value: Int) { coinsEM = value.coerceAtLeast(0); prefs.edit { putInt("coinsEM", coinsEM) }; saveInventoryToFirestore() }
+    fun directSetCoinsGM(value: Int) { coinsGM = value.coerceAtLeast(0); prefs.edit { putInt("coinsGM", coinsGM) }; saveInventoryToFirestore() }
+    fun directSetCoinsPM(value: Int) { coinsPM = value.coerceAtLeast(0); prefs.edit { putInt("coinsPM", coinsPM) }; saveInventoryToFirestore() }
 
     var totalArrows by mutableIntStateOf(prefs.getInt("totalArrows", 20))
         private set

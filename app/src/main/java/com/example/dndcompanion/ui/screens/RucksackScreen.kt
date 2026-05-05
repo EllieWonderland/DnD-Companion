@@ -190,11 +190,11 @@ fun RucksackScreen(viewModel: CharacterViewModel, inventoryVm: InventoryViewMode
 
                                     if (isMoneyBagExpanded) {
                                         Spacer(modifier = Modifier.height(12.dp))
-                                        CoinRow("Kupfer (KM)", viewModel.coinsKM.toString(), Color(0xFFCD7F32), onMinus = { viewModel.changeCoinsKM(-it) }, onPlus = { viewModel.changeCoinsKM(it) }, onSetDirect = { viewModel.setCoinsKM(it) })
-                                        CoinRow("Silber (SM)", viewModel.coinsSM.toString(), Color(0xFFC0C0C0), onMinus = { viewModel.changeCoinsSM(-it) }, onPlus = { viewModel.changeCoinsSM(it) }, onSetDirect = { viewModel.setCoinsSM(it) })
-                                        CoinRow("Elektrum (EM)", viewModel.coinsEM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsEM(-it) }, onPlus = { viewModel.changeCoinsEM(it) }, onSetDirect = { viewModel.setCoinsEM(it) })
-                                        CoinRow("Gold (GM)", viewModel.coinsGM.toString(), Color(0xFFFFD700), onMinus = { viewModel.changeCoinsGM(-it) }, onPlus = { viewModel.changeCoinsGM(it) }, onSetDirect = { viewModel.setCoinsGM(it) })
-                                        CoinRow("Platin (PM)", viewModel.coinsPM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsPM(-it) }, onPlus = { viewModel.changeCoinsPM(it) }, onSetDirect = { viewModel.setCoinsPM(it) })
+                                        CoinRow("Kupfer (KM)", viewModel.coinsKM.toString(), Color(0xFFCD7F32), onMinus = { viewModel.changeCoinsKM(-it) }, onPlus = { viewModel.changeCoinsKM(it) }, onSetDirect = { viewModel.directSetCoinsKM(it) })
+                                        CoinRow("Silber (SM)", viewModel.coinsSM.toString(), Color(0xFFC0C0C0), onMinus = { viewModel.changeCoinsSM(-it) }, onPlus = { viewModel.changeCoinsSM(it) }, onSetDirect = { viewModel.directSetCoinsSM(it) })
+                                        CoinRow("Elektrum (EM)", viewModel.coinsEM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsEM(-it) }, onPlus = { viewModel.changeCoinsEM(it) }, onSetDirect = { viewModel.directSetCoinsEM(it) })
+                                        CoinRow("Gold (GM)", viewModel.coinsGM.toString(), Color(0xFFFFD700), onMinus = { viewModel.changeCoinsGM(-it) }, onPlus = { viewModel.changeCoinsGM(it) }, onSetDirect = { viewModel.directSetCoinsGM(it) })
+                                        CoinRow("Platin (PM)", viewModel.coinsPM.toString(), Color(0xFFE5E4E2), onMinus = { viewModel.changeCoinsPM(-it) }, onPlus = { viewModel.changeCoinsPM(it) }, onSetDirect = { viewModel.directSetCoinsPM(it) })
                                     } else {
                                         Text(
                                             text = "${viewModel.coinsKM}KM | ${viewModel.coinsSM}SM | ${viewModel.coinsEM}EM | ${viewModel.coinsGM}GM | ${viewModel.coinsPM}PM",
