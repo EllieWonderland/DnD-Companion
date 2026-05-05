@@ -31,6 +31,7 @@ import com.example.dndcompanion.ui.screens.BucherScreen
 import com.example.dndcompanion.ui.screens.CharacterScreen
 import com.example.dndcompanion.ui.screens.CharacterSetupScreen
 import com.example.dndcompanion.ui.screens.FeatureSelectionScreen
+import com.example.dndcompanion.ui.screens.LoreScreen
 import com.example.dndcompanion.ui.theme.*
 import androidx.compose.foundation.Image
 import androidx.compose.ui.layout.ContentScale
@@ -112,7 +113,7 @@ fun DnDApp(
     inventoryViewModel: InventoryViewModel,
     onLogout: () -> Unit = {}
 ) {
-    // 0 = Charakter, 1 = Chat, 2 = Bibliothek
+    // 0 = Charakter, 1 = Chat, 2 = Bibliothek, 3 = Lore
     var currentScreen by rememberSaveable { mutableStateOf(0) }
     var previousScreen by rememberSaveable { mutableStateOf(0) }
     val lastScreen = remember { mutableStateOf(currentScreen) }
@@ -206,6 +207,25 @@ fun DnDApp(
                         indicatorColor = Waldgruen
                     )
                 )
+                NavigationBarItem(
+                    selected = currentScreen == 3,
+                    onClick = { currentScreen = 3 },
+                    icon = {
+                        Image(
+                            painter = painterResource(id = R.drawable.questlog),
+                            contentDescription = "Lore",
+                            modifier = Modifier.size(38.dp)
+                        )
+                    },
+                    label = { Text("Lore", fontFamily = com.example.dndcompanion.ui.theme.Almendra) },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = PergamentHell,
+                        selectedTextColor = PergamentHell,
+                        unselectedIconColor = PergamentDunkel,
+                        unselectedTextColor = PergamentDunkel,
+                        indicatorColor = Waldgruen
+                    )
+                )
             }
         }
     ) { paddingValues ->
@@ -226,6 +246,7 @@ fun DnDApp(
                     currentScreen = 2
                 })
                 2 -> BucherScreen(viewModel, spellViewModel, groupViewModel)
+                3 -> LoreScreen()
             }
         }
 

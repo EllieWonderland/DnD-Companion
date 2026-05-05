@@ -123,9 +123,9 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 > Ersetzt den Begleiter-Tab vollständig. Gruppeninhalt, für alle zugänglich.
 
 ### 4.1 Lore-Tab Grundstruktur
-- [ ] `LoreScreen.kt` erstellen mit `TabRow` und `HorizontalPager` (4 Sub-Tabs)
-- [ ] In `MainActivity.kt`: neuen Bottom-Tab „Lore" an der Position des Begleiter-Tabs einfügen
-- [ ] Firebase Security Rules: alle `lore/*`-Collections für eingeloggte User lese-/schreibbar
+- [x] `LoreScreen.kt` erstellen mit `TabRow` und `HorizontalPager` (4 Sub-Tabs)
+- [x] In `MainActivity.kt`: neuen Bottom-Tab „Lore" an der Position des Begleiter-Tabs einfügen
+- [x] Firebase Security Rules: alle `lore/*`-Collections für eingeloggte User lese-/schreibbar
 
 ### 4.2 Sub-Tab: Quests
 - [ ] Layout von `BucherQuestlogDetailView.kt` übernehmen
