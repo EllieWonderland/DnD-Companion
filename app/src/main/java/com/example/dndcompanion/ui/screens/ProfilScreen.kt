@@ -132,7 +132,7 @@ fun ProfilScreen(
                                     strokeWidth = 6.dp,
                                     strokeCap = androidx.compose.ui.graphics.StrokeCap.Round
                                 )
-                                if (viewModel.characterData.portraitUrl.isNotBlank()) {
+                                if (!viewModel.characterData.portraitUrl.isNullOrBlank()) {
                                     AsyncImage(
                                         model = viewModel.characterData.portraitUrl,
                                         contentDescription = "Charakter Portrait",
@@ -199,14 +199,14 @@ fun ProfilScreen(
                     
                     val annotatedString = buildAnnotatedString {
                         append("$baseClassLabel")
-                        if (viewModel.characterData.subclass.isNotBlank()) {
+                        if (!viewModel.characterData.subclass.isNullOrBlank()) {
                             append(" (")
-                            pushStringAnnotation("SUBCLASS", viewModel.characterData.subclass)
+                            pushStringAnnotation("SUBCLASS", viewModel.characterData.subclass ?: "")
                             withStyle(style = SpanStyle(
                                 color = MaterialTheme.colorScheme.tertiary,
                                 textDecoration = TextDecoration.Underline
                             )) {
-                                append(viewModel.characterData.subclass)
+                                append(viewModel.characterData.subclass ?: "")
                             }
                             pop()
                             append(")")
@@ -347,28 +347,28 @@ fun ProfilScreen(
                     val accentColorLocal = MaterialTheme.colorScheme.tertiary
                     val data = viewModel.characterData
 
-                    if (data.appearance.isNotBlank()) {
+                    if (!data.appearance.isNullOrBlank()) {
                         Text("Aussehen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text(data.appearance, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
                     }
 
-                    if (data.languages.isNotBlank()) {
+                    if (!data.languages.isNullOrBlank()) {
                         Text("Sprachen:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text(data.languages, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                     }
 
-                    if (data.ideal.isNotBlank() || data.flaw.isNotBlank()) {
+                    if (!data.ideal.isNullOrBlank() || !data.flaw.isNullOrBlank()) {
                         HorizontalDivider(color = PergamentDunkel, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
                     }
 
-                    if (data.ideal.isNotBlank()) {
+                    if (!data.ideal.isNullOrBlank()) {
                         Text("Ideal:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text(data.ideal, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                         Spacer(modifier = Modifier.height(8.dp))
                     }
 
-                    if (data.flaw.isNotBlank()) {
+                    if (!data.flaw.isNullOrBlank()) {
                         Text("Makel:", style = MaterialTheme.typography.labelLarge, color = accentColorLocal)
                         Text(data.flaw, style = MaterialTheme.typography.bodySmall, color = TintenSchwarz)
                     }

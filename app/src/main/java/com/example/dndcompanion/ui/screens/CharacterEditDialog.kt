@@ -21,13 +21,13 @@ fun CharacterEditDialog(viewModel: CharacterViewModel) {
 
     var nameInput by remember(data.id) { mutableStateOf(data.name) }
     var raceInput by remember(data.id) { mutableStateOf(data.race) }
-    var subclassInput by remember(data.id) { mutableStateOf(data.subclass) }
+    var subclassInput by remember(data.id) { mutableStateOf(data.subclass ?: "") }
     var alignmentInput by remember(data.id) { mutableStateOf(data.alignment) }
     var backgroundInput by remember(data.id) { mutableStateOf(data.background) }
-    var appearanceInput by remember(data.id) { mutableStateOf(data.appearance) }
-    var languagesInput by remember(data.id) { mutableStateOf(data.languages) }
-    var idealInput by remember(data.id) { mutableStateOf(data.ideal) }
-    var flawInput by remember(data.id) { mutableStateOf(data.flaw) }
+    var appearanceInput by remember(data.id) { mutableStateOf(data.appearance ?: "") }
+    var languagesInput by remember(data.id) { mutableStateOf(data.languages ?: "") }
+    var idealInput by remember(data.id) { mutableStateOf(data.ideal ?: "") }
+    var flawInput by remember(data.id) { mutableStateOf(data.flaw ?: "") }
     var strInput by remember(data.id) { mutableStateOf(viewModel.strength.toString()) }
     var dexInput by remember(data.id) { mutableStateOf(viewModel.dexterity.toString()) }
     var conInput by remember(data.id) { mutableStateOf(viewModel.constitution.toString()) }
