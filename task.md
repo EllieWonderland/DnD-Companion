@@ -154,12 +154,12 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] Markdown-Rendering via `Material3RichText { Markdown(...) }` (expandierbare Karten)
 
 ### 4.5 Sub-Tab: Stories / Notizbuch (Gruppe)
-- [ ] Layout von `BucherGroupChatDetailView.kt` / `BucherBookDetailView.kt` übernehmen
-- [ ] Firestore-Collection `lore/stories`
-- [ ] Story/Notiz erstellen: Titel, Text (Markdown), Autor, Datum
-- [ ] Alle Mitglieder können lesen und schreiben
-- [ ] Einträge bearbeiten und löschen (nur eigene)
-- [ ] Chronologische Sortierung (neueste zuerst)
+- [x] Layout an `BucherBookDetailView.kt` / `BucherGroupChatDetailView.kt` angelehnt
+- [x] Firestore-Collection `loreStories` (top-level, konsistent mit loreQuests/loreMaps)
+- [x] Story erstellen: Titel, Text (Markdown), Autor (vorausgefüllt aus Firebase Auth), Datum (auto)
+- [x] Alle Mitglieder können lesen und schreiben
+- [x] Einträge bearbeiten und löschen (nur eigene: createdBy == currentUid)
+- [x] Chronologische Sortierung (neueste zuerst via Firestore orderBy timestamp DESC)
 
 ---
 

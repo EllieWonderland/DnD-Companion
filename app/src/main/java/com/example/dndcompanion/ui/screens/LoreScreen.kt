@@ -20,6 +20,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
@@ -51,12 +52,16 @@ import com.example.dndcompanion.ui.viewmodel.LoreHouserule
 import com.example.dndcompanion.ui.viewmodel.LoreMap
 import com.example.dndcompanion.ui.viewmodel.LoreQuest
 import com.example.dndcompanion.ui.viewmodel.LoreQuestStatus
+import com.example.dndcompanion.ui.viewmodel.LoreStory
 import com.example.dndcompanion.ui.viewmodel.LoreViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.material3.Material3RichText
 import kotlinx.coroutines.launch
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 private val loreTabs = listOf("Quests", "Karten", "Hausregeln", "Geschichten")
 private val houseruleCategories = listOf("Allgemein", "Kämpfe", "Magie", "Soziales", "Reisen", "Sonstiges")
@@ -105,7 +110,7 @@ fun LoreScreen(loreVm: LoreViewModel) {
                     0 -> LoreQuestsTab(loreVm)
                     1 -> LoreMapsTab(loreVm)
                     2 -> LoreHouserulesTab(loreVm)
-                    3 -> LoreStoriesTab()
+                    3 -> LoreStoriesTab(loreVm)
                 }
             }
         }
@@ -1159,9 +1164,332 @@ private fun HouseruleDialog(
 
 // ─── Placeholder Tabs ────────────────────────────────────────────────────────
 
+// ─── Stories Tab ─────────────────────────────────────────────────────────────
+
 @Composable
-fun LoreStoriesTab() {
-    LorePlaceholder("Geschichten", "Gruppen-Geschichten – kommt in Task 4.5")
+fun LoreStoriesTab(loreVm: LoreViewModel) {
+    val currentUid = remember { FirebaseAuth.getInstance().currentUser?.uid ?: "" }
+    val defaultAuthor = remember {
+        FirebaseAuth.getInstance().currentUser?.displayName
+            ?: FirebaseAuth.getInstance().currentUser?.email?.substringBefore("@")
+            ?: ""
+    }
+
+    var showAddDialog by remember { mutableStateOf(false) }
+    var editingStory by remember { mutableStateOf<LoreStory?>(null) }
+    var selectedStory by remember { mutableStateOf<LoreStory?>(null) }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (loreVm.loreStories.isEmpty()) {
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "Noch keine Geschichten vorhanden",
+                    fontFamily = Almendra,
+                    fontSize = 16.sp,
+                    color = TintenSchwarz.copy(alpha = 0.5f)
+                )
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    text = "Füge eine Geschichte über das + hinzu",
+                    fontSize = 13.sp,
+                    color = TintenSchwarz.copy(alpha = 0.35f)
+                )
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
+                contentPadding = PaddingValues(top = 8.dp, bottom = 80.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                items(loreVm.loreStories, key = { it.id }) { story ->
+                    LoreStoryCard(
+                        story = story,
+                        isOwner = story.createdBy == currentUid,
+                        onClick = { selectedStory = story },
+                        onEdit = { editingStory = story },
+                        onDelete = { loreVm.deleteLoreStory(story.id) }
+                    )
+                }
+            }
+        }
+
+        FloatingActionButton(
+            onClick = { showAddDialog = true },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp),
+            containerColor = WaldgruenDunkel,
+            contentColor = PergamentHell,
+            shape = CircleShape
+        ) {
+            Icon(Icons.Default.Add, contentDescription = "Geschichte hinzufügen")
+        }
+    }
+
+    if (showAddDialog) {
+        StoryDialog(
+            story = null,
+            defaultAuthor = defaultAuthor,
+            onDismiss = { showAddDialog = false },
+            onSave = { title, text, author ->
+                loreVm.addLoreStory(title, text, author)
+                showAddDialog = false
+            }
+        )
+    }
+
+    editingStory?.let { story ->
+        StoryDialog(
+            story = story,
+            defaultAuthor = defaultAuthor,
+            onDismiss = { editingStory = null },
+            onSave = { title, text, author ->
+                loreVm.updateLoreStory(story.id, title, text, author)
+                editingStory = null
+            }
+        )
+    }
+
+    selectedStory?.let { story ->
+        StoryDetailDialog(story = story, onDismiss = { selectedStory = null })
+    }
+}
+
+@Composable
+private fun LoreStoryCard(
+    story: LoreStory,
+    isOwner: Boolean,
+    onClick: () -> Unit,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit
+) {
+    val dateStr = remember(story.timestamp) {
+        SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(Date(story.timestamp))
+    }
+
+    PergamentCard(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .clickable { onClick() }
+                .padding(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = story.title,
+                        fontFamily = Almendra,
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TintenSchwarz
+                    )
+                    Spacer(Modifier.height(3.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (story.author.isNotBlank()) {
+                            Box(
+                                modifier = Modifier
+                                    .background(WaldgruenDunkel.copy(alpha = 0.1f), RoundedCornerShape(4.dp))
+                                    .padding(horizontal = 6.dp, vertical = 2.dp)
+                            ) {
+                                Text(
+                                    text = story.author,
+                                    fontSize = 11.sp,
+                                    color = WaldgruenDunkel,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+                        }
+                        Text(dateStr, fontSize = 11.sp, color = TintenSchwarz.copy(alpha = 0.5f))
+                    }
+                }
+                if (isOwner) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        IconButton(onClick = onEdit, modifier = Modifier.size(36.dp)) {
+                            Icon(
+                                Icons.Default.Edit,
+                                contentDescription = "Bearbeiten",
+                                tint = TintenBraun.copy(alpha = 0.7f),
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                        IconButton(onClick = onDelete, modifier = Modifier.size(36.dp)) {
+                            Icon(
+                                Icons.Default.Clear,
+                                contentDescription = "Löschen",
+                                tint = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.size(18.dp)
+                            )
+                        }
+                    }
+                }
+            }
+
+            if (story.text.isNotBlank()) {
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    text = story.text,
+                    fontSize = 13.sp,
+                    color = TintenSchwarz.copy(alpha = 0.65f),
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                    lineHeight = 19.sp
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun StoryDetailDialog(story: LoreStory, onDismiss: () -> Unit) {
+    val dateStr = remember(story.timestamp) {
+        SimpleDateFormat("dd.MM.yyyy · HH:mm", Locale.getDefault()).format(Date(story.timestamp))
+    }
+
+    Dialog(onDismissRequest = onDismiss) {
+        PergamentCard(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(20.dp)) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.Top
+                ) {
+                    Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
+                        Text(
+                            text = story.title,
+                            fontFamily = Almendra,
+                            fontSize = 22.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = TintenSchwarz
+                        )
+                        Spacer(Modifier.height(4.dp))
+                        if (story.author.isNotBlank()) {
+                            Text(
+                                text = story.author,
+                                fontSize = 13.sp,
+                                color = WaldgruenDunkel,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                        Text(dateStr, fontSize = 11.sp, color = TintenSchwarz.copy(alpha = 0.5f))
+                    }
+                    IconButton(onClick = onDismiss, modifier = Modifier.size(36.dp)) {
+                        Icon(
+                            Icons.Default.Clear,
+                            contentDescription = "Schließen",
+                            tint = TintenSchwarz.copy(alpha = 0.6f),
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
+                Spacer(Modifier.height(10.dp))
+                HorizontalDivider(color = TintenSchwarz.copy(alpha = 0.15f))
+                Spacer(Modifier.height(10.dp))
+                Box(
+                    modifier = Modifier
+                        .heightIn(max = 420.dp)
+                        .verticalScroll(rememberScrollState())
+                ) {
+                    if (story.text.isNotBlank()) {
+                        Material3RichText(modifier = Modifier.fillMaxWidth()) {
+                            Markdown(story.text)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun StoryDialog(
+    story: LoreStory?,
+    defaultAuthor: String,
+    onDismiss: () -> Unit,
+    onSave: (String, String, String) -> Unit
+) {
+    var title by remember { mutableStateOf(story?.title ?: "") }
+    var text by remember { mutableStateOf(story?.text ?: "") }
+    var author by remember { mutableStateOf(story?.author ?: defaultAuthor) }
+
+    Dialog(onDismissRequest = onDismiss) {
+        PergamentCard(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = if (story == null) "Geschichte hinzufügen" else "Geschichte bearbeiten",
+                    fontFamily = Almendra,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TintenSchwarz
+                )
+                Spacer(Modifier.height(12.dp))
+                OutlinedTextField(
+                    value = title,
+                    onValueChange = { title = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Titel *", color = TintenSchwarz.copy(alpha = 0.7f)) },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Waldgruen,
+                        unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f)
+                    ),
+                    textStyle = TextStyle(color = TintenSchwarz, fontWeight = FontWeight.Bold),
+                    singleLine = true
+                )
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = author,
+                    onValueChange = { author = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Autor", color = TintenSchwarz.copy(alpha = 0.7f)) },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Waldgruen,
+                        unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f)
+                    ),
+                    textStyle = TextStyle(color = TintenSchwarz),
+                    singleLine = true
+                )
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = text,
+                    onValueChange = { text = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp),
+                    label = { Text("Text (Markdown möglich)", color = TintenSchwarz.copy(alpha = 0.7f)) },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Waldgruen,
+                        unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f)
+                    ),
+                    textStyle = TextStyle(color = TintenSchwarz, fontSize = 14.sp)
+                )
+                Spacer(Modifier.height(14.dp))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    TextButton(onClick = onDismiss) {
+                        Text("Abbrechen", fontFamily = Almendra, color = TintenBraun)
+                    }
+                    Spacer(Modifier.width(8.dp))
+                    Button(
+                        onClick = { if (title.isNotBlank()) onSave(title, text, author) },
+                        enabled = title.isNotBlank(),
+                        colors = ButtonDefaults.buttonColors(containerColor = WaldgruenDunkel),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text("Speichern", fontFamily = Almendra, color = PergamentHell)
+                    }
+                }
+            }
+        }
+    }
 }
 
 @Composable

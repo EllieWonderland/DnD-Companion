@@ -21,6 +21,7 @@ class LoreViewModel(application: Application) : AndroidViewModel(application) {
     val loreQuests = mutableStateListOf<LoreQuest>()
     val loreMaps = mutableStateListOf<LoreMap>()
     val loreHouserules = mutableStateListOf<LoreHouserule>()
+    val loreStories = mutableStateListOf<LoreStory>()
 
     var isUploading by mutableStateOf(false)
         private set
@@ -29,6 +30,7 @@ class LoreViewModel(application: Application) : AndroidViewModel(application) {
         listenToLoreQuests()
         listenToLoreMaps()
         listenToLoreHouserules()
+        listenToLoreStories()
     }
 
     private fun listenToLoreQuests() {
@@ -132,6 +134,43 @@ class LoreViewModel(application: Application) : AndroidViewModel(application) {
 
     fun deleteLoreHouserule(id: String) {
         db.collection("loreHouserules").document(id).delete()
+    }
+
+    private fun listenToLoreStories() {
+        db.collection("loreStories")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.e("Firebase", "LoreStories Listener Fehler", e)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    loreStories.clear()
+                    for (doc in snapshot.documents) {
+                        val story = doc.toObject(LoreStory::class.java)
+                        if (story != null) loreStories.add(story)
+                    }
+                }
+            }
+    }
+
+    fun addLoreStory(title: String, text: String, author: String) {
+        val uid = currentUid
+        if (uid.isEmpty() || title.isBlank()) return
+        val story = LoreStory(title = title.trim(), text = text.trim(), author = author.trim(), createdBy = uid)
+        db.collection("loreStories").document(story.id).set(story)
+    }
+
+    fun updateLoreStory(id: String, title: String, text: String, author: String) {
+        db.collection("loreStories").document(id).update(
+            "title", title.trim(),
+            "text", text.trim(),
+            "author", author.trim()
+        )
+    }
+
+    fun deleteLoreStory(id: String) {
+        db.collection("loreStories").document(id).delete()
     }
 
     fun uploadMap(imageUri: Uri, title: String, description: String) {
