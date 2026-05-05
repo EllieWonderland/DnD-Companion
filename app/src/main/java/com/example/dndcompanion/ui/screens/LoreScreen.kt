@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTransformGestures
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,11 +17,14 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
@@ -43,15 +47,19 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import coil.compose.AsyncImage
 import com.example.dndcompanion.ui.theme.*
+import com.example.dndcompanion.ui.viewmodel.LoreHouserule
 import com.example.dndcompanion.ui.viewmodel.LoreMap
 import com.example.dndcompanion.ui.viewmodel.LoreQuest
 import com.example.dndcompanion.ui.viewmodel.LoreQuestStatus
 import com.example.dndcompanion.ui.viewmodel.LoreViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.halilibo.richtext.markdown.Markdown
+import com.halilibo.richtext.ui.material3.Material3RichText
 import kotlinx.coroutines.launch
 import java.io.File
 
 private val loreTabs = listOf("Quests", "Karten", "Hausregeln", "Geschichten")
+private val houseruleCategories = listOf("Allgemein", "Kämpfe", "Magie", "Soziales", "Reisen", "Sonstiges")
 
 @Composable
 fun LoreScreen(loreVm: LoreViewModel) {
@@ -96,7 +104,7 @@ fun LoreScreen(loreVm: LoreViewModel) {
                 when (page) {
                     0 -> LoreQuestsTab(loreVm)
                     1 -> LoreMapsTab(loreVm)
-                    2 -> LoreHouserulesTab()
+                    2 -> LoreHouserulesTab(loreVm)
                     3 -> LoreStoriesTab()
                 }
             }
@@ -848,12 +856,308 @@ private fun LoreMapFullscreenDialog(map: LoreMap, onDismiss: () -> Unit) {
     }
 }
 
-// ─── Placeholder Tabs ────────────────────────────────────────────────────────
+// ─── Houserules Tab ──────────────────────────────────────────────────────────
 
 @Composable
-fun LoreHouserulesTab() {
-    LorePlaceholder("Hausregeln", "Hausregeln – kommt in Task 4.4")
+fun LoreHouserulesTab(loreVm: LoreViewModel) {
+    var searchQuery by remember { mutableStateOf("") }
+    var filterCategory by remember { mutableStateOf<String?>(null) }
+    var showAddDialog by remember { mutableStateOf(false) }
+    var editingHouserule by remember { mutableStateOf<LoreHouserule?>(null) }
+    var expandedId by remember { mutableStateOf<String?>(null) }
+
+    val filtered = loreVm.loreHouserules.filter { hr ->
+        (filterCategory == null || hr.category == filterCategory) &&
+        (searchQuery.isBlank() ||
+            hr.title.contains(searchQuery, ignoreCase = true) ||
+            hr.ruleText.contains(searchQuery, ignoreCase = true))
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            OutlinedTextField(
+                value = searchQuery,
+                onValueChange = { searchQuery = it },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                placeholder = { Text("Hausregeln durchsuchen...", color = TintenSchwarz.copy(alpha = 0.5f)) },
+                leadingIcon = {
+                    Icon(Icons.Default.Search, contentDescription = null, tint = TintenSchwarz.copy(alpha = 0.6f))
+                },
+                trailingIcon = {
+                    if (searchQuery.isNotEmpty()) {
+                        IconButton(onClick = { searchQuery = "" }) {
+                            Icon(Icons.Default.Clear, contentDescription = "Löschen", tint = TintenSchwarz.copy(alpha = 0.6f))
+                        }
+                    }
+                },
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Waldgruen,
+                    unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.4f)
+                ),
+                textStyle = TextStyle(color = TintenSchwarz, fontSize = 14.sp),
+                singleLine = true
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .horizontalScroll(rememberScrollState())
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+                LoreStatusChip(selected = filterCategory == null, label = "Alle") { filterCategory = null }
+                houseruleCategories.forEach { cat ->
+                    LoreStatusChip(selected = filterCategory == cat, label = cat) {
+                        filterCategory = if (filterCategory == cat) null else cat
+                    }
+                }
+            }
+
+            if (filtered.isEmpty()) {
+                Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            text = if (searchQuery.isNotBlank() || filterCategory != null)
+                                "Keine Ergebnisse gefunden"
+                            else
+                                "Noch keine Hausregeln vorhanden",
+                            fontFamily = Almendra,
+                            fontSize = 16.sp,
+                            color = TintenSchwarz.copy(alpha = 0.5f)
+                        )
+                        if (searchQuery.isBlank() && filterCategory == null) {
+                            Spacer(Modifier.height(6.dp))
+                            Text(
+                                text = "Füge eine Hausregel über das + hinzu",
+                                fontSize = 13.sp,
+                                color = TintenSchwarz.copy(alpha = 0.35f)
+                            )
+                        }
+                    }
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(top = 8.dp, bottom = 80.dp)
+                ) {
+                    items(filtered, key = { it.id }) { hr ->
+                        LoreHouseruleCard(
+                            houserule = hr,
+                            isExpanded = expandedId == hr.id,
+                            onToggle = { expandedId = if (expandedId == hr.id) null else hr.id },
+                            onEdit = { editingHouserule = hr },
+                            onDelete = { loreVm.deleteLoreHouserule(hr.id) }
+                        )
+                    }
+                }
+            }
+        }
+
+        FloatingActionButton(
+            onClick = { showAddDialog = true },
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp),
+            containerColor = WaldgruenDunkel,
+            contentColor = PergamentHell,
+            shape = CircleShape
+        ) {
+            Icon(Icons.Default.Add, contentDescription = "Hausregel hinzufügen")
+        }
+    }
+
+    if (showAddDialog) {
+        HouseruleDialog(
+            houserule = null,
+            onDismiss = { showAddDialog = false },
+            onSave = { title, ruleText, category ->
+                loreVm.addLoreHouserule(title, ruleText, category)
+                showAddDialog = false
+            }
+        )
+    }
+
+    editingHouserule?.let { hr ->
+        HouseruleDialog(
+            houserule = hr,
+            onDismiss = { editingHouserule = null },
+            onSave = { title, ruleText, category ->
+                loreVm.updateLoreHouserule(hr.id, title, ruleText, category)
+                editingHouserule = null
+            }
+        )
+    }
 }
+
+@Composable
+private fun LoreHouseruleCard(
+    houserule: LoreHouserule,
+    isExpanded: Boolean,
+    onToggle: () -> Unit,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit
+) {
+    PergamentCard(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .clickable { onToggle() }
+                .padding(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = houserule.title,
+                        fontFamily = Almendra,
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = TintenSchwarz
+                    )
+                    Spacer(Modifier.height(3.dp))
+                    Box(
+                        modifier = Modifier
+                            .background(WaldgruenDunkel.copy(alpha = 0.12f), RoundedCornerShape(4.dp))
+                            .padding(horizontal = 6.dp, vertical = 2.dp)
+                    ) {
+                        Text(
+                            text = houserule.category,
+                            fontSize = 11.sp,
+                            color = WaldgruenDunkel,
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = onEdit, modifier = Modifier.size(36.dp)) {
+                        Icon(
+                            Icons.Default.Edit,
+                            contentDescription = "Bearbeiten",
+                            tint = TintenBraun.copy(alpha = 0.7f),
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+                    IconButton(onClick = onDelete, modifier = Modifier.size(36.dp)) {
+                        Icon(
+                            Icons.Default.Clear,
+                            contentDescription = "Löschen",
+                            tint = MaterialTheme.colorScheme.error,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    }
+                }
+            }
+
+            if (houserule.ruleText.isNotBlank()) {
+                Spacer(Modifier.height(6.dp))
+                if (isExpanded) {
+                    HorizontalDivider(color = TintenSchwarz.copy(alpha = 0.15f))
+                    Spacer(Modifier.height(8.dp))
+                    Material3RichText(modifier = Modifier.fillMaxWidth()) {
+                        Markdown(houserule.ruleText)
+                    }
+                } else {
+                    Text(
+                        text = houserule.ruleText,
+                        fontSize = 13.sp,
+                        color = TintenSchwarz.copy(alpha = 0.6f),
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun HouseruleDialog(
+    houserule: LoreHouserule?,
+    onDismiss: () -> Unit,
+    onSave: (String, String, String) -> Unit
+) {
+    var title by remember { mutableStateOf(houserule?.title ?: "") }
+    var ruleText by remember { mutableStateOf(houserule?.ruleText ?: "") }
+    var category by remember { mutableStateOf(houserule?.category ?: "Allgemein") }
+
+    Dialog(onDismissRequest = onDismiss) {
+        PergamentCard(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = if (houserule == null) "Hausregel hinzufügen" else "Hausregel bearbeiten",
+                    fontFamily = Almendra,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = TintenSchwarz
+                )
+                Spacer(Modifier.height(12.dp))
+                OutlinedTextField(
+                    value = title,
+                    onValueChange = { title = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text("Titel *", color = TintenSchwarz.copy(alpha = 0.7f)) },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Waldgruen,
+                        unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f)
+                    ),
+                    textStyle = TextStyle(color = TintenSchwarz, fontWeight = FontWeight.Bold),
+                    singleLine = true
+                )
+                Spacer(Modifier.height(8.dp))
+                OutlinedTextField(
+                    value = ruleText,
+                    onValueChange = { ruleText = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(130.dp),
+                    label = { Text("Regeltext (Markdown möglich)", color = TintenSchwarz.copy(alpha = 0.7f)) },
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = Waldgruen,
+                        unfocusedBorderColor = TintenSchwarz.copy(alpha = 0.5f)
+                    ),
+                    textStyle = TextStyle(color = TintenSchwarz, fontSize = 14.sp)
+                )
+                Spacer(Modifier.height(8.dp))
+                Text("Kategorie", fontSize = 12.sp, color = TintenSchwarz.copy(alpha = 0.6f), fontFamily = Almendra)
+                Spacer(Modifier.height(4.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState()),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    houseruleCategories.forEach { cat ->
+                        LoreStatusChip(selected = category == cat, label = cat) { category = cat }
+                    }
+                }
+                Spacer(Modifier.height(14.dp))
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                    TextButton(onClick = onDismiss) {
+                        Text("Abbrechen", fontFamily = Almendra, color = TintenBraun)
+                    }
+                    Spacer(Modifier.width(8.dp))
+                    Button(
+                        onClick = { if (title.isNotBlank()) onSave(title, ruleText, category) },
+                        enabled = title.isNotBlank(),
+                        colors = ButtonDefaults.buttonColors(containerColor = WaldgruenDunkel),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text("Speichern", fontFamily = Almendra, color = PergamentHell)
+                    }
+                }
+            }
+        }
+    }
+}
+
+// ─── Placeholder Tabs ────────────────────────────────────────────────────────
 
 @Composable
 fun LoreStoriesTab() {

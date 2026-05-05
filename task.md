@@ -146,12 +146,12 @@ Geordnet nach Priorität. Jede abgeschlossene Task wird direkt committed und gep
 - [x] CAMERA-Permission und Gallery via `ActivityResultContracts` korrekt angefragt; FileProvider für Kamera-URI konfiguriert
 
 ### 4.4 Sub-Tab: Houserules
-- [ ] `LoreHouserulesTab.kt` erstellen
-- [ ] Firestore-Collection `lore/houserules`
-- [ ] Houserule erstellen: Titel, Regeltext (Markdown-Support), Kategorie
-- [ ] Houserule editieren und löschen
-- [ ] Suchfeld für Houserules
-- [ ] Markdown-Rendering (bereits via `RichText` im Projekt vorhanden)
+- [x] `LoreHouserulesTab.kt` erstellen
+- [x] Firestore-Collection `loreHouserules` (top-level, konsistent mit loreQuests/loreMaps)
+- [x] Houserule erstellen: Titel, Regeltext (Markdown-Support), Kategorie
+- [x] Houserule editieren und löschen
+- [x] Suchfeld für Houserules
+- [x] Markdown-Rendering via `Material3RichText { Markdown(...) }` (expandierbare Karten)
 
 ### 4.5 Sub-Tab: Stories / Notizbuch (Gruppe)
 - [ ] Layout von `BucherGroupChatDetailView.kt` / `BucherBookDetailView.kt` übernehmen

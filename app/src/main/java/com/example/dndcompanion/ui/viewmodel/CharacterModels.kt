@@ -88,6 +88,15 @@ data class LoreMap(
     @get:PropertyName("timestamp") @set:PropertyName("timestamp") var timestamp: Long = System.currentTimeMillis()
 )
 
+data class LoreHouserule(
+    @get:PropertyName("id") @set:PropertyName("id") var id: String = java.util.UUID.randomUUID().toString(),
+    @get:PropertyName("title") @set:PropertyName("title") var title: String = "",
+    @get:PropertyName("ruleText") @set:PropertyName("ruleText") var ruleText: String = "",
+    @get:PropertyName("category") @set:PropertyName("category") var category: String = "Allgemein",
+    @get:PropertyName("createdBy") @set:PropertyName("createdBy") var createdBy: String = "",
+    @get:PropertyName("timestamp") @set:PropertyName("timestamp") var timestamp: Long = System.currentTimeMillis()
+)
+
 data class GroupLootItem(
     @get:PropertyName("id") @set:PropertyName("id") var id: String = java.util.UUID.randomUUID().toString(),
     @get:PropertyName("name") @set:PropertyName("name") var name: String = "",

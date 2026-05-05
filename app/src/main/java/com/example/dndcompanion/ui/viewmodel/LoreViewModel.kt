@@ -20,6 +20,7 @@ class LoreViewModel(application: Application) : AndroidViewModel(application) {
 
     val loreQuests = mutableStateListOf<LoreQuest>()
     val loreMaps = mutableStateListOf<LoreMap>()
+    val loreHouserules = mutableStateListOf<LoreHouserule>()
 
     var isUploading by mutableStateOf(false)
         private set
@@ -27,6 +28,7 @@ class LoreViewModel(application: Application) : AndroidViewModel(application) {
     init {
         listenToLoreQuests()
         listenToLoreMaps()
+        listenToLoreHouserules()
     }
 
     private fun listenToLoreQuests() {
@@ -88,6 +90,48 @@ class LoreViewModel(application: Application) : AndroidViewModel(application) {
 
     fun deleteLoreQuest(id: String) {
         db.collection("loreQuests").document(id).delete()
+    }
+
+    private fun listenToLoreHouserules() {
+        db.collection("loreHouserules")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.e("Firebase", "LoreHouserules Listener Fehler", e)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    loreHouserules.clear()
+                    for (doc in snapshot.documents) {
+                        val hr = doc.toObject(LoreHouserule::class.java)
+                        if (hr != null) loreHouserules.add(hr)
+                    }
+                }
+            }
+    }
+
+    fun addLoreHouserule(title: String, ruleText: String, category: String) {
+        if (title.isBlank()) return
+        val uid = currentUid
+        val hr = LoreHouserule(
+            title = title.trim(),
+            ruleText = ruleText.trim(),
+            category = category,
+            createdBy = uid
+        )
+        db.collection("loreHouserules").document(hr.id).set(hr)
+    }
+
+    fun updateLoreHouserule(id: String, title: String, ruleText: String, category: String) {
+        db.collection("loreHouserules").document(id).update(
+            "title", title.trim(),
+            "ruleText", ruleText.trim(),
+            "category", category
+        )
+    }
+
+    fun deleteLoreHouserule(id: String) {
+        db.collection("loreHouserules").document(id).delete()
     }
 
     fun uploadMap(imageUri: Uri, title: String, description: String) {
